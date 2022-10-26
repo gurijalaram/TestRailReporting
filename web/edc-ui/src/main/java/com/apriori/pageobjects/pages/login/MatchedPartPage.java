@@ -21,10 +21,10 @@ public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
     @FindBy(css = "[data-icon='plus']")
     private WebElement addButton;
 
-    @FindBy(css = "p:nth-child(5) > span.title")
+    @FindBy(xpath = "//span[.='Pin Count']")
     private WebElement pinCount;
 
-    @FindBy(css = "p:nth-child(4) > span.title")
+    @FindBy(xpath = "//span[.='Mount Type']")
     private WebElement mountType;
 
     private UploadedBomTableActions uploadedBomTableActions = new UploadedBomTableActions(getDriver());

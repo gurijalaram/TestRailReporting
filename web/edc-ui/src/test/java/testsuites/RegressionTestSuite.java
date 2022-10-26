@@ -3,7 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import com.fieldsvalidation.mounttypepincount.MountTypePinCountTests;
+import com.fieldsvalidation.MountTypePinCountTests;
 import com.help.HelpTests;
 import com.myuser.MyProfileTests;
 import com.myuser.TermsOfUseTests;

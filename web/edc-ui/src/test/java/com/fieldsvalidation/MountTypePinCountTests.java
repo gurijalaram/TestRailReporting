@@ -1,4 +1,4 @@
-package com.fieldsvalidation.mounttypepincount;
+package com.fieldsvalidation;
 
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
@@ -26,7 +26,6 @@ public class MountTypePinCountTests extends TestBase {
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
-    private MatchedPartPage matchedPartPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
