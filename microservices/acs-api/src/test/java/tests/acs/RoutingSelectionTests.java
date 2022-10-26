@@ -737,45 +737,5 @@ public class RoutingSelectionTests extends TestUtil {
         assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
-    @Test
-    @TestRail(testCaseId = "14870")
-    @Description("Save Routing Selection after Cost for Stock Machining")
-    public void testSaveRoutingSelectionStockMachining() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
-        fileUploadResources.checkValidProcessGroup(processGroup);
-
-        FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "testpart-4.prt",
-            processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-            fileResponse,
-            testScenarioName
-        );
-
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
-            productionInfoInputs,
-            fileUploadOutputs,
-            processGroup,
-            false
-        );
-
-        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
-            costOutputs.getScenarioIterationKey(),
-            "Stock Machining",
-            "aPriori India",
-            "Stock Machining"
-        );
-
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
-    }
 }
