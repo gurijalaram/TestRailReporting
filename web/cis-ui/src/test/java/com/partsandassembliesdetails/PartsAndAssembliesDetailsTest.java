@@ -1122,7 +1122,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+        partsAndAssembliesDetailsPage= loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
