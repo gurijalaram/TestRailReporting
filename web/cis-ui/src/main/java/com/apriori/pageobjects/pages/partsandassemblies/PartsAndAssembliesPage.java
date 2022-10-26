@@ -798,7 +798,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickToRemoveAddedFilter() {
         getPageUtils().waitForElementAndClick(removeIcon);
         getPageUtils().waitForElementsToAppear(tableRow);
-        return new PartsAndAssembliesPage(getDriver());
+        return this;
     }
 
     /**
