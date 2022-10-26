@@ -79,27 +79,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * Gets the uncosted component from CSS
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - user to upload the part
-     * @return response object
-     */
-    public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
-
-        scenarioItem.stream()
-            .findFirst()
-            .orElseThrow(
-                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
-                    scenarioItem.stream().findFirst().get().getScenarioState())));
-
-        return scenarioItem;
-    }
-
-    /**
      * POST new component
      *
      * @param componentBuilder - the component object
@@ -142,6 +121,27 @@ public class ComponentsUtil {
         });
 
         return componentBuilder;
+    }
+
+    /**
+     * Gets the uncosted component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
+
+        scenarioItem.stream()
+            .findFirst()
+            .orElseThrow(
+                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                    scenarioItem.stream().findFirst().get().getScenarioState())));
+
+        return scenarioItem;
     }
 
     /**
