@@ -1,7 +1,8 @@
 package com.explore;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -11,6 +12,7 @@ import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPa
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -42,6 +44,7 @@ public class GroupCostTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemA;
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private CssComponent cssComponent = new CssComponent();
 
     @Test
     @TestRail(testCaseId = {"14796"})
@@ -117,8 +120,8 @@ public class GroupCostTests extends TestBase {
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .setPagination()
@@ -255,8 +258,8 @@ public class GroupCostTests extends TestBase {
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
@@ -275,5 +278,4 @@ public class GroupCostTests extends TestBase {
 
         softAssertions.assertAll();
     }
-
 }

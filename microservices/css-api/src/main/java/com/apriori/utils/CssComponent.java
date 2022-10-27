@@ -88,9 +88,48 @@ public class CssComponent {
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
+        // TODO: 26/10/2022 cn - wrap in a try/catch/throw, when incorrect k,v is entered its easily debuggable
         paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
 
         return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+
+                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+
+                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+
+                    cssComponentResponse.getResponseEntity().getItems().stream()
+                        .allMatch(o -> ScenarioStateEnum.terminalState.stream()
+                            .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
+
+                    return cssComponentResponse;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
+        );
     }
 
     /**
