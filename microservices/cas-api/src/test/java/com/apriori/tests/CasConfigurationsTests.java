@@ -28,7 +28,7 @@ public class CasConfigurationsTests extends TestUtil {
     @TestRail(testCaseId = {"5660"})
     @Description("Returns a list of all aP Versions.")
     public void getConfigurationsTest() {
-        ResponseWrapper<Configurations> configurationsResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CONFIGURATIONS, Configurations.class)
+        ResponseWrapper<Configurations> configurationsResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CONFIGURATIONS, Configurations.class)
             .token(token)).get();
 
         soft.assertThat(configurationsResponse.getStatusCode())
