@@ -28,7 +28,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        ResponseWrapper<User> user = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CURRENT_USER, User.class)
+        ResponseWrapper<User> user = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CURRENT_USER, User.class)
             .token(token)).get();
 
         soft.assertThat(user.getStatusCode())

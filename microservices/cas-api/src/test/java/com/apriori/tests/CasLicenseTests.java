@@ -158,7 +158,7 @@ public class CasLicenseTests {
             .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<SubLicenses> subLicenses = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SUBLICENSES_BY_LICENSE_ID, SubLicenses.class)
+        ResponseWrapper<SubLicenses> subLicenses = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)).get();
 
@@ -171,7 +171,7 @@ public class CasLicenseTests {
         soft.assertThat(associationUserResponse.getResponseEntity().getUserIdentity())
             .isEqualTo(userIdentity);
 
-        ResponseWrapper<SublicenseAssociation> sublicenseAssociations = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SUBLICENSE_ASSOCIATIONS, SublicenseAssociation.class)
+        ResponseWrapper<SublicenseAssociation> sublicenseAssociations = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, SublicenseAssociation.class)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)).get();
 
@@ -188,7 +188,7 @@ public class CasLicenseTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper<String> deleteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS, null)
+        ResponseWrapper<String> deleteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SPECIFIC_USER_SUB_LICENSE_USERS, null)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity)).delete();
 
