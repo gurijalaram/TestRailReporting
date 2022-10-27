@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.common;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -32,6 +34,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
@@ -302,8 +305,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component
-     * @param scenarioName - Name of the scenario
-     *
+     * @param scenarioName  - Name of the scenario
      * @return LocalDateTime representation of Created At value
      */
     public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
@@ -569,5 +571,35 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         new CssComponent().getComponentParts(userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
         return this;
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param column          - the column
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(String componentName, String scenarioName, ColumnsEnum column, UserCredentials userCredentials) {
+        String scenarioIdentity = new CssComponent().getWaitBaseCssComponents(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
+            .getResponseEntity()
+            .getItems()
+            .get(0)
+            .getScenarioIdentity();
+
+        List<WebElement> columnData = driver.findElements(By.cssSelector(".table-head [role='columnheader']"));
+
+        int columnPosition = IntStream.range(0, columnData.size())
+            .filter(o -> columnData.get(o).getAttribute("textContent").equals(column.getColumns()))
+            .findFirst()
+            .getAsInt();
+
+        return pageUtils.waitForElementsToAppear(By.cssSelector(String.format("[role='row'] [data-row-id='%s']", scenarioIdentity)))
+            .stream()
+            .map(o -> o.getAttribute("textContent"))
+            .collect(Collectors.toList())
+            .get(columnPosition);
     }
 }

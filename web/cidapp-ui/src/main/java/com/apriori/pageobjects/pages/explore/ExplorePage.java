@@ -491,4 +491,17 @@ public class ExplorePage extends ExploreToolbar {
         scenarioTableController.addColumn(columnToAdd);
         return this;
     }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param column          - the column
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(String componentName, String scenarioName, ColumnsEnum column, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(componentName, scenarioName, column, userCredentials);
+    }
 }
