@@ -36,7 +36,7 @@ public class CasDeploymentsTests {
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
 
-        ResponseWrapper<Deployments> responseDeployment = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_DEPLOYMENTS, Deployments.class)
+        ResponseWrapper<Deployments> responseDeployment = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -52,7 +52,7 @@ public class CasDeploymentsTests {
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
 
-        ResponseWrapper<Deployments> responseDeployments = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_DEPLOYMENTS, Deployments.class)
+        ResponseWrapper<Deployments> responseDeployments = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -63,7 +63,7 @@ public class CasDeploymentsTests {
 
         String deploymentIdentity = responseDeployments.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Deployment> deploymentByID = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, Deployment.class)
+        ResponseWrapper<Deployment> deploymentByID = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_DEPLOYMENT, Deployment.class)
             .token(token)
             .inlineVariables(customerIdentity, deploymentIdentity)).get();
 
