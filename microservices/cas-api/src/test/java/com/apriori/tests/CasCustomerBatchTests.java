@@ -62,7 +62,7 @@ public class CasCustomerBatchTests {
         soft.assertThat(batch.getResponseEntity().getCustomerIdentity())
             .isEqualTo(customerIdentity);
 
-        ResponseWrapper<CustomerBatches> customerBatches = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, CustomerBatches.class)
+        ResponseWrapper<CustomerBatches> customerBatches = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCHES, CustomerBatches.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -95,7 +95,7 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerBatch> customerBatch = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCH, CustomerBatch.class)
+        ResponseWrapper<CustomerBatch> customerBatch = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH, CustomerBatch.class)
             .token(token)
             .inlineVariables(customerIdentity, batchIdentity)).get();
 

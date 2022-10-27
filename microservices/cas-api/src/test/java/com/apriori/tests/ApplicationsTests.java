@@ -35,7 +35,7 @@ public class ApplicationsTests {
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_APPLICATIONS, Applications.class)
+        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_APPLICATIONS, Applications.class)
             .token(token)
             .inlineVariables(customer.getIdentity())).get();
 

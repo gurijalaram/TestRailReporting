@@ -55,7 +55,7 @@ public class CasSitesTests {
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> siteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
+        ResponseWrapper<Sites> siteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SITES, Sites.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -79,7 +79,7 @@ public class CasSitesTests {
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
+        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SITES, Sites.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -90,7 +90,7 @@ public class CasSitesTests {
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITE_ID, Site.class)
+        ResponseWrapper<Site> site = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SITE_ID, Site.class)
             .token(token)
             .inlineVariables(customerIdentity, siteIdentity)).get();
 
@@ -113,7 +113,7 @@ public class CasSitesTests {
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
+        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.SITES, Sites.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 

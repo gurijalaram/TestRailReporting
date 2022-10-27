@@ -6,6 +6,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.entity.response.AccessControl;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
@@ -31,11 +32,9 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -250,7 +249,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> resetMfa(String identity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_MFA, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.MFA, null)
             .token(token)
             .inlineVariables(identity);
 
@@ -261,9 +260,9 @@ public class CasTestUtil extends TestUtil {
      * @param identity - the identity
      * @return <T>ResponseWrapper <T>
      */
-    public static <T> ResponseWrapper<T> resetMfa(String customerIdentity, String identity) {
+    public static <T> ResponseWrapper<T> resetUserMfa(String customerIdentity, String identity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_MFA, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.MFA, null)
             .token(token)
             .inlineVariables(customerIdentity, "users", identity);
 
@@ -293,7 +292,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<Site> addSite(String identity, String siteId, String siteName) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SITES, Site.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SITES, Site.class)
             .token(token)
             .body("site",
                 Site.builder().siteId(siteId)
@@ -436,7 +435,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCH, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH, null)
             .token(token)
             .inlineVariables(customerIdentity, batchIdentity);
 
@@ -492,7 +491,7 @@ public class CasTestUtil extends TestUtil {
      */
     public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity)
                 .body(LicenseRequest.builder()
@@ -518,13 +517,34 @@ public class CasTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, klass)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
                 .body("userAssociation",
                         AssociationUser.builder()
                                 .userIdentity(userIdentity)
                                 .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Creates new access control for user
+     *
+     * @param customerIdentity - customer identity
+     * @param userIdentity - user identity
+     * @return ResponseWrapper <AccessControl>
+     */
+    public ResponseWrapper<AccessControl> addAccessControl(String customerIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACCESS_CONTROLS, AccessControl.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("accessControl",
+                AccessControl.builder()
+                    .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+                    .applicationIdentity(PropertiesContext.get("${env}.cds.apriori_cloud_home_identity"))
+                    .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
+                    .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
+                    .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
