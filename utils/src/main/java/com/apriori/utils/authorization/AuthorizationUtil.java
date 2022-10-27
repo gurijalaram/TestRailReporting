@@ -1,7 +1,9 @@
 package com.apriori.utils.authorization;
 
+import com.apriori.utils.ApplicationItem;
 import com.apriori.utils.DeploymentItem;
 import com.apriori.utils.GetDeploymentsResponse;
+import com.apriori.utils.InstallationItem;
 import com.apriori.utils.enums.DeploymentsAPIEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -13,10 +15,9 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.Get;
+
+import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationUtil {
@@ -98,29 +99,32 @@ public class AuthorizationUtil {
      * Gets Authorisation Target Cloud Context
      *
      * @param userCredentials - user credentials
-     * @return string
+     * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        GetDeploymentsResponse getDeploymentsResponse = getDeploymentsResponse(userCredentials);
-        DeploymentItem deploymentItem = getDeploymentsResponse.getItems().get(0);
-
         String cloudContext = PropertiesContext.get("${env}.customer_identity");
-        String deploymentInstallation = "";
-        String deploymentApplication = "";
+        String deploymentNameFromConfig = PropertiesContext.get("${env}.deployment_name");
+        String installationNameFromConfig = PropertiesContext.get("${env}.installation_name");
+        String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
 
-        String deploymentItemName = deploymentItem.getName();
-        String installationItemName = deploymentItem.getInstallations().get(4).getName();
-        String applicationItemName = deploymentItem.getInstallations().get(4).getApplications().get(2).getServiceName();
+        DeploymentItem deploymentItem = getDeploymentsResponse(userCredentials).getItems()
+            .stream()
+            .filter(element -> element.getName().equalsIgnoreCase(deploymentNameFromConfig))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
-        boolean correctInstallation = deploymentItemName.equalsIgnoreCase(PropertiesContext.get("${env}.deployment_name")) &&
-            installationItemName.equalsIgnoreCase(PropertiesContext.get("${env}.installation_name")) &&
-            applicationItemName.equalsIgnoreCase(PropertiesContext.get("${env}.application_name"));
+        InstallationItem installationItem = deploymentItem.getInstallations()
+            .stream()
+            .filter(element -> element.getName().equals(installationNameFromConfig))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
-        if (correctInstallation) {
-            deploymentInstallation = deploymentItem.getInstallations().get(3).getIdentity();
-            deploymentApplication = deploymentItem.getInstallations().get(3).getApplications().get(2).getIdentity();
-        }
+        ApplicationItem applicationItem = installationItem.getApplications()
+            .stream()
+            .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
-        return cloudContext.concat(deploymentItem.getIdentity()).concat(deploymentInstallation).concat(deploymentApplication);
+        return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
     }
 }
