@@ -56,6 +56,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
     private WebElement configureButton;
 
+    @FindBy(css = ".table-head [role='columnheader']")
+    private List<WebElement> columnHeader;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ComponentTableActions componentTableActions;
@@ -589,10 +592,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             .get(0)
             .getScenarioIdentity();
 
-        List<WebElement> columnData = driver.findElements(By.cssSelector(".table-head [role='columnheader']"));
-
-        int columnPosition = IntStream.range(0, columnData.size())
-            .filter(o -> columnData.get(o).getAttribute("textContent").equals(column.getColumns()))
+        int columnPosition = IntStream.range(0, pageUtils.waitForElementsToAppear(columnHeader).size())
+            .filter(o -> columnHeader.get(o).getAttribute("textContent").equals(column.getColumns()))
             .findFirst()
             .getAsInt();
 
