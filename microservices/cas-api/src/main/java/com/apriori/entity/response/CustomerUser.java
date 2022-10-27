@@ -35,6 +35,7 @@ public class CustomerUser {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String createdBy;
+    private String updatedBy;
     private String customerIdentity;
     private CustomerUserProfile userProfile;
     private String email;
@@ -44,6 +45,7 @@ public class CustomerUser {
     private CustomAttributes customAttributes;
     private CustomProperties customProperties;
     private String createdByName;
+    private String updatedByName;
     private List<Object> licenseAssignments = null;
     private String userType;
 }

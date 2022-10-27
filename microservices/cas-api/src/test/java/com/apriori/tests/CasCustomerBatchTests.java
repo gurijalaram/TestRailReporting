@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
@@ -22,11 +17,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasCustomerBatchTests {
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
@@ -60,19 +57,25 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        assertThat(batch.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(batch.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));
+        soft.assertThat(batch.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
+        soft.assertThat(batch.getResponseEntity().getCustomerIdentity())
+            .isEqualTo(customerIdentity);
 
         ResponseWrapper<CustomerBatches> customerBatches = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, CustomerBatches.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(customerBatches.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(customerBatches.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
-        assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        soft.assertThat(deleteBatch.getStatusCode())
+            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        soft.assertAll();
     }
 
     @Test
@@ -96,11 +99,15 @@ public class CasCustomerBatchTests {
             .token(token)
             .inlineVariables(customerIdentity, batchIdentity)).get();
 
-        assertThat(customerBatch.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerBatch.getResponseEntity().getIdentity(), is(equalTo(batchIdentity)));
+        soft.assertThat(customerBatch.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(customerBatch.getResponseEntity().getIdentity())
+            .isEqualTo(batchIdentity);
 
         ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
-        assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        soft.assertThat(deleteBatch.getStatusCode())
+            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        soft.assertAll();
     }
 }

@@ -1,11 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.User;
@@ -17,10 +11,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasUsersTests extends TestUtil {
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
 
     @Before
@@ -35,7 +31,10 @@ public class CasUsersTests extends TestUtil {
         ResponseWrapper<User> user = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CURRENT_USER, User.class)
             .token(token)).get();
 
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(user.getResponseEntity().getIdentity(), is(not(emptyString())));
+        soft.assertThat(user.getStatusCode())
+                .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(user.getResponseEntity().getIdentity())
+                .isNotEmpty();
+        soft.assertAll();
     }
 }

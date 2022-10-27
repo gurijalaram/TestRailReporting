@@ -40,6 +40,7 @@ import com.explore.FilterCriteriaTests;
 import com.explore.GroupCostTests;
 import com.explore.GroupDeleteTests;
 import com.explore.GroupEditTests;
+import com.explore.GroupPublishTests;
 import com.explore.PreviewPanelTests;
 import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
@@ -101,7 +102,8 @@ import testsuites.suiteinterface.SmokeTests;
     GroupDeleteTests.class,
     GroupCostTests.class,
     OpenUnknownComponentsTests.class,
-    ProcessRoutingTests.class
+    ProcessRoutingTests.class,
+    GroupPublishTests.class
 })
 public class RegressionTestSuite {
 }
