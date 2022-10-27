@@ -1,5 +1,8 @@
 package com.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -12,6 +15,7 @@ import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -52,6 +56,7 @@ public class UploadComponentTests extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private CssComponent cssComponent = new CssComponent();
 
     @Test
     @Category(SanityTests.class)
@@ -263,17 +268,21 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .clickClose();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.PROCESSING_FAILED), is(ScenarioStateEnum.PROCESSING_FAILED.getState())));
+            softAssertions.assertThat(cssComponent.getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.PROCESSING_FAILED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
+            softAssertions.assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isTrue());
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -363,8 +372,8 @@ public class UploadComponentTests extends TestBase {
             .clickClose();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
