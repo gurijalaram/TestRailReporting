@@ -151,7 +151,7 @@ public class ComponentsUtil {
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
 
         scenarioItem.stream()
             .findFirst()
@@ -263,12 +263,11 @@ public class ComponentsUtil {
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
         ResponseWrapper<Object> response;
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
-                .inlineVariables(componentId)
-                .token(componentInfo.getUser().getToken())
-                .followRedirection(false)
-                .socketTimeout(SOCKET_TIMEOUT);
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+            .inlineVariables(componentId)
+            .token(componentInfo.getUser().getToken())
+            .followRedirection(false)
+            .socketTimeout(SOCKET_TIMEOUT);
         do {
             response = HTTPRequest.build(requestEntity).get();
         } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
