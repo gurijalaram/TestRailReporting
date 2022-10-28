@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.components;
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -45,10 +46,10 @@ import java.util.stream.Collectors;
 public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> {
 
     @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
-    private WebElement tableButton;
+    private WebElement tableViewButton;
 
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
-    private WebElement treeButton;
+    private WebElement treeViewButton;
 
     @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
     private WebElement previewButton;
@@ -128,20 +129,10 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(tableButton);
+        assertTrue("Table View is not active", pageUtils.waitForElementToAppear(tableViewButton).getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         pageUtils.waitForElementToAppear(componentTable);
-    }
-
-    /**
-     * Changes the view to table view
-     *
-     * @return current page object
-     */
-    public ComponentsTablePage tableView() {
-        pageUtils.waitForElementAndClick(tableButton);
-        return this;
     }
 
     /**
@@ -151,16 +142,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      */
     public ComponentsTablePage setPagination() {
         componentTableActions.setPagination();
-        return this;
-    }
-
-    /**
-     * Changes the view to tree view
-     *
-     * @return current page object
-     */
-    public ComponentsTablePage treeView() {
-        pageUtils.waitForElementAndClick(treeButton);
         return this;
     }
 
@@ -206,13 +187,13 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
 
 
     /**
-     * Opens tree view tab
+     * Opens tree view
      *
      * @return new page object
      */
-    public TreePage openTreeTab() {
-        pageUtils.waitForElementAndClick(treeButton);
-        return new TreePage(driver);
+    public ComponentsTreePage selectTreeView() {
+        pageUtils.waitForElementAndClick(treeViewButton);
+        return new ComponentsTreePage(driver);
     }
 
     /**

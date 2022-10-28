@@ -90,6 +90,7 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(big_ring + "," + scenarioName, pin + "," + scenarioName, small_ring + "," + scenarioName)
             .publishSubcomponent()
             .clickContinue(PublishPage.class)
@@ -250,7 +251,8 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
 
         componentsTablePage = infoPage.cancel(EvaluatePage.class)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         subComponentNames.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
@@ -404,7 +406,8 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         allSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
@@ -444,7 +447,8 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        componentsTablePage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(pin, scenarioName)).contains("circle-minus");
         softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
@@ -593,6 +597,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -649,6 +654,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -701,6 +707,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -760,6 +767,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -830,6 +838,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -882,6 +891,7 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
 
         componentsTablePage = evaluatePage.openComponents()
+            .selectTableView()
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + SMALL_RING + "," + PIN);
 
         subComponentNames.forEach(subcomponent ->
@@ -929,6 +939,7 @@ public class EditAssembliesTest extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BOLT + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -950,7 +961,8 @@ public class EditAssembliesTest extends TestBase {
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
@@ -998,6 +1010,7 @@ public class EditAssembliesTest extends TestBase {
         double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
         componentsTablePage = evaluatePage.openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -1066,6 +1079,7 @@ public class EditAssembliesTest extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly2)
             .openComponents()
+            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("assy03A" + "," + scenarioName + "", "Part0005a" + "," + scenarioName + "");
 

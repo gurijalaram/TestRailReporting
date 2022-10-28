@@ -281,7 +281,8 @@ public class UploadAssembliesTests extends TestBase {
             .submit()
             .clickClose()
             .openComponent(assemblyName1, scenarioName, currentUser)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         componentNames1.forEach(component ->
             assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
@@ -413,12 +414,14 @@ public class UploadAssembliesTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly3).uploadAssembly(componentAssembly3);
 
         componentsTablePage = explorePage.openComponent(assemblyName2, scenarioName, currentUser)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
 
         componentsTablePage = explorePage.openComponent(assemblyName3, scenarioName, currentUser)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
 
@@ -454,7 +457,7 @@ public class UploadAssembliesTests extends TestBase {
         configurePage = loginPage.login(currentUser)
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .treeView()
+            .selectTableView()
             .configure();
 
         softAssertions.assertThat(configurePage.getChoicesList()).containsAnyOf("Assigned At", "Assigned By", "Cost Maturity");
@@ -545,6 +548,7 @@ public class UploadAssembliesTests extends TestBase {
             .clickExplore()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
+            .selectTableView()
             .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)

@@ -66,7 +66,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -96,7 +96,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName2)
@@ -126,7 +126,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .cancel(ExplorePage.class);
 
@@ -154,7 +154,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -186,7 +186,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -216,7 +216,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -248,7 +248,7 @@ public class FiltersTests extends TestBase {
                 currentUser)
 
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .selectFilter("Missing")
             .saveAs()
@@ -280,7 +280,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -319,7 +319,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -331,7 +331,7 @@ public class FiltersTests extends TestBase {
             .submit(EvaluatePage.class)
             .treeView()
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter(filterName);
 
         soft.assertThat(componentsTablePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
@@ -357,7 +357,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -412,7 +412,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Uncosted");
 
         List<String> stateListUncosted = componentsTablePage.getAllScenarioState();
@@ -434,7 +434,7 @@ public class FiltersTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
         .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Assigned To Me");
 
         soft.assertThat(componentsTablePage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
@@ -454,7 +454,7 @@ public class FiltersTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Missing");
 
         soft.assertThat(componentsTablePage.isElementDisplayed("Missing", "text-overflow")).isTrue();
@@ -474,7 +474,7 @@ public class FiltersTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("All");
 
         soft.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
