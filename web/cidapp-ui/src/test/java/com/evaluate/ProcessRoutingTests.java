@@ -278,7 +278,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectMaterial("ABS");
 
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
-            .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
+            .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Thermoset", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
                 "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
         softAssertions.assertAll();
     }

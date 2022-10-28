@@ -949,6 +949,7 @@ public class EditAssembliesTest extends TestBase {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
+            .clickRefresh(EvaluatePage.class)
             .openComponents();
 
         softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
