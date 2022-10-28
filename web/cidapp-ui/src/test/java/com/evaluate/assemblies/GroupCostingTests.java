@@ -81,7 +81,8 @@ public class GroupCostingTests extends TestBase {
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .openScenario(assemblyName, scenarioName);
-        componentsTablePage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -97,9 +98,11 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getListOfProcessGroups()).containsOnly(ProcessGroupEnum.ASSEMBLY.getProcessGroup());
 
-        componentsTablePage = evaluatePage.openComponents().multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName,
-            octagon + "," + scenarioName, cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName,
-            cuboid + "," + scenarioName, cylinder + "," + scenarioName, blob + "," + scenarioName);
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView()
+            .multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName,
+                octagon + "," + scenarioName, cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName,
+                cuboid + "," + scenarioName, cylinder + "," + scenarioName, blob + "," + scenarioName);
 
         softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
@@ -149,7 +152,8 @@ public class GroupCostingTests extends TestBase {
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .openScenario(assemblyName, scenarioName);
-        componentsTablePage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -182,7 +186,8 @@ public class GroupCostingTests extends TestBase {
 
         componentsTablePage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
         evaluatePage.refresh();
-        componentsTablePage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView();
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(

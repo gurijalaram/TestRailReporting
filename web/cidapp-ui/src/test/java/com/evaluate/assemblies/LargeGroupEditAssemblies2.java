@@ -66,6 +66,7 @@ public class LargeGroupEditAssemblies2 extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);

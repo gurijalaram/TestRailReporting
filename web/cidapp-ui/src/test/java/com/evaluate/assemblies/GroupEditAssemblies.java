@@ -71,6 +71,7 @@ public class GroupEditAssemblies extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", PIN + "," + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(true);
@@ -122,6 +123,7 @@ public class GroupEditAssemblies extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "")
             .editSubcomponent(EditScenarioStatusPage.class);
 
@@ -171,6 +173,7 @@ public class GroupEditAssemblies extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "")
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)

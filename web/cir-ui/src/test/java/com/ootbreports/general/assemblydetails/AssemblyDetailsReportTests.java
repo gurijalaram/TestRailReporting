@@ -104,9 +104,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
         );
 
         assemblyDetailsReportPage.clickInputControlsButton()
@@ -115,9 +115,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
         );
 
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
@@ -149,9 +149,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
         );
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
@@ -161,9 +161,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
-                assemblyType,
-                "Grand Total",
-                "Capital Investments"
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
         );
 
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.USD.getCurrency())));
@@ -196,19 +196,19 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Piece Part Cost"),
+                assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Fully Burdened Cost"),
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Capital Investments"),
+                assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -223,23 +223,23 @@ public class AssemblyDetailsReportTests extends TestBase {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
 
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .clickOk(true, AssemblyDetailsReportPage.class)
-                .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+            .clickOk(true, AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -248,19 +248,19 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Piece Part Cost"),
+                assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Fully Burdened Cost"),
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Capital Investments"),
+                assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -282,9 +282,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
@@ -300,19 +300,19 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Piece Part Cost"),
+                assemblyType, "Grand Total", "Piece Part Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Fully Burdened Cost"),
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
             assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
         ), is(true));
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(
-                    assemblyType, "Grand Total", "Capital Investments"),
+                assemblyType, "Grand Total", "Capital Investments"),
             assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
         ), is(true));
     }
@@ -335,33 +335,33 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class)
-                .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(true, AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Cycle Time"
+            assemblyType,
+            "Cycle Time"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ppcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Piece Part Cost"
+            assemblyType,
+            "Piece Part Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> fbcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Fully Burdened Cost"
+            assemblyType,
+            "Fully Burdened Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ciValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Capital Investments"
+            assemblyType,
+            "Capital Investments"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
@@ -381,9 +381,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
@@ -393,26 +393,26 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Cycle Time"
+            assemblyType,
+            "Cycle Time"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ppcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Piece Part Cost"
+            assemblyType,
+            "Piece Part Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> fbcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Fully Burdened Cost"
+            assemblyType,
+            "Fully Burdened Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ciValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Capital Investments"
+            assemblyType,
+            "Capital Investments"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
@@ -432,9 +432,9 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
@@ -444,26 +444,26 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Cycle Time"
+            assemblyType,
+            "Cycle Time"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ppcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Piece Part Cost"
+            assemblyType,
+            "Piece Part Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> fbcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Fully Burdened Cost"
+            assemblyType,
+            "Fully Burdened Cost"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
 
         ArrayList<BigDecimal> ciValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
-                assemblyType,
-                "Capital Investments"
+            assemblyType,
+            "Capital Investments"
         );
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
     }
@@ -475,7 +475,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
+            ReportNamesEnum.ASSEMBLY_DETAILS.getReportName()
         );
     }
 
@@ -512,14 +512,15 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         ComponentsTablePage componentsPage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, Constants.PISTON_ASSEMBLY_CID_NAME)
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario()
-                .openComponents();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, Constants.PISTON_ASSEMBLY_CID_NAME)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario()
+            .openComponents()
+            .selectTableView();
         /*.openComponentsTable()
         .openColumnsTable()
         .checkColumnSettings(columnsToAdd)
@@ -626,22 +627,22 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(true, AssemblyDetailsReportPage.class);
 
         String partNumberComponent = assemblyDetailsReportPage.getComponentLinkPartNumber();
         assemblyDetailsReportPage.clickComponentLinkAssemblyDetails();
 
         assertThat(assemblyDetailsReportPage.getReportTitle(),
-                is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
+            is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
         assertThat(assemblyDetailsReportPage.getComponentCostPartNumber(), is(equalTo(partNumberComponent)));
         assemblyDetailsReportPage.closeTab();
 
         String partNumberAssembly = assemblyDetailsReportPage.getAssemblyLinkPartNumber();
         assemblyDetailsReportPage.clickAssemblyLinkAssemblyDetails();
         assertThat(assemblyDetailsReportPage.getReportTitle(),
-                is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
+            is(equalTo(ReportNamesEnum.COMPONENT_COST_INTERNAL_USE.getReportName())));
         assertThat(assemblyDetailsReportPage.getComponentCostPartNumber(), is(equalTo(partNumberAssembly)));
     }
 
@@ -656,7 +657,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.waitForInputControlsLoad()
-                .searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .searchForExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         assertThat(assemblyDetailsReportPage.getExportSetOptionCount(), is(equalTo("2")));
         assertThat(assemblyDetailsReportPage.isExportSetVisible(ExportSetEnum.TOP_LEVEL.getExportSetName()), is(true));
@@ -681,46 +682,46 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
         String lastModifiedByAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
+            ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
         String scenarioNameAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assemblyDetailsReportPage.selectListItem(ListNameEnum.CREATED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.CREATED_BY.getListName(),
-                "Selected: ",
-                "1"
+            ListNameEnum.CREATED_BY.getListName(),
+            "Selected: ",
+            "1"
         );
         assertThat(assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.CREATED_BY.getListName(),
-                "Selected"
+            ListNameEnum.CREATED_BY.getListName(),
+            "Selected"
         ), is(equalTo("1")));
 
         assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
+            ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
 
         String lastModifiedByAvailableCountPostSelection = assemblyDetailsReportPage
-                .getCountOfListAvailableOrSelectedItems(
+            .getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
 
         String scenarioNameAvailableCountPostSelection = assemblyDetailsReportPage
-                .getCountOfListAvailableOrSelectedItems(
+            .getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(lastModifiedByAvailableCountPreSelection,
-                is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
+            is(not(equalTo(lastModifiedByAvailableCountPostSelection))));
         assertThat(scenarioNameAvailableCountPreSelection,
-                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+            is(not(equalTo(scenarioNameAvailableCountPostSelection))));
 
         assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
         assertThat(assemblyDetailsReportPage.getCurrentlySelectedAssembly(),
-                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
+            is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
@@ -754,34 +755,34 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class);
 
         String scenarioNameAvailableCountPreSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assemblyDetailsReportPage.selectListItem(ListNameEnum.LAST_MODIFIED_BY.getListName(), Constants.NAME_TO_SELECT);
 
         assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(),
-                "Selected: ",
-                "1"
+            ListNameEnum.LAST_MODIFIED_BY.getListName(),
+            "Selected: ",
+            "1"
         );
         assertThat(assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(),
-                "Selected"
+            ListNameEnum.LAST_MODIFIED_BY.getListName(),
+            "Selected"
         ), is(equalTo("1")));
 
         String scenarioNameAvailableCountPostSelection = assemblyDetailsReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available");
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available");
 
         assertThat(scenarioNameAvailableCountPreSelection,
-                is(not(equalTo(scenarioNameAvailableCountPostSelection))));
+            is(not(equalTo(scenarioNameAvailableCountPostSelection))));
 
         assemblyDetailsReportPage.waitForCorrectAssemblyInDropdown(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName());
         assertThat(assemblyDetailsReportPage.getCurrentlySelectedAssembly(),
-                is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
+            is(startsWith(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())));
     }
 
     @Test
@@ -834,13 +835,13 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.EQUALS, reportsValues.get("Part Name"))
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, reportsValues.get("Part Name"))
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario();
 
         Map<String, String> cidValues = new HashMap<>();
         cidValues.put("Cycle Time", String.valueOf(evaluatePage.getProcessesResult("Total Cycle Time")));
@@ -860,21 +861,21 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .clickOk(true, AssemblyDetailsReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(true, AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> levelValues =
-                assemblyDetailsReportPage.getLevelValues(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType());
+            assemblyDetailsReportPage.getLevelValues(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType());
 
         assertThat(levelValues.isEmpty(), is(false));
         for (int i = 0; i < 7; i++) {
@@ -906,7 +907,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
         BigDecimal actualPercentageOfTarget = assemblyDetailsReportPage.getComponentCostReportValue("% of Target");
         BigDecimal actualLifetimeProjectedCostDifference =
-                assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Projected Cost");
+            assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Projected Cost");
 
         assertThat(actualVariance.compareTo(new BigDecimal("79.80")), is(equalTo(0)));
         assertThat(actualPercentageOfTarget.compareTo(new BigDecimal("1596.06")), is(equalTo(0)));
@@ -921,36 +922,37 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName(), AssemblyDetailsReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL_MULTI_VPE.getExportSetName(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
-                .clickOk(true, GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
+            .clickOk(true, GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<String> reportsVpeValues = assemblyDetailsReportPage.getAllVpeValuesAssemblyDetailsReport();
 
         assemblyDetailsReportPage.openNewCidTabAndFocus(1);
 
         ComponentsTablePage componentsTablePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.EQUALS,
-                        AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, "Multi VPE")
-                .submit(ExplorePage.class)
-                .openFirstScenario().openComponents();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS,
+                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "Multi VPE")
+            .submit(ExplorePage.class)
+            .openFirstScenario().openComponents()
+            .selectTableView();
 
         /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 

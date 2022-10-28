@@ -76,6 +76,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
+            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
@@ -93,6 +94,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
+            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("0200613, " + scenarioName + "");
 
@@ -107,6 +109,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
+            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
@@ -134,11 +137,12 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
-        componentsTablePage.tableView()
+        componentsTablePage
             .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 

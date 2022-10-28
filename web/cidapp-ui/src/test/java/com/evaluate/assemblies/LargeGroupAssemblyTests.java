@@ -86,6 +86,7 @@ public class LargeGroupAssemblyTests extends TestBase {
         componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(
                 CENTRE_BOLT.getPartName() + ", " + scenarioName + "",
                 CENTRE_WASHER.getPartName() + ", " + scenarioName + "",
