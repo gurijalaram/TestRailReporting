@@ -4,7 +4,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -28,7 +28,7 @@ import java.util.List;
 public class GroupEditAssemblies extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private EditScenarioStatusPage editScenarioStatusPage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -68,22 +68,22 @@ public class GroupEditAssemblies extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", PIN + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(true);
 
-        componentsListPage.editSubcomponent(EditComponentsPage.class)
+        componentsTablePage.editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
             .clickContinue(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + PIN);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -127,12 +127,12 @@ public class GroupEditAssemblies extends TestBase {
 
         softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
 
-        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class)
+        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, BIG_RING);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -168,19 +168,19 @@ public class GroupEditAssemblies extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "")
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, BOLT)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", FLANGE + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
-        softAssertions.assertThat(componentsListPage.getRowDetails(FLANGE, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(NUT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.getRowDetails(FLANGE, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(NUT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }

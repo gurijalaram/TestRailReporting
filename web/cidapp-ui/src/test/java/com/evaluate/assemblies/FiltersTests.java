@@ -1,13 +1,10 @@
 package com.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -21,11 +18,9 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
-import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.File;
@@ -38,7 +33,7 @@ public class FiltersTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
@@ -313,7 +308,7 @@ public class FiltersTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -339,7 +334,7 @@ public class FiltersTests extends TestBase {
             .tableView()
             .selectFilter(filterName);
 
-        soft.assertThat(componentsListPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
     }
 
     @Test
@@ -406,7 +401,7 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -420,9 +415,9 @@ public class FiltersTests extends TestBase {
             .tableView()
             .selectFilter("Uncosted");
 
-        List<String> stateListUncosted = componentsListPage.getAllScenarioState();
+        List<String> stateListUncosted = componentsTablePage.getAllScenarioState();
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
         soft.assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
     }
 
@@ -436,14 +431,14 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
         .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
             .tableView()
             .selectFilter("Assigned To Me");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
+        soft.assertThat(componentsTablePage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
     }
 
     @Test
@@ -456,14 +451,14 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
             .tableView()
             .selectFilter("Missing");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Missing", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
+        soft.assertThat(componentsTablePage.isElementDisplayed("Missing", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
     }
 
     @Test
@@ -476,14 +471,14 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
         loginPage = new CidAppLoginPage(driver);
 
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
             .tableView()
             .selectFilter("All");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+        soft.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getAllScenarioComponentName(3)).hasSize(3);
     }
 
     @Test

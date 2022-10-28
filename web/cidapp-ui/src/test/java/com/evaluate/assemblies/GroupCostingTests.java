@@ -3,7 +3,7 @@ package com.evaluate.assemblies;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -30,7 +30,7 @@ public class GroupCostingTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private ComponentBasicPage componentBasicPage;
     private UserCredentials currentUser;
     private List<File> subComponents = new ArrayList<File>();
@@ -81,31 +81,31 @@ public class GroupCostingTests extends TestBase {
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .openScenario(assemblyName, scenarioName);
-        componentsListPage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        componentsListPage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName, octagon + "," + scenarioName,
+        componentsTablePage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName, octagon + "," + scenarioName,
             cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName, cuboid + "," + scenarioName,
             cylinder + "," + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
-        evaluatePage = componentsListPage.closePanel();
+        evaluatePage = componentsTablePage.closePanel();
 
         softAssertions.assertThat(evaluatePage.getListOfProcessGroups()).containsOnly(ProcessGroupEnum.ASSEMBLY.getProcessGroup());
 
-        componentsListPage = evaluatePage.openComponents().multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName,
+        componentsTablePage = evaluatePage.openComponents().multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName,
             octagon + "," + scenarioName, cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName,
             cuboid + "," + scenarioName, cylinder + "," + scenarioName, blob + "," + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
-        componentsListPage.clickScenarioCheckbox(subComponentNames.get(rand.nextInt(subComponentNames.size())).toUpperCase(), scenarioName);
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
+        componentsTablePage.clickScenarioCheckbox(subComponentNames.get(rand.nextInt(subComponentNames.size())).toUpperCase(), scenarioName);
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
         softAssertions.assertAll();
     }
@@ -149,18 +149,18 @@ public class GroupCostingTests extends TestBase {
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .openScenario(assemblyName, scenarioName);
-        componentsListPage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
-                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("circle-minus");
+                componentsTablePage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("circle-minus");
         });
 
-        subComponentNames.forEach(subComponentName -> componentsListPage.clickScenarioCheckbox(subComponentName.toUpperCase(), scenarioName));
+        subComponentNames.forEach(subComponentName -> componentsTablePage.clickScenarioCheckbox(subComponentName.toUpperCase(), scenarioName));
 
-        componentBasicPage = componentsListPage.setInputs();
+        componentBasicPage = componentsTablePage.setInputs();
 
         softAssertions.assertThat(componentBasicPage.getProcessGroup()).as("Process Group Text").isEqualTo(retainText);
         softAssertions.assertThat(componentBasicPage.getDigitalFactory()).as("Digital Factory Text").isEqualTo(retainText);
@@ -168,27 +168,27 @@ public class GroupCostingTests extends TestBase {
         softAssertions.assertThat(componentBasicPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
         softAssertions.assertThat(componentBasicPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
 
-        componentsListPage = componentBasicPage.selectProcessGroup(prtProcessGroupEnum)
+        componentsTablePage = componentBasicPage.selectProcessGroup(prtProcessGroupEnum)
             .clickApplyAndCost(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class);
+            .close(ComponentsTablePage.class);
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
-                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
-            componentsListPage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
-            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button state").isFalse();
-            componentsListPage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
+                componentsTablePage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
+            componentsTablePage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
+            softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).as("Set Inputs Button state").isFalse();
+            componentsTablePage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
         });
 
-        componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
+        componentsTablePage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
         evaluatePage.refresh();
-        componentsListPage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents();
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
-                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
+                componentsTablePage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
             softAssertions.assertThat(
-                componentsListPage.getScenarioFullyBurdenedCost(subComponentName.toUpperCase(), scenarioName)
+                componentsTablePage.getScenarioFullyBurdenedCost(subComponentName.toUpperCase(), scenarioName)
             ).as("Fully Burdened Cost - " + subComponentName
             ).isCloseTo(fullyBurdenedCosts.get(subComponentName), Percentage.withPercentage(10));
         });
