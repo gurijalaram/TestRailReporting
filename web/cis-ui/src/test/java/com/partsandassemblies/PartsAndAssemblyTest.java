@@ -313,8 +313,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickAddCondition()
                 .hideFilterModal()
                 .checkFilteredComponents()
-                .clickMessages()
-                .clickPartsAndAssemblies();
+                .openSelectedComponent(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 

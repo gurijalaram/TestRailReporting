@@ -163,6 +163,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioCreatedAt']//button//*[local-name()='svg']")
     private WebElement createdAtSortIcon;
 
+    @FindBy(xpath = "//header[@data-testid='app-bar']//button[contains(@class,'MuiButton-text')]")
+    private WebElement linkBackToPartNAssemblyPage;
+
+    @FindBy(xpath = "//div[@data-testid='scenario-discussion-no-data-No comments available']")
+    private WebElement emptyCommentMessage;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -823,6 +829,18 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
             getPageUtils().waitForElementAndClick(checkAllCheckBox);
             getPageUtils().waitForElementToAppear(By.xpath("//input[@aria-label='Unselect row']"));
         }
+        return this;
+    }
+
+    /**
+     * open selected component
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage openSelectedComponent(String componentName) {
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='componentName']//p[text()='" + componentName + "']")));
+        getPageUtils().waitForElementToAppear(emptyCommentMessage);
+        getPageUtils().waitForElementAndClick(linkBackToPartNAssemblyPage);
         return this;
     }
 }
