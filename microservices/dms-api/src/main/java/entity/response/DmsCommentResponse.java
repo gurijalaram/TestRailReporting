@@ -12,21 +12,19 @@ import java.util.ArrayList;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DiscussionResponseSchema.json")
-public class DiscussionResponse {
+@Schema(location = "DmsCommentResponseSchema.json")
+public class DmsCommentResponse {
     private String identity;
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String description;
     private String status;
-    private ArrayList<CommentResponse> comments;
-    private ArrayList<Participant> participants;
+    private String content;
+    private ArrayList<DmsParticipant> mentionedUsers;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime publishedAt;
+    private ArrayList<Object> commentView;
     private String updatedBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime assignedAt;
-    private Assignee assignee;
-    private Attributes attributes;
 }
