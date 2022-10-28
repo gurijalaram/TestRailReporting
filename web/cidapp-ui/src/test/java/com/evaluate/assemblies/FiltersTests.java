@@ -32,7 +32,6 @@ public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
     private ComponentsTablePage componentsTablePage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
@@ -74,6 +73,8 @@ public class FiltersTests extends TestBase {
             .clear();
 
         soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -104,6 +105,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -131,6 +134,8 @@ public class FiltersTests extends TestBase {
             .cancel(ExplorePage.class);
 
         soft.assertThat(explorePage.isFilterTablePresent()).isFalse();
+
+        soft.assertAll();
     }
 
     @Test
@@ -163,6 +168,8 @@ public class FiltersTests extends TestBase {
             .deleteAllCriteria();
 
         soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -193,6 +200,8 @@ public class FiltersTests extends TestBase {
             .cancel(FilterPage.class);
 
         soft.assertThat(filterPage.getAllFilters()).doesNotContain(filterName);
+
+        soft.assertAll();
     }
 
     @Test
@@ -224,6 +233,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.getAllScenarioComponentName()).containsExactly("BIG RING");
+
+        soft.assertAll();
     }
 
     @Test
@@ -256,6 +267,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -295,6 +308,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -335,6 +350,8 @@ public class FiltersTests extends TestBase {
             .selectFilter(filterName);
 
         soft.assertThat(componentsTablePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -389,6 +406,8 @@ public class FiltersTests extends TestBase {
             filterPage.getListOfOperationsForCriteria((PropertyEnum.FINISH_MASS));
         soft.assertThat(Arrays.asList("Equals", "Not Equal", "Greater Than", "Greater Than or Equal To",
             "Less Than", "Less Than or Equal To")).isEqualTo(operations6);
+
+        soft.assertAll();
     }
 
     @Test
@@ -419,6 +438,8 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsTablePage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
         soft.assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
+
+        soft.assertAll();
     }
 
     @Test
@@ -439,6 +460,8 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsTablePage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
         soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
+
+        soft.assertAll();
     }
 
     @Test
@@ -459,6 +482,8 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsTablePage.isElementDisplayed("Missing", "text-overflow")).isTrue();
         soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
+
+        soft.assertAll();
     }
 
     @Test
@@ -479,6 +504,8 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
         soft.assertThat(componentsTablePage.getAllScenarioComponentName(3)).hasSize(3);
+
+        soft.assertAll();
     }
 
     @Test
