@@ -5,6 +5,7 @@ import com.apriori.tests.CasBatchItemTests;
 import com.apriori.tests.CasConfigurationsTests;
 import com.apriori.tests.CasCustomerAssociationTests;
 import com.apriori.tests.CasCustomerBatchTests;
+import com.apriori.tests.CasCustomerUserAccessControlsTests;
 import com.apriori.tests.CasCustomerUserAssociationTests;
 import com.apriori.tests.CasCustomersTests;
 import com.apriori.tests.CasCustomersUsersTests;
@@ -34,7 +35,8 @@ import org.junit.runners.Suite;
     CasCustomerBatchTests.class,
     CasBatchItemTests.class,
     CasCustomerUserAssociationTests.class,
-    CasCustomerAssociationTests.class
+    CasCustomerAssociationTests.class,
+    CasCustomerUserAccessControlsTests.class
 })
 public class CasAPISuite {
 }
