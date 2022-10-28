@@ -12,6 +12,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -46,6 +47,7 @@ public class EditAssembliesTest extends TestBase {
     private UserCredentials currentUser;
     private EditScenarioStatusPage editScenarioStatusPage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private InfoPage infoPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
@@ -1089,9 +1091,10 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
 
-        componentsTablePage.tableView();
+        // TODO: 28/10/2022 cn - uncomment once a common page controller (to avoid code duplication) has been implemented for componentstree and componentstable page
+        /*componentsTreePage = componentsTablePage.selectTreeView();
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);*/
 
         softAssertions.assertAll();
     }
