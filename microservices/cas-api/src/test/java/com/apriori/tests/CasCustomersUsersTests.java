@@ -12,7 +12,6 @@ import com.apriori.entity.response.UpdateUser;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -25,7 +24,7 @@ import org.junit.Test;
 
 public class CasCustomersUsersTests {
     private SoftAssertions soft = new SoftAssertions();
-    private String token;
+    private final CasTestUtil casTestUtil = new CasTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private IdentityHolder userIdentityHolder;
     private IdentityHolder customerIdentityHolder;
@@ -33,7 +32,7 @@ public class CasCustomersUsersTests {
 
     @Before
     public void getToken() {
-        token = new AuthorizationUtil().getTokenAsString();
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @After
@@ -74,9 +73,7 @@ public class CasCustomersUsersTests {
         soft.assertThat(user.getResponseEntity().getUsername())
             .isEqualTo(userName);
 
-        ResponseWrapper<CustomerUsers> customerUsers = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, CustomerUsers.class)
-            .token(token)
-            .inlineVariables(customerIdentity, "users")).get();
+        ResponseWrapper<CustomerUsers> customerUsers = casTestUtil.getCommonRequest(CASAPIEnum.USERS, CustomerUsers.class, customerIdentity);
 
         soft.assertThat(customerUsers.getStatusCode())
             .isEqualTo(HttpStatus.SC_OK);
@@ -89,9 +86,7 @@ public class CasCustomersUsersTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.USER, CustomerUser.class)
-            .token(token)
-            .inlineVariables(customerIdentity, userIdentity)).get();
+        ResponseWrapper<CustomerUser> singleUser = casTestUtil.getCommonRequest(CASAPIEnum.USER, CustomerUser.class, customerIdentity, userIdentity);
 
         soft.assertThat(singleUser.getResponseEntity().getIdentity())
             .isEqualTo(userIdentity);
