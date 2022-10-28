@@ -371,6 +371,21 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@aria-label='Unresolve Comment']//*[local-name()='svg']")
     private WebElement resolveIcon;
 
+    @FindBy(xpath = "//button[contains(@data-testid,'more-options-menu-icon-button')]")
+    private WebElement discussionMenuIcon;
+
+    @FindBy(xpath = "//div[@id='more-options-menu-popper']//p[contains(text(),'Delete Thread')]")
+    private WebElement deleteDiscussionOption;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'modal-delete-thread-modal')]//div[@role='presentation']//div[contains(@data-testid,'modal-paper-comp-delete-thread-modal')]")
+    private WebElement deleteDiscussionConfirmationModal;
+
+    @FindBy(xpath = "//button[contains(@data-testid,'button-primary-delete-thread-modal')]")
+    private WebElement deleteButton;
+
+    @FindBy(xpath = "//button[contains(@data-testid,'undo-icon-button')]")
+    private WebElement undoDeleteButton;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -2065,5 +2080,72 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public String getUnResolveStatus() {
         getPageUtils().waitForElementToAppear(unResolveIcon);
         return getPageUtils().waitForElementToAppear(unResolveIcon).getAttribute("class");
+    }
+
+    /**
+     * clicks on more option
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickMoreOption() {
+        getPageUtils().waitForElementAppear(discussionMenuIcon).click();
+        return this;
+    }
+
+    /**
+     * Checks if delete discussion option displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteDiscussionDisplayed() {
+        return getPageUtils().waitForElementAppear(deleteDiscussionOption).isDisplayed();
+    }
+
+    /**
+     * clicks delete discussion
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickDeleteDiscussion() {
+        getPageUtils().waitForElementAppear(deleteDiscussionOption).click();
+        return this;
+    }
+
+    /**
+     * Checks if delete discussion confirmation modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteDiscussionConfirmationModalDisplayed() {
+        return getPageUtils().waitForElementAppear(deleteDiscussionConfirmationModal).isDisplayed();
+    }
+
+    /**
+     * clicks delete button
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickDeleteDiscussionButton() {
+        getPageUtils().waitForElementAppear(deleteButton).click();
+        return this;
+    }
+
+    /**
+     * Checks if undo delete option displayed
+     *
+     * @return true/false
+     */
+    public boolean isUndoDeleteOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(undoDeleteButton).isDisplayed();
+    }
+
+    /**
+     * clicks undo delete button
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickUndoDeleteDiscussionButton() {
+        getPageUtils().waitForElementAppear(undoDeleteButton).click();
+        return this;
     }
 }

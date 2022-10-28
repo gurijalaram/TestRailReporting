@@ -363,7 +363,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
             .selectAnOption("Process Group");
 
         partsAndAssembliesDetailsPage.clickToOpenDropDown()
-            .selectAnOption("Identity")
+            .selectAnOption("Additional Amortized Investment")
             .clickToOpenDropDown()
             .selectAnOption("Digital Factory");
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedFieldName()).contains("Process Group");
@@ -408,7 +408,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
             .clickToOpenDropDown()
             .selectAnOption("Process Group")
             .clickToOpenDropDown()
-            .selectAnOption("Identity")
+            .selectAnOption("Additional Amortized Investment")
             .clickToOpenDropDown()
             .selectAnOption("Digital Factory")
             .enterCardName(cardName)
@@ -462,7 +462,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
             .clickToOpenDropDown()
             .selectAnOption("Process Group")
             .clickToOpenDropDown()
-            .selectAnOption("Identity")
+            .selectAnOption("Additional Amortized Investment")
             .clickToOpenDropDown()
             .selectAnOption("Digital Factory")
             .enterCardName(cardName)
@@ -668,9 +668,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
 
-        partsAndAssembliesDetailsPage.openAssembly("Pin", scenarioName);
+        partsAndAssembliesDetailsPage.openAssembly("PIN", scenarioName);
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("Pin");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("PIN");
 
         softAssertions.assertAll();
     }
@@ -1148,6 +1148,52 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         partsAndAssembliesDetailsPage.clickOnUnResolveIcon();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getUnResolveStatus()).contains("active");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14195","14196","14201","14202","14730","14732"})
+    @Description("Verify that user can delete and undelete a discussion")
+    public void testDeleteAndUndeleteDiscussion() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMessageIconOnCommentSection()
+                .clickOnAttribute()
+                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+                .addComment("New Comment With Attribute")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .clickMoreOption();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDeleteDiscussionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickDeleteDiscussion();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDeleteDiscussionConfirmationModalDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickDeleteDiscussionButton();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isUndoDeleteOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickUndoDeleteDiscussionButton();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
