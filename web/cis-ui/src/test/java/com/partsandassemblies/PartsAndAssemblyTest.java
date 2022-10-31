@@ -307,17 +307,11 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
-                .clickFilter()
-                .clickAddCondition()
-                .addFilterValue(componentName, scenarioName)
-                .clickAddCondition()
-                .hideFilterModal()
-                .checkFilteredComponents()
-                .openSelectedComponent(componentName);
+                .clickMessages()
+                .clickPartsAndAssemblies();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getDigitalFactorySortingRule()).isEqualTo("sort-up");
@@ -326,11 +320,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
                 .sortUpDigitalFactoryField()
-                .pinToRightProcessGroupColumn()
-                .clickFilter()
-                .clickRemoveCondition()
-                .clickMessages()
-                .clickPartsAndAssemblies();
+                .pinToRightProcessGroupColumn();
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
