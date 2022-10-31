@@ -11,7 +11,6 @@ import com.apriori.entity.response.PostBatch;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -23,15 +22,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CasCustomerBatchTests {
+    private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void getToken() {
-        token = new AuthorizationUtil().getTokenAsString();
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @After
@@ -62,9 +61,9 @@ public class CasCustomerBatchTests {
         soft.assertThat(batch.getResponseEntity().getCustomerIdentity())
             .isEqualTo(customerIdentity);
 
-        ResponseWrapper<CustomerBatches> customerBatches = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCHES, CustomerBatches.class)
-            .token(token)
-            .inlineVariables(customerIdentity)).get();
+        ResponseWrapper<CustomerBatches> customerBatches = casTestUtil.getCommonRequest(CASAPIEnum.BATCHES,
+            CustomerBatches.class,
+            customerIdentity);
 
         soft.assertThat(customerBatches.getStatusCode())
             .isEqualTo(HttpStatus.SC_OK);
@@ -95,9 +94,10 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerBatch> customerBatch = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH, CustomerBatch.class)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity)).get();
+        ResponseWrapper<CustomerBatch> customerBatch = casTestUtil.getCommonRequest(CASAPIEnum.BATCH,
+            CustomerBatch.class,
+            customerIdentity,
+            batchIdentity);
 
         soft.assertThat(customerBatch.getStatusCode())
             .isEqualTo(HttpStatus.SC_OK);
