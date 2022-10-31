@@ -377,7 +377,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Issues({@Issue("BA-2651"), @Issue("BA-2659")})
+    @Issues(@Issue("BA-2651"))
     @TestRail(testCaseId = {"5141", "5142", "5143"})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
