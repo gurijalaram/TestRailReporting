@@ -1138,7 +1138,11 @@
                         "customerIdentity",
                         "applications",
                         "region"
-                      ]
+                      ],
+                      "optional": [
+                        "cidApiId",
+                        "cidApiSecret"
+                        ]
                     },
                     {
                       "type": "object",
@@ -2605,11 +2609,13 @@
                         "clientId",
                         "clientSecret",
                         "cidGlobalKey",
-                        "cidApiId",
-                        "cidApiSecret",
                         "customerIdentity",
                         "applications",
                         "region"
+                      ],
+                      "optional": [
+                        "cidApiId",
+                        "cidApiSecret"
                       ]
                     },
                     {

@@ -11,7 +11,8 @@ import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -45,7 +46,8 @@ public class EditAssembliesTest extends TestBase {
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private EditScenarioStatusPage editScenarioStatusPage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private InfoPage infoPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
@@ -90,11 +92,12 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(big_ring + "," + scenarioName, pin + "," + scenarioName, small_ring + "," + scenarioName)
             .publishSubcomponent()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
             .publishScenario(PublishPage.class)
@@ -249,10 +252,11 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
 
-        componentsListPage = infoPage.cancel(EvaluatePage.class)
-            .openComponents();
+        componentsTablePage = infoPage.cancel(EvaluatePage.class)
+            .openComponents()
+            .selectTableView();
 
-        subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+        subComponentNames.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
     @Test
@@ -400,13 +404,14 @@ public class EditAssembliesTest extends TestBase {
             .publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
-        allSubComponents.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+        allSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
     @Test
@@ -444,11 +449,12 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        componentsListPage = evaluatePage.openComponents();
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView();
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(pin, scenarioName)).contains("circle-minus");
-        softAssertions.assertThat(componentsListPage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
-        softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(componentsTablePage.getRowDetails(pin, scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(componentsTablePage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
 
         softAssertions.assertAll();
     }
@@ -593,6 +599,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -600,14 +607,14 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
 
         subComponentNames.forEach(subcomponentName ->
-            assertThat(componentsListPage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTablePage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -649,6 +656,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -657,10 +665,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -701,9 +709,10 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -711,14 +720,14 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
 
         subComponentNames.forEach(componentName ->
-            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTablePage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -760,9 +769,10 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -771,10 +781,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTablePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -830,6 +840,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -881,14 +892,15 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
 
-        componentsListPage = evaluatePage.openComponents()
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView()
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + SMALL_RING + "," + PIN);
 
         subComponentNames.forEach(subcomponent ->
-            assertThat(componentsListPage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
+            assertThat(componentsTablePage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
 
         subComponentNames.forEach(subcomponent ->
-            softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
+            softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
 
         softAssertions.assertAll();
     }
@@ -926,18 +938,19 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BOLT + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkManifestComplete(componentAssembly, BOLT)
             .multiSelectSubcomponents(BOLT + "," + scenarioName)
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .closePanel()
             .clickExplore()
             .getCssComponents(currentUser, "componentName[EQ], " + BOLT, "scenarioName[EQ], " + scenarioName, "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE,
@@ -950,9 +963,10 @@ public class EditAssembliesTest extends TestBase {
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
-            .openComponents();
+            .openComponents()
+            .selectTableView();
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -997,27 +1011,28 @@ public class EditAssembliesTest extends TestBase {
         double initialTotalCost = evaluatePage.getCostResults("Total Cost");
         double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        componentsListPage = evaluatePage.openComponents()
+        componentsTablePage = evaluatePage.openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkManifestComplete(componentAssembly, PIN)
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkManifestComplete(componentAssembly, PIN)
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .publishSubcomponent()
             .changeName(editedComponentScenarioName)
             .clickContinue(PublishPage.class)
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .checkManifestComplete(componentAssembly, PIN);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        evaluatePage = componentsListPage.closePanel()
+        evaluatePage = componentsTablePage.closePanel()
             .clickCostButton()
             .confirmCost("Yes")
             .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2);
@@ -1063,21 +1078,23 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly2).publishAssembly(componentAssembly2);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly2)
             .openComponents()
+            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("assy03A" + "," + scenarioName + "", "Part0005a" + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
-        componentsListPage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
+        componentsTablePage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
 
-        componentsListPage.tableView();
+        // TODO: 28/10/2022 cn - uncomment once a common page controller (to avoid code duplication) has been implemented for componentstree and componentstable page
+        /*componentsTreePage = componentsTablePage.selectTreeView();
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);*/
 
         softAssertions.assertAll();
     }
