@@ -147,11 +147,45 @@ public class UploadTests extends TestBase {
         String fileError;
 
         loginPage = new CidAppLoginPage(driver);
-        fileError = loginPage.login(UserUtil.getUser())
+        fileError = loginPage.login(currentUser)
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile)
             .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5448")
+    @Description("User can upload a file, after a failed file upload")
+    public void uploadAfterFailedUpload() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName2 = "2062987";
+        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".prt");
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        String componentName = "ANKARA_SEHPA_SKETCHUP";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".skp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String fileError;
+
+        loginPage = new CidAppLoginPage(driver);
+        fileError = loginPage.login(currentUser)
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .getAlertWarning();
+
+        softAssertions.assertThat(fileError).contains("The file type of the selected file is not supported");
+
+        evaluatePage = new ExplorePage(driver)
+            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(scenarioName2);
+
+        softAssertions.assertAll();
     }
 }
