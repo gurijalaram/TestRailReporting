@@ -581,7 +581,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      *
      * @param componentName   - the component name
      * @param scenarioName    - the scenario name
-     * @param column          - the column
+     * @param column          - the column to query
      * @param userCredentials - the user credentials
      * @return string
      */
@@ -592,7 +592,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             .get(0)
             .getScenarioIdentity();
 
-        int columnPosition = IntStream.range(0, pageUtils.waitForElementsToAppear(columnHeader).size())
+        int columnPosition = IntStream.range(0, columnHeader.size())
             .filter(o -> columnHeader.get(o).getAttribute("textContent").equals(column.getColumns()))
             .findFirst()
             .getAsInt();
