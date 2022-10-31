@@ -4,7 +4,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -26,7 +26,7 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     private static String scenarioName;
     private static String scenarioName2;
     private CidAppLoginPage loginPage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
@@ -63,18 +63,19 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
 
-        componentsListPage.multiSelectSubcomponents("centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "");
-        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+        componentsTablePage.multiSelectSubcomponents("centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "");
+        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
 
-        componentsListPage.multiSelectSubcomponents("left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "steer wheel support, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "");
-        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+        componentsTablePage.multiSelectSubcomponents("left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "steer wheel support, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "");
+        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
 
         softAssertions.assertAll();
     }

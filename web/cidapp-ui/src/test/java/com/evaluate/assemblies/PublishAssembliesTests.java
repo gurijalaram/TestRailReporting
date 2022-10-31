@@ -9,7 +9,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -50,7 +50,7 @@ public class PublishAssembliesTests extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private PublishPage publishPage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
     private InfoPage infoPage;
@@ -139,9 +139,10 @@ public class PublishAssembliesTests extends TestBase {
         publishPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
             .publishSubcomponent()
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, FLANGE)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .publishSubcomponent();
@@ -179,20 +180,21 @@ public class PublishAssembliesTests extends TestBase {
             .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
             .publishSubcomponent()
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, FLANGE)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
-        componentsListPage = componentsListPage.multiSelectSubcomponents(FLANGE + ", " + scenarioName);
+        componentsTablePage = componentsTablePage.multiSelectSubcomponents(FLANGE + ", " + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
@@ -244,18 +246,19 @@ public class PublishAssembliesTests extends TestBase {
             .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", SMALL_RING + "," + scenarioName + "")
             .publishSubcomponent()
             .changeName(preExistingScenarioName)
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsListPage.class);
+            .close(ComponentsTablePage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -295,9 +298,10 @@ public class PublishAssembliesTests extends TestBase {
         publishPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
             .publishSubcomponent()
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, FLANGE)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .publishSubcomponent()
@@ -340,28 +344,29 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(PIN + "," + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
-        componentsListPage = componentsListPage.publishSubcomponent()
-            .publish(ComponentsListPage.class)
+        componentsTablePage = componentsTablePage.publishSubcomponent()
+            .publish(ComponentsTablePage.class)
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", SMALL_RING + "," + scenarioName + "")
             .publishSubcomponent()
             .override()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsListPage.class);
+            .close(ComponentsTablePage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
-        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        explorePage = componentsListPage.closePanel()
+        explorePage = componentsTablePage.closePanel()
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(assemblyName);
@@ -759,12 +764,13 @@ public class PublishAssembliesTests extends TestBase {
             .clickExplore()
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName, NUT + "," + scenarioName)
             .publishSubcomponent()
             .override()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsListPage.class)
+            .close(ComponentsTablePage.class)
             .checkManifestComplete(componentAssembly, FLANGE)
             .closePanel()
             .publishScenario(PublishPage.class)
@@ -805,22 +811,23 @@ public class PublishAssembliesTests extends TestBase {
             .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(STAND + ", " + scenarioName)
             .publishSubcomponent()
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .multiSelectSubcomponents(STAND + "," + scenarioName + "", DRIVE + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(STAND, scenarioName)).contains("gear");
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isFalse();
+        softAssertions.assertThat(componentsTablePage.getRowDetails(STAND, scenarioName)).contains("gear");
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).isFalse();
 
-        componentsListPage.checkSubcomponentState(componentAssembly, STAND)
+        componentsTablePage.checkSubcomponentState(componentAssembly, STAND)
             .multiSelectSubcomponents(STAND + "," + scenarioName + "", DRIVE + "," + scenarioName + "")
             .multiSelectSubcomponents(JOINT + "," + scenarioName + "", DRIVE + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isTrue();
+        softAssertions.assertThat(componentsTablePage.isSetInputsEnabled()).isTrue();
 
         softAssertions.assertAll();
     }
@@ -852,20 +859,21 @@ public class PublishAssembliesTests extends TestBase {
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
+            .selectTableView()
             .multiSelectSubcomponents("titan charger base" + "," + scenarioName)
             .publishSubcomponent()
-            .publish(ComponentsListPage.class)
+            .publish(ComponentsTablePage.class)
             .multiSelectSubcomponents("titan charger base" + "," + scenarioName + "", "titan charger lead" + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("gear");
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.getRowDetails("titan charger base", scenarioName)).contains("gear");
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
 
-        componentsListPage.multiSelectSubcomponents("titan charger base" + "," + scenarioName);
+        componentsTablePage.multiSelectSubcomponents("titan charger base" + "," + scenarioName);
 
-        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
