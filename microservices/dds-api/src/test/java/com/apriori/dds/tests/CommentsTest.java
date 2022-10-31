@@ -1,6 +1,7 @@
 package com.apriori.dds.tests;
 
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -30,7 +31,7 @@ import utils.DdsApiTestUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentsTest {
+public class CommentsTest extends TestUtil {
 
     private static String userContext;
     private static SoftAssertions softAssertions;
