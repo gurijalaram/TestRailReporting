@@ -2,6 +2,7 @@ package com.evaluate.assemblies;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -80,7 +81,7 @@ public class ColumnDataTests extends TestBase {
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.DIGITAL_FACTORY, bigRingIdentity, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.LAST_UPDATED_BY, pinIdentity, currentUser))
-            .isEqualTo("Ciene Frith");
+            .isEqualTo(new PeopleUtil().getCurrentPerson(currentUser).getGivenName());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, smallRingIdentity, currentUser)).isNotEqualTo("21700.29");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.FINISH_MASS, smallRingIdentity, currentUser)).isNotEqualTo("0.03kg");
 
