@@ -1,6 +1,7 @@
 package com.apriori.dds.tests;
 
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -26,7 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.DdsApiTestUtils;
 
-public class DiscussionTest {
+public class DiscussionTest extends TestUtil {
 
     private static String userContext;
     private static SoftAssertions softAssertions;
