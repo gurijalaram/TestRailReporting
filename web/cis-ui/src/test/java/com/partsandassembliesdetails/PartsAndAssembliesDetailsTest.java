@@ -169,7 +169,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingMenuIconDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockMenuIconDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesMenuIconDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDfmRiskMenuIconDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
