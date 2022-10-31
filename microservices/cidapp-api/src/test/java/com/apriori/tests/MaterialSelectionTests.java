@@ -70,7 +70,7 @@ public class MaterialSelectionTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
