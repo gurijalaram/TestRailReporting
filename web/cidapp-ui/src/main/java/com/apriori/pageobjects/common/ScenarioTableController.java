@@ -586,7 +586,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return string
      */
     public String getColumnData(String componentName, String scenarioName, ColumnsEnum column, UserCredentials userCredentials) {
-        String scenarioIdentity = new CssComponent().getWaitBaseCssComponents(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
+        String scenarioIdentity = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
             .getResponseEntity()
             .getItems()
             .get(0)
