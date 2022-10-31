@@ -1,13 +1,10 @@
 package com.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -21,11 +18,9 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
-import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.File;
@@ -37,8 +32,7 @@ public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTablePage componentsTablePage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
@@ -71,7 +65,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -79,6 +73,8 @@ public class FiltersTests extends TestBase {
             .clear();
 
         soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -101,7 +97,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName2)
@@ -109,6 +105,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -131,11 +129,13 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .cancel(ExplorePage.class);
 
         soft.assertThat(explorePage.isFilterTablePresent()).isFalse();
+
+        soft.assertAll();
     }
 
     @Test
@@ -159,7 +159,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -168,6 +168,8 @@ public class FiltersTests extends TestBase {
             .deleteAllCriteria();
 
         soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -191,13 +193,15 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
             .cancel(FilterPage.class);
 
         soft.assertThat(filterPage.getAllFilters()).doesNotContain(filterName);
+
+        soft.assertAll();
     }
 
     @Test
@@ -221,7 +225,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -229,6 +233,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.getAllScenarioComponentName()).containsExactly("BIG RING");
+
+        soft.assertAll();
     }
 
     @Test
@@ -253,7 +259,7 @@ public class FiltersTests extends TestBase {
                 currentUser)
 
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .selectFilter("Missing")
             .saveAs()
@@ -261,6 +267,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -285,7 +293,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -300,6 +308,8 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -313,7 +323,7 @@ public class FiltersTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -324,7 +334,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -336,10 +346,12 @@ public class FiltersTests extends TestBase {
             .submit(EvaluatePage.class)
             .treeView()
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter(filterName);
 
-        soft.assertThat(componentsListPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
+
+        soft.assertAll();
     }
 
     @Test
@@ -362,7 +374,7 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -394,6 +406,8 @@ public class FiltersTests extends TestBase {
             filterPage.getListOfOperationsForCriteria((PropertyEnum.FINISH_MASS));
         soft.assertThat(Arrays.asList("Equals", "Not Equal", "Greater Than", "Greater Than or Equal To",
             "Less Than", "Less Than or Equal To")).isEqualTo(operations6);
+
+        soft.assertAll();
     }
 
     @Test
@@ -406,7 +420,7 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -417,13 +431,15 @@ public class FiltersTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Uncosted");
 
-        List<String> stateListUncosted = componentsListPage.getAllScenarioState();
+        List<String> stateListUncosted = componentsTablePage.getAllScenarioState();
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
         soft.assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
+
+        soft.assertAll();
     }
 
     @Test
@@ -436,14 +452,16 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
         .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Assigned To Me");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
+        soft.assertThat(componentsTablePage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
+
+        soft.assertAll();
     }
 
     @Test
@@ -456,14 +474,16 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("Missing");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("Missing", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
+        soft.assertThat(componentsTablePage.isElementDisplayed("Missing", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getScenarioMessage()).contains("No scenarios found");
+
+        soft.assertAll();
     }
 
     @Test
@@ -476,14 +496,16 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
         loginPage = new CidAppLoginPage(driver);
 
-        componentsListPage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
-            .tableView()
+            .selectTableView()
             .selectFilter("All");
 
-        soft.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isTrue();
-        soft.assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+        soft.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
+        soft.assertThat(componentsTablePage.getAllScenarioComponentName(3)).hasSize(3);
+
+        soft.assertAll();
     }
 
     @Test

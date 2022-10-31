@@ -8,7 +8,6 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     //CUSTOMERS
     CUSTOMERS("customers"),
     CUSTOMER(CUSTOMERS.getEndpointString().concat("/%s")),
-    GET_CUSTOMERS(CUSTOMERS.getEndpointString().concat("/%s/%s")),
 
     //CUSTOMER ASSOCIATIONS
     CUSTOMER_ASSOCIATIONS(CUSTOMER.getEndpointString().concat("/customer-associations")),

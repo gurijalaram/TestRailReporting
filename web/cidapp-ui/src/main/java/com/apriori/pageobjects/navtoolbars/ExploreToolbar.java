@@ -8,7 +8,7 @@ import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
@@ -477,7 +477,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser     - current user
      * @return - new page object
      */
-    public ComponentsListPage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
+    public ComponentsTablePage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
         importCadFile()
             .inputMultiComponents(multiComponents)
             .inputScenarioName(scenarioName)
@@ -485,7 +485,7 @@ public class ExploreToolbar extends MainNavBar {
             .clickClose()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents();
-        return new ComponentsListPage(driver);
+        return new ComponentsTablePage(driver);
     }
 
     /**
