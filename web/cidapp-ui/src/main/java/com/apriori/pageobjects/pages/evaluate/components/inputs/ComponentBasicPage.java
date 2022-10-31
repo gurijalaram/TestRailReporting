@@ -63,6 +63,11 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
     @FindBy(css = "div[data-testid='loader']")
     private WebElement loadingSpinner;
+    @FindBy(css = ".MuiFormGroup-root .MuiButtonBase-root")
+    private WebElement machiningStrategyCheckbox;
+
+    @FindBy(css = ".MuiFormGroup-root .PrivateSwitchBase-input")
+    private WebElement machiningStrategyCheckboxInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -268,5 +273,33 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      */
     public <T> T close(Class<T> klass) {
         return modalDialogController.close(klass);
+    }
+
+    /**
+     * Selects the Do not machine this part checkbox
+     *
+     * @return current page object
+     */
+    public ComponentBasicPage selectMachineOptionCheckBox() {
+        inputsController.selectMachineOptionsCheckbox(machiningStrategyCheckbox);
+        return this;
+    }
+
+    /**
+     * Checks if the machine part checkbox is displayed
+     *
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckBoxDisplayed() {
+        return inputsController.isMachineOptionsCheckboxDisplayed(machiningStrategyCheckbox);
+    }
+
+    /**
+     * Checks if the machine part checkbox is selected
+     *
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckBoxSelected() {
+        return inputsController.isMachineOptionsCheckboxSelected(machiningStrategyCheckboxInput);
     }
 }
