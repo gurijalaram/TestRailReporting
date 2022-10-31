@@ -34,7 +34,7 @@ public class ColumnDataTests extends TestBase {
     }
 
     @Test
-    public void columDataTests() {
+    public void columnDataTests() {
         final String hinge_assembly = "Hinge assembly";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
