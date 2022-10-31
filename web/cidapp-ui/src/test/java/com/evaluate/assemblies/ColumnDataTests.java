@@ -73,12 +73,12 @@ public class ColumnDataTests extends TestBase {
             .openComponents()
             .selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getColumnData("big ring", scenarioName, ColumnsEnum.PROCESS_GROUP, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
-        softAssertions.assertThat(componentsTablePage.getColumnData("big ring", scenarioName, ColumnsEnum.DIGITAL_FACTORY, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
-        softAssertions.assertThat(componentsTablePage.getColumnData("pin", scenarioName, ColumnsEnum.LAST_UPDATED_BY, currentUser))
+        softAssertions.assertThat(componentsTablePage.getColumnData(big_ring, scenarioName, ColumnsEnum.PROCESS_GROUP, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
+        softAssertions.assertThat(componentsTablePage.getColumnData(big_ring, scenarioName, ColumnsEnum.DIGITAL_FACTORY, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(componentsTablePage.getColumnData(pin, scenarioName, ColumnsEnum.LAST_UPDATED_BY, currentUser))
                  .isEqualTo(new PeopleUtil().getCurrentPerson(currentUser).getGivenName());
-        softAssertions.assertThat(componentsTablePage.getColumnData("small ring", scenarioName, ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, currentUser)).isNotEqualTo("21700.29");
-        softAssertions.assertThat(componentsTablePage.getColumnData("small ring", scenarioName, ColumnsEnum.FINISH_MASS, currentUser)).isNotEqualTo("0.03kg");
+        softAssertions.assertThat(componentsTablePage.getColumnData(small_ring, scenarioName, ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, currentUser)).isNotEqualTo("21700.29");
+        softAssertions.assertThat(componentsTablePage.getColumnData(small_ring, scenarioName, ColumnsEnum.FINISH_MASS, currentUser)).isNotEqualTo("0.03kg");
 
         softAssertions.assertAll();
     }
