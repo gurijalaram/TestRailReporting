@@ -1,7 +1,5 @@
 package com.apriori.pageobjects.common;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -579,25 +577,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Gets the column data from a table
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
      * @param column          - the column to query
+     * @param scenarioId      - the scenario identity
      * @param userCredentials - the user credentials
      * @return string
      */
-    public String getColumnData(String componentName, String scenarioName, ColumnsEnum column, UserCredentials userCredentials) {
-        String scenarioIdentity = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .getResponseEntity()
-            .getItems()
-            .get(0)
-            .getScenarioIdentity();
-
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
         int columnPosition = IntStream.range(0, columnHeader.size())
             .filter(o -> columnHeader.get(o).getAttribute("textContent").equals(column.getColumns()))
             .findFirst()
             .getAsInt();
 
-        return pageUtils.waitForElementsToAppear(By.cssSelector(String.format("[role='row'] [data-row-id='%s']", scenarioIdentity)))
+        return pageUtils.waitForElementsToAppear(By.cssSelector(String.format("[role='row'] [data-row-id='%s']", scenarioId)))
             .stream()
             .map(o -> o.getAttribute("textContent"))
             .collect(Collectors.toList())

@@ -778,13 +778,12 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     /**
      * Gets the column data from a table
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
      * @param column          - the column
+     * @param scenarioId      - the scenario identity
      * @param userCredentials - the user credentials
      * @return string
      */
-    public String getColumnData(String componentName, String scenarioName, ColumnsEnum column, UserCredentials userCredentials) {
-        return scenarioTableController.getColumnData(componentName, scenarioName, column, userCredentials);
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
 }

@@ -2,11 +2,10 @@ package com.evaluate.assemblies;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.cidappapi.utils.PeopleUtil;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -24,10 +23,10 @@ import java.util.List;
 public class ColumnDataTests extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private EvaluatePage evaluatePage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
+    private CssComponent cssComponent = new CssComponent();
 
     public ColumnDataTests() {
         super();
@@ -67,18 +66,23 @@ public class ColumnDataTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .selectFilter("Recent");
 
-        softAssertions.assertThat(explorePage.getColumnData("hinge assembly", scenarioName, ColumnsEnum.ANNUAL_VOLUME, currentUser)).isEqualTo("5,500");
+        String hingeIdentity = cssComponent.getComponentItem(hinge_assembly, scenarioName, currentUser).getScenarioIdentity();
+        String bigRingIdentity = cssComponent.getComponentItem(big_ring, scenarioName, currentUser).getScenarioIdentity();
+        String pinIdentity = cssComponent.getComponentItem(pin, scenarioName, currentUser).getScenarioIdentity();
+        String smallRingIdentity = cssComponent.getComponentItem(small_ring, scenarioName, currentUser).getScenarioIdentity();
+
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("5,500");
 
         componentsTablePage = explorePage.navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getColumnData(big_ring, scenarioName, ColumnsEnum.PROCESS_GROUP, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
-        softAssertions.assertThat(componentsTablePage.getColumnData(big_ring, scenarioName, ColumnsEnum.DIGITAL_FACTORY, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
-        softAssertions.assertThat(componentsTablePage.getColumnData(pin, scenarioName, ColumnsEnum.LAST_UPDATED_BY, currentUser))
-                 .isEqualTo(new PeopleUtil().getCurrentPerson(currentUser).getGivenName());
-        softAssertions.assertThat(componentsTablePage.getColumnData(small_ring, scenarioName, ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, currentUser)).isNotEqualTo("21700.29");
-        softAssertions.assertThat(componentsTablePage.getColumnData(small_ring, scenarioName, ColumnsEnum.FINISH_MASS, currentUser)).isNotEqualTo("0.03kg");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.DIGITAL_FACTORY, bigRingIdentity, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.LAST_UPDATED_BY, pinIdentity, currentUser))
+            .isEqualTo("Ciene Frith");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, smallRingIdentity, currentUser)).isNotEqualTo("21700.29");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.FINISH_MASS, smallRingIdentity, currentUser)).isNotEqualTo("0.03kg");
 
         softAssertions.assertAll();
     }
