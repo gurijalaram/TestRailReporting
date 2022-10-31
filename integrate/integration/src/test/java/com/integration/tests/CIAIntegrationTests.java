@@ -22,6 +22,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -100,8 +101,9 @@ public class CIAIntegrationTests extends TestBase {
     }
 
     @Test
+    @Issue("DEVTOOLS-145")
     @TestRail(testCaseId = {"12046"})
-    @Description("Create and verify component cost OOTB report")
+    @Description("Create and verify component cost OOTB report ")
     public void testCreateComponentCostOOTBReport() {
         componentCostReportPage = new ReportsLoginPage(driver)
             .login()
