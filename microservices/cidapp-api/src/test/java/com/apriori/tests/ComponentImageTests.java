@@ -43,7 +43,7 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -78,7 +78,7 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .user(currentUser)
@@ -110,7 +110,7 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .user(currentUser)
