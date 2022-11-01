@@ -400,7 +400,7 @@ public class SecondaryProcessTests extends TestBase {
                 .goToSurfaceTreatmentTab()
                 .expandSecondaryProcessTree("Paint")
                 .selectSecondaryProcess("Powder Coat Cart")
-                .inputFractionOverride("0.30")
+                .inputFractionPartArea("0.30")
                 .submit(EvaluatePage.class)
                 .costScenario()
                 .openMaterialProcess()
