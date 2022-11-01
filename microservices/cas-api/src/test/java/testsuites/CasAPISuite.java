@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.tests.ApplicationsTests;
 import com.apriori.tests.CasBatchItemTests;
+import com.apriori.tests.CasBulkGrantDenyAccessTests;
 import com.apriori.tests.CasConfigurationsTests;
 import com.apriori.tests.CasCustomerAssociationTests;
 import com.apriori.tests.CasCustomerBatchTests;
@@ -36,7 +37,8 @@ import org.junit.runners.Suite;
     CasBatchItemTests.class,
     CasCustomerUserAssociationTests.class,
     CasCustomerAssociationTests.class,
-    CasCustomerUserAccessControlsTests.class
+    CasCustomerUserAccessControlsTests.class,
+    CasBulkGrantDenyAccessTests.class
 })
 public class CasAPISuite {
 }
