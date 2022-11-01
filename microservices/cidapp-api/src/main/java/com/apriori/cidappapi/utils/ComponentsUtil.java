@@ -2,6 +2,7 @@ package com.apriori.cidappapi.utils;
 
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -78,63 +79,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * Gets the uncosted component from CSS
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - user to upload the part
-     * @return response object
-     */
-    public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .getResponseEntity().getItems();
-
-        scenarioItem.stream()
-            .filter(o -> o.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.NOT_COSTED.getState()))
-            .findFirst()
-            .orElseThrow(
-                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
-                    scenarioItem.stream().findFirst().get().getScenarioState())));
-
-        return scenarioItem;
-    }
-
-    /**
-     * POST new component and query CSS
-     *
-     * @param componentBuilder - the component object
-     * @return response object
-     */
-    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
-
-        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
-
-        componentSuccesses.forEach(componentSuccess -> {
-            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
-                componentBuilder.getUser());
-            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
-        });
-
-        return componentBuilder;
-    }
-
-    /**
-     * Upload a component
-     *
-     * @param componentBuilder - the component
-     * @return response object
-     */
-    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
-
-        componentBuilder.setResourceFile(resourceFile);
-
-        return postComponentQueryCSS(componentBuilder);
-    }
-
-    /**
      * POST new component
      *
      * @param componentBuilder - the component object
@@ -156,6 +100,49 @@ public class ComponentsUtil {
                 .token(componentBuilder.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST new component and query CSS
+     *
+     * @param componentBuilder - the component object
+     * @return response object
+     */
+    public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentBuilder) {
+
+        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
+
+        componentSuccesses.forEach(componentSuccess -> {
+            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
+                componentBuilder.getUser());
+            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+            // TODO: 26/10/2022 see where needed and remove/fix up if necessary
+            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+        });
+
+        return componentBuilder;
+    }
+
+    /**
+     * Gets the uncosted component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
+
+        scenarioItem.stream()
+            .findFirst()
+            .orElseThrow(
+                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                    scenarioItem.stream().findFirst().get().getScenarioState())));
+
+        return scenarioItem;
     }
 
     /**
@@ -206,6 +193,20 @@ public class ComponentsUtil {
     }
 
     /**
+     * Upload a component
+     *
+     * @param componentBuilder - the component
+     * @return response object
+     */
+    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
+
+        componentBuilder.setResourceFile(resourceFile);
+
+        return postComponentQueryCSSUncosted(componentBuilder);
+    }
+
+    /**
      * GET components for the current user matching a specified query.
      *
      * @return response object
@@ -245,12 +246,11 @@ public class ComponentsUtil {
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
         ResponseWrapper<Object> response;
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
-                .inlineVariables(componentId)
-                .token(componentInfo.getUser().getToken())
-                .followRedirection(false)
-                .socketTimeout(SOCKET_TIMEOUT);
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+            .inlineVariables(componentId)
+            .token(componentInfo.getUser().getToken())
+            .followRedirection(false)
+            .socketTimeout(SOCKET_TIMEOUT);
         do {
             response = HTTPRequest.build(requestEntity).get();
         } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);

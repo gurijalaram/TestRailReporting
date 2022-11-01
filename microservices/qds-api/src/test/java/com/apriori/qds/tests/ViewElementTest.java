@@ -1,5 +1,6 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.request.layout.ViewElementRequest;
 import com.apriori.qds.entity.request.layout.ViewElementRequestConfig;
@@ -23,7 +24,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ViewElementTest {
+public class ViewElementTest extends TestUtil {
 
     private static String viewElementName;
     private static String layoutIdentity;

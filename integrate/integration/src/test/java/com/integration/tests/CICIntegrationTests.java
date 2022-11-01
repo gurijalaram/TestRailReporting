@@ -29,6 +29,7 @@ import entity.request.workflow.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobRun;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
@@ -141,6 +142,7 @@ public class CICIntegrationTests extends TestBase {
     }
 
     @Test
+    @Issue("DEVOPS-2552")
     @TestRail(testCaseId = {"12046"})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
