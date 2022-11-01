@@ -6,6 +6,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.entity.requests.BulkAccessControlRequest;
 import com.apriori.entity.response.AccessControl;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
@@ -26,7 +27,6 @@ import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -530,6 +530,27 @@ public class CasTestUtil extends TestUtil {
                     .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
                     .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Grants bulk access to customer application
+     *
+     * @param aPInternalIdentity - identity of aP Internal customer
+     * @param siteIdentity - site identity
+     * @param deploymentIdentity - deployment identity
+     * @param installationIdentity - installation identity
+     * @param appIdentity - application identity
+     * @param sourceCustomerId - source customer identity
+     * @return ResponseWrapper <String>
+     */
+    public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GRANT_DENY_ALL, null)
+            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
+            .body(BulkAccessControlRequest.builder()
+                .sourceCustomerIdentity(sourceCustomerId)
+                .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
