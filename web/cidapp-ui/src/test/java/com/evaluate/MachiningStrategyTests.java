@@ -38,7 +38,8 @@ public class MachiningStrategyTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB);
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(false);
         evaluatePage.selectProcessGroup(processGroupEnum);
@@ -102,43 +103,45 @@ public class MachiningStrategyTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.FORGING)
             .costScenario();
 
+        softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
                 .costScenario();
 
+        softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(false);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         softAssertions.assertAll();
-
     }
 
     @Test
     @TestRail(testCaseId = {"15421"})
-    @Description("Evaluate page - Machinable PG can be selected and part can be costed with \"Do not machine this part\" checked")
+    @Description("Evaluate page - Machinable PG can be selected and part can be costed with Do not machine this part checked")
     public void testCostWithMachiningOptionSelected() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        String componentName = "Part0004";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .selectMachineOptionsCheckbox()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).doesNotContain("5 Axis Mill");
 
         evaluatePage.selectMachineOptionsCheckbox()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("5 Axis Mill");
 
         softAssertions.assertAll();
     }
-
 }
