@@ -545,30 +545,9 @@ public class CasTestUtil extends TestUtil {
      * @param sourceCustomerId - source customer identity
      * @return ResponseWrapper <String>
      */
-    public ResponseWrapper<String> grantAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String sourceCustomerId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GRANT_ALL, null)
-            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity)
-            .body(BulkAccessControlRequest.builder()
-                .sourceCustomerIdentity(sourceCustomerId)
-                .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Denu bulk access to customer application
-     *
-     * @param aPInternalIdentity - identity of aP Internal customer
-     * @param siteIdentity - site identity
-     * @param deploymentIdentity - deployment identity
-     * @param installationIdentity - installation identity
-     * @param appIdentity - application identity
-     * @param sourceCustomerId - source customer identity
-     * @return ResponseWrapper <String>
-     */
-    public ResponseWrapper<String> denyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String sourceCustomerId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.DENY_ALL, null)
-            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity)
+    public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GRANT_DENY_ALL, null)
+            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
             .body(BulkAccessControlRequest.builder()
                 .sourceCustomerIdentity(sourceCustomerId)
                 .build());

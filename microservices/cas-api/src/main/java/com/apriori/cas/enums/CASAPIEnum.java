@@ -61,8 +61,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     ACCESS_CONTROL_BY_ID(ACCESS_CONTROLS.getEndpointString().concat("/%s")),
 
     //BULK GRANT/DENY ACCESS TO APPLICATION
-    GRANT_ALL(SITE_ID.getEndpointString().concat("/deployments/%s/installations/%s/applications/%s/grant-all")),
-    DENY_ALL(SITE_ID.getEndpointString().concat("/deployments/%s/installations/%s/applications/%s/deny-all"));
+    GRANT_DENY_ALL(SITE_ID.getEndpointString().concat("/deployments/%s/installations/%s/applications/%s/%s"));
 
     private final String endpoint;
 

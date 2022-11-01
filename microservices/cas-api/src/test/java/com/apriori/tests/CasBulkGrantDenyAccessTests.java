@@ -87,7 +87,7 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, customerIdentity);
+        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
         soft.assertThat(grantAll.getStatusCode())
             .isEqualTo(HttpStatus.SC_NO_CONTENT);
 
@@ -114,11 +114,11 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, customerIdentity);
+        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
         soft.assertThat(grantAll.getStatusCode())
             .isEqualTo(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<String> denyAll = casTestUtil.denyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, customerIdentity);
+        ResponseWrapper<String> denyAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", customerIdentity);
         soft.assertThat(denyAll.getStatusCode())
             .isEqualTo(HttpStatus.SC_NO_CONTENT);
 
@@ -171,7 +171,7 @@ public class CasBulkGrantDenyAccessTests {
             .installationIdentity(installationIdentity)
             .build();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, null);
+        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", null);
         soft.assertThat(grantAll.getStatusCode())
             .isEqualTo(HttpStatus.SC_NO_CONTENT);
 
@@ -182,7 +182,7 @@ public class CasBulkGrantDenyAccessTests {
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
-        ResponseWrapper<String> denyAll = casTestUtil.denyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, null);
+        ResponseWrapper<String> denyAll = casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", null);
         soft.assertThat(denyAll.getStatusCode())
             .isEqualTo(HttpStatus.SC_NO_CONTENT);
 
@@ -192,5 +192,6 @@ public class CasBulkGrantDenyAccessTests {
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
             .isEqualTo(0L);
+        soft.assertAll();
     }
 }
