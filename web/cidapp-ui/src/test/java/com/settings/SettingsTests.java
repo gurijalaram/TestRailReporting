@@ -346,6 +346,13 @@ public class SettingsTests extends TestBase {
             .inputBatchSize("0.12.00");
 
         assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
+
+        productionDefaultPage.inputAnnualVolume("0.12.01");
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
+
+        productionDefaultPage.inputYears("0.12.02");
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
+
     }
 
     @Test
