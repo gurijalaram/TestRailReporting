@@ -58,10 +58,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@data-testid ='search-control-input']")
     private WebElement fieldSearch;
 
-    @FindBy(xpath = "//input[@class='MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1uvydh2']")
+    @FindBy(xpath = "//div[@data-testid='search-control-input']//input")
     private WebElement searchInputField;
 
-    @FindBy(xpath = "//div[starts-with(@Class,'MuiOutlinedInput-root MuiInputBase-root')]//button//*[@data-icon='circle-xmark']")
+    @FindBy(xpath = "//div[@data-testid='search-control-popper']//button//*[local-name()='svg']")
     private WebElement btnClear;
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
@@ -103,7 +103,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]")
     private WebElement filterValue;
 
-    @FindBy(xpath = "//*[@data-icon='circle-xmark']")
+    @FindBy(xpath = "//*[@data-icon='times-circle']")
     private WebElement removeIcon;
 
     @FindBy(xpath = "//li[@data-value='componentName']")
