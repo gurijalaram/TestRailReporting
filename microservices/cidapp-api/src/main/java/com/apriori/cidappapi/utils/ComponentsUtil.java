@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ComponentsUtil {
 
+    private final int MAX_FILES = 20;
 
     /**
      * POST cad files
@@ -49,6 +50,10 @@ public class ComponentsUtil {
      * @return cad file response object
      */
     public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
+        if (componentBuilder.getResourceFiles().size() > MAX_FILES) {
+            throw new RuntimeException("A maximum of " + MAX_FILES + " CAD files can be uploaded at the same time");
+        }
+
         return postCadFile(componentBuilder, componentBuilder.getResourceFiles());
     }
 
