@@ -131,7 +131,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "title")
     private WebElement nameField;
 
-    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='circle-xmark']")
+    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='times-circle']")
     private WebElement modalCloseIcon;
 
     @FindBy(xpath = "//div[@role='dialog']")
@@ -908,7 +908,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickMoreOptions(String cardName) {
-        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-vertical']"));
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//button[@aria-label='More Options...']//*[local-name()='svg']"));
         return this;
     }
 
