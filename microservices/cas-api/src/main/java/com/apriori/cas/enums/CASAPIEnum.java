@@ -39,6 +39,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     //USERS
     USERS(CUSTOMER.getEndpointString().concat("/users")),
     USER(USERS.getEndpointString().concat("/%s")),
+    USERS_SUBLICENSES(USER.getEndpointString().concat("/licensing")),
 
     //BATCHES
     BATCHES(CUSTOMER.getEndpointString().concat("/batches")),
