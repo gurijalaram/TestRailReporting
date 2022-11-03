@@ -162,4 +162,13 @@ public class InputsController {
     public boolean isMachineOptionsCheckboxDisplayed(WebElement machineCheckbox) {
         return pageUtils.isElementDisplayed(machineCheckbox);
     }
+
+    /**
+     * Checks if the machine part checkbox is selected
+     * @param checkBoxInput - the machine checkbox webelement
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckboxSelected(WebElement checkBoxInput) {
+        return pageUtils.isCheckboxSelected(checkBoxInput);
+    }
 }
