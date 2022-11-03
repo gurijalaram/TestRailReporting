@@ -402,7 +402,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    // TODO: 9/15/2022 Work this test into defaultProductionLife() once CID-1182 is resolved.
     @TestRail(testCaseId = {"6277", "6291"})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
