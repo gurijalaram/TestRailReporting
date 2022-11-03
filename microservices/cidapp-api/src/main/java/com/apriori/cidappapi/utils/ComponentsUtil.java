@@ -57,8 +57,8 @@ public class ComponentsUtil {
 
         List<CadFile> cadFiles = new ArrayList<>();
 
-        Iterators.partition(componentBuilder.getResourceFiles().iterator(), 10).forEachRemaining(o ->
-            cadFiles.addAll(postCadFile(componentBuilder, o).getResponseEntity().getCadFiles()));
+        Iterators.partition(componentBuilder.getResourceFiles().iterator(), 10).forEachRemaining(cadFile ->
+            cadFiles.addAll(postCadFile(componentBuilder, cadFile).getResponseEntity().getCadFiles()));
 
         return cadFiles;
     }
