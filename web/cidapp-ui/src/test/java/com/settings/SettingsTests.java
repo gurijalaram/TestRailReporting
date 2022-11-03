@@ -333,7 +333,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6306", "6307"})
+    @TestRail(testCaseId = {"6305", "6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
@@ -353,6 +353,18 @@ public class SettingsTests extends TestBase {
         productionDefaultPage.inputYears("0.12.02");
         assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
 
+        productionDefaultPage.cancel(ExplorePage.class)
+            .openSettings()
+            .goToProductionTab()
+            .inputBatchSize("this is txt");
+
+        assertThat(productionDefaultPage.getBatchSize(), is(equalTo("")));
+
+        productionDefaultPage.inputAnnualVolume("this is txt");
+        assertThat(productionDefaultPage.getAnnualVolume(), is(equalTo("")));
+
+        productionDefaultPage.inputYears("this is txt");
+        assertThat(productionDefaultPage.getYears(), is(equalTo("")));
     }
 
     @Test
