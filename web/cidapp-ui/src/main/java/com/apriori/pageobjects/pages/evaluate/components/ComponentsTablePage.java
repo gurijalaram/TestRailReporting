@@ -28,6 +28,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -772,5 +773,17 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      */
     public List<String> getTableHeaders() {
         return scenarioTableController.getTableHeaders();
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
 }
