@@ -53,7 +53,7 @@ public class ComponentsUtil {
      */
     public List<CadFile> postCadFiles(ComponentInfoBuilder componentBuilder) {
         if (componentBuilder.getResourceFiles().size() > MAX_FILES) {
-            throw new RuntimeException("A maximum of " + MAX_FILES + " CAD files can be uploaded at the same time");
+            throw new RuntimeException("Attempted to upload '" + componentBuilder.getResourceFiles().size() + "' files. A maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
         }
 
         List<CadFile> cadFiles = new ArrayList<>();
