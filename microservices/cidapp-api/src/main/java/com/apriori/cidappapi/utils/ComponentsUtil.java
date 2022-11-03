@@ -26,6 +26,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -49,12 +50,17 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return cad file response object
      */
-    public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
+    public List<CadFile> postCadFiles(ComponentInfoBuilder componentBuilder) {
         if (componentBuilder.getResourceFiles().size() > MAX_FILES) {
             throw new RuntimeException("A maximum of " + MAX_FILES + " CAD files can be uploaded at the same time");
         }
 
-        return postCadFile(componentBuilder, componentBuilder.getResourceFiles());
+        List<CadFile> cadFiles = new ArrayList<>();
+
+        Iterators.partition(componentBuilder.getResourceFiles().iterator(), 10).forEachRemaining(o ->
+            cadFiles.addAll(postCadFile(componentBuilder, o).getResponseEntity().getCadFiles()));
+
+        return cadFiles;
     }
 
     /**
@@ -157,7 +163,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public ComponentInfoBuilder postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
-        List<CadFile> resources = new ArrayList<>(postCadFiles(componentInfoBuilder).getResponseEntity().getCadFiles());
+        List<CadFile> resources = postCadFiles(componentInfoBuilder);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfoBuilder.getResourceFiles()

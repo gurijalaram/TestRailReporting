@@ -172,8 +172,6 @@ public abstract class SDSTestUtil extends TestUtil {
 
         String uploadedComponentResourceName = new ComponentsUtil()
             .postCadFiles(componentInfo)
-            .getResponseEntity()
-            .getCadFiles()
             .get(0)
             .getResourceName();
 
