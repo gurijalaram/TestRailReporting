@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 public class ComponentsUtil {
 
     private final int MAX_FILES = 20;
+    private final int CHUNK_SIZE = 10;
 
     /**
      * POST cad files
@@ -57,7 +58,7 @@ public class ComponentsUtil {
 
         List<CadFile> cadFiles = new ArrayList<>();
 
-        Iterators.partition(componentBuilder.getResourceFiles().iterator(), 10).forEachRemaining(cadFile ->
+        Iterators.partition(componentBuilder.getResourceFiles().iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
             cadFiles.addAll(postCadFile(componentBuilder, cadFile).getResponseEntity().getCadFiles()));
 
         return cadFiles;
