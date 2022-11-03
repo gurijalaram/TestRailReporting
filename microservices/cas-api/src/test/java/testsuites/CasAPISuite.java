@@ -12,8 +12,8 @@ import com.apriori.tests.CasCustomersTests;
 import com.apriori.tests.CasCustomersUsersTests;
 import com.apriori.tests.CasDeploymentsTests;
 import com.apriori.tests.CasIdentityProvidersTests;
-import com.apriori.tests.CasLicenseTests;
 import com.apriori.tests.CasSitesTests;
+import com.apriori.tests.CasUserSubLicensesTests;
 import com.apriori.tests.CasUsersTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
     CasCustomersTests.class,
     CasDeploymentsTests.class,
     CasIdentityProvidersTests.class,
-    CasLicenseTests.class,
+    CasUserSubLicensesTests.class,
     CasSitesTests.class,
     CasCustomersUsersTests.class,
     CasUsersTests.class,
