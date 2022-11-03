@@ -1,7 +1,6 @@
 package com.settings;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,6 +30,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
+import com.utils.MassEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -409,8 +409,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    // TODO: 9/15/2022 Work this test into defaultProductionLife() once CID-1182 is resolved.
-    @TestRail(testCaseId = {"6277"})
+    @TestRail(testCaseId = {"6277", "6291"})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
 
@@ -424,7 +423,9 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
             .selectCurrency(CurrencyEnum.EUR)
+            .selectMass(MassEnum.GRAM)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
@@ -435,6 +436,9 @@ public class SettingsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost"), containsString("€"));
+        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost").contains("€"));
+        softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
+
+        softAssertions.assertAll();
     }
 }
