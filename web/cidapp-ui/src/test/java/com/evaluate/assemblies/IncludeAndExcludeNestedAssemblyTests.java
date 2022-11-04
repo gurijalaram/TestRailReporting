@@ -146,6 +146,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .navigateToScenario(componentAssembly3)
             .openComponents()
             .selectTableView()
+            .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
@@ -155,6 +156,8 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Test
