@@ -98,7 +98,7 @@ public class CssComponent {
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
+     * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         QueryParams queryParams = new QueryParams();
