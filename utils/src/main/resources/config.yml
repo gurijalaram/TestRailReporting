@@ -277,7 +277,7 @@ qa-cig-perf:
 ######################################################## On Prem ########################################################
 onprem:
   name: onprem
-  base_url: https://conqsbel10-01/
+  base_url: https://conqbaci02/
 
   admin:
     ui_url: ${onprem.base_url}apriori/login
@@ -294,7 +294,7 @@ onprem:
 
   reports:
     ui_url: ${onprem.base_url}jasperserver-pro/login.html
-    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+    on_prem_vm_url: https://conqbaci02/jasperserver-pro/
 
   bcs:
     report_identity: 50A4DFJF3NC7
