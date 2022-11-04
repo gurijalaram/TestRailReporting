@@ -85,11 +85,13 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ScenarioItem getComponentItem(String componentName, String scenarioName, UserCredentials userCredentials) {
+    public ScenarioItem findFirst(String componentName, String scenarioName, UserCredentials userCredentials) {
         return getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
             .getResponseEntity()
             .getItems()
-            .get(0);
+            .stream()
+            .findFirst()
+            .orElse(null);
     }
 
     /**
