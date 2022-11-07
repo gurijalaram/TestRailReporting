@@ -15,14 +15,11 @@
         "siteIdentity",
         "apVersion",
         "active",
+        "license",
         "description",
         "subLicenses",
         "licensedModules",
         "createdByName"
-      ],
-      "optional": [
-        "updatedBy",
-        "updatedByName"
       ],
       "properties": {
         "identity": {
@@ -48,6 +45,9 @@
         },
         "active": {
           "type": "boolean"
+        },
+        "license": {
+          "type": "string"
         },
         "description": {
           "type": "string"
@@ -107,6 +107,12 @@
           "type": "array",
           "items": {
             "type": "object",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "name"
+            ],
             "properties": {
               "identity": {
                 "type": "string"
