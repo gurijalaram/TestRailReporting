@@ -22,6 +22,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -34,6 +35,7 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -70,6 +72,7 @@ public class CIDIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"12106"})
     @Description("Upload, Cost and Publish part")
     public void testCreateCostAndPublishPart() {
+        SoftAssertions softAssertions = new SoftAssertions();
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testDataService.getInputData().get("componentName") + ".prt");
         loginPage = new CidAppLoginPage(driver);
@@ -89,96 +92,44 @@ public class CIDIntegrationTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(testDataService.getInputData().get("componentName").toString(), testDataService.getInputData().get("scenarioName").toString()), is(greaterThan(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(testDataService.getInputData().get("componentName").toString(), testDataService.getInputData().get("scenarioName").toString())).isGreaterThan(0);
         testDataService.exportDataToCloud(FILE_NAME);
-
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"2695"})
-    @Description("Verify User can login CIA")
-    public void testUserLoginCIA() {
-        scenarioExport = new AdminLoginPage(driver)
-            .login()
-            .navigateToManageScenarioExport();
+    @TestRail(testCaseId = {"12107"})
+    @Description("User can change the default Production Defaults")
+    public void changeUserSettings() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        currentUser = UserUtil.getUser();
 
-        assertThat(scenarioExport.isHeaderDisplayed(), CoreMatchers.is(equalTo(true)));
-        assertThat(scenarioExport.isHeaderEnabled(), CoreMatchers.is(equalTo(true)));
-    }
+        loginPage = new CidAppLoginPage(driver);
+        productionDefaultPage = loginPage.login(currentUser)
+            .openSettings()
+            .goToProductionTab()
+            .inputScenarioName("MP Auto Test")
+            .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS, Plating")
+            .submit(ProductionDefaultsPage.class)
+            .inputAnnualVolume("3000")
+            .inputYears("7")
+            .inputBatchSize("50")
+            .submit(ExplorePage.class)
+            .openSettings()
+            .goToProductionTab();
 
-    @Test
-    @TestRail(testCaseId = {"12046"})
-    @Description("Verify user can login CIR")
-    public void testUserLoginCIR() {
-        ReportsHeader reportsHeader = new ReportsLoginPage(driver)
-            .login()
-            .navigateToHomePage();
+        softAssertions.assertThat(productionDefaultPage.getScenarioName()).contains("MP Auto Test");
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).contains(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).contains(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).contains(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).contains("ABS, Plating");
 
-        assertThat(reportsHeader.getHomeTitleText(), CoreMatchers.is(containsString("Home")));
-    }
-
-    @Test
-    @TestRail(testCaseId = "12517")
-    @Description("Verify Create Simple Ad Hoc View Report")
-    public void testCreateAdHocViewReport() {
-        CreateAdHocViewPage createAdHocViewPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToCreateAdHocViewPage()
-            .clickFirstDataSource()
-            .clickChooseData()
-            .waitForChooseDataDialogToAppear()
-            .clickMoveDataToRightButton()
-            .clickGoToDesignerOkButton()
-            .changeVisualizationToTable()
-            .changeDataScopeToFull()
-            .addDataToTable()
-            .addFilterToTable();
-
-        assertThat(createAdHocViewPage.getTableCellValue("1", "1"),
-            CoreMatchers.is(equalTo("0200613"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("1", "2"),
-            CoreMatchers.is(equalTo("Initial"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("1", "3"),
-            CoreMatchers.is(equalTo("4.35"))
-        );
-
-        assertThat(createAdHocViewPage.getTableCellValue("14", "1"),
-            CoreMatchers.is(equalTo("TOP-LEVEL"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("14", "2"),
-            CoreMatchers.is(equalTo("Initial"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("14", "3"),
-            CoreMatchers.is(equalTo("27.28"))
-        );
-    }
-
-    @Test
-    @Issue("DEVTOOLS-145")
-    @TestRail(testCaseId = {"12046"})
-    @Description("Create and verify component cost OOTB report ")
-    public void testCreateComponentCostOOTBReport() {
-        componentCostReportPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-            .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
-            .waitForComponentFilter();
-
-        componentCostReportPage.waitForCorrectAvailableSelectedCount(
-            ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
-        assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-            ListNameEnum.SCENARIO_NAME.getListName(), "Available"), CoreMatchers.is(equalTo("1")));
-        assertThat(componentCostReportPage.getFirstScenarioName(), CoreMatchers.is(equalTo("Initial")));
-
-        assertThat(componentCostReportPage.getComponentListCount(), CoreMatchers.is(equalTo("14")));
-        assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
-        assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
-        componentCostReportPage = componentCostReportPage.clickOk(true, ComponentCostReportPage.class);
-        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("0200613")));
+        softAssertions.assertAll();
     }
 
     @AfterClass

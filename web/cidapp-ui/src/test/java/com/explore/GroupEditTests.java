@@ -4,6 +4,7 @@ import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
@@ -21,14 +22,12 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class GroupEditTests extends TestBase {
 
@@ -38,6 +37,7 @@ public class GroupEditTests extends TestBase {
     private ExplorePage explorePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
+    private ComponentInfoBuilder componentInfoBuilder;
 
     @Test
     @TestRail(testCaseId = {"14723"})
@@ -49,7 +49,6 @@ public class GroupEditTests extends TestBase {
         final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
         final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
-
 
         String componentName2 = "Part0004";
         final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
@@ -186,39 +185,34 @@ public class GroupEditTests extends TestBase {
     }
 
     @Test
-    // TODO: the test can be optimized by uploading and publishing multiple parts via API, but the current methods need to be reworked
     @TestRail(testCaseId = {"14726", "15015"})
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0005b.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final File resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT");
+        final File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT");
+        final File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT");
+        final File resourceFile4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt");
+        final File resourceFile5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt");
+        final File resourceFile6 = FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp");
+        final File resourceFile7 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp");
+        final File resourceFile8 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt");
+        final File resourceFile9 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0005b.ipt");
+        final File resourceFile10 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt");
+        final File resourceFile11 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .clickClose()
-            .setPagination()
-            .selectFilter("Recent");
+        componentInfoBuilder = loginPage.login(currentUser)
+            .uploadMultiComponents(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
+                scenarioName, currentUser);
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        componentInfoBuilder.getScenarioItems().forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
+        explorePage = new ExplorePage(driver);
         explorePage.refresh()
             .setPagination()
             .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
@@ -237,8 +231,8 @@ public class GroupEditTests extends TestBase {
             .publish(PublishPage.class)
             .close(ExplorePage.class);
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        componentInfoBuilder.getScenarioItems().forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()

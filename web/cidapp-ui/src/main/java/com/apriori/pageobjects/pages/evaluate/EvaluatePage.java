@@ -4,7 +4,7 @@ import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
@@ -158,6 +158,9 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = ".MuiFormControlLabel-root [data-testid='checkbox']")
     private WebElement machinePartCheckbox;
+
+    @FindBy(css = ".PrivateSwitchBase-input")
+    private WebElement checkBoxInput;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -349,12 +352,12 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public ComponentsListPage openComponents() {
+    public ComponentsTreePage openComponents() {
         if (!pageUtils.isElementDisplayed(componentsDetailsButton)) {
-            return new ComponentsListPage(driver);
+            return new ComponentsTreePage(driver);
         }
         pageUtils.waitForElementAndClick(componentsDetailsButton);
-        return new ComponentsListPage(driver);
+        return new ComponentsTreePage(driver);
     }
 
     /**
@@ -787,6 +790,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Selects the Do not machine this part checkbox
+     *
      * @return current page object
      */
     public EvaluatePage selectMachineOptionsCheckbox() {
@@ -796,9 +800,20 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Checks if the machine part checkbox is displayed
+     *
      * @return boolean
      */
     public boolean isMachineOptionsCheckboxDisplayed() {
         return inputsController.isMachineOptionsCheckboxDisplayed(machinePartCheckbox);
     }
+
+    /**
+     * Checks if the machine part checkbox is selected
+     *
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckboxSelected() {
+        return inputsController.isMachineOptionsCheckboxSelected(checkBoxInput);
+    }
 }
+

@@ -29,14 +29,14 @@ import org.junit.Test;
 
 public class CasBatchItemTests {
     private SoftAssertions soft = new SoftAssertions();
-    private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CasTestUtil casTestUtil = new CasTestUtil();
 
     @Before
     public void getToken() {
-        token = new AuthorizationUtil().getTokenAsString();
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @After
@@ -63,9 +63,10 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity)).get();
+        ResponseWrapper<BatchItems> getItems = casTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEMS,
+            BatchItems.class,
+            customerIdentity,
+            batchIdentity);
 
         soft.assertThat(getItems.getStatusCode())
             .isEqualTo(HttpStatus.SC_OK);
@@ -113,17 +114,20 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity)).get();
+        ResponseWrapper<BatchItems> getItems = casTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEMS,
+            BatchItems.class,
+            customerIdentity,
+            batchIdentity);
 
         BatchItem batchItem = getItems.getResponseEntity().getItems().get(0);
         String itemId = batchItem.getIdentity();
         String userName = batchItem.getUserName();
 
-        ResponseWrapper<BatchItem> getItem = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity, itemId)).get();
+        ResponseWrapper<BatchItem> getItem = casTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEM,
+            BatchItem.class,
+            customerIdentity,
+            batchIdentity,
+            itemId);
 
         soft.assertThat(getItem.getStatusCode())
             .isEqualTo(HttpStatus.SC_OK);
@@ -152,9 +156,10 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity)).get();
+        ResponseWrapper<BatchItems> getItems = casTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEMS,
+            BatchItems.class,
+            customerIdentity,
+            batchIdentity);
 
         String itemId = getItems.getResponseEntity().getItems().get(0).getIdentity();
 

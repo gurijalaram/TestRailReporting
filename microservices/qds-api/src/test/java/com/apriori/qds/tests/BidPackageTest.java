@@ -1,5 +1,6 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageRequest;
@@ -26,7 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BidPackageTest {
+public class BidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<BidPackageResponse> bidPackageResponse;

@@ -1,5 +1,6 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
 import com.apriori.qds.entity.response.layout.LayoutsResponse;
@@ -20,7 +21,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LayoutConfiguationTest {
+public class LayoutConfiguationTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<LayoutResponse> layoutConfigurationResponse;

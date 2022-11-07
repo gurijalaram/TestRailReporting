@@ -26,6 +26,7 @@ public class LicenseResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private String siteIdentity;
     private String apVersion;
@@ -34,4 +35,5 @@ public class LicenseResponse {
     private List<SubLicense> subLicenses = null;
     private List<LicenseModule> licensedModules = null;
     private String createdByName;
+    private String updatedByName;
 }
