@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "LicenseResponseSchema.json")
+@Schema(location = "LicenseByIdentitySchema.json")
 @Data
 @JsonRootName("response")
-public class LicenseResponse {
+public class LicenseByIdentity {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -31,6 +31,7 @@ public class LicenseResponse {
     private String siteIdentity;
     private String apVersion;
     private Boolean active;
+    private String license;
     private String description;
     private List<SubLicense> subLicenses = null;
     private List<LicenseModule> licensedModules = null;
