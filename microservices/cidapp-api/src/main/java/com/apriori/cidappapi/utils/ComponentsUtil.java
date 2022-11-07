@@ -26,6 +26,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -41,6 +42,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ComponentsUtil {
 
+    private final int MAX_FILES = 20;
+    private final int CHUNK_SIZE = 10;
 
     /**
      * POST cad files
@@ -48,8 +51,17 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return cad file response object
      */
-    public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
-        return postCadFile(componentBuilder, componentBuilder.getResourceFiles());
+    public List<CadFile> postCadFiles(ComponentInfoBuilder componentBuilder) {
+        if (componentBuilder.getResourceFiles().size() > MAX_FILES) {
+            throw new RuntimeException("Attempted to upload '" + componentBuilder.getResourceFiles().size() + "' files. A maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
+        }
+
+        List<CadFile> cadFiles = new ArrayList<>();
+
+        Iterators.partition(componentBuilder.getResourceFiles().iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
+            cadFiles.addAll(postCadFile(componentBuilder, cadFile).getResponseEntity().getCadFiles()));
+
+        return cadFiles;
     }
 
     /**
@@ -152,7 +164,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public ComponentInfoBuilder postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
-        List<CadFile> resources = new ArrayList<>(postCadFiles(componentInfoBuilder).getResponseEntity().getCadFiles());
+        List<CadFile> resources = postCadFiles(componentInfoBuilder);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfoBuilder.getResourceFiles()
@@ -180,7 +192,9 @@ public class ComponentsUtil {
         assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
 
         List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
-            getUnCostedComponent(component.getFilename(), component.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
+                getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
+                    .stream())
+            .collect(Collectors.toList());
 
         scenarioItemList.forEach(scenario -> {
             componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());
