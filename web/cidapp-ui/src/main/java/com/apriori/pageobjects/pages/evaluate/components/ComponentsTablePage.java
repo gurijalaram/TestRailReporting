@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.components;
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -27,6 +28,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -42,13 +44,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
+public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> {
 
     @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
-    private WebElement tableButton;
+    private WebElement tableViewButton;
 
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
-    private WebElement treeButton;
+    private WebElement treeViewButton;
 
     @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
     private WebElement previewButton;
@@ -110,7 +112,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     private ComponentTableActions componentTableActions;
     private ScenarioTableController scenarioTableController;
 
-    public ComponentsListPage(WebDriver driver) {
+    public ComponentsTablePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
@@ -128,20 +130,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(tableButton);
+        assertTrue("Table View is not active", pageUtils.waitForElementToAppear(tableViewButton).getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         pageUtils.waitForElementToAppear(componentTable);
-    }
-
-    /**
-     * Changes the view to table view
-     *
-     * @return current page object
-     */
-    public ComponentsListPage tableView() {
-        pageUtils.waitForElementAndClick(tableButton);
-        return this;
     }
 
     /**
@@ -149,18 +141,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return current page object
      */
-    public ComponentsListPage setPagination() {
+    public ComponentsTablePage setPagination() {
         componentTableActions.setPagination();
-        return this;
-    }
-
-    /**
-     * Changes the view to tree view
-     *
-     * @return current page object
-     */
-    public ComponentsListPage treeView() {
-        pageUtils.waitForElementAndClick(treeButton);
         return this;
     }
 
@@ -170,7 +152,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return new page object
      */
-    public ComponentsListPage enterSearch(String componentName) {
+    public ComponentsTablePage enterSearch(String componentName) {
         componentTableActions.enterKeySearch(componentName);
         return this;
     }
@@ -181,7 +163,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return new page object
      */
-    public ComponentsListPage clickSearch(String componentName) {
+    public ComponentsTablePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
     }
@@ -206,13 +188,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
 
     /**
-     * Opens tree view tab
+     * Opens tree view
      *
      * @return new page object
      */
-    public TreePage openTreeTab() {
-        pageUtils.waitForElementAndClick(treeButton);
-        return new TreePage(driver);
+    public ComponentsTreePage selectTreeView() {
+        pageUtils.waitForElementAndClick(treeViewButton);
+        return new ComponentsTreePage(driver);
     }
 
     /**
@@ -259,7 +241,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ComponentsListPage highlightScenario(String componentName, String scenarioName) {
+    public ComponentsTablePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -270,7 +252,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ComponentsListPage multiHighlightScenarios(String... componentScenarioName) {
+    public ComponentsTablePage multiHighlightScenarios(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
@@ -282,7 +264,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ComponentsListPage clickScenarioCheckbox(String componentName, String scenarioName) {
+    public ComponentsTablePage clickScenarioCheckbox(String componentName, String scenarioName) {
         scenarioTableController.clickScenarioCheckbox(componentName, scenarioName);
         return this;
     }
@@ -293,7 +275,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - component name
      * @return current page object
      */
-    public ComponentsListPage clickScenarioCheckbox(String componentName) {
+    public ComponentsTablePage clickScenarioCheckbox(String componentName) {
         By scenario = getXpath(componentName);
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
@@ -307,7 +289,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ComponentsListPage multiSelectSubcomponents(String... componentScenarioName) {
+    public ComponentsTablePage multiSelectSubcomponents(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
@@ -318,7 +300,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - current page object
      */
-    public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
+    public ComponentsTablePage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
         By scenario = with(getXpath(componentName))
             .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(scenario);
@@ -336,7 +318,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ComponentsListPage controlHighlightScenario(String componentName, String scenarioName) {
+    public ComponentsTablePage controlHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -348,7 +330,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public ComponentsListPage expandSubAssembly(String componentName, String scenarioName) {
+    public ComponentsTablePage expandSubAssembly(String componentName, String scenarioName) {
         scenarioTableController.expandSubassembly(componentName, scenarioName);
         return this;
     }
@@ -360,7 +342,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public ComponentsListPage collapseSubassembly(String componentName, String scenarioName) {
+    public ComponentsTablePage collapseSubassembly(String componentName, String scenarioName) {
         scenarioTableController.collapseSubassembly(componentName, scenarioName);
         return this;
     }
@@ -444,7 +426,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage selectButtonType(ButtonTypeEnum buttonTypeEnum) {
+    public ComponentsTablePage selectButtonType(ButtonTypeEnum buttonTypeEnum) {
         WebElement buttonToPress;
 
         switch (buttonTypeEnum) {
@@ -487,7 +469,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage selectCheckAllBox() {
+    public ComponentsTablePage selectCheckAllBox() {
         pageUtils.waitForElementAndClick(checkAllBox);
         return this;
     }
@@ -528,7 +510,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param subcomponentNames - the subcomponent names
      * @return current page object
      */
-    public ComponentsListPage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+    public ComponentsTablePage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
         List<String> componentNames = Arrays.stream(subcomponentNames)
             .flatMap(x -> Arrays.stream(x.split(","))
                 .map(String::trim))
@@ -558,7 +540,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param subcomponentNames - the subcomponent names
      * @return current page object
      */
-    public ComponentsListPage checkManifestComplete(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+    public ComponentsTablePage checkManifestComplete(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
 
         List<String> componentNames = Arrays.stream(subcomponentNames)
             .flatMap(x -> Arrays.stream(x.split(","))
@@ -632,9 +614,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return new page object
      */
-    public ComponentsListPage updateCadFile(File filePath) {
+    public ComponentsTablePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(updateCadButton);
-        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(ComponentsListPage.class);
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(ComponentsTablePage.class);
     }
 
 
@@ -688,7 +670,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  -the scenario name
      * @return current page object
      */
-    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+    public ComponentsTablePage switchScenarioName(String componentName, String scenarioName) {
         WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
         pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
         return this;
@@ -722,7 +704,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param filter - the filter
      * @return current page object
      */
-    public ComponentsListPage selectFilter(String filter) {
+    public ComponentsTablePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, "qa-sub-components-detail-card-filter-selector", filter);
         setPagination();
         return this;
@@ -791,5 +773,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public List<String> getTableHeaders() {
         return scenarioTableController.getTableHeaders();
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
 }
