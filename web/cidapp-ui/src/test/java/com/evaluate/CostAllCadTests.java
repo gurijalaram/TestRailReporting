@@ -20,11 +20,9 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.Keys;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;

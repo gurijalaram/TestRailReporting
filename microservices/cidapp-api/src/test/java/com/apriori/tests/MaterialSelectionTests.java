@@ -1,17 +1,11 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ForkRequest;
-import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
-import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -76,7 +70,7 @@ public class MaterialSelectionTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

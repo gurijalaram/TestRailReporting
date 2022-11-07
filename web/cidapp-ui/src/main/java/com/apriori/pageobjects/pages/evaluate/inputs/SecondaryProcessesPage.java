@@ -314,7 +314,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Inputs masked feature
+     * Inputs fraction override
      *
      * @param value -the value
      * @return current page object
@@ -322,6 +322,18 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     public SecondaryProcessesPage inputFractionOverride(String value) {
         psoController.inputOverrideValue(psoController.buildLocator("What Fraction of Component is Painted?", "user"),
             psoController.inputLocator("What Fraction of Component is Painted?"), value);
+        return this;
+    }
+
+    /**
+     * Inputs fraction part area
+     *
+     * @param value -the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputFractionPartArea(String value) {
+        psoController.inputOverrideValue(psoController.buildLocator("Fraction of Part Area that is Powder Coated", "user"),
+            psoController.inputLocator("Fraction of Part Area that is Powder Coated"), value);
         return this;
     }
 

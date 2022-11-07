@@ -1,9 +1,12 @@
 package com.apriori.utils;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -72,6 +75,21 @@ public class CssComponent {
         }
         throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
         );
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ScenarioItem getComponentItem(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
+            .getResponseEntity()
+            .getItems()
+            .get(0);
     }
 
     /**

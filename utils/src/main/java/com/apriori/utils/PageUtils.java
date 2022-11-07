@@ -1379,4 +1379,19 @@ public class PageUtils {
         }
     }
 
+    /**
+     * Check if the checkbox is selected or not. Important: this is not a wait method, it only shows
+     * the current status of the checkbox.
+     *
+     * @param element - WebElement
+     * @return - returns whether checkbox is selected or not
+     */
+    public boolean isCheckboxSelected(WebElement element) {
+        try {
+            return element.isSelected();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
 }
