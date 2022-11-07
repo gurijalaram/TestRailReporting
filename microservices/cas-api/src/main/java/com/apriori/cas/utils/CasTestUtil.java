@@ -554,4 +554,20 @@ public class CasTestUtil extends TestUtil {
 
         return HTTPRequest.build(requestEntity).post();
     }
+
+    /**
+     * Changes activation state of a License.
+     *
+     * @param klas - class
+     * @param customerIdentity - customer identity
+     * @param siteIdentity - site identity
+     * @param licenseIdentity - license identity
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACTIVATE_LICENSE, klas)
+            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
+            .body(null);
+        return HTTPRequest.build(requestEntity).post();
+    }
 }
