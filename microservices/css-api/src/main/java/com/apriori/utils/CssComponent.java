@@ -1,9 +1,7 @@
 package com.apriori.utils;
 
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_TYPE_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
@@ -52,20 +50,21 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
 
-                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, scenarioItemList.getStatusCode());
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+                if (scenarioItemList.size() > 0 &&
 
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
 
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    return cssComponentResponse;
+                    // TODO: 04/11/2022 change getbasecss to return list<scenarioItem>
+                    return scenarioItemList;
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -128,17 +127,17 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
 
                 assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+                if (scenarioItemList.size() > 0 &&
 
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    return cssComponentResponse.getResponseEntity().getItems();
+                    return scenarioItemList;
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
