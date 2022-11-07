@@ -15,6 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,8 +51,6 @@ public class CssComponent {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
-
-                //assertEquals("Failed to receive data about component", HttpStatus.SC_OK, scenarioItemList.getStatusCode());
 
                 if (scenarioItemList.size() > 0 &&
 
@@ -127,8 +126,6 @@ public class CssComponent {
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
 
-                //assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
-
                 if (scenarioItemList.size() > 0 &&
 
                     scenarioItemList.stream()
@@ -156,7 +153,8 @@ public class CssComponent {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken())
-            .socketTimeout(SOCKET_TIMEOUT);
+            .socketTimeout(SOCKET_TIMEOUT)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
