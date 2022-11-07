@@ -146,7 +146,7 @@ public class ComponentsUtil {
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED.getState()).getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED.getState());
 
         scenarioItem.stream()
             .findFirst()

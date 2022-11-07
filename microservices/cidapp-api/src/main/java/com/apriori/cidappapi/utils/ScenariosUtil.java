@@ -403,7 +403,7 @@ public class ScenariosUtil {
                 .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
 
                 new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
-                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]).getResponseEntity().getItems()
+                        SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                     .forEach(o -> new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
                         SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
 
@@ -600,8 +600,6 @@ public class ScenariosUtil {
         for (String[] componentScenario : componentScenarioNames) {
             ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                     SCENARIO_NAME_EQ.getKey() + componentScenario[1])
-                .getResponseEntity()
-                .getItems()
                 .stream()
                 .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
                 .findFirst()

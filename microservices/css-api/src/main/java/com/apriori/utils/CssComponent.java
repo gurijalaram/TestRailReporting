@@ -1,6 +1,7 @@
 package com.apriori.utils;
 
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_TYPE_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.junit.Assert.assertEquals;
 
@@ -43,7 +44,7 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getComponentParts(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getComponentParts(UserCredentials userCredentials, String... paramKeysValues) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -87,8 +88,6 @@ public class CssComponent {
      */
     public ScenarioItem findFirst(String componentName, String scenarioName, UserCredentials userCredentials) {
         return getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .getResponseEntity()
-            .getItems()
             .stream()
             .findFirst()
             .orElse(null);
@@ -121,7 +120,7 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -139,7 +138,7 @@ public class CssComponent {
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    return cssComponentResponse;
+                    return cssComponentResponse.getResponseEntity().getItems();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
