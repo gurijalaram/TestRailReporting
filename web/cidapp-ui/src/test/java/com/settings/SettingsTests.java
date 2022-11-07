@@ -333,7 +333,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6306", "6307"})
+    @TestRail(testCaseId = {"6305", "6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
@@ -345,7 +345,28 @@ public class SettingsTests extends TestBase {
             .goToProductionTab()
             .inputBatchSize("0.12.00");
 
-        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.inputAnnualVolume("0.12.01");
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.inputYears("0.12.02");
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.cancel(ExplorePage.class)
+            .openSettings()
+            .goToProductionTab()
+            .inputBatchSize("this is txt");
+
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEqualTo("");
+
+        productionDefaultPage.inputAnnualVolume("this is txt");
+        softAssertions.assertThat(productionDefaultPage.getAnnualVolume()).isEqualTo("");
+
+        productionDefaultPage.inputYears("this is txt");
+        softAssertions.assertThat(productionDefaultPage.getYears()).isEqualTo("");
+
+        softAssertions.assertAll();
     }
 
     @Test
