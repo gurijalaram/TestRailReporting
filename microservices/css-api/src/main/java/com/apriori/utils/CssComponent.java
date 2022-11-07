@@ -61,7 +61,6 @@ public class CssComponent {
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    // TODO: 04/11/2022 change getbasecss to return list<scenarioItem>
                     return scenarioItemList;
                 }
 
