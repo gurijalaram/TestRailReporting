@@ -184,7 +184,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param givenName - given name
      * @return current page object
      */
-    private NewUserPage inputGivenName(String givenName) {
+    public NewUserPage inputGivenName(String givenName) {
         pageUtils.waitForElementToAppear(givenNameInput).clear();
         givenNameInput.sendKeys(givenName);
         return this;
@@ -196,7 +196,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param familyName - family name
      * @return current page object
      */
-    private NewUserPage inputFamilyName(String familyName) {
+    public NewUserPage inputFamilyName(String familyName) {
         pageUtils.waitForElementToAppear(familyNameInput).clear();
         familyNameInput.sendKeys(familyName);
         return this;
