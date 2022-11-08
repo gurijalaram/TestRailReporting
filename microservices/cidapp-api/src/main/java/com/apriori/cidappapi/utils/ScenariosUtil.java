@@ -464,7 +464,8 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .build())
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.getUser().getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -486,7 +487,8 @@ public class ScenariosUtil {
                         .scenarioIdentity(null)
                         .build()))
                     .build())
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.getUser().getToken())
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
         return HTTPRequest.build(requestEntity).post();
     }
