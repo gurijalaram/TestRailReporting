@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class ListProcessGroupTests {
 
-    SoftAssertions softAssertions;
+    private SoftAssertions softAssertions;
 
     @Test
     @TestRail(testCaseId = {"6197"})
