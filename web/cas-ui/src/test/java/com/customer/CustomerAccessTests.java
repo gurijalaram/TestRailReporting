@@ -1,9 +1,5 @@
 package com.customer;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -44,6 +40,7 @@ public class CustomerAccessTests extends TestBase {
     private String userName;
     private String userEmail;
     private UsersPage usersPage;
+    SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setup() {
@@ -75,12 +72,13 @@ public class CustomerAccessTests extends TestBase {
     @Description("Validate requesting access for a user that is not in white list of customer")
     @TestRail(testCaseId = {"12082", "12083", "12085", "12088", "12144", "13172"})
     public void requestAccessForNotWhiteListUser() {
-        SoftAssertions soft = new SoftAssertions();
         UsersListPage serviceAccountUsers = usersPage.goToCustomerStaff();
         SourceListComponent users = serviceAccountUsers.getUsersList();
         TableComponent usersTable = Obligation.mandatory(users::getTable, "The users list table is missing");
         long rows = usersTable.getRows().count();
-        assertThat("There are no service accounts created for Cloud customer.", rows, is(equalTo(4L)));
+        soft.assertThat(rows)
+            .overridingErrorMessage("There are no service accounts created for Cloud customer.")
+            .isEqualTo(4L);
 
         UserProfilePage serviceAccountProfile = serviceAccountUsers.openUser(cloudRef + ".service-account.1");
 
@@ -110,16 +108,16 @@ public class CustomerAccessTests extends TestBase {
         customerAccess.clickRequestAccessButton()
             .selectServiceAccount("service-account.1")
             .clickOkRequestRevokeAccess();
-        soft.assertAll();
 
-        assertThat(customerAccess.getTextErrorMessage(), is(equalTo(String.format("HTTP 400: Can't authorize '%s' access to '%s' as they are not on the authorized user list for the customer.", userEmail, customerName))));
+        soft.assertThat(customerAccess.getTextErrorMessage())
+            .isEqualTo((String.format("HTTP 400: Can't authorize '%s' access to '%s' as they are not on the authorized user list for the customer.", userEmail, customerName)));
+        soft.assertAll();
     }
 
     @Test
     @Description("Validate user from white list can request and revoke customer access")
     @TestRail(testCaseId = {"12084", "12087", "12934", "12935", "12936", "12923"})
     public void requestCustomerAccess() {
-        SoftAssertions soft = new SoftAssertions();
         String userName = "qa-automation-10";
         String email = "qa-automation-10@apriori.com";
         String password = "TrumpetSnakeFridgeToasty18!%";
@@ -144,7 +142,8 @@ public class CustomerAccessTests extends TestBase {
             .selectServiceAccount("service-account.1")
             .clickOkRequestRevokeAccess();
 
-        assertThat(customerAccess.getTextSuccessMessage(), is(equalTo("Email has been sent")));
+        soft.assertThat(customerAccess.getTextSuccessMessage())
+            .isEqualTo("Email has been sent");
         customerAccess.closeMessage();
 
         soft.assertThat(customerAccess.canRequest())
@@ -156,7 +155,8 @@ public class CustomerAccessTests extends TestBase {
             .clickRevokeAccessButton()
             .clickOkRequestRevokeAccess();
 
-        assertThat(customerAccess.getTextSuccessMessage(), is(equalTo("Access successfully revoked")));
+        soft.assertThat(customerAccess.getTextSuccessMessage())
+            .isEqualTo("Access successfully revoked");
         customerAccess.closeMessage();
 
         soft.assertThat(customerAccess.canRequest())
@@ -178,14 +178,15 @@ public class CustomerAccessTests extends TestBase {
             .validateHistoryTableHasCorrectColumns("Service Account", "serviceAccount", soft)
             .validateHistoryTableHasCorrectColumns("Access Granted At", "createdAt", soft)
             .validateHistoryTableHasCorrectColumns("Access Revoked At", "updatedAt", soft);
-        soft.assertAll();
 
         SourceListComponent historyList = goToHistoryTab.getUsersList();
         Obligation.mandatory(historyList::getSearch, "Users account search is missing").search("service-account.1");
 
         TableComponent accountFound = Obligation.mandatory(historyList::getTable, "The account was not found");
         long count = accountFound.getRows().count();
-        assertThat(count, is(CoreMatchers.equalTo(1L)));
+        soft.assertThat(count)
+            .isEqualTo(1L);
+        soft.assertAll();
     }
 
     @Test
@@ -208,6 +209,7 @@ public class CustomerAccessTests extends TestBase {
 
         CustomerWorkspacePage errorMessage = new CustomerWorkspacePage(driver);
 
-        assertThat(errorMessage.getTextErrorMessage(), is(equalTo("HTTP 403: User cannot add self to a customer.")));
+        soft.assertThat(errorMessage.getTextErrorMessage())
+            .isEqualTo("HTTP 403: User cannot add self to a customer.");
     }
 }
