@@ -45,7 +45,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY, CssComponentResponse.class)
+                RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
                         .token(currentUser.getToken())
                     .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
@@ -59,7 +59,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<ErrorRequestResponse> getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, ErrorRequestResponse.class)
+                RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
                     .body(scenarioIterationRequest)
                         .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();
@@ -73,7 +73,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, CssComponentResponse.class)
+            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
                 .body(scenarioIterationRequest)
                 .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();

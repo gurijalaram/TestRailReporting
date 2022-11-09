@@ -1,4 +1,4 @@
-package com.apriori.css.entity.enums;
+package com.apriori.entity.enums;
 
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
@@ -7,7 +7,8 @@ public enum CssAPIEnum implements ExternalEndpointEnum {
 
     //SCENARIO
     SCENARIO_ITERATIONS("scenario-iterations"),
-    SCENARIO_ITERATIONS_SEARCH("scenario-iterations/search");
+    SCENARIO_ITERATIONS_SEARCH("scenario-iterations/search"),
+    SCENARIO_ITERATIONS_QUERY("scenario-iterations/query");
 
     private final String endpoint;
 
