@@ -79,7 +79,8 @@ public class AuthorizationUtil {
             .token(userCredentials.getToken())
             .inlineVariables(
                 PropertiesContext.get("${env}.customer_identity"),
-                PropertiesContext.get("${env}.secret_key")
+                PropertiesContext.get("${env}.secret_key"),
+                PropertiesContext.get("${env}.deployment_name")
             );
 
         return HTTPRequest.build(requestEntity).get();
@@ -103,27 +104,30 @@ public class AuthorizationUtil {
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         String cloudContext = PropertiesContext.get("${env}.customer_identity");
-        String deploymentNameFromConfig = PropertiesContext.get("${env}.deployment_name");
         String installationNameFromConfig = PropertiesContext.get("${env}.installation_name");
         String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
 
-        DeploymentItem deploymentItem = getDeploymentsResponse(userCredentials).getItems()
-            .stream()
-            .filter(element -> element.getName().equalsIgnoreCase(deploymentNameFromConfig))
-            .limit(1)
-            .collect(Collectors.toList()).get(0);
+        DeploymentItem deploymentItem = null;
+        InstallationItem installationItem = null;
+        ApplicationItem applicationItem = null;
 
-        InstallationItem installationItem = deploymentItem.getInstallations()
-            .stream()
-            .filter(element -> element.getName().equals(installationNameFromConfig))
-            .limit(1)
-            .collect(Collectors.toList()).get(0);
+        try {
+            deploymentItem = getDeploymentsResponse(userCredentials).getItems().get(0);
 
-        ApplicationItem applicationItem = installationItem.getApplications()
-            .stream()
-            .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
-            .limit(1)
-            .collect(Collectors.toList()).get(0);
+            installationItem = deploymentItem.getInstallations()
+                .stream()
+                .filter(element -> element.getName().equals(installationNameFromConfig))
+                .limit(1)
+                .collect(Collectors.toList()).get(0);
+
+            applicationItem = installationItem.getApplications()
+                .stream()
+                .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
+                .limit(1)
+                .collect(Collectors.toList()).get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
     }

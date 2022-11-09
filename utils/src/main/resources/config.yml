@@ -410,7 +410,7 @@ qa-test:
   customer_identity: 6C1F8C1D4D75
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
   deployment_name: production
-  installation_name: core-na-1 - production deployment
+  installation_name: core-na-1 - 23 production deployment
   application_name: cid
 
   admin:
