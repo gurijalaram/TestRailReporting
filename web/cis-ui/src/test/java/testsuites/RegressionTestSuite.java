@@ -3,16 +3,20 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import com.explore.SearchTests;
-import com.explore.StartComparisonTests;
+import com.messages.MessagesTest;
+import com.navigation.NavigationPanelTest;
+import com.partsandassemblies.PartsAndAssemblyTest;
+import com.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @ProjectRunID("867")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    StartComparisonTests.class,
-    SearchTests.class,
+    PartsAndAssemblyTest.class,
+    NavigationPanelTest.class,
+    PartsAndAssembliesDetailsTest.class,
+    MessagesTest.class
 })
 public class RegressionTestSuite {
 }

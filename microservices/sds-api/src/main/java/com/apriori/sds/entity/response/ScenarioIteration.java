@@ -1,6 +1,6 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.css.entity.response.Thumbnail;
+import com.apriori.entity.response.Thumbnail;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 

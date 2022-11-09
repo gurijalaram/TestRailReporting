@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.entity.builder;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.Builder;
