@@ -1,15 +1,10 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.ats.entity.request.ResetAutoUsers;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
@@ -45,11 +40,10 @@ public class ResetAutomationUsers {
                 .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
                 .body(new ResetAutoUsers()
-                    .setPassword(automationPassword));
+                    .setPassword(automationPassword))
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-            ResponseWrapper<String> resetAutoUsersResponse = HTTPRequest.build(requestEntity).patch();
-
-            assertThat(resetAutoUsersResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+            HTTPRequest.build(requestEntity).patch();
         });
     }
 }
