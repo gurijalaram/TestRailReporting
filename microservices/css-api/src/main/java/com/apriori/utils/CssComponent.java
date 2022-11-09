@@ -94,7 +94,7 @@ public class CssComponent {
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
+     * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         QueryParams queryParams = new QueryParams();
@@ -102,8 +102,11 @@ public class CssComponent {
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
-        // TODO: 26/10/2022 cn - wrap in a try/catch/throw, when incorrect k,v is entered its easily debuggable
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
 
         return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
     }
