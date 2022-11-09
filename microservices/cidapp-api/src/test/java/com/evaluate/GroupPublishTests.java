@@ -6,8 +6,6 @@ import static com.apriori.css.entity.enums.CssSearch.LAST_ACTION_EQ;
 import static com.apriori.css.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -660,8 +658,12 @@ public class GroupPublishTests {
 
         ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, STAND + "," + scenarioName);
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         publishSuccessFailure.getResponseEntity()
-            .getFailures().forEach(o -> assertThat(o.getError(), equalTo("Scenario '" + scenarioName + "' has been published, scenario can not be published")));
+            .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Scenario '" + scenarioName + "' has been published, scenario can not be published"));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -728,8 +730,12 @@ public class GroupPublishTests {
 
         ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName);
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         publishSuccessFailure.getResponseEntity()
-            .getFailures().forEach(o -> assertThat(o.getError(), equalTo("Scenario '" + scenarioName + "' has been published, scenario can not be published")));
+            .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Scenario '" + scenarioName + "' has been published, scenario can not be published"));
+
+        softAssertions.assertAll();
     }
 
     @Test

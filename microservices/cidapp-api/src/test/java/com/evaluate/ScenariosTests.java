@@ -1,10 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -21,7 +16,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
@@ -33,6 +28,7 @@ public class ScenariosTests {
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions;
 
     @Test
     @TestRail(testCaseId = "10620")
@@ -61,14 +57,17 @@ public class ScenariosTests {
             .user(currentUser)
             .build());
 
-        assertThat(copyScenarioResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(copyScenarioResponse.getResponseEntity().getScenarioName(), is(equalTo(newScenarioName)));
-        assertThat(copyScenarioResponse.getResponseEntity().getLastAction(), is(equalTo("COPY")));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(copyScenarioResponse.getResponseEntity().getScenarioName()).isEqualTo(newScenarioName);
+        softAssertions.assertThat(copyScenarioResponse.getResponseEntity().getLastAction()).isEqualTo("COPY");
 
         //Rechecking the original scenario has not changed
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(postComponentResponse);
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioName()).isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -98,7 +97,7 @@ public class ScenariosTests {
             .uploadAssembly(componentAssembly);
 
         assemblyUtils.costSubComponents(componentAssembly)
-                .costAssembly(componentAssembly);
+            .costAssembly(componentAssembly);
 
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
@@ -110,8 +109,12 @@ public class ScenariosTests {
                     .build())
             .getResponseEntity();
 
-        assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
-        assertThat(editAssemblyResponse.getPublished(), is(false));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(editAssemblyResponse.getLastAction()).isEqualTo("FORK");
+        softAssertions.assertThat(editAssemblyResponse.getPublished()).isFalse();
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -147,8 +150,11 @@ public class ScenariosTests {
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 
-        assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
-        assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(assemblyUploadResponse.getBody()).contains(errorMessage);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -164,7 +170,6 @@ public class ScenariosTests {
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-
 
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -191,7 +196,11 @@ public class ScenariosTests {
                     .build())
             .getResponseEntity();
 
-        assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
-        assertThat(editAssemblyResponse.getPublished(), is(false));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(editAssemblyResponse.getLastAction()).isEqualTo("FORK");
+        softAssertions.assertThat(editAssemblyResponse.getPublished()).isFalse();
+
+        softAssertions.assertAll();
     }
 }
