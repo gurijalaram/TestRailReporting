@@ -15,7 +15,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class NotificationsTests extends TestHelper {
@@ -25,11 +24,11 @@ public class NotificationsTests extends TestHelper {
     @Description("Get a list of notifications using the NTS API")
     public void getNotifications() {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_NOTIFICATIONS,
-            Notifications.class);
+            Notifications.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Notifications> notificationResponse = HTTPRequest.build(requestEntity).get();
 
-        Assert.assertEquals(HttpStatus.SC_OK, notificationResponse.getStatusCode());
         assertThat(notificationResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
