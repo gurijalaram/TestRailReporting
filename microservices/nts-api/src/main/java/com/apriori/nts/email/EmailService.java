@@ -16,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -133,7 +134,8 @@ public class EmailService {
     public ResponseWrapper<EmailsItems> getEmailsByIdentity(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS_BY_ID, EmailsItems.class)
             .inlineVariables(identity)
-            .headers(headers);
+            .headers(headers)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -147,7 +149,8 @@ public class EmailService {
     public ResponseWrapper<Email> getEmail(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
             .inlineVariables(identity)
-            .headers(headers);
+            .headers(headers)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
