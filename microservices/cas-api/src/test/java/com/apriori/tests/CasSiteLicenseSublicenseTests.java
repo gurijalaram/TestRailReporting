@@ -105,5 +105,6 @@ public class CasSiteLicenseSublicenseTests {
             .isEqualTo(HttpStatus.SC_NOT_FOUND);
         soft.assertThat(getNotExistingSubLicense.getResponseEntity().getMessage())
             .isEqualTo(String.format("Unable to get SubLicense with identity '%s' for license with identity '%s' and Site with identity '%s'.", getNotExistingSubLicense, licenseIdentity, siteIdentity));
+        soft.assertAll();
     }
 }
