@@ -14,6 +14,8 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.apache.http.HttpStatus;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +30,8 @@ public class FileManagementController {
      */
     public static ResponseWrapper<FilesResponse> getFiles(UserCredentials userCredentials) {
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FilesResponse.class)
-            .headers(initHeaders(userCredentials, false));
+            .headers(initHeaders(userCredentials, false))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -89,7 +92,8 @@ public class FileManagementController {
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
-            .queryParams(requestQueryParams);
+            .queryParams(requestQueryParams)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return (FileResponse) HTTPRequest.build(requestEntity).postMultipart().getResponseEntity();
     }
