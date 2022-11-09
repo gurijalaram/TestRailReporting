@@ -240,7 +240,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.SCENARIO_NAME.getListName(),
