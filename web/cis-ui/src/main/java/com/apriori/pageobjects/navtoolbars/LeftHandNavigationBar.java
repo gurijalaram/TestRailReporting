@@ -1,5 +1,11 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.utils.enums.ScenarioStateEnum.COST_COMPLETE;
+import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
@@ -172,23 +178,23 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      * @return current page object
      */
     public LeftHandNavigationBar uploadAndCostScenario(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum) {
-        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(userCredentials)
+            .build());
+        scenariosUtil.postCostScenario(
+            ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .processGroup(processGroupEnum)
+                .digitalFactory(digitalFactoryEnum)
                 .user(userCredentials)
                 .build());
-        scenariosUtil.postCostScenario(
-                ComponentInfoBuilder.builder()
-                        .componentName(componentName)
-                        .scenarioName(scenarioName)
-                        .componentIdentity(scenarioItem.getComponentIdentity())
-                        .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                        .processGroup(processGroupEnum)
-                        .digitalFactory(digitalFactoryEnum)
-                        .user(userCredentials)
-                        .build());
-        cssComponent.getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, COST_COMPLETE");
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + COST_COMPLETE);
         scenariosUtil.postPublishScenario(scenarioItem);
         return this;
     }
@@ -207,20 +213,20 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                                                        String scenarioName,
                                                        UserCredentials currentUser) {
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser);
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly)
-                .uploadAssembly(componentAssembly);
+            .uploadAssembly(componentAssembly);
 
         assemblyUtils.costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly)
-                .publishAssembly(componentAssembly);
+            .publishAssembly(componentAssembly);
 
         return this;
     }
@@ -250,14 +256,14 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      * @return current page object
      */
     public LeftHandNavigationBar uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder myComponent = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(userCredentials)
-                .build());
+        ComponentInfoBuilder myComponent = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(userCredentials)
+            .build());
 
-        cssComponent.getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, NOT_COSTED");
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
         scenariosUtil.postPublishScenario(myComponent);
         return this;
     }

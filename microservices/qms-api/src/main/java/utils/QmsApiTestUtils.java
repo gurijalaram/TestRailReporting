@@ -5,8 +5,7 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.enums.CssSearch;
-import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.entity.response.ComponentResponse;
 import com.apriori.qms.entity.response.ScenariosResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
