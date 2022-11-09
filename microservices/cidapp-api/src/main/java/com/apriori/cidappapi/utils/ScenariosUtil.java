@@ -319,7 +319,8 @@ public class ScenariosUtil {
                 .body("scenario",
                     ScenarioRequest.builder()
                         .scenarioName(componentInfo.getScenarioName())
-                        .build());
+                        .build())
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -464,7 +465,8 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .build())
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.getUser().getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -486,7 +488,8 @@ public class ScenariosUtil {
                         .scenarioIdentity(null)
                         .build()))
                     .build())
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.getUser().getToken())
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -556,7 +559,7 @@ public class ScenariosUtil {
      * @return - scenarioResponse object
      */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfo) {
-        publishScenario(componentInfo, ScenarioResponse.class);
+        publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
         return getPublishedScenarioRepresentation(componentInfo, "PUBLISH", true);
     }
@@ -569,7 +572,7 @@ public class ScenariosUtil {
      * @param <T>           - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass) {
+    public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass, int expectedResponseCode) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfo.getUser().getToken())
@@ -579,8 +582,8 @@ public class ScenariosUtil {
                     .costMaturity("Initial".toUpperCase())
                     .override(false)
                     .status("New".toUpperCase())
-                    .build()
-                );
+                    .build())
+                .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).post();
     }

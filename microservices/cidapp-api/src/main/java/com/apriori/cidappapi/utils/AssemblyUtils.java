@@ -8,6 +8,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -136,7 +137,7 @@ public class AssemblyUtils {
      * @return - scenario object
      */
     public ResponseWrapper<ScenarioResponse> publishAssemblyExpectError(ComponentInfoBuilder component) {
-        return scenariosUtil.publishScenario(component, ErrorMessage.class);
+        return scenariosUtil.publishScenario(component, ErrorMessage.class, HttpStatus.SC_CONFLICT);
     }
 
     /**
