@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class IncludeAndExcludeTests {
@@ -490,7 +491,7 @@ public class IncludeAndExcludeTests {
             .excluded(false)
             .build();
 
-        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1), AssociationSuccessesFailures.class);
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Collections.singletonList(scenarioAssociation1), AssociationSuccessesFailures.class);
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError()).isEqualTo("Error");
@@ -540,7 +541,7 @@ public class IncludeAndExcludeTests {
             .excluded(true)
             .build();
 
-        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1), AssociationSuccessesFailures.class);
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Collections.singletonList(scenarioAssociation1), AssociationSuccessesFailures.class);
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError())
