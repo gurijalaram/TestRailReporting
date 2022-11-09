@@ -256,4 +256,19 @@ public class AssemblyUtils {
         publishAssembly(componentAssembly);
         return this;
     }
+
+    /**
+     * Delete an assembly and all it's sub-components
+     *
+     * @param componentAssembly - The Assembly ComponentIfo
+     * @param currentUser - The current user
+     * @return - Current Object
+     */
+    public AssemblyUtils deleteAssembly(ComponentInfoBuilder componentAssembly, UserCredentials currentUser) {
+        scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
+        componentAssembly.getSubComponents().forEach(
+            subComponent -> scenariosUtil.deleteScenario(subComponent.getComponentIdentity(), subComponent.getScenarioIdentity(), currentUser));
+
+        return this;
+    }
 }
