@@ -16,8 +16,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.stream.Collectors;
+import org.apache.http.HttpStatus;
 
 @Slf4j
 public class AuthorizationUtil {
@@ -53,7 +53,8 @@ public class AuthorizationUtil {
                         .email(email)
                         .build())
                     .build())
-                .build());
+                .build())
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }

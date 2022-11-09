@@ -4,10 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.cidappapi.utils.PeopleUtil;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -181,7 +178,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .openComponents()
             .selectTableView();
 
-        String componentIdentity = cssComponent.getComponentItem("3571050", scenarioName, currentUser).getScenarioIdentity();
+        String componentIdentity = cssComponent.findFirst("3571050", scenarioName, currentUser).getScenarioIdentity();
 
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("1");
