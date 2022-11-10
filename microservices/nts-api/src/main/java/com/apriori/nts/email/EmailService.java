@@ -7,6 +7,7 @@ import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -34,7 +35,7 @@ import javax.mail.internet.MimeMultipart;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = UserUtil.getUser().getCloudContext();
+    private final String cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(UserUtil.getUser());
     private Map<String, String> headers = new HashMap<String, String>() {{
             put("ap-cloud-context", cloudContext);
         }};
