@@ -30,7 +30,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
+import com.utils.LengthEnum;
 import com.utils.MassEnum;
+import com.utils.TimeEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -452,6 +454,44 @@ public class SettingsTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost").contains("€"));
         softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6363"})
+    @Description("Validate User Preferences are for single user only")
+    public void settingsDifferentUsers() {
+
+        UserCredentials user1 = UserUtil.getUser();
+        UserCredentials user2 = UserUtil.getUser();
+        new UserPreferencesUtil().resetSettings(user1);
+        new UserPreferencesUtil().resetSettings(user2);
+
+        loginPage = new CidAppLoginPage(driver);
+
+        displayPreferencesPage = loginPage.login(user1)
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectLength(LengthEnum.MILLIMETER)
+            .selectMass(MassEnum.GRAM)
+            .selectTime(TimeEnum.MILLISECOND)
+            .submit(ExplorePage.class)
+            .logout()
+            .login(user2)
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectLength(LengthEnum.METER)
+            .selectMass(MassEnum.KILOGRAM)
+            .selectTime(TimeEnum.MINUTE)
+            .submit(ExplorePage.class)
+            .logout()
+            .login(user1)
+            .openSettings();
+
+        softAssertions.assertThat(displayPreferencesPage.getLength()).isEqualTo("Millimeter");
+        softAssertions.assertThat(displayPreferencesPage.getMass()).isEqualTo("Gram");
+        softAssertions.assertThat(displayPreferencesPage.getTime()).isEqualTo("Millisecond");
 
         softAssertions.assertAll();
     }
