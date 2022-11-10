@@ -380,7 +380,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
         List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();

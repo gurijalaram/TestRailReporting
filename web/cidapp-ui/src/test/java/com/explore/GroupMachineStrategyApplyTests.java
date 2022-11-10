@@ -80,7 +80,7 @@ public class GroupMachineStrategyApplyTests extends TestBase {
 
         multiComponents.forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
-                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_INCOMPLETE).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_INCOMPLETE)).hasSizeGreaterThan(0));
 
         componentBasicPage = explorePage.refresh()
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
@@ -94,7 +94,7 @@ public class GroupMachineStrategyApplyTests extends TestBase {
 
         multiComponents.forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
-                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)).hasSizeGreaterThan(0));
 
         softAssertions.assertAll();
     }
