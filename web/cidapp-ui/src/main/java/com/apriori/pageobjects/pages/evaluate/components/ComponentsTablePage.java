@@ -148,16 +148,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     }
 
     /**
-     * Open configure page
-     *
-     * @param element - the configure button
-     * @return new page object
-     */
-    public ConfigurePage configure(WebElement element) {
-        return assembliesComponentsController.configure(element);
-    }
-
-    /**
      * Open filters page
      *
      * @return new page object
