@@ -172,8 +172,6 @@ public abstract class SDSTestUtil extends TestUtil {
 
         String uploadedComponentResourceName = new ComponentsUtil()
             .postCadFiles(componentInfo)
-            .getResponseEntity()
-            .getCadFiles()
             .get(0)
             .getResourceName();
 
@@ -218,7 +216,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + " not_costed").getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + " not_costed");
     }
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {

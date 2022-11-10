@@ -1,9 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.not;
-
 import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.customizations.ProcessGroups;
 import com.apriori.cidappapi.utils.CustomizationUtil;
@@ -15,6 +11,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,6 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListProcessGroupTests {
+
+    private SoftAssertions softAssertions;
 
     @Test
     @TestRail(testCaseId = {"6197"})
@@ -48,7 +47,11 @@ public class ListProcessGroupTests {
             .orElseThrow(AssertionError::new)
             .collect(Collectors.toList());
 
-        ignoredProcessGroups.forEach(ignoredProcessGroup -> assertThat(new ArrayList<>(processGroupResponse), not(hasItem(ignoredProcessGroup))));
+        softAssertions = new SoftAssertions();
+
+        ignoredProcessGroups.forEach(ignoredProcessGroup -> softAssertions.assertThat(new ArrayList<>(processGroupResponse)).doesNotContain(ignoredProcessGroup));
+
+        softAssertions.assertAll();
     }
 
     @Ignore("Assemblies cannot be upload")
@@ -67,6 +70,10 @@ public class ListProcessGroupTests {
             .orElseThrow(AssertionError::new)
             .collect(Collectors.toList());
 
-        Arrays.stream(AssemblyProcessGroupEnum.getNames()).forEach(assemblyProcessGroup -> assertThat(new ArrayList<>(processGroupResponse), not(hasItem(assemblyProcessGroup))));
+        softAssertions = new SoftAssertions();
+
+        Arrays.stream(AssemblyProcessGroupEnum.getNames()).forEach(assemblyProcessGroup -> softAssertions.assertThat(new ArrayList<>(processGroupResponse)).doesNotContain(assemblyProcessGroup));
+
+        softAssertions.assertAll();
     }
 }

@@ -6,7 +6,9 @@ import static org.hamcrest.core.Is.is;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -15,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
@@ -31,9 +34,11 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     private static ComponentInfoBuilder componentAssembly2;
     private static ComponentInfoBuilder componentAssembly3;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private static UserCredentials currentUser;
     private static String scenarioName;
     SoftAssertions softAssertions = new SoftAssertions();
+    private CssComponent cssComponent = new CssComponent();
 
     public IncludeAndExcludeNestedAssemblyTests() {
         super();
@@ -138,6 +143,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .navigateToScenario(componentAssembly3)
             .openComponents()
             .selectTableView()
+            .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
@@ -147,5 +153,67 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "12196")
+    @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")
+    public void testExcludeRepeatingComponent() {
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .openScenario(SUB_ASSEMBLY, scenarioName)
+            .openComponents()
+            .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("3571050")).isEqualTo(true);
+
+        componentsTablePage = componentsTreePage
+            .closePanel()
+            .costScenario()
+            .clickExplore()
+            .navigateToScenario(componentAssembly3)
+            .openComponents()
+            .selectTableView();
+
+        String componentIdentity = cssComponent.findFirst("3571050", scenarioName, currentUser).getScenarioIdentity();
+
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("1");
+
+        componentsTreePage = componentsTablePage.closePanel()
+            .clickExplore()
+            .navigateToScenario(componentAssembly1)
+            .openComponents()
+            .selectSubAssemblySubComponent("3571050", SUB_SUB_ASSEMBLY)
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("3571050")).isEqualTo(true);
+
+        componentsTablePage = componentsTreePage
+            .closePanel()
+            .costScenario()
+            .clickExplore()
+            .navigateToScenario(componentAssembly3)
+            .openComponents()
+            .selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("2");
+
+        componentsTablePage.selectTreeView()
+            .selectSubAssemblySubComponent("3571050", TOP_LEVEL)
+            .selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .closePanel()
+            .costScenario()
+            .openComponents()
+            .selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("3");
+
+        softAssertions.assertAll();
     }
 }

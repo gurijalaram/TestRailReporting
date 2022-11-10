@@ -39,7 +39,9 @@ public enum ColumnsEnum {
     ANNUAL_VOLUME("Annual Volume"),
     BATCH_SIZE("Batch Size"),
     DFM_RISK("DFM Risk"),
-    FULLY_BURDENED_COST("Fully Burdened Cost");
+    FULLY_BURDENED_COST("Fully Burdened Cost"),
+    EXCLUDED("Excluded"),
+    QUANTITY("Quantity");
 
     private final String columns;
 

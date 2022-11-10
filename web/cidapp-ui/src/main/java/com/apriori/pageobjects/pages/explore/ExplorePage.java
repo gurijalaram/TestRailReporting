@@ -414,7 +414,7 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
         List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
@@ -490,5 +490,17 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage addColumn(ColumnsEnum columnToAdd) {
         scenarioTableController.addColumn(columnToAdd);
         return this;
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
 }
