@@ -46,7 +46,7 @@ public class CostingInput {
     @Builder
     public static class SecondaryProcesses {
         @JsonProperty("Other Secondary Processes")
-        private String otherSecondaryProcesses;
+        private List<String> otherSecondaryProcesses;
     }
 
     public static class SecondaryDigitalFactories {
