@@ -1,6 +1,6 @@
-package com.apriori.entity.request;
+package com.apriori.cidappapi.entity.request.operators;
 
-import com.apriori.entity.enums.Direction;
+import com.apriori.cidappapi.entity.enums.Direction;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,14 +2,14 @@ package com.apriori.tests.newendpoint;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.cidappapi.entity.enums.Direction;
+import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
+import com.apriori.cidappapi.entity.request.operators.LogicalOperator;
+import com.apriori.cidappapi.entity.request.operators.Operator;
+import com.apriori.cidappapi.entity.request.operators.Params;
+import com.apriori.cidappapi.entity.request.operators.Query;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
-import com.apriori.entity.enums.Direction;
 import com.apriori.entity.request.ErrorRequestResponse;
-import com.apriori.entity.request.LogicalOperator;
-import com.apriori.entity.request.Operator;
-import com.apriori.entity.request.Params;
-import com.apriori.entity.request.Query;
-import com.apriori.entity.request.ScenarioIterationRequest;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

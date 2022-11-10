@@ -1,9 +1,9 @@
 package com.apriori.cidappapi.utils;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
 import com.apriori.entity.enums.CssAPIEnum;
 import com.apriori.entity.request.ErrorRequestResponse;
-import com.apriori.entity.request.ScenarioIterationRequest;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;

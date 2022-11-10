@@ -4,10 +4,10 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.cidappapi.entity.enums.Direction;
+import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
+import com.apriori.cidappapi.entity.request.operators.Params;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
-import com.apriori.entity.enums.Direction;
-import com.apriori.entity.request.Params;
-import com.apriori.entity.request.ScenarioIterationRequest;
 import com.apriori.entity.response.CostingInput;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;

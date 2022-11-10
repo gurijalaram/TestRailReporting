@@ -1,4 +1,4 @@
-package com.apriori.entity.request;
+package com.apriori.cidappapi.entity.request.operators;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

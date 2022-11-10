@@ -1,4 +1,4 @@
-package com.apriori.entity.request;
+package com.apriori.cidappapi.entity.request.operators;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.apriori.entity.enums;
+package com.apriori.cidappapi.entity.enums;
 
 public enum Direction {
     ASC("ASC"),
