@@ -8,6 +8,7 @@ import com.apriori.utils.enums.DeploymentsAPIEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -73,19 +75,21 @@ public class AuthorizationUtil {
      * Gets deployments
      *
      * @param userCredentials - UserCredentials instance containing user details to use in api call
-     * @return Instance of GetDeploymentsResponse with ResponseWrapper
+     * @param queryParams - Map of key value pairs to add to url
+     * @return List of Deployment Items
      */
-    private ResponseWrapper<String> getDeployments(UserCredentials userCredentials) {
+    private List<DeploymentItem> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
             .token(userCredentials.getToken())
             .inlineVariables(
                 PropertiesContext.get("${env}.customer_identity"),
-                PropertiesContext.get("${env}.secret_key"),
-                PropertiesContext.get("${env}.deployment_name")
-            );
+                PropertiesContext.get("${env}.secret_key")
+            )
+            .queryParams(queryParams)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        return HTTPRequest.build(requestEntity).get();
+        return JsonManager.convertBodyToJson(HTTPRequest.build(requestEntity).get(), GetDeploymentsResponse.class).getItems();
     }
 
     /**
@@ -94,8 +98,11 @@ public class AuthorizationUtil {
      * @param userCredentials UserCredentials instance containing user details to use in api call
      * @return GetDeploymentsResponse instance
      */
-    private GetDeploymentsResponse getDeploymentsResponse(UserCredentials userCredentials) {
-        return JsonManager.convertBodyToJson(getDeployments(userCredentials), GetDeploymentsResponse.class);
+    private DeploymentItem getDeploymentByName(UserCredentials userCredentials, String deploymentName) {
+        QueryParams filterMap = new QueryParams();
+        filterMap.put("name[EQ]", deploymentName);
+        List<DeploymentItem> deploymentItems = getDeploymentItems(userCredentials, filterMap);
+        return deploymentItems.stream().findFirst().orElseThrow(() -> new RuntimeException("Deployment not found"));
     }
 
     /**
@@ -109,27 +116,19 @@ public class AuthorizationUtil {
         String installationNameFromConfig = PropertiesContext.get("${env}.installation_name");
         String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
 
-        DeploymentItem deploymentItem = null;
-        InstallationItem installationItem = null;
-        ApplicationItem applicationItem = null;
+        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("${env}.deployment_name"));
 
-        try {
-            deploymentItem = getDeploymentsResponse(userCredentials).getItems().get(0);
+        InstallationItem installationItem = deploymentItem.getInstallations()
+            .stream()
+            .filter(element -> element.getName().equals(installationNameFromConfig))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
-            installationItem = deploymentItem.getInstallations()
-                .stream()
-                .filter(element -> element.getName().equals(installationNameFromConfig))
-                .limit(1)
-                .collect(Collectors.toList()).get(0);
-
-            applicationItem = installationItem.getApplications()
-                .stream()
-                .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
-                .limit(1)
-                .collect(Collectors.toList()).get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ApplicationItem applicationItem = installationItem.getApplications()
+            .stream()
+            .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
+            .limit(1)
+            .collect(Collectors.toList()).get(0);
 
         return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
     }
