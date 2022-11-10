@@ -22,6 +22,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -53,6 +54,7 @@ public class UpdateCADFileTests extends TestBase {
     private final String modifiedComponentExtension = ".prt.2";
     private final String originalAsmExtension = ".asm.1";
     private final String modifiedAsmExtension = ".asm.2";
+    private final String topLevelAsmExtension = ".asm.3";
 
     private String autoBotAsm = "autobotasm";
     private String autoHelm = "autoparthelm";
@@ -62,17 +64,29 @@ public class UpdateCADFileTests extends TestBase {
     private String autoHand = "autoparthand";
     private String autoLeg = "autopartleg";
     private String autoFoot = "autopartfoot";
+    private String autoSword = "autosword";
+    private String autoPommel = "autopommel";
+    private String autoHandle = "autohandle";
+    private String autoGuard = "autoguard";
+    private String autoBlade = "autoblade";
     private ComponentInfoBuilder assemblyInfo;
+    private ComponentInfoBuilder subAssemblyInfo;
 
     @After
     public void deleteScenarios() {
         if (currentUser != null) {
             assemblyUtils.deleteAssembly(assemblyInfo, currentUser);
+            assemblyInfo = null;
+        }
+        if (subAssemblyInfo != null) {
+            assemblyUtils.deleteAssembly(subAssemblyInfo, currentUser);
+            subAssemblyInfo = null;
         }
     }
     private File modifiedAutoAsm = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoBotAsm + modifiedAsmExtension);
     private File autoHelmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHelm + componentExtension);
     private File modifiedAutoHeadFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHead + modifiedComponentExtension);
+    private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
     @TestRail(testCaseId = {"10903", "10908", "10909"})
@@ -143,6 +157,8 @@ public class UpdateCADFileTests extends TestBase {
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
 
+        scenarioUtil.publishScenario(assemblyInfo.getSubComponents().get(5), null);
+
         componentsListPage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName)
             .openComponents();
@@ -152,6 +168,70 @@ public class UpdateCADFileTests extends TestBase {
         soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is enabled").isTrue();
         componentsListPage.multiSelectSubcomponents(autoTorso + "," + scenarioName);
         soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after 2 selected").isFalse();
+
+        componentsListPage.multiSelectSubcomponents(autoArm + "," + scenarioName, autoTorso + "," + scenarioName);
+
+        soft.assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.PUBLIC, autoFoot.toUpperCase())).as("Verify sub-component is Public").isTrue();
+        componentsListPage.multiSelectSubcomponents(autoFoot + "," + scenarioName);
+        soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after Public sub-component selected").isFalse();
+
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12131", "", ""})
+    @Description("Validate Update CAD file for an assembly scenario that is CAD connected and uncosted")
+    public void updateSubAssemblyCADFileTest() {
+        SoftAssertions soft = new SoftAssertions();
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
+        List<String> subAsmComponents = Arrays.asList(autoPommel, autoGuard, autoBlade);
+
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+
+        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+
+        assemblyUtils.uploadSubComponents(subAssemblyInfo);
+        assemblyUtils.uploadAssembly(subAssemblyInfo);
+
+        assemblyUtils.uploadSubComponents(assemblyInfo);
+        assemblyUtils.uploadAssembly(assemblyInfo);
+
+        evaluatePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(autoBotAsm, scenarioName);
+        componentsListPage = evaluatePage.openComponents();
+
+        componentsListPage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is struck out").isTrue();
+        componentsListPage.multiSelectSubcomponents(autoHandle + "," + scenarioName)
+            .updateCadFile(autoHandleFile);
+
+        List<ScenarioItem> autoHandleDetails = componentsUtil.getUnCostedComponent(autoHandle, scenarioName, currentUser);
+
+        ComponentInfoBuilder handleInfo = ComponentInfoBuilder.builder()
+            .scenarioName(scenarioName)
+            .scenarioIdentity(autoHandleDetails.get(0).getScenarioIdentity())
+            .componentIdentity(autoHandleDetails.get(0).getComponentIdentity())
+            .componentName(autoHandle)
+            .user(currentUser)
+            .build();
+
+        subAssemblyInfo.addSubComponent(handleInfo);
+
+        componentsListPage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsListPage.getScenarioState(autoHandle, scenarioName))
+            .as("Verify that CAD file update is being processed").isEqualTo("gear");
+        componentsListPage.checkSubcomponentState(subAssemblyInfo, autoHandle);
+        evaluatePage.clickRefresh(EvaluatePage.class);
+        componentsListPage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsListPage.getScenarioState(autoHandle, scenarioName))
+            .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
+        //componentsListPage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is not struck out").isFalse();
+        soft.assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.CAD, autoHandle)).as("Missing part now CAD Connected").isTrue();
 
         soft.assertAll();
     }
