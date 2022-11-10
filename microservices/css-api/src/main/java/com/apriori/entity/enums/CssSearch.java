@@ -1,4 +1,4 @@
-package com.apriori.css.entity.enums;
+package com.apriori.entity.enums;
 
 public enum CssSearch {
     COMPONENT_NAME_EQ("componentName[EQ],"),

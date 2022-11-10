@@ -1,12 +1,11 @@
-package com.apriori.entity.apicalls;
+package com.apriori.cidappapi.utils;
 
-import com.apriori.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.entity.enums.CssAPIEnum;
 import com.apriori.entity.request.ErrorRequestResponse;
 import com.apriori.entity.request.ScenarioIterationRequest;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.ComponentsUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -30,7 +29,7 @@ import java.util.regex.Pattern;
 public class ScenarioIterationService {
 
     private UserCredentials currentUser;
-    private final  ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
 
     public ScenarioIterationService() {
         currentUser = UserUtil.getUser();
@@ -45,9 +44,9 @@ public class ScenarioIterationService {
     public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
-                        .token(currentUser.getToken())
-                    .queryParams(queryParams);
+            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+                .token(currentUser.getToken())
+                .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -59,9 +58,9 @@ public class ScenarioIterationService {
     public ResponseWrapper<ErrorRequestResponse> getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
-                    .body(scenarioIterationRequest)
-                        .token(currentUser.getToken());
+            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
+                .body(scenarioIterationRequest)
+                .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -84,7 +83,7 @@ public class ScenarioIterationService {
      * (especially when running on local env)
      */
     public void loadDataIfNotExists() {
-        Map<String,String> dataMap = new HashMap();
+        Map<String, String> dataMap = new HashMap();
         dataMap.put("bracket_basic.prt", "Sheet Metal - Stretch Forming");
         dataMap.put("case_002_006-8611543_prt.stp", "Stock Machining");
         dataMap.put("oldham.asm.1", "Assembly");
@@ -113,12 +112,12 @@ public class ScenarioIterationService {
             File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
             String scenarioName = ("AutoAPI" + entry.getValue() + component[0]).replace(" ", "");
 
-            componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                    .componentName(componentName)
-                    .scenarioName(scenarioName)
-                    .resourceFile(resourceFile)
-                    .user(currentUser)
-                    .build());
+            componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(currentUser)
+                .build());
         }
     }
 
@@ -131,7 +130,7 @@ public class ScenarioIterationService {
         queryParams.use(property, searchedItem);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                getScenarioIterationWithParams(queryParams);
+            getScenarioIterationWithParams(queryParams);
         if (scenarioIterationRespond.getResponseEntity().getItems().size() > 0) {
             return true;
         }
@@ -175,7 +174,7 @@ public class ScenarioIterationService {
      */
 
     public boolean validateIfTrueWithSwOperator(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
-        Pattern p = Pattern.compile("BR.*",Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("BR.*", Pattern.CASE_INSENSITIVE);
 
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
             Matcher m = p.matcher(item.getComponentName());

@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.COST_COMPLETE;
 import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 
@@ -30,7 +30,6 @@ import java.util.List;
 
 @Slf4j
 public class LeftHandNavigationBar extends CisHeaderBar {
-
 
     @FindBy(xpath = "//button[@data-testid='non-collapsed']")
     private WebElement hamburgerIcon;

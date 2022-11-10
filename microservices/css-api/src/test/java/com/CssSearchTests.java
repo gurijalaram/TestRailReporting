@@ -1,7 +1,7 @@
 package com;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
 
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.utils.CssComponent;

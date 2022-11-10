@@ -4,8 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.utils.ComponentsUtil;
-import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -26,8 +24,6 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
-    private final ComponentsUtil componentsUtil = new ComponentsUtil();
-    private CssComponent cssComponent = new CssComponent();
 
     public CisLoginPage(WebDriver driver) {
         this.driver = driver;

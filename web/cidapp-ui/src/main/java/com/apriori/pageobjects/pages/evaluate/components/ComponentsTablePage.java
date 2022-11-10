@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 

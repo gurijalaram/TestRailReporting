@@ -1,8 +1,8 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;

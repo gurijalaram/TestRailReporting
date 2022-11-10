@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.entity.apicalls.ScenarioIterationService;
+import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.TestRail;
@@ -45,13 +45,13 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
-                        .findFirst().orElse(null);
+            .findFirst().orElse(null);
 
-        assertEquals("BRACKET_BASIC",scenarioItem.getComponentDisplayName());
-        assertEquals("bracket_basic.prt",scenarioItem.getComponentFilename());
+        assertEquals("BRACKET_BASIC", scenarioItem.getComponentDisplayName());
+        assertEquals("bracket_basic.prt", scenarioItem.getComponentFilename());
     }
 
     @Test
@@ -62,12 +62,12 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentName[NE]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
-        assertEquals(null,scenarioIterationRespond.getResponseEntity().getItems().stream()
-                .filter(p -> p.getComponentDisplayName().equals("BRACKET_BASIC"))
-                .findFirst()
-                .orElse(null));
+        assertEquals(null, scenarioIterationRespond.getResponseEntity().getItems().stream()
+            .filter(p -> p.getComponentDisplayName().equals("BRACKET_BASIC"))
+            .findFirst()
+            .orElse(null));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentType[IN]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
     }
@@ -91,7 +91,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentType[NI]", "PART|ASSEMBLY");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertFalse(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
     }
@@ -105,7 +105,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithAndOperator(scenarioIterationRespond));
     }
@@ -119,7 +119,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(queryParams);
+            scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithSwOperator(scenarioIterationRespond));
     }

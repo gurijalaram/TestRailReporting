@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientState;
 import static org.junit.Assert.assertEquals;
