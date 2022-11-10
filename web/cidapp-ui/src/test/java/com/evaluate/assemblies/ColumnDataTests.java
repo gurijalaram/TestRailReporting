@@ -68,10 +68,10 @@ public class ColumnDataTests extends TestBase {
         explorePage = loginPage.login(currentUser)
             .selectFilter("Recent");
 
-        String hingeIdentity = cssComponent.getComponentItem(hinge_assembly, scenarioName, currentUser).getScenarioIdentity();
-        String bigRingIdentity = cssComponent.getComponentItem(big_ring, scenarioName, currentUser).getScenarioIdentity();
-        String pinIdentity = cssComponent.getComponentItem(pin, scenarioName, currentUser).getScenarioIdentity();
-        String smallRingIdentity = cssComponent.getComponentItem(small_ring, scenarioName, currentUser).getScenarioIdentity();
+        String hingeIdentity = cssComponent.findFirst(hinge_assembly, scenarioName, currentUser).getScenarioIdentity();
+        String bigRingIdentity = cssComponent.findFirst(big_ring, scenarioName, currentUser).getScenarioIdentity();
+        String pinIdentity = cssComponent.findFirst(pin, scenarioName, currentUser).getScenarioIdentity();
+        String smallRingIdentity = cssComponent.findFirst(small_ring, scenarioName, currentUser).getScenarioIdentity();
 
         softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("5,500");
 

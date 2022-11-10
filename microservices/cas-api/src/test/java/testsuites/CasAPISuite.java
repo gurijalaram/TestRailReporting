@@ -12,6 +12,7 @@ import com.apriori.tests.CasCustomersTests;
 import com.apriori.tests.CasCustomersUsersTests;
 import com.apriori.tests.CasDeploymentsTests;
 import com.apriori.tests.CasIdentityProvidersTests;
+import com.apriori.tests.CasSiteLicenseSublicenseTests;
 import com.apriori.tests.CasSiteLicenseTests;
 import com.apriori.tests.CasSitesTests;
 import com.apriori.tests.CasUserSubLicensesTests;
@@ -40,7 +41,8 @@ import org.junit.runners.Suite;
     CasCustomerAssociationTests.class,
     CasCustomerUserAccessControlsTests.class,
     CasBulkGrantDenyAccessTests.class,
-    CasSiteLicenseTests.class
+    CasSiteLicenseTests.class,
+    CasSiteLicenseSublicenseTests.class
 })
 public class CasAPISuite {
 }
