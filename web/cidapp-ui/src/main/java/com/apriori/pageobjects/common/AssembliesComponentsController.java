@@ -109,18 +109,6 @@ public class AssembliesComponentsController {
     }
 
     /**
-     * Open configure page
-     *
-     * @param element - the configure button
-     * @return new page object
-     */
-    public ConfigurePage configure(WebElement element) {
-        pageUtils.waitForElementAndClick(element);
-        return new ConfigurePage(driver);
-    }
-
-
-    /**
      * Opens cost inputs page
      *
      * @return new page object
