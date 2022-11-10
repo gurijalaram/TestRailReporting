@@ -1,7 +1,6 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilderSettings;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -27,7 +26,7 @@ public class GroupCostingTests {
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;
-    private SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions;
     private UserCredentials currentUser;
 
     private final List<String> subComponentNames = Arrays.asList(
@@ -67,11 +66,12 @@ public class GroupCostingTests {
 
         ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentsToCost);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupCostResponse.getStatusCode()).as("Group Cost Response Code").isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(groupCostResponse.getResponseEntity().getSuccesses().size()).as("Group Cost Successes").isEqualTo(subComponentsToCost.length);
         softAssertions.assertThat(groupCostResponse.getResponseEntity().getFailures().size()).as("Group Cost Failures").isEqualTo(0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -97,11 +97,13 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(
             groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'groupItems' should be less than or equal to 10.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -135,9 +137,10 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> error = scenariosUtil.postGroupCostNullScenarios(componentAssembly);
 
+        softAssertions = new SoftAssertions();
+
         componentAssembly.getSubComponents().forEach(o -> softAssertions.assertThat(o.getScenarioItem().getScenarioState()).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
-        softAssertions.assertThat(error.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(error.getResponseEntity().getMessage()).contains("validation failures were found");
 
         softAssertions.assertAll();
@@ -170,11 +173,11 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(
-            groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'componentIdentity' should not be null.");
+        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'componentIdentity' should not be null.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -204,11 +207,11 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(
-            groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'scenarioIdentity' should not be null.");
+        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'scenarioIdentity' should not be null.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -238,10 +241,10 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(
-            groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'costingTemplateIdentity' should not be null.");
+        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'costingTemplateIdentity' should not be null.");
+
+        softAssertions.assertAll();
     }
 }

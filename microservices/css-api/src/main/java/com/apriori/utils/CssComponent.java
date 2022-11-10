@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
@@ -43,7 +42,7 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getComponentParts(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getComponentParts(UserCredentials userCredentials, String... paramKeysValues) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -51,20 +50,18 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
 
-                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+                if (scenarioItemList.size() > 0 &&
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
-
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
 
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    return cssComponentResponse;
+                    return scenarioItemList;
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -73,8 +70,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
-        );
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
@@ -85,11 +81,11 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ScenarioItem getComponentItem(String componentName, String scenarioName, UserCredentials userCredentials) {
+    public ScenarioItem findFirst(String componentName, String scenarioName, UserCredentials userCredentials) {
         return getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.toUpperCase(), SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .getResponseEntity()
-            .getItems()
-            .get(0);
+            .stream()
+            .findFirst()
+            .orElse(null);
     }
 
     /**
@@ -98,7 +94,7 @@ public class CssComponent {
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
+     * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         QueryParams queryParams = new QueryParams();
@@ -106,8 +102,11 @@ public class CssComponent {
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
-        // TODO: 26/10/2022 cn - wrap in a try/catch/throw, when incorrect k,v is entered its easily debuggable
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
 
         return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
     }
@@ -119,7 +118,7 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -127,17 +126,15 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
 
-                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+                if (scenarioItemList.size() > 0 &&
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
-
-                    cssComponentResponse.getResponseEntity().getItems().stream()
+                    scenarioItemList.stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
                             .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
-                    return cssComponentResponse;
+                    return scenarioItemList;
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -146,8 +143,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
-        );
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
@@ -159,7 +155,8 @@ public class CssComponent {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken())
-            .socketTimeout(SOCKET_TIMEOUT);
+            .socketTimeout(SOCKET_TIMEOUT)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
