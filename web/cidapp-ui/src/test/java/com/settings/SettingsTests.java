@@ -465,6 +465,9 @@ public class SettingsTests extends TestBase {
 
         UserCredentials user1 = UserUtil.getUser();
         UserCredentials user2 = UserUtil.getUser();
+        new UserPreferencesUtil().resetSettings(user1);
+        new UserPreferencesUtil().resetSettings(user2);
+
         loginPage = new CidAppLoginPage(driver);
 
         displayPreferencesPage = loginPage.login(user1)
