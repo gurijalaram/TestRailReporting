@@ -447,7 +447,7 @@ public class IncludeAndExcludeTests extends TestBase {
         subComponentNames.forEach(component ->
             softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component)).isTrue());
 
-        componentsTreePage = componentsTreePage.closePanel()
+        componentsTreePage.closePanel()
             .clickActions()
             .updateCadFile(assemblyResourceFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
@@ -456,7 +456,7 @@ public class IncludeAndExcludeTests extends TestBase {
         softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
-        componentsTreePage = componentsTreePage.clickScenarioCheckbox(componentName)
+        componentsTreePage.clickScenarioCheckbox(componentName)
             .updateCadFile(componentResourceFile)
             .closePanel()
             .clickRefresh(ComponentsTreePage.class);
@@ -511,7 +511,7 @@ public class IncludeAndExcludeTests extends TestBase {
             .confirmCost("Yes")
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(subAssemblyName + "," + scenarioName, missingSubcomponent + "," + "Initial");
+            .multiHighlightScenarios(subAssemblyName + "," + scenarioName, missingSubcomponent + "," + "Initial");
 
         assertThat(componentsTablePage.isSetInputsEnabled(), is(equalTo(false)));
     }

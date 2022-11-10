@@ -236,7 +236,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return new page object
      */
     public ComponentsTreePage updateCadFile(File filePath) {
-        assembliesComponentsController.updateCadFile(filePath, ComponentsTablePage.class);
+        assembliesComponentsController.updateCadFile(filePath, ComponentsTreePage.class);
         return this;
     }
 
@@ -260,6 +260,15 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public ComponentsTreePage setPagination() {
         componentTableActions.setPagination();
         return this;
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isSetInputsEnabled() {
+        return assembliesComponentsController.isSetInputsEnabled();
     }
 
 
