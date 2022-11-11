@@ -290,7 +290,10 @@ staging:
   ap_user_context:
   user_identity: 6AHL1HHGB15E
   customer_identity: 7G0JGBE2N4GM
-  base_url:
+  base_url: https://na-1-v22-1-demo.apriori-internal.${env}.apriori.net/
+
+  admin:
+      ui_url: ${staging.base_url}apriori/login
 
   cds:
     api_url: https://cds.na-1.staging.apriori.net/
