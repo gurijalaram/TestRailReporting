@@ -86,11 +86,13 @@ public class UpdateCADFileTests extends TestBase {
     private File modifiedAutoAsm = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoBotAsm + modifiedAsmExtension);
     private File autoHelmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHelm + componentExtension);
     private File modifiedAutoHeadFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHead + modifiedComponentExtension);
+    private File autoArmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoArm + componentExtension);
+    private File autoSwordFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoSword + originalAsmExtension);
     private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
-    @TestRail(testCaseId = {"10903", "10908", "10909"})
-    @Description("Validate Update CAD file for an assembly scenario that is CAD connected and uncosted")
+    @TestRail(testCaseId = {"10903", "10961", "10909"})
+    @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
         currentUser = UserUtil.getUser();
@@ -179,9 +181,9 @@ public class UpdateCADFileTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12131", "", ""})
-    @Description("Validate Update CAD file for an assembly scenario that is CAD connected and uncosted")
-    public void updateSubAssemblyCADFileTest() {
+    @TestRail(testCaseId = "11965")
+    @Description("Validate updating of CAD file for the sub-component of a sub-assembly via components table.")
+    public void updateSubAssemblyCADFilesFromComponentTableTest() {
         SoftAssertions soft = new SoftAssertions();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -195,7 +197,6 @@ public class UpdateCADFileTests extends TestBase {
             subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
 
         assemblyUtils.uploadSubComponents(subAssemblyInfo);
-        assemblyUtils.uploadAssembly(subAssemblyInfo);
 
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
@@ -203,6 +204,25 @@ public class UpdateCADFileTests extends TestBase {
         evaluatePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName);
         componentsListPage = evaluatePage.openComponents();
+
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        soft.assertThat(componentsListPage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.MISSING.getStatusIcon()))
+                .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
+
+        componentsListPage.multiSelectSubcomponents(autoSword + "," + scenarioName)
+            .updateCadFile(autoSwordFile);
+
+        List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
+        subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
+        subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
+
+        soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
+            .as("Verify that sub-assembly CAD file update is being processed").isEqualTo("gear");
+        // ToDo:- Find another way to wait for the sub-assembly to finish processing
+        componentsListPage.checkSubcomponentState(assemblyInfo, autoSword);
+        evaluatePage.clickRefresh(EvaluatePage.class);
+        soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
+            .as("Verify that sub-assembly CAD file update completed successfully").isEqualTo("circle-minus");
 
         componentsListPage.expandSubAssembly(autoSword, scenarioName);
         soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is struck out").isTrue();
@@ -229,9 +249,59 @@ public class UpdateCADFileTests extends TestBase {
         componentsListPage.expandSubAssembly(autoSword, scenarioName);
         soft.assertThat(componentsListPage.getScenarioState(autoHandle, scenarioName))
             .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
-        //componentsListPage.expandSubAssembly(autoSword, scenarioName);
         soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is not struck out").isFalse();
-        soft.assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.CAD, autoHandle)).as("Missing part now CAD Connected").isTrue();
+        soft.assertThat(componentsListPage.getRowDetails(autoHandle, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+            .as("Missing part now CAD Connected").isTrue();
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"", "10908", ""})
+    @Description("Validate updating sub-assembly and sub-component CAD files by opening new tab from Components Table.")
+    public void updateSubComponentCADFileTest() {
+        SoftAssertions soft = new SoftAssertions();
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<String> components = Arrays.asList(autoHead, autoTorso, autoHand, autoLeg, autoFoot);
+
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+
+        assemblyUtils.uploadSubComponents(assemblyInfo);
+        assemblyUtils.uploadAssembly(assemblyInfo);
+
+        componentsListPage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(autoBotAsm, scenarioName)
+            .openComponents();
+
+        soft.assertThat(componentsListPage.getListOfSubcomponents().contains(autoArm.toUpperCase())).as("Verify missing Arm component added as virtual part")
+            .isTrue();
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoArm)).as("Verify Arm sub-component is struck out").isTrue();
+
+        EvaluatePage secondaryEvaluatePage = componentsListPage.openAssembly(autoArm, scenarioName);
+        evaluatePage = secondaryEvaluatePage.clickActions()
+            .updateCadFile(autoArmFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
+            .closeNewlyOpenedTab();
+
+        componentsListPage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .openComponents();
+
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoArm))
+            .as("Verify Arm sub-component is no longer struck out").isFalse();
+        soft.assertThat(componentsListPage.getRowDetails(autoArm, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+            .as("Verify CAD connected icon is present");
+
+        List<ScenarioItem> autoArmDetails = componentsUtil.getUnCostedComponent(autoArm, scenarioName, currentUser);
+        ComponentInfoBuilder armInfo = ComponentInfoBuilder.builder()
+            .scenarioName(scenarioName)
+            .scenarioIdentity(autoArmDetails.get(0).getScenarioIdentity())
+            .componentIdentity(autoArmDetails.get(0).getComponentIdentity())
+            .componentName(autoArm)
+            .user(currentUser)
+            .build();
+
+        assemblyInfo.addSubComponent(armInfo);
 
         soft.assertAll();
     }
