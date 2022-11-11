@@ -171,8 +171,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return - boolean
      */
     public boolean isComponentNameDisplayedInTreeView(String componentName) {
-        By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
-        return pageUtils.waitForElementToAppear(componentText).isDisplayed();
+        return assembliesComponentsController.isComponentNameDisplayedInTreeView(componentName);
     }
 
     /**

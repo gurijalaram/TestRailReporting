@@ -590,4 +590,14 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
         return assembliesComponentsController.getColumnData(column, scenarioId, userCredentials);
     }
+
+    /**
+     * Check if subcomponents are in the tree view
+     *
+     * @param componentName - component name
+     * @return - boolean
+     */
+    public boolean isComponentNameDisplayedInTreeView(String componentName) {
+        return assembliesComponentsController.isComponentNameDisplayedInTreeView(componentName);
+    }
 }

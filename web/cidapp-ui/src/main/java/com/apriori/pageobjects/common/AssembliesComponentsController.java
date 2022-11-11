@@ -528,6 +528,17 @@ public class AssembliesComponentsController {
     public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
         return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
+
+    /**
+     * Check if subcomponents are in the tree view
+     *
+     * @param componentName - component name
+     * @return - boolean
+     */
+    public boolean isComponentNameDisplayedInTreeView(String componentName) {
+        By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
+        return pageUtils.waitForElementToAppear(componentText).isDisplayed();
+    }
 }
 
 
