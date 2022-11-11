@@ -70,7 +70,7 @@ public class NewUserTests extends TestBase {
     @After
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
-        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
     @Test
@@ -79,6 +79,7 @@ public class NewUserTests extends TestBase {
     @TestRail(testCaseId = {"4063", "4062", "4073"})
     public void testUserIsCreatedWithOnlyRequiredFields() {
         SoftAssertions soft = new SoftAssertions();
+        String userName = new GenerateStringUtil().generateUserName();
         List<String> labelsToCheck = Arrays.asList(
                 "User Name:",
                 "Identity:",
@@ -101,7 +102,7 @@ public class NewUserTests extends TestBase {
 
         newUserPage.testNewUserLabelAvailable(labelsToCheck, soft);
 
-        newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + email + ".com", "", "")
+        newUserPage.formFillNewUserDetails(userName, userName + "@" + email + ".com", "", "")
             .inputNamePrefix("");
 
         soft.assertThat(newUserPage.canSave())
@@ -114,8 +115,9 @@ public class NewUserTests extends TestBase {
 
         soft.assertAll();
 
-        newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + email + ".com", "Test", "User")
-                .save(UserProfilePage.class);
+        newUserPage.inputGivenName("Test")
+               .inputFamilyName("User")
+               .save(UserProfilePage.class);
 
         userIdentity = new UserProfilePage(driver).getUserIdentity();
 

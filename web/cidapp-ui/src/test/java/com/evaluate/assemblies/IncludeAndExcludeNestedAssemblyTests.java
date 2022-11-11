@@ -174,7 +174,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .openComponents()
             .selectTableView();
 
-        String componentIdentity = cssComponent.getComponentItem("3571050", scenarioName, currentUser).getScenarioIdentity();
+        String componentIdentity = cssComponent.findFirst("3571050", scenarioName, currentUser).getScenarioIdentity();
 
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("1");

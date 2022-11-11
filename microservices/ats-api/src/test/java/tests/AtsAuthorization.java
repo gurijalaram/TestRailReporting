@@ -17,7 +17,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 public class AtsAuthorization extends TestUtil {
@@ -28,7 +27,6 @@ public class AtsAuthorization extends TestUtil {
     public void generateTokenTest() {
         ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
     }
 
@@ -41,7 +39,6 @@ public class AtsAuthorization extends TestUtil {
         ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(
             userCredentials.getCloudContext(), userCredentials.getToken());
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getEmail(), is(equalTo(userCredentials.getEmail())));
     }
 }
