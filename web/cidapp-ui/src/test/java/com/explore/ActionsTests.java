@@ -17,6 +17,7 @@ import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -58,6 +59,7 @@ public class ActionsTests extends TestBase {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UpdateCadFilePage updateCadFilePage;
 
     public ActionsTests() {
         super();
@@ -861,5 +863,28 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5440"})
+    @Description("User can not update the 3D CAD with a differently named 3D CAD file")
+    public void updateWithDifferentCADFile() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        String componentName = "Bishop";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String componentName2 = "Machined Box AMERICAS";
+        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
+
+        currentUser = UserUtil.getUser();
+
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .updateCadFile(resourceFile2);
+
+        String expectedError = "The supplied CAD file (Machined Box AMERICAS.SLDPRT) cannot be used for this scenario. The name of the file must be Bishop.SLDPRT.";
+        assertThat(updateCadFilePage.getFileInputError(), is(equalTo(expectedError)));
     }
 }
