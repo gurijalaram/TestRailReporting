@@ -1,0 +1,9 @@
+{
+  "query": {
+    "filter": {
+      "and": [
+        {"equals": {}}
+      ]
+    }
+  }
+}

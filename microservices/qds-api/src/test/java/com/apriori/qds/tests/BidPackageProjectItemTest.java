@@ -1,7 +1,7 @@
 package com.apriori.qds.tests;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectItemResponse;
@@ -29,7 +29,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     private static ResponseWrapper<BidPackageProjectResponse> bidPackageProjectResponse;
     private static ResponseWrapper<BidPackageItemResponse> bidPackageItemResponse;
     private static ResponseWrapper<BidPackageProjectItemResponse> bidPackageProjectItemResponse;
-    UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String bidPackageProjectName;
     private static String userContext;
@@ -44,7 +44,7 @@ public class BidPackageProjectItemTest extends TestUtil {
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser)
             .getResponseEntity().getItems().get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
-        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName,bidPackageResponse.getResponseEntity().getIdentity(),currentUser);
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName, bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -86,7 +86,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageProjectItemResponse.getResponseEntity().getIdentity(),
-            currentUser,BidPackageProjectItemResponse.class);
+            currentUser, BidPackageProjectItemResponse.class);
 
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
     }
@@ -98,7 +98,7 @@ public class BidPackageProjectItemTest extends TestUtil {
         ResponseWrapper<BidPackageProjectItemsResponse> getBidPackageProjectItemResponse = BidPackageResources.getBidPackageProjectItems(
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            currentUser,BidPackageProjectItemsResponse.class);
+            currentUser, BidPackageProjectItemsResponse.class);
 
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getIsFirstPage()).isTrue();
@@ -112,7 +112,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             currentUser);
         BidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
-        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),bidPackageProjectResponse.getResponseEntity().getIdentity(),currentUser);
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
         BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertAll();
     }
