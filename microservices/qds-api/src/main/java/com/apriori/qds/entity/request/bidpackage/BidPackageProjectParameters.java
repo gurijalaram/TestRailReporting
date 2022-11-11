@@ -1,4 +1,4 @@
-package com.apriori.qds.entity.request.projects;
+package com.apriori.qds.entity.request.bidpackage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Project {
-    private String identity;
+public class BidPackageProjectParameters {
     private String name;
     private String description;
     private String status;
     private String type;
-    public ProjectProfile projectProfile;
+    public BidPackageProjectProfile projectProfile;
 }

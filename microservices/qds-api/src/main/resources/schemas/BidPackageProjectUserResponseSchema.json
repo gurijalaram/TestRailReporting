@@ -1,22 +1,9 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": [
-    "response"
-  ],
   "properties": {
     "response": {
       "type": "object",
-      "required": [
-        "identity",
-        "createdBy",
-        "createdAt",
-        "description",
-        "name",
-        "type",
-        "status",
-        "projectProfile",
-        "bidPackageIdentity"
-      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -27,25 +14,37 @@
         "createdAt": {
           "type": "string"
         },
-        "bidPackageIdentity": {
+        "updatedBy": {
           "type": "string"
         },
-        "name": {
+        "updatedAt": {
           "type": "string"
         },
-        "description": {
+        "userIdentity": {
           "type": "string"
         },
-        "type": {
+        "role": {
           "type": "string"
         },
-        "status": {
+        "projectIdentity": {
           "type": "string"
-        },
-        "projectProfile": {
-          "$ref": "projects/ProjectProfile.json"
         }
-      }
+      },
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "userIdentity",
+        "role",
+        "projectIdentity"
+      ],
+      "optional": [
+        "updatedBy",
+        "updatedAt"
+      ]
     }
-  }
+  },
+  "required": [
+    "response"
+  ]
 }
