@@ -77,9 +77,12 @@ public class UserCredentials {
     }
 
     public String getToken() {
+        if (token == null) {
+            generateToken();
+        }
         if (ChronoUnit.MINUTES.between(LocalTime.now(),
             Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
-                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES || token == null) {
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES) {
             generateToken();
         }
         return token;

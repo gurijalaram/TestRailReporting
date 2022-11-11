@@ -1,6 +1,8 @@
 package com.apriori.nts.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
 
 import com.apriori.nts.email.EmailService;
 import com.apriori.nts.entity.response.Email;
@@ -12,7 +14,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -30,8 +31,7 @@ public class EmailsTests extends TestHelper {
         //Send Email
         SendEmail sendEmail = emailService.sendEmail(
             subject,
-            Constants.EMAIL_CONTENT
-        ).getResponseEntity();
+            Constants.EMAIL_CONTENT).getResponseEntity();
 
         //Confirm Email Sent
         Boolean emailExists = emailService.validateEmail(subject);
@@ -39,12 +39,11 @@ public class EmailsTests extends TestHelper {
 
         //Get Single Email
         ResponseWrapper<Email> getEmailResponse = emailService.getEmail(sendEmail.getIdentity());
-        soft.assertThat(getEmailResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-
+        soft.assertThat(getEmailResponse.getResponseEntity().getSubject()).isEqualTo(subject);
 
         //Get All Emails, but filter by single identity
         ResponseWrapper<EmailsItems> getEmailsItemsResponse = emailService.getEmailsByIdentity(sendEmail.getIdentity());
-        soft.assertThat(getEmailsItemsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(getEmailsItemsResponse.getResponseEntity().getItems()).hasSizeGreaterThan(0);
 
         soft.assertAll();
     }
@@ -62,8 +61,7 @@ public class EmailsTests extends TestHelper {
         SendEmail sendEmail = emailService.sendEmailWithAttachment(
             subject,
             "NtsAttachment.txt",
-            Constants.EMAIL_CONTENT_W_ATTACHMENT
-        ).getResponseEntity();
+            Constants.EMAIL_CONTENT_W_ATTACHMENT).getResponseEntity();
 
         //Confirm Email Sent
         Boolean emailExists = emailService.validateEmail(subject);
@@ -71,11 +69,11 @@ public class EmailsTests extends TestHelper {
 
         //Get Single Email
         ResponseWrapper<Email> getEmailResponse = emailService.getEmail(sendEmail.getIdentity());
-        soft.assertThat(getEmailResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(getEmailResponse.getResponseEntity().getSubject()).isEqualTo(subject);
 
         //Get All Emails, but filter by single identity
         ResponseWrapper<EmailsItems> getEmailsItemsResponse = emailService.getEmailsByIdentity(sendEmail.getIdentity());
-        soft.assertThat(getEmailsItemsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(getEmailsItemsResponse.getResponseEntity().getItems()).hasSizeGreaterThan(0);
 
         soft.assertAll();
     }
@@ -86,7 +84,6 @@ public class EmailsTests extends TestHelper {
     public void getEmails() {
         EmailService emailService = new EmailService();
 
-        ResponseWrapper<EmailsItems> getEmailResponse = emailService.getEmails();
-        assertEquals(getEmailResponse.getStatusCode(), HttpStatus.SC_OK);
+        assertThat(emailService.getEmails().getResponseEntity().getItems(), hasSize(greaterThanOrEqualTo(0)));
     }
 }
