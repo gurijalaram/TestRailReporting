@@ -1,25 +1,23 @@
-package com.apriori.qds.entity.request.projects;
+package com.apriori.qds.entity.response.bidpackage;
 
+
+import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProjectProfile {
+@JsonRootName("response")
+@Schema(location = "BidPackageProjectItemResponseSchema.json")
+public class BidPackageProjectItemResponse {
     private String identity;
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    public String supplierViewPermissionIdentity;
-    public EmailReminder emailReminder;
-    public CommentReminder commentReminder;
+    private String bidPackageItemIdentity;
+    private String projectIdentity;
 }

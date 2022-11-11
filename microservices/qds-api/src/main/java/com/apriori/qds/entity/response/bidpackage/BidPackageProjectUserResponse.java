@@ -12,17 +12,16 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "BidPackageItemResponseSchema.json")
-public class BidPackageItemResponse {
-    public String identity;
+@Schema(location = "BidPackageProjectUserResponseSchema.json")
+public class BidPackageProjectUserResponse {
+    private String identity;
     private String createdBy;
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String updatedBy;
-    private String componentIdentity;
-    private String scenarioIdentity;
-    private String iterationIdentity;
-    private String bidPackageIdentity;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
+    private String userIdentity;
+    private String role;
+    private String projectIdentity;
 }

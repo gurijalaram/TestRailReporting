@@ -1,4 +1,4 @@
-package com.apriori.qds.entity.request.projects;
+package com.apriori.qds.entity.request.bidpackage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentReminder {
+public class EmailReminder {
     private boolean active;
     private String startDuration;
     private String frequencyValue;
