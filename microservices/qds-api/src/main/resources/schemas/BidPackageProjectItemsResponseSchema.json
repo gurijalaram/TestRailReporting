@@ -1,6 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "default": {},
   "required": [
     "response"
   ],
@@ -13,7 +13,7 @@
       "items": {
         "type": "array",
         "items": {
-          "$ref": "ProjectResponseSchema.json"
+          "$ref": "BidPackageProjectItemResponseSchema.json"
         }
       }
     }

@@ -14,22 +14,10 @@
         "createdAt": {
           "type": "string"
         },
-        "componentIdentity": {
+        "bidPackageItemIdentity": {
           "type": "string"
         },
-        "scenarioIdentity": {
-          "type": "string"
-        },
-        "iterationIdentity": {
-          "type": "string"
-        },
-        "bidPackageIdentity": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "string"
-        },
-        "updatedAt": {
+        "projectIdentity": {
           "type": "string"
         }
       },
@@ -37,14 +25,8 @@
         "identity",
         "createdBy",
         "createdAt",
-        "componentIdentity",
-        "scenarioIdentity",
-        "iterationIdentity"
-      ],
-      "optional": [
-        "bidPackageIdentity",
-        "updatedBy",
-        "updatedAt"
+        "bidPackageItemIdentity",
+        "projectIdentity"
       ]
     }
   },

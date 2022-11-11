@@ -2,18 +2,34 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "required": [
-    "supplierViewPermissionIdentity",
     "emailReminder",
     "commentReminder"
   ],
   "optional": [
-    "identity"
+    "identity",
+    "supplierViewPermissionIdentity",
+    "updatedBy",
+    "updatedAt",
+    "createdBy",
+    "createdAt"
   ],
   "properties": {
     "identity": {
       "type": "string"
     },
     "supplierViewPermissionIdentity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedAt": {
       "type": "string"
     },
     "emailReminder": {
