@@ -251,17 +251,6 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
         return assembliesComponentsController.getListOfScenarios(componentName, scenarioName);
     }
 
-
-    /**
-     * Sets pagination to by default
-     *
-     * @return current page object
-     */
-    public ComponentsTreePage setPagination() {
-        componentTableActions.setPagination();
-        return this;
-    }
-
     /**
      * Checks if button is enabled
      *

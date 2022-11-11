@@ -139,7 +139,6 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
