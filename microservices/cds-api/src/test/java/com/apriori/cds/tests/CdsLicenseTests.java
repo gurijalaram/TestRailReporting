@@ -107,10 +107,10 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSES_BY_CUSTOMER_ID,
             Licenses.class,
+            HttpStatus.SC_OK,
             customerIdentity
         );
 
-        assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(license.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
     }
 
@@ -120,10 +120,10 @@ public class CdsLicenseTests {
     public void getCustomerLicenseByIdentity() {
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             licenseIdentity
         );
-        assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getIdentity(), is(equalTo(licenseIdentity)));
     }
 
@@ -134,11 +134,11 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Licenses> siteLicenses = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS,
             Licenses.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity
         );
 
-        assertThat(siteLicenses.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteLicenses.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
@@ -148,12 +148,12 @@ public class CdsLicenseTests {
     public void getLicenseOfSiteById() {
         ResponseWrapper<LicenseResponse> licenseById = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_LICENSE_IDS,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity
         );
 
-        assertThat(licenseById.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseById.getResponseEntity().getIdentity(), is(equalTo(licenseIdentity)));
     }
 
@@ -172,12 +172,12 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.SUB_LICENSES,
             SubLicenses.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity
         );
 
-        assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(subLicense.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
@@ -196,13 +196,13 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_SUB_LICENSE,
             SubLicense.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity
         );
 
-        assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(subLicense.getResponseEntity().getName(), containsString("License"));
     }
 
@@ -221,6 +221,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             licenseIdentity
         );
@@ -257,6 +258,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             licenseIdentity
         );
@@ -269,13 +271,13 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS,
             SubLicenseAssociation.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity
         );
 
-        assertThat(associationUserResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(associationUserResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -301,6 +303,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             licenseIdentity
         );
@@ -313,11 +316,11 @@ public class CdsLicenseTests {
 
         ResponseWrapper<UsersLicensing> licensing = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS_LICENSES,
             UsersLicensing.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             userIdentity
         );
 
-        assertThat(licensing.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licensing.getResponseEntity().getResponse().get(0).getSubLicenseIdentity(), is(equalTo(subLicenseIdentity)));
 
         deleteIdentityHolder = IdentityHolder.builder()
@@ -344,6 +347,7 @@ public class CdsLicenseTests {
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             licenseIdentity
         );
@@ -354,14 +358,6 @@ public class CdsLicenseTests {
 
 
         cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-
-        deleteIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .siteIdentity(siteIdentity)
-            .licenseIdentity(licenseIdentity)
-            .subLicenseIdentity(subLicenseIdentity)
-            .userIdentity(userIdentity)
-            .build();
 
         ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
             customerIdentity,
