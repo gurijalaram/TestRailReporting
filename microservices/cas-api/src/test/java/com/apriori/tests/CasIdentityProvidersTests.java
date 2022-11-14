@@ -13,7 +13,6 @@ import com.apriori.entity.response.IdentityProviders;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -74,21 +73,15 @@ public class CasIdentityProvidersTests extends TestUtil {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        soft.assertThat(postResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         idpIdentity = postResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<IdentityProviders> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProviders.class, customerIdentity + "/identity-providers");
+        ResponseWrapper<IdentityProviders> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProviders.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers");
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
-        ResponseWrapper<IdentityProvider> responseIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProvider.class, customerIdentity + "/identity-providers/" + idpIdentity);
+        ResponseWrapper<IdentityProvider> responseIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProvider.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers/" + idpIdentity);
 
-        soft.assertThat(responseIdentity.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(responseIdentity.getResponseEntity().getIdentity())
             .isEqualTo(idpIdentity);
         soft.assertAll();

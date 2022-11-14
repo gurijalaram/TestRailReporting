@@ -80,20 +80,17 @@ public class CasCustomerUserAssociationTests {
         CustomerAssociationUser associatedUser = response.getResponseEntity();
         associatedUsers.add(associatedUser);
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(response.getResponseEntity().getUserIdentity())
             .isEqualTo(user.getIdentity());
 
-        ResponseWrapper<CasErrorMessage> error = casTestUtil.create(
+        casTestUtil.create(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
             CasErrorMessage.class,
             associatedUser,
+            HttpStatus.SC_CONFLICT,
             aprioriInternal.getIdentity(),
             customerAssociationToAprioriInternal.getIdentity()
         );
-        soft.assertThat(error.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CONFLICT);
         soft.assertAll();
     }
 
@@ -108,8 +105,6 @@ public class CasCustomerUserAssociationTests {
 
         ResponseWrapper<CustomerAssociationUsers> response = casTestUtil.findCustomerAssociationUsers(aprioriInternal, customerAssociationToAprioriInternal);
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(response.getResponseEntity().getItems().size())
             .isEqualTo(associatedUsers.size());
         soft.assertAll();
@@ -123,8 +118,6 @@ public class CasCustomerUserAssociationTests {
         List<CustomerUser> allUsers = casTestUtil.findUsers(aprioriInternal);
         ResponseWrapper<CustomerUsers> response = casTestUtil.findCustomerAssociationCandidates(aprioriInternal, customerAssociationToAprioriInternal);
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(response.getResponseEntity().getItems().size())
             .isEqualTo(allUsers.size() - associatedUsers.size());
         soft.assertAll();
@@ -136,14 +129,11 @@ public class CasCustomerUserAssociationTests {
     public void deleteUserAssociation() {
         final CustomerAssociationUser user = casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity();
 
-        ResponseWrapper<String> response = casTestUtil.delete(
+        casTestUtil.delete(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USER,
             aprioriInternal.getIdentity(),
             customerAssociationToAprioriInternal.getIdentity(),
             user.getIdentity()
         );
-
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
     }
 }

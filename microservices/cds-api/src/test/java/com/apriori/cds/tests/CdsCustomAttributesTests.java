@@ -79,9 +79,8 @@ public class CdsCustomAttributesTests {
 
         assertThat(customAttributeAdded.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, customerIdentity, userIdentity);
+        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(customAttributes.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customAttributes.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         ResponseWrapper<CustomAttribute> putCustomAttribute = cdsTestUtil.putCustomAttribute(customerIdentity, userIdentity, updatedDepartment);
@@ -105,9 +104,8 @@ public class CdsCustomAttributesTests {
         ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
 
         String attributeIdentity = customAttributeAdded.getResponseEntity().getIdentity();
-        ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, customerIdentity, userIdentity, attributeIdentity);
+        ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, HttpStatus.SC_OK, customerIdentity, userIdentity, attributeIdentity);
 
-        assertThat(customAttributes.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customAttributes.getResponseEntity().getIdentity(), is(equalTo(attributeIdentity)));
 
         ResponseWrapper<CustomAttribute> updateCustomAttribute = cdsTestUtil.updateAttribute(customerIdentity, userIdentity, attributeIdentity, updatedDepartment);

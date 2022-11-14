@@ -58,7 +58,7 @@ public class CasSiteLicenseSublicenseTests {
         siteIdentity = site.getResponseEntity().getIdentity();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
         licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
     }
 
@@ -74,21 +74,19 @@ public class CasSiteLicenseSublicenseTests {
     @Description("Get the sub License identified by its identity for the customer site in the given license.")
     @TestRail(testCaseId = {"5656"})
     public void getSublicenseById() {
-        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class,
+        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity);
 
         String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<SubLicense> sublicense = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_BY_ID, SubLicense.class,
+        ResponseWrapper<SubLicense> sublicense = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_BY_ID, SubLicense.class, HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity);
 
-        soft.assertThat(sublicense.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(sublicense.getResponseEntity().getIdentity())
             .isEqualTo(subLicenseIdentity);
         soft.assertAll();
@@ -100,11 +98,9 @@ public class CasSiteLicenseSublicenseTests {
     public void getSubLicenseThatNotExist() {
         String notExistingSubLicenseId = "000000000000";
 
-        ResponseWrapper<CasErrorMessage> getNotExistingSubLicense = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_BY_ID, CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, notExistingSubLicenseId);
-        soft.assertThat(getNotExistingSubLicense.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NOT_FOUND);
+        ResponseWrapper<CasErrorMessage> getNotExistingSubLicense = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_BY_ID, CasErrorMessage.class, HttpStatus.SC_NOT_FOUND, customerIdentity, siteIdentity, licenseIdentity, notExistingSubLicenseId);
         soft.assertThat(getNotExistingSubLicense.getResponseEntity().getMessage())
-            .isEqualTo(String.format("Unable to get SubLicense with identity '%s' for license with identity '%s' and Site with identity '%s'.", getNotExistingSubLicense, licenseIdentity, siteIdentity));
+            .isEqualTo(String.format("Unable to get SubLicense with identity '%s' for license with identity '%s' and Site with identity '%s'.", notExistingSubLicenseId, licenseIdentity, siteIdentity));
         soft.assertAll();
     }
 }

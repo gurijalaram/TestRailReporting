@@ -28,12 +28,10 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        ResponseWrapper<User> user = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class);
+        ResponseWrapper<User> user = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class, HttpStatus.SC_OK);
 
-        soft.assertThat(user.getStatusCode())
-                .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(user.getResponseEntity().getIdentity())
-                .isNotEmpty();
+            .isNotEmpty();
         soft.assertAll();
     }
 }

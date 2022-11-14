@@ -104,9 +104,8 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(accessControls.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControls.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
     }
 
@@ -128,7 +127,7 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, customerIdentity, userIdentity, accessControlIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
 
         assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControlResponse.getResponseEntity().getUserIdentity(), is(equalTo(userIdentity)));

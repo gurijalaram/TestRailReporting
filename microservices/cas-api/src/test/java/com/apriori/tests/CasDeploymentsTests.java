@@ -36,10 +36,8 @@ public class CasDeploymentsTests {
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
 
-        ResponseWrapper<Deployments> responseDeployment = casTestUtil.getCommonRequest(CASAPIEnum.DEPLOYMENTS, Deployments.class, customerIdentity);
+        ResponseWrapper<Deployments> responseDeployment = casTestUtil.getCommonRequest(CASAPIEnum.DEPLOYMENTS, Deployments.class, HttpStatus.SC_OK, customerIdentity);
 
-        soft.assertThat(responseDeployment.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(responseDeployment.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
         soft.assertAll();
@@ -50,19 +48,15 @@ public class CasDeploymentsTests {
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
 
-        ResponseWrapper<Deployments> responseDeployments = casTestUtil.getCommonRequest(CASAPIEnum.DEPLOYMENTS, Deployments.class, customerIdentity);
+        ResponseWrapper<Deployments> responseDeployments = casTestUtil.getCommonRequest(CASAPIEnum.DEPLOYMENTS, Deployments.class, HttpStatus.SC_OK, customerIdentity);
 
-        soft.assertThat(responseDeployments.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(responseDeployments.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
         String deploymentIdentity = responseDeployments.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Deployment> deploymentByID = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_DEPLOYMENT, Deployment.class, customerIdentity,deploymentIdentity);
+        ResponseWrapper<Deployment> deploymentByID = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_DEPLOYMENT, Deployment.class, HttpStatus.SC_OK, customerIdentity, deploymentIdentity);
 
-        soft.assertThat(deploymentByID.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(deploymentByID.getResponseEntity().getIdentity())
             .isEqualTo(deploymentIdentity);
         soft.assertAll();
