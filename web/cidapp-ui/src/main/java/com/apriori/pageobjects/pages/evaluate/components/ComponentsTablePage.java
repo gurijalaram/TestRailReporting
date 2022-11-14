@@ -111,16 +111,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     }
 
     /**
-     * Opens tree view
-     *
-     * @return new page object
-     */
-    public ComponentsTreePage selectTreeView() {
-        pageUtils.waitForElementAndClick(treeViewButton);
-        return new ComponentsTreePage(driver);
-    }
-
-    /**
      * Search for component
      *
      * @param componentName - the component name
