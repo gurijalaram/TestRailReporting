@@ -12,15 +12,15 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LayoutViewElementConfig {
-    public String layout;
-    public ArrayList<String> visibleColumns;
-    public ArrayList<LayoutSortModel> sortModel;
-    public String joinType;
-    public String viewType;
-    public ArrayList<String> pinnedColumns;
-    public Integer pageSize;
-    public ArrayList<Object> filters;
-    public LayoutViewElementConfigList insightFor3D;
-    public LayoutViewElementConfigList insightForList;
-    public LayoutViewElementConfigList scenarioResult;
+    private String layout;
+    private ArrayList<String> visibleColumns;
+    private ArrayList<LayoutSortModel> sortModel;
+    private String joinType;
+    private String viewType;
+    private ArrayList<String> pinnedColumns;
+    private Integer pageSize;
+    private ArrayList<Object> filters;
+    private LayoutViewElementConfigList insightFor3D;
+    private LayoutViewElementConfigList insightForList;
+    private LayoutViewElementConfigList scenarioResult;
 }

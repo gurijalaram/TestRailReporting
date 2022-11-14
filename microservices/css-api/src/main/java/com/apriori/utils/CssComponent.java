@@ -1,11 +1,12 @@
 package com.apriori.utils;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static org.junit.Assert.assertEquals;
 
-import com.apriori.css.entity.enums.CssAPIEnum;
-import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.enums.CssAPIEnum;
+import com.apriori.entity.response.CssComponentResponse;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;

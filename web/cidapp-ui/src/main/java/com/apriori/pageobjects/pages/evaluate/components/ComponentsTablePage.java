@@ -1,11 +1,15 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -154,6 +158,17 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      */
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
+    }
+
+
+    /**
+     * Opens tree view
+     *
+     * @return new page object
+     */
+    public ComponentsTreePage selectTreeView() {
+        pageUtils.waitForElementAndClick(treeViewButton);
+        return new ComponentsTreePage(driver);
     }
 
     /**
@@ -471,6 +486,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
         assembliesComponentsController.updateCadFile(filePath, ComponentsTablePage.class);
         return this;
     }
+
 
     /**
      * Checks if the cad button is enabled
