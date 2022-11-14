@@ -14,13 +14,16 @@
         "createdAt": {
           "type": "string"
         },
-        "name": {
+        "componentIdentity": {
           "type": "string"
         },
-        "description": {
+        "scenarioIdentity": {
           "type": "string"
         },
-        "status": {
+        "iterationIdentity": {
+          "type": "string"
+        },
+        "bidPackageIdentity": {
           "type": "string"
         },
         "updatedBy": {
@@ -28,31 +31,20 @@
         },
         "updatedAt": {
           "type": "string"
-        },
-        "updatedByName": {
-          "type": "string"
-        },
-        "customerIdentity": {
-          "type": "string"
-        },
-        "assignedTo": {
-          "type": "string"
         }
       },
       "required": [
         "identity",
         "createdBy",
         "createdAt",
-        "name",
-        "description",
-        "status"
+        "componentIdentity",
+        "scenarioIdentity",
+        "iterationIdentity"
       ],
       "optional": [
+        "bidPackageIdentity",
         "updatedBy",
-        "updatedAt",
-        "customerIdentity",
-        "assignedTo",
-        "updatedByName"
+        "updatedAt"
       ]
     }
   },

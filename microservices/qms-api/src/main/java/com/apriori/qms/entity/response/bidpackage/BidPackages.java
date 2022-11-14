@@ -1,7 +1,6 @@
-package com.apriori.qds.entity.response.bidpackage;
+package com.apriori.qms.entity.response.bidpackage;
 
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -12,20 +11,18 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "BidPackageResponseSchema.json")
-public class BidPackageResponse {
+public class BidPackages {
     private String identity;
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    private String assignedTo;
     private String name;
+    private String customerIdentity;
     private String createdByName;
     private String description;
     private String status;
     private String updatedBy;
-    private String updatedByName;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String customerIdentity;
-    private String assignedTo;
 }

@@ -1,31 +1,29 @@
-package com.apriori.qds.entity.response.bidpackage;
+package com.apriori.qms.entity.response.bidpackage;
 
-
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.qms.entity.request.bidpackage.CommentReminder;
+import com.apriori.qms.entity.request.bidpackage.EmailReminder;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@JsonRootName("response")
-@Schema(location = "BidPackageResponseSchema.json")
-public class BidPackageResponse {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class BidPackageProjectProfileResponse {
     private String identity;
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String name;
-    private String createdByName;
-    private String description;
-    private String status;
     private String updatedBy;
-    private String updatedByName;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String customerIdentity;
-    private String assignedTo;
+    public EmailReminder emailReminder;
+    public CommentReminder commentReminder;
 }

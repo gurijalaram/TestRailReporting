@@ -1,4 +1,4 @@
-package utils;
+package com.apriori.qms.controller;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
@@ -21,7 +21,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.io.File;
 
-public class QmsApiTestUtils {
+public class QmsComponentResources {
 
     /**
      * Create Component
@@ -111,4 +111,3 @@ public class QmsApiTestUtils {
         return HTTPRequest.build(requestEntity).get();
     }
 }
-
