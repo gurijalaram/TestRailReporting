@@ -2,22 +2,18 @@ package com.apriori.qds.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
-import com.apriori.qds.entity.request.projects.Project;
-import com.apriori.qds.entity.request.projects.ProjectRequest;
+import com.apriori.qds.entity.request.bidpackage.BidPackageProjectRequest;
+import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qds.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qds.entity.response.projects.ProjectsResponse;
-import com.apriori.qds.enums.QDSAPIEnum;
-import com.apriori.qds.utils.QdsApiTestUtils;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import org.apache.http.HttpStatus;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +23,9 @@ public class ProjectsTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
+    private static ResponseWrapper<BidPackageProjectResponse> bidPackageProjectResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
-    private static String userContext;
     private static String projectName;
 
     @Before
@@ -37,47 +33,51 @@ public class ProjectsTest extends TestUtil {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
+        bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
     }
 
     @Test
-    public void createProject() {
-        ProjectRequest projectRequest = ProjectRequest.builder()
-            .project(Project.builder()
-                .name(projectName)
-                .description(projectName)
-                .status("NEW")
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT, ProjectsResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
-            .headers(QdsApiTestUtils.setUpHeader())
-            .body(projectRequest)
-            .apUserContext(userContext);
-
-        ResponseWrapper<ProjectsResponse> ProjectsResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(ProjectsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(ProjectsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+    @TestRail(testCaseId = {"13334", "13343"})
+    @Description("Create and Delete Bid Package Project")
+    public void CreateAndDeleteProject() {
+        ResponseWrapper<BidPackageProjectResponse> bppResponse = BidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(), bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        softAssertions.assertThat(bppResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(), bppResponse.getResponseEntity().getIdentity(), currentUser);
     }
 
     @Test
-    public void getProjects() {
+    @TestRail(testCaseId = {"13335", "13348"})
+    @Description("Get all Bid Package Projects and verify pagination")
+    public void getBidPackageProjects() {
+        ResponseWrapper<BidPackageProjectsResponse> projectsResponse = BidPackageResources.getBidPackageProjects(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        softAssertions.assertThat(projectsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(projectsResponse.getResponseEntity().getIsFirstPage()).isTrue();
+    }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.PROJECTS, ProjectsResponse.class)
-            .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+    @Test
+    @TestRail(testCaseId = {"13338"})
+    @Description("Find Bid Package Project By Identity")
+    public void getBidPackageProject() {
+        ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.getBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
+        softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+    }
 
-        ResponseWrapper<ProjectsResponse> ProjectsResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(ProjectsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(ProjectsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+    @Test
+    @TestRail(testCaseId = {"13340"})
+    @Description("Update Bid Package Project By Identity")
+    public void updateBidPackageProject() {
+        BidPackageProjectRequest projectRequest = BidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers());
+        ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
+        softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
 
     @After
     public void testCleanup() {
-        //  ResponseWrapper<String> responseWrapper = LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
-        //   softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertAll();
 
     }

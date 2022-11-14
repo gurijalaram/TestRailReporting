@@ -80,6 +80,9 @@ default:
     ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
     api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
 
+  cnh:
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
+
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
@@ -365,6 +368,10 @@ local:
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
 
+  css:
+    ui_url: ${local.base_url}:8802
+    api_url: ${local.base_url}:8802/
+
   cidapp:
     ui_url: ${local.base_url}:3003/
     api_url: ${local.base_url}:8813/
@@ -410,7 +417,7 @@ qa-test:
   customer_identity: 6C1F8C1D4D75
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
   deployment_name: production
-  installation_name: core-na-1 - production deployment
+  installation_name: core-na-1 - 23 production deployment
   application_name: cid
 
   admin:
@@ -475,6 +482,57 @@ qa-test:
     ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 
+    ui_url: ${local.base_url}:3004
+
+######################################################## CIS_SANDBOX ########################################################
+cis-sbx:
+  aws_region: na-1
+  name: cis-sbx
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+
+  ats:
+    api_url: https://ats.na-1.qa-cid-perf.apriori.net/
+
+  cidapp:
+    api_url: https://cid-api.dev-cis-sbx.apriori.net/
+    ui_url:  https://cid.dev-cis-sbx.apriori.net/
+
+  css:
+    api_url: https://css.dev-cis-sbx.apriori.net/
+
+  cis:
+    ui_url: https://cis.dev-cis-sbx.apriori.net/
+
+######################################################## CIS_QA ########################################################
+cis-qa:
+  aws_region: na-1
+  name: cis-qa
+  secret_key: PG9E795ML3P4
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: qa
+  installation_name: cis.na-1-v23-1
+  application_name: cis
+
+  ats:
+    api_url: https://ats.${default.aws_region}.qa-test.apriori.net/
+
+  cds:
+    api_url: https://cds.${default.aws_region}.qa-test.apriori.net/
+
+  cidapp:
+    api_url: https://cid-api.${default.aws_region}-v23-1.qa-test.apriori.net/
+    ui_url:  https://ci-design.${default.aws_region}-v23-1.qa-test.apriori.net/
+
+  css:
+    api_url: https://css.${default.aws_region}-v23-1.qa-test.apriori.net/
+
+  cis:
+    ui_url: https://cis.${default.aws_region}-v23-1.qa-test.apriori.net/
+    api_url: https://cid-api.${default.aws_region}-v23-1.qa-test.apriori.net/
 ######################################################## QA-TEST-SANDBOX ########################################################
 qa-test-sandbox:
   name: qa-test-sandbox
@@ -483,7 +541,7 @@ qa-test-sandbox:
   customer_identity: 6C1F8C1D4D75
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
   deployment_name: production
-  installation_name: core-na-1 - production deployment
+  installation_name: core-na-1 - 23 production deployment
   application_name: cid
 
   admin:

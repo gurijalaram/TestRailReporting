@@ -8,20 +8,24 @@ import com.apriori.qds.entity.request.layout.ViewElementRequest;
 import com.apriori.qds.entity.request.layout.ViewElementRequestConfig;
 import com.apriori.qds.entity.request.layout.ViewElementRequestParameters;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
+import com.apriori.qds.entity.response.layout.ViewElementResponse;
 import com.apriori.qds.entity.response.layout.ViewElementsResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpStatus;
 
 public class LayoutResources {
 
-    public static ResponseWrapper<LayoutResponse> createLayout(String layoutName, String userContext) {
+    public static ResponseWrapper<LayoutResponse> createLayout(String layoutName, UserCredentials currentUser) {
         LayoutRequest layoutRequest = LayoutRequest.builder()
             .layout(LayoutRequestParameters.builder()
                 .applicationIdentity("AN" + layoutName)
@@ -34,7 +38,7 @@ public class LayoutResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUTS, LayoutResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
-            .apUserContext(userContext);
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -57,7 +61,7 @@ public class LayoutResources {
         return HTTPRequest.build(requestEntity).delete();
     }
 
-    public static RequestEntity getLayoutConfigurationRequestEntity(String viewElementName, String layoutConfigName) {
+    public static RequestEntity getLayoutConfigurationRequestEntity(String viewElementName, String layoutConfigName, UserCredentials currentUser) {
         LayoutConfigRequest layoutConfigurationRequest = new TestDataService().getTestData("LayoutConfigurationRequestData.json", LayoutConfigRequest.class);
         layoutConfigurationRequest.setLayoutConfiguration(LayoutConfigRequestParameters.builder()
             .configuration(String.format(layoutConfigurationRequest.getLayoutConfiguration().getConfiguration(), RandomStringUtils.randomNumeric(3)))
@@ -66,11 +70,13 @@ public class LayoutResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, LayoutResponse.class)
             .inlineVariables(viewElementName)
             .body(layoutConfigurationRequest)
-            .headers(QdsApiTestUtils.setUpHeader("authorizationKey"));
+            .headers(QdsApiTestUtils.setUpHeader())
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
         return requestEntity;
     }
 
-    public static ResponseWrapper<ViewElementsResponse> createLayoutViewElement(String layoutIdentity, String viewElementName, String userContext) {
+    public static ResponseWrapper<ViewElementResponse> createLayoutViewElement(String layoutIdentity, String viewElementName, UserCredentials currentUser) {
         ViewElementRequest viewElementRequest = ViewElementRequest.builder()
             .viewElement(ViewElementRequestParameters.builder()
                 .name(viewElementName)
@@ -79,11 +85,12 @@ public class LayoutResources {
                     .build())
                 .build())
             .build();
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementResponse.class)
             .inlineVariables(layoutIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)
-            .apUserContext(userContext);
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         return HTTPRequest.build(requestEntity).post();
     }
+
 }
