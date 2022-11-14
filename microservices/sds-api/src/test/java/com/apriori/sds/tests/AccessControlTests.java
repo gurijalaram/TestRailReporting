@@ -1,6 +1,6 @@
 package com.apriori.sds.tests;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;

@@ -17,8 +17,6 @@ public class ViewElementResponse {
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
-    private LayoutViewElementConfig configuration;
+    private Object configuration;
     private String name;
 }

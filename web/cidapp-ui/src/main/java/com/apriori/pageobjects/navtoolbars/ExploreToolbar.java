@@ -4,7 +4,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;

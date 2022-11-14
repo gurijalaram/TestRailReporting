@@ -24,4 +24,5 @@ public class BidPackageItemResponse {
     private String componentIdentity;
     private String scenarioIdentity;
     private String iterationIdentity;
+    private String bidPackageIdentity;
 }

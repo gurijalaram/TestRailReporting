@@ -1,9 +1,9 @@
 package com;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
 
-import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;

@@ -1,7 +1,7 @@
 package com.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -54,8 +54,7 @@ public class ComponentRedirectTests {
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper<Object> response = componentsUtil.getComponentIdentityExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
+        assertThat(componentsUtil.getComponentIdentityExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -83,8 +82,7 @@ public class ComponentRedirectTests {
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper<Object> response = scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
+        assertThat(scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -114,8 +112,7 @@ public class ComponentRedirectTests {
         existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper<Object> response = scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
+        assertThat(scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -143,7 +140,6 @@ public class ComponentRedirectTests {
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper<Object> response = componentsUtil.getComponentIterationLatestExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
+        assertThat(componentsUtil.getComponentIterationLatestExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 }

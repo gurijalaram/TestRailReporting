@@ -8,12 +8,12 @@ public enum QDSAPIEnum implements ExternalEndpointEnum {
     //BID PACKAGE
     BID_PACKAGES("bid-packages"),
     BID_PACKAGE(BID_PACKAGES.getEndpointString().concat("/%s")),
-    BID_PACKAGE_PROJECTS(BID_PACKAGES.getEndpointString().concat("/projects")),
+    BID_PACKAGE_PROJECTS(BID_PACKAGE.getEndpointString().concat("/projects")),
     BID_PACKAGE_PROJECT(BID_PACKAGE_PROJECTS.getEndpointString().concat("/%s")),
     BID_PACKAGE_PROJECT_USERS(BID_PACKAGE_PROJECT.getEndpointString().concat("/project-users")),
     BID_PACKAGE_PROJECT_USER(BID_PACKAGE_PROJECT_USERS.getEndpointString().concat("/%s")),
     BID_PACKAGE_PROJECT_ITEMS(BID_PACKAGE_PROJECT.getEndpointString().concat("/project-items")),
-    BID_PACKAGE_PROJECT_ITEM(BID_PACKAGE_PROJECT.getEndpointString().concat("/%s")),
+    BID_PACKAGE_PROJECT_ITEM(BID_PACKAGE_PROJECT_ITEMS.getEndpointString().concat("/%s")),
     BID_PACKAGE_ITEMS(BID_PACKAGE.getEndpointString().concat("/bid-package-items")),
     BID_PACKAGE_ITEM(BID_PACKAGE_ITEMS.getEndpointString().concat("/%s")),
 

@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientState;
 import static org.junit.Assert.assertEquals;
@@ -24,7 +24,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.DigitalFactoryEnum;
