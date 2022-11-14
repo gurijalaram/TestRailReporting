@@ -19,7 +19,6 @@ import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.junit.Assert;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -39,10 +38,10 @@ public class JasperReportUtil {
 
     public InputControl getInputControls() {
         RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.DTC_METRICS, InputControl.class)
-            .headers(initHeadersWithJSession());
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
-        Assert.assertEquals(responseResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
 
         return responseResponseWrapper.getResponseEntity();
     }
@@ -64,10 +63,10 @@ public class JasperReportUtil {
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
         RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_EXECUTIONS, ReportStatusResponse.class)
             .headers(initHeadersWithJSession())
-            .body(reportRequest);
+            .body(reportRequest)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ReportStatusResponse> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
-        Assert.assertEquals(responseResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
 
         return responseResponseWrapper.getResponseEntity();
     }
@@ -76,11 +75,10 @@ public class JasperReportUtil {
         RequestEntity doExportRequest = RequestEntityUtil.init(CIRAPIEnum.REPORT_EXPORT_BY_REQUEST_ID, ReportStatusResponse.class)
             .inlineVariables(response.getRequestId())
             .headers(initHeadersWithJSession())
-            .body(ReportExportRequest.initFromJsonFile());
-
+            .body(ReportExportRequest.initFromJsonFile())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ReportStatusResponse> exportDataResponseWrapper = HTTPRequest.build(doExportRequest).post();
-        Assert.assertEquals(exportDataResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
 
         return exportDataResponseWrapper.getResponseEntity();
     }

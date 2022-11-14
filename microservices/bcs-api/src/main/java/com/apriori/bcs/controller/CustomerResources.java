@@ -11,6 +11,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 
+import org.apache.http.HttpStatus;
+
 import java.util.Random;
 
 /**
@@ -32,7 +34,8 @@ public class CustomerResources {
         RequestEntity requestEntity = RequestEntityUtil
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
-            .body(request);
+            .body(request)
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).patch();
     }
 
@@ -53,12 +56,13 @@ public class CustomerResources {
     /**
      * This overloaded method is to create customer request entity.
      *
-     * @param newPartRequest - Deserialized NewPartRequest POJO.
-     * @param batchIdentity  - Batch ID
+     * @param endPoint       - endpoint which is to be called
      * @param klass          - Response class
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"));
+        return RequestEntityUtil.init(endPoint, klass)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .expectedResponseCode(HttpStatus.SC_OK);
     }
 }

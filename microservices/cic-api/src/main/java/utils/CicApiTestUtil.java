@@ -19,6 +19,7 @@ import entity.response.AgentWorkflowJobRun;
 import enums.CICAPIEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalTime;
@@ -56,7 +57,9 @@ public class CicApiTestUtil extends TestUtil {
      * @return response of klass object
      */
     public static <T> ResponseWrapper<T> submitRequest(CICAPIEnum endPoint, Class<T> klass) {
-        RequestEntity requestEntity = RequestEntityUtil.init(endPoint, klass);
+        RequestEntity requestEntity = RequestEntityUtil.init(endPoint, klass)
+            .headers(setUpHeader())
+            .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).get();
     }
@@ -64,11 +67,13 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Submit request to get Agent workflow
      *
-     * @param workFlowID
+     * @param workFlowID - id of workflow to get
      * @return response of AgentWorkflow object
      */
     public static ResponseWrapper<AgentWorkflow> getCicAgentWorkflow(String workFlowID) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW, AgentWorkflow.class).inlineVariables(workFlowID);
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW, AgentWorkflow.class)
+            .inlineVariables(workFlowID)
+            .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).get();
     }
@@ -76,11 +81,13 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Submit request to get CIC agent workflow jobs
      *
-     * @param workFlowID
+     * @param workFlowID - id of workflow jobs to get
      * @return response
      */
     public static ResponseWrapper<String> getCicAgentWorkflowJobs(String workFlowID) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOBS, null).inlineVariables(workFlowID);
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOBS, null)
+            .inlineVariables(workFlowID)
+            .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).get();
     }
@@ -88,13 +95,14 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Submit request to get CIC agent workflow job
      *
-     * @param workFlowID
-     * @param jobID
+     * @param workFlowID - id of workflow to get job from
+     * @param jobID - id of job to get
      * @return response of AgentWorkflowJob object
      */
     public static ResponseWrapper<AgentWorkflowJob> getCicAgentWorkflowJob(String workFlowID, String jobID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB, AgentWorkflowJob.class)
-            .inlineVariables(workFlowID, jobID);
+            .inlineVariables(workFlowID, jobID)
+            .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).get();
     }
@@ -102,12 +110,13 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Submit request to run the CIC agent workflow
      *
-     * @param workflowId
+     * @param workflowId -
      * @return response of AgentWorkflowJob object
      */
     public static ResponseWrapper<AgentWorkflowJobRun> runCicAgentWorkflow(String workflowId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, AgentWorkflowJobRun.class)
-            .inlineVariables(workflowId);
+            .inlineVariables(workflowId)
+            .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).post();
     }
@@ -126,7 +135,8 @@ public class CicApiTestUtil extends TestUtil {
         header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(header)
-            .customBody(workflowData);
+            .customBody(workflowData)
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -145,7 +155,8 @@ public class CicApiTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
             .headers(header)
-            .body(jobDefinition);
+            .body(jobDefinition)
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -156,7 +167,8 @@ public class CicApiTestUtil extends TestUtil {
      */
     public static ResponseWrapper<String> cancelWorkflow(String workFlowID, String workflowJobID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_CANCEL, null)
-            .inlineVariables(workFlowID, workflowJobID);
+            .inlineVariables(workFlowID, workflowJobID)
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         requestEntity.headers(setUpHeader());
         return HTTPRequest.build(requestEntity).post();
     }
@@ -169,7 +181,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return JSessionID
      */
     public static String getLoginSession(UserCredentials currentUser, WebDriver webDriver) {
-        UsersPage usersPage = new CicLoginPage(webDriver)
+        new CicLoginPage(webDriver)
             .login(currentUser)
             .clickUsersMenu();
         return String.valueOf(webDriver.manage().getCookies()).replace("[", "").replace("]", "");

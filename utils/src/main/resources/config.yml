@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test-sandbox
+env: qa-test
 
 # Define the global properties not related to environment
 global:
@@ -406,9 +406,6 @@ local:
   cis:
     ui_url: ${local.base_url}:3004/
 
-  css:
-    api_url: ${local.base_url}:8802/
-
 ######################################################## QA-TEST ########################################################
 qa-test:
   name: qa-test
@@ -481,8 +478,6 @@ qa-test:
   reports:
     ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
-
-    ui_url: ${local.base_url}:3004
 
 ######################################################## CIS_SANDBOX ########################################################
 cis-sbx:

@@ -30,7 +30,6 @@ public class BatchResourcesTest {
     public static void testSetup() {
         response = BatchResources.createBatch();
         batch1 = response.getResponseEntity();
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(batch1.getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
@@ -38,7 +37,7 @@ public class BatchResourcesTest {
     @Description("API creates and returns Batch in the CIS DB")
     public void createBatch() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+
         assertThat(batchResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
@@ -47,7 +46,7 @@ public class BatchResourcesTest {
     @Description("API returns a list of Batches in the CIS DB")
     public void getBatches() {
         ResponseWrapper<Batches> batchesResponse = BatchResources.getBatches();
-        assertThat(batchesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+
         assertNotEquals(batchesResponse.getResponseEntity().getItems().size(), 0);
     }
 
@@ -56,8 +55,8 @@ public class BatchResourcesTest {
     @Description("API returns a representation of a single Batch in the CIS DB")
     public void getBatch() {
         ResponseWrapper<Batch> batchResponse = BatchResources.getBatchRepresentation(batch1.getIdentity());
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(batch1.getIdentity(), is(equalTo(batchResponse.getResponseEntity().getIdentity().toString())));
+
+        assertThat(batch1.getIdentity(), is(equalTo(batchResponse.getResponseEntity().getIdentity())));
     }
 
     @Test
@@ -65,10 +64,11 @@ public class BatchResourcesTest {
     @Description("Cancel batch processing")
     public void batchProcessingCancel() {
         Batch batch = BatchResources.createBatch().getResponseEntity();
+
         assertThat(batch.getState(), is(equalTo(BCSState.CREATED.toString())));
 
         ResponseWrapper<Cancel> cancelResponse = BatchResources.cancelBatchProcessing(batch.getIdentity());
-        assertThat(cancelResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
+
         assertThat(cancelResponse.getResponseEntity().getState(), is(equalTo(BCSState.CANCELLED.toString())));
     }
 
@@ -77,11 +77,11 @@ public class BatchResourcesTest {
     @Description("Create and Cost the empty batch")
     public void createBatchCosting() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+
         assertThat(batchResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
 
-        ResponseWrapper<String> batchCostingResponse = BatchResources.startBatchCosting(batchResponse.getResponseEntity());
-        assertThat(batchCostingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
+        BatchResources.startBatchCosting(batchResponse.getResponseEntity());
+
         assertTrue("Verify Batch costing state is completed", BatchResources.waitUntilBatchCostingReachedExpected(batchResponse.getResponseEntity().getIdentity(), BCSState.COMPLETED));
     }
 

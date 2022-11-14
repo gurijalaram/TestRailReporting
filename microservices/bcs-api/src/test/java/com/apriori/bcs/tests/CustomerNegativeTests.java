@@ -23,13 +23,11 @@ public class CustomerNegativeTests {
     @TestRail(testCaseId = {"8147"})
     @Description("Get costing preferences with Invalid Customer Identity")
     public void getUserPrefInvalidCustID() {
-
-        ResponseWrapper<UserPreference> costingPreferencesResponse = HTTPRequest.build(RequestEntityUtil
-                .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, ErrorMessage.class)
-                .inlineVariables("INVALIDCUSTOMER"))
-            .get();
-
-        assertThat(costingPreferencesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(RequestEntityUtil.init(
+            BCSAPIEnum.CUSTOMER_USER_PREFERENCES, ErrorMessage.class)
+                .inlineVariables("INVALIDCUSTOMER")
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            ).get();
     }
 
     @Test
@@ -37,7 +35,8 @@ public class CustomerNegativeTests {
     @Description("Missing customer identity")
     public void getUserPrefMissingCustID() {
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(RequestEntityUtil
-                .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES_NO_CUSTOMER, ErrorMessage.class))
+                .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES_NO_CUSTOMER, ErrorMessage.class)
+                .expectedResponseCode(HttpStatus.SC_NOT_FOUND))
             .get();
         assertThat(processGroupsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
     }

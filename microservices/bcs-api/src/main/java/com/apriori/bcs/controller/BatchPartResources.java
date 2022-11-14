@@ -22,6 +22,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.util.HashMap;
@@ -60,7 +61,8 @@ public class BatchPartResources {
      * @return Response of type part object
      */
     public static ResponseWrapper<Part> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity) {
-        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity);
+        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
 
@@ -109,7 +111,8 @@ public class BatchPartResources {
      * @Param return class name
      */
     public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
-        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass);
+        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
 
@@ -158,7 +161,8 @@ public class BatchPartResources {
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
-            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")))
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -200,7 +204,8 @@ public class BatchPartResources {
         if (BatchPartResources.waitUntilPartStateIsCompleted(batchIdentity, partIdentity)) {
             log.info("Batch Part State is => " + BCSState.COMPLETED);
             RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
-                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
             return HTTPRequest.build(requestEntity).get();
         }
         // TODO: 27/09/2022 if null is returned and the test fails you will get a null pointer. this should be coded to catch the npe or recoded
@@ -276,7 +281,10 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
+        requestEntity = RequestEntityUtil.init(
+            BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
         return setPartRequestFormParams(newPartRequest);
     }
 
