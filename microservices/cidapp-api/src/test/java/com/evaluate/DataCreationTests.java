@@ -50,7 +50,7 @@ public class DataCreationTests {
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE);
+        softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
 
         softAssertions.assertAll();
     }
@@ -84,7 +84,7 @@ public class DataCreationTests {
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE);
+        softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
         softAssertions.assertThat(data.getPublished()).isTrue();
 
         softAssertions.assertAll();
