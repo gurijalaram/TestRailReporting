@@ -9,6 +9,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -50,6 +51,7 @@ public class UploadAssembliesTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
+    private ComponentsTreePage componentsTreePage;
 
     public UploadAssembliesTests() {
         super();
@@ -128,11 +130,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "flange c.CATProduct"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -149,11 +151,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -172,11 +174,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -194,11 +196,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -217,11 +219,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -241,11 +243,11 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -273,7 +275,7 @@ public class UploadAssembliesTests extends TestBase {
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(firstMultiComponentBatch)
             .inputMultiComponents(secondMultiComponentBatch)
@@ -281,19 +283,18 @@ public class UploadAssembliesTests extends TestBase {
             .submit()
             .clickClose()
             .openComponent(assemblyName1, scenarioName, currentUser)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
         componentNames1.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
 
-        componentsTablePage.closePanel()
+        componentsTreePage.closePanel()
             .clickExplore()
             .openComponent(assemblyName2, scenarioName, currentUser)
             .openComponents();
 
         componentNames2.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -413,17 +414,15 @@ public class UploadAssembliesTests extends TestBase {
 
         assemblyUtils.uploadSubComponents(componentAssembly3).uploadAssembly(componentAssembly3);
 
-        componentsTablePage = explorePage.openComponent(assemblyName2, scenarioName, currentUser)
-            .openComponents()
-            .selectTableView();
+        componentsTreePage = explorePage.openComponent(assemblyName2, scenarioName, currentUser)
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
 
-        componentsTablePage = explorePage.openComponent(assemblyName3, scenarioName, currentUser)
-            .openComponents()
-            .selectTableView();
+        componentsTreePage = explorePage.openComponent(assemblyName3, scenarioName, currentUser)
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -457,29 +456,29 @@ public class UploadAssembliesTests extends TestBase {
         configurePage = loginPage.login(currentUser)
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .selectTableView()
             .configure();
 
         softAssertions.assertThat(configurePage.getChoicesList()).containsAnyOf("Assigned At", "Assigned By", "Cost Maturity");
         softAssertions.assertThat(configurePage.getChosenList()).containsAnyOf("Component Name", "Scenario Name", "Component Type");
 
-        componentsTablePage = configurePage.selectColumn(ColumnsEnum.NOTES)
+        componentsTreePage = configurePage.selectColumn(ColumnsEnum.NOTES)
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.NOTES.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.NOTES.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage.configure()
             .selectColumn(ColumnsEnum.PUBLISHED)
             .moveColumn(DirectionEnum.RIGHT)
             .selectColumn(ColumnsEnum.LOCKED)
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.PUBLISHED.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.PUBLISHED.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
 
-        componentsTablePage.configure()
+        componentsTablePage = componentsTreePage.selectTableView()
+            .configure()
             .selectColumn(ColumnsEnum.PUBLISHED)
             .moveColumn(DirectionEnum.LEFT)
             .selectColumn(ColumnsEnum.LOCKED)
@@ -489,17 +488,18 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(componentsTablePage.getTableHeaders()).doesNotContain(ColumnsEnum.PUBLISHED.getColumns());
         softAssertions.assertThat(componentsTablePage.getTableHeaders()).doesNotContain(ColumnsEnum.LOCKED.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage = componentsTablePage.selectTreeView()
+            .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.PROCESS_ROUTING.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.LABOR_COST.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.FINISH_MASS.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.BATCH_SIZE.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.PROCESS_ROUTING.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.LABOR_COST.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.FINISH_MASS.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.BATCH_SIZE.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage.configure()
             .selectChosen()
             .moveColumn(DirectionEnum.LEFT);
 
@@ -534,7 +534,7 @@ public class UploadAssembliesTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .openComponent("titan charger base", scenarioName, currentUser)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
@@ -548,16 +548,16 @@ public class UploadAssembliesTests extends TestBase {
             .clickExplore()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .selectTableView()
             .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
-            "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
+        softAssertions.assertThat(componentsTreePage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
+            "New", "Plastic Molding", "Injection Molding", "ABS");
 
-        componentsTablePage.configure()
+        componentsTablePage = componentsTreePage.selectTableView()
+            .configure()
             .selectChosen()
             .moveColumn(DirectionEnum.LEFT)
             .selectColumn(ColumnsEnum.COMPONENT_NAME)
@@ -567,7 +567,6 @@ public class UploadAssembliesTests extends TestBase {
             .selectColumn(ColumnsEnum.LOCKED)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsTablePage.class);
-
 
         softAssertions.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isEqualTo(true);
 

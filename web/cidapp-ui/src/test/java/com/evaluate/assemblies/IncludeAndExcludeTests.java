@@ -8,6 +8,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -36,6 +37,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
@@ -43,6 +45,11 @@ public class IncludeAndExcludeTests extends TestBase {
     SoftAssertions softAssertions = new SoftAssertions();
     private File assemblyResourceFile;
     private File componentResourceFile;
+    private static String scenarioName;
+    private static ComponentInfoBuilder componentAssembly1;
+    private static ComponentInfoBuilder componentAssembly2;
+    private final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
+    private final String SUB_ASSEMBLY = "sub-assembly";
 
     public IncludeAndExcludeTests() {
         super();
@@ -63,7 +70,7 @@ public class IncludeAndExcludeTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -73,11 +80,11 @@ public class IncludeAndExcludeTests extends TestBase {
                 processGroupEnum,
                 scenarioName,
                 currentUser)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
@@ -97,7 +104,7 @@ public class IncludeAndExcludeTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -108,13 +115,12 @@ public class IncludeAndExcludeTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .selectTableView()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
-                assertThat(componentsTablePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
 
     @Test
@@ -132,7 +138,7 @@ public class IncludeAndExcludeTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -143,28 +149,27 @@ public class IncludeAndExcludeTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents("PIN, " + scenarioName + "")
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .multiSelectSubcomponents("SMALL RING, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
 
-        componentsTablePage.multiSelectSubcomponents("pin, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents("pin, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
-        componentsTablePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
-        componentsTablePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
@@ -198,21 +203,20 @@ public class IncludeAndExcludeTests extends TestBase {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .selectCheckAllBox();
 
-        assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
+        assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
 
-        componentsTablePage.selectButtonType(ButtonTypeEnum.INCLUDE);
+        componentsTreePage.selectButtonType(ButtonTypeEnum.INCLUDE);
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
-                assertThat(componentsTablePage.isTextDecorationStruckOut(componentName.toString()), is(false)));
+                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(false)));
     }
 
     @Test
@@ -244,19 +248,18 @@ public class IncludeAndExcludeTests extends TestBase {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .selectCheckAllBox();
 
-        assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
+        assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
 
-        componentsTablePage.selectButtonType(ButtonTypeEnum.EXCLUDE);
+        componentsTreePage.selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
-                assertThat(componentsTablePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
 
     @Test
@@ -274,7 +277,7 @@ public class IncludeAndExcludeTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .uploadsAndOpenAssembly(
                 assemblyName,
                 assemblyExtension,
@@ -285,9 +288,10 @@ public class IncludeAndExcludeTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents("PIN, " + scenarioName + "", "SMALL RING, " + scenarioName + "")
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        componentsTablePage = componentsTreePage.selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getCellColour("pin", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
         softAssertions.assertThat(componentsTablePage.getCellColour("small ring", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
@@ -327,7 +331,6 @@ public class IncludeAndExcludeTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .closePanel()
@@ -336,15 +339,14 @@ public class IncludeAndExcludeTests extends TestBase {
         double initialTotalCost = evaluatePage.getCostResults("Total Cost");
         double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        componentsTablePage = evaluatePage.openComponents()
-            .selectTableView()
+        componentsTreePage = evaluatePage.openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.INCLUDE);
 
         subComponentNames.forEach(componentName ->
-            assertThat(componentsTablePage.isTextDecorationStruckOut(componentName), is(false)));
+            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName), is(false)));
 
-        evaluatePage = componentsTablePage.closePanel()
+        evaluatePage = componentsTreePage.closePanel()
             .costScenario();
 
         double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
@@ -391,15 +393,14 @@ public class IncludeAndExcludeTests extends TestBase {
         double initialTotalCost = evaluatePage.getCostResults("Total Cost");
         double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        componentsTablePage = evaluatePage.openComponents()
-            .selectTableView()
+        componentsTreePage = evaluatePage.openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         subComponentNames.forEach(componentName ->
-            assertThat(componentsTablePage.isTextDecorationStruckOut(componentName), is(true)));
+            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName), is(true)));
 
-        evaluatePage = componentsTablePage.closePanel()
+        evaluatePage = componentsTreePage.closePanel()
             .costScenario();
 
         double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
@@ -444,30 +445,28 @@ public class IncludeAndExcludeTests extends TestBase {
             .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
         subComponentNames.forEach(component ->
-            softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component)).isTrue());
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component)).isTrue());
 
-        componentsTablePage = componentsTablePage.closePanel()
+        componentsTreePage.closePanel()
             .clickActions()
             .updateCadFile(assemblyResourceFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
-        componentsTablePage = componentsTablePage.clickScenarioCheckbox(componentName)
+        componentsTreePage.clickScenarioCheckbox(componentName)
             .updateCadFile(componentResourceFile)
             .closePanel()
-            .clickRefresh(ComponentsTablePage.class);
+            .clickRefresh(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
 
         softAssertions.assertAll();
 
@@ -487,39 +486,30 @@ public class IncludeAndExcludeTests extends TestBase {
     @TestRail(testCaseId = {"11099"})
     @Description("Validate  the set inputs button cannot be selected when sub assemblies and parts are selected")
     public void testInputsDisabledPartsSubassemblies() {
-        final String assemblyName = "MainAssembly";
-        final String assemblyExtension = ".iam";
-        final String subAssemblyName = "SubAssembly1";
-        final String missingSubcomponent = "78829";
 
-        List<String> subComponentNames = Arrays.asList(subAssemblyName);
+        List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
+        List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
 
+        final String componentExtension = ".prt.1";
+        final String assemblyExtension = ".asm.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            scenarioName,
-            currentUser);
+        componentAssembly1 = assemblyUtils.uploadsAndOpenAssembly(SUB_SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        componentAssembly2 = assemblyUtils.uploadsAndOpenAssembly(SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .clickCostButton()
-            .confirmCost("Yes")
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly2)
             .openComponents()
-            .selectTableView()
-            .multiSelectSubcomponents(subAssemblyName + "," + scenarioName, missingSubcomponent + "," + "Initial");
+            .multiSelectSubcomponents(SUB_SUB_ASSEMBLY + "," + scenarioName, "0200613" + "," + scenarioName);
 
-        assertThat(componentsTablePage.isSetInputsEnabled(), is(equalTo(false)));
+        assertThat(componentsTreePage.isSetInputsEnabled(), is(equalTo(false)));
     }
 }
 

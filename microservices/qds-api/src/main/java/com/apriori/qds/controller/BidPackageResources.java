@@ -139,8 +139,7 @@ public class BidPackageResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
 
         return HTTPRequest.build(requestEntity).get();
     }
