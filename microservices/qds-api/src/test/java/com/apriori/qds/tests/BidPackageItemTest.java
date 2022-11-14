@@ -27,7 +27,7 @@ public class BidPackageItemTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
     private static ResponseWrapper<BidPackageItemResponse> bidPackageItemResponse;
-    private UserCredentials currentUser = UserUtil.getUser();
+    UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
     private static ScenarioItem scenarioItem;
