@@ -1,7 +1,7 @@
 package com.apriori.cisapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.cisapi.entity.enums.CISAPIEnum;
+import com.apriori.cisapi.entity.enums.CisAPIEnum;
 import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesItemsResponse;
 import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -22,7 +22,7 @@ public class UserPreferencesUtil extends TestUtil {
      */
     protected static List<UserPreferencesResponse> getUserPreferences() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CISAPIEnum.GET_USERS_CURRENT_PREFERENCES, UserPreferencesItemsResponse.class);
+            RequestEntityUtil.init(CisAPIEnum.USERS_CURRENT_PREFERENCES, UserPreferencesItemsResponse.class);
 
         ResponseWrapper<UserPreferencesItemsResponse> getAllResponses = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllResponses.getStatusCode());

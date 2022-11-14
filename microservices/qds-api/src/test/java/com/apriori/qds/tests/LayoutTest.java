@@ -37,7 +37,7 @@ public class LayoutTest extends TestUtil {
         softAssertions = new SoftAssertions();
         layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        layoutResponse = LayoutResources.createLayout(layoutName, userContext);
+        layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
     }
 
     @Test
