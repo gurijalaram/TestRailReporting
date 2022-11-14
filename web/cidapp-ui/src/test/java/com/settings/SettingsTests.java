@@ -30,6 +30,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
+import com.utils.DecimalPlaceEnum;
 import com.utils.LengthEnum;
 import com.utils.MassEnum;
 import com.utils.TimeEnum;
@@ -459,7 +460,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6363"})
+    @TestRail(testCaseId = {"6363", "5298"})
     @Description("Validate User Preferences are for single user only")
     public void settingsDifferentUsers() {
 
@@ -476,6 +477,7 @@ public class SettingsTests extends TestBase {
             .selectLength(LengthEnum.MILLIMETER)
             .selectMass(MassEnum.GRAM)
             .selectTime(TimeEnum.MILLISECOND)
+            .selectDecimalPlaces(DecimalPlaceEnum.TWO)
             .submit(ExplorePage.class)
             .logout()
             .login(user2)
@@ -484,6 +486,7 @@ public class SettingsTests extends TestBase {
             .selectLength(LengthEnum.METER)
             .selectMass(MassEnum.KILOGRAM)
             .selectTime(TimeEnum.MINUTE)
+            .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
             .submit(ExplorePage.class)
             .logout()
             .login(user1)
@@ -492,6 +495,7 @@ public class SettingsTests extends TestBase {
         softAssertions.assertThat(displayPreferencesPage.getLength()).isEqualTo("Millimeter");
         softAssertions.assertThat(displayPreferencesPage.getMass()).isEqualTo("Gram");
         softAssertions.assertThat(displayPreferencesPage.getTime()).isEqualTo("Millisecond");
+        softAssertions.assertThat(displayPreferencesPage.getDecimalPlaces()).isEqualTo("2");
 
         softAssertions.assertAll();
     }

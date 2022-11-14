@@ -1,0 +1,26 @@
+{
+  "query":{
+    "filter":{
+      "or":[
+        {
+          "equals":{
+            "property":"componentName",
+            "value":"bracket_basic"
+          }
+        },
+        {
+          "equals":{
+            "property":"componentName",
+            "value":"BasicScenario_Forging"
+          }
+        },
+        {
+          "equals":{
+            "property":"componentName",
+            "value":"oldham"
+          }
+        }
+      ]
+    }
+  }
+}

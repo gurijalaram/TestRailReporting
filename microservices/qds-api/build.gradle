@@ -17,6 +17,8 @@ dependencies {
     implementation project(':apibase')
     implementation project(':utils')
     implementation project(':db')
+    implementation project(':microservices:css-api')
+    implementation project(':microservices:cidapp-api')
     implementation 'com.massisframework:j-text-utils:0.3.4'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
