@@ -107,14 +107,14 @@ public class TestUtil extends TestHelper {
      *
      * @return The api response.
      */
-    public final <E extends EndpointEnum, R, B> ResponseWrapper<R> create(E apiEnum, Class<R> klass, B body, Integer status, String... inlineVariables) {
+    public final <E extends EndpointEnum, R, B> ResponseWrapper<R> create(E apiEnum, Class<R> klass, B body, Integer expectedResponseCode, String... inlineVariables) {
         CreatableModel model = body.getClass().getAnnotation(CreatableModel.class);
 
         if (model == null) {
             throw new IllegalArgumentException("The body is not a CreatableModel.  Did you forget a @CreatableModel(kind) annotation?");
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables).expectedResponseCode(status);
+        RequestEntity requestEntity = RequestEntityUtil.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -167,8 +167,8 @@ public class TestUtil extends TestHelper {
      *
      * @return The response wrapper that contains the response data.
      */
-    public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer status, String... inlineVariables) {
-        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(status);
+    public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
+        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(request).get();
     }
 

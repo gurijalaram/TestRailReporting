@@ -517,10 +517,10 @@ public class CasTestUtil extends TestUtil {
      * @param userIdentity - the user identity
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity, Integer status) {
+    public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, klass)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
-                .expectedResponseCode(status)
+                .expectedResponseCode(expectedResponseCode)
                 .body("userAssociation",
                         AssociationUser.builder()
                                 .userIdentity(userIdentity)
@@ -582,10 +582,10 @@ public class CasTestUtil extends TestUtil {
      * @param licenseIdentity - license identity
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity, Integer status) {
+    public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACTIVATE_LICENSE, klas)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
-            .expectedResponseCode(status)
+            .expectedResponseCode(expectedResponseCode)
             .body(null);
         return HTTPRequest.build(requestEntity).post();
     }
