@@ -45,6 +45,11 @@ public class IncludeAndExcludeTests extends TestBase {
     SoftAssertions softAssertions = new SoftAssertions();
     private File assemblyResourceFile;
     private File componentResourceFile;
+    private static String scenarioName;
+    private static ComponentInfoBuilder componentAssembly1;
+    private static ComponentInfoBuilder componentAssembly2;
+    private final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
+    private final String SUB_ASSEMBLY = "sub-assembly";
 
     public IncludeAndExcludeTests() {
         super();
@@ -481,39 +486,30 @@ public class IncludeAndExcludeTests extends TestBase {
     @TestRail(testCaseId = {"11099"})
     @Description("Validate  the set inputs button cannot be selected when sub assemblies and parts are selected")
     public void testInputsDisabledPartsSubassemblies() {
-        final String assemblyName = "MainAssembly";
-        final String assemblyExtension = ".iam";
-        final String subAssemblyName = "SubAssembly1";
-        final String missingSubcomponent = "78829";
 
-        List<String> subComponentNames = Arrays.asList(subAssemblyName);
+        List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
+        List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
 
+        final String componentExtension = ".prt.1";
+        final String assemblyExtension = ".asm.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            scenarioName,
-            currentUser);
+        componentAssembly1 = assemblyUtils.uploadsAndOpenAssembly(SUB_SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        componentAssembly2 = assemblyUtils.uploadsAndOpenAssembly(SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .clickCostButton()
-            .confirmCost("Yes")
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly2)
             .openComponents()
-            .selectTableView()
-            .multiHighlightScenarios(subAssemblyName + "," + scenarioName, missingSubcomponent + "," + "Initial");
+            .multiSelectSubcomponents(SUB_SUB_ASSEMBLY + "," + scenarioName, "0200613" + "," + scenarioName);
 
-        assertThat(componentsTablePage.isSetInputsEnabled(), is(equalTo(false)));
+        assertThat(componentsTreePage.isSetInputsEnabled(), is(equalTo(false)));
     }
 }
 

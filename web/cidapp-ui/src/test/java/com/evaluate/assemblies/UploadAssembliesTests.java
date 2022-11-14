@@ -456,29 +456,29 @@ public class UploadAssembliesTests extends TestBase {
         configurePage = loginPage.login(currentUser)
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .selectTableView()
             .configure();
 
         softAssertions.assertThat(configurePage.getChoicesList()).containsAnyOf("Assigned At", "Assigned By", "Cost Maturity");
         softAssertions.assertThat(configurePage.getChosenList()).containsAnyOf("Component Name", "Scenario Name", "Component Type");
 
-        componentsTablePage = configurePage.selectColumn(ColumnsEnum.NOTES)
+        componentsTreePage = configurePage.selectColumn(ColumnsEnum.NOTES)
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.NOTES.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.NOTES.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage.configure()
             .selectColumn(ColumnsEnum.PUBLISHED)
             .moveColumn(DirectionEnum.RIGHT)
             .selectColumn(ColumnsEnum.LOCKED)
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.PUBLISHED.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.PUBLISHED.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
 
-        componentsTablePage.configure()
+        componentsTablePage = componentsTreePage.selectTableView()
+            .configure()
             .selectColumn(ColumnsEnum.PUBLISHED)
             .moveColumn(DirectionEnum.LEFT)
             .selectColumn(ColumnsEnum.LOCKED)
@@ -488,17 +488,18 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(componentsTablePage.getTableHeaders()).doesNotContain(ColumnsEnum.PUBLISHED.getColumns());
         softAssertions.assertThat(componentsTablePage.getTableHeaders()).doesNotContain(ColumnsEnum.LOCKED.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage = componentsTablePage.selectTreeView()
+            .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.PROCESS_ROUTING.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.LABOR_COST.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.FINISH_MASS.getColumns());
-        softAssertions.assertThat(componentsTablePage.getTableHeaders()).contains(ColumnsEnum.BATCH_SIZE.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.PROCESS_ROUTING.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.LABOR_COST.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.FINISH_MASS.getColumns());
+        softAssertions.assertThat(componentsTreePage.getTableHeaders()).contains(ColumnsEnum.BATCH_SIZE.getColumns());
 
-        componentsTablePage.configure()
+        componentsTreePage.configure()
             .selectChosen()
             .moveColumn(DirectionEnum.LEFT);
 
@@ -533,7 +534,7 @@ public class UploadAssembliesTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .openComponent("titan charger base", scenarioName, currentUser)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
@@ -547,16 +548,16 @@ public class UploadAssembliesTests extends TestBase {
             .clickExplore()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .selectTableView()
             .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
-            .submit(ComponentsTablePage.class);
+            .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
-            "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
+        softAssertions.assertThat(componentsTreePage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
+            "New", "Plastic Molding", "Injection Molding", "ABS");
 
-        componentsTablePage.configure()
+        componentsTablePage = componentsTreePage.selectTableView()
+            .configure()
             .selectChosen()
             .moveColumn(DirectionEnum.LEFT)
             .selectColumn(ColumnsEnum.COMPONENT_NAME)
@@ -566,7 +567,6 @@ public class UploadAssembliesTests extends TestBase {
             .selectColumn(ColumnsEnum.LOCKED)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsTablePage.class);
-
 
         softAssertions.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isEqualTo(true);
 

@@ -5,6 +5,7 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
+import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -20,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
+import java.util.List;
 
 @Slf4j
 public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
@@ -257,6 +259,35 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isSetInputsEnabled() {
         return assembliesComponentsController.isSetInputsEnabled();
+    }
+
+    /**
+     * Open configure page
+     *
+     * @return new page object
+     */
+    public ConfigurePage configure() {
+        return assembliesComponentsController.configure();
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return assembliesComponentsController.getTableHeaders();
+    }
+
+    /**
+     * Gets the icon in the row
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return list of string
+     */
+    public List<String> getRowDetails(String componentName, String scenarioName) {
+        return assembliesComponentsController.getRowDetails(componentName, scenarioName);
     }
 
 
