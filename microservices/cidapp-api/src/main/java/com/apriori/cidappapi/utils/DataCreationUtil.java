@@ -61,6 +61,7 @@ public class DataCreationUtil {
             .scenarioName(this.componentBuilder.getScenarioName())
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .user(this.componentBuilder.getUser())
             .build();
 
         scenariosUtil = new ScenariosUtil();
@@ -98,6 +99,7 @@ public class DataCreationUtil {
             .scenarioName(this.componentBuilder.getScenarioName())
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .user(this.componentBuilder.getUser())
             .build();
 
         return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
