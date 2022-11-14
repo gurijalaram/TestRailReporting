@@ -11,59 +11,56 @@ import java.io.File;
 public class DataCreationUtil {
 
     private ScenariosUtil scenariosUtil;
-    private ComponentsUtil componentsUtil;
+
+    private String componentName;
+    private String scenarioName;
+    private ProcessGroupEnum processGroup;
+    private File resourceFile;
+    private UserCredentials userCredentials;
+    private ComponentInfoBuilder componentBuilder;
+
+    public DataCreationUtil(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, UserCredentials userCredentials) {
+        this.componentName = componentName;
+        this.scenarioName = scenarioName;
+        this.processGroup = processGroup;
+        this.resourceFile = resourceFile;
+        this.userCredentials = userCredentials;
+
+        this.componentBuilder = ComponentInfoBuilder.builder()
+            .componentName(this.componentName)
+            .scenarioName(this.scenarioName)
+            .processGroup(this.processGroup)
+            .resourceFile(this.resourceFile)
+            .user(this.userCredentials)
+            .build();
+    }
 
     /**
      * Create a component
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param resourceFile  - the resource file
-     * @param currentUser   - the user
      * @return response object
      */
-    public ScenarioItem createComponent(String componentName, String scenarioName, File resourceFile, UserCredentials currentUser) {
-        ComponentInfoBuilder componentBuilder = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+    public ScenarioItem createComponent() {
+        scenariosUtil = new ScenariosUtil();
 
-        componentsUtil = new ComponentsUtil();
-
-        return componentsUtil.postComponentQueryCSSUncosted(componentBuilder).getScenarioItem();
+        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
     }
 
     /**
      * Create and publish a component
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param processGroup  - the process group
-     * @param resourceFile  - the resource file
-     * @param currentUser   - the user
      * @return response object
      */
-    public ScenarioResponse createPublishComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, UserCredentials currentUser) {
-        ComponentInfoBuilder costBuilder = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroup)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+    public ScenarioResponse createPublishComponent() {
+        scenariosUtil = new ScenariosUtil();
 
-        componentsUtil = new ComponentsUtil();
-
-        ScenarioItem scenarioItem = componentsUtil.postComponentQueryCSSUncosted(costBuilder).getScenarioItem();
+        ScenarioItem scenarioItem = scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
-            .componentName(scenarioItem.getComponentName())
-            .scenarioName(scenarioItem.getScenarioName())
+            .componentName(this.componentBuilder.getComponentName())
+            .scenarioName(this.componentBuilder.getScenarioName())
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .user(currentUser)
             .build();
 
         scenariosUtil = new ScenariosUtil();
@@ -74,58 +71,33 @@ public class DataCreationUtil {
     /**
      * Create and cost a component
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param processGroup  - the process group
-     * @param resourceFile  - the resource file
-     * @param currentUser   - the user
      * @return response object
      */
-    public ScenarioResponse createCostComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, UserCredentials currentUser) {
-        ScenarioItem scenarioItem = createComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        ComponentInfoBuilder costBuilder = ComponentInfoBuilder.builder()
-            .componentIdentity(scenarioItem.getComponentIdentity())
-            .scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .processGroup(processGroup)
-            .user(currentUser)
-            .build();
+    public ScenarioResponse createCostComponent() {
+        createComponent();
 
         scenariosUtil = new ScenariosUtil();
 
-        return scenariosUtil.postCostScenario(costBuilder).getResponseEntity();
+        return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
     }
 
     /**
      * Create, cost and publish a component
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param processGroup  - the process group
-     * @param resourceFile  - the resource file
-     * @param currentUser   - the user
      * @return response object
      */
-    public ScenarioResponse createCostPublishComponent(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, UserCredentials currentUser) {
-        ScenarioItem scenarioItem = createComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        ComponentInfoBuilder costBuilder = ComponentInfoBuilder.builder()
-            .componentIdentity(scenarioItem.getComponentIdentity())
-            .scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .processGroup(processGroup)
-            .user(currentUser)
-            .build();
+    public ScenarioResponse createCostPublishComponent() {
+        ScenarioItem scenarioItem = createComponent();
 
         scenariosUtil = new ScenariosUtil();
 
-        scenariosUtil.postCostScenario(costBuilder);
+        scenariosUtil.postCostScenario(this.componentBuilder);
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
-            .componentName(scenarioItem.getComponentName())
-            .scenarioName(scenarioItem.getScenarioName())
+            .componentName(this.componentBuilder.getComponentName())
+            .scenarioName(this.componentBuilder.getScenarioName())
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .user(currentUser)
             .build();
 
         return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
