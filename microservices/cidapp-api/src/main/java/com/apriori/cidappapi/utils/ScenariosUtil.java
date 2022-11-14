@@ -53,6 +53,10 @@ public class ScenariosUtil {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
 
+    public ComponentsUtil getComponentsUtil() {
+        return componentsUtil;
+    }
+
     /**
      * GET scenario representation of a part
      *
