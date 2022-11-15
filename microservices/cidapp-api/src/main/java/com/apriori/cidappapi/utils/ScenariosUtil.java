@@ -73,9 +73,6 @@ public class ScenariosUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
-                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
                 scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
@@ -85,7 +82,6 @@ public class ScenariosUtil {
 
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation;
                 }
 
@@ -122,9 +118,6 @@ public class ScenariosUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
-                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
                 if (scenarioState != PROCESSING_FAILED) {
@@ -136,7 +129,6 @@ public class ScenariosUtil {
 
                 if (scenarioResponse.isPresent() && scenarioResponse.get().getScenarioState().equalsIgnoreCase(scenarioState.getState())) {
 
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation;
                 }
 
@@ -171,9 +163,6 @@ public class ScenariosUtil {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
-
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
-                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
@@ -237,7 +226,8 @@ public class ScenariosUtil {
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
                 .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
+                .socketTimeout(SOCKET_TIMEOUT)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
