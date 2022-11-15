@@ -35,6 +35,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -51,11 +52,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
+    @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
-
-    public ComponentsUtil getComponentsUtil() {
-        return componentsUtil;
-    }
 
     /**
      * GET scenario representation of a part
