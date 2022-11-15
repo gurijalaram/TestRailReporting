@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.entity.enums.CssAPIEnum;
 import com.apriori.entity.response.CssComponentResponse;
@@ -90,7 +89,7 @@ public class CssComponent {
     }
 
     /**
-     * Calls an api with GET verb
+     * Calls an api with GET verb. No wait is performed for this call.
      *
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
