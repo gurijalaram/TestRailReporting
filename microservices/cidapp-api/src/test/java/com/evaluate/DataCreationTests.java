@@ -25,7 +25,7 @@ public class DataCreationTests {
         final String componentName = "Machined Box AMERICAS";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = "AutoScenario872-918578482446200";
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ScenarioItem data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).createComponent();
 
