@@ -37,8 +37,7 @@ public class BidPackageItemTest extends TestUtil {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser)
-            .getResponseEntity().getItems().get(0);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),

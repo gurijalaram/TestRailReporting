@@ -50,7 +50,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
                 if (scenarioItemList.size() > 0 &&
 
@@ -96,7 +96,7 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         QueryParams queryParams = new QueryParams();
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class CssComponent {
             throw new KeyValueException(ae.getMessage(), paramKeyValue);
         }
 
-        return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
+        return getBaseCssComponents(userCredentials, queryParams.use(paramMap)).getResponseEntity().getItems();
     }
 
     /**
@@ -126,7 +126,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
                 if (scenarioItemList.size() > 0 &&
 

@@ -37,8 +37,7 @@ public class QmsBidPackageItemTest extends TestUtil {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser)
-            .getResponseEntity().getItems().get(0);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, userContext);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),

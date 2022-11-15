@@ -41,8 +41,7 @@ public class BidPackageProjectItemTest extends TestUtil {
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser)
-            .getResponseEntity().getItems().get(0);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
         bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName,bidPackageResponse.getResponseEntity().getIdentity(),currentUser);
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
