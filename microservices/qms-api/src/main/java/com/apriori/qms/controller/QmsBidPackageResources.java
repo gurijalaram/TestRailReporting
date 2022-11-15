@@ -5,7 +5,6 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameter;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectProfile;
