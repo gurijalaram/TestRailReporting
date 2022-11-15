@@ -53,6 +53,8 @@ public class ScenariosUtil {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
 
+    private final int SOCKET_TIMEOUT = 240000;
+
     /**
      * GET scenario representation of a part
      *
@@ -71,7 +73,7 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = getBaseScenarioComponent(componentInfo);
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
@@ -116,7 +118,7 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = getBaseScenarioComponent(componentInfo);
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
@@ -162,7 +164,7 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = getBaseScenarioComponent(componentInfo);
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
@@ -191,6 +193,17 @@ public class ScenariosUtil {
         );
     }
 
+    private ResponseWrapper<ScenarioResponse> getBaseScenarioComponent(ComponentInfoBuilder componentInfo) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken())
+                .socketTimeout(SOCKET_TIMEOUT)
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
     /**
      * Call GET on Scenario Representation by Component Endpoint with an expected Return Code
      *
@@ -199,7 +212,6 @@ public class ScenariosUtil {
      * @return response - A response object
      */
     public ResponseWrapper<Object> getScenarioRepresentationExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
-        final int SOCKET_TIMEOUT = 240000;
         final int METHOD_TIMEOUT = 30;
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
@@ -215,21 +227,6 @@ public class ScenariosUtil {
             response = HTTPRequest.build(requestEntity).get();
         } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
         return response;
-    }
-
-    private ResponseWrapper<ScenarioResponse> scenarioRequestEntity(ComponentInfoBuilder componentInfo) {
-        final int SOCKET_TIMEOUT = 240000;
-        String componentId = componentInfo.getComponentIdentity();
-        String scenarioId = componentInfo.getScenarioIdentity();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -748,8 +745,6 @@ public class ScenariosUtil {
     }
 
     private <T> RequestEntity genericDeleteRequest(UserCredentials userCredentials, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
-        final int SOCKET_TIMEOUT = 240000;
-
         return RequestEntityUtil.init(endPoint, klass)
             .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
