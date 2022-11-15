@@ -23,6 +23,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -66,6 +67,7 @@ public class CIAIntegrationTests extends TestBase {
     @TestRail(testCaseId = "12517")
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testCreateAdHocViewReport() {
+        SoftAssertions softAssertions = new SoftAssertions();
         CreateAdHocViewPage createAdHocViewPage = new ReportsLoginPage(driver)
             .login()
             .navigateToCreateAdHocViewPage()
@@ -79,25 +81,12 @@ public class CIAIntegrationTests extends TestBase {
             .addDataToTable()
             .addFilterToTable();
 
-        assertThat(createAdHocViewPage.getTableCellValue("1", "1"),
-            CoreMatchers.is(equalTo("0200613"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("1", "2"),
-            CoreMatchers.is(equalTo("Initial"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("1", "3"),
-            CoreMatchers.is(equalTo("4.35"))
-        );
+        softAssertions.assertThat(createAdHocViewPage.getTableRowByCellText("0200613")).isNotNull();
+        softAssertions.assertThat(createAdHocViewPage.getCellValue(createAdHocViewPage.getTableRowByCellText("0200613"), 1).getText()).isEqualTo("Initial");
 
-        assertThat(createAdHocViewPage.getTableCellValue("14", "1"),
-            CoreMatchers.is(equalTo("TOP-LEVEL"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("14", "2"),
-            CoreMatchers.is(equalTo("Initial"))
-        );
-        assertThat(createAdHocViewPage.getTableCellValue("14", "3"),
-            CoreMatchers.is(equalTo("27.28"))
-        );
+        softAssertions.assertThat(createAdHocViewPage.getTableRowByCellText("TOP-LEVEL")).isNotNull();
+        softAssertions.assertThat(createAdHocViewPage.getCellValue(createAdHocViewPage.getTableRowByCellText("TOP-LEVEL"), 1).getText()).isEqualTo("Initial");
+        softAssertions.assertAll();
     }
 
     @Test
