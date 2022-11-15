@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class BidPackageProjectProfileResponse {
     private String identity;
