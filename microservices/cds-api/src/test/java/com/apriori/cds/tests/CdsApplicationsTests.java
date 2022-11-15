@@ -27,9 +27,8 @@ public class CdsApplicationsTests {
     @TestRail(testCaseId = {"3251"})
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
-        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATIONS, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATIONS, Applications.class, HttpStatus.SC_OK);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getIsSingleTenant(), CoreMatchers.is(notNullValue()));
     }
@@ -40,10 +39,10 @@ public class CdsApplicationsTests {
     public void getApplicationById() {
         ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_BY_ID,
             Application.class,
+            HttpStatus.SC_OK,
             Constants.getApProApplicationIdentity()
         );
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getName(), is(equalTo("aPriori Professional")));
     }
 
@@ -53,10 +52,10 @@ public class CdsApplicationsTests {
     public void getCustomersAuthorizedForApplication() {
         ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_APPLICATION_BY_ID,
             Customers.class,
+            HttpStatus.SC_OK,
             Constants.getApProApplicationIdentity()
         );
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }

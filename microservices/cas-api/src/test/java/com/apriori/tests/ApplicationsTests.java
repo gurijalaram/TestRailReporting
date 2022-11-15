@@ -7,7 +7,6 @@ import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.Applications;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -30,16 +29,15 @@ public class ApplicationsTests {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class);
+        ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_APPLICATIONS,
             Applications.class,
+            HttpStatus.SC_OK,
             customer.getIdentity());
 
-        soft.assertThat(responseApplications.getStatusCode())
-                .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(responseApplications.getResponseEntity().getTotalItemCount())
                 .isGreaterThanOrEqualTo(1);
         soft.assertAll();

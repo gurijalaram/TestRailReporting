@@ -9,7 +9,6 @@ import com.apriori.qds.entity.request.layout.ViewElementRequestConfig;
 import com.apriori.qds.entity.request.layout.ViewElementRequestParameters;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
 import com.apriori.qds.entity.response.layout.ViewElementResponse;
-import com.apriori.qds.entity.response.layout.ViewElementsResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;

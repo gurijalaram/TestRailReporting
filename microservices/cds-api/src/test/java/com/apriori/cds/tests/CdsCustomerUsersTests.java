@@ -86,9 +86,8 @@ public class CdsCustomerUsersTests {
 
         userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, customerIdentity);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getIdentity(), is(not(emptyString())));
     }
@@ -103,9 +102,8 @@ public class CdsCustomerUsersTests {
 
         userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, customerIdentity, userIdentity);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
         assertThat(response.getResponseEntity().getUsername(), is(equalTo(userName)));
     }
@@ -151,7 +149,7 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CredentialsItems> credentials = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
+        ResponseWrapper<CredentialsItems> credentials = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, HttpStatus.SC_OK, userIdentity);
         String currentHashPassword = credentials.getResponseEntity().getPasswordHash();
         String currentPasswordSalt = credentials.getResponseEntity().getPasswordSalt();
 

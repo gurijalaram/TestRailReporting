@@ -30,6 +30,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang.StringUtils;
+import org.apache.hc.core5.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -149,7 +150,7 @@ public class BatchImportListTests extends TestBase {
         cdsTestUtil = new CdsTestUtil();
         List<User> sourceUsers = new ArrayList<>();
         for (int i = 0; i < 10; ++i) {
-            User added = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, customerIdentity).getResponseEntity().getItems().get(i);
+            User added = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity().getItems().get(i);
             sourceUsers.add(added);
         }
         return sourceUsers;

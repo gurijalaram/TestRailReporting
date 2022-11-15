@@ -10,6 +10,8 @@ import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import org.apache.http.HttpStatus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -105,14 +107,14 @@ public class TestUtil extends TestHelper {
      *
      * @return The api response.
      */
-    public final <E extends EndpointEnum, R, B> ResponseWrapper<R> create(E apiEnum, Class<R> klass, B body, String... inlineVariables) {
+    public final <E extends EndpointEnum, R, B> ResponseWrapper<R> create(E apiEnum, Class<R> klass, B body, Integer expectedResponseCode, String... inlineVariables) {
         CreatableModel model = body.getClass().getAnnotation(CreatableModel.class);
 
         if (model == null) {
             throw new IllegalArgumentException("The body is not a CreatableModel.  Did you forget a @CreatableModel(kind) annotation?");
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables);
+        RequestEntity requestEntity = RequestEntityUtil.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -147,6 +149,7 @@ public class TestUtil extends TestHelper {
 
         RequestEntity request = RequestEntityUtil.init(apiEnum, klass)
             .inlineVariables(inlineVariables)
+            .expectedResponseCode(HttpStatus.SC_OK)
             .urlParams(Arrays.asList(filter, sort, pagination));
 
         return HTTPRequest.build(request).get();
@@ -164,8 +167,8 @@ public class TestUtil extends TestHelper {
      *
      * @return The response wrapper that contains the response data.
      */
-    public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, String... inlineVariables) {
-        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables);
+    public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
+        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(request).get();
     }
 
@@ -175,6 +178,6 @@ public class TestUtil extends TestHelper {
      * @return The response of what was deleted
      */
     public final <E extends EndpointEnum> ResponseWrapper<String> delete(E apiEnum, String... inlineVariables) {
-        return HTTPRequest.build(RequestEntityUtil.init(apiEnum, null).inlineVariables(inlineVariables)).delete();
+        return HTTPRequest.build(RequestEntityUtil.init(apiEnum, null).inlineVariables(inlineVariables).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
     }
 }

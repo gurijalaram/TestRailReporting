@@ -59,9 +59,8 @@ public class CdsInstallationsTests {
     @TestRail(testCaseId = {"5823"})
     @Description("API returns a list of all the installations in the CDS DB")
     public void getInstallations() {
-        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class);
+        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class, HttpStatus.SC_OK);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getRegion(), is(not(nullValue())));
     }
@@ -162,12 +161,12 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<InstallationItems> identity = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
             InstallationItems.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             deploymentIdentity,
             installationIdentity
         );
 
-        assertThat(identity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(identity.getResponseEntity().getIdentity(), is(equalTo(installationIdentity)));
     }
 

@@ -29,10 +29,10 @@ public class CdsCustomerAssociationTests {
     public void getCustomerAssociations() {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
+            HttpStatus.SC_OK,
             Constants.getAPrioriInternalCustomerIdentity()
         );
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getTargetCustomerIdentity(), is(not(nullValue())));
     }
@@ -43,18 +43,17 @@ public class CdsCustomerAssociationTests {
     public void getCustomerAssociationByIdentity() {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
+            HttpStatus.SC_OK,
             Constants.getAPrioriInternalCustomerIdentity()
         );
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-
         String associationIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
         ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID,
             CustomerAssociationItems.class,
+            HttpStatus.SC_OK,
             Constants.getAPrioriInternalCustomerIdentity(),
             associationIdentity
         );
 
-        assertThat(association.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(association.getResponseEntity().getIdentity(), is(equalTo(associationIdentity)));
         assertThat(association.getResponseEntity().getDescription(), containsString("customer of aPriori"));
     }

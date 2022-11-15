@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CasBulkGrantDenyAccessTests {
     private SoftAssertions soft = new SoftAssertions();
@@ -56,7 +57,7 @@ public class CasBulkGrantDenyAccessTests {
         sourceUsers = new ArrayList<>();
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
         sourceUsers.add(casTestUtil.createUser(sourceCustomer).getResponseEntity());
-        siteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, aPrioriIdentity).getResponseEntity().getItems().get(0).getIdentity();
+        siteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aPrioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
         deploymentIdentity = PropertiesContext.get("${env}.cds.apriori_production_deployment_identity");
         installationIdentity = PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity");
         appIdentity = PropertiesContext.get("${env}.cds.apriori_cloud_home_identity");
@@ -87,18 +88,16 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
-        soft.assertThat(grantAll.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
 
-        ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             user1Identity);
         soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
-        ResponseWrapper<AccessControls> user2ControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> user2ControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             user2Identity);
         soft.assertThat(user2ControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
@@ -114,22 +113,19 @@ public class CasBulkGrantDenyAccessTests {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
-        soft.assertThat(grantAll.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", customerIdentity);
 
-        ResponseWrapper<String> denyAll = casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", customerIdentity);
-        soft.assertThat(denyAll.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.grantDenyAll(aPrioriIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", customerIdentity);
 
-        ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+
+        ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             user1Identity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
             .isEqualTo(0L);
 
-        ResponseWrapper<AccessControls> user2DeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> user2DeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             user2Identity);
         soft.assertThat(user2DeniedControls.getResponseEntity().getTotalItemCount())
@@ -171,22 +167,18 @@ public class CasBulkGrantDenyAccessTests {
             .installationIdentity(installationIdentity)
             .build();
 
-        ResponseWrapper<String> grantAll = casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", null);
-        soft.assertThat(grantAll.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", null);
 
-        ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             userIdentity);
         soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
-        ResponseWrapper<String> denyAll = casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", null);
-        soft.assertThat(denyAll.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", null);
 
-        ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> userDeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             userIdentity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
