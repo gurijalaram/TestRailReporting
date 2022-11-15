@@ -41,7 +41,7 @@ public class DataCreationUtil {
     }
 
     /**
-     * Create a component if no existing component exist matching the component/scenario name
+     * Create a component if no component exist matching the component/scenario name
      *
      * @return response object
      */
