@@ -54,7 +54,7 @@ public class DataCreationUtil {
     public ScenarioResponse createPublishComponent() {
         scenariosUtil = new ScenariosUtil();
 
-        ScenarioItem scenarioItem = scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+        ScenarioItem scenarioItem = createComponent();
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
             .componentName(this.componentBuilder.getComponentName())
