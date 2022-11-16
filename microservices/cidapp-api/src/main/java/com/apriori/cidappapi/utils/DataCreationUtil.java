@@ -52,8 +52,6 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioResponse createPublishComponent() {
-        scenariosUtil = new ScenariosUtil();
-
         ScenarioItem scenarioItem = createComponent();
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
