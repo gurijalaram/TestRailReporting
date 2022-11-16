@@ -10,7 +10,7 @@ import java.io.File;
 
 public class DataCreationUtil {
 
-    private ScenariosUtil scenariosUtil;
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     private String componentName;
     private String scenarioName;
@@ -41,8 +41,6 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioItem createComponent() {
-        scenariosUtil = new ScenariosUtil();
-
         return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
     }
 
@@ -62,8 +60,6 @@ public class DataCreationUtil {
             .user(this.componentBuilder.getUser())
             .build();
 
-        scenariosUtil = new ScenariosUtil();
-
         return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
     }
 
@@ -75,8 +71,6 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        scenariosUtil = new ScenariosUtil();
-
         return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
     }
 
@@ -87,8 +81,6 @@ public class DataCreationUtil {
      */
     public ScenarioResponse createCostPublishComponent() {
         ScenarioItem scenarioItem = createComponent();
-
-        scenariosUtil = new ScenariosUtil();
 
         scenariosUtil.postCostScenario(this.componentBuilder);
 
