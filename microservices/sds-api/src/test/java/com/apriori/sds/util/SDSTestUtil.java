@@ -1,8 +1,8 @@
 package com.apriori.sds.util;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -14,9 +14,9 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.entity.response.Application;
 import com.apriori.entity.response.Applications;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -172,8 +172,6 @@ public abstract class SDSTestUtil extends TestUtil {
 
         String uploadedComponentResourceName = new ComponentsUtil()
             .postCadFiles(componentInfo)
-            .getResponseEntity()
-            .getCadFiles()
             .get(0)
             .getResourceName();
 
@@ -218,7 +216,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + " not_costed").getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + " not_costed");
     }
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {

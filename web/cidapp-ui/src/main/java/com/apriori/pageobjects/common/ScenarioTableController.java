@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ScenarioTableController extends LoadableComponent<ScenarioTableController> {
@@ -52,6 +53,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
     private WebElement configureButton;
+
+    @FindBy(css = ".table-head [role='columnheader']")
+    private List<WebElement> columnHeader;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -302,8 +306,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component
-     * @param scenarioName - Name of the scenario
-     *
+     * @param scenarioName  - Name of the scenario
      * @return LocalDateTime representation of Created At value
      */
     public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
@@ -567,7 +570,28 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-        new CssComponent().getComponentParts(userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
+        new CssComponent().getComponentParts(userCredentials, paramKeysValues);
         return this;
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column to query
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        int columnPosition = IntStream.range(0, columnHeader.size())
+            .filter(o -> columnHeader.get(o).getAttribute("textContent").equals(column.getColumns()))
+            .findFirst()
+            .getAsInt();
+
+        return pageUtils.waitForElementsToAppear(By.cssSelector(String.format("[role='row'] [data-row-id='%s']", scenarioId)))
+            .stream()
+            .map(o -> o.getAttribute("textContent"))
+            .collect(Collectors.toList())
+            .get(columnPosition);
     }
 }

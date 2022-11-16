@@ -1,7 +1,6 @@
 package com.settings;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,6 +30,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
+import com.utils.DecimalPlaceEnum;
+import com.utils.LengthEnum;
+import com.utils.MassEnum;
+import com.utils.TimeEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -333,7 +336,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6306", "6307"})
+    @TestRail(testCaseId = {"6305", "6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
@@ -345,7 +348,28 @@ public class SettingsTests extends TestBase {
             .goToProductionTab()
             .inputBatchSize("0.12.00");
 
-        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.inputAnnualVolume("0.12.01");
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.inputYears("0.12.02");
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
+
+        productionDefaultPage.cancel(ExplorePage.class)
+            .openSettings()
+            .goToProductionTab()
+            .inputBatchSize("this is txt");
+
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEqualTo("");
+
+        productionDefaultPage.inputAnnualVolume("this is txt");
+        softAssertions.assertThat(productionDefaultPage.getAnnualVolume()).isEqualTo("");
+
+        productionDefaultPage.inputYears("this is txt");
+        softAssertions.assertThat(productionDefaultPage.getYears()).isEqualTo("");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -402,8 +426,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    // TODO: 9/15/2022 Work this test into defaultProductionLife() once CID-1182 is resolved.
-    @TestRail(testCaseId = {"6277"})
+    @TestRail(testCaseId = {"6277", "6291"})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
 
@@ -417,7 +440,9 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
             .selectCurrency(CurrencyEnum.EUR)
+            .selectMass(MassEnum.GRAM)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
@@ -428,6 +453,50 @@ public class SettingsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost"), containsString("€"));
+        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost").contains("€"));
+        softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6363", "5298"})
+    @Description("Validate User Preferences are for single user only")
+    public void settingsDifferentUsers() {
+
+        UserCredentials user1 = UserUtil.getUser();
+        UserCredentials user2 = UserUtil.getUser();
+        new UserPreferencesUtil().resetSettings(user1);
+        new UserPreferencesUtil().resetSettings(user2);
+
+        loginPage = new CidAppLoginPage(driver);
+
+        displayPreferencesPage = loginPage.login(user1)
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectLength(LengthEnum.MILLIMETER)
+            .selectMass(MassEnum.GRAM)
+            .selectTime(TimeEnum.MILLISECOND)
+            .selectDecimalPlaces(DecimalPlaceEnum.TWO)
+            .submit(ExplorePage.class)
+            .logout()
+            .login(user2)
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectLength(LengthEnum.METER)
+            .selectMass(MassEnum.KILOGRAM)
+            .selectTime(TimeEnum.MINUTE)
+            .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
+            .submit(ExplorePage.class)
+            .logout()
+            .login(user1)
+            .openSettings();
+
+        softAssertions.assertThat(displayPreferencesPage.getLength()).isEqualTo("Millimeter");
+        softAssertions.assertThat(displayPreferencesPage.getMass()).isEqualTo("Gram");
+        softAssertions.assertThat(displayPreferencesPage.getTime()).isEqualTo("Millisecond");
+        softAssertions.assertThat(displayPreferencesPage.getDecimalPlaces()).isEqualTo("2");
+
+        softAssertions.assertAll();
     }
 }

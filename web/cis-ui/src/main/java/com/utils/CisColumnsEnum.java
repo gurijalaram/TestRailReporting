@@ -14,6 +14,7 @@ public enum CisColumnsEnum {
     ANNUAL_VOLUME("Annual Volume"),
     BATCH_SIZE("Batch Size"),
     DFM_RISK("DFM Risk"),
+    STOCK_FORM("Stock Form"),
     FULLY_BURDENED_COST("Fully Burdened Cost");
 
     private final String columns;

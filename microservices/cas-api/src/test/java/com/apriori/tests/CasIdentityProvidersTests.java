@@ -13,7 +13,6 @@ import com.apriori.entity.response.IdentityProviders;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -25,9 +24,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CasIdentityProvidersTests extends TestUtil {
-
+    private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private String token;
     private String customerIdentity;
     private String userIdentity;
     private String idpIdentity;
@@ -40,8 +38,8 @@ public class CasIdentityProvidersTests extends TestUtil {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @Before
-    public void getToken() {
-        token = new AuthorizationUtil().getTokenAsString();
+    public void setUp() {
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -75,25 +73,15 @@ public class CasIdentityProvidersTests extends TestUtil {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        soft.assertThat(postResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         idpIdentity = postResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProviders.class)
-            .token(token)
-            .inlineVariables(customerIdentity + "/identity-providers")).get();
+        ResponseWrapper<IdentityProviders> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProviders.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers");
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
-        ResponseWrapper<IdentityProvider> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProvider.class)
-            .token(token)
-            .inlineVariables(customerIdentity + "/identity-providers/" + idpIdentity)).get();
+        ResponseWrapper<IdentityProvider> responseIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProvider.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers/" + idpIdentity);
 
-        soft.assertThat(responseIdentity.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(responseIdentity.getResponseEntity().getIdentity())
             .isEqualTo(idpIdentity);
         soft.assertAll();

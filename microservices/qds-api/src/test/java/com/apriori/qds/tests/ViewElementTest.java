@@ -1,10 +1,12 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.request.layout.ViewElementRequest;
 import com.apriori.qds.entity.request.layout.ViewElementRequestConfig;
 import com.apriori.qds.entity.request.layout.ViewElementRequestParameters;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
+import com.apriori.qds.entity.response.layout.ViewElementResponse;
 import com.apriori.qds.entity.response.layout.ViewElementsResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
@@ -23,13 +25,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ViewElementTest {
+public class ViewElementTest extends TestUtil {
 
     private static String viewElementName;
     private static String layoutIdentity;
-    private static ResponseWrapper<ViewElementsResponse> viewElementResponse;
+    private static ResponseWrapper<ViewElementResponse> viewElementResponse;
     private static ResponseWrapper<LayoutResponse> layoutResponse;
-    UserCredentials userCredentials = UserUtil.getUser();
+    UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static String userContext;
     private static String layoutName;
@@ -40,37 +42,37 @@ public class ViewElementTest {
         softAssertions = new SoftAssertions();
         viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
         layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
-        userContext = new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail());
-        layoutResponse = LayoutResources.createLayout(layoutName, userContext);
-        viewElementResponse = LayoutResources.createLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(), "TEST123456", userContext);
+        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
+        layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
+        viewElementResponse = LayoutResources.createLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(), viewElementName, currentUser);
 
     }
 
     @Test
     public void createLayoutViewElements() {
         softAssertions.assertThat(viewElementResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
     }
 
     @Test
     public void updateLayoutViewElements() {
         ViewElementRequest viewElementRequest = ViewElementRequest.builder()
             .viewElement(ViewElementRequestParameters.builder()
-                .name(viewElementResponse.getResponseEntity().getItems().get(0).getName())
+                .name(viewElementResponse.getResponseEntity().getName())
                 .configuration(ViewElementRequestConfig.builder()
                     .foo("Test")
                     .build())
                 .build())
             .build();
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, ViewElementsResponse.class)
-            .inlineVariables(viewElementResponse.getResponseEntity().getItems().get(0).getIdentity())
+            .inlineVariables(viewElementResponse.getResponseEntity().getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)
             .apUserContext(userContext);
 
         viewElementResponse = HTTPRequest.build(requestEntity).patch();
         softAssertions.assertThat(viewElementResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
     }
 
     @Test
@@ -83,13 +85,13 @@ public class ViewElementTest {
 
         viewElementResponse = HTTPRequest.build(requestEntity).get();
         softAssertions.assertThat(viewElementResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
     }
 
     @After
     public void testCleanup() {
         ResponseWrapper<String> deleteLayoutViewElementResponse = LayoutResources.deleteLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(),
-            viewElementResponse.getResponseEntity().getItems().get(0).getIdentity(), userContext);
+            viewElementResponse.getResponseEntity().getIdentity(), userContext);
         ResponseWrapper<String> deleteLayoutResponse = LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertThat(deleteLayoutViewElementResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
         softAssertions.assertThat(deleteLayoutResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);

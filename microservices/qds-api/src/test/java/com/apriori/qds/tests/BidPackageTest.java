@@ -1,5 +1,6 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageRequest;
@@ -26,7 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BidPackageTest {
+public class BidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
@@ -123,7 +124,7 @@ public class BidPackageTest {
         softAssertions.assertThat(bidPackageCreatedResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(bidPackageCreatedResponse.getResponseEntity().getAssignedTo()).isEqualTo(userIdentity);
 
-        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageCreatedResponse.getResponseEntity().getIdentity(), userContext);
+        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageCreatedResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertThat(deleteBidResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
 
         ResponseWrapper<ErrorMessage> bidPackageResponse = HTTPRequest.build(
@@ -161,7 +162,7 @@ public class BidPackageTest {
         softAssertions.assertThat(bidPackageAssignedResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(bidPackageAssignedResponse.getResponseEntity().getAssignedTo()).isEqualTo(userIdentity);
 
-        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageAssignedResponse.getResponseEntity().getIdentity(), userContext);
+        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageAssignedResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertThat(deleteBidResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
     }
 
@@ -396,7 +397,7 @@ public class BidPackageTest {
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), userContext);
+        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertThat(deleteBidResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
         softAssertions.assertAll();
     }

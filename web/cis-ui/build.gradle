@@ -1,3 +1,7 @@
 dependencies {
     implementation project(':utils')
+    implementation project(':apibase')
+    implementation project(':microservices:css-api')
+    implementation project(':microservices:cis-api')
+    implementation project(':microservices:cidapp-api')
 }

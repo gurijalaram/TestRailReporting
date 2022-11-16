@@ -27,5 +27,6 @@ public class DiscussionResponse {
     private LocalDateTime updatedAt;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime assignedAt;
-
+    private Assignee assignee;
+    private Attributes attributes;
 }

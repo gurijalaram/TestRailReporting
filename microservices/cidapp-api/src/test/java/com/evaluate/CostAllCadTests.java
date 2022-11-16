@@ -1,7 +1,6 @@
 package com.evaluate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -22,6 +21,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterfaces.SmokeTests;
@@ -33,6 +34,7 @@ public class CostAllCadTests {
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final IterationsUtil iterationsUtil = new IterationsUtil();
+    private SoftAssertions softAssertions;
 
     @Test
     @Category(SmokeTests.class)
@@ -46,7 +48,7 @@ public class CostAllCadTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -75,9 +77,13 @@ public class CostAllCadTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        assertThat(analysisOfScenario.getMaterialCost(), is(closeTo(27.44, 15)));
-        assertThat(analysisOfScenario.getLaborCost(), is(closeTo(6.30, 5)));
-        assertThat(analysisOfScenario.getDirectOverheadCost(), is(closeTo(1.69, 5)));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(analysisOfScenario.getMaterialCost()).isCloseTo(Double.valueOf(27.44), Offset.offset(15.0));
+        softAssertions.assertThat(analysisOfScenario.getLaborCost()).isCloseTo(Double.valueOf(6.30), Offset.offset(5.0));
+        softAssertions.assertThat(analysisOfScenario.getDirectOverheadCost()).isCloseTo(Double.valueOf(1.69), Offset.offset(5.0));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -196,7 +202,7 @@ public class CostAllCadTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)

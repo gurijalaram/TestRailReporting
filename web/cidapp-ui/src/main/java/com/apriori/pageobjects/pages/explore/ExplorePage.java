@@ -1,11 +1,11 @@
 package com.apriori.pageobjects.pages.explore;
 
-import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -414,7 +414,7 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
         List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
@@ -490,5 +490,17 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage addColumn(ColumnsEnum columnToAdd) {
         scenarioTableController.addColumn(columnToAdd);
         return this;
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
     }
 }

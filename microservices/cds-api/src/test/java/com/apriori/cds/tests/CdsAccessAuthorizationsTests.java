@@ -58,7 +58,7 @@ public class CdsAccessAuthorizationsTests {
         customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
-        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class,aPCustomerIdentity);
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, aPCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
         associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
@@ -92,9 +92,8 @@ public class CdsAccessAuthorizationsTests {
         assertThat(accessAuthorization.getResponseEntity().getUserIdentity(), is(equalTo(aPStaffIdentity)));
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AccessAuthorizations> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorizations.class, customerIdentity);
+        ResponseWrapper<AccessAuthorizations> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(authorizationsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(authorizationsResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         accessAuthorizationIdentityHolder = IdentityHolder.builder()
@@ -110,9 +109,8 @@ public class CdsAccessAuthorizationsTests {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
         LocalDateTime creationDate = accessAuthorization.getResponseEntity().getCreatedAt();
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
-        ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, customerIdentity);
+        ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(statusResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(statusResponse.getResponseEntity().getResponse().get(0).getAssignedAt(), is(equalTo(creationDate)));
 
         accessAuthorizationIdentityHolder = IdentityHolder.builder()
@@ -128,9 +126,8 @@ public class CdsAccessAuthorizationsTests {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
         String authorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AccessAuthorization> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, AccessAuthorization.class, customerIdentity, authorizationIdentity);
+        ResponseWrapper<AccessAuthorization> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, AccessAuthorization.class, HttpStatus.SC_OK, customerIdentity, authorizationIdentity);
 
-        assertThat(authorizationsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(authorizationsResponse.getResponseEntity().getIdentity(), is(equalTo(authorizationIdentity)));
 
         ResponseWrapper<String> deleteAuthorizationAccess = cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, customerIdentity, authorizationIdentity);

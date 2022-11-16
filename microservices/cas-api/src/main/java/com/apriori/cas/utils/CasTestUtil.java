@@ -6,6 +6,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.entity.requests.BulkAccessControlRequest;
 import com.apriori.entity.response.AccessControl;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
@@ -26,13 +27,14 @@ import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
+
+import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -43,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 public class CasTestUtil extends TestUtil {
-    private static final String token = new AuthorizationUtil().getTokenAsString();
 
     /**
      * Gets the special customer "aPriori Internal"
@@ -102,7 +103,7 @@ public class CasTestUtil extends TestUtil {
             .maxCadFileSize(51)
             .emailDomains(Arrays.asList(domains))
             .build();
-        return create(CASAPIEnum.CUSTOMERS, Customer.class, customer);
+        return create(CASAPIEnum.CUSTOMERS, Customer.class, customer, HttpStatus.SC_CREATED);
     }
 
     /**
@@ -190,6 +191,7 @@ public class CasTestUtil extends TestUtil {
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
             CustomerAssociationUser.class,
             body,
+            HttpStatus.SC_CREATED,
             user.getCustomerIdentity(),
             association.getIdentity()
         );
@@ -206,7 +208,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String description, String email) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
-            .token(token)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("customer",
                 Customer.builder().name(name)
                     .cloudReference(cloudReference)
@@ -233,7 +235,7 @@ public class CasTestUtil extends TestUtil {
     public static ResponseWrapper<Customer> updateCustomer(String identity, String email) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
-            .token(token)
+            .expectedResponseCode(HttpStatus.SC_OK)
             .body("customer",
                 Customer.builder()
                     .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
@@ -250,7 +252,7 @@ public class CasTestUtil extends TestUtil {
     public static <T> ResponseWrapper<T> resetMfa(String identity) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.MFA, null)
-            .token(token)
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED)
             .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).post();
@@ -263,8 +265,8 @@ public class CasTestUtil extends TestUtil {
     public static <T> ResponseWrapper<T> resetUserMfa(String customerIdentity, String identity) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.MFA, null)
-            .token(token)
-            .inlineVariables(customerIdentity, "users", identity);
+            .inlineVariables(customerIdentity, "users", identity)
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -276,11 +278,11 @@ public class CasTestUtil extends TestUtil {
     public static ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER, ValidateSite.class)
-            .token(token)
             .body("site",
                 Site.builder().siteId(siteId)
                     .build())
-            .inlineVariables(identity + "/sites/validate");
+            .inlineVariables(identity + "/sites/validate")
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -293,14 +295,14 @@ public class CasTestUtil extends TestUtil {
     public static ResponseWrapper<Site> addSite(String identity, String siteId, String siteName) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SITES, Site.class)
-            .token(token)
             .body("site",
                 Site.builder().siteId(siteId)
                     .name(siteName)
                     .description("Site created by automation test")
                     .active(true)
                     .build())
-            .inlineVariables(identity);
+            .inlineVariables(identity)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -357,7 +359,7 @@ public class CasTestUtil extends TestUtil {
             .userProfile(profile)
             .build();
 
-        return create(CASAPIEnum.USERS, CustomerUser.class, user, customerIdentity);
+        return create(CASAPIEnum.USERS, CustomerUser.class, user, HttpStatus.SC_CREATED, customerIdentity);
     }
 
     /**
@@ -368,7 +370,6 @@ public class CasTestUtil extends TestUtil {
 
         String domain = String.format("%s.co.uk", customerName.toLowerCase());
         CasTestUtil util = new CasTestUtil();
-        RequestEntityUtil.useTokenForRequests(token);
         return util.createUser(identity, userName, domain);
     }
 
@@ -385,7 +386,6 @@ public class CasTestUtil extends TestUtil {
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, UpdateUser.class)
-            .token(token)
             .body("user",
                 UpdateUser.builder().userType("AP_CLOUD_USER")
                     .email(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
@@ -410,7 +410,8 @@ public class CasTestUtil extends TestUtil {
                         .setDepartment("QA")
                         .setSupervisor("Ciene Frith"))
                     .build())
-                .inlineVariables(customerIdentity, identity);
+            .inlineVariables(customerIdentity, identity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -422,10 +423,10 @@ public class CasTestUtil extends TestUtil {
 
         final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, PostBatch.class)
-            .token(token)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER, PostBatch.class)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
-            .inlineVariables(customerIdentity, "batches/");
+            .inlineVariables(customerIdentity + "/batches/")
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -436,8 +437,8 @@ public class CasTestUtil extends TestUtil {
     public static <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH, null)
-            .token(token)
-            .inlineVariables(customerIdentity, batchIdentity);
+            .inlineVariables(customerIdentity, batchIdentity)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -450,10 +451,10 @@ public class CasTestUtil extends TestUtil {
     public static <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, null)
-            .token(token)
             .body(BatchItemsPost.builder().batchItems(Collections.singletonList(batchIdentity))
                 .build())
-            .inlineVariables(customerIdentity, batchIdentity);
+            .inlineVariables(customerIdentity, batchIdentity)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -467,7 +468,6 @@ public class CasTestUtil extends TestUtil {
     public static ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
-            .token(token)
             .body("batchItem",
                 BatchItem.builder().userName("maggie")
                     .givenName("Maggie")
@@ -475,7 +475,8 @@ public class CasTestUtil extends TestUtil {
                     .prefix("Miss")
                     .cityTown("Springfield")
                     .jobTitle("QA"))
-            .inlineVariables(customerIdentity, batchIdentity, itemIdentity);
+            .inlineVariables(customerIdentity, batchIdentity, itemIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -492,8 +493,8 @@ public class CasTestUtil extends TestUtil {
     public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
-                .token(token)
                 .inlineVariables(customerIdentity, siteIdentity)
+                .expectedResponseCode(HttpStatus.SC_CREATED)
                 .body(LicenseRequest.builder()
                     .license(
                         License.builder()
@@ -516,10 +517,10 @@ public class CasTestUtil extends TestUtil {
      * @param userIdentity - the user identity
      * @return <T>ResponseWrapper <T>
      */
-    public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
+    public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, klass)
-                .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+                .expectedResponseCode(expectedResponseCode)
                 .body("userAssociation",
                         AssociationUser.builder()
                                 .userIdentity(userIdentity)
@@ -538,6 +539,7 @@ public class CasTestUtil extends TestUtil {
     public ResponseWrapper<AccessControl> addAccessControl(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACCESS_CONTROLS, AccessControl.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessControl",
                 AccessControl.builder()
                     .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
@@ -546,6 +548,45 @@ public class CasTestUtil extends TestUtil {
                     .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
                     .build());
 
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Grants bulk access to customer application
+     *
+     * @param aPInternalIdentity - identity of aP Internal customer
+     * @param siteIdentity - site identity
+     * @param deploymentIdentity - deployment identity
+     * @param installationIdentity - installation identity
+     * @param appIdentity - application identity
+     * @param sourceCustomerId - source customer identity
+     * @return ResponseWrapper <String>
+     */
+    public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GRANT_DENY_ALL, null)
+            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
+            .body(BulkAccessControlRequest.builder()
+                .sourceCustomerIdentity(sourceCustomerId)
+                .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Changes activation state of a License.
+     *
+     * @param klas - class
+     * @param customerIdentity - customer identity
+     * @param siteIdentity - site identity
+     * @param licenseIdentity - license identity
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity, Integer expectedResponseCode) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACTIVATE_LICENSE, klas)
+            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body(null);
         return HTTPRequest.build(requestEntity).post();
     }
 }

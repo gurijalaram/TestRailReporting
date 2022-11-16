@@ -23,6 +23,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -116,15 +117,15 @@ public class AccessControlsApplicationTests extends TestBase {
     @TestRail(testCaseId = {"13224", "13225", "13226", "13227", "13230", "14060"})
     public void testUsersCanBeGivenAccessToApplication() {
         SoftAssertions soft = new SoftAssertions();
-        ResponseWrapper<Users> customerUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, customerIdentity);
+        ResponseWrapper<Users> customerUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
         String serviceAccountIdentity = customerUsers.getResponseEntity().getItems().stream().filter(givenName -> givenName.getUserProfile().getGivenName().equals("service-account")).collect(Collectors.toList()).get(0).getIdentity();
         String userIdentity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
 
-        ResponseWrapper<AccessControls> serviceAccountControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, serviceAccountIdentity);
+        ResponseWrapper<AccessControls> serviceAccountControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, serviceAccountIdentity);
         long accessControlsServiceAccount = serviceAccountControls.getResponseEntity().getTotalItemCount();
 
-        ResponseWrapper<AccessControls> userControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> userControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         soft.assertThat(userControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected user doesn't have access control to customer application")
             .isEqualTo(0L);
@@ -139,17 +140,17 @@ public class AccessControlsApplicationTests extends TestBase {
             .isEqualTo("Users have been granted access successfully");
         grantAll.closeMessage();
 
-        ResponseWrapper<AccessControls> userControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> userControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
-        ResponseWrapper<AccessControls> user2ControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, user2Identity);
+        ResponseWrapper<AccessControls> user2ControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, user2Identity);
         soft.assertThat(user2ControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
-        ResponseWrapper<AccessControls> serviceAccountControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, serviceAccountIdentity);
+        ResponseWrapper<AccessControls> serviceAccountControlsGranted = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, serviceAccountIdentity);
         soft.assertThat(serviceAccountControlsGranted.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected service accounts access controls were not changed after grant all")
             .isEqualTo(accessControlsServiceAccount);
@@ -163,17 +164,17 @@ public class AccessControlsApplicationTests extends TestBase {
         soft.assertThat(denyAll.getTextSuccessMessage())
             .isEqualTo("Users have been denied access successfully");
 
-        ResponseWrapper<AccessControls> serviceAccountsAfterDeny = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, serviceAccountIdentity);
+        ResponseWrapper<AccessControls> serviceAccountsAfterDeny = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, serviceAccountIdentity);
         soft.assertThat(serviceAccountsAfterDeny.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected service accounts access controls were not changed after deny all")
             .isEqualTo(accessControlsServiceAccount);
 
-        ResponseWrapper<AccessControls> userDeniedControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> userDeniedControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
             .isEqualTo(0L);
 
-        ResponseWrapper<AccessControls> user2DeniedControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, user2Identity);
+        ResponseWrapper<AccessControls> user2DeniedControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, user2Identity);
         soft.assertThat(user2DeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
             .isEqualTo(0L);

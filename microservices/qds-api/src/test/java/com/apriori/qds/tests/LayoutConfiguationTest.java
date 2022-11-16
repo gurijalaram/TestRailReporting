@@ -1,10 +1,13 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
 import com.apriori.qds.entity.response.layout.LayoutsResponse;
+import com.apriori.qds.entity.response.layout.ViewElementResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -13,27 +16,33 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LayoutConfiguationTest {
+public class LayoutConfiguationTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
+    private static ResponseWrapper<LayoutResponse> layoutResponse;
     private static ResponseWrapper<LayoutResponse> layoutConfigurationResponse;
+    private static ResponseWrapper<ViewElementResponse> viewElementsResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
     private static String viewElementName;
     private static String layoutConfigName;
+    private static String layoutName;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        layoutConfigName = "LCN" + RandomStringUtils.randomNumeric(6);
-        // layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName)).post();
+        layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbers();
+        layoutName = "LN" + new GenerateStringUtil().getRandomNumbers();
+        viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
+        layoutResponse = LayoutResources.createLayout(layoutName,currentUser);
+        viewElementsResponse = LayoutResources.createLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(),viewElementName,currentUser);
+        layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).post();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }
 
@@ -69,7 +78,7 @@ public class LayoutConfiguationTest {
     @Test
     public void updateLayoutConfiguration() {
         ResponseWrapper<LayoutResponse> layoutConfigurationResponse;
-        layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName)).patch();
+        layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).patch();
         softAssertions.assertThat(layoutConfigurationResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
     }
 

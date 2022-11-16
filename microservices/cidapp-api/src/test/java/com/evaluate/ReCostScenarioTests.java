@@ -1,10 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
@@ -35,6 +30,7 @@ public class ReCostScenarioTests {
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final IterationsUtil iterationsUtil = new IterationsUtil();
+    private SoftAssertions softAssertions;
 
     @Test
     @Category(SmokeTests.class)
@@ -48,7 +44,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -62,13 +58,17 @@ public class ReCostScenarioTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        assertThat(analysisOfScenario.getProcessRoutingName(), containsString("Material Stock"));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains("Material Stock");
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -106,13 +106,15 @@ public class ReCostScenarioTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        assertThat(analysisOfScenario.getProcessRoutingName(), containsString("3 Axis Mill"));
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains("3 Axis Mill");
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
     }
 
     @Test
@@ -154,7 +156,7 @@ public class ReCostScenarioTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -176,7 +178,7 @@ public class ReCostScenarioTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains(processRoutingName);
 

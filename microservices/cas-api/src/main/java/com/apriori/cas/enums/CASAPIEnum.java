@@ -8,7 +8,6 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     //CUSTOMERS
     CUSTOMERS("customers"),
     CUSTOMER(CUSTOMERS.getEndpointString().concat("/%s")),
-    GET_CUSTOMERS(CUSTOMERS.getEndpointString().concat("/%s/%s")),
 
     //CUSTOMER ASSOCIATIONS
     CUSTOMER_ASSOCIATIONS(CUSTOMER.getEndpointString().concat("/customer-associations")),
@@ -30,8 +29,11 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //LICENSES
     LICENSE_BY_CUSTOMER_SITE_IDS(SITE_ID.getEndpointString().concat("/licenses")),
-    SUBLICENSES_BY_LICENSE_ID(LICENSE_BY_CUSTOMER_SITE_IDS.getEndpointString().concat("/%s/sub-licenses")),
-    SUBLICENSE_ASSOCIATIONS(SUBLICENSES_BY_LICENSE_ID.getEndpointString().concat("/%s/users")),
+    LICENSE_BY_ID(LICENSE_BY_CUSTOMER_SITE_IDS.getEndpointString().concat("/%s")),
+    ACTIVATE_LICENSE(LICENSE_BY_ID.getEndpointString().concat("/activate")),
+    SUBLICENSES_BY_LICENSE_ID(LICENSE_BY_ID.getEndpointString().concat("/sub-licenses")),
+    SUBLICENSE_BY_ID(SUBLICENSES_BY_LICENSE_ID.getEndpointString().concat("/%s")),
+    SUBLICENSE_ASSOCIATIONS(SUBLICENSE_BY_ID.getEndpointString().concat("/users")),
     SPECIFIC_USER_SUB_LICENSE_USERS(SUBLICENSE_ASSOCIATIONS.getEndpointString().concat("/%s")),
 
     //MFA
@@ -40,6 +42,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     //USERS
     USERS(CUSTOMER.getEndpointString().concat("/users")),
     USER(USERS.getEndpointString().concat("/%s")),
+    USERS_SUBLICENSES(USER.getEndpointString().concat("/licensing")),
 
     //BATCHES
     BATCHES(CUSTOMER.getEndpointString().concat("/batches")),
@@ -59,7 +62,10 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //CUSTOMER USER ACCESS CONTROLS
     ACCESS_CONTROLS(USER.getEndpointString().concat("/access-controls")),
-    ACCESS_CONTROL_BY_ID(ACCESS_CONTROLS.getEndpointString().concat("/%s"));
+    ACCESS_CONTROL_BY_ID(ACCESS_CONTROLS.getEndpointString().concat("/%s")),
+
+    //BULK GRANT/DENY ACCESS TO APPLICATION
+    GRANT_DENY_ALL(SITE_ID.getEndpointString().concat("/deployments/%s/installations/%s/applications/%s/%s"));
 
     private final String endpoint;
 

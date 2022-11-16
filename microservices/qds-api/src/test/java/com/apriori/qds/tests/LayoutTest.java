@@ -1,5 +1,6 @@
 package com.apriori.qds.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.request.layout.LayoutRequest;
 import com.apriori.qds.entity.request.layout.LayoutRequestParameters;
@@ -22,7 +23,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LayoutTest {
+public class LayoutTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<LayoutResponse> layoutResponse;
@@ -36,7 +37,7 @@ public class LayoutTest {
         softAssertions = new SoftAssertions();
         layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        layoutResponse = LayoutResources.createLayout(layoutName, userContext);
+        layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
     }
 
     @Test

@@ -80,10 +80,10 @@ public class CdsDeploymentsTests {
 
         ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
             Deployments.class,
+            HttpStatus.SC_OK,
             customerIdentity
         );
 
-        assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
@@ -98,11 +98,11 @@ public class CdsDeploymentsTests {
 
         ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS,
             Deployment.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             deploymentIdentity
         );
 
-        assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getIdentity(), is(equalTo(deploymentIdentity)));
     }
 }

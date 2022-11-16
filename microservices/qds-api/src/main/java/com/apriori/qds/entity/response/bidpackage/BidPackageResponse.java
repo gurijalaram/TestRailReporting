@@ -23,6 +23,7 @@ public class BidPackageResponse {
     private String description;
     private String status;
     private String updatedBy;
+    private String updatedByName;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String customerIdentity;

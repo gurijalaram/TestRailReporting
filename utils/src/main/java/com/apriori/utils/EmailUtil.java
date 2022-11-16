@@ -14,8 +14,8 @@ import javax.mail.Store;
 public class EmailUtil {
     public static Message[] getEmail(String address, String userName, String password) throws MessagingException,
         IOException {
-        Folder folder = null;
-        Store store = null;
+        Folder folder;
+        Store store;
         String subject = null;
         Flags.Flag flag = null;
 
@@ -44,8 +44,8 @@ public class EmailUtil {
     public static Message[] getEmail(String... inlineVars) throws MessagingException,
         IOException {
 
-        Folder folder = null;
-        Store store = null;
+        Folder folder;
+        Store store;
         String subject = null;
         Flags.Flag flag = null;
 
