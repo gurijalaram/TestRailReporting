@@ -74,9 +74,8 @@ public class CdsUserPreferencesTests {
     @TestRail(testCaseId = {"12397"})
     @Description("Returns a paged set of UserPreferences for a specific user.")
     public void getUserPreferences() {
-        ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, customerIdentity, userIdentity);
+        ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(userPreferences.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(userPreferences.getResponseEntity().getTotalItemCount(), greaterThanOrEqualTo(1));
     }
 
@@ -89,9 +88,8 @@ public class CdsUserPreferencesTests {
         assertThat(newPreference.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, customerIdentity, userIdentity, preferenceIdentity);
+        ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, HttpStatus.SC_OK, customerIdentity, userIdentity, preferenceIdentity);
 
-        assertThat(preferenceResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(preferenceResponse.getResponseEntity().getIdentity(), is(equalTo(preferenceIdentity)));
 
         userPreferenceIdentityHolder = IdentityHolder.builder()

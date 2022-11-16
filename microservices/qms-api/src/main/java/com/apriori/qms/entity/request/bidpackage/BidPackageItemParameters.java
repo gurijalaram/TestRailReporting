@@ -1,16 +1,15 @@
-package com.apriori.qds.entity.response.bidpackage;
+package com.apriori.qms.entity.request.bidpackage;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class BidPackageProjectItem {
-    private String identity;
-    private String bidPackageIdentity;
-    private String projectIdentity;
+@AllArgsConstructor
+public class BidPackageItemParameters {
     private String componentIdentity;
     private String scenarioIdentity;
     private String iterationIdentity;

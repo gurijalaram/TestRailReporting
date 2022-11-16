@@ -5,6 +5,18 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum QMSAPIEnum implements ExternalEndpointEnum {
 
+    //BID PACKAGE
+    BID_PACKAGES("bid-packages"),
+    BID_PACKAGE("bid-packages/%s"),
+    BID_PACKAGE_PROJECTS("bid-packages/%s/projects"),
+    BID_PACKAGE_PROJECT("bid-packages/%s/projects/%s"),
+    BID_PACKAGE_PROJECT_USERS("bid-packages/%s/projects/%s/project-users"),
+    BID_PACKAGE_PROJECT_USER("bid-packages/%s/projects/%s/project-users/%s"),
+    BID_PACKAGE_PROJECT_ITEMS("bid-packages/%s/projects/%s/project-items"),
+    BID_PACKAGE_PROJECT_ITEM("bid-packages/%s/projects/%s/project-items/%s"),
+    BID_PACKAGE_ITEMS("bid-packages/%s/bid-package-items"),
+    BID_PACKAGE_ITEM("bid-packages/%s/bid-package-items/%s"),
+
     //COMPONENTS
     COMPONENT("components/%s"),
 
