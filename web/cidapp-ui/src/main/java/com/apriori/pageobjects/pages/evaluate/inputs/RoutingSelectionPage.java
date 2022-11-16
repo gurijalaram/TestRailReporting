@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -170,6 +171,30 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     public boolean isAprioriLogoDisplayed(String routingPreference) {
         return getPageUtils().isElementDisplayed(getDriver().findElement(
             By.xpath(String.format("//h3[text()='%s']/parent::div//*[@data-testid='logo']", routingPreference))));
+    }
+
+    /**
+     * Check if user tile is displayed
+     *
+     * @param routingPreference - the routing preference
+     * @return true/false
+     */
+    public boolean isUserTileDisplayed(String routingPreference) {
+        By byUserTile = with(By.cssSelector("[data-icon='user-check']"))
+            .below(By.xpath(String.format("//h3[text()='%s']", routingPreference)));
+        return getPageUtils().isElementDisplayed(byUserTile);
+    }
+
+    /**
+     * Gets the text of the button
+     *
+     * @param routingPreference - the routing preference
+     * @return string
+     */
+    public String getButtonText(String routingPreference) {
+        By byButton = with(By.xpath("//button"))
+            .toRightOf(By.xpath(String.format("//h3[text()='%s']", routingPreference)));
+        return getDriver().findElement(byButton).getAttribute("textContent");
     }
 
     /**
