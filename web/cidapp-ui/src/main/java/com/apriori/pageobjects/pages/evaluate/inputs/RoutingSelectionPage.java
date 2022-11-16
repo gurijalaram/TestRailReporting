@@ -191,7 +191,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * @param routingPreference - the routing preference
      * @return string
      */
-    public String getButtonText(String routingPreference) {
+    public String getSelectionStatus(String routingPreference) {
         By byButton = with(By.xpath("//button"))
             .toRightOf(By.xpath(String.format("//h3[text()='%s']", routingPreference)));
         return getDriver().findElement(byButton).getAttribute("textContent");
