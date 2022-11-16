@@ -34,10 +34,9 @@ public class CustomerNegativeTests {
     @TestRail(testCaseId = {"8178"})
     @Description("Missing customer identity")
     public void getUserPrefMissingCustID() {
-        ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(RequestEntityUtil
-                .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES_NO_CUSTOMER, ErrorMessage.class)
-                .expectedResponseCode(HttpStatus.SC_NOT_FOUND))
-            .get();
-        assertThat(processGroupsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
+        HTTPRequest.build(RequestEntityUtil.init(
+            BCSAPIEnum.CUSTOMER_USER_PREFERENCES_NO_CUSTOMER, ErrorMessage.class)
+                .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
+        ).get();
     }
 }

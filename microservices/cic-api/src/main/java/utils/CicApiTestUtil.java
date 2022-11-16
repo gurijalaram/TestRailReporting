@@ -2,7 +2,6 @@ package utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.users.UsersPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -58,9 +57,9 @@ public class CicApiTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> submitRequest(CICAPIEnum endPoint, Class<T> klass) {
         RequestEntity requestEntity = RequestEntityUtil.init(endPoint, klass)
-            .headers(setUpHeader())
+            .headers(setupHeader())
             .expectedResponseCode(HttpStatus.SC_OK);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -74,7 +73,7 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW, AgentWorkflow.class)
             .inlineVariables(workFlowID)
             .expectedResponseCode(HttpStatus.SC_OK);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -88,7 +87,7 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOBS, null)
             .inlineVariables(workFlowID)
             .expectedResponseCode(HttpStatus.SC_OK);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -103,7 +102,7 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB, AgentWorkflowJob.class)
             .inlineVariables(workFlowID, jobID)
             .expectedResponseCode(HttpStatus.SC_OK);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -117,7 +116,7 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, AgentWorkflowJobRun.class)
             .inlineVariables(workflowId)
             .expectedResponseCode(HttpStatus.SC_OK);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -169,7 +168,7 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_CANCEL, null)
             .inlineVariables(workFlowID, workflowJobID)
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
-        requestEntity.headers(setUpHeader());
+        requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -192,7 +191,7 @@ public class CicApiTestUtil extends TestUtil {
      *
      * @return Map
      */
-    public static Map<String, String> setUpHeader() {
+    public static Map<String, String> setupHeader() {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Authorization", PropertiesContext.get("${env}.ci-connect.agent_api_authorization_key"));
@@ -227,14 +226,14 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Track the job status by workflow
      *
-     * @param workflowID
-     * @param jobID
+     * @param workflowID - workflow id to track status with
+     * @param jobID - job id to track status with
      * @return boolean - true or false (true - Job is in finished state)
      */
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
         List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
-        String finalJobStatus = StringUtils.EMPTY;
+        String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getResponseEntity().getStatus();
         while (!jobStatusList.contains(finalJobStatus)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {

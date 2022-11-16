@@ -24,7 +24,6 @@ import entity.response.AgentWorkflowJobRun;
 import enums.CICAPIEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,15 +37,13 @@ public class CicAgentTest extends TestBase {
     private static JobDefinition jobDefinitionData;
     private static ResponseWrapper<AgentWorkflowJobRun> agentWorkflowJobRunResponse;
     private static String workflowName = StringUtils.EMPTY;
-    private static String scenarioName = StringUtils.EMPTY;
-    private static String customerName = StringUtils.EMPTY;
     private static String workflowData;
 
     @BeforeClass
     public static void testSetup() {
         workflowName = "CIC_AGENT" + System.currentTimeMillis();
-        scenarioName = "SN" + System.currentTimeMillis();
-        workflowData = String.format(CicApiTestUtil.getWorkflowData("CicGuiCreateWorkFlowData.json"), CicApiTestUtil.getCustomerName(),CicApiTestUtil.getAgent(),workflowName,scenarioName);
+        String scenarioName = "SN" + System.currentTimeMillis();
+        workflowData = String.format(CicApiTestUtil.getWorkflowData("CicGuiCreateWorkFlowData.json"), CicApiTestUtil.getCustomerName(),CicApiTestUtil.getAgent(),workflowName, scenarioName);
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
     }
 

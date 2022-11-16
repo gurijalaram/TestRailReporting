@@ -87,7 +87,8 @@ public class JasperReportUtil {
     private Document getReportHtmlData(final String requestId, final String exportId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs, InputStream.class)
             .inlineVariables(requestId, exportId)
-            .headers(initHeadersWithJSession());
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         InputStream htmlData = (InputStream) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
@@ -97,7 +98,8 @@ public class JasperReportUtil {
     private List<ChartDataPoint> getReportChartData(final String requestId, final String exportId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
             .inlineVariables(requestId, exportId)
-            .headers(initHeadersWithJSession());
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return parseJsonResponse(HTTPRequest.build(requestEntity).get()
             .getBody()
