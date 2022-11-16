@@ -62,7 +62,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, customerIdentity);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity);
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -73,9 +73,9 @@ public class CdsGetCustomerTests {
     public void getCustomersApplications() {
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
             Applications.class,
+            HttpStatus.SC_OK,
             customerIdentity
         );
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(equalTo(0)));
     }
 

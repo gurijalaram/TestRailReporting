@@ -58,7 +58,7 @@ public class CdsAssociationUserTests {
 
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class,aPCustomerIdentity);
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, aPCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
 
     }
@@ -98,21 +98,21 @@ public class CdsAssociationUserTests {
 
         ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
             AssociationUserResponse.class,
+            HttpStatus.SC_OK,
             aPCustomerIdentity,
             associationIdentity
         );
 
-        assertThat(associationUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(associationUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         ResponseWrapper<AssociationUserItems> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
+            HttpStatus.SC_OK,
             aPCustomerIdentity,
             associationIdentity,
             customerAssociationUserIdentity
         );
 
-        assertThat(users.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 
     @Test
@@ -127,12 +127,12 @@ public class CdsAssociationUserTests {
 
         ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
+            HttpStatus.SC_OK,
             aPCustomerIdentity,
             associationIdentity,
             customerAssociationUserIdentity
         );
 
-        assertThat(associationUserIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(associationUserIdentity.getResponseEntity().getUserIdentity(), is(equalTo(aPStaffIdentity)));
     }
 }

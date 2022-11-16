@@ -16,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class SystemConfigurationTests extends TestBase {
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
         String customerIdentity = aprioriInternal.getIdentity();
-        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, customerIdentity);
+        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
         String internalSiteName = aprioriInternalSites.getResponseEntity().getItems().get(0).getName();
         String siteName2 = aprioriInternalSites.getResponseEntity().getItems().get(1).getName();
 

@@ -108,11 +108,11 @@ public class CdsIdentityProvidersTests {
 
         ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
             IdentityProviderResponse.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             idpIdentity
         );
 
-        assertThat(idp.getStatusCode(), CoreMatchers.is(CoreMatchers.equalTo(HttpStatus.SC_OK)));
         assertThat(idp.getResponseEntity().getIdentity(), is(equalTo(idpIdentity)));
     }
 
@@ -129,10 +129,10 @@ public class CdsIdentityProvidersTests {
 
         ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_ID,
             IdentityProviderPagination.class,
+            HttpStatus.SC_OK,
             customerIdentity
         );
 
-        assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(idpPagination.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 

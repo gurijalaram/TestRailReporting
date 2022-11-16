@@ -68,15 +68,11 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
-        soft.assertThat(user.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(user.getResponseEntity().getUsername())
             .isEqualTo(userName);
 
-        ResponseWrapper<CustomerUsers> customerUsers = casTestUtil.getCommonRequest(CASAPIEnum.USERS, CustomerUsers.class, customerIdentity);
+        ResponseWrapper<CustomerUsers> customerUsers = casTestUtil.getCommonRequest(CASAPIEnum.USERS, CustomerUsers.class, HttpStatus.SC_OK, customerIdentity);
 
-        soft.assertThat(customerUsers.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(customerUsers.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
@@ -86,7 +82,7 @@ public class CasCustomersUsersTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper<CustomerUser> singleUser = casTestUtil.getCommonRequest(CASAPIEnum.USER, CustomerUser.class, customerIdentity, userIdentity);
+        ResponseWrapper<CustomerUser> singleUser = casTestUtil.getCommonRequest(CASAPIEnum.USER, CustomerUser.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
         soft.assertThat(singleUser.getResponseEntity().getIdentity())
             .isEqualTo(userIdentity);
@@ -123,8 +119,6 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, userIdentity, customerIdentity, profileIdentity);
 
-        soft.assertThat(updatedUser.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
             .isEqualTo("QA");
         soft.assertAll();
@@ -150,6 +144,7 @@ public class CasCustomersUsersTests {
 
         soft.assertThat(user.getResponseEntity().getUsername())
             .isEqualTo(userName);
+        soft.assertAll();
 
         String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityHolder = IdentityHolder.builder()
@@ -157,10 +152,6 @@ public class CasCustomersUsersTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper<String> resetMfa = CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
-
-        soft.assertThat(resetMfa.getStatusCode())
-            .isEqualTo(HttpStatus.SC_ACCEPTED);
-        soft.assertAll();
+        CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
     }
 }

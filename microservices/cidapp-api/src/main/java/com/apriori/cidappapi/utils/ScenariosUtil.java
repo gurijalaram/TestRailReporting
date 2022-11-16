@@ -20,7 +20,6 @@ import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -36,6 +35,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -52,6 +52,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
+    @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
@@ -260,25 +261,9 @@ public class ScenariosUtil {
                         .processGroupName(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
                         .productionLife(5.0)
                         .digitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                        .build()
-                );
+                        .build());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * GET hoops image
-     *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
-     * @return response object
-     */
-    public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
-
-        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

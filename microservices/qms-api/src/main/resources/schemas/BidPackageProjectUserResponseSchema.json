@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "projectIdentity": {
+          "type": "string"
+        },
+        "userIdentity": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "isSystemUser": {
+              "type": "boolean"
+            },
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "userProfile": {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "givenName": {
+                  "type": "string"
+                },
+                "familyName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "givenName",
+                "familyName"
+              ]
+            },
+            "email": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "active": {
+              "type": "boolean"
+            },
+            "mfaRequired": {
+              "type": "boolean"
+            },
+            "customAttributes": {
+              "type": "object",
+              "properties": {
+                "workspaceId": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "workspaceId"
+              ]
+            },
+            "userType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "isSystemUser",
+            "identity",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "customerIdentity",
+            "userProfile",
+            "email",
+            "username",
+            "active",
+            "mfaRequired",
+            "customAttributes",
+            "userType"
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "projectIdentity",
+        "userIdentity",
+        "role",
+        "userEmail",
+        "user"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

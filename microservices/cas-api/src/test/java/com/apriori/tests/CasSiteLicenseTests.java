@@ -71,14 +71,10 @@ public class CasSiteLicenseTests {
     public void getSitesLicenses() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
+        casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
-        ResponseWrapper<Licenses> siteLicenses = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, Licenses.class, customerIdentity, siteIdentity);
+        ResponseWrapper<Licenses> siteLicenses = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, Licenses.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
 
-        soft.assertThat(siteLicenses.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(siteLicenses.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
         soft.assertAll();
@@ -90,15 +86,12 @@ public class CasSiteLicenseTests {
     public void getSiteLicenseByIdentity() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicenseByIdentity> license = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_ID, LicenseByIdentity.class, customerIdentity, siteIdentity, licenseIdentity);
-        soft.assertThat(license.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
+        ResponseWrapper<LicenseByIdentity> license = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_ID, LicenseByIdentity.class, HttpStatus.SC_OK, customerIdentity, siteIdentity, licenseIdentity);
+
         soft.assertThat(license.getResponseEntity().getIdentity())
             .isEqualTo(licenseIdentity);
         soft.assertAll();
@@ -110,15 +103,11 @@ public class CasSiteLicenseTests {
     public void activateLicense() {
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
 
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicenseResponse> activateLicenseResponse = casTestUtil.activateLicense(LicenseResponse.class, customerIdentity, siteIdentity, licenseIdentity);
-        soft.assertThat(activateLicenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
+        ResponseWrapper<LicenseResponse> activateLicenseResponse = casTestUtil.activateLicense(LicenseResponse.class, customerIdentity, siteIdentity, licenseIdentity, HttpStatus.SC_CREATED);
         soft.assertThat(activateLicenseResponse.getResponseEntity().getActive())
             .isTrue();
         soft.assertAll();
@@ -130,15 +119,11 @@ public class CasSiteLicenseTests {
     public void getAndActivateLicenseThatNotExist() {
         String notExistingLicenseId = "000000000000";
 
-        ResponseWrapper<CasErrorMessage> getNotExistingLicense = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_ID, CasErrorMessage.class, customerIdentity, siteIdentity, notExistingLicenseId);
-        soft.assertThat(getNotExistingLicense.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NOT_FOUND);
+        ResponseWrapper<CasErrorMessage> getNotExistingLicense = casTestUtil.getCommonRequest(CASAPIEnum.LICENSE_BY_ID, CasErrorMessage.class, HttpStatus.SC_NOT_FOUND, customerIdentity, siteIdentity, notExistingLicenseId);
         soft.assertThat(getNotExistingLicense.getResponseEntity().getMessage())
             .isEqualTo(String.format("Resource 'License' with identity '%s' was not found", notExistingLicenseId));
 
-        ResponseWrapper<CasErrorMessage> activateNotExistingLicense = casTestUtil.activateLicense(CasErrorMessage.class, customerIdentity, siteIdentity, notExistingLicenseId);
-        soft.assertThat(activateNotExistingLicense.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NOT_FOUND);
+        ResponseWrapper<CasErrorMessage> activateNotExistingLicense = casTestUtil.activateLicense(CasErrorMessage.class, customerIdentity, siteIdentity, notExistingLicenseId, HttpStatus.SC_NOT_FOUND);
         soft.assertThat(activateNotExistingLicense.getResponseEntity().getMessage())
             .isEqualTo(String.format("Resource 'License' with identity '%s' was not found", notExistingLicenseId));
         soft.assertAll();

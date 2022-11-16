@@ -1,4 +1,4 @@
-package com.apriori.qms.entity.response;
+package com.apriori.qms.entity.response.bidpackage;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
