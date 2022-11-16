@@ -173,7 +173,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
 
         advancedPage = evaluatePage.goToAdvancedTab();
 
@@ -184,7 +184,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isTrue();
 
         evaluatePage.goToAdvancedTab();
 
@@ -195,7 +195,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isTrue();
 
         evaluatePage.goToAdvancedTab();
 
@@ -287,7 +287,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96"));
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -302,8 +302,8 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19"));
-        softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isEqualTo(true);
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
     }
@@ -598,6 +598,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("3 Axis Lathe"));
         softAssertions.assertAll();
     }
@@ -629,6 +630,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Die Casting"));
         softAssertions.assertAll();
     }
@@ -660,6 +662,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Gravity Die Cast"));
         softAssertions.assertAll();
     }
@@ -787,6 +790,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Printing"));
         softAssertions.assertAll();
     }
@@ -818,6 +822,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Rotational Mold"));
         softAssertions.assertAll();
     }
@@ -851,6 +856,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Laser Punch"));
         softAssertions.assertAll();
     }
@@ -883,6 +889,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Laser Cut"));
         softAssertions.assertAll();
     }
@@ -945,6 +952,7 @@ public class ProcessRoutingTests extends TestBase {
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(materialProcessPage.selectBarChart("Single Cavity Drape Forming"));
         softAssertions.assertAll();
     }
@@ -1077,6 +1085,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectFilter("Private")
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
             "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Waterjet"));
 
@@ -1095,6 +1104,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
             "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Waterjet"));
 
@@ -1106,6 +1116,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
             "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "4 Cavities Material Conversion"));
 
@@ -1120,6 +1131,7 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage.clickExplore()
             .selectFilter("Private");
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
             "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Single Cavity Material Conversion"));
 
@@ -1131,6 +1143,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
+        // FIXME: 16/11/2022 what is being asserted here?
         softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
             "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "4 Cavities Material Conversion"));
         softAssertions.assertAll();
@@ -1206,7 +1219,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98"));
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -1215,7 +1228,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98022"));
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98022")).isTrue();
         softAssertions.assertAll();
     }
 }

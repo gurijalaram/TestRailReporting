@@ -61,9 +61,7 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioResponse createPublishComponent() {
-        scenariosUtil = new ScenariosUtil();
-
-        ScenarioItem scenarioItem = scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+        ScenarioItem scenarioItem = createComponent();
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
             .componentName(this.componentBuilder.getComponentName())
@@ -72,8 +70,6 @@ public class DataCreationUtil {
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
             .user(this.componentBuilder.getUser())
             .build();
-
-        scenariosUtil = new ScenariosUtil();
 
         return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
     }
@@ -86,8 +82,6 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        scenariosUtil = new ScenariosUtil();
-
         return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
     }
 
@@ -98,8 +92,6 @@ public class DataCreationUtil {
      */
     public ScenarioResponse createCostPublishComponent() {
         ScenarioItem scenarioItem = createComponent();
-
-        scenariosUtil = new ScenariosUtil();
 
         scenariosUtil.postCostScenario(this.componentBuilder);
 
