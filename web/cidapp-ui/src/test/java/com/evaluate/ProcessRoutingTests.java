@@ -268,7 +268,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15012", "14401", "15050"})
+    @TestRail(testCaseId = {"15012", "14401", "15050", "15988", "7851", "7852"})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -292,14 +292,19 @@ public class ProcessRoutingTests extends TestBase {
 
         routingSelectionPage = new RoutingSelectionPage(driver);
         routingSelectionPage = routingSelectionPage
-            .selectRoutingPreferenceByName("Gravity Die Cast")
-            .submit(EvaluatePage.class)
+            .selectRoutingPreferenceByName("Gravity Die Cast");
+
+        softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
+
+        routingSelectionPage.submit(EvaluatePage.class)
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
         softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19"));
+        softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isEqualTo(true);
+        softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
     }
 
@@ -626,7 +631,6 @@ public class ProcessRoutingTests extends TestBase {
 
         softAssertions.assertThat(materialProcessPage.selectBarChart("Die Casting"));
         softAssertions.assertAll();
-
     }
 
     @Test
