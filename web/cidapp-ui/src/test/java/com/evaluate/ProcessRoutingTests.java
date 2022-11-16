@@ -287,7 +287,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96"));
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -299,7 +299,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19"));
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19")).isTrue();
         softAssertions.assertAll();
     }
 
