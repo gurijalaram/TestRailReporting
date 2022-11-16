@@ -1,29 +1,20 @@
 package com.evaluate.assemblies;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -38,16 +29,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UpdateCADFileTests extends TestBase {
-    private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private String filterName2 = generateStringUtil.generateFilterName();
-    private FilterPage filterPage;
     private UserCredentials currentUser;
 
     private final String componentExtension = ".prt.1";
@@ -83,6 +70,7 @@ public class UpdateCADFileTests extends TestBase {
             subAssemblyInfo = null;
         }
     }
+
     private File modifiedAutoAsm = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoBotAsm + modifiedAsmExtension);
     private File autoHelmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHelm + componentExtension);
     private File modifiedAutoHeadFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHead + modifiedComponentExtension);
@@ -91,7 +79,7 @@ public class UpdateCADFileTests extends TestBase {
     private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
-    @TestRail(testCaseId = {"10903", "10961", "10909"})
+    @TestRail(testCaseId = {"10903", "10961"})
     @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -206,7 +194,7 @@ public class UpdateCADFileTests extends TestBase {
         componentsListPage = evaluatePage.openComponents();
 
         soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
-        soft.assertThat(componentsListPage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.MISSING.getStatusIcon()))
+        soft.assertThat(componentsListPage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
                 .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
 
         componentsListPage.multiSelectSubcomponents(autoSword + "," + scenarioName)
@@ -218,8 +206,7 @@ public class UpdateCADFileTests extends TestBase {
 
         soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update is being processed").isEqualTo("gear");
-        // ToDo:- Find another way to wait for the sub-assembly to finish processing
-        componentsListPage.checkSubcomponentState(assemblyInfo, autoSword);
+        scenarioUtil.getScenarioRepresentation(subAssemblyInfo);
         evaluatePage.clickRefresh(EvaluatePage.class);
         soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update completed successfully").isEqualTo("circle-minus");
@@ -256,7 +243,7 @@ public class UpdateCADFileTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"", "10908", ""})
+    @TestRail(testCaseId = {"10908", "10909", "12131"})
     @Description("Validate updating sub-assembly and sub-component CAD files by opening new tab from Components Table.")
     public void updateSubComponentCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -302,6 +289,19 @@ public class UpdateCADFileTests extends TestBase {
             .build();
 
         assemblyInfo.addSubComponent(armInfo);
+
+        secondaryEvaluatePage = componentsListPage.openAssembly(autoHead, scenarioName);
+        evaluatePage = secondaryEvaluatePage.clickActions()
+            .updateCadFile(modifiedAutoHeadFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
+            .closeNewlyOpenedTab();
+        componentsListPage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .openComponents();
+
+        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHead))
+            .as("Verify Head sub-component is no longer struck out").isFalse();
+        soft.assertThat(componentsListPage.getRowDetails(autoHead, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+            .as("Verify CAD connected icon is present");
 
         soft.assertAll();
     }
