@@ -1,27 +1,14 @@
 package com.evaluate;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.ITERATION_EQ;
-import static com.apriori.entity.enums.CssSearch.LAST_ACTION_EQ;
-import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
-import com.apriori.cidappapi.entity.request.PublishRequest;
-import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.User;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -34,7 +21,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,10 +31,7 @@ public class GroupEditTests {
     private ComponentInfoBuilder componentAssembly;
     private static UserCredentials currentUser;
     private CssComponent cssComponent = new CssComponent();
-    private File resourceFile;
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
-    private int PUBLIC_WORKSPACE = 0;
 
 
     @Before
@@ -90,13 +73,15 @@ public class GroupEditTests {
             .override(true)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
-        User user = new PeopleUtil().getCurrentUser(currentUser);
-
-        subComponentNames.forEach(subComponent -> cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(user.getCustomAttributes().getWorkspaceId())));
+        subComponentNames.forEach(subComponent -> {
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
+                "scenarioPublished[EQ], false")).hasSizeGreaterThan(0);
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
+                "scenarioPublished[EQ], true")).hasSizeGreaterThan(0);
+        });
 
         softAssertions.assertAll();
     }
@@ -146,7 +131,4 @@ public class GroupEditTests {
 
         softAssertions.assertAll();
     }
-
 }
-
-
