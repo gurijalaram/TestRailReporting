@@ -1,11 +1,8 @@
 package com.apriori.qms.controller;
 
-import com.apriori.qms.entity.request.bidpackage.BidPackageItem;
-import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameter;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectProfile;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
@@ -64,7 +61,8 @@ public class QmsBidPackageResources {
     public static ResponseWrapper<String> deleteBidPackage(String bidPackageIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, null)
             .inlineVariables(bidPackageIdentity)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -124,18 +122,19 @@ public class QmsBidPackageResources {
     /**
      * get Bid Package Project
      *
+     * @param <T>                       klass type
      * @param bidPackageIdentity
      * @param bidPackageProjectIdentity
      * @param currentUser               - UserCredentials
      * @param klass                     response class name
-     * @param <T>                       klass type
+     * @param httpStatus                -Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -143,20 +142,21 @@ public class QmsBidPackageResources {
     /**
      * Update Bid Package Project
      *
+     * @param <T>                             - response of class type
      * @param bidPackageProjectRequestBuilder - BidPackageProjectRequest
      * @param bidPackageIdentity
      * @param bidPackageProjectIdentity
      * @param currentUser                     - UserCredentials
      * @param klass                           - response of klass name
-     * @param <T>                             - response of class type
+     * @param httpStatus                      - Integer
      * @return - ResponseWrapper of response klass
      */
-    public static <T> ResponseWrapper<T> updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .body(bidPackageProjectRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -190,55 +190,25 @@ public class QmsBidPackageResources {
             .build();
     }
 
-    // BID PACKAGE PROJECT ITEM RESOURCES
-
-    /**
-     * Create Bid package project item
-     *
-     * @param bidPackageIdentity
-     * @param projectIdentity
-     * @param projectItemIdentity
-     * @param currentUser         - UserCredentials
-     * @param klass               - response class name
-     * @param <T>                 - response class type
-     * @return ResponseWrapper of klass object
-     */
-    public static <T> ResponseWrapper<T> createBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass) {
-        BidPackageProjectItemRequest bidPackageProjectItemRequestBuilder = BidPackageProjectItemRequest.builder()
-            .projectItem(BidPackageItemParameter.builder()
-                .bidPackageItem(BidPackageItem.builder()
-                    .identity(projectItemIdentity)
-                    .build())
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, klass)
-            .inlineVariables(bidPackageIdentity, projectIdentity)
-            .body(bidPackageProjectItemRequestBuilder)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
     // BID PACKAGE ITEM RESOURCES
 
     /**
      * Create Bid Package Item
      *
+     * @param <T>                          - response class type
      * @param bidPackageItemRequestBuilder
      * @param bidPackageIdentity
      * @param currentUser                  - UserCredentials
      * @param klass                        - response class name
-     * @param <T>                          - response class type
+     * @param httpStatus                   - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> createBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> createBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_ITEMS, klass)
             .inlineVariables(bidPackageIdentity)
             .body(bidPackageItemRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_CREATED);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -246,20 +216,21 @@ public class QmsBidPackageResources {
     /**
      * Update Bid Package Item
      *
+     * @param <T>                          - response class type
      * @param bidPackageItemRequestBuilder
      * @param bidPackageIdentity
      * @param bidPackageItemIdentity
      * @param currentUser                  - UserCredentials
      * @param klass                        - response class name
-     * @param <T>                          - response class type
+     * @param httpStatus                   - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> updateBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_ITEM, klass)
             .inlineVariables(bidPackageIdentity, bidPackageItemIdentity)
             .body(bidPackageItemRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -267,14 +238,15 @@ public class QmsBidPackageResources {
     /**
      * Get Bid Package Item
      *
+     * @param <T>                    - response class type
      * @param bidPackageIdentity
      * @param bidPackageItemIdentity
      * @param currentUser            - UserCredentials
      * @param klass                  - response class name
-     * @param <T>                    - response class type
+     * @param httpStatus             - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_ITEM, klass)
             .inlineVariables(bidPackageIdentity, bidPackageItemIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -286,13 +258,14 @@ public class QmsBidPackageResources {
     /**
      * Get List of all bid package items
      *
+     * @param <T>                - response class type
      * @param bidPackageIdentity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
-     * @param <T>                - response class type
+     * @param httpStatus         - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageItems(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageItems(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_ITEMS, klass)
             .inlineVariables(bidPackageIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -339,7 +312,7 @@ public class QmsBidPackageResources {
     /**
      * Create bid package project user
      *
-     * @param role - DEFAULT or ADMIN
+     * @param role               - DEFAULT or ADMIN
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param currentUser
@@ -384,19 +357,20 @@ public class QmsBidPackageResources {
     /**
      * get bid package project user
      *
+     * @param <T>                 - response class type
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param projectUserIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
-     * @param <T>                 - response class type
+     * @param httpStatus          - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
 
@@ -405,18 +379,19 @@ public class QmsBidPackageResources {
     /**
      * get all bid package project users
      *
+     * @param <T>                - response class type
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
-     * @param <T>                - response class type
+     * @param httpStatus
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectUsers(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectUsers(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
 
@@ -425,16 +400,17 @@ public class QmsBidPackageResources {
     /**
      * Update bid package project user
      *
-     * @param role - DEFAULT or ADMIN
+     * @param <T>                 - response class type
+     * @param role                - DEFAULT or ADMIN
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param projectUserIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
-     * @param <T>                 - response class type
+     * @param httpStatus          - Integer
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> updateBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
             .projectUser(BidPackageProjectUserParameters.builder()
                 .userEmail(currentUser.getEmail())
@@ -446,7 +422,7 @@ public class QmsBidPackageResources {
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }

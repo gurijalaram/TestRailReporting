@@ -8,13 +8,13 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -80,7 +80,7 @@ public class BidPackageProjectUserTest extends TestUtil {
         ResponseWrapper<BidPackageProjectUserResponse> getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectUserResponse.class);
+            currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
     }
@@ -91,7 +91,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     public void getBidPackageProjectUsers() {
         ResponseWrapper<BidPackageProjectUsersResponse> getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectUsersResponse.class);
+            currentUser, BidPackageProjectUsersResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
@@ -104,7 +104,7 @@ public class BidPackageProjectUserTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectUserResponse.class);
+            currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageProjectUserResponse.getResponseEntity().getRole()).isEqualTo("ADMIN");
     }

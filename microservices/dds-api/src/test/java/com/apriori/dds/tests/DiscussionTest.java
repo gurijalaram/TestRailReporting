@@ -47,7 +47,6 @@ public class DiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"12404"})
     @Description("create a valid discussion")
     public void createDiscussions() {
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
     }
 
@@ -67,10 +66,10 @@ public class DiscussionTest extends TestUtil {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_CONFLICT);
 
         ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(requestEntity).post();
-        softAssertions.assertThat(errorMessageResponseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_CONFLICT);
         softAssertions.assertThat(errorMessageResponseWrapper.getResponseEntity().getMessage()).contains("Status should be ACTIVE for all new discussions");
     }
 
@@ -81,10 +80,10 @@ public class DiscussionTest extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DiscussionsResponse> discussionsResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(discussionsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(discussionsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
@@ -102,11 +101,11 @@ public class DiscussionTest extends TestUtil {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DiscussionResponse> discussionResponse = HTTPRequest.build(requestEntity).patch();
 
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
     }
 
@@ -126,10 +125,10 @@ public class DiscussionTest extends TestUtil {
                 .inlineVariables(PropertiesContext.get("${env}.customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(discussionsRequest)
-                .apUserContext(userContext))
+                .apUserContext(userContext)
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
             .patch();
 
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
     }
 
@@ -138,7 +137,6 @@ public class DiscussionTest extends TestUtil {
     @Description("Create, delete and update a deleted discussion")
     public void UpdateDeletedDiscussion() {
         ResponseWrapper<DiscussionResponse> discussionCreatedResponse = DdsApiTestUtils.createDiscussion(discussionDescription, userContext);
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
 
         ResponseWrapper<String> discussionDeletedResponse = DdsApiTestUtils.deleteDiscussion(discussionCreatedResponse.getResponseEntity().getIdentity(), userContext);
@@ -153,10 +151,10 @@ public class DiscussionTest extends TestUtil {
                         .status("RESOLVED")
                         .build())
                     .build())
-                .apUserContext(userContext))
+                .apUserContext(userContext)
+                .expectedResponseCode(HttpStatus.SC_NOT_FOUND))
             .patch();
 
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getMessage()).contains("Resource 'Discussion' with identity '" + discussionCreatedResponse.getResponseEntity().getIdentity() + "' was not found");
     }
 
@@ -168,7 +166,8 @@ public class DiscussionTest extends TestUtil {
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("${env}.customer_identity"), "FDWXINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
-                .apUserContext(userContext))
+                .apUserContext(userContext)
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
             .delete();
 
         softAssertions.assertThat(discussionDeletedResponse.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
@@ -186,35 +185,35 @@ public class DiscussionTest extends TestUtil {
             .build();
 
         ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(RequestEntityUtil
-            .init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
-            .inlineVariables("INVALIDCUSTOMER")
-            .headers(DdsApiTestUtils.setUpHeader())
-            .body(discussionsRequest)
-            .apUserContext(userContext)).post();
+                .init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
+                .inlineVariables("INVALIDCUSTOMER")
+                .headers(DdsApiTestUtils.setUpHeader())
+                .body(discussionsRequest)
+                .apUserContext(userContext)
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
+            .post();
 
-        softAssertions.assertThat(errorMessageResponseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(errorMessageResponseWrapper.getResponseEntity().getMessage()).contains("'customerIdentity' is not a valid identity");
     }
 
     @Test
     @TestRail(testCaseId = {"14328"})
     @Description("Get Discussion with invalid Discussion Identity")
-    public void getDiscussionWithInvalidIDentity() {
+    public void getDiscussionWithInvalidIdentity() {
         ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("${env}.customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
-                .apUserContext(userContext))
+                .apUserContext(userContext)
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
             .get();
 
-        softAssertions.assertThat(discussionErrorResponse.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(discussionErrorResponse.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
     }
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> discussionsResponse = DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
-        softAssertions.assertThat(discussionsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertAll();
     }
 }
