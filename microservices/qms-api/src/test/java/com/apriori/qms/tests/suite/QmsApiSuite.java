@@ -11,7 +11,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("1359")
+@ProjectRunID("1712")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     QmsComponentTest.class,

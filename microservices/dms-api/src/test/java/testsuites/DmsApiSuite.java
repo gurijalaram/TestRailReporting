@@ -8,7 +8,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("1379")
+@ProjectRunID("1714")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     DmsDiscussionTest.class,
