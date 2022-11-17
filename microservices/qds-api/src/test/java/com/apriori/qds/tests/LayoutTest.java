@@ -42,7 +42,6 @@ public class LayoutTest extends TestUtil {
 
     @Test
     public void createLayout() {
-        softAssertions.assertThat(layoutResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(layoutResponse.getResponseEntity().getName()).isEqualTo(layoutName);
     }
 
@@ -51,10 +50,10 @@ public class LayoutTest extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
             .inlineVariables(layoutResponse.getResponseEntity().getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<LayoutResponse> getLayoutResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(getLayoutResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(getLayoutResponse.getResponseEntity().getName()).isEqualTo(layoutName);
     }
 
@@ -73,10 +72,10 @@ public class LayoutTest extends TestUtil {
             .inlineVariables(layoutResponse.getResponseEntity().getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<LayoutResponse> updateLayoutResponse = HTTPRequest.build(requestEntity).patch();
-        softAssertions.assertThat(updateLayoutResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(updateLayoutResponse.getResponseEntity().isPublished()).isTrue();
     }
 
@@ -85,18 +84,17 @@ public class LayoutTest extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUTS, LayoutsResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<LayoutsResponse> layoutConfigurationsResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(layoutConfigurationsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(layoutConfigurationsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> responseWrapper = LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
-        softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertAll();
 
     }
