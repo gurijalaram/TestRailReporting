@@ -17,6 +17,7 @@ import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPag
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -56,6 +57,7 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialSelectorPage materialSelectorPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
+    private CssComponent cssComponent;
 
     private File resourceFile;
     private File twoModelFile;
@@ -1085,9 +1087,9 @@ public class ProcessRoutingTests extends TestBase {
             .selectFilter("Private")
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Waterjet"));
+        String sheetMetalIdentity = cssComponent.findFirst(componentName, scenarioName, currentUser).getScenarioIdentity();
+
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Waterjet");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1104,9 +1106,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Waterjet"));
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Waterjet");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1116,9 +1116,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "4 Cavities Material Conversion"));
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
 
         explorePage.openScenario(componentName, scenarioName)
             .goToAdvancedTab()
@@ -1131,9 +1129,8 @@ public class ProcessRoutingTests extends TestBase {
         evaluatePage.clickExplore()
             .selectFilter("Private");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "Single Cavity Material Conversion"));
+
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Single Cavity Material Conversion");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1143,9 +1140,8 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(explorePage.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "analysisOfScenario.processRoutingName[CN], " + "4 Cavities Material Conversion"));
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
+
         softAssertions.assertAll();
     }
 
