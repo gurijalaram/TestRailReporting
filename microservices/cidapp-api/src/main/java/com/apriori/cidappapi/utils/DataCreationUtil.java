@@ -14,8 +14,8 @@ import java.io.File;
 
 public class DataCreationUtil {
 
-    private ScenariosUtil scenariosUtil;
-    private CssComponent cssComponent;
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private CssComponent cssComponent = new CssComponent();
 
     private String componentName;
     private String scenarioName;
@@ -41,16 +41,22 @@ public class DataCreationUtil {
     }
 
     /**
-     * Create a component if no component exist matching the component/scenario name
+     * Create a component
      *
      * @return response object
      */
     public ScenarioItem createComponent() {
-        scenariosUtil = new ScenariosUtil();
-        cssComponent = new CssComponent();
+        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+    }
 
+    /**
+     * Search for a component and create if no component exist matching the component/scenario name
+     *
+     * @return response object
+     */
+    public ScenarioItem searchCreateComponent() {
         if (cssComponent.getBaseCssComponents(this.userCredentials, COMPONENT_NAME_EQ.getKey() + this.componentName, SCENARIO_NAME_EQ.getKey() + this.scenarioName).size() < 1) {
-            return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+            return createComponent();
         }
         return cssComponent.findFirst(this.componentName, this.scenarioName, this.userCredentials);
     }
