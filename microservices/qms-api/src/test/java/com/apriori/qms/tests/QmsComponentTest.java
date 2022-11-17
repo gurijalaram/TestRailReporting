@@ -25,13 +25,12 @@ public class QmsComponentTest extends TestUtil {
 
     public static ScenarioItem scenarioItem;
     private static SoftAssertions softAssertions;
-    private UserCredentials currentUser;
+    private UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        currentUser = UserUtil.getUser();
         scenarioItem = QmsApiTestUtils.createAndQueryComponent(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         softAssertions.assertThat(scenarioItem.getComponentIdentity()).isNotNull();
