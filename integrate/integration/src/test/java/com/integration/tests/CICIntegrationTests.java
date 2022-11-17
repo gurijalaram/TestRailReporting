@@ -8,6 +8,7 @@ import com.apriori.nts.excel.ExcelService;
 import com.apriori.nts.pdf.PDFDocument;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.nts.reports.partscost.PartsCost;
+import com.apriori.nts.utils.EmailSetup;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
@@ -18,6 +19,7 @@ import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
@@ -63,12 +65,15 @@ public class CICIntegrationTests extends TestBase {
         String randomNumber = RandomStringUtils.randomNumeric(6);
         workflowName = "CIC_REPORT" + randomNumber;
         scenarioName = PropertiesContext.get("customer") + randomNumber;
+        EmailService emailService = new EmailService();
+        EmailData emailMessage = emailService.getEmailMessageData(emailSubject, scenarioName);
     }
 
     @Test
     @TestRail(testCaseId = {"12045"})
     @Description("Test creating, invoking, tracking and deletion of a workflow")
     public void testCreateAndDeleteWorkflow() {
+        SoftAssertions softAssertions = new SoftAssertions();
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         log.info(String.format("Start Creating Workflow >> %s <<", workFlowData.getWorkflowName()));
@@ -91,12 +96,14 @@ public class CICIntegrationTests extends TestBase {
         PublishResultsPart publishResultsPart = notificationsPart.selectEmailTab().selectEmailTemplate().selectRecipient().clickCINotificationNextBtn();
         WorkflowHome workflowHome = publishResultsPart.selectAttachReportTab().selectReportName().selectCurrencyCode().selectCostRounding().clickSaveButton();
         log.info(String.format("created Workflow confirmation >> %s <<", workflowHome.getWorkFlowStatusMessage()));
-        Assert.assertEquals("Job definition created", workflowHome.getWorkFlowStatusMessage());
 
-        Assert.assertTrue("verify workflow is sorted by Name", schedulePage.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.ASCENDING, workFlowData.getWorkflowName()));
+        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
+        softAssertions.assertThat(schedulePage.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.ASCENDING, workFlowData.getWorkflowName())).isTrue();
 
         log.info(String.format("Delete Workflow >> %s <<", workFlowData.getWorkflowName()));
-        Assert.assertTrue("verify workflow is deleted", schedulePage.deleteWorkFlow(workFlowData.getWorkflowName()));
+
+        softAssertions.assertThat(schedulePage.deleteWorkFlow(workFlowData.getWorkflowName())).isTrue();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -126,7 +133,7 @@ public class CICIntegrationTests extends TestBase {
         // Delete the workflow
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
         ResponseWrapper<String> deleteWorkflowResponse = CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
-        Assert.assertEquals("Verify Workflow is deleted", deleteWorkflowResponse.getStatusCode(), HttpStatus.SC_OK);
+        softAssertions.assertThat(deleteWorkflowResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
 
         //Verify Email Notification
         EmailData emailMessage = emailService.getEmailMessageData(emailSubject, scenarioName);

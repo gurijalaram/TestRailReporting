@@ -28,10 +28,8 @@ public class CasConfigurationsTests extends TestUtil {
     @TestRail(testCaseId = {"5660"})
     @Description("Returns a list of all aP Versions.")
     public void getConfigurationsTest() {
-        ResponseWrapper<Configurations> configurationsResponse = casTestUtil.getCommonRequest(CASAPIEnum.CONFIGURATIONS, Configurations.class);
+        ResponseWrapper<Configurations> configurationsResponse = casTestUtil.getCommonRequest(CASAPIEnum.CONFIGURATIONS, Configurations.class, HttpStatus.SC_OK);
 
-        soft.assertThat(configurationsResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(configurationsResponse.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
         soft.assertAll();

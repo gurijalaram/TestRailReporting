@@ -14,6 +14,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -60,7 +61,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.getBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
+            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
 
@@ -70,7 +71,7 @@ public class BidPackageProjectsTest extends TestUtil {
     public void updateBidPackageProject() {
         BidPackageProjectRequest projectRequest = BidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers());
         ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
+            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
 

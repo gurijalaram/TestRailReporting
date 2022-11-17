@@ -65,9 +65,8 @@ public class CdsCustomerUserRolesTests {
     @TestRail(testCaseId = {"13414"})
     @Description("Returns a list of roles for a user")
     public void getUserRoles() {
-        ResponseWrapper<UserRoles> userRoles = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES, UserRoles.class, customerIdentity, userIdentity);
+        ResponseWrapper<UserRoles> userRoles = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES, UserRoles.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(userRoles.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(userRoles.getResponseEntity().getTotalItemCount(), greaterThanOrEqualTo(1));
     }
 
@@ -80,9 +79,8 @@ public class CdsCustomerUserRolesTests {
         assertThat(newRole.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String roleId = newRole.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, customerIdentity, userIdentity, roleId);
+        ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
 
-        assertThat(userRole.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(userRole.getResponseEntity().getIdentity(), is(equalTo(roleId)));
 
         ResponseWrapper<String> deleteRole = cdsTestUtil.delete(CDSAPIEnum.USER_ROLES_BY_ID, customerIdentity, userIdentity, roleId);

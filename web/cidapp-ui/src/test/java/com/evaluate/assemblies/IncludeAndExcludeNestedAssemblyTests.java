@@ -78,15 +78,14 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     @Description("Verify Include and Exclude buttons disabled for a component that is part both of the top level assembly and sub-assembly")
     public void testIncludeAndExcludeDisabledForAssembly() {
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -96,14 +95,13 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     @Description("Verify Exclude button disabled when selecting included sub-component from sub-assembly")
     public void testExcludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("0200613, " + scenarioName + "");
 
-        assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
     }
 
     @Test
@@ -111,25 +109,24 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios("3571050", scenarioName)).isEqualTo(2);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios("3571050", scenarioName)).isEqualTo(2);
 
-        componentsTablePage.collapseSubassembly(SUB_ASSEMBLY, scenarioName);
+        componentsTreePage.collapseSubassembly(SUB_ASSEMBLY, scenarioName);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios("3571050", scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios("3571050", scenarioName)).isEqualTo(1);
 
-        componentsTablePage.expandSubAssembly(SUB_ASSEMBLY, scenarioName)
+        componentsTreePage.expandSubAssembly(SUB_ASSEMBLY, scenarioName)
                 .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -139,16 +136,14 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     @Description("Validate  the publish button will only be enabled in the tree view and now the list view")
     public void testPublishButtonEnabledInTreeView() {
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .selectTableView()
-            .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
-        componentsTablePage
+        componentsTablePage = componentsTreePage.selectTableView()
             .setPagination()
             .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
 
