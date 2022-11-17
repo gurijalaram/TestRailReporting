@@ -1,8 +1,12 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -11,6 +15,7 @@ import java.io.File;
 public class DataCreationUtil {
 
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private CssComponent cssComponent = new CssComponent();
 
     private String componentName;
     private String scenarioName;
@@ -42,6 +47,18 @@ public class DataCreationUtil {
      */
     public ScenarioItem createComponent() {
         return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+    }
+
+    /**
+     * Search for a component and create if no component exist matching the component/scenario name
+     *
+     * @return response object
+     */
+    public ScenarioItem searchCreateComponent() {
+        if (cssComponent.getBaseCssComponents(this.userCredentials, COMPONENT_NAME_EQ.getKey() + this.componentName, SCENARIO_NAME_EQ.getKey() + this.scenarioName).size() < 1) {
+            return createComponent();
+        }
+        return cssComponent.findFirst(this.componentName, this.scenarioName, this.userCredentials);
     }
 
     /**
