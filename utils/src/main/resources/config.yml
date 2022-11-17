@@ -1,14 +1,14 @@
 # Define the environment
-env: qa-test-sandbox
+env: qa-test
 
 # Define the global properties not related to environment
 global:
-  schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: common-users.csv
-  different_users: true
-  different_parts: true
   db_recording: true
+  different_parts: true
+  different_users: true
+  schema_base_path: schemas/
+  users_csv_file: common-users.csv
 
 # Define the customer
 customer: ap-int
@@ -16,11 +16,11 @@ customer: ap-int
 ap-int:
   token_subject: 4127
 
-widgets:
-  token_subject: 739e
-
 gadgets:
   token_subject: 247f
+
+widgets:
+  token_subject: 739e
 
 sprockets:
   token_subject: c8fc
@@ -50,12 +50,19 @@ default:
     ui_url: https://cas.${default.aws_region}.${env}.apriori.net/
     api_url: https://cas-api.${default.aws_region}.${env}.apriori.net/%s
 
+  cis:
+    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
+    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
+
   cds:
     api_url: https://cds.${default.aws_region}.${env}.apriori.net/
 
   cidapp:
     api_url: https://cid-api.${default.aws_region}-v22-1.${env}.apriori.net/
     ui_url: https://ci-design.${default.aws_region}-v22-1.${env}.apriori.net/
+
+  cnh:
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
 
   css:
     api_url: https://css.${default.aws_region}-v22-1.${env}.apriori.net/
@@ -76,20 +83,13 @@ default:
   vds:
     api_url: https://vds.${default.aws_region}-v23-1.${env}.apriori.net/
 
-  cis:
-    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
-    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
-
-  cnh:
-    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
-
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
-  name: int-core
-  secret_key: 65J1ID2B6LDG
   base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
+  name: int-core
+  secret_key: 65J1ID2B6LDG
   user_identity: 8GFDIG229629
 
   admin:
@@ -105,9 +105,16 @@ int-core:
     part_identity: 6E5GDN0CHB95
     batch_identity: 6N92EN8EHM52
 
+  ci-connect:
+    ui_url: https://ci-connect.core.int.apriori.net/
+
   cidapp:
     ui_url: https://cid.core.int.apriori.net/
     api_url: https://cid-api.core.int.apriori.net/
+
+  cis:
+    ui_url: https://cis.core.int.apriori.net/
+    api_url: https://cis-api.core.int.apriori.net/
 
   cas:
     ui_url: https://cas.core.int.apriori.net/
@@ -124,11 +131,12 @@ int-core:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
-  ci-connect:
-    ui_url: https://ci-connect.core.int.apriori.net/
-
   css:
     api_url: https://css.core.int.apriori.net/
+
+  edc:
+    ui_url: https://edc.core.int.apriori.net/
+    api_url: https://edc-api.core.int.apriori.net/
 
   fms:
     api_url: https://fms.core.int.apriori.net/
@@ -136,30 +144,22 @@ int-core:
   nts:
     api_url: https://nts.core.int.apriori.net/
 
-  sds:
-    api_url: https://sds.core.int.apriori.net/
-
   reports:
     ui_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
+
+  sds:
+    api_url: https://sds.core.int.apriori.net/
 
   vds:
     api_url: https://vds.core.int.apriori.net/
 
-  cis:
-    ui_url: https://cis.core.int.apriori.net/
-    api_url: https://cis-api.core.int.apriori.net/
-
-  edc:
-    ui_url: https://edc.core.int.apriori.net/
-    api_url: https://edc-api.core.int.apriori.net/
-
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
   name: qa-cid-perf
   secret_key: 502M4JBUCE36
   user_identity: 1F7GAI5DLI2B
-  customer_identity: 92E1E4E9DFCD
-  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   admin:
     ui_url: ${qa-cid-perf.base_url}apriori/login
@@ -194,37 +194,42 @@ qa-cid-perf:
 
 ######################################################## QA-CID-PERF-SANDBOX ########################################################
 qa-cid-perf-sandbox:
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
   name: qa-cid-perf-sandbox
   secret_key: 502M4JBUCE36
   user_identity: 1F7GAI5DLI2B
-  customer_identity: 92E1E4E9DFCD
-  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   bcs:
     api_url: https://bcs.na-1-v22-1.qa-cid-perf.apriori.net/
     number_of_parts: 5
 
-  sds:
-    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
-
   edc:
     ui_url: https://edc.na-1.qa-cid-perf.apriori.net/
     api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/
 
+  sds:
+    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+
   vds:
     api_url: https://vds.na-1.qa-cid-perf.apriori.net/
 
-
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
+  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
+  customer_identity: C339C55A8155
   name: qa-cig-perf
   user_identity: C339C55A8155
-  customer_identity: C339C55A8155
   secret_key: WJIM0HV7Z6U1
-  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
 
   admin:
     ui_url: ${qa-cig-perf.base_url}apriori/login
+
+  bcs:
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
   cds:
     apriori_core_services_installation_identity:
@@ -239,19 +244,19 @@ qa-cig-perf:
   reports:
     ui_url: ${qa-cig-perf.base_url}jasperserver-pro/login.html
 
+######################################################## On Prem ########################################################
+onprem:
+  base_url: https://conqbaci02/
+  name: onprem
+
+  admin:
+    ui_url: ${onprem.base_url}apriori/login
+
   bcs:
     report_identity: 50A4DFJF3NC7
     reportType_identity: 0J3JMAA4MCAJ
     part_identity: 6E5GDN0CHB95
     batch_identity: 6N92EN8EHM52
-
-######################################################## On Prem ########################################################
-onprem:
-  name: onprem
-  base_url: https://conqbaci02/
-
-  admin:
-    ui_url: ${onprem.base_url}apriori/login
 
   cds:
     apriori_core_services_installation_identity:
@@ -266,17 +271,11 @@ onprem:
   reports:
     ui_url: ${onprem.base_url}jasperserver-pro/
 
-  bcs:
-    report_identity: 50A4DFJF3NC7
-    reportType_identity: 0J3JMAA4MCAJ
-    part_identity: 6E5GDN0CHB95
-    batch_identity: 6N92EN8EHM52
-
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
+  base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
   name: qa-20-1
   secret_key: LZJM8S47H5S8
-  base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
 
   admin:
     ui_url: ${qa-20-1.base_url}apriori/login
@@ -289,11 +288,14 @@ qa-20-1:
 
 ######################################################## STAGING ########################################################
 staging:
-  secret_key: K6JWVF8KV884
   ap_user_context:
-  user_identity: 6AHL1HHGB15E
-  customer_identity: 7G0JGBE2N4GM
   base_url:
+  customer_identity: 7G0JGBE2N4GM
+  secret_key: K6JWVF8KV884
+  user_identity: 6AHL1HHGB15E
+
+  ats:
+    api_url: https://ats.na-1.${env}.apriori.net/
 
   cds:
     api_url: https://cds.na-1.staging.apriori.net/
@@ -313,9 +315,6 @@ staging:
     ui_url: https://ci-design.na-1-v22-1.${env}.apriori.net/
     api_url: https://cid-api.na-1-v22-1.${env}.apriori.net/
 
-  ats:
-    api_url: https://ats.na-1.${env}.apriori.net/
-
   css:
     api_url: https://css.na-1-v22-1.${env}.apriori.net/
 
@@ -325,40 +324,40 @@ migration:
   customer_identity: 3KED5H5BKN85
   secret_key: X0V4XXK2SF87
 
+  ats:
+    api_url: https://ats.na-1.qa-20-1.apriori.net/
+
+  bcs:
+    api_url: https://bcs.na-1-v22-1.preview.qa-20-1.apriori.net/
+
   cidapp:
     ui_url: https://ci-design.na-1-v22-1.qa-20-1.apriori.net/
     api_url: https://cid-api.na-1-v22-1.qa-20-1.apriori.net/
 
-  ats:
-    api_url: https://ats.na-1.qa-20-1.apriori.net/
-
   css:
     api_url: https://css.na-1-v22-1.qa-20-1.apriori.net/
-
-  bcs:
-    api_url: https://bcs.na-1-v22-1.preview.qa-20-1.apriori.net/
 
 ######################################################## MIGRATION-PREVIEW #####################################################
 migration-preview:
   name: migration-preview
   secret_key: X0V4XXK2SF87
 
+  ats:
+    api_url: https://ats.na-1.qa-20-1.apriori.net/
+
   cidapp:
     ui_url: https://ci-design.na-1-v22-1.preview.qa-20-1.apriori.net/
     api_url: https://cid-api.na-1-v22-1.preview.qa-20-1.apriori.net/
-
-  ats:
-    api_url: https://ats.na-1.qa-20-1.apriori.net/
 
   css:
     api_url: https://css.na-1-v22-1.preview.qa-20-1.apriori.net/
 
 ######################################################## LOCAL ########################################################
 local:
+  ap_user_context:
+  base_url: http://localhost
   name: local
   secret_key: 65J1ID2B6LDG
-  base_url: http://localhost
-  ap_user_context:
 
   admin:
     ui_url: ${local.base_url}apriori/login
@@ -367,14 +366,6 @@ local:
     api_url: ${local.base_url}:8805/
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
-
-  css:
-    ui_url: ${local.base_url}:8802
-    api_url: ${local.base_url}:8802/
-
-  cidapp:
-    ui_url: ${local.base_url}:3003/
-    api_url: ${local.base_url}:8813/
 
   bcs:
     api_url: ${local.base_url}:8810/
@@ -391,6 +382,17 @@ local:
     apriori_production_deployment_identity: H337GKD0LA0N
     identity_role: H337GKD0L80E
 
+  cidapp:
+    ui_url: ${local.base_url}:3003/
+    api_url: ${local.base_url}:8813/
+
+  cis:
+    ui_url: ${local.base_url}:3004/
+
+  css:
+    ui_url: ${local.base_url}:8802
+    api_url: ${local.base_url}:8802/
+
   fms:
     api_url: ${local.base_url}:8806/
 
@@ -403,22 +405,16 @@ local:
   sds:
     api_url: ${local.base_url}:8811/
 
-  cis:
-    ui_url: ${local.base_url}:3004/
-
-  css:
-    api_url: ${local.base_url}:8802/
-
 ######################################################## QA-TEST ########################################################
 qa-test:
+  application_name: cid
+  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: production
+  installation_name: core-na-1 - 23 production deployment
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
-  customer_identity: 6C1F8C1D4D75
-  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
-  deployment_name: production
-  installation_name: core-na-1 - 23 production deployment
-  application_name: cid
 
   admin:
     ui_url: ${qa-test.base_url}apriori/login
@@ -427,21 +423,9 @@ qa-test:
     api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
     number_of_parts: 5
 
-  qds:
-    api_url: https://qds.na-1-v23-1.qa-test.apriori.net/
-
-  qms:
-    api_url: https://qms.na-1-v23-1.qa-test.apriori.net/
-
   cas:
     ui_url: https://cas.na-1.qa-test.apriori.net/
     api_url: https://cas-api.na-1.qa-test.apriori.net/
-
-  dds:
-    api_url: https://dds.na-1-v23-1.qa-test.apriori.net/
-
-  dms:
-    api_url: https://dms.na-1-v23-1.qa-test.apriori.net/
 
   cds:
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
@@ -478,20 +462,30 @@ qa-test:
   css:
     api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
 
+  dds:
+    api_url: https://dds.na-1-v23-1.qa-test.apriori.net/
+
+  dms:
+    api_url: https://dms.na-1-v23-1.qa-test.apriori.net/
+
   reports:
     ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 
-    ui_url: ${local.base_url}:3004
+  qds:
+    api_url: https://qds.na-1-v23-1.qa-test.apriori.net/
+
+  qms:
+    api_url: https://qms.na-1-v23-1.qa-test.apriori.net/
 
 ######################################################## CIS_SANDBOX ########################################################
 cis-sbx:
   aws_region: na-1
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
   name: cis-sbx
   secret_key: 502M4JBUCE36
   user_identity: 1F7GAI5DLI2B
-  customer_identity: 92E1E4E9DFCD
-  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   ats:
     api_url: https://ats.na-1.qa-cid-perf.apriori.net/
@@ -500,22 +494,22 @@ cis-sbx:
     api_url: https://cid-api.dev-cis-sbx.apriori.net/
     ui_url:  https://cid.dev-cis-sbx.apriori.net/
 
-  css:
-    api_url: https://css.dev-cis-sbx.apriori.net/
-
   cis:
     ui_url: https://cis.dev-cis-sbx.apriori.net/
 
+  css:
+    api_url: https://css.dev-cis-sbx.apriori.net/
+
 ######################################################## CIS_QA ########################################################
 cis-qa:
+  application_name: cis
   aws_region: na-1
-  name: cis-qa
-  secret_key: PG9E795ML3P4
-  user_identity: 1F7GAI5DLI2B
   customer_identity: 6C1F8C1D4D75
   deployment_name: qa
   installation_name: cis.na-1-v23-1
-  application_name: cis
+  name: cis-qa
+  secret_key: PG9E795ML3P4
+  user_identity: 1F7GAI5DLI2B
 
   ats:
     api_url: https://ats.${default.aws_region}.qa-test.apriori.net/
@@ -527,29 +521,41 @@ cis-qa:
     api_url: https://cid-api.${default.aws_region}-v23-1.qa-test.apriori.net/
     ui_url:  https://ci-design.${default.aws_region}-v23-1.qa-test.apriori.net/
 
-  css:
-    api_url: https://css.${default.aws_region}-v23-1.qa-test.apriori.net/
-
   cis:
     ui_url: https://cis.${default.aws_region}-v23-1.qa-test.apriori.net/
     api_url: https://cid-api.${default.aws_region}-v23-1.qa-test.apriori.net/
+
+  css:
+    api_url: https://css.${default.aws_region}-v23-1.qa-test.apriori.net/
+
 ######################################################## QA-TEST-SANDBOX ########################################################
 qa-test-sandbox:
+  application_name: cid
+  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: production
+  installation_name: core-na-1 - 23 production deployment
   name: qa-test-sandbox
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
-  customer_identity: 6C1F8C1D4D75
-  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
-  deployment_name: production
-  installation_name: core-na-1 - 23 production deployment
-  application_name: cid
 
   admin:
     ui_url: ${qa-test.base_url}apriori/login
 
+  ats:
+    api_url: https://ats.na-1.qa-test.apriori.net/
+
   bcs:
     api_url: https://bcs.na-1-v23-1.sandbox.qa-test.apriori.net/
     number_of_parts: 5
+
+  cas:
+    ui_url: https://cas.na-1.qa-test.apriori.net/
+    api_url: https://cas-api.na-1.qa-test.apriori.net/
+
+  cidapp:
+    api_url: https://cid-api.na-1-v23-1.sandbox.qa-test.apriori.net/
+    ui_url: https://ci-design.na-1-v23-1.sandbox.qa-test.apriori.net/
 
   cds:
     api_url: https://cds.na-1.qa-test.apriori.net/
@@ -562,18 +568,8 @@ qa-test-sandbox:
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
 
-  ats:
-    api_url: https://ats.na-1.qa-test.apriori.net/
-
-  qds:
-    api_url: https://qds.na-1-v23-1.sandbox.qa-test.apriori.net/
-
-  qms:
-    api_url: https://qms.na-1-v23-1.sandbox.qa-test.apriori.net/
-
-  cas:
-    ui_url: https://cas.na-1.qa-test.apriori.net/
-    api_url: https://cas-api.na-1.qa-test.apriori.net/
+  css:
+    api_url: https://css.na-1-v23-1.sandbox.qa-test.apriori.net/
 
   dds:
     api_url: https://dds.na-1-v23-1.sandbox.qa-test.apriori.net/
@@ -581,9 +577,8 @@ qa-test-sandbox:
   dms:
     api_url: https://dms.na-1-v23-1.sandbox.qa-test.apriori.net/
 
-  cidapp:
-    api_url: https://cid-api.na-1-v23-1.sandbox.qa-test.apriori.net/
-    ui_url: https://ci-design.na-1-v23-1.sandbox.qa-test.apriori.net/
+  qms:
+    api_url: https://qms.na-1-v23-1.sandbox.qa-test.apriori.net/
 
-  css:
-    api_url: https://css.na-1-v23-1.sandbox.qa-test.apriori.net/
+  qds:
+    api_url: https://qds.na-1-v23-1.sandbox.qa-test.apriori.net/
