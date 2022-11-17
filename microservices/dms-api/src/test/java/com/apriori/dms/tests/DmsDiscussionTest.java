@@ -47,7 +47,6 @@ public class DmsDiscussionTest extends TestUtil {
     @Test
     @Description("create a valid discussion")
     public void createDiscussions() {
-        softAssertions.assertThat(discussionResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
     }
 
@@ -55,9 +54,8 @@ public class DmsDiscussionTest extends TestUtil {
     @Description("update a valid discussion")
     public void UpdateValidDiscussion() {
         ResponseWrapper<DiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
-            "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DiscussionResponse.class);
+            "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DiscussionResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(discussionUpdateResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
     }
 
@@ -66,9 +64,8 @@ public class DmsDiscussionTest extends TestUtil {
     @Description("update a invalid discussion")
     public void UpdateInValidDiscussion() {
         ResponseWrapper<ErrorMessage> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
-            "RESOLVED","INVALIDDISCUSSION", currentUser, ErrorMessage.class);
+            "RESOLVED","INVALIDDISCUSSION", currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        softAssertions.assertThat(discussionUpdateResponse.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getMessage()).contains("'discussionIdentity' is not a valid identity");
     }
 
@@ -87,18 +84,17 @@ public class DmsDiscussionTest extends TestUtil {
                 .inlineVariables("INVALIDCUSTOMER")
                 .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .body(discussionsRequest))
+                .body(discussionsRequest)
+                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
             .post();
 
-        softAssertions.assertThat(errorMessageResponseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(errorMessageResponseWrapper.getResponseEntity().getMessage()).contains("'customerIdentity' is not a valid identity");
     }
 
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> discussionsResponse = DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
-        softAssertions.assertThat(discussionsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         softAssertions.assertAll();
     }
 }
