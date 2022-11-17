@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +46,8 @@ public class BidPackageItemTest extends TestUtil {
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemResponse.class);
+            BidPackageItemResponse.class,
+            HttpStatus.SC_CREATED);
     }
 
     @Test
@@ -60,7 +62,7 @@ public class BidPackageItemTest extends TestUtil {
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemResponse.class);
+            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
         softAssertions.assertThat(bidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
@@ -80,7 +82,7 @@ public class BidPackageItemTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemResponse.class);
+            BidPackageItemResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
@@ -93,7 +95,7 @@ public class BidPackageItemTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemResponse.class);
+            BidPackageItemResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
@@ -105,7 +107,7 @@ public class BidPackageItemTest extends TestUtil {
         ResponseWrapper<BidPackageItemsResponse> updateBidPackageItemResponse = BidPackageResources.getBidPackageItems(
             bidPackageResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemsResponse.class);
+            BidPackageItemsResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getIsFirstPage()).isTrue();

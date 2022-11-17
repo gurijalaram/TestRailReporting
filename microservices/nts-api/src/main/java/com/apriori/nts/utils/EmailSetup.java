@@ -25,6 +25,7 @@ public class EmailSetup {
         try {
             String content = EncryptionUtil.decryptFile(key, credentialFile);
             credentials = JsonManager.deserializeJsonFromString(content, Credentials.class);
+            credentials.setFolder(PropertiesContext.get("customer"));
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -42,8 +43,8 @@ public class EmailSetup {
         return credentials.getPassword();
     }
 
-    public  String getFolder() {
-        return PropertiesContext.get("customer");
+    public String getFolder() {
+        return credentials.getFolder();
     }
 
 

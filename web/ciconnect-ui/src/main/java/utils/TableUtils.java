@@ -260,7 +260,6 @@ public class TableUtils {
      */
     public WebElement getItemNameFromTable(WebElement tableRow, int columnIndex) {
         WebElement webElement = tableRow.findElement(By.cssSelector("td:nth-child(" + columnIndex + ")"));
-        System.out.println(webElement.getText());
         return (webElement != null) ? webElement : null;
     }
 
@@ -274,5 +273,35 @@ public class TableUtils {
     private WebElement getColumn(WebElement tableHeaders, String columnHeader) {
         List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
         return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
+    }
+
+    public WebElement getRowByCellText(WebElement table, String cellText) {
+        WebElement dataElement = null;
+        try {
+            dataElement = table.findElements(By.tagName("tr"))
+                    .stream()
+                    .skip(1)
+                    .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(cellText))
+                    .findFirst()
+                    .orElse(null);
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            dataElement = table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(cellText))
+                .findFirst()
+                .orElse(null);
+        }
+        return dataElement;
+    }
+
+    public WebElement getColumnByIndex(WebElement tableRow, int columnIndex) {
+        WebElement column = null;
+        try {
+            column = tableRow.findElements(By.tagName("td")).get(columnIndex);
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            column = tableRow.findElements(By.tagName("td")).get(columnIndex);
+        }
+        return column;
     }
 }

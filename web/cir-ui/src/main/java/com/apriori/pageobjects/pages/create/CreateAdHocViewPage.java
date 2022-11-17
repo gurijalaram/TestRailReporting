@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.TableUtils;
 
 public class CreateAdHocViewPage extends ReportsPageHeader {
 
@@ -84,6 +85,9 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//ul[@id='dimensionsTree']//ul/li[2]")
     private WebElement secondDataPostSearchField;
+
+    @FindBy(xpath = "//tbody[@id='tableDetails']")
+    private WebElement adHocViewReportTable;
 
     private final PageUtils pageUtils;
     private final WebDriver driver;
@@ -279,8 +283,6 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(By.xpath("//fieldset[@id='applyFilter']/button"));
 
-        pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '0200613')]"));
-
         return this;
     }
 
@@ -288,17 +290,38 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      * Gets specified table cell value
      *
      * @param columnIndex - String
-     * @param rowIndex - String
+     * @param rowIndex    - String
      * @return String of value retrieved
      */
     public String getTableCellValue(String columnIndex, String rowIndex) {
         return driver.findElement(
-            By.xpath(
-                String.format(
-                    "//tbody[@id='tableDetails']/tr[%s]/td[%s]/span",
-                    columnIndex,
-                    rowIndex)))
+                By.xpath(
+                    String.format(
+                        "//tbody[@id='tableDetails']/tr[%s]/td[%s]/span",
+                        columnIndex,
+                        rowIndex)))
             .getText();
+    }
+
+    /**
+     * Get matching row from table
+     *
+     * @param cellText
+     * @return WebElement
+     */
+    public WebElement getTableRowByCellText(String cellText) {
+        return new TableUtils(driver).getRowByCellText(adHocViewReportTable, cellText);
+    }
+
+    /**
+     * Get cell value from row and column index
+     *
+     * @param tableRowElement
+     * @param columnIndex
+     * @return WebElement - Matching WebElement from row and column.
+     */
+    public WebElement getCellValue(WebElement tableRowElement, int columnIndex) {
+        return new TableUtils(driver).getColumnByIndex(tableRowElement, columnIndex);
     }
 
     /**
