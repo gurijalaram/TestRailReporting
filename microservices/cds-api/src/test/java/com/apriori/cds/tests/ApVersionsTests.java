@@ -1,6 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,9 +23,8 @@ public class ApVersionsTests {
     @TestRail(testCaseId = {"5958"})
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
-        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.AP_VERSION, ApVersions.class);
+        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.AP_VERSION, ApVersions.class, HttpStatus.SC_OK);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getVersion(), is(not(emptyString())));
     }

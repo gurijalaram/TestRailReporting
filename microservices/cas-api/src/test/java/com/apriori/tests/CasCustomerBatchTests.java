@@ -56,25 +56,19 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        soft.assertThat(batch.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(batch.getResponseEntity().getCustomerIdentity())
             .isEqualTo(customerIdentity);
 
         ResponseWrapper<CustomerBatches> customerBatches = casTestUtil.getCommonRequest(CASAPIEnum.BATCHES,
             CustomerBatches.class,
+            HttpStatus.SC_OK,
             customerIdentity);
 
-        soft.assertThat(customerBatches.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
-
-        ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
-
-        soft.assertThat(deleteBatch.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
         soft.assertAll();
+
+        CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
     }
 
     @Test
@@ -96,18 +90,14 @@ public class CasCustomerBatchTests {
 
         ResponseWrapper<CustomerBatch> customerBatch = casTestUtil.getCommonRequest(CASAPIEnum.BATCH,
             CustomerBatch.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             batchIdentity);
 
-        soft.assertThat(customerBatch.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(customerBatch.getResponseEntity().getIdentity())
             .isEqualTo(batchIdentity);
-
-        ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
-
-        soft.assertThat(deleteBatch.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
         soft.assertAll();
+
+        CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
     }
 }

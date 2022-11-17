@@ -72,15 +72,13 @@ public class CasCustomerUserAccessControlsTests {
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
 
-        soft.assertThat(accessControl.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(accessControl.getResponseEntity().getOutOfContext())
             .isTrue();
         soft.assertAll();
 
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
+        accessControlIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .userIdentity(userIdentity)
             .accessControlIdentity(accessControlIdentity)
@@ -98,19 +96,17 @@ public class CasCustomerUserAccessControlsTests {
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AccessControls> listOfControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class,
+        ResponseWrapper<AccessControls> listOfControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             userIdentity);
 
-        soft.assertThat(listOfControls.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(listOfControls.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
         soft.assertThat(listOfControls.getResponseEntity().getItems().get(0).getIdentity())
             .isEqualTo(accessControlId);
         soft.assertAll();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
+        accessControlIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .userIdentity(userIdentity)
             .accessControlIdentity(accessControlId)
@@ -128,18 +124,16 @@ public class CasCustomerUserAccessControlsTests {
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AccessControl> controlById = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID, AccessControl.class,
+        ResponseWrapper<AccessControl> controlById = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID, AccessControl.class, HttpStatus.SC_OK,
             customerIdentity,
             userIdentity,
             accessControlId);
 
-        soft.assertThat(controlById.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(controlById.getResponseEntity().getUserIdentity())
             .isEqualTo(userIdentity);
         soft.assertAll();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
+        accessControlIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .userIdentity(userIdentity)
             .accessControlIdentity(accessControlId)
@@ -157,13 +151,10 @@ public class CasCustomerUserAccessControlsTests {
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> deleteAccessControl = casTestUtil.delete(CASAPIEnum.ACCESS_CONTROL_BY_ID,
-                customerIdentity,
-                userIdentity,
-                accessControlId);
-
-        soft.assertThat(deleteAccessControl.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        casTestUtil.delete(CASAPIEnum.ACCESS_CONTROL_BY_ID,
+            customerIdentity,
+            userIdentity,
+            accessControlId);
     }
 
     @Test
@@ -178,12 +169,11 @@ public class CasCustomerUserAccessControlsTests {
 
         ResponseWrapper<CasErrorMessage> response = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID,
             CasErrorMessage.class,
+            HttpStatus.SC_NOT_FOUND,
             customerIdentity,
             userIdentity,
             notExistingIdentity);
 
-        soft.assertThat(response.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NOT_FOUND);
         soft.assertThat(response.getResponseEntity().getMessage())
             .isEqualTo(String.format("Unable to get access control with identity '%s' for user with identity '%s'.", notExistingIdentity, userIdentity));
         soft.assertAll();

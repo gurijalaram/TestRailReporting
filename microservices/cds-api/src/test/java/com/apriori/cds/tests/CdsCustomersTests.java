@@ -45,9 +45,8 @@ public class CdsCustomersTests {
     @TestRail(testCaseId = {"3252"})
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
-        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
         assertThat(response.getResponseEntity().getItems().get(0).getMaxCadFileRetentionDays(), is(not(nullValue())));
     }

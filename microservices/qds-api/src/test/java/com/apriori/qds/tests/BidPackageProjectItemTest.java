@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     private static ResponseWrapper<BidPackageProjectResponse> bidPackageProjectResponse;
     private static ResponseWrapper<BidPackageItemResponse> bidPackageItemResponse;
     private static ResponseWrapper<BidPackageProjectItemResponse> bidPackageProjectItemResponse;
-    private UserCredentials currentUser = UserUtil.getUser();
+    UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String bidPackageProjectName;
     private static String userContext;
@@ -44,19 +45,19 @@ public class BidPackageProjectItemTest extends TestUtil {
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser)
             .getResponseEntity().getItems().get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
-        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName, bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName,bidPackageResponse.getResponseEntity().getIdentity(),currentUser);
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getResponseEntity().getIdentity(),
             currentUser,
-            BidPackageItemResponse.class);
+            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
         bidPackageProjectItemResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectItemResponse.class);
+            currentUser, BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectItemResponse.class);
+            currentUser, BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED);
         softAssertions.assertThat(bidPackageProjectItemResponse.getResponseEntity().getBidPackageItemIdentity()).isEqualTo(bidPackageItemResponse.getResponseEntity().identity);
     }
 
@@ -86,7 +87,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
             bidPackageProjectItemResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectItemResponse.class);
+            currentUser,BidPackageProjectItemResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
     }
@@ -98,7 +99,7 @@ public class BidPackageProjectItemTest extends TestUtil {
         ResponseWrapper<BidPackageProjectItemsResponse> getBidPackageProjectItemResponse = BidPackageResources.getBidPackageProjectItems(
             bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            currentUser, BidPackageProjectItemsResponse.class);
+            currentUser,BidPackageProjectItemsResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(getBidPackageProjectItemResponse.getResponseEntity().getIsFirstPage()).isTrue();
@@ -112,7 +113,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             currentUser);
         BidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
             bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
-        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),bidPackageProjectResponse.getResponseEntity().getIdentity(),currentUser);
         BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertAll();
     }

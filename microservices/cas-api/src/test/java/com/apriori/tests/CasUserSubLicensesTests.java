@@ -97,16 +97,12 @@ public class CasUserSubLicensesTests {
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
 
-        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity, HttpStatus.SC_CONFLICT);
 
-        soft.assertThat(associationErrorResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CONFLICT);
         soft.assertThat(associationErrorResponse.getResponseEntity().getMessage())
             .isEqualTo(String.format("Sub License with identity '%s' expired on '%s' and cannot be assigned to a user.", subLicenseIdentity, expireDate));
         soft.assertAll();
@@ -119,15 +115,11 @@ public class CasUserSubLicensesTests {
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_MASTER_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
-        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity, HttpStatus.SC_CONFLICT);
 
-        soft.assertThat(associationErrorResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CONFLICT);
         soft.assertThat(associationErrorResponse.getResponseEntity().getMessage())
             .isEqualTo(String.format("Error assigning sub license 'masterLicense' to user with identity '%s'. Sub license can only be assigned to an 'aPriori Internal' user.", userIdentity));
         soft.assertAll();
@@ -140,15 +132,11 @@ public class CasUserSubLicensesTests {
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_APRIORI_INTERNAL_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
-        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity, HttpStatus.SC_CONFLICT);
 
-        soft.assertThat(associationErrorResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CONFLICT);
         soft.assertThat(associationErrorResponse.getResponseEntity().getMessage())
             .isEqualTo(String.format("Error assigning sub license 'aPrioriInternalLicense' to user with identity '%s'. Sub license can only be assigned to an 'aPriori Internal' user.", userIdentity));
         soft.assertAll();
@@ -161,45 +149,36 @@ public class CasUserSubLicensesTests {
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class,
+        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity);
 
         String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity, HttpStatus.SC_CREATED);
 
-        soft.assertThat(associationUserResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(associationUserResponse.getResponseEntity().getUserIdentity())
             .isEqualTo(userIdentity);
 
-        ResponseWrapper<SublicenseAssociation> sublicenseAssociations = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, SublicenseAssociation.class,
+        ResponseWrapper<SublicenseAssociation> sublicenseAssociations = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, SublicenseAssociation.class, HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity);
 
-        soft.assertThat(sublicenseAssociations.getStatusCode())
-            .isEqualTo(HttpStatus.SC_OK);
         soft.assertThat(sublicenseAssociations.getResponseEntity().getItems().get(0).getIdentity())
             .isEqualTo(userIdentity);
+        soft.assertAll();
 
-        ResponseWrapper<String> deleteResponse = casTestUtil.delete(CASAPIEnum.SPECIFIC_USER_SUB_LICENSE_USERS,
+        casTestUtil.delete(CASAPIEnum.SPECIFIC_USER_SUB_LICENSE_USERS,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity,
             userIdentity);
-
-        soft.assertThat(deleteResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_NO_CONTENT);
-        soft.assertAll();
     }
 
     @Test
@@ -209,28 +188,22 @@ public class CasUserSubLicensesTests {
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        soft.assertThat(licenseResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class,
+        ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licenseIdentity);
 
         String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity, HttpStatus.SC_CREATED);
 
-        soft.assertThat(associationUserResponse.getStatusCode())
-            .isEqualTo(HttpStatus.SC_CREATED);
         soft.assertThat(associationUserResponse.getResponseEntity().getUserIdentity())
             .isEqualTo(userIdentity);
 
-        ResponseWrapper<UserLicensing> usersSubLicenses = casTestUtil.getCommonRequest(CASAPIEnum.USERS_SUBLICENSES, UserLicensing.class, customerIdentity, userIdentity);
+        ResponseWrapper<UserLicensing> usersSubLicenses = casTestUtil.getCommonRequest(CASAPIEnum.USERS_SUBLICENSES, UserLicensing.class, HttpStatus.SC_ACCEPTED, customerIdentity, userIdentity);
 
-        soft.assertThat(usersSubLicenses.getStatusCode())
-            .isEqualTo(HttpStatus.SC_ACCEPTED);
         soft.assertThat(usersSubLicenses.getResponseEntity().get(0).getSubLicenseIdentity())
             .isEqualTo(subLicenseIdentity);
         soft.assertAll();

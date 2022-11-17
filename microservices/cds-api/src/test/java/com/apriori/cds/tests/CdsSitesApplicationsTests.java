@@ -106,15 +106,16 @@ public class CdsSitesApplicationsTests {
 
         ResponseWrapper<LicensedApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
             LicensedApplications.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity
         );
 
-        assertThat(licensedApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licensedApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             LicensedApplication.class,
+            HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
             licensedApplicationIdentity

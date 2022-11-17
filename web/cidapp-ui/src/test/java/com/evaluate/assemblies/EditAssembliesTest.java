@@ -1078,23 +1078,17 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly2).publishAssembly(componentAssembly2);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly2)
             .openComponents()
-            .selectTableView()
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("assy03A" + "," + scenarioName + "", "Part0005a" + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
-        componentsTablePage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
+        componentsTreePage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
-
-        // TODO: 28/10/2022 cn - uncomment once a common page controller (to avoid code duplication) has been implemented for componentstree and componentstable page
-        /*componentsTreePage = componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);*/
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
