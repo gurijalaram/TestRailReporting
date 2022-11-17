@@ -61,8 +61,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.getBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
-        softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getStatus()).isEqualTo(HttpStatus.SC_OK);
+            bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
 
@@ -72,7 +71,7 @@ public class BidPackageProjectsTest extends TestUtil {
     public void updateBidPackageProject() {
         BidPackageProjectRequest projectRequest = BidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers());
         ResponseWrapper<BidPackageProjectResponse> getBidPackageProjectResponse = BidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class);
+            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
     }
 
