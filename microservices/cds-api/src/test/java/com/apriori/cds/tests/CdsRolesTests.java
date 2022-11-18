@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Role;
 import com.apriori.cds.objects.response.Roles;
@@ -14,12 +9,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.stream.Collectors;
 
 public class CdsRolesTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
 
     @Test
     @TestRail(testCaseId = {"3243"})
@@ -27,8 +24,9 @@ public class CdsRolesTests {
     public void getRoles() {
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, HttpStatus.SC_OK);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(2));
-        assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList()), hasItems("USER", "ADMIN"));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(2);
+        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("USER", "ADMIN");
+        soft.assertAll();
     }
 
     @Test
@@ -41,6 +39,7 @@ public class CdsRolesTests {
 
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class,HttpStatus.SC_OK,  roleIdentity);
 
-        assertThat(response.getResponseEntity().getItems().get(0).getName(), is("ADMIN"));
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("ADMIN");
+        soft.assertAll();
     }
 }

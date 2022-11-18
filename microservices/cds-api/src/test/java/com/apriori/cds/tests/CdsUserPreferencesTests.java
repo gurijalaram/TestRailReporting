@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
@@ -19,11 +14,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CdsUserPreferencesTests {
+    private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder userPreferenceIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -76,7 +73,8 @@ public class CdsUserPreferencesTests {
     public void getUserPreferences() {
         ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(userPreferences.getResponseEntity().getTotalItemCount(), greaterThanOrEqualTo(1));
+        soft.assertThat(userPreferences.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -84,13 +82,12 @@ public class CdsUserPreferencesTests {
     @Description("Creates a user preference for a user and gets it by identity")
     public void addUserPreference() {
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
-
-        assertThat(newPreference.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, HttpStatus.SC_OK, customerIdentity, userIdentity, preferenceIdentity);
 
-        assertThat(preferenceResponse.getResponseEntity().getIdentity(), is(equalTo(preferenceIdentity)));
+        soft.assertThat(preferenceResponse.getResponseEntity().getIdentity()).isEqualTo(preferenceIdentity);
+        soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -110,8 +107,8 @@ public class CdsUserPreferencesTests {
 
         ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsTestUtil.updatePreference(customerIdentity, userIdentity, preferenceIdentity, updatedPreference);
 
-        assertThat(updatedPreferenceResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(updatedPreferenceResponse.getResponseEntity().getValue(), is(equalTo(updatedPreference)));
+        soft.assertThat(updatedPreferenceResponse.getResponseEntity().getValue()).isEqualTo(updatedPreference);
+        soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -128,11 +125,11 @@ public class CdsUserPreferencesTests {
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
 
-        assertThat(preferenceResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(preferenceResponse.getResponseEntity().getName()).isEqualTo(preferenceName);
+        soft.assertAll();
+
         String preferenceIdentity = preferenceResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> deletePreference = cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID, customerIdentity, userIdentity, preferenceIdentity);
-
-        assertThat(deletePreference.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID, customerIdentity, userIdentity, preferenceIdentity);
     }
 }

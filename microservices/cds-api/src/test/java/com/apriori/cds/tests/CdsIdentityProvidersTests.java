@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.response.IdentityProviderPagination;
 import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -19,7 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +32,7 @@ public class CdsIdentityProvidersTests {
     private ResponseWrapper<Customer> customer;
     private String userName;
     private ResponseWrapper<User> user;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -75,7 +71,8 @@ public class CdsIdentityProvidersTests {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(samlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(samlResponse.getResponseEntity().getIdentity()).isNotNull();
+        soft.assertAll();
 
         idpIdentity = samlResponse.getResponseEntity().getIdentity();
     }
@@ -88,11 +85,11 @@ public class CdsIdentityProvidersTests {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         idpIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderResponse> updatedDescription = cdsTestUtil.patchIdp(customerIdentity, idpIdentity, userIdentity);
-        assertThat(updatedDescription.getResponseEntity().getDescription(), is(equalTo("patch IDP using Automation")));
+        soft.assertThat(updatedDescription.getResponseEntity().getDescription()).isEqualTo("patch IDP using Automation");
+        soft.assertAll();
     }
 
     @Test
@@ -103,7 +100,6 @@ public class CdsIdentityProvidersTests {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         idpIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
@@ -113,7 +109,8 @@ public class CdsIdentityProvidersTests {
             idpIdentity
         );
 
-        assertThat(idp.getResponseEntity().getIdentity(), is(equalTo(idpIdentity)));
+        soft.assertThat(idp.getResponseEntity().getIdentity()).isEqualTo(idpIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -124,7 +121,6 @@ public class CdsIdentityProvidersTests {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         idpIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_ID,
@@ -133,7 +129,8 @@ public class CdsIdentityProvidersTests {
             customerIdentity
         );
 
-        assertThat(idpPagination.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(idpPagination.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -146,11 +143,9 @@ public class CdsIdentityProvidersTests {
         ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
         String identityProviderIdentity = identityProviderResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
+        cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
             customerIdentity,
             identityProviderIdentity
         );
-
-        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }
