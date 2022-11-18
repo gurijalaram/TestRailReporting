@@ -14,6 +14,12 @@
         "createdBy": {
           "type": "string"
         },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
         "projectIdentity": {
           "type": "string"
         },
@@ -127,6 +133,10 @@
         "role",
         "userEmail",
         "user"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
       ]
     }
   },

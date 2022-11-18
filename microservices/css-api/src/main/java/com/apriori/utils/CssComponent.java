@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.entity.enums.CssAPIEnum;
 import com.apriori.entity.response.CssComponentResponse;
@@ -51,7 +50,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
                 if (scenarioItemList.size() > 0 &&
 
@@ -90,14 +89,14 @@ public class CssComponent {
     }
 
     /**
-     * Calls an api with GET verb
+     * Calls an api with GET verb. No wait is performed for this call.
      *
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public List<ScenarioItem> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
         QueryParams queryParams = new QueryParams();
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
@@ -109,7 +108,7 @@ public class CssComponent {
             throw new KeyValueException(ae.getMessage(), paramKeyValue);
         }
 
-        return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
+        return getBaseCssComponents(userCredentials, queryParams.use(paramMap)).getResponseEntity().getItems();
     }
 
     /**
@@ -127,7 +126,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems();
+                List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
                 if (scenarioItemList.size() > 0 &&
 
