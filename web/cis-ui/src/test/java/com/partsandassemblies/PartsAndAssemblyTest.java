@@ -179,7 +179,8 @@ public class PartsAndAssemblyTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies();
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField();
 
         assertThat(partsAndAssembliesPage.isSearchOptionDisplayed(), is(true));
 
@@ -306,9 +307,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .pinToLeftProcessGroupColumn()
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
-                .clickOnToggleButton()
-                .clickMessages()
-                .clickPartsAndAssemblies();
+                .disableStateField();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -316,9 +315,16 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getDigitalFactorySortingRule()).isEqualTo("sort-up");
 
+        partsAndAssembliesPage.clickMessages()
+                        .clickPartsAndAssemblies();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getDigitalFactorySortingRule()).isEqualTo("sort-up");
+
         partsAndAssembliesPage.clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
-                .clickOnToggleButton()
+                .enableStateField()
                 .sortUpDigitalFactoryField()
                 .pinToRightProcessGroupColumn();
 

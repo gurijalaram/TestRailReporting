@@ -169,6 +169,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@data-testid='scenario-discussion-no-data-No comments available']")
     private WebElement emptyCommentMessage;
 
+    @FindBy(xpath = "//span[contains(@class,'Switch-checked')]")
+    private WebElement btnCheckedStatus;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -217,7 +220,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public String getComponentCheckBoxStatus() {
         if (getPageUtils().waitForElementsToAppear(tableRow).size() > 0) {
             for (int i = 0;i < tableRow.size();i++) {
-                getPageUtils().waitForElementToAppear(driver.findElement(By.xpath("//div[@data-rowindex='" + i + "']//span[starts-with(@class,'MuiCheckbox-root')]"))).click();
+                getPageUtils().waitForElementToAppear(driver.findElement(By.xpath("//div[@data-rowindex='" + i + "']//span[contains(@class,'MuiCheckbox-root')]"))).click();
             }
         }
         return getPageUtils().waitForElementsToAppear(selectedCheckboxes).get(tableRow.size()).getAttribute("aria-selected");
@@ -707,7 +710,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage selectFilterField(String fieldName) {
         getPageUtils().waitForElementAndClick(filterField);
-        getPageUtils().waitForElementAndClick(By.xpath("//li[starts-with(@class,'MuiMenuItem-root')]//span[text()='" + fieldName + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath("//li[contains(@class,'MuiMenuItem-root')]//span[text()='" + fieldName + "']"));
         getPageUtils().waitForElementAndClick(filterCondition);
         return this;
     }
@@ -841,6 +844,30 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='componentName']//p[text()='" + componentName + "']")));
         getPageUtils().waitForElementToAppear(emptyCommentMessage);
         getPageUtils().waitForElementAndClick(linkBackToPartNAssemblyPage);
+        return this;
+    }
+
+    /**
+     * disable state field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage disableStateField() {
+        getPageUtils().waitForElementToAppear(toggleButton);
+        getPageUtils().moveAndClick(toggleButton);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),2);
+        return this;
+    }
+
+    /**
+     * enable state field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage enableStateField() {
+        getPageUtils().waitForElementToAppear(toggleButton);
+        getPageUtils().moveAndClick(toggleButton);
+        getPageUtils().waitForElementToAppear(btnCheckedStatus);
         return this;
     }
 }
