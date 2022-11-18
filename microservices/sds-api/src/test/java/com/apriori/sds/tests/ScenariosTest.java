@@ -362,8 +362,6 @@ public class ScenariosTest extends SDSTestUtil {
         softAssertions.assertThat(testingScenarios.size()).isNotZero();
         softAssertions.assertAll();
 
-        assertNotEquals("Testing scenario should present.", testingScenarios.size(), 0);
-
         return testingScenario = testingScenarios.get(0);
     }
 }
