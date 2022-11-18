@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-
 @Slf4j
 public class MultiPartCostingTest {
     private static Batch batch;
