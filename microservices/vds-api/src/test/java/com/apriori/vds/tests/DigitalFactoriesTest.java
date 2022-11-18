@@ -36,11 +36,10 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(getDigitalFactoriesResponse().getIdentity());
+            .inlineVariables(getDigitalFactoriesResponse().getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTPRequest.build(requestEntity).get().getStatusCode()
-        );
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -62,24 +61,18 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getVPEsByIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(this.getVPEsResponse().getIdentity());
+            .inlineVariables(this.getVPEsResponse().getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTPRequest.build(requestEntity).get().getStatusCode()
-        );
+        HTTPRequest.build(requestEntity).get();
     }
 
     private DigitalFactory getVPEsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTPRequest.build(requestEntity).get();
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            vpEsItemsResponse.getStatusCode()
-        );
-
         return vpEsItemsResponse.getResponseEntity().getItems().get(0);
     }
-
-
 }

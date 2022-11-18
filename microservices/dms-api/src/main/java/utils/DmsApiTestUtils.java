@@ -18,6 +18,7 @@ import entity.response.DmsCommentResponse;
 import entity.response.DmsCommentsResponse;
 import enums.DMSApiEnum;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpStatus;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,7 +70,8 @@ public class DmsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .body(discussionsRequest);
+            .body(discussionsRequest)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -94,7 +96,8 @@ public class DmsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .body(dmsCommentsRequest)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -110,7 +113,8 @@ public class DmsApiTestUtils {
         RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, DmsCommentsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -128,7 +132,8 @@ public class DmsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"),
                 discussionIdentity, commentIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -156,7 +161,8 @@ public class DmsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .body(dmsCommentsRequest)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -171,10 +177,11 @@ public class DmsApiTestUtils {
      * @param currentUser
      * @param klass response class (response class can be DiscussionResponse for valid data
      *              ErrorMessage response class for invalid data
+     * @param httpStatus
      * @param <T>
      * @return ResponseWrapper of class type
      */
-    public static <T> ResponseWrapper<T> updateDiscussion(String discussionDescription, String status, String discussionIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateDiscussion(String discussionDescription, String status, String discussionIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
             .discussion(DiscussionsRequestParameters.builder()
                 .status(status)
@@ -186,7 +193,8 @@ public class DmsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .body(discussionsRequest);
+            .body(discussionsRequest)
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -203,7 +211,8 @@ public class DmsApiTestUtils {
         RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
