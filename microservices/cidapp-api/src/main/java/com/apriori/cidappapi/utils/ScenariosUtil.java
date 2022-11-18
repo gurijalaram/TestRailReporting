@@ -418,6 +418,33 @@ public class ScenariosUtil {
     }
 
     /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> postSimpleEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
+                .body(ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .groupItems(forkRequest.getGroupItems()
+                        .stream()
+                        .map(request -> GroupItems.builder()
+                            .componentIdentity(request.getComponentIdentity())
+                            .scenarioIdentity(request.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Post to cost a group of scenarios
      *
      * @param componentInfo - A number of copy component objects

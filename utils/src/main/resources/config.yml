@@ -510,6 +510,16 @@ qa-test-v22:
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
 
+  ats:
+      api_url: https://ats.${default.aws_region}.qa-test.apriori.net/
+      token_username: qa-automation-01
+      token_email: qa-automation-01@apriori.com
+      token_issuer: 2021 R1
+      token_subject: 4127
+      auth_application: CID
+      automation_username: qa-automation-%s@apriori.com
+      automation_password: TrumpetSnakeFridgeToasty18!%
+
   ci-connect:
     ui_url: https://ci-connect.na-1-v22-1.qa-test.apriori.net/
     second_page_starting_range_number: 26

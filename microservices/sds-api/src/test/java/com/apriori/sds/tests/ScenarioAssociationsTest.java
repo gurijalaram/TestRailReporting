@@ -1,7 +1,5 @@
 package com.apriori.sds.tests;
 
-import static org.junit.Assert.assertEquals;
-
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
@@ -17,6 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,10 +49,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
                 .inlineVariables(
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -74,13 +73,15 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(updatedOccurrences)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
-                .build());
+                .build())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(request).patch();
         final ScenarioAssociation scenarioAssociation = response.getResponseEntity();
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-        assertEquals("Occurrences should be updated", scenarioAssociation.getOccurrences(), updatedOccurrences);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(scenarioAssociation.getOccurrences()).isEqualTo(updatedOccurrences);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -104,10 +105,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                 .occurrences(1)
                 .excluded(false)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
-                .build());
+                .build())
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         final ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(request).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
         return testingAssociation = response.getResponseEntity();
     }
@@ -124,11 +125,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociationsItems.class)
                 .inlineVariables(
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ScenarioAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
-
         return responseWrapper.getResponseEntity().getItems();
     }
 
@@ -136,12 +136,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
                 .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(),
-                    associationIdentity);
+                    associationIdentity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);;
 
-        ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
-
-        assertEquals(String.format("The association %s, was not removed", associationIdentity),
-            HttpStatus.SC_NO_CONTENT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).delete();
     }
 
     public static ScenarioItem getTestingRollUp() {
