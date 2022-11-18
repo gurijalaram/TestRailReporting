@@ -3,7 +3,6 @@ package com.apriori.bcs.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -75,11 +74,9 @@ public class BatchPartTest {
     public void createBatchPart() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
         Batch batchObject = batchResponse.getResponseEntity();
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(batchObject.getState(), is(equalTo(BCSState.CREATED.toString())));
 
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
-        assertThat(partResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
@@ -88,8 +85,15 @@ public class BatchPartTest {
     @Description("Create Batch, Add Part to a batch, wait until part is costed and get results")
     public void createBatchPartAndGetResults() {
         assertTrue("Track and verify Batch Part Costing is completed", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity(), BCSState.COMPLETED));
-        ResponseWrapper<Results> resultsResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, batch.getIdentity(), part.getIdentity(), Results.class)).get();
-        assertThat(resultsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        ResponseWrapper<Results> resultsResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                part.getIdentity(),
+                Results.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+        ).get();
+
         assertThat(resultsResponse.getResponseEntity().getCostingStatus(), is(equalTo("COST_COMPLETE")));
     }
 
@@ -100,8 +104,14 @@ public class BatchPartTest {
         Batch batch2 = BatchResources.createBatch().getResponseEntity();
         assertThat(batch2.getState(), is(equalTo(BCSState.CREATED.toString())));
 
-        ResponseWrapper<ErrorMessage> resultsResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, batch2.getIdentity(), part.getIdentity(), ErrorMessage.class)).get();
-        assertThat(resultsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS,
+                batch2.getIdentity(),
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
+        ).get();
     }
 
     @Test
@@ -109,7 +119,6 @@ public class BatchPartTest {
     @Description("Get part to a batch")
     public void getBatchParts() {
         ResponseWrapper<Parts> partsResponse = BatchPartResources.getBatchPartById(batch.getIdentity());
-        assertThat(partsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertNotEquals(partsResponse.getResponseEntity().getItems().size(), 0);
     }
 
@@ -121,7 +130,7 @@ public class BatchPartTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setAnnualVolume(123);
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
-        assertEquals("Response code didn't match expected code", HttpStatus.SC_CREATED, partResponse.getStatusCode());
+
         assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
@@ -134,7 +143,7 @@ public class BatchPartTest {
     @Description("Create part with Valid UDA Field in form data")
     public void createBatchPartWithValidUDAField() {
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartWithValidUDA(batch.getIdentity());
-        assertEquals("Response code didn't match expected code", HttpStatus.SC_CREATED, partResponse.getStatusCode());
+
         assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 

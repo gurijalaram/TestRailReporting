@@ -13,6 +13,7 @@ import entity.request.DiscussionsRequestParameters;
 import entity.response.CommentResponse;
 import entity.response.DiscussionResponse;
 import enums.DDSApiEnum;
+import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +53,8 @@ public class DdsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(setUpHeader())
             .body(discussionsRequest)
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -68,7 +70,8 @@ public class DdsApiTestUtils {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -94,7 +97,8 @@ public class DdsApiTestUtils {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .body(commentsRequest)
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -110,7 +114,8 @@ public class DdsApiTestUtils {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .headers(setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }

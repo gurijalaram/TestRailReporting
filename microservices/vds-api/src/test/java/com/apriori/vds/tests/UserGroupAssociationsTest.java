@@ -45,8 +45,10 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                 .inlineVariables(
                     getGroupIdentity(),
                     this.postUserGroupAssociation().getIdentity()
-                );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -81,18 +83,18 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                     .userIdentity(userId)
                     .updatedBy(userId)
                     .build()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        final ResponseWrapper<UserGroupAssociation> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, updatedSiteVariableResponse.getStatusCode());
+        HTTPRequest.build(requestEntity).patch();
     }
 
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
-            .inlineVariables(getGroupIdentity());
+            .inlineVariables(getGroupIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, userGroupAssociationsResponse.getStatusCode());
 
         return userGroupAssociationsResponse.getResponseEntity().getItems();
     }
@@ -102,7 +104,6 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         UserGroupAssociationRequest requestBody;
 
         List<UserGroupAssociation> userGroupAssociations = this.getUserGroupAssociationsResponse();
-
 
         if (!userGroupAssociations.isEmpty()) {
             UserGroupAssociation userGroupAssociation = userGroupAssociations.get(0);
@@ -124,14 +125,13 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                 .build();
         }
 
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
-                .body(requestBody);
+                .body(requestBody)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, userGroupAssociationResponse.getStatusCode());
 
         UserGroupAssociation createdUserGroupAssociation = userGroupAssociationResponse.getResponseEntity();
 
@@ -144,7 +144,9 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
-                .inlineVariables(getGroupIdentity(), ugaIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
+                .inlineVariables(getGroupIdentity(), ugaIdentity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        HTTPRequest.build(requestEntity).delete();
     }
 }
