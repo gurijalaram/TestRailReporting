@@ -15,6 +15,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +54,8 @@ public class BatchResources extends BcsBase {
         final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, Batch.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(headerInfo)
-            .body(newBatchRequest);
+            .body(newBatchRequest)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -77,7 +79,8 @@ public class BatchResources extends BcsBase {
         final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
             .inlineVariables(customerIdentity)
             .headers(headerInfo)
-            .body(newBatchRequest);
+            .body(newBatchRequest)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -88,7 +91,8 @@ public class BatchResources extends BcsBase {
      */
     public static ResponseWrapper<Batches> getBatches() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, Batches.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"));
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -100,7 +104,8 @@ public class BatchResources extends BcsBase {
      */
     public static ResponseWrapper<Batch> getBatchRepresentation(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), identity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), identity)
+            .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -125,7 +130,8 @@ public class BatchResources extends BcsBase {
     public static ResponseWrapper<String> startBatchCosting(Batch batch) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.START_COSTING_BY_ID, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batch.getIdentity())
-            .customBody("{}");
+            .customBody("{}")
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -139,7 +145,8 @@ public class BatchResources extends BcsBase {
         log.info("Started cancelling the batch id " + batchIdentity);
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.CANCEL_COSTING_BY_ID, Cancel.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
-            .customBody("{}");
+            .customBody("{}")
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         return HTTPRequest.build(requestEntity).post();
     }
 
