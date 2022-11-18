@@ -57,7 +57,7 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialSelectorPage materialSelectorPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
-    private CssComponent cssComponent;
+    private CssComponent cssComponent = new CssComponent();
 
     private File resourceFile;
     private File twoModelFile;
@@ -598,10 +598,12 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("3 Axis Lathe");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("3 Axis Lathe"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Machining");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("3 Axis Lathe");
         softAssertions.assertAll();
     }
 
@@ -611,8 +613,8 @@ public class ProcessRoutingTests extends TestBase {
     public void routingsCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        String componentName = "SandCast";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -626,14 +628,16 @@ public class ProcessRoutingTests extends TestBase {
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("SandCasting", "DieCasting", "Permanent Mold");
 
-        routingSelectionPage.selectRoutingPreferenceByName("DieCasting")
+        routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("PM Molding");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Die Casting"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Casting");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("PM Molding");
         softAssertions.assertAll();
     }
 
@@ -662,10 +666,12 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Gravity Die Casting");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Gravity Die Cast"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Casting - Die");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Gravity Die Casting");
         softAssertions.assertAll();
     }
 
@@ -790,17 +796,19 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Printing");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Printing"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Rapid Prototyping");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Printing");
         softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"14995", "15809"})
-    @Description("Validate routings Roto & Blow Moulding")
-    public void routingsRotoBlowMould() {
+    @Description("Validate routings Roto & Blow Molding")
+    public void routingsRotoBlowMold() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
 
         String componentName = "Rapid Prototyping";
@@ -822,10 +830,12 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Rotational Mold");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Rotational Mold"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Roto & Blow Molding");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Rotational Mold");
         softAssertions.assertAll();
     }
 
@@ -856,10 +866,12 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Laser Punch");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Laser Punch"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Sheet Metal");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Laser Punch");
         softAssertions.assertAll();
     }
 
@@ -889,10 +901,17 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Laser Cut");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Laser Cut"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Sheet Metal");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Laser Cut");
+
+        materialProcessPage.selectBarChart("Hydroform");
+
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Sheet Metal - Hydroforming");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Hydroform");
         softAssertions.assertAll();
     }
 
@@ -952,10 +971,12 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectProcessTab()
+            .selectBarChart("Single Cavity Drape Forming");
 
-        // FIXME: 16/11/2022 what is being asserted here?
-        softAssertions.assertThat(materialProcessPage.selectBarChart("Single Cavity Drape Forming"));
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Sheet Plastic");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Single Cavity Drape Forming");
         softAssertions.assertAll();
     }
 
@@ -1128,7 +1149,6 @@ public class ProcessRoutingTests extends TestBase {
 
         evaluatePage.clickExplore()
             .selectFilter("Private");
-
 
         softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Single Cavity Material Conversion");
 
