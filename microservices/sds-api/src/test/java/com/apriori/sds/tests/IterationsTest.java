@@ -8,7 +8,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,10 +23,10 @@ public class IterationsTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioIterationItemsResponse> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -38,10 +37,10 @@ public class IterationsTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioIteration> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -52,9 +51,9 @@ public class IterationsTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId(), getIterationId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioIteration> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 }
