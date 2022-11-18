@@ -1,17 +1,10 @@
 package com.apriori.vds.tests.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
-import org.assertj.core.api.SoftAssertions;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import org.assertj.core.api.SoftAssertions;
 
 public abstract class SiteVariableUtil extends ProcessGroupUtil {
 

@@ -51,7 +51,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_OK);
 
-            HTTPRequest.build(requestEntity).get();
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
