@@ -48,8 +48,10 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
                 .inlineVariables(
                     getProcessGroupIdentity(),
                     this.getFirstProcessGroupSiteVariable().getIdentity()
-                );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+            HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -76,10 +78,10 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity())
-                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate))
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
 
         validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
@@ -94,18 +96,20 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(getProcessGroupIdentity())
-                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate))
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
         validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteProcessGroupSiteVariableById(final String identity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
-                .inlineVariables(getProcessGroupIdentity(), identity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
+                .inlineVariables(getProcessGroupIdentity(), identity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        HTTPRequest.build(requestEntity).delete();
     }
 
     private SiteVariable getFirstProcessGroupSiteVariable() {
@@ -117,10 +121,10 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private List<SiteVariable> getProcessGroupSiteVariablesResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariablesItems.class)
-            .inlineVariables(getProcessGroupIdentity());
-        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
+            .inlineVariables(getProcessGroupIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
+        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
 
         return siteVariablesResponse.getResponseEntity().getItems();
     }
@@ -137,10 +141,10 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
                     .notes("foo bar")
                     .createdBy(this.getFirstProcessGroupSiteVariable().getCreatedBy())
                     .build()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, siteVariableResponse.getStatusCode());
 
         return siteVariableResponse.getResponseEntity();
     }

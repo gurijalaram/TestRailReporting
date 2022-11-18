@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
+import org.assertj.core.api.SoftAssertions;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,15 +20,19 @@ public abstract class SiteVariableUtil extends ProcessGroupUtil {
     protected static final String updatedNotes = "UpdatedNotes";
 
     protected static void validateUpdatedObject(SiteVariable updatedSiteVariable) {
-        assertNotEquals("The name should not be updated", updatedName, updatedSiteVariable.getName());
-        assertEquals("The value should be updated", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be updated", updatedNotes, updatedSiteVariable.getNotes());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(updatedName).isNotEqualTo(updatedSiteVariable.getName());
+        softAssertions.assertThat(updatedValue).isEqualTo(updatedSiteVariable.getValue());
+        softAssertions.assertThat(updatedNotes).isEqualTo(updatedSiteVariable.getNotes());
+        softAssertions.assertAll();
     }
 
     protected static void validateCreatedObject(SiteVariable updatedSiteVariable) {
-        assertEquals("The name should be created", updatedName, updatedSiteVariable.getName());
-        assertEquals("The value should be created", updatedValue, updatedSiteVariable.getValue());
-        assertEquals("Notes should be created", updatedNotes, updatedSiteVariable.getNotes());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(updatedName).isEqualTo(updatedSiteVariable.getName());
+        softAssertions.assertThat(updatedValue).isEqualTo(updatedSiteVariable.getValue());
+        softAssertions.assertThat(updatedNotes).isEqualTo(updatedSiteVariable.getNotes());
+        softAssertions.assertAll();
     }
 
     protected SiteVariableRequest initUpdateRequestBody(final SiteVariable siteVariableInfo) {

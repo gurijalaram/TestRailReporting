@@ -15,6 +15,7 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
@@ -36,15 +37,15 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            digitalFactoriesItemsResponseWrapper.getStatusCode()
-        );
-
         List<DigitalFactory> digitalFactories = digitalFactoriesItemsResponseWrapper.getResponseEntity().getItems();
-        Assert.assertNotEquals("To get Digital Factory, response should contain it.", 0, digitalFactories.size());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(digitalFactories.size()).isNotZero();
 
         return findDigitalFactoryByName(digitalFactories, "aPriori USA");
     }
@@ -59,12 +60,10 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            accessControlGroupsResponse.getStatusCode()
-        );
 
         return accessControlGroupsResponse.getResponseEntity().getItems();
     }

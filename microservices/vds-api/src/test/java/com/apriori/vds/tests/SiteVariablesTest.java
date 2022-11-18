@@ -1,7 +1,5 @@
 package com.apriori.vds.tests;
 
-import static org.junit.Assert.assertNotEquals;
-
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -16,6 +14,7 @@ import com.apriori.vds.tests.util.SiteVariableUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -46,8 +45,10 @@ public class SiteVariablesTest extends SiteVariableUtil {
             RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
                 .inlineVariables(
                     this.getFirstSiteVariable().getIdentity()
-                );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -74,10 +75,11 @@ public class SiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
                 .inlineVariables(siteVariableBeforeUpdate.getIdentity())
-                .body(initUpdateRequestBody(siteVariableBeforeUpdate));
+                .body(initUpdateRequestBody(siteVariableBeforeUpdate))
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
+
         validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
@@ -89,32 +91,38 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable));
+                .body(initUpdateRequestBody(siteVariable))
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
+
         validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteSiteVariableById(final String identity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
-                .inlineVariables(identity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
+                .inlineVariables(identity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        HTTPRequest.build(requestEntity).delete();
     }
 
     private SiteVariable getFirstSiteVariable() {
         List<SiteVariable> siteVariables = this.getSiteVariablesResponse();
-        assertNotEquals("To get Site Variable, response should contain it.", 0, siteVariables.size());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(siteVariables.size()).isNotZero();
+        softAssertions.assertAll();
 
         return siteVariables.get(0);
     }
 
     private List<SiteVariable> getSiteVariablesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
 
         return siteVariablesResponse.getResponseEntity().getItems();
     }
@@ -130,10 +138,10 @@ public class SiteVariablesTest extends SiteVariableUtil {
                     .notes("foo bar")
                     .createdBy(this.getFirstSiteVariable().getCreatedBy())
                     .build()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, siteVariableResponse.getStatusCode());
 
         return siteVariableResponse.getResponseEntity();
     }
