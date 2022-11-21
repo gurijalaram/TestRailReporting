@@ -281,7 +281,7 @@ qa-cig-perf:
 
 ######################################################## On Prem ########################################################
 onprem:
-  base_url: https://conqbaci02/
+  base_url: https://conqsbel10-02/
   name: onprem
 
   admin:
@@ -305,7 +305,7 @@ onprem:
 
   reports:
     ui_url: ${onprem.base_url}jasperserver-pro/login.html
-    on_prem_vm_url: https://conqbaci02/jasperserver-pro/
+    on_prem_vm_url: https://conqsbel10-02/jasperserver-pro/
 
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
