@@ -1,12 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
@@ -17,9 +10,11 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class CdsUsersTests {
+    private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Test
@@ -28,8 +23,9 @@ public class CdsUsersTests {
     public void getUsers() {
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class, HttpStatus.SC_OK);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getUserType(), is(not(emptyString())));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getUserType()).isNotEmpty();
+        soft.assertAll();
     }
 
 
@@ -43,8 +39,9 @@ public class CdsUsersTests {
 
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, HttpStatus.SC_OK, userIdentity);
 
-        assertThat(response.getResponseEntity().getCustomerIdentity(), is(not(emptyString())));
-        assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
+        soft.assertThat(response.getResponseEntity().getCustomerIdentity()).isNotEmpty();
+        soft.assertThat(response.getResponseEntity().getIdentity()).isEqualTo(userIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -57,6 +54,7 @@ public class CdsUsersTests {
 
         ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, HttpStatus.SC_OK, userIdentity);
 
-        assertThat(response.getResponseEntity().getPasswordHash(), is(not(emptyString())));
+        soft.assertThat(response.getResponseEntity().getPasswordHash()).isNotEmpty();
+        soft.assertAll();
     }
 }

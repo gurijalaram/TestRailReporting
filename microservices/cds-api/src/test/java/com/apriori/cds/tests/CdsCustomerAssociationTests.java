@@ -1,13 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -18,10 +10,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class CdsCustomerAssociationTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
 
     @Test
     @TestRail(testCaseId = {"5387"})
@@ -33,8 +27,9 @@ public class CdsCustomerAssociationTests {
             Constants.getAPrioriInternalCustomerIdentity()
         );
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getTargetCustomerIdentity(), is(not(nullValue())));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getTargetCustomerIdentity()).isNotNull();
+        soft.assertAll();
     }
 
     @Test
@@ -54,7 +49,8 @@ public class CdsCustomerAssociationTests {
             associationIdentity
         );
 
-        assertThat(association.getResponseEntity().getIdentity(), is(equalTo(associationIdentity)));
-        assertThat(association.getResponseEntity().getDescription(), containsString("customer of aPriori"));
+        soft.assertThat(association.getResponseEntity().getIdentity()).isEqualTo(associationIdentity);
+        soft.assertThat(association.getResponseEntity().getDescription()).contains("customer of aPriori");
+        soft.assertAll();
     }
 }

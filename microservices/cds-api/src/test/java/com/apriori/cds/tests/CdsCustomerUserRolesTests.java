@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
@@ -18,6 +13,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +30,7 @@ public class CdsCustomerUserRolesTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -67,7 +64,8 @@ public class CdsCustomerUserRolesTests {
     public void getUserRoles() {
         ResponseWrapper<UserRoles> userRoles = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES, UserRoles.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(userRoles.getResponseEntity().getTotalItemCount(), greaterThanOrEqualTo(1));
+        soft.assertThat(userRoles.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -75,16 +73,13 @@ public class CdsCustomerUserRolesTests {
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
         ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity);
-
-        assertThat(newRole.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String roleId = newRole.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
 
-        assertThat(userRole.getResponseEntity().getIdentity(), is(equalTo(roleId)));
+        soft.assertThat(userRole.getResponseEntity().getIdentity()).isEqualTo(roleId);
+        soft.assertAll();
 
-        ResponseWrapper<String> deleteRole = cdsTestUtil.delete(CDSAPIEnum.USER_ROLES_BY_ID, customerIdentity, userIdentity, roleId);
-
-        assertThat(deleteRole.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        cdsTestUtil.delete(CDSAPIEnum.USER_ROLES_BY_ID, customerIdentity, userIdentity, roleId);
     }
 }

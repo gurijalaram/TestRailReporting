@@ -1,9 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessControlResponse;
@@ -18,6 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +31,7 @@ public class CdsAccessControlsTests  {
     private String customerType;
     private String customerIdentity;
     private String userIdentity;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -82,8 +80,8 @@ public class CdsAccessControlsTests  {
             .accessControlIdentity(accessControlIdentity)
             .build();
 
-        assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(accessControlResponse.getResponseEntity().getOutOfContext(), is(true));
+        soft.assertThat(accessControlResponse.getResponseEntity().getOutOfContext()).isTrue();
+        soft.assertAll();
     }
 
     @Test
@@ -106,7 +104,8 @@ public class CdsAccessControlsTests  {
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(accessControls.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
+        soft.assertThat(accessControls.getResponseEntity().getTotalItemCount()).isEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -129,7 +128,7 @@ public class CdsAccessControlsTests  {
 
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
 
-        assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(accessControlResponse.getResponseEntity().getUserIdentity(), is(equalTo(userIdentity)));
+        soft.assertThat(accessControlResponse.getResponseEntity().getUserIdentity()).isEqualTo(userIdentity);
+        soft.assertAll();
     }
 }
