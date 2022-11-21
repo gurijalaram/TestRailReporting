@@ -15,7 +15,7 @@ import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMater
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
 
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
+import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
 
@@ -29,22 +29,19 @@ public class ProcessGroupUtil extends VDSTestUtil {
     protected static List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity());
+                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            processGroupMaterialsItems.getStatusCode()
-        );
 
         return processGroupMaterialsItems.getResponseEntity().getItems();
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupsResponse.getStatusCode());
 
         return processGroupsResponse.getResponseEntity().getItems();
     }
@@ -73,17 +70,20 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static ProcessGroupAssociation getFirstGroupAssociation() {
         List<ProcessGroupAssociation> processGroupAssociations =  getProcessGroupAssociations();
-        Assert.assertNotEquals("To get process group association it should present.", processGroupAssociations.size(), 0);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(processGroupAssociations.size()).isNotZero();
+        softAssertions.assertAll();
 
         return processGroupAssociations.get(0);
     }
 
     protected static List<ProcessGroupAssociation> getProcessGroupAssociations() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class);
+            RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ProcessGroupAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity()
             .getItems();
@@ -91,7 +91,10 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     private static AccessControlGroup getSingleGroup() {
         List<AccessControlGroup> accessControlGroups = getAccessControlGroupsResponse();
-        Assert.assertNotEquals("To get Access Control Group, response should contain it.", 0, accessControlGroups.size());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(accessControlGroups.size()).isNotZero();
+        softAssertions.assertAll();
 
         return accessControlGroups.get(0);
     }

@@ -1,12 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Site;
@@ -19,11 +12,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CdsSitesTests {
+    private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private ResponseWrapper<Customer> customer;
@@ -58,8 +53,9 @@ public class CdsSitesTests {
     public void getSites() {
         ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES, Sites.class, HttpStatus.SC_OK);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getSiteId(), is(not(emptyString())));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getSiteId()).isNotEmpty();
+        soft.assertAll();
     }
 
     @Test
@@ -71,7 +67,8 @@ public class CdsSitesTests {
 
         ResponseWrapper<Site> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITE_BY_ID, Site.class, HttpStatus.SC_OK, siteIdentity);
 
-        assertThat(responseWrapper.getResponseEntity().getIdentity(), is(equalTo(siteIdentity)));
+        soft.assertThat(responseWrapper.getResponseEntity().getIdentity()).isEqualTo(siteIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -83,8 +80,8 @@ public class CdsSitesTests {
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
 
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(site.getResponseEntity().getName(), is(equalTo(siteName)));
+        soft.assertThat(site.getResponseEntity().getName()).isEqualTo(siteName);
+        soft.assertAll();
     }
 
     @Test
@@ -93,7 +90,8 @@ public class CdsSitesTests {
     public void getCustomerSites() {
         ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(0)));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(0);
+        soft.assertAll();
     }
 
     @Test
@@ -107,7 +105,9 @@ public class CdsSitesTests {
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITE_BY_CUSTOMER_SITE_ID, Site.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
-        assertThat(site.getResponseEntity().getName(), is(equalTo(siteName)));
-        assertThat(site.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));
+
+        soft.assertThat(response.getResponseEntity().getName()).isEqualTo(siteName);
+        soft.assertThat(response.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);
+        soft.assertAll();
     }
 }

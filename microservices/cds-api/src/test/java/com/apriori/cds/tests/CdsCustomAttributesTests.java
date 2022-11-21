@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.CustomAttribute;
@@ -19,6 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +32,7 @@ public class CdsCustomAttributesTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -76,12 +73,10 @@ public class CdsCustomAttributesTests {
     public void addCustomAttribute() {
         String updatedDepartment = generateStringUtil.getRandomString();
         ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
-
-        assertThat(customAttributeAdded.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(customAttributeAdded.getResponseEntity().getIdentity()).isNotNull();
 
         ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
-
-        assertThat(customAttributes.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(customAttributes.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<CustomAttribute> putCustomAttribute = cdsTestUtil.putCustomAttribute(customerIdentity, userIdentity, updatedDepartment);
         String customAttributeIdentity = putCustomAttribute.getResponseEntity().getIdentity();
@@ -92,8 +87,8 @@ public class CdsCustomAttributesTests {
             .customAttributeIdentity(customAttributeIdentity)
             .build();
 
-        assertThat(putCustomAttribute.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(putCustomAttribute.getResponseEntity().getValue(), is(equalTo(updatedDepartment)));
+        soft.assertThat(putCustomAttribute.getResponseEntity().getValue()).isEqualTo(updatedDepartment);
+        soft.assertAll();
     }
 
     @Test
@@ -106,12 +101,12 @@ public class CdsCustomAttributesTests {
         String attributeIdentity = customAttributeAdded.getResponseEntity().getIdentity();
         ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, HttpStatus.SC_OK, customerIdentity, userIdentity, attributeIdentity);
 
-        assertThat(customAttributes.getResponseEntity().getIdentity(), is(equalTo(attributeIdentity)));
+        soft.assertThat(customAttributes.getResponseEntity().getIdentity()).isEqualTo(attributeIdentity);
 
         ResponseWrapper<CustomAttribute> updateCustomAttribute = cdsTestUtil.updateAttribute(customerIdentity, userIdentity, attributeIdentity, updatedDepartment);
 
-        assertThat(updateCustomAttribute.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(updateCustomAttribute.getResponseEntity().getValue(), is(equalTo(updatedDepartment)));
+        soft.assertThat(updateCustomAttribute.getResponseEntity().getValue()).isEqualTo(updatedDepartment);
+        soft.assertAll();
 
         customAttributesIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)

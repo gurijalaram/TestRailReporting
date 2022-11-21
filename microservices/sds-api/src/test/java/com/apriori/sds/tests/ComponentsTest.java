@@ -8,7 +8,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -21,10 +20,10 @@ public class ComponentsTest extends SDSTestUtil {
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ComponentsItemsResponse> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -33,10 +32,10 @@ public class ComponentsTest extends SDSTestUtil {
     public void getComponentByIdentity() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class)
-                .inlineVariables(getComponentId());
+                .inlineVariables(getComponentId())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<Component> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test

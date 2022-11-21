@@ -17,7 +17,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class AccessControlTests extends SDSTestUtil {
@@ -34,10 +34,13 @@ public class AccessControlTests extends SDSTestUtil {
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(
                     getComponentId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
         ResponseWrapper<ScenarioItemsResponse> responseForWrongUser = HTTPRequest.build(requestEntity).get();
 
-        Assert.assertTrue("The response return an information about scenario, but should not.", responseForWrongUser.getResponseEntity().getItems().isEmpty());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(responseForWrongUser.getResponseEntity().getItems().isEmpty()).isTrue();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -60,10 +63,10 @@ public class AccessControlTests extends SDSTestUtil {
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_CONFLICT);
 
-        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CONFLICT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).patch();
     }
 
     @Test
@@ -78,15 +81,11 @@ public class AccessControlTests extends SDSTestUtil {
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(componentToDeleteForTestingUser.getComponentIdentity(),
-                    componentToDeleteForTestingUser.getScenarioIdentity());
+                    componentToDeleteForTestingUser.getScenarioIdentity())
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).delete();
-
-        if (response.getStatusCode() == HttpStatus.SC_NO_CONTENT) {
-            scenariosToDelete.remove(componentToDeleteForTestingUser);
-        }
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CONFLICT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).delete();
+        scenariosToDelete.remove(componentToDeleteForTestingUser);
     }
 
     @Test
@@ -108,9 +107,9 @@ public class AccessControlTests extends SDSTestUtil {
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_CONFLICT);
 
-        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CONFLICT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).post();
     }
 }

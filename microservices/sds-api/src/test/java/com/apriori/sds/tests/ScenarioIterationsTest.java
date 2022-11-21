@@ -1,13 +1,11 @@
 package com.apriori.sds.tests;
 
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -22,9 +20,9 @@ public class ScenarioIterationsTest extends SDSTestUtil {
     @Ignore
     public void testCreateScenarioIterations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null);
+            RequestEntityUtil.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
+        HTTPRequest.build(requestEntity).post();
     }
 }

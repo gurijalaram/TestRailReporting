@@ -1,8 +1,5 @@
 package com.apriori.sds.tests;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.sds.entity.response.Scenario;
@@ -10,7 +7,6 @@ import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -58,9 +54,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        ResponseWrapper<Scenario> assemblyUploadResponse = publishAssembly(componentAssembly, Scenario.class);
-
-        assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_OK));
+        publishAssembly(componentAssembly, Scenario.class, HttpStatus.SC_OK);
     }
 
     @Test
@@ -95,8 +89,6 @@ public class PublishAssembliesTests extends SDSTestUtil {
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-        ResponseWrapper<Scenario> assemblyUploadResponse = publishAssemblyExpectError(componentAssembly);
-
-        assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
+        publishAssemblyExpectError(componentAssembly, HttpStatus.SC_CONFLICT);
     }
 }
