@@ -13,7 +13,7 @@ public enum CssSearch {
     LATEST_EQ("latest[EQ],"),
     ITERATION_EQ("iteration[EQ],"),
     SCENARIO_LOCKED_EQ("scenarioLocked[EQ],"),
-    SCENARIO_PUBLISHED_EQ("scenarioPublished[EQ]");
+    SCENARIO_PUBLISHED_EQ("scenarioPublished[EQ],");
 
     private final String key;
 
