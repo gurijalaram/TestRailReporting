@@ -3,7 +3,6 @@ package com.apriori.sds.util;
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.services.cas.Customer;
@@ -41,7 +40,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import java.io.File;
@@ -129,12 +127,10 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
-                .inlineVariables(componentId, scenarioId);
+                .inlineVariables(componentId, scenarioId)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
-
-        assertEquals(String.format("The component with scenario %s, was not removed", scenarioId),
-            HttpStatus.SC_NO_CONTENT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).delete();
     }
 
     /**
@@ -224,12 +220,10 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .headers(getContextHeaders())
                 .token(testingUser.getToken())
-                .body("component", postComponentRequest);
+                .body("component", postComponentRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
-
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, postComponentRequest.getScenarioName()),
-            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+        HTTPRequest.build(requestEntity).post();
 
         List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentName, postComponentRequest.getScenarioName(),
             testingUser);
@@ -316,10 +310,10 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
     }
@@ -420,10 +414,10 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
                     componentIdentity, scenarioIdentity
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity();
     }
@@ -481,7 +475,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param componentInfoBuilder - the component info builder object
      * @return - scenario object
      */
-    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
+    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
         ShallowPublishRequest shallowPublishRequest = ShallowPublishRequest.builder()
             .assignedTo(componentInfoBuilder.getAssignedTo())
             .locked(false)
@@ -494,7 +488,8 @@ public abstract class SDSTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
-                .body("scenario", shallowPublishRequest);
+                .body("scenario", shallowPublishRequest)
+                .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -505,7 +500,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param componentInfoBuilder - the component info builder object
      * @return - scenario object
      */
-    public ResponseWrapper<Scenario> publishAssemblyExpectError(ComponentInfoBuilder componentInfoBuilder) {
-        return publishAssembly(componentInfoBuilder, ErrorMessage.class);
+    public ResponseWrapper<Scenario> publishAssemblyExpectError(ComponentInfoBuilder componentInfoBuilder, Integer expectedResponseCode) {
+        return publishAssembly(componentInfoBuilder, ErrorMessage.class, expectedResponseCode);
     }
 }

@@ -1,6 +1,5 @@
 package com.apriori.sds.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -26,6 +25,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -58,10 +58,10 @@ public class ScenariosTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS, ScenarioCostingDefaultsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioCostingDefaultsResponse> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -74,10 +74,10 @@ public class ScenariosTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_CUSTOM_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -88,10 +88,10 @@ public class ScenariosTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_WEB_IMAGE_BY_COMPONENT_SCENARIO_IDS, ScenarioHoopsImage.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -104,10 +104,10 @@ public class ScenariosTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
                 .inlineVariables(
                     testingRollUp.getComponentIdentity(), testingRollUp.getScenarioIdentity()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioManifest> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -124,15 +124,16 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), getScenarioId())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         final Scenario copiedScenario = responseWrapper.getResponseEntity();
 
-        assertEquals("Copied scenario should present for a component",
-            copiedScenarioName, this.getReadyToWorkScenario(getComponentId(), copiedScenario.getIdentity()).getScenarioName());
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(copiedScenarioName).isEqualTo(this.getReadyToWorkScenario(getComponentId(), copiedScenario.getIdentity()).getScenarioName());
+        softAssertions.assertAll();
 
         this.addScenarioToDelete(copiedScenario.getIdentity());
     }
@@ -161,18 +162,17 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_OK);
+
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).patch();
         final Scenario scenario = responseWrapper.getResponseEntity();
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
-
-        assertEquals("Scenario notes should be updated.",
-            scenario.getNotes(), updatedNotes);
-
-        assertEquals("Scenario description should be updated.",
-            scenario.getDescription(), updatedDescription);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(scenario.getNotes()).isEqualTo(updatedNotes);
+        softAssertions.assertThat(scenario.getDescription()).isEqualTo(updatedDescription);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -199,17 +199,19 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_FORK_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(publishedScenario.getComponentIdentity(), publishedScenario.getScenarioIdentity())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         final Scenario forkScenario = responseWrapper.getResponseEntity();
 
 
-        assertEquals("Fork scenario should present for a component",
-            forkScenarioName, this.getReadyToWorkScenario(publishedScenario.getComponentIdentity(), forkScenario.getIdentity()).getScenarioName()
-        );
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.getReadyToWorkScenario(publishedScenario.getComponentIdentity(), forkScenario.getIdentity())
+            .getScenarioName()).isEqualTo(forkScenarioName);
+
+        softAssertions.assertAll();
 
         scenariosToDelete.add(ScenarioItem.builder()
             .componentIdentity(publishedScenario.getComponentIdentity())
@@ -234,10 +236,10 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .inlineVariables(
-                    scenarioWithCreatedWatchpoint.getComponentIdentity(), scenarioWithCreatedWatchpoint.getScenarioIdentity());
+                    scenarioWithCreatedWatchpoint.getComponentIdentity(), scenarioWithCreatedWatchpoint.getScenarioIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -273,10 +275,10 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .inlineVariables(scenario.getComponentIdentity(), scenario.getScenarioIdentity())
-                .body("scenario", watchpointReportRequest);
+                .body("scenario", watchpointReportRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+        HTTPRequest.build(requestEntity).post();
 
         return testingScenarioWithWatchpoint = scenario;
     }
@@ -290,10 +292,11 @@ public class ScenariosTest extends SDSTestUtil {
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
                 .inlineVariables(
                     getComponentId()
-                );
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
 
         ResponseWrapper<ScenarioItemsResponse> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
     }
@@ -311,16 +314,18 @@ public class ScenariosTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())
-                .body("scenario", scenarioRequestBody);
+                .body("scenario", scenarioRequestBody)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         final Scenario publishedScenario = responseWrapper.getResponseEntity();
 
-        assertEquals("Published scenario should present for a component",
-            publishScenarioName, this.getReadyToWorkScenario(testingComponent.getComponentIdentity(), publishedScenario.getIdentity()).getScenarioName()
-        );
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(this.getReadyToWorkScenario(testingComponent.getComponentIdentity(), publishedScenario.getIdentity())
+            .getScenarioName()).isEqualTo(publishScenarioName);
+        softAssertions.assertAll();
 
         return testingComponent;
     }
@@ -353,7 +358,9 @@ public class ScenariosTest extends SDSTestUtil {
                 .user(testingUser)
                 .build());
 
-        assertNotEquals("Testing scenario should present.", testingScenarios.size(), 0);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(testingScenarios.size()).isNotZero();
+        softAssertions.assertAll();
 
         return testingScenario = testingScenarios.get(0);
     }

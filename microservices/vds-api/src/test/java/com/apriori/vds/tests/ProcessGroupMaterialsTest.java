@@ -27,8 +27,9 @@ public class ProcessGroupMaterialsTest extends ProcessGroupUtil {
     public void getMaterialByIdentity() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterial.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity());
+                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 }

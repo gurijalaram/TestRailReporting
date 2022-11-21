@@ -25,10 +25,10 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     public void getMaterialStocks() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity());
+                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupMaterialStocksResponse.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -44,18 +44,20 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
                     getAssociatedProcessGroupIdentity(),
                     getMaterialIdentity(),
                     processGroupMaterialsStocks.get(0).getIdentity()
-                );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        HTTPRequest.build(requestEntity).get();
     }
 
     private List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
         for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
             RequestEntity requestEntity =
                 RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
-                    .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity());
+                    .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
+                    .expectedResponseCode(HttpStatus.SC_OK);
 
             ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
-            validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupMaterialStocksResponse.getStatusCode());
 
             List<ProcessGroupMaterialStock> processGroupMaterialStocks = processGroupMaterialStocksResponse.getResponseEntity().getItems();
 
