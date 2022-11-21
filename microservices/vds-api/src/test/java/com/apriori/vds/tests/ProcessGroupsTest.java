@@ -58,10 +58,9 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
         Assert.assertNotEquals("To get Process Group, response should contain it.", 0, processGroups.size());
 
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
-            .inlineVariables(processGroups.get(0).getIdentity());
+            .inlineVariables(processGroups.get(0).getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTPRequest.build(requestEntity).get().getStatusCode()
-        );
+        HTTPRequest.build(requestEntity).get();
     }
 }

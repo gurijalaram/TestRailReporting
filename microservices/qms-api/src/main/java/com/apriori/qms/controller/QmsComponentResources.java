@@ -44,8 +44,7 @@ public class QmsComponentResources {
         new ComponentsUtil().postComponent(componentInfoBuilder);
         return new CssComponent().getBaseCssComponents(currentUser,
                 CssSearch.COMPONENT_NAME_EQ.getKey() + componentName,
-                CssSearch.SCENARIO_NAME_EQ.getKey() + scenarioName)
-            .getResponseEntity().getItems().get(0);
+                CssSearch.SCENARIO_NAME_EQ.getKey() + scenarioName).get(0);
     }
 
     /**

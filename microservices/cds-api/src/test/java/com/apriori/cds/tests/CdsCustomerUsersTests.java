@@ -1,13 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
@@ -25,6 +17,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +25,7 @@ import org.junit.Test;
 public class CdsCustomerUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
     private ResponseWrapper<Customer> customer;
     private String customerName;
     private String cloudRef;
@@ -71,8 +65,8 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
+        soft.assertThat(user.getResponseEntity().getUsername()).isEqualTo(userName);
+        soft.assertAll();
     }
 
     @Test
@@ -82,14 +76,13 @@ public class CdsCustomerUsersTests {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getIdentity(), is(not(emptyString())));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getIdentity()).isNotEmpty();
+        soft.assertAll();
     }
 
     @Test
@@ -98,14 +91,13 @@ public class CdsCustomerUsersTests {
     public void getCustomerUserByIdentity() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
-        assertThat(response.getResponseEntity().getUsername(), is(equalTo(userName)));
+        soft.assertThat(response.getResponseEntity().getIdentity()).isEqualTo(userIdentity);
+        soft.assertThat(response.getResponseEntity().getUsername()).isEqualTo(userName);
+        soft.assertAll();
     }
 
     @Test
@@ -114,13 +106,12 @@ public class CdsCustomerUsersTests {
     public void patchUserByIdentity() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         User userResponse = user.getResponseEntity();
 
         ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(userResponse);
-        assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(patchResponse.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
+
+        soft.assertThat(patchResponse.getResponseEntity().getUserProfile().getDepartment()).isEqualTo("Design Dept");
+        soft.assertAll();
     }
 
     @Test
@@ -129,16 +120,15 @@ public class CdsCustomerUsersTests {
     public void deleteWrongUserIdentity() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         userIdentity = user.getResponseEntity().getIdentity();
 
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DELETE_USER_WRONG_ID, ErrorMessage.class)
-            .inlineVariables(customerIdentity);
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
 
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
-        assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
-        assertThat(responseWrapper.getResponseEntity().getMessage(), is(containsString("Unable to get user with identity")));
+        soft.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("Unable to get user with identity");
+        soft.assertAll();
     }
 
     @Test
@@ -155,7 +145,7 @@ public class CdsCustomerUsersTests {
 
         ResponseWrapper<CredentialsItems> updatedCredentials = cdsTestUtil.updateUserCredentials(customerIdentity, userIdentity, currentHashPassword, currentPasswordSalt);
 
-        assertThat(updatedCredentials.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0), is(equalTo(currentHashPassword)));
+        soft.assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0)).isEqualTo(currentHashPassword);
+        soft.assertAll();
     }
 }

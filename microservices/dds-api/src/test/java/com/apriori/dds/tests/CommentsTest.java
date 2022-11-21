@@ -55,7 +55,6 @@ public class CommentsTest extends TestUtil {
     @TestRail(testCaseId = {"12360"})
     @Description("Create a valid comment")
     public void createComment() {
-        softAssertions.assertThat(commentResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(commentResponse.getResponseEntity().getContent()).isEqualTo(contentDesc);
     }
 
@@ -66,10 +65,12 @@ public class CommentsTest extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CommentsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isGreaterThan(0);
+
     }
 
     @Test
@@ -81,10 +82,11 @@ public class CommentsTest extends TestUtil {
                 discussionResponse.getResponseEntity().getIdentity(),
                 commentResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CommentResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getIdentity()).isNotNull();
     }
 
     @Test
@@ -103,20 +105,18 @@ public class CommentsTest extends TestUtil {
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity())
             .body(commentsRequest)
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CommentResponse> commentUpdateResponse = HTTPRequest.build(requestEntity).patch();
-        softAssertions.assertThat(commentUpdateResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(commentUpdateResponse.getResponseEntity().getContent()).isEqualTo(commentContent);
         softAssertions.assertThat(commentUpdateResponse.getResponseEntity().getMentionedUsers().size()).isGreaterThan(0);
     }
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> commentDeleteResponse = DdsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), userContext);
-        ResponseWrapper<String> discussionDeleteResponse = DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
-        softAssertions.assertThat(commentDeleteResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
-        softAssertions.assertThat(discussionDeleteResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        DdsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), userContext);
+        DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertAll();
     }
 }

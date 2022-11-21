@@ -1,9 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
@@ -18,12 +14,13 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CdsInstallationApplicationTests {
+    private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -91,7 +88,6 @@ public class CdsInstallationApplicationTests {
         String appIdentity = Constants.getApProApplicationIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -101,9 +97,8 @@ public class CdsInstallationApplicationTests {
             .build();
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         String installationIdentity = installation.getResponseEntity().getIdentity();
+
         installationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .deploymentIdentity(deploymentIdentity)
@@ -111,10 +106,9 @@ public class CdsInstallationApplicationTests {
             .build();
 
         ResponseWrapper<InstallationItems> application = cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        assertThat(application.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(application.getResponseEntity().getApplications().get(0).getIdentity(), is(equalTo(appIdentity)));
+        soft.assertThat(application.getResponseEntity().getApplications().get(0).getIdentity()).isEqualTo(appIdentity);
+        soft.assertAll();
 
-        ResponseWrapper<String> deleteApplication = cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
-        assertThat(deleteApplication.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
     }
 }
