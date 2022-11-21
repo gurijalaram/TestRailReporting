@@ -1,9 +1,10 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.response.scenarios.Routings;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.DataCreationUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -23,16 +24,16 @@ public class RoutingsTests {
         @Test
         @Description("Test routings")
         public void cadFormatSLDPRT() {
-
             final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
             final String componentName = "Machined Box AMERICAS";
             final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
             final UserCredentials currentUser = UserUtil.getUser();
             final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-            ScenarioItem scenarioItem = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+            ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
 
-            Routings routings = scenariosUtil.getRoutings(currentUser, scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity()).getResponseEntity();
+            Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+                scenarioResponse.getIdentity()).getResponseEntity();
 
             softAssertions = new SoftAssertions();
 
