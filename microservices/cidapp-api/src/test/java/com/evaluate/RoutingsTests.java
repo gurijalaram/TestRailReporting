@@ -19,7 +19,7 @@ import java.io.File;
 
 public class RoutingsTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private SoftAssertions softAssertions;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @Description("Test routings")
@@ -34,8 +34,6 @@ public class RoutingsTests {
 
         Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
-
-        softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
 
