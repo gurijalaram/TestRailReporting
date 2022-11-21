@@ -1,11 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
@@ -17,11 +11,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.hamcrest.CoreMatchers;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class CdsApplicationsTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
 
     @Test
     @TestRail(testCaseId = {"3251"})
@@ -29,8 +24,9 @@ public class CdsApplicationsTests {
     public void getAllApplications() {
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATIONS, Applications.class, HttpStatus.SC_OK);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getIsSingleTenant(), CoreMatchers.is(notNullValue()));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getIsSingleTenant()).isNotNull();
+        soft.assertAll();
     }
 
     @Test
@@ -43,7 +39,8 @@ public class CdsApplicationsTests {
             Constants.getApProApplicationIdentity()
         );
 
-        assertThat(response.getResponseEntity().getName(), is(equalTo("aPriori Professional")));
+        soft.assertThat(response.getResponseEntity().getName()).isEqualTo("aPriori Professional");
+        soft.assertAll();
     }
 
     @Test
@@ -56,6 +53,7 @@ public class CdsApplicationsTests {
             Constants.getApProApplicationIdentity()
         );
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 }
