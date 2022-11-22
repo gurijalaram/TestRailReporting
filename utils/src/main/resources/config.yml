@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test
+env: staging
 
 # Define the global properties not related to environment
 global:
@@ -8,7 +8,7 @@ global:
   different_parts: true
   different_users: true
   schema_base_path: schemas/
-  users_csv_file: common-users.csv
+  users_csv_file: cis-common-users.csv
 
 # Define the customer
 customer: ap-int
@@ -317,6 +317,10 @@ staging:
 
   css:
     api_url: https://css.na-1-v22-1.${env}.apriori.net/
+
+  cis:
+    ui_url: https://cis.na-1-v22-1.staging.apriori.net/
+    api_url: https://cis-api.na-1-v22-1.staging.apriori.net/
 
 ######################################################## MIGRATION #####################################################
 migration:
