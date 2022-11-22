@@ -14,7 +14,7 @@ global:
 customer: ap-int
 
 ap-int:
-  token_subject: 4127
+  token_subject: 2b68
 
 gadgets:
   token_subject: 247f
