@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -37,6 +36,23 @@ public class GroupEditTests {
     private CssComponent cssComponent = new CssComponent();
     private SoftAssertions softAssertions = new SoftAssertions();
 
+    /**
+     * Asserts that after editing scenario one iteration of that scenario exists in public workspace and one iteration in the private one
+     *
+     * @param scenarioName - the name of the published scenario
+     * @param secondScenarioName - the name of the private scenario (it will be the same as scenarioName if override is true, and it will be different if option Rename is selected)
+     * @param subComponentNames - list of subcomponents
+     */
+    private void verifyEditAction(String scenarioName, String secondScenarioName, List<String> subComponentNames) {
+        subComponentNames.forEach(subComponent -> {
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + secondScenarioName,
+                "scenarioPublished[EQ], false")).hasSize(1);
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
+                "scenarioPublished[EQ], true")).hasSize(1);
+        });
+
+        softAssertions.assertAll();
+    }
 
     @Before
     public void setupUser() {
@@ -78,12 +94,7 @@ public class GroupEditTests {
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName);
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            "scenarioPublished[EQ], false")).hasSize(1);
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            "scenarioPublished[EQ], true")).hasSize(1);
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
 
     @Test
@@ -124,14 +135,7 @@ public class GroupEditTests {
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
-        subComponentNames.forEach(subComponent -> {
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], false")).hasSizeGreaterThan(0);
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSizeGreaterThan(0);
-        });
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
 
     @Test
@@ -173,14 +177,7 @@ public class GroupEditTests {
         ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
-        subComponentNames.forEach(subComponent -> {
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + newScenarioName,
-                "scenarioPublished[EQ], false")).hasSizeGreaterThan(0);
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSizeGreaterThan(0);
-        });
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
 
     @Test
@@ -226,12 +223,7 @@ public class GroupEditTests {
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName);
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            "scenarioPublished[EQ], false")).hasSize(1);
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            "scenarioPublished[EQ], true")).hasSize(1);
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
 
     @Test
@@ -278,12 +270,7 @@ public class GroupEditTests {
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName);
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + newScenarioName,
-            "scenarioPublished[EQ], false")).hasSize(1);
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            "scenarioPublished[EQ], true")).hasSize(1);
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
 
     @Test
@@ -331,14 +318,7 @@ public class GroupEditTests {
         ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse2 = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
-        subComponentNames.forEach(subComponent -> {
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], false")).hasSize(1);
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSize(1);
-        });
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
 
     @Test
@@ -387,14 +367,7 @@ public class GroupEditTests {
         ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse2 = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
-        subComponentNames.forEach(subComponent -> {
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + newScenarioName,
-                "scenarioPublished[EQ], false")).hasSize(1);
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSize(1);
-        });
-
-        softAssertions.assertAll();
+        verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
 
     @Test
