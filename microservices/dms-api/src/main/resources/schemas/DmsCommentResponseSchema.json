@@ -55,7 +55,7 @@
         "publishedAt": {
           "type": "string"
         },
-        "commentView": {
+        "commentViews": {
           "type": "array",
           "items": {}
         }
