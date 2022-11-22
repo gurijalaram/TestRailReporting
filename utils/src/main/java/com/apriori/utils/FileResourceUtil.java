@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -155,6 +156,20 @@ public class FileResourceUtil {
     }
 
     /**
+     * Delete local file
+     *
+     * @param fileNamePath path to file
+     */
+    public static void deleteIfExistsLocalFile(String fileNamePath) {
+        try {
+            Files.deleteIfExists(Paths.get(fileNamePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * Connect to AWS S3 client
      *
      * @return S3Client instance
@@ -257,6 +272,21 @@ public class FileResourceUtil {
         try {
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceFileName);
             return copyIntoTempFile(in, null, resourceFileName);
+        } catch (RuntimeException e) {
+            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
+        }
+    }
+
+    /**
+     * Verify that downloaded file exists (in: user.home/Downloads/{file_name}
+     *
+     * @param resourceFileName - the file name path
+     * @return file boolean
+     */
+    public static boolean isDownloadFileExists(String resourceFileName) {
+        try {
+            Path path = Paths.get(resourceFileName);
+            return Files.exists(path);
         } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
         }

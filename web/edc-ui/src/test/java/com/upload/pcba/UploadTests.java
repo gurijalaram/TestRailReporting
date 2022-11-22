@@ -1,9 +1,13 @@
 package com.upload.pcba;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
+import com.apriori.pageobjects.pages.login.ElectronicsDataCollectionPage;
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
+import com.apriori.pageobjects.pages.login.UploadedFilePage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -12,9 +16,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EdcUiResources;
+import com.utils.RightClickOptionEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -27,6 +33,9 @@ public class UploadTests extends TestBase {
     private MatchedPartPage matchedPartPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private UserCredentials currentUser;
+    private UploadedFilePage uploadedFilePage;
+
+    private ElectronicsDataCollectionPage electronicsDataCollectionPage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public UploadTests() {
@@ -39,8 +48,8 @@ public class UploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1553", "3225"})
-    @Description("Basic workflow to upload a csv file, edit missing sections and save, verify Pin Count and Mount Type are in Part Detail Brief view")
+    @TestRail(testCaseId = "1553")
+    @Description("Basic workflow to upload a csv file, edit missing sections and save")
     public void testUploadBOM() {
         currentUser = UserUtil.getUser();
 
@@ -60,14 +69,85 @@ public class UploadTests extends TestBase {
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isEqualTo(false);
 
         matchedPartPage = editBomPage
-            .selectMountType("Surface Mount")
-            .selectOtherMountType(testMountTypeData)
-            .enterPinCount(testPinCountData)
+            .enterMountTypeOldVer("mountType")
+            .enterPinCount("123456")
             .clickSave();
 
         softAssertions.assertThat(matchedPartPage.getPinCountHeaderText()).isEqualTo("Pin Count");
         softAssertions.assertThat(matchedPartPage.getMountTypeHeaderText()).isEqualTo("Mount Type");
 
         softAssertions.assertAll();
+    }
+
+    @Ignore("ignoring temporarily as qa-test gets 500 error while uploading wireHarness BOM")
+    @Test
+    @TestRail(testCaseId = "13253")
+    @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
+    public void uploadWireHarnessBOMTest() {
+        String testMountTypeData = generateStringUtil.getRandomString();
+        String testPinCountData = generateStringUtil.getRandomNumbers();
+
+        currentUser = UserUtil.getUser();
+        String fileName = "Wire Harness BOM.csv";
+        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        loginPage = new EdcAppLoginPage(driver);
+        uploadedFilePage = loginPage.login(currentUser)
+            .uploadComponent(resourceFile)
+            .clickUploadPCBA();
+
+        softAssertions.assertThat(uploadedFilePage.getBomTitleName()).isEqualTo("WIRE-HARNESS-PETE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "1731")
+    @Description("BOM can be deleted from main page")
+    public void deleteUploadedBOMTest() {
+        int numberOfBomAfterUpload;
+        int numberOfBomAfterDelete;
+
+        currentUser = UserUtil.getUser();
+        String fileName = "Test BOM 7.csv";
+        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        loginPage = new EdcAppLoginPage(driver);
+        uploadedFilePage = loginPage.login(currentUser)
+            .uploadComponent(resourceFile)
+            .clickUploadPCBA();
+
+        electronicsDataCollectionPage =
+        uploadedFilePage.backToElectronicsDataCollectionPage();
+
+        numberOfBomAfterUpload = electronicsDataCollectionPage.getNumberOfLoadedBOMs();
+        electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.DELETE);
+        numberOfBomAfterDelete = numberOfBomAfterUpload - 1;
+        softAssertions.assertThat(electronicsDataCollectionPage.getNumberOfLoadedBOMs()).isEqualTo(numberOfBomAfterDelete);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "1732")
+    @Description("BOM can be exported to file from main page")
+    public void exportUploadedBOMTest() {
+        currentUser = UserUtil.getUser();
+        String fileName = "Test BOM 7.csv";
+        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        loginPage = new EdcAppLoginPage(driver);
+        uploadedFilePage = loginPage.login(currentUser)
+            .uploadComponent(resourceFile)
+            .clickUploadPCBA();
+
+        electronicsDataCollectionPage =
+            uploadedFilePage.backToElectronicsDataCollectionPage();
+
+        String bomIdName =
+            electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
+        String filePath = downloadPath + bomIdName + ".csv";
+
+        softAssertions.assertThat(FileResourceUtil.isDownloadFileExists(filePath)).isTrue();
+        softAssertions.assertAll();
+        FileResourceUtil.deleteIfExistsLocalFile(filePath);
     }
 }

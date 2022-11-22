@@ -27,6 +27,12 @@ public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
     @FindBy(css = ".line-item-list .no-content-message")
     private WebElement matchComplete;
 
+    @FindBy(xpath = "//div[@class = 'info']/div")
+    private WebElement uploadedBomTitle;
+
+    @FindBy(css = "button[class='btn btn-secondary']")
+    private WebElement backButton;
+
     private ElectronicsDataCollectionPage electronicsDataCollectionPage = new ElectronicsDataCollectionPage(getDriver());
 
     public UploadedFilePage(WebDriver driver) {
@@ -44,6 +50,16 @@ public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
     }
 
     /**
+     * Get the BOM title name
+     *
+     * @return String
+     */
+    public String getBomTitleName() {
+        return getPageUtils().waitForElementToAppear(uploadedBomTitle)
+            .getText();
+    }
+
+    /**
      * Click on the Matched part
      *
      * @return new page object
@@ -51,6 +67,16 @@ public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
     public MatchedPartPage selectMatchedPart(String part) {
         getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@class='card-title']//div[text()='%s']", part)));
         return new MatchedPartPage(getDriver());
+    }
+
+    /**
+     * go back to the main page - ElectronicsDataCollectionPage
+     *
+     * @return new page object
+     */
+    public ElectronicsDataCollectionPage backToElectronicsDataCollectionPage() {
+        getPageUtils().waitForElementAndClick(backButton);
+        return new ElectronicsDataCollectionPage(getDriver());
     }
 
 
@@ -118,4 +144,16 @@ public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
     public String getMatchCompleteText() {
         return getPageUtils().waitForElementToAppear(matchComplete).getAttribute("textContent");
     }
+
+    /**
+     * Get BomId from current url
+     *
+     * @return String
+     */
+    public String getBomIdFromCurrentUrl() {
+        String url = getDriver().getCurrentUrl();
+        return url.substring(url.lastIndexOf('/') + 1);
+    }
 }
+
+
