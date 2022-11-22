@@ -1011,7 +1011,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, UserUtil.getUser().setEmail("testUser1@widgets.aprioritest.com"), ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
             .clickPartsAndAssemblies()
             .sortDownCreatedAtField()
             .clickSearchOption()
