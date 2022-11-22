@@ -1,0 +1,348 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "assigneeUserIdentity": {
+          "type": "string"
+        },
+        "assignee": {
+          "type": "object",
+          "properties": {
+            "isSystemUser": {
+              "type": "boolean"
+            },
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "userProfile": {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "givenName": {
+                  "type": "string"
+                },
+                "familyName": {
+                  "type": "string"
+                },
+                "jobTitle": {
+                  "type": "string"
+                },
+                "department": {
+                  "type": "string"
+                },
+                "townCity": {
+                  "type": "string"
+                },
+                "county": {
+                  "type": "string"
+                },
+                "timezone": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "givenName",
+                "familyName"
+              ],
+              "optional": [
+                "updatedAt",
+                "jobTitle",
+                "department",
+                "townCity",
+                "county",
+                "timezone"
+              ]
+            },
+            "email": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "active": {
+              "type": "boolean"
+            },
+            "mfaRequired": {
+              "type": "boolean"
+            },
+            "customAttributes": {
+              "type": "object",
+              "properties": {
+                "location": {
+                  "type": "string"
+                },
+                "workspaceId": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "location",
+                "workspaceId"
+              ]
+            },
+            "userType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "isSystemUser",
+            "identity",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "customerIdentity",
+            "userProfile",
+            "email",
+            "username",
+            "active",
+            "mfaRequired",
+            "customAttributes",
+            "userType"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "attribute": {
+              "type": "string"
+            },
+            "attributeDisplayValue": {
+              "type": "string"
+            },
+            "componentType": {
+              "type": "string"
+            },
+            "models": {
+              "type": "string"
+            },
+            "pinDetails": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "subject"
+          ],
+          "optional": [
+            "attribute",
+            "attributeDisplayValue",
+            "componentType",
+            "models",
+            "pinDetails"
+          ]
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "discussionIdentity": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "publishedAt": {
+                  "type": "string"
+                },
+                "commentView": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "identity": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "createdBy": {
+                          "type": "string"
+                        },
+                        "participantIdentity": {
+                          "type": "string"
+                        },
+                        "userCustomerIdentity": {
+                          "type": "string"
+                        },
+                        "userIdentity": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "identity",
+                        "participantIdentity",
+                        "userCustomerIdentity",
+                        "userIdentity"
+                      ],
+                      "optional": [
+                        "createdAt",
+                        "createdBy"
+                      ]
+                    }
+                  ]
+                },
+                "mentionedUsers": {
+                  "type": "array",
+                  "items": {}
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "content",
+                "discussionIdentity",
+                "status",
+                "publishedAt",
+                "commentView",
+                "mentionedUsers"
+              ]
+            }
+          ]
+        },
+        "participants": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "userIdentity": {
+                  "type": "string"
+                },
+                "userCustomerIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "userIdentity",
+                "userCustomerIdentity"
+              ]
+            }
+          ]
+        },
+        "status": {
+          "type": "string"
+        },
+        "componentIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "projectIdentity": {
+          "type": "string"
+        },
+        "projectItemIdentity": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "attributes",
+        "customerIdentity",
+        "description",
+        "type",
+        "comments",
+        "participants",
+        "status",
+        "componentIdentity",
+        "scenarioIdentity",
+        "projectIdentity",
+        "projectItemIdentity"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy",
+        "assigneeUserIdentity",
+        "assignee"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}
