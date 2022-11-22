@@ -1,6 +1,5 @@
 package com.partsandassembliesdetails;
 
-import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
@@ -20,7 +19,6 @@ import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 
 import java.io.File;
@@ -38,7 +36,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private File resourceFile;
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"12396", "12458", "12460", "12461", "12254", "12459"})
@@ -52,12 +50,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -89,12 +87,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -152,12 +150,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -185,12 +183,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickPartNestingIcon();
@@ -225,12 +223,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickMaterialPropertiesIcon();
@@ -265,12 +263,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickMaterialStockIcon();
@@ -293,7 +291,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13180", "13182", "13197","13924"})
+    @TestRail(testCaseId = {"13180", "13182", "13197", "13924"})
     @Description("Verify insights for a non-costed scenario")
     public void testInsightsSectionForUnCostedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -304,12 +302,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -339,12 +337,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -393,12 +391,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         String editedCardName = "Process Analysis Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -447,12 +445,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -492,12 +490,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName, scenarioName)
             .clickProcessRouting();
@@ -542,12 +540,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -588,12 +586,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -639,7 +637,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostAssembly(assemblyName,
+            .uploadAndCostAssembly(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
                 subComponentNames,
@@ -647,11 +645,11 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 subComponentProcessGroup,
                 scenarioName,
                 currentUser)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(assemblyName);
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(assemblyName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName)
             .clickAssemblyTree();
@@ -686,12 +684,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -734,12 +732,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -776,12 +774,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -817,12 +815,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -864,19 +862,19 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostAssembly(assemblyName,
-                        assemblyExtension,
-                        assemblyProcessGroup,
-                        subComponentNames,
-                        subComponentExtension,
-                        subComponentProcessGroup,
-                        scenarioName,
-                        currentUser)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(assemblyName);
+            .uploadAndCostAssembly(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(assemblyName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName);
 
@@ -915,12 +913,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -958,12 +956,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -1013,12 +1011,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, UserUtil.getUser().setEmail("testUser1@widgets.aprioritest.com"), ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -1038,14 +1036,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickOnAttribute();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeList()).contains(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName(),CisScenarioResultsEnum.PROCESS_GROUP.getFieldName(), CisScenarioResultsEnum.MATERIAL.getFieldName(),
-                CisScenarioResultsEnum.MANUFACTURING.getFieldName(), CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName(),
-                CisScenarioResultsEnum.PIECE_PART_COST.getFieldName(), CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName(),
-                CisScenarioResultsEnum.BATCH_SIZE.getFieldName(), CisScenarioResultsEnum.FINISH_MASS.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeList()).contains(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName(), CisScenarioResultsEnum.PROCESS_GROUP.getFieldName(), CisScenarioResultsEnum.MATERIAL.getFieldName(),
+            CisScenarioResultsEnum.MANUFACTURING.getFieldName(), CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName(),
+            CisScenarioResultsEnum.PIECE_PART_COST.getFieldName(), CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName(),
+            CisScenarioResultsEnum.BATCH_SIZE.getFieldName(), CisScenarioResultsEnum.FINISH_MASS.getFieldName());
 
         partsAndAssembliesDetailsPage.selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                        .addComment("New Comment With Attribute")
-                        .clickComment();
+            .addComment("New Comment With Attribute")
+            .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
@@ -1054,8 +1052,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatorAvatarDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickMessageIconOnCommentSection()
-                .addComment("New Comment Without Attribute")
-                .clickComment();
+            .addComment("New Comment Without Attribute")
+            .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
@@ -1063,9 +1061,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14183","14184","14185","14186","14187","14691"})
+    @TestRail(testCaseId = {"14183", "14184", "14185", "14186", "14187", "14691"})
     @Description("Verify that replies can be added to a selected comment thread")
-    public void testReplyToACommentThread()  {
+    public void testReplyToACommentThread() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
 
@@ -1074,18 +1072,18 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion();
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1096,22 +1094,22 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getCancelButtonState()).doesNotContain("Mui-disabled");
 
         partsAndAssembliesDetailsPage.addComment("New Reply")
-                .clickComment();
+            .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getReplyMessage()).contains("New Reply");
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getRepliesCount()).contains("1 reply");
 
         partsAndAssembliesDetailsPage.clickDigitalFactoryMessageIcon()
-                .addComment("Second Discussion")
-                .clickComment();
-        
+            .addComment("Second Discussion")
+            .clickComment();
+
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeDiscussionCount()).contains("2");
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"14189","14190","14697","14698","14699"})
+    @TestRail(testCaseId = {"14189", "14190", "14697", "14698", "14699"})
     @Description("Verify that user can resolve and unresolve a discussion")
     public void testResolveAndUnresolvedComment() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1122,19 +1120,19 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickMessageIconOnCommentSection()
-                .clickOnAttribute()
-                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("New Comment With Attribute")
-                .clickComment()
-                .selectCreatedDiscussion();
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickMessageIconOnCommentSection()
+            .clickOnAttribute()
+            .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+            .addComment("New Comment With Attribute")
+            .clickComment()
+            .selectCreatedDiscussion();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1152,7 +1150,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14195","14196","14201","14202","14730","14732"})
+    @TestRail(testCaseId = {"14195", "14196", "14201", "14202", "14730", "14732"})
     @Description("Verify that user can delete and undelete a discussion")
     public void testDeleteAndUndeleteDiscussion() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1163,20 +1161,20 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickMessageIconOnCommentSection()
-                .clickOnAttribute()
-                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("New Comment With Attribute")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .clickMoreOption();
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickMessageIconOnCommentSection()
+            .clickOnAttribute()
+            .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+            .addComment("New Comment With Attribute")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .clickMoreOption();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
