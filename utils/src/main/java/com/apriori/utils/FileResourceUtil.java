@@ -28,10 +28,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class FileResourceUtil {
@@ -283,11 +291,11 @@ public class FileResourceUtil {
      * @param resourceFileName - the file name path
      * @return file boolean
      */
-    public static boolean isDownloadFileExists(String resourceFileName) {
+    public static BasicFileAttributes isDownloadFileExists(String resourceFileName) {
         try {
             Path path = Paths.get(resourceFileName);
-            return Files.exists(path);
-        } catch (RuntimeException e) {
+            return awaitFile(path,3000);
+        } catch (RuntimeException | IOException | InterruptedException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
         }
     }
@@ -384,5 +392,61 @@ public class FileResourceUtil {
             log.warn(e.getMessage());
         }
         return jsonFileContent;
+    }
+
+    /**
+     * wait certain time to check if file exists(appear) in the certain location
+     *
+     * @param target - path to the file
+     * @param timeout - how long wait to appear
+     * @return BasicFileAttributes is file exists and null if file does not exist
+     * @throws Exception
+     */
+    public static BasicFileAttributes awaitFile(Path target, long timeout)
+        throws IOException, InterruptedException {
+        final Path name = target.getFileName();
+        final Path targetDir = target.getParent();
+
+        // If path already exists, return early
+        try {
+            return Files.readAttributes(target, BasicFileAttributes.class);
+        } catch (NoSuchFileException ex) {
+            ex.printStackTrace();
+        }
+
+        final WatchService watchService = FileSystems.getDefault().newWatchService();
+        try {
+            final WatchKey watchKey = targetDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+            // The file could have been created in the window between Files.readAttributes and Path.register
+            try {
+                return Files.readAttributes(target, BasicFileAttributes.class);
+            } catch (NoSuchFileException ex) {
+                ex.printStackTrace();
+            }
+            // The file is absent: watch events in parent directory
+            WatchKey watchKey1 = null;
+            boolean valid = true;
+            do {
+                long t0 = System.currentTimeMillis();
+                watchKey1 = watchService.poll(timeout, TimeUnit.MILLISECONDS);
+                if (watchKey1 == null) {
+                    return null; // timed out
+                }
+                // Examine events associated with key
+                for (WatchEvent<?> event: watchKey1.pollEvents()) {
+                    Path path1 = (Path) event.context();
+                    if (path1.getFileName().equals(name)) {
+                        return Files.readAttributes(target, BasicFileAttributes.class);
+                    }
+                }
+                // Did not receive an interesting event; re-register key to queue
+                long elapsed = System.currentTimeMillis() - t0;
+                timeout = elapsed < timeout ? (timeout - elapsed) : 0L;
+                valid = watchKey1.reset();
+            } while (valid);
+        } finally {
+            watchService.close();
+        }
+        return null;
     }
 }

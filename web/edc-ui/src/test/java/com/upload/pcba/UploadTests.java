@@ -112,17 +112,13 @@ public class UploadTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
-        uploadedFilePage = loginPage.login(currentUser)
-            .uploadComponent(resourceFile)
-            .clickUploadPCBA();
-
-        electronicsDataCollectionPage =
-        uploadedFilePage.backToElectronicsDataCollectionPage();
+        electronicsDataCollectionPage = loginPage.login(currentUser);
 
         numberOfBomAfterUpload = electronicsDataCollectionPage.getNumberOfLoadedBOMs();
         electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.DELETE);
         numberOfBomAfterDelete = numberOfBomAfterUpload - 1;
-        softAssertions.assertThat(electronicsDataCollectionPage.getNumberOfLoadedBOMs()).isEqualTo(numberOfBomAfterDelete);
+        softAssertions.assertThat(electronicsDataCollectionPage.getNumberOfLoadedBOMs(numberOfBomAfterDelete))
+                .isEqualTo(numberOfBomAfterDelete);
         softAssertions.assertAll();
     }
 
@@ -146,7 +142,7 @@ public class UploadTests extends TestBase {
             electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
         String filePath = downloadPath + bomIdName + ".csv";
 
-        softAssertions.assertThat(FileResourceUtil.isDownloadFileExists(filePath)).isTrue();
+        softAssertions.assertThat(FileResourceUtil.isDownloadFileExists(filePath)).isNotNull();
         softAssertions.assertAll();
         FileResourceUtil.deleteIfExistsLocalFile(filePath);
     }

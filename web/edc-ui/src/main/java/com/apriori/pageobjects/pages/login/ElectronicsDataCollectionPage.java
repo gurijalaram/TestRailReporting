@@ -26,7 +26,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     @FindBy(xpath = "//button[.='20']")
     private WebElement paginator;
 
-    @FindBy(id = "qa-summary")
+    @FindBy(xpath = "//span[contains(.,'1 - 10')]")
     private WebElement numberOfLoadedBOMs;
 
     @FindBy(xpath = "//button[@class = 'btn btn-danger']")
@@ -76,8 +76,20 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      * @return int
      */
     public int getNumberOfLoadedBOMs() {
-        getPageUtils().waitFor(1500);
         String getNumber = getPageUtils().waitForElementAppear(numberOfLoadedBOMs).getText();
+        return Integer.parseInt(getNumber.substring(getNumber.indexOf("of ") + 3));
+    }
+
+    /**
+     * gets number of loaded BOMs - check for expected number
+     * @param expectedNumber - check for expected amount of BOMs
+     *
+     * @return boolean
+     */
+    public int getNumberOfLoadedBOMs(int expectedNumber) {
+        By xpath = By.xpath(String.format("//span[contains(.,'of %s')]", expectedNumber));
+        WebElement element = getPageUtils().waitForElementToAppear(xpath);
+        String getNumber = element.getText();
         return Integer.parseInt(getNumber.substring(getNumber.indexOf("of ") + 3));
     }
 
@@ -88,19 +100,17 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      */
     public ElectronicsDataCollectionPage rightClickOnSpecifiedBomAndChooseOption(String bomId, RightClickOptionEnum option) {
         setPagination();
-        getPageUtils().waitFor(1000);
         By xpath = By.xpath(String.format("//a[contains(@href,'%s')]", bomId));
-        WebElement bomElement = getDriver().findElement(xpath);
-        rightClick(getPageUtils().waitForElementToAppear(bomElement));
+        WebElement bomElement = getPageUtils().waitForElementToAppear(xpath);
+        getPageUtils().rightClick(getPageUtils().waitForElementToAppear(bomElement));
 
         By xpath2 = By.xpath(String.format("//span[contains(.,'%s')]", option.getOption()));
         WebElement optionChosen = bomElement.findElement(xpath2);
 
-        getPageUtils().waitForElementToAppear(optionChosen).click();
+        getPageUtils().waitForElementAndClick(optionChosen);
         if (option.equals(RightClickOptionEnum.DELETE)) {
-            getPageUtils().waitForElementToAppear(deleteButton).click();
+            getPageUtils().waitForElementAndClick(deleteButton);
         }
-
         return this;
     }
 
@@ -112,7 +122,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
 
     public String rightClickOnFirstBomAndChooseOption(RightClickOptionEnum option) {
         String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
-        rightClick(getPageUtils().waitForElementToAppear(firstBOMOnTheList));
+        getPageUtils().rightClick(getPageUtils().waitForElementToAppear(firstBOMOnTheList));
 
         WebElement  firstDivElement = getDriver().findElement(By.xpath("//div[@class = 'panel-body']/div[1]"));
         WebElement  firstLinkElement = getDriver().findElement(By.xpath("//div[@class = 'panel-body']/a[1]"));
@@ -126,19 +136,6 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         if (option.equals(RightClickOptionEnum.DELETE)) {
             getPageUtils().waitForElementToAppear(deleteButton).click();
         }
-
-        getPageUtils().waitFor(1000);
-
         return bomID;
-    }
-
-    /**
-     * right click on element
-     *
-     * @return void
-     */
-    public void rightClick(WebElement element) {
-        Actions actions = new Actions(getDriver());
-        actions.contextClick(element).perform();
     }
 }

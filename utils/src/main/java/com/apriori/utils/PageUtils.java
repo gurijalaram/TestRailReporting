@@ -1374,4 +1374,13 @@ public class PageUtils {
         }
     }
 
+    /**
+     * right click on element
+     *
+     * @return void
+     */
+    public void rightClick(WebElement element) {
+        Actions actions = new Actions(driver);
+        actions.contextClick(element).perform();
+    }
 }
