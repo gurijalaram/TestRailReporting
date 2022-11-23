@@ -1,3 +1,4 @@
+
 {
   "type": "object",
   "default": {},
@@ -13,7 +14,7 @@
       "items": {
         "type": "array",
         "items": {
-          "$ref": "ScenarioResponse.json"
+          "$ref": "DmsCommentViewResponseSchema.json"
         }
       }
     }

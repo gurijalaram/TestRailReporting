@@ -20,6 +20,7 @@ import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
+import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -905,6 +906,22 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
+    }
+
+    /**
+     * GET scenario routings
+     *
+     * @param currentUser     - the user details to obtain a token
+     * @param inlineVariables - usually component/scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+                .inlineVariables(inlineVariables)
+                .token(currentUser.getToken());
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
