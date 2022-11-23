@@ -8,19 +8,31 @@
         "identity": {
           "type": "string"
         },
-        "createdBy": {
-          "type": "string"
-        },
         "createdAt": {
           "type": "string"
         },
-        "status": {
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
           "type": "string"
         },
         "content": {
           "type": "string"
         },
-        "mentionedUsers": {
+        "discussionIdentity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "publishedAt": {
+          "type": "string"
+        },
+        "commentView": {
           "type": "array",
           "items": [
             {
@@ -29,10 +41,13 @@
                 "identity": {
                   "type": "string"
                 },
+                "createdAt": {
+                  "type": "string"
+                },
                 "createdBy": {
                   "type": "string"
                 },
-                "createdAt": {
+                "participantIdentity": {
                   "type": "string"
                 },
                 "userCustomerIdentity": {
@@ -44,31 +59,36 @@
               },
               "required": [
                 "identity",
-                "createdBy",
-                "createdAt",
+                "participantIdentity",
                 "userCustomerIdentity",
                 "userIdentity"
+              ],
+              "optional": [
+                "createdAt",
+                "createdBy"
               ]
             }
           ]
         },
-        "publishedAt": {
-          "type": "string"
-        },
-        "commentViews": {
+        "mentionedUsers": {
           "type": "array",
           "items": {}
         }
       },
       "required": [
         "identity",
-        "createdBy",
         "createdAt",
-        "status",
+        "createdBy",
         "content",
-        "mentionedUsers",
+        "discussionIdentity",
+        "status",
         "publishedAt",
-        "commentView"
+        "commentView",
+        "mentionedUsers"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
       ]
     }
   },
