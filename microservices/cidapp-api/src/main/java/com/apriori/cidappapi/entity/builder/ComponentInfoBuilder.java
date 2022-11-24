@@ -1,13 +1,12 @@
 package com.apriori.cidappapi.entity.builder;
 
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,15 +27,7 @@ public class ComponentInfoBuilder {
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
     @Builder.Default
-    @JsonProperty("vpeName")
-    private final DigitalFactoryEnum digitalFactory = DigitalFactoryEnum.APRIORI_USA;
-    @Builder.Default
-    private final String mode = "Manual";
-    @Builder.Default
-    private final String material = "Use Default";
-    @Builder.Default
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
-    private String assemblyName;
     private List<ComponentInfoBuilder> subComponents;
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
@@ -46,4 +37,5 @@ public class ComponentInfoBuilder {
     @Builder.Default
     private final boolean overrideScenario = false;
     private String costingTemplateId;
+    private CostingTemplate costingTemplate;
 }

@@ -17,6 +17,7 @@ import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
@@ -536,7 +537,7 @@ public class ScenariosUtil {
      *
      * @return scenario object
      */
-    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfo) {
+    private CostingTemplate getCostingTemplateId(ComponentInfoBuilder componentInfo) {
         return postCostingTemplate(componentInfo);
     }
 
@@ -545,22 +546,13 @@ public class ScenariosUtil {
      *
      * @return scenario object
      */
-    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfo) {
+    private CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
                 .token(componentInfo.getUser().getToken())
-                .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfo.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfo.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfo.getMode().toUpperCase())
-                    .materialName(componentInfo.getMaterial())
-                    .annualVolume(5500)
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .propertiesToReset(null)
-                    .build());
+                .body("costingTemplate", componentInfo.getCostingTemplate());
 
-        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
         return response.getResponseEntity();
     }
