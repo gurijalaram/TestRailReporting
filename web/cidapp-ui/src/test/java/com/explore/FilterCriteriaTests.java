@@ -7,25 +7,34 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
+import com.utils.CurrencyEnum;
+import com.utils.MassEnum;
 import com.utils.SortOrderEnum;
+import com.utils.TimeEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -44,9 +53,19 @@ public class FilterCriteriaTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private FilterPage filterPage;
+    private SoftAssertions softAssertion = new SoftAssertions();
+    private DisplayPreferencesPage displayPreferencesPage;
 
     public FilterCriteriaTests() {
         super();
+    }
+
+    @After
+    public void resetAllSettings() {
+        if (currentUser != null) {
+            new UserPreferencesUtil().resetSettings(currentUser);
+        }
     }
 
     @Test
@@ -287,5 +306,136 @@ public class FilterCriteriaTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6169", "6170"})
+    @Description("Check that user cannot Delete Preset Filters")
+    public void testDeleteButtonDisabledForPresetFilters() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        filterPage = new ExplorePage(driver)
+            .filter()
+            .selectFilter("Private");
+
+        softAssertion.assertThat(filterPage.isDeleteButtonEnabled()).isEqualTo(false);
+        softAssertion.assertThat(filterPage.isRenameButtonEnabled()).isEqualTo(false);
+
+        softAssertion.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6100"})
+    @Description("Validate that user can cancel action New, Rename, Save As before saving")
+    public void testCancelNewSaveRename() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        filterPage = new ExplorePage(driver)
+            .filter()
+            .newFilter()
+            .inputName("Test Filter")
+            .save(FilterPage.class)
+            .newFilter();
+
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+
+        filterPage.cancel(FilterPage.class)
+            .saveAs();
+
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+
+        filterPage.cancel(FilterPage.class)
+            .rename();
+
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+
+        filterPage.cancel(FilterPage.class);
+
+        softAssertion.assertThat(filterPage.isElementDisplayed("Test Filter", "text-overflow")).isTrue();
+
+        softAssertion.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9108"})
+    @Description("Verify that filter values for cost results are converted after changing unit preferences")
+    public void testFilterValuesAfterChangingUnitPreferencesToEUR() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        explorePage = new ExplorePage(driver)
+            .filter()
+            .newFilter()
+            .inputName("Test Filter")
+            .addCriteria(PropertyEnum.TOTAL_CAPITAL_INVESTMENT, OperationEnum.LESS_THAN, "1")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        filterPage = explorePage.openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectCurrency(CurrencyEnum.EUR)
+            .submit(ExplorePage.class)
+            .filter();
+
+        assertThat(filterPage.getPropertyValue(), is("0.847946"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9109"})
+    @Description("Verify that filter value for Finish Mass is converted after changing unit preferences")
+    public void testFilterValuesAfterChangingUnitPreferencesToGram() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        explorePage = new ExplorePage(driver)
+            .filter()
+            .newFilter()
+            .inputName("Test Filter")
+            .addCriteria(PropertyEnum.FINISH_MASS, OperationEnum.GREATER_THAN, "1")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        filterPage = explorePage.openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectMass(MassEnum.GRAM)
+            .submit(ExplorePage.class)
+            .filter();
+
+        assertThat(filterPage.getPropertyValue(), is("1000"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9110"})
+    @Description("Verify that filter value for Cycle Time is converted after changing unit preferences")
+    public void testFilterValuesAfterChangingUnitPreferencesForCycleTime() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        explorePage = new ExplorePage(driver)
+            .filter()
+            .newFilter()
+            .inputName("Test Filter")
+            .addCriteria(PropertyEnum.CYCLE_TIME, OperationEnum.GREATER_THAN, "60")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        filterPage = explorePage.openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectTime(TimeEnum.MINUTE)
+            .selectCurrency(CurrencyEnum.EUR)
+            .submit(ExplorePage.class)
+            .filter();
+
+        assertThat(filterPage.getPropertyValue(), is("1"));
     }
 }

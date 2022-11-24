@@ -51,6 +51,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement clearAllCriteriaBtn;
     @FindBy(xpath = "//button[contains(.,'Cancel')]")
     private WebElement cancelBtn;
+    @FindBy(css = ".btn-danger")
+    private WebElement deleteFilterBtn;
+    @FindBy(css = ".ml-2:nth-child(4)")
+    private WebElement renameFilterBtn;
+    @FindBy(css = "#qa-searchCriterion\\[0\\]\\.target .form-control")
+    private WebElement valueField;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -406,5 +412,51 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public <T> T save(Class<T> klass) {
         return modalDialogController.save(klass);
+    }
+
+    /**
+     * Checks if delete button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteFilterBtn).isEnabled();
+    }
+
+    /**
+     * Checks if rename button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isRenameButtonEnabled() {
+        return pageUtils.waitForElementToAppear(renameFilterBtn).isEnabled();
+    }
+
+    /**
+     * Checks if Name field is displayed
+     *
+     * @return true/false
+     */
+    public boolean isNameFieldDisplayed() {
+        return pageUtils.waitForElementToAppear(nameInput).isDisplayed();
+    }
+
+    /**
+     * Checks if Cancel button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isCancelBtnDisplayed() {
+        return pageUtils.waitForElementToAppear(cancelBtn).isDisplayed();
+    }
+
+    /**
+     * Gets the value of Value field (for properties from Cost Results and Material and Process Results)
+     *
+     * @return String
+     */
+    public String getPropertyValue() {
+        String value = valueField.getAttribute("value");
+        return value;
     }
 }
