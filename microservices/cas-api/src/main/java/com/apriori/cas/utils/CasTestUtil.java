@@ -7,6 +7,7 @@ import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.entity.requests.BulkAccessControlRequest;
+import com.apriori.entity.response.AccessAuthorization;
 import com.apriori.entity.response.AccessControl;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
@@ -587,6 +588,29 @@ public class CasTestUtil extends TestUtil {
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body(null);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Requests access for a customer
+     *
+     * @param klas - class
+     * @param customerIdentity - customer identity
+     * @param userIdentity - user identity
+     * @param serviceAccount - service account name
+     * @param expectedResponseCode - expected response code
+     * @return <T>ResponseWrapper <T>
+     */
+    public <T> ResponseWrapper<T> addAccessAuthorization(Class<T> klas, String customerIdentity, String userIdentity, String serviceAccount, Integer expectedResponseCode) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.ACCESS_AUTHORIZATIONS, klas)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body("accessAuthorization",
+                AccessAuthorization.builder()
+                    .userIdentity(userIdentity)
+                    .serviceAccount(serviceAccount)
+                    .build());
+
         return HTTPRequest.build(requestEntity).post();
     }
 }
