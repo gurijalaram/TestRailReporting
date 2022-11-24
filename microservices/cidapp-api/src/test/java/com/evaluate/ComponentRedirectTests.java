@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -103,7 +104,7 @@ public class ComponentRedirectTests {
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
             .user(currentUser)
-            .overrideScenario(true)
+            .publishRequest(PublishRequest.builder().override(true).build())
             .build();
 
         componentsUtil.postComponent(existingPart);

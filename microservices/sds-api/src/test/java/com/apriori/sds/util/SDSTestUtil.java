@@ -19,7 +19,7 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
-import com.apriori.sds.entity.request.ShallowPublishRequest;
+import com.apriori.sds.entity.request.PublishRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
@@ -476,12 +476,12 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return - scenario object
      */
     protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
-        ShallowPublishRequest shallowPublishRequest = ShallowPublishRequest.builder()
-            .assignedTo(componentInfoBuilder.getAssignedTo())
+        PublishRequest shallowPublishRequest = PublishRequest.builder()
+            .assignedTo(componentInfoBuilder.getPublishRequest().getAssignedTo())
             .locked(false)
             .override(false)
             .scenarioName(componentInfoBuilder.getScenarioName())
-            .status(componentInfoBuilder.getStatus())
+            .status(componentInfoBuilder.getPublishRequest().getStatus())
             .publishSubComponents(false)
             .build();
 

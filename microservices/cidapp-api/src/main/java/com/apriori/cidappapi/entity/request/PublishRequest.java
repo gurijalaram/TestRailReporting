@@ -18,7 +18,8 @@ import java.util.List;
 public class PublishRequest {
     private String assignedTo;
     private String costMaturity;
-    private Boolean override;
+    @Builder.Default
+    private Boolean override = false;
     private String status;
     private String scenarioName;
     private List<GroupItems> groupItems;

@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.entity.builder;
 
+import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -41,10 +42,7 @@ public class ComponentInfoBuilder {
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
     private PostComponentResponse component;
-    private String assignedTo;
-    private String status;
-    @Builder.Default
-    private final boolean overrideScenario = false;
+    private PublishRequest publishRequest;
     @Builder.Default
     private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
 }
