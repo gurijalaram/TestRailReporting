@@ -665,9 +665,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
 
-        partsAndAssembliesDetailsPage.openAssembly("PIN", scenarioName);
+        partsAndAssembliesDetailsPage.openAssembly("Pin", scenarioName);
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("PIN");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("Pin");
 
         softAssertions.assertAll();
     }

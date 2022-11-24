@@ -8,13 +8,13 @@ global:
   different_parts: true
   different_users: true
   schema_base_path: schemas/
-  users_csv_file: cis-common-users.csv
+  users_csv_file: common-users.csv
 
 # Define the customer
 customer: ap-int
 
 ap-int:
-  token_subject: 2b68
+  token_subject: 4127
 
 gadgets:
   token_subject: 247f
