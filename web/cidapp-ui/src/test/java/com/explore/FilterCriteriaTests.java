@@ -320,8 +320,8 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .selectFilter("Private");
 
-        softAssertion.assertThat(filterPage.isDeleteButtonEnabled()).isEqualTo(false);
-        softAssertion.assertThat(filterPage.isRenameButtonEnabled()).isEqualTo(false);
+        softAssertion.assertThat(filterPage.isDeleteButtonEnabled()).isFalse();
+        softAssertion.assertThat(filterPage.isRenameButtonEnabled()).isFalse();
 
         softAssertion.assertAll();
     }
@@ -341,20 +341,20 @@ public class FilterCriteriaTests extends TestBase {
             .save(FilterPage.class)
             .newFilter();
 
-        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
-        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isTrue();
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isTrue();
 
         filterPage.cancel(FilterPage.class)
             .saveAs();
 
-        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
-        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isTrue();
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isTrue();
 
         filterPage.cancel(FilterPage.class)
             .rename();
 
-        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isEqualTo(true);
-        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isEqualTo(true);
+        softAssertion.assertThat(filterPage.isNameFieldDisplayed()).isTrue();
+        softAssertion.assertThat(filterPage.isCancelBtnDisplayed()).isTrue();
 
         filterPage.cancel(FilterPage.class);
 
