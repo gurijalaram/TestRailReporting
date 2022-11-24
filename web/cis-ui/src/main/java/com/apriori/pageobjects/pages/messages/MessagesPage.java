@@ -16,7 +16,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//h3[@data-testid='title']")
     private WebElement headerTitle;
 
-    @FindBy(xpath = "//div[contains(@class,'MuiPaper-root MuiPaper-elevation MuiPaper-rounded')]")
+    @FindBy(xpath = "//div[contains(@id,'discussion')]")
     private WebElement allMessages;
 
     @FindBy(xpath = "//h3[contains(@data-testid,'created-by')]")
