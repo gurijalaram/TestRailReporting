@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 @Data
 public class ComponentInfoBuilder {
+    private final UserCredentials user;
     private final String componentName;
     private final String extension;
     private String scenarioName;
@@ -33,7 +34,6 @@ public class ComponentInfoBuilder {
     private final String mode = "Manual";
     @Builder.Default
     private final String material = "Use Default";
-    private final UserCredentials user;
     @Builder.Default
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
     private String assemblyName;
