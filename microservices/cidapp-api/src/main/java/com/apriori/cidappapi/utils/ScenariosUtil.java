@@ -28,8 +28,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -244,28 +242,6 @@ public class ScenariosUtil {
                 .socketTimeout(SOCKET_TIMEOUT);
 
         return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * POST to cost a component
-     *
-     * @param componentInfo - the component object
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(ComponentInfoBuilder componentInfo) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs",
-                    CostRequest.builder().annualVolume(5500)
-                        .batchSize(458)
-                        .materialName("Aluminum, Stock, ANSI 1050A")
-                        .processGroupName(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-                        .productionLife(5.0)
-                        .digitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                        .build());
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
