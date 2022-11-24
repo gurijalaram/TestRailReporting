@@ -7,9 +7,5 @@ import lombok.Data;
 @Data
 public class ComponentInfoBuilderSettings {
     @Builder.Default
-    private Boolean useEmptyComponentID = false;
-    @Builder.Default
-    private Boolean useEmptyScenarioID = false;
-    @Builder.Default
     private Boolean useEmptyCostingTemplateID = false;
 }
