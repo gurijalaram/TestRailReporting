@@ -28,6 +28,8 @@ public class ComponentInfoBuilder {
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
     @Builder.Default
+    private Boolean override = false;
+    @Builder.Default
     @JsonProperty("vpeName")
     private final DigitalFactoryEnum digitalFactory = DigitalFactoryEnum.APRIORI_USA;
     @Builder.Default

@@ -586,16 +586,16 @@ public class ScenariosUtil {
      * @return generic object
      */
     public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass, int expectedResponseCode) {
+        componentInfo.setPublishRequest(PublishRequest.builder()
+            .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser())
+                .getIdentity())
+            .build());
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser()).getIdentity())
-                    .costMaturity("Initial".toUpperCase())
-                    .override(false)
-                    .status("New".toUpperCase())
-                    .build())
+                .body("scenario", componentInfo.getPublishRequest())
                 .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).post();

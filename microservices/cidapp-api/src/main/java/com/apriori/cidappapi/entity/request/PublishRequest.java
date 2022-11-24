@@ -17,10 +17,12 @@ import java.util.List;
 @Builder
 public class PublishRequest {
     private String assignedTo;
-    private String costMaturity;
+    @Builder.Default
+    private String costMaturity = "Initial".toUpperCase();
     @Builder.Default
     private Boolean override = false;
-    private String status;
+    @Builder.Default
+    private String status = "New".toUpperCase();
     private String scenarioName;
     private List<GroupItems> groupItems;
     private Options options;
