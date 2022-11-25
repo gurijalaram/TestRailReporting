@@ -13,7 +13,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class SecondaryProcessesTest extends SDSTestUtil {
@@ -35,13 +35,16 @@ public class SecondaryProcessesTest extends SDSTestUtil {
                     vpeName,
                     pgName
                 )
-            .urlEncodingEnabled(true);
+                .urlEncodingEnabled(true)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<SecondaryProcessesItems> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
+        SoftAssertions softAssertions = new SoftAssertions();
         response.getResponseEntity().getItems().forEach(item -> {
-            Assert.assertEquals("Response Item should be with the requested vpe name", vpeName, item.getPlantName());
+            softAssertions.assertThat(item.getPlantName()).isEqualTo(vpeName);
         });
+
+        softAssertions.assertAll();
     }
 }

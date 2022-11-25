@@ -25,7 +25,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -61,8 +60,7 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4182","7958"})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ResponseWrapper<Report> reportResponse = ReportResources.getReportRepresentation(report.getIdentity());
-        assertThat(reportResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        ReportResources.getReportRepresentation(report.getIdentity());
     }
 
     @Test
@@ -105,7 +103,7 @@ public class ReportResourcesTest extends TestUtil {
     public void exportReport() {
         ResponseWrapper<ReportExport> reportExportResponse = ReportResources.exportReport(report.getIdentity());
         ReportExport reportExport = reportExportResponse.getResponseEntity();
-        assertThat(reportExportResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+
         assertThat(report.getIdentity(), is(equalTo(reportExport.getReportIdentity())));
     }
 

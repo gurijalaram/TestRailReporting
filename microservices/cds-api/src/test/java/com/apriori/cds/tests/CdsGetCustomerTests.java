@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
@@ -12,22 +7,19 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class CdsGetCustomerTests {
-
+    private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private ResponseWrapper<Customer> customer;
@@ -63,8 +55,9 @@ public class CdsGetCustomerTests {
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
         ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity);
-        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
-        assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
+        soft.assertThat(response.getResponseEntity().getName()).isEqualTo(customerName);
+        soft.assertThat(response.getResponseEntity().getEmailRegexPatterns()).isEqualTo(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk"));
+        soft.assertAll();
     }
 
     @Test
@@ -76,26 +69,17 @@ public class CdsGetCustomerTests {
             HttpStatus.SC_OK,
             customerIdentity
         );
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(equalTo(0)));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(0);
+        soft.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
-            .inlineVariables(customerIdentity)
-            .headers(new HashMap<String, String>() {{
-                    put("Content-Type", "application/json");
-                }
-            })
-            .body("customer",
-                Customer.builder()
-                    .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
-                    .build());
+        ResponseWrapper<Customer> updatedEmail = cdsTestUtil.updateCustomer(customerIdentity, updatedEmailPattern);
 
-        ResponseWrapper<Customer> updatedEmail = HTTPRequest.build(requestEntity).patch();
-
-        assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
+        soft.assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns()).contains(updatedEmailPattern + ".com");
+        soft.assertAll();
     }
 }

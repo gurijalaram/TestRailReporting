@@ -18,6 +18,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +92,8 @@ public class ReportResources {
      */
     public static ResponseWrapper<Report> getReportRepresentation(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -104,7 +106,8 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportExport> exportReport(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }

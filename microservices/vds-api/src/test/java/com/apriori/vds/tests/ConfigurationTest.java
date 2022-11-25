@@ -36,11 +36,10 @@ public class ConfigurationTest extends VDSTestUtil {
         Assert.assertNotEquals("To get Configuration, response should contain it.", 0, configurationsItems.getItems().size());
 
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
-            .inlineVariables(configurationsItems.getItems().get(0).getIdentity());
+            .inlineVariables(configurationsItems.getItems().get(0).getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTPRequest.build(requestEntity).get().getStatusCode()
-        );
+        HTTPRequest.build(requestEntity).get();
     }
 
     @Test
@@ -49,27 +48,24 @@ public class ConfigurationTest extends VDSTestUtil {
     @Ignore
     public void putConfiguration() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.PUT_CONFIGURATION, null)
-            .headers(new HashMap<String, String>() {{
+            .headers(new HashMap<String, String>() {
+                {
                     put("Content-Type", "application/json");
                 }
             })
             .customBody(
                 "{ \"customerConfiguration\": { \"configurationType\": \"ACCESS_CONTROL\", \"serializationType\": \"COMPRESSED_BINARY\", \"customerIdentity\" : \"8GFDIG229629\" }}"
-            );
+            )
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
-            HTTPRequest.build(requestEntity).put().getStatusCode()
-        );
+        HTTPRequest.build(requestEntity).put();
     }
 
     private ConfigurationsItems getConfigurationsItems() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTPRequest.build(requestEntity).get();
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            configurationsItemsResponse.getStatusCode()
-        );
 
         return configurationsItemsResponse.getResponseEntity();
     }

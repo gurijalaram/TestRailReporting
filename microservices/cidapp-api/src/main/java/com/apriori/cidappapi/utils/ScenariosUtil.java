@@ -20,7 +20,7 @@ import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -36,6 +36,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -52,6 +53,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
+    @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
@@ -260,25 +262,9 @@ public class ScenariosUtil {
                         .processGroupName(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
                         .productionLife(5.0)
                         .digitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                        .build()
-                );
+                        .build());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * GET hoops image
-     *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
-     * @return response object
-     */
-    public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
-
-        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -424,6 +410,33 @@ public class ScenariosUtil {
                         .map(component -> GroupItems.builder()
                             .componentIdentity(component.getComponentIdentity())
                             .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> postSimpleEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
+                .body(ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .groupItems(forkRequest.getGroupItems()
+                        .stream()
+                        .map(request -> GroupItems.builder()
+                            .componentIdentity(request.getComponentIdentity())
+                            .scenarioIdentity(request.getScenarioIdentity())
                             .build())
                         .collect(Collectors.toList()))
                     .build())
@@ -893,6 +906,22 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
+    }
+
+    /**
+     * GET scenario routings
+     *
+     * @param currentUser     - the user details to obtain a token
+     * @param inlineVariables - usually component/scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+                .inlineVariables(inlineVariables)
+                .token(currentUser.getToken());
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

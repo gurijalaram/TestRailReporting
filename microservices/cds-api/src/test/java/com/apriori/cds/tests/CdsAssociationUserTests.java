@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AssociationUserItems;
@@ -19,6 +14,7 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +37,7 @@ public class CdsAssociationUserTests {
     private String aPCustomerIdentity;
     private String associationIdentity;
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -81,7 +78,6 @@ public class CdsAssociationUserTests {
         String aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
-        assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
@@ -93,7 +89,6 @@ public class CdsAssociationUserTests {
         String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity02");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
-        assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
@@ -103,7 +98,7 @@ public class CdsAssociationUserTests {
             associationIdentity
         );
 
-        assertThat(associationUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(associationUsers.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<AssociationUserItems> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
@@ -112,7 +107,8 @@ public class CdsAssociationUserTests {
             associationIdentity,
             customerAssociationUserIdentity
         );
-
+        soft.assertThat(users.getResponseEntity().getIdentity()).isEqualTo(customerAssociationUserIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -122,7 +118,6 @@ public class CdsAssociationUserTests {
         String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity03");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
-        assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
@@ -133,6 +128,7 @@ public class CdsAssociationUserTests {
             customerAssociationUserIdentity
         );
 
-        assertThat(associationUserIdentity.getResponseEntity().getUserIdentity(), is(equalTo(aPStaffIdentity)));
+        soft.assertThat(associationUserIdentity.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
+        soft.assertAll();
     }
 }

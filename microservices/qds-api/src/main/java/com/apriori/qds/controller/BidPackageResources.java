@@ -47,7 +47,8 @@ public class BidPackageResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<BidPackageResponse> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
 
@@ -65,7 +66,8 @@ public class BidPackageResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, null)
             .inlineVariables(bidPackageIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -135,11 +137,12 @@ public class BidPackageResources {
      * @param <T>                       klass type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -155,13 +158,13 @@ public class BidPackageResources {
      * @param <T>                             - response of class type
      * @return - ResponseWrapper of response klass
      */
-    public static <T> ResponseWrapper<T> updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(bidPackageProjectRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -205,10 +208,11 @@ public class BidPackageResources {
      * @param projectItemIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
+     * @param httpStatus          - Integer
      * @param <T>                 - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> createBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> createBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         BidPackageProjectItemRequest bidPackageProjectItemRequestBuilder = BidPackageProjectItemRequest.builder()
             .projectItem(BidPackageProjectItemParameters.builder()
                 .bidPackageItemIdentity(projectItemIdentity)
@@ -220,7 +224,7 @@ public class BidPackageResources {
             .body(bidPackageProjectItemRequestBuilder)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_CREATED);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -233,15 +237,16 @@ public class BidPackageResources {
      * @param projectItemIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
+     * @param httpStatus          - Integer
      * @param <T>                 - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity, projectItemIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -253,15 +258,16 @@ public class BidPackageResources {
      * @param projectIdentity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
+     * @param httpsStatus        - Integer
      * @param <T>                - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectItems(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectItems(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -294,16 +300,17 @@ public class BidPackageResources {
      * @param bidPackageIdentity
      * @param currentUser                  - UserCredentials
      * @param klass                        - response class name
+     * @param httpStatus                   - Integer
      * @param <T>                          - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> createBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> createBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_ITEMS, klass)
             .inlineVariables(bidPackageIdentity)
             .body(bidPackageItemRequestBuilder)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_CREATED);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -316,16 +323,17 @@ public class BidPackageResources {
      * @param bidPackageItemIdentity
      * @param currentUser                  - UserCredentials
      * @param klass                        - response class name
+     * @param httpStatus                   - Integer
      * @param <T>                          - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> updateBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageItem(BidPackageItemRequest bidPackageItemRequestBuilder, String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_ITEM, klass)
             .inlineVariables(bidPackageIdentity, bidPackageItemIdentity)
             .body(bidPackageItemRequestBuilder)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -337,15 +345,16 @@ public class BidPackageResources {
      * @param bidPackageItemIdentity
      * @param currentUser            - UserCredentials
      * @param klass                  - response class name
+     * @param httpStatus             - Integer
      * @param <T>                    - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_ITEM, klass)
             .inlineVariables(bidPackageIdentity, bidPackageItemIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -356,15 +365,16 @@ public class BidPackageResources {
      * @param bidPackageIdentity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
+     * @param httpStatus         - Integer
      * @param <T>                - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageItems(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageItems(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_ITEMS, klass)
             .inlineVariables(bidPackageIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -408,7 +418,7 @@ public class BidPackageResources {
     /**
      * Create bid package project user
      *
-     * @param role - DEFAULT or ADMIN
+     * @param role               - DEFAULT or ADMIN
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param currentUser
@@ -459,15 +469,16 @@ public class BidPackageResources {
      * @param projectUserIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
+     * @param httpStatus          - Integer
      * @param <T>                 - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
 
@@ -480,15 +491,16 @@ public class BidPackageResources {
      * @param projectIdentity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
+     * @param httpStatus         - Integer
      * @param <T>                - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> getBidPackageProjectUsers(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> getBidPackageProjectUsers(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USERS, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).get();
 
@@ -497,16 +509,17 @@ public class BidPackageResources {
     /**
      * Update bid package project user
      *
-     * @param role - DEFAULT or ADMIN
+     * @param role                - DEFAULT or ADMIN
      * @param bidPackageIdentity
      * @param projectIdentity
      * @param projectUserIdentity
      * @param currentUser         - UserCredentials
      * @param klass               - response class name
+     * @param httpStatus          - Integer
      * @param <T>                 - response class type
      * @return ResponseWrapper of klass object
      */
-    public static <T> ResponseWrapper<T> updateBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass) {
+    public static <T> ResponseWrapper<T> updateBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
             .projectUser(BidPackageProjectUserParameters.builder()
                 .userEmail(currentUser.getEmail())
@@ -519,7 +532,7 @@ public class BidPackageResources {
             .body(bidPackageProjectUserRequestBuilder)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
     }

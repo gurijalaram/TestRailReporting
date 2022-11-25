@@ -3,34 +3,27 @@ package com.apriori.dms.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import entity.response.DiscussionResponse;
 import entity.response.DmsCommentResponse;
 import entity.response.DmsCommentsResponse;
-import enums.DMSApiEnum;
+import entity.response.DmsDiscussionResponse;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.DdsApiTestUtils;
 import utils.DmsApiTestUtils;
 
 public class DmsCommentsTest extends TestUtil {
 
     private static String userContext;
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<DiscussionResponse> discussionResponse;
+    private static ResponseWrapper<DmsDiscussionResponse> discussionResponse;
     private static ResponseWrapper<DmsCommentResponse> commentResponse;
     private static String contentDesc = StringUtils.EMPTY;
     private static UserCredentials currentUser = UserUtil.getUser();
@@ -47,7 +40,6 @@ public class DmsCommentsTest extends TestUtil {
     @Test
     @Description("Create a valid comment")
     public void createComment() {
-        softAssertions.assertThat(commentResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(commentResponse.getResponseEntity().getContent()).isEqualTo(contentDesc);
     }
 
@@ -56,7 +48,7 @@ public class DmsCommentsTest extends TestUtil {
     public void getComments() {
         ResponseWrapper<DmsCommentsResponse> responseWrapper = DmsApiTestUtils.getDiscussionComments(currentUser,
             discussionResponse.getResponseEntity().getIdentity());
-        softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().items.size()).isGreaterThan(0);
     }
 
     @Test
@@ -64,7 +56,7 @@ public class DmsCommentsTest extends TestUtil {
     public void getComment() {
         ResponseWrapper<DmsCommentResponse> responseWrapper = DmsApiTestUtils.getDiscussionComment(currentUser,
             discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity());
-        softAssertions.assertThat(responseWrapper.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getIdentity()).isNotNull();
     }
 
     @Test
@@ -73,16 +65,13 @@ public class DmsCommentsTest extends TestUtil {
         ResponseWrapper<DmsCommentResponse> commentUpdateResponse = DmsApiTestUtils.updateComment(commentResponse.getResponseEntity().getStatus(),
             discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), currentUser);
 
-        softAssertions.assertThat(commentUpdateResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(commentUpdateResponse.getResponseEntity().getMentionedUsers().size()).isGreaterThan(0);
     }
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> commentDeleteResponse = DmsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), currentUser);
-        ResponseWrapper<String> discussionDeleteResponse = DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
-        softAssertions.assertThat(commentDeleteResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
-        softAssertions.assertThat(discussionDeleteResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
+        DmsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), currentUser);
+        DmsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertAll();
     }
 }

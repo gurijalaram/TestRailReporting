@@ -7,7 +7,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -28,10 +27,10 @@ public class CostingTemplatesTest extends SDSTestUtil {
     public void testGetCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
-                .inlineVariables(this.getFirstCostingTemplate().getIdentity());
+                .inlineVariables(this.getFirstCostingTemplate().getIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).get();
     }
 
 }

@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.bcs.controller.BatchPartResources;
@@ -110,7 +109,6 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         ResponseWrapper<ErrorMessage> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, "INVALIDBATCHID", ErrorMessage.class);
 
-        assertThat(partResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(partResponse.getResponseEntity().getMessage(), is(equalTo("'batchIdentity' is not a valid identity.")));
     }
 
@@ -119,7 +117,7 @@ public class BatchPartNegativeTest {
     @Description("Invalid Customer Identity")
     public void createBatchWithInvalidCustomerID() {
         ResponseWrapper<ErrorMessage> batchResponse = BatchResources.createBatch("INVALIDCUSTOMER", ErrorMessage.class);
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+
         assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("'customerIdentity' is not a valid identity.")));
     }
 
@@ -131,7 +129,6 @@ public class BatchPartNegativeTest {
         newPartRequest.setExternalId("");
         ResponseWrapper<ErrorMessage> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity(), ErrorMessage.class);
 
-        assertThat(partResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(partResponse.getResponseEntity().getMessage(), is(containsString("'externalId' should not be empty")));
     }
 
@@ -139,10 +136,12 @@ public class BatchPartNegativeTest {
     @TestRail(testCaseId = {"8037"})
     @Description("Get single batch with invalid customer identity")
     public void getBatchWithInvalidCustomerID() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, ErrorMessage.class)
-            .inlineVariables("INVALIDCUSTOMER", batch.getIdentity())).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, ErrorMessage.class)
+            .inlineVariables("INVALIDCUSTOMER", batch.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("'customerIdentity' is not a valid identity.")));
     }
 
@@ -150,37 +149,50 @@ public class BatchPartNegativeTest {
     @TestRail(testCaseId = {"8049"})
     @Description("Get batch with invalid batch identity")
     public void getBatchWithInvalidBatchID() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchResources.getBatchRequestEntity(BCSAPIEnum.BATCH_PARTS_BY_ID, "INVALIDBATCH", ErrorMessage.class)).get();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
+        HTTPRequest.build(
+            BatchResources.getBatchRequestEntity(
+                BCSAPIEnum.BATCH_PARTS_BY_ID,
+                "INVALIDBATCH",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
     @TestRail(testCaseId = {"8058"})
     @Description("Cancel batch with invalid batch identity")
     public void cancelBatchWithInvalidBatchID() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchResources.getBatchRequestEntity(
-                BCSAPIEnum.CANCEL_COSTING_BY_ID, "INVALIDBATCH", ErrorMessage.class))
-            .post();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
+        HTTPRequest.build(BatchResources.getBatchRequestEntity(
+            BCSAPIEnum.CANCEL_COSTING_BY_ID, "INVALIDBATCH", ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
+       ).post();
     }
 
     @Test
     @TestRail(testCaseId = {"8094"})
     @Description("get parts with invalid Batch identity")
     public void getBatchPartWithInvalidBatchID() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchResources.getBatchRequestEntity(BCSAPIEnum.BATCH_PARTS, "InvalidBatchId", ErrorMessage.class)).get();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchResources.getBatchRequestEntity(
+                BCSAPIEnum.BATCH_PARTS,
+                "InvalidBatchId",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
     @TestRail(testCaseId = {"8123", "9538"})
     @Description("Return a single Batch-Part using an invalid batch")
     public void getBatchPartWithInvalidPartIdentity() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, batch.getIdentity(), "InvalidPartIdentity", ErrorMessage.class)).get();
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                "InvalidPartIdentity",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
@@ -188,9 +200,14 @@ public class BatchPartNegativeTest {
     @Description("Get Batch part results with UnCosted part identity")
     public void getBatchPartResultWithUnCostedPartIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, batch.getIdentity(), part.getIdentity(), ErrorMessage.class)).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
+                batch.getIdentity(), part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_CONFLICT)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
         assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("Can't get cost results. Invalid state.")));
     }
 
@@ -198,9 +215,14 @@ public class BatchPartNegativeTest {
     @TestRail(testCaseId = {"8126","9540"})
     @Description("Get Batch part results with invalid part identity")
     public void getBatchPartResultWithInvalidPartIdentity() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, batch.getIdentity(), "InvalidPartId", ErrorMessage.class)).get();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                "InvalidPartId",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
@@ -208,9 +230,14 @@ public class BatchPartNegativeTest {
     @Description("Get Batch part results with missing batch")
     public void getBatchPartResultWithMissingBatchIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, " ", part.getIdentity(), ErrorMessage.class)).get();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
+                " ",
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
@@ -218,9 +245,15 @@ public class BatchPartNegativeTest {
     @Description("Get Batch part report with UnCosted part identity")
     public void getBatchPartReportWithUnCostedPartIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, batch.getIdentity(), part.getIdentity(), ErrorMessage.class)).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_CONFLICT)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
         assertThat(batchResponse.getResponseEntity().getError(), is(equalTo("Conflict")));
     }
 
@@ -229,13 +262,23 @@ public class BatchPartNegativeTest {
     @Description("Get part report with invalid batch and invalid part identity")
     public void getBatchPartReportWithInvalidBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, "INVALIDBATCHID", part.getIdentity(), ErrorMessage.class)).get();
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS,
+                "INVALIDBATCHID",
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-
-        ResponseWrapper<ErrorMessage> partResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, batch.getIdentity(), "INVALIDPARTID", ErrorMessage.class)).get();
-
-        assertThat(partResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                "INVALIDPARTID",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
@@ -243,9 +286,15 @@ public class BatchPartNegativeTest {
     @Description("Get part report with missing batch")
     public void getBatchPartReportWithMissingBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, " ", part.getIdentity(), ErrorMessage.class)).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS,
+                " ",
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'batchIdentity' should not be blank")));
 
     }
@@ -254,11 +303,16 @@ public class BatchPartNegativeTest {
     @TestRail(testCaseId = {"9543"})
     @Description("Get part report with missing Part identity")
     public void getBatchPartReportWithMissingPartId() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, batch.getIdentity(), " ", ErrorMessage.class)).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS,
+                batch.getIdentity(),
+                " ",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'identity' should not be blank")));
-
     }
 
     @Test
@@ -266,20 +320,29 @@ public class BatchPartNegativeTest {
     @Description("Get single part with missing batch id")
     public void getSinglePartWithMissingBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchPartResources.getBatchPartRequestEntity(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, " ", part.getIdentity(), ErrorMessage.class)).get();
+        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
+            BatchPartResources.getBatchPartRequestEntity(
+                BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS,
+                " ",
+                part.getIdentity(),
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
 
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'batchIdentity' should not be blank")));
-
     }
 
     @Test
     @TestRail(testCaseId = {"8096"})
     @Description("Get part to a batch with missing batch identity")
     public void getBatchPartsWithMissingBatchID() {
-        ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(BatchResources.getBatchRequestEntity(BCSAPIEnum.BATCH_PARTS, " ", ErrorMessage.class)).get();
-
-        assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        HTTPRequest.build(
+            BatchResources.getBatchRequestEntity(
+                BCSAPIEnum.BATCH_PARTS,
+                " ",
+                ErrorMessage.class)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+        ).get();
     }
 
     @Test
@@ -289,8 +352,7 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setMaterial("");
         newPartRequest.setDigitalFactory("");
-        ResponseWrapper<Part> response = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
-        assertEquals("Create batch with empty material name and vpename", HttpStatus.SC_CREATED, response.getStatusCode());
+        BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
     }
 
     @Test
@@ -299,8 +361,7 @@ public class BatchPartNegativeTest {
     public void createBatchPartWithInvalidProductionLife() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setProductionLife("abc");
-        ResponseWrapper<ErrorMessage> response = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity(), ErrorMessage.class);
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity(), ErrorMessage.class);
     }
 
     @AfterClass

@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "AssociationUserSchema.json")
+@Schema(location = "CasAssociationUserSchema.json")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

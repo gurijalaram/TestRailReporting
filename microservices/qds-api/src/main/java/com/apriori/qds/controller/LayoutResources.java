@@ -37,7 +37,8 @@ public class LayoutResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUTS, LayoutResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -46,7 +47,8 @@ public class LayoutResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, null)
             .inlineVariables(layoutIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -55,7 +57,8 @@ public class LayoutResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, null)
             .inlineVariables(layoutIdentity, viewElementIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext);
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -88,7 +91,9 @@ public class LayoutResources {
             .inlineVariables(layoutIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
         return HTTPRequest.build(requestEntity).post();
     }
 

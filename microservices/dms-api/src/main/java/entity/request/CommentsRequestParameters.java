@@ -15,5 +15,5 @@ import java.util.List;
 public class CommentsRequestParameters {
     private String status;
     private String content;
-    private List<Object> mentionedUserEmails;
+    private List<String> mentionedUserEmails;
 }

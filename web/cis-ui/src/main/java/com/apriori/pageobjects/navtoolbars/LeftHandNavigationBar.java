@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.COST_COMPLETE;
 import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
@@ -193,7 +193,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                 .digitalFactory(digitalFactoryEnum)
                 .user(userCredentials)
                 .build());
-        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + COST_COMPLETE);
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + COST_COMPLETE);
         scenariosUtil.postPublishScenario(scenarioItem);
         return this;
     }
@@ -262,7 +262,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
             .user(userCredentials)
             .build());
 
-        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
         scenariosUtil.postPublishScenario(myComponent);
         return this;
     }
