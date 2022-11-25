@@ -164,20 +164,6 @@ public class FileResourceUtil {
     }
 
     /**
-     * Delete local file
-     *
-     * @param fileNamePath path to file
-     */
-    public static void deleteIfExistsLocalFile(String fileNamePath) {
-        try {
-            Files.deleteIfExists(Paths.get(fileNamePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
      * Connect to AWS S3 client
      *
      * @return S3Client instance
@@ -289,13 +275,13 @@ public class FileResourceUtil {
      * Verify that downloaded file exists (in: user.home/Downloads/{file_name}
      *
      * @param resourceFileName - the file name path
-     * @return file boolean
+     * @return boolean
      */
-    public static BasicFileAttributes isDownloadFileExists(String resourceFileName) {
+    public static boolean isDownloadFileExists(String resourceFileName) {
         try {
             Path path = Paths.get(resourceFileName);
             return awaitFile(path,3000);
-        } catch (RuntimeException | IOException | InterruptedException e) {
+        } catch (RuntimeException e) {
             throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
         }
     }
@@ -395,58 +381,55 @@ public class FileResourceUtil {
     }
 
     /**
-     * wait certain time to check if file exists(appear) in the certain location
+     * wait certain time to check if file exists(appear) if exists - delete it
      *
-     * @param target - path to the file
-     * @param timeout - how long wait to appear
-     * @return BasicFileAttributes is file exists and null if file does not exist
+     * @param path - path to the file
+     * @param waitTimeInSec - how long wait to appear
+     *
      * @throws Exception
      */
-    public static BasicFileAttributes awaitFile(Path target, long timeout)
-        throws IOException, InterruptedException {
-        final Path name = target.getFileName();
-        final Path targetDir = target.getParent();
+    public static void deleteFileIfExist(Path path, Integer waitTimeInSec) {
+        long initialTime = System.currentTimeMillis() / 1000;
 
-        // If path already exists, return early
-        try {
-            return Files.readAttributes(target, BasicFileAttributes.class);
-        } catch (NoSuchFileException ex) {
-            ex.printStackTrace();
-        }
-
-        final WatchService watchService = FileSystems.getDefault().newWatchService();
-        try {
-            final WatchKey watchKey = targetDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-            // The file could have been created in the window between Files.readAttributes and Path.register
+        do {
             try {
-                return Files.readAttributes(target, BasicFileAttributes.class);
-            } catch (NoSuchFileException ex) {
-                ex.printStackTrace();
+                Thread.sleep(200);
+
+                if (Files.deleteIfExists(path)) {
+                    log.info("File was removed. File path: {}", path);
+                    return;
+                }
+            } catch (IOException | InterruptedException e) {
+                log.error("Failed to remove file.");
+                throw new IllegalArgumentException(e);
             }
-            // The file is absent: watch events in parent directory
-            WatchKey watchKey1 = null;
-            boolean valid = true;
-            do {
-                long t0 = System.currentTimeMillis();
-                watchKey1 = watchService.poll(timeout, TimeUnit.MILLISECONDS);
-                if (watchKey1 == null) {
-                    return null; // timed out
+        } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
+    }
+
+    /**
+     * wait certain time to check if file exists(appear) if exists - delete it
+     *
+     * @param path - path to the file
+     * @param waitTimeInSec - how long wait to appear
+     *
+     * @throws Exception
+     */
+    public static boolean awaitFile(Path path, Integer waitTimeInSec) {
+        long initialTime = System.currentTimeMillis() / 1000;
+
+        do {
+            try {
+                Thread.sleep(200);
+
+                if (Files.exists(path)) {
+                    log.info("File exists");
+                    return true;
                 }
-                // Examine events associated with key
-                for (WatchEvent<?> event: watchKey1.pollEvents()) {
-                    Path path1 = (Path) event.context();
-                    if (path1.getFileName().equals(name)) {
-                        return Files.readAttributes(target, BasicFileAttributes.class);
-                    }
-                }
-                // Did not receive an interesting event; re-register key to queue
-                long elapsed = System.currentTimeMillis() - t0;
-                timeout = elapsed < timeout ? (timeout - elapsed) : 0L;
-                valid = watchKey1.reset();
-            } while (valid);
-        } finally {
-            watchService.close();
-        }
-        return null;
+                return false;
+            } catch (InterruptedException e) {
+                log.error("File does not exist");
+                throw new IllegalArgumentException(e);
+            }
+        } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
     }
 }

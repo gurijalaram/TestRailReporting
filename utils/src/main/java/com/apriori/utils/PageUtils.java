@@ -667,32 +667,6 @@ public class PageUtils {
     }
 
     /**
-     * Checks the specific elements number are displayed
-     *
-     * @param element - the element
-     * @return int
-     */
-    public List<WebElement> waitForSpecificElementsNumberToAppear(By element, int size) {
-        long webDriverWait = 5L;
-        int retries = 0;
-        int maxRetries = 12;
-
-        while (retries < maxRetries) {
-            try {
-
-                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
-                    .ignoreAll(ignoredWebDriverExceptions)
-                    .until(numberOfElementsToBe(element,size));
-
-            } catch (Exception e) {
-                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
-                retries++;
-            }
-        }
-        return driver.findElements(element);
-    }
-
-    /**
      * Checks element is not displayed by size
      *
      * @param element - the element
@@ -722,6 +696,32 @@ public class PageUtils {
             }
         }
         return element;
+    }
+
+    /**
+     * Checks the specific elements number are displayed
+     *
+     * @param element - the element
+     * @return int
+     */
+    public List<WebElement> waitForSpecificElementsNumberToAppear(By element, int size) {
+        long webDriverWait = 5L;
+        int retries = 0;
+        int maxRetries = 12;
+
+        while (retries < maxRetries) {
+            try {
+
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(numberOfElementsToBe(element,size));
+
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+        }
+        return driver.findElements(element);
     }
 
     /**

@@ -24,6 +24,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 public class UploadTests extends TestBase {
 
@@ -144,6 +145,6 @@ public class UploadTests extends TestBase {
 
         softAssertions.assertThat(FileResourceUtil.isDownloadFileExists(filePath)).isNotNull();
         softAssertions.assertAll();
-        FileResourceUtil.deleteIfExistsLocalFile(filePath);
+        FileResourceUtil.deleteFileIfExist(Paths.get(filePath),1);
     }
 }
