@@ -381,7 +381,7 @@ public class FileResourceUtil {
     }
 
     /**
-     * wait certain time to check if file exists(appear) if exists - delete it
+     * wait certain time to check if file exists(appear)  - if exists - delete it
      *
      * @param path - path to the file
      * @param waitTimeInSec - how long wait to appear
@@ -407,7 +407,7 @@ public class FileResourceUtil {
     }
 
     /**
-     * wait certain time to check if file exists(appear) if exists - delete it
+     * wait certain time to check if file exists(appear)
      *
      * @param path - path to the file
      * @param waitTimeInSec - how long wait to appear
