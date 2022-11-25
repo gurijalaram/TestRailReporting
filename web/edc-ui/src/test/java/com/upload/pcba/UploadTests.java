@@ -143,8 +143,7 @@ public class UploadTests extends TestBase {
             electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
         String filePath = downloadPath + bomIdName + ".csv";
 
-        softAssertions.assertThat(FileResourceUtil.isDownloadFileExists(filePath)).isNotNull();
+        softAssertions.assertThat(FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath),3)).isTrue();
         softAssertions.assertAll();
-        FileResourceUtil.deleteFileIfExist(Paths.get(filePath),1);
     }
 }

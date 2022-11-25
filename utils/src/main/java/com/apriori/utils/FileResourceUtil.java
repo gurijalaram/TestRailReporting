@@ -271,21 +271,6 @@ public class FileResourceUtil {
         }
     }
 
-    /**
-     * Verify that downloaded file exists (in: user.home/Downloads/{file_name}
-     *
-     * @param resourceFileName - the file name path
-     * @return boolean
-     */
-    public static boolean isDownloadFileExists(String resourceFileName) {
-        try {
-            Path path = Paths.get(resourceFileName);
-            return awaitFile(path,3000);
-        } catch (RuntimeException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' does not exist: ", resourceFileName, e));
-        }
-    }
-
     public static File copyIntoTempFile(final InputStream inputStreamOfOriginalFile, final String additionalPath, final String fileName) {
         if (inputStreamOfOriginalFile == null) {
             return null;
@@ -388,22 +373,22 @@ public class FileResourceUtil {
      *
      * @throws Exception
      */
-    public static void deleteFileIfExist(Path path, Integer waitTimeInSec) {
+    public static Boolean deleteFileWhenAppears(Path path, Integer waitTimeInSec) {
         long initialTime = System.currentTimeMillis() / 1000;
-
         do {
             try {
                 Thread.sleep(200);
-
                 if (Files.deleteIfExists(path)) {
                     log.info("File was removed. File path: {}", path);
-                    return;
+                    return true;
                 }
             } catch (IOException | InterruptedException e) {
                 log.error("Failed to remove file.");
                 throw new IllegalArgumentException(e);
             }
         } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
+
+        return false;
     }
 
     /**
@@ -414,22 +399,4 @@ public class FileResourceUtil {
      *
      * @throws Exception
      */
-    public static boolean awaitFile(Path path, Integer waitTimeInSec) {
-        long initialTime = System.currentTimeMillis() / 1000;
-
-        do {
-            try {
-                Thread.sleep(200);
-
-                if (Files.exists(path)) {
-                    log.info("File exists");
-                    return true;
-                }
-                return false;
-            } catch (InterruptedException e) {
-                log.error("File does not exist");
-                throw new IllegalArgumentException(e);
-            }
-        } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
-    }
 }

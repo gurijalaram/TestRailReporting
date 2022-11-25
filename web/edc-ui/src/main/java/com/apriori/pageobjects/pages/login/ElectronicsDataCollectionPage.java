@@ -129,7 +129,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         WebElement  firstLinkElement = getDriver().findElement(By.xpath("//div[@class = 'panel-body']/a[1]"));
         String bomID = firstLinkElement.getAttribute("id");
         String filePath = downloadPath + bomID + ".csv";
-        FileResourceUtil.deleteFileIfExist(Paths.get(filePath),1);
+        FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath),1);
         By optionXpath = By.xpath(String.format("//span[contains(.,'%s')]", option.getOption()));
         WebElement optionChosen = firstDivElement.findElement(optionXpath);
 
