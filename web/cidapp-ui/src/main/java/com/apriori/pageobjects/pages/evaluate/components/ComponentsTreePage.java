@@ -239,8 +239,9 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return new page object
      */
     public ComponentsTreePage updateCadFile(File filePath) {
-        return assembliesComponentsController.updateCadFile(filePath, ComponentsTreePage.class);
-        // return this;
+        assembliesComponentsController.updateCadFile(filePath, ComponentsTreePage.class);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 2);
+        return this;
     }
 
     /**

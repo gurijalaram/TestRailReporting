@@ -118,7 +118,6 @@ public class UpdateCADFileTests extends TestBase {
             .build();
 
         assemblyInfo.addSubComponent(helmInfo);
-        // ToDo:- All falls apart here... No idea why
         soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
             .as("Verify that CAD file update is being processed").isEqualTo("gear");
         componentsTreePage.checkSubcomponentState(assemblyInfo, autoHelm);
