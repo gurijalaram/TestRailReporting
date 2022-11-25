@@ -33,7 +33,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement saveAsButton;
     @FindBy(css = "[data-icon='pencil']")
     private WebElement renameButton;
-    @FindBy(css = "button [data-icon='times-circle']")
+    @FindBy(css = "button [data-icon='circle-xmark']")
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
@@ -407,4 +407,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public <T> T save(Class<T> klass) {
         return modalDialogController.save(klass);
     }
+
+    /**
+     * Get clickable status of Save button
+     *
+     * @return Boolean value of Save button status
+     */
+    public Boolean isSaveEnabled() { return modalDialogController.isSaveEnabled(); }
 }

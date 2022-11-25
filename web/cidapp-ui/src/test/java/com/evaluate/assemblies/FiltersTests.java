@@ -575,4 +575,48 @@ public class FiltersTests extends TestBase {
 
         assertThat(explorePage.getCurrentFilter()).isEqualTo(filterName);
     }
+
+    @Test
+    @TestRail(testCaseId = "6100")
+    @Description("Validate that user can cancel action New, Rename, Save As before saving")
+    public void cancelFilterTest() {
+        SoftAssertions soft = new SoftAssertions();
+
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+        String cancelledFilterName = generateStringUtil.generateFilterName();
+
+        explorePage = loginPage.login(currentUser)
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .submit(ExplorePage.class);
+
+        filterPage = explorePage.filter()
+            .newFilter()
+            .inputName(cancelledFilterName);
+
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (New)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (New)").isFalse();
+
+        filterPage.saveAs()
+            .inputName(cancelledFilterName);
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (Save As)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (Save As)").isFalse();
+        explorePage = filterPage.cancel(ExplorePage.class);
+
+        filterPage = explorePage.filter()
+            .selectFilter(filterName)
+            .rename()
+            .inputName(cancelledFilterName);
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (Rename)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (Rename)").isFalse();
+        soft.assertThat(filterPage.getAllFilters()).as("Cancelled filter name not present in list").doesNotContain(cancelledFilterName);
+
+        soft.assertAll();
+    }
 }
