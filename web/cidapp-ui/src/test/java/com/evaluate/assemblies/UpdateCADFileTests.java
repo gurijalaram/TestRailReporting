@@ -4,10 +4,9 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.pageobjects.common.FilterPage;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -20,6 +19,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import java.util.List;
 
 public class UpdateCADFileTests extends TestBase {
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private ComponentsTreePage componentsTreePage;
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -95,17 +95,17 @@ public class UpdateCADFileTests extends TestBase {
 
         evaluatePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName);
-        componentsListPage = evaluatePage.clickActions()
+        componentsTreePage = evaluatePage.clickActions()
             .updateCadFile(modifiedAutoAsm)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
-        soft.assertThat(componentsListPage.getListOfSubcomponents().contains(autoHelm.toUpperCase())).as("Verify new Sub-Component after CAD update")
+        soft.assertThat(componentsTreePage.getListOfSubcomponents().contains(autoHelm.toUpperCase())).as("Verify new Sub-Component after CAD update")
             .isTrue();
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHelm)).as("Verify new Sub-Component is struck out").isTrue();
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoHelm)).as("Verify new Sub-Component is struck out").isTrue();
 
-        componentsListPage.multiSelectSubcomponents(autoHelm + "," + scenarioName)
-                .updateCadFile(autoHelmFile);
+        componentsTreePage.multiSelectSubcomponents(autoHelm + "," + scenarioName)
+            .updateCadFile(autoHelmFile);
 
         List<ScenarioItem> autoHelmDetails = componentsUtil.getUnCostedComponent(autoHelm, scenarioName, currentUser);
 
@@ -118,15 +118,22 @@ public class UpdateCADFileTests extends TestBase {
             .build();
 
         assemblyInfo.addSubComponent(helmInfo);
+        // ToDo:- All falls apart here... No idea why
+        soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
+            .as("Verify that CAD file update is being processed").isEqualTo("gear");
+        componentsTreePage.checkSubcomponentState(assemblyInfo, autoHelm);
+        evaluatePage.clickRefresh(EvaluatePage.class);
+        soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
+            .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
 
-        componentsListPage.multiSelectSubcomponents(autoHead + "," + scenarioName)
+        componentsTreePage.multiSelectSubcomponents(autoHead + "," + scenarioName)
                 .updateCadFile(modifiedAutoHeadFile);
 
-        soft.assertThat(componentsListPage.getScenarioState(autoHead, scenarioName))
+        soft.assertThat(componentsTreePage.getScenarioState(autoHead, scenarioName))
             .as("Verify that CAD file update is being processed").isEqualTo("gear");
-        componentsListPage.checkSubcomponentState(assemblyInfo, autoHead);
+        componentsTreePage.checkSubcomponentState(assemblyInfo, autoHead);
         evaluatePage.clickRefresh(EvaluatePage.class);
-        soft.assertThat(componentsListPage.getScenarioState(autoHead, scenarioName))
+        soft.assertThat(componentsTreePage.getScenarioState(autoHead, scenarioName))
             .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
 
         soft.assertAll();
@@ -147,23 +154,23 @@ public class UpdateCADFileTests extends TestBase {
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
 
-        scenarioUtil.publishScenario(assemblyInfo.getSubComponents().get(5), null);
+        scenarioUtil.publishScenario(assemblyInfo.getSubComponents().get(5), null, HttpStatus.SC_CREATED);
 
-        componentsListPage = new CidAppLoginPage(driver).login(currentUser)
+        componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName)
             .openComponents();
 
-        soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled when nothing selected").isFalse();
-        componentsListPage.multiSelectSubcomponents(autoArm + "," + scenarioName);
-        soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is enabled").isTrue();
-        componentsListPage.multiSelectSubcomponents(autoTorso + "," + scenarioName);
-        soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after 2 selected").isFalse();
+        soft.assertThat(componentsTreePage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled when nothing selected").isFalse();
+        componentsTreePage.multiSelectSubcomponents(autoArm + "," + scenarioName);
+        soft.assertThat(componentsTreePage.isCadButtonEnabled()).as("Verify Update CAD file button is enabled").isTrue();
+        componentsTreePage.multiSelectSubcomponents(autoTorso + "," + scenarioName);
+        soft.assertThat(componentsTreePage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after 2 selected").isFalse();
 
-        componentsListPage.multiSelectSubcomponents(autoArm + "," + scenarioName, autoTorso + "," + scenarioName);
+        componentsTreePage.multiSelectSubcomponents(autoArm + "," + scenarioName, autoTorso + "," + scenarioName);
 
-        soft.assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.PUBLIC, autoFoot.toUpperCase())).as("Verify sub-component is Public").isTrue();
-        componentsListPage.multiSelectSubcomponents(autoFoot + "," + scenarioName);
-        soft.assertThat(componentsListPage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after Public sub-component selected").isFalse();
+        soft.assertThat(componentsTreePage.isIconDisplayed(StatusIconEnum.PUBLIC, autoFoot.toUpperCase())).as("Verify sub-component is Public").isTrue();
+        componentsTreePage.multiSelectSubcomponents(autoFoot + "," + scenarioName);
+        soft.assertThat(componentsTreePage.isCadButtonEnabled()).as("Verify Update CAD file button is disabled after Public sub-component selected").isFalse();
 
         soft.assertAll();
     }
@@ -191,29 +198,29 @@ public class UpdateCADFileTests extends TestBase {
 
         evaluatePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName);
-        componentsListPage = evaluatePage.openComponents();
+        componentsTreePage = evaluatePage.openComponents();
 
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
-        soft.assertThat(componentsListPage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        soft.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
                 .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
 
-        componentsListPage.multiSelectSubcomponents(autoSword + "," + scenarioName)
+        componentsTreePage.multiSelectSubcomponents(autoSword + "," + scenarioName)
             .updateCadFile(autoSwordFile);
 
         List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
         subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
         subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
 
-        soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
+        soft.assertThat(componentsTreePage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update is being processed").isEqualTo("gear");
         scenarioUtil.getScenarioRepresentation(subAssemblyInfo);
         evaluatePage.clickRefresh(EvaluatePage.class);
-        soft.assertThat(componentsListPage.getScenarioState(autoSword, scenarioName))
+        soft.assertThat(componentsTreePage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update completed successfully").isEqualTo("circle-minus");
 
-        componentsListPage.expandSubAssembly(autoSword, scenarioName);
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is struck out").isTrue();
-        componentsListPage.multiSelectSubcomponents(autoHandle + "," + scenarioName)
+        componentsTreePage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is struck out").isTrue();
+        componentsTreePage.multiSelectSubcomponents(autoHandle + "," + scenarioName)
             .updateCadFile(autoHandleFile);
 
         List<ScenarioItem> autoHandleDetails = componentsUtil.getUnCostedComponent(autoHandle, scenarioName, currentUser);
@@ -228,16 +235,16 @@ public class UpdateCADFileTests extends TestBase {
 
         subAssemblyInfo.addSubComponent(handleInfo);
 
-        componentsListPage.expandSubAssembly(autoSword, scenarioName);
-        soft.assertThat(componentsListPage.getScenarioState(autoHandle, scenarioName))
+        componentsTreePage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsTreePage.getScenarioState(autoHandle, scenarioName))
             .as("Verify that CAD file update is being processed").isEqualTo("gear");
-        componentsListPage.checkSubcomponentState(subAssemblyInfo, autoHandle);
+        componentsTreePage.checkSubcomponentState(subAssemblyInfo, autoHandle);
         evaluatePage.clickRefresh(EvaluatePage.class);
-        componentsListPage.expandSubAssembly(autoSword, scenarioName);
-        soft.assertThat(componentsListPage.getScenarioState(autoHandle, scenarioName))
+        componentsTreePage.expandSubAssembly(autoSword, scenarioName);
+        soft.assertThat(componentsTreePage.getScenarioState(autoHandle, scenarioName))
             .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is not struck out").isFalse();
-        soft.assertThat(componentsListPage.getRowDetails(autoHandle, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoHandle)).as("Verify Missing Sub-Assembly sub-component is not struck out").isFalse();
+        soft.assertThat(componentsTreePage.getRowDetails(autoHandle, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
             .as("Missing part now CAD Connected").isTrue();
         soft.assertAll();
     }
@@ -257,26 +264,26 @@ public class UpdateCADFileTests extends TestBase {
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
 
-        componentsListPage = new CidAppLoginPage(driver).login(currentUser)
+        componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(autoBotAsm, scenarioName)
             .openComponents();
 
-        soft.assertThat(componentsListPage.getListOfSubcomponents().contains(autoArm.toUpperCase())).as("Verify missing Arm component added as virtual part")
+        soft.assertThat(componentsTreePage.getListOfSubcomponents().contains(autoArm.toUpperCase())).as("Verify missing Arm component added as virtual part")
             .isTrue();
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoArm)).as("Verify Arm sub-component is struck out").isTrue();
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoArm)).as("Verify Arm sub-component is struck out").isTrue();
 
-        EvaluatePage secondaryEvaluatePage = componentsListPage.openAssembly(autoArm, scenarioName);
+        EvaluatePage secondaryEvaluatePage = componentsTreePage.openAssembly(autoArm, scenarioName);
         evaluatePage = secondaryEvaluatePage.clickActions()
             .updateCadFile(autoArmFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .closeNewlyOpenedTab();
 
-        componentsListPage = evaluatePage.clickRefresh(EvaluatePage.class)
+        componentsTreePage = evaluatePage.clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoArm))
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoArm))
             .as("Verify Arm sub-component is no longer struck out").isFalse();
-        soft.assertThat(componentsListPage.getRowDetails(autoArm, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+        soft.assertThat(componentsTreePage.getRowDetails(autoArm, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
             .as("Verify CAD connected icon is present");
 
         List<ScenarioItem> autoArmDetails = componentsUtil.getUnCostedComponent(autoArm, scenarioName, currentUser);
@@ -290,17 +297,17 @@ public class UpdateCADFileTests extends TestBase {
 
         assemblyInfo.addSubComponent(armInfo);
 
-        secondaryEvaluatePage = componentsListPage.openAssembly(autoHead, scenarioName);
+        secondaryEvaluatePage = componentsTreePage.openAssembly(autoHead, scenarioName);
         evaluatePage = secondaryEvaluatePage.clickActions()
             .updateCadFile(modifiedAutoHeadFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .closeNewlyOpenedTab();
-        componentsListPage = evaluatePage.clickRefresh(EvaluatePage.class)
+        componentsTreePage = evaluatePage.clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        soft.assertThat(componentsListPage.isTextDecorationStruckOut(autoHead))
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoHead))
             .as("Verify Head sub-component is no longer struck out").isFalse();
-        soft.assertThat(componentsListPage.getRowDetails(autoHead, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+        soft.assertThat(componentsTreePage.getRowDetails(autoHead, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
             .as("Verify CAD connected icon is present");
 
         soft.assertAll();
