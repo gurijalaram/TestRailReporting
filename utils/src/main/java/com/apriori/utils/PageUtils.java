@@ -714,7 +714,7 @@ public class PageUtils {
 
                 return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
-                    .until(numberOfElementsToBe(element,size));
+                    .until(numberOfElementsToBe(element, size));
 
             } catch (Exception e) {
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));

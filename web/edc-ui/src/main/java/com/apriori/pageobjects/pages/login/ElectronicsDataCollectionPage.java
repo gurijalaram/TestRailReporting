@@ -2,14 +2,12 @@ package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.RightClickOptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.io.File;

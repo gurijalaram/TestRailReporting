@@ -1,7 +1,5 @@
 package com.upload.pcba;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
