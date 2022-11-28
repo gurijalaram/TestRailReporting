@@ -104,7 +104,6 @@ public class ComponentRedirectTests {
             .publishRequest(PublishRequest.builder().override(true).build())
             .build();
 
-        componentsUtil.postComponent(existingPart);
         ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
