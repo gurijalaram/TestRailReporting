@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.entity.builder;
 
 import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -32,8 +33,7 @@ public class ComponentInfoBuilder {
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
     private PostComponentResponse component;
-    private String assignedTo;
-    private String status;
+    private PublishRequest publishRequest;
     @Builder.Default
     private final boolean overrideScenario = false;
     private String costingTemplateId;
