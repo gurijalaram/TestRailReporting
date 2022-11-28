@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -41,7 +42,6 @@ public class ComponentRedirectTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-
         ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
@@ -68,7 +68,6 @@ public class ComponentRedirectTests {
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
 
         ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
             .componentName(componentName)
@@ -97,16 +96,14 @@ public class ComponentRedirectTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-
         ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
             .user(currentUser)
-            .overrideScenario(true)
+            .publishRequest(PublishRequest.builder().override(true).build())
             .build();
 
-        componentsUtil.postComponent(existingPart);
         ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
@@ -126,7 +123,6 @@ public class ComponentRedirectTests {
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
 
         ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
             .componentName(componentName)

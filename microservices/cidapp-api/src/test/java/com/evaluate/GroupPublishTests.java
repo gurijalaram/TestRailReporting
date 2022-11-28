@@ -90,7 +90,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
@@ -111,7 +111,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest2)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
