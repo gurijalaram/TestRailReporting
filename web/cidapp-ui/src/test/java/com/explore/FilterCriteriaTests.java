@@ -331,13 +331,14 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void testCancelNewSaveRename() {
         currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
         filterPage = new ExplorePage(driver)
             .filter()
             .newFilter()
-            .inputName("Test Filter")
+            .inputName(filterName)
             .save(FilterPage.class)
             .newFilter();
 
@@ -358,7 +359,7 @@ public class FilterCriteriaTests extends TestBase {
 
         filterPage.cancel(FilterPage.class);
 
-        softAssertion.assertThat(filterPage.isElementDisplayed("Test Filter", "text-overflow")).isTrue();
+        softAssertion.assertThat(filterPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
 
         softAssertion.assertAll();
     }
@@ -368,13 +369,15 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Verify that filter values for cost results are converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesToEUR() {
         currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
         explorePage = new ExplorePage(driver)
             .filter()
             .newFilter()
-            .inputName("Test Filter")
+            .inputName(filterName)
             .addCriteria(PropertyEnum.TOTAL_CAPITAL_INVESTMENT, OperationEnum.LESS_THAN, "1")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -385,7 +388,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getPropertyValue(), is("0.847946"));
+        assertThat(filterPage.getFilterValue(PropertyEnum.TOTAL_CAPITAL_INVESTMENT), equalTo("0.847946"));
     }
 
     @Test
@@ -393,13 +396,15 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Verify that filter value for Finish Mass is converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesToGram() {
         currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
         explorePage = new ExplorePage(driver)
             .filter()
             .newFilter()
-            .inputName("Test Filter")
+            .inputName(filterName)
             .addCriteria(PropertyEnum.FINISH_MASS, OperationEnum.GREATER_THAN, "1")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -410,7 +415,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getPropertyValue(), is("1000"));
+        assertThat(filterPage.getFilterValue(PropertyEnum.FINISH_MASS), equalTo("1000"));
     }
 
     @Test
@@ -418,13 +423,15 @@ public class FilterCriteriaTests extends TestBase {
     @Description("Verify that filter value for Cycle Time is converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesForCycleTime() {
         currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
         explorePage = new ExplorePage(driver)
             .filter()
             .newFilter()
-            .inputName("Test Filter")
+            .inputName(filterName)
             .addCriteria(PropertyEnum.CYCLE_TIME, OperationEnum.GREATER_THAN, "60")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -432,7 +439,6 @@ public class FilterCriteriaTests extends TestBase {
         filterPage = explorePage.openSettings()
             .selectUnits(UnitsEnum.CUSTOM)
             .selectTime(TimeEnum.MINUTE)
-            .selectCurrency(CurrencyEnum.EUR)
             .submit(ExplorePage.class)
             .filter();
 
