@@ -617,7 +617,7 @@ public class ScenariosUtil {
             ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                     SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .stream()
-                .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
+                .filter(o -> !o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
                 .findFirst()
                 .get();
 
