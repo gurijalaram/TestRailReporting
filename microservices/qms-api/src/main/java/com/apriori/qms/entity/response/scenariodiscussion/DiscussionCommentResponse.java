@@ -1,4 +1,4 @@
-package entity.response;
+package com.apriori.qms.entity.response.scenariodiscussion;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
@@ -12,19 +12,20 @@ import java.util.ArrayList;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DmsCommentResponseSchema.json")
-public class DmsCommentResponse {
+@Schema(location = "DiscussionCommentResponseSchema.json")
+public class DiscussionCommentResponse {
     private String identity;
-    private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String status;
-    private String content;
-    private ArrayList<DmsParticipant> mentionedUsers;
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime publishedAt;
-    private ArrayList<DmsCommentViewResponse> commentView;
-    private String updatedBy;
+    private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
+    private String content;
+    private String discussionIdentity;
+    private String status;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime publishedAt;
+    private ArrayList<CommentView> commentView;
+    private ArrayList<Object> mentionedUsers;
 }
