@@ -18,6 +18,7 @@ import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
@@ -529,6 +530,22 @@ public class ScenariosUtil {
                 .body("costingTemplate", componentInfo.getCostingTemplate());
 
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Calls an api with the GET verb
+     *
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public CostingTemplates getCostingTemplate(UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplates.class)
+                .token(userCredentials.getToken());
+
+        ResponseWrapper<CostingTemplates> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity();
     }
