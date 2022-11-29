@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.entity.request.GroupPublishRequest;
@@ -18,7 +17,6 @@ import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
@@ -256,13 +254,10 @@ public class ScenariosUtil {
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs",
-                    CostRequest.builder()
-                        .costingTemplateIdentity(
-                            getCostingTemplateId(componentInfo)
-                                .getIdentity())
-                        .deleteTemplateAfterUse(true)
-                        .build());
+                .body("costingInputs", CostingTemplate.builder()
+                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getIdentity())
+                    .deleteTemplateAfterUse(componentInfo.getCostingTemplate().getDeleteTemplateAfterUse())
+                    .build());
 
         HTTPRequest.build(requestEntity).post();
 
@@ -510,7 +505,7 @@ public class ScenariosUtil {
     }
 
     /**
-     * GET costing template id
+     * Calls an api with the GET verb
      *
      * @return scenario object
      */
@@ -519,11 +514,12 @@ public class ScenariosUtil {
     }
 
     /**
-     * POST costing template
+     * Calls an api with the POST verb
      *
-     * @return scenario object
+     * @param componentInfo - the component info object
+     * @return response object
      */
-    private CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
+    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
                 .token(componentInfo.getUser().getToken())
@@ -540,12 +536,29 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public CostingTemplates getCostingTemplate(UserCredentials userCredentials) {
+    public CostingTemplate getCostingTemplateIdentity(UserCredentials userCredentials, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplates.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES_ID, CostingTemplate.class)
+                .inlineVariables(inlineVariables)
                 .token(userCredentials.getToken());
 
-        ResponseWrapper<CostingTemplates> response = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Calls an api with the GET verb
+     *
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public CostingTemplate getCostingTemplate(UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
+                .token(userCredentials.getToken());
+
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity();
     }

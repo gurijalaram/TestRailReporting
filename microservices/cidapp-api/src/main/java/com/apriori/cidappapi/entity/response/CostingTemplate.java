@@ -25,6 +25,7 @@ import java.util.List;
 @JsonRootName("response")
 public class CostingTemplate {
     private String identity = null;
+    private String costingTemplateIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;

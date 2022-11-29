@@ -1,0 +1,87 @@
+package com.evaluate;
+
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
+
+import org.assertj.core.api.SoftAssertions;
+import org.junit.Test;
+
+import java.io.File;
+
+public class CostingTemplateTests {
+
+    ComponentsUtil componentsUtil = new ComponentsUtil();
+    SoftAssertions softAssertions = new SoftAssertions();
+    ScenariosUtil scenariosUtil = new ScenariosUtil();
+
+    @Test
+    public void testCostingTemplateId() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "Machined Box AMERICAS";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder costingInfo = ComponentInfoBuilder.builder()
+            .costingTemplate(CostingTemplate.builder()
+                .annualVolume(4400)
+                .batchSize(7)
+                .productionLife(2.5)
+                .processGroupName(ProcessGroupEnum.CASTING.getProcessGroup())
+                .build())
+            .user(currentUser)
+            .build();
+
+        CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSSUncosted(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(currentUser)
+                .costingTemplate(costingTemplateId)
+                .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(currentUser, costingTemplateId.getIdentity());
+
+        softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(4400);
+        softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(7);
+        softAssertions.assertThat(costingTemplate.getProductionLife()).isEqualTo(2.5);
+        softAssertions.assertThat(costingTemplate.getProductionLife()).isNotEqualTo(9.5);
+        softAssertions.assertThat(costingTemplate.getProcessGroupName()).isEqualTo(ProcessGroupEnum.CASTING.getProcessGroup());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void testCostingTemplate() {
+        final UserCredentials currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder costingInfo = ComponentInfoBuilder.builder()
+            .costingTemplate(CostingTemplate.builder()
+                .annualVolume(4400)
+                .batchSize(3)
+                .productionLife(2.5)
+                .processGroupName(ProcessGroupEnum.CASTING.getProcessGroup())
+                .build())
+            .user(currentUser)
+            .build();
+
+        CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
+
+        softAssertions.assertThat(costingTemplateId.getIdentity()).isNotEmpty();
+        softAssertions.assertThat(costingTemplateId.getBatchSize()).isEqualTo(3);
+
+        softAssertions.assertAll();
+    }
+}
