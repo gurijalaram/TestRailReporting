@@ -24,10 +24,10 @@ public class AccountsUtil extends TestUtil {
      */
     public static List<AccountsResponse> getAllAccounts() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsItemsResponse.class);
+            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsItemsResponse.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccountsItemsResponse> getAllAccountsResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllAccountsResponse.getStatusCode());
 
         return getAllAccountsResponse.getResponseEntity().getItems();
     }
@@ -39,7 +39,7 @@ public class AccountsUtil extends TestUtil {
      * @return the response object
      */
     public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity) {
-        return getAccountByIdentity(identity, AccountsResponse.class);
+        return getAccountByIdentity(identity, AccountsResponse.class, HttpStatus.SC_OK);
     }
 
     /**
@@ -49,8 +49,9 @@ public class AccountsUtil extends TestUtil {
      * @param klass    - the klass
      * @return response object
      */
-    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity, Class klass) {
-        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, klass);
+    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity, Class klass, Integer expectedResponseCode) {
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, klass)
+            .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -63,7 +64,8 @@ public class AccountsUtil extends TestUtil {
     public ResponseWrapper<AccountsResponse> postCreateNewAccount() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsResponse.class)
-                .body(postBodyInformation());
+                .body(postBodyInformation())
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -84,7 +86,8 @@ public class AccountsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<AccountsResponse> deleteAccountByIdentity(String identity) {
-        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, null);
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, null)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -99,7 +102,8 @@ public class AccountsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.ACCOUNT_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity)
-                .body(postBodyInformation());
+                .body(postBodyInformation())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -127,8 +131,8 @@ public class AccountsUtil extends TestUtil {
     public ResponseWrapper<AccountsResponse> postRefreshLicense(String identity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
-
-                .inlineVariables(identity);
+                .inlineVariables(identity)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -140,7 +144,8 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> getActiveAccount() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class);
+            RequestEntityUtil.init(EDCAPIEnum.CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
     }

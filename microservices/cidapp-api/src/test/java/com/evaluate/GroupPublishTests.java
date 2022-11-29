@@ -90,7 +90,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
@@ -111,7 +111,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest2)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
@@ -799,62 +799,6 @@ public class GroupPublishTests {
 
         publishSuccessFailure2.getResponseEntity()
             .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Resource 'Scenario' with identity '" + UNKNOWN_SCENARIO_ID + "' was not found"));
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(testCaseId = {"10955"})
-    @Description("Attempt to edit a sub-component that does not exist")
-    public void testEditSubcomponentThatDoesNotExist() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String STAND = "stand";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-        final List<String> subComponentNames = Arrays.asList(STAND, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
-        final String UNKNOWN_SCENARIO_ID = "41EBF4GGGGGG";
-        final String UNKNOWN_COMPONENT_ID = "A5C6KLGMOYA";
-        final String UNKNOWN_SCENARIO_ID2 = "41EBF4HJEKTU";
-        final String UNKNOWN_COMPONENT_ID2 = "A5C6KLGZLATI";
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-
-        ForkRequest forkRequest = ForkRequest.builder()
-            .override(false)
-            .scenarioName(scenarioName)
-            .groupItems(Arrays.asList(
-                GroupItems.builder()
-                    .componentIdentity(UNKNOWN_COMPONENT_ID)
-                    .scenarioIdentity(UNKNOWN_SCENARIO_ID)
-                    .build(),
-                GroupItems.builder()
-                    .componentIdentity(UNKNOWN_COMPONENT_ID2)
-                    .scenarioIdentity(UNKNOWN_SCENARIO_ID2)
-                    .build()))
-            .build();
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        ErrorMessage errorResponse = scenariosUtil.postSimpleEditPublicGroupScenarios(componentAssembly, forkRequest, ErrorMessage.class).getResponseEntity();
-
-        subComponentNames.forEach(subcomponent -> {
-            softAssertions.assertThat(errorResponse.getError()).isEqualTo("Bad Request");
-            softAssertions.assertThat(errorResponse.getMessage()).isEqualTo("'componentIdentity' is not a valid identity.");
-        });
 
         softAssertions.assertAll();
     }

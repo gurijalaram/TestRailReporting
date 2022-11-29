@@ -9,7 +9,6 @@ import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -41,37 +40,27 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "9415")
     @Description("DELETE a bill of materials")
     public void testDeleteBomByIdentity() {
-        ResponseWrapper<BillOfMaterialsResponse> postResponse = postBillOfMaterials(filename);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
-        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
+        String postResponseIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
 
-        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(postResponseIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+        getBillOfMaterialById(postResponseIdentity);
 
-        ResponseWrapper<BillOfMaterialsResponse> deleteResponse = deleteBillOfMaterialById(postResponseIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, deleteResponse.getStatusCode());
+        deleteBillOfMaterialById(postResponseIdentity);
 
-        ResponseWrapper<BillOfMaterialsResponse> getResponseDeleted = getBillOfMaterialById(postResponseIdentity, null);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, getResponseDeleted.getStatusCode());
+        getBillOfMaterialById(postResponseIdentity, null, HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
     @TestRail(testCaseId = "9413")
     @Description("POST Upload a new bill of materials")
     public void testPostBillOfMaterials() {
-        ResponseWrapper<BillOfMaterialsResponse> postResponse = postBillOfMaterials(filename);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
-
-        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(postResponse.getResponseEntity().getIdentity());
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+        getBillOfMaterialById(postBillOfMaterials(filename).getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = "9414")
     @Description("GET the current representation of a bill of materials")
     public void testGetBillOfMaterialsById() {
-        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(billOfMaterialsIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+        getBillOfMaterialById(billOfMaterialsIdentity);
     }
 
     @Test
@@ -86,7 +75,6 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "9416")
     @Description("POST Export a bill of materials as a CSV file.")
     public void testExportBomAsCsvFile() {
-        ResponseWrapper<BillOfMaterialsResponse> responseWrapper = postExportBomAsCsvFile(billOfMaterialsIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        postExportBomAsCsvFile(billOfMaterialsIdentity);
     }
 }

@@ -23,13 +23,14 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     //SCENARIOS
     COMPONENT_SCENARIOS("components/%s/scenarios"),
     COMPONENT_SCENARIO("components/%s/scenarios/%s"),
+    COMPONENT_SCENARIO_USERS("components/%s/scenarios/%s/users"),
 
     //SCENARIO_DISCUSSIONS
     SCENARIO_DISCUSSIONS("scenario-discussions"),
+    SCENARIO_DISCUSSIONS_FILTER("scenario-discussions/filter"),
     SCENARIO_DISCUSSION("scenario-discussions/%s"),
     SCENARIO_DISCUSSION_COMMENTS("scenario-discussions/%s/comments"),
     SCENARIO_DISCUSSION_COMMENT("scenario-discussions/%s/comments/%s"),
-
 
     //ITERATIONS
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest");

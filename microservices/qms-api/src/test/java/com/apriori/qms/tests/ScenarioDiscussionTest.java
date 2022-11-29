@@ -4,8 +4,10 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
+import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
+import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
@@ -104,8 +106,9 @@ public class ScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14675", "14678"})
-    @Description("Verify that User can add comment and update status to delete to scenario discussion")
+    @TestRail(testCaseId = {"14675", "14678", "15477"})
+    @Description("Verify that User can add comment, update status to delete to scenario discussion" +
+        "and verify commenview is created for the same user")
     public void addAndDeleteCommentToDiscussion() {
         String commentContent = new GenerateStringUtil().generateNotes();
         DiscussionCommentRequest discussionCommentRequest = DiscussionCommentRequest.builder()
@@ -119,6 +122,7 @@ public class ScenarioDiscussionTest extends TestUtil {
             discussionCommentRequest, currentUser);
 
         softAssertions.assertThat(createResponseWrapper.getResponseEntity().getContent()).isEqualTo(commentContent);
+        softAssertions.assertThat(createResponseWrapper.getResponseEntity().getCommentView().size()).isGreaterThan(0);
 
         DiscussionCommentRequest discussionDeleteCommentRequest = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
@@ -174,9 +178,54 @@ public class ScenarioDiscussionTest extends TestUtil {
         softAssertions.assertThat(responseWrapper.getResponseEntity().getContent()).isEqualTo(commentContent);
     }
 
+    @Test
+    @TestRail(testCaseId = {"16057", "14672"})
+    @Description("Create, get scenario discussion with assignee user and useridentity")
+    public void getScenarioDiscussionsByUserIdentity() {
+        UserCredentials assignedUser = UserUtil.getUser();
+        String description = new GenerateStringUtil().generateNotes();
+        ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
+                .status("ACTIVE")
+                .type("SCENARIO")
+                .assigneeEmail(assignedUser.getEmail())
+                .description(description)
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .attributes(Attributes.builder()
+                    .attribute("materialName")
+                    .subject("4056-23423-003")
+                    .build())
+                .build())
+            .build();
+
+        ResponseWrapper<ScenarioDiscussionResponse> scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
+
+        softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getResponseEntity().getDescription()).isEqualTo(description);
+
+        ResponseWrapper<ScenarioDiscussionsResponse> responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, "assigneeUserIdentity[EQ]," + scenarioDiscussionAssigneeResponse.getResponseEntity().getAssigneeUserIdentity());
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isEqualTo(0);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14673"})
+    @Description("Create, get scenario discussion with mentioned user profile identity")
+    public void getScenarioDiscussionsByMentionedUserIdentity() {
+        ResponseWrapper<ScenarioDiscussionsResponse> responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, "mentionedUsers.userProfile.Identity[EQ]," + scenarioDiscussionResponse.getResponseEntity().getAssigneeUserIdentity());
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isEqualTo(0);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14674"})
+    @Description("Verify that user can GET a list of all Unresolved discussions")
+    public void getUnresolvedScenarioDiscussions() {
+        ResponseWrapper<ScenarioDiscussionsResponse> responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, "status[EQ]," + "ACTIVE");
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isGreaterThan(0);
+    }
+
     @After
     public void testCleanup() {
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getResponseEntity().getIdentity(), currentUser);
         softAssertions.assertAll();
     }
 }
