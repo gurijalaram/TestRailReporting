@@ -62,11 +62,11 @@ public class UpdateCADFileTests extends TestBase {
     @After
     public void deleteScenarios() {
         if (currentUser != null) {
-            assemblyUtils.deleteAssembly(assemblyInfo, currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo, currentUser);
             assemblyInfo = null;
         }
         if (subAssemblyInfo != null) {
-            assemblyUtils.deleteAssembly(subAssemblyInfo, currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo, currentUser);
             subAssemblyInfo = null;
         }
     }
@@ -117,7 +117,7 @@ public class UpdateCADFileTests extends TestBase {
             .user(currentUser)
             .build();
 
-        assemblyInfo.addSubComponent(helmInfo);
+        assemblyInfo.getSubComponents().add(helmInfo);
         soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
             .as("Verify that CAD file update is being processed").isEqualTo("gear");
         componentsTreePage.checkSubcomponentState(assemblyInfo, autoHelm);
@@ -232,7 +232,7 @@ public class UpdateCADFileTests extends TestBase {
             .user(currentUser)
             .build();
 
-        subAssemblyInfo.addSubComponent(handleInfo);
+        subAssemblyInfo.getSubComponents().add(handleInfo);
 
         componentsTreePage.expandSubAssembly(autoSword, scenarioName);
         soft.assertThat(componentsTreePage.getScenarioState(autoHandle, scenarioName))
@@ -271,13 +271,12 @@ public class UpdateCADFileTests extends TestBase {
             .isTrue();
         soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoArm)).as("Verify Arm sub-component is struck out").isTrue();
 
-        EvaluatePage secondaryEvaluatePage = componentsTreePage.openAssembly(autoArm, scenarioName);
-        evaluatePage = secondaryEvaluatePage.clickActions()
+       componentsTreePage.openAssembly(autoArm, scenarioName)
+            .clickActions()
             .updateCadFile(autoArmFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
-            .closeNewlyOpenedTab();
-
-        componentsTreePage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .closeNewlyOpenedTab()
+            .clickRefresh(EvaluatePage.class)
             .openComponents();
 
         soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoArm))
@@ -294,14 +293,14 @@ public class UpdateCADFileTests extends TestBase {
             .user(currentUser)
             .build();
 
-        assemblyInfo.addSubComponent(armInfo);
+        assemblyInfo.getSubComponents().add(armInfo);
 
-        secondaryEvaluatePage = componentsTreePage.openAssembly(autoHead, scenarioName);
-        evaluatePage = secondaryEvaluatePage.clickActions()
+       componentsTreePage.openAssembly(autoHead, scenarioName)
+            .clickActions()
             .updateCadFile(modifiedAutoHeadFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
-            .closeNewlyOpenedTab();
-        componentsTreePage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .closeNewlyOpenedTab()
+            .clickRefresh(EvaluatePage.class)
             .openComponents();
 
         soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoHead))

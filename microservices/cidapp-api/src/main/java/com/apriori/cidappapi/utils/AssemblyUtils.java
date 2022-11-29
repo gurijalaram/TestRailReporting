@@ -265,7 +265,7 @@ public class AssemblyUtils {
      * @param currentUser - The current user
      * @return - Current Object
      */
-    public AssemblyUtils deleteAssembly(ComponentInfoBuilder componentAssembly, UserCredentials currentUser) {
+    public AssemblyUtils deleteAssemblyAndComponents(ComponentInfoBuilder componentAssembly, UserCredentials currentUser) {
         scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
         componentAssembly.getSubComponents().forEach(
             subComponent -> scenariosUtil.deleteScenario(subComponent.getComponentIdentity(), subComponent.getScenarioIdentity(), currentUser));

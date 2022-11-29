@@ -47,8 +47,4 @@ public class ComponentInfoBuilder {
     private final boolean overrideScenario = false;
     @Builder.Default
     private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
-
-    public void addSubComponent(ComponentInfoBuilder component) {
-        this.subComponents.add(component);
-    }
 }
