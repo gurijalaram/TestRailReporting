@@ -2,11 +2,13 @@ package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -81,6 +83,18 @@ public class CostingTemplateTests {
 
         softAssertions.assertThat(costingTemplateId.getIdentity()).isNotEmpty();
         softAssertions.assertThat(costingTemplateId.getBatchSize()).isEqualTo(3);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    public void testCostingTemplates() {
+        final UserCredentials currentUser = UserUtil.getUser();
+
+        ResponseWrapper<CostingTemplates> costingTemplates = new ScenariosUtil().getCostingTemplates(currentUser);
+
+        softAssertions.assertThat(costingTemplates.getResponseEntity().getItems().size()).isGreaterThan(0);
+        costingTemplates.getResponseEntity().getItems().forEach(o -> softAssertions.assertThat(o.getIdentity()).isNotEmpty());
 
         softAssertions.assertAll();
     }
