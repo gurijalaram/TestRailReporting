@@ -2,6 +2,8 @@ package com.apriori.dms.tests;
 
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -13,6 +15,7 @@ import entity.response.DmsDiscussionResponse;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -23,8 +26,8 @@ public class DmsCommentsTest extends TestUtil {
 
     private static String userContext;
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<DmsDiscussionResponse> discussionResponse;
-    private static ResponseWrapper<DmsCommentResponse> commentResponse;
+    private static ResponseWrapper<DmsDiscussionResponse> discussionResponse = null;
+    private static ResponseWrapper<DmsCommentResponse> commentResponse = null;
     private static String contentDesc = StringUtils.EMPTY;
     private static UserCredentials currentUser = UserUtil.getUser();
 
@@ -38,12 +41,14 @@ public class DmsCommentsTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"13169"})
     @Description("Create a valid comment")
     public void createComment() {
         softAssertions.assertThat(commentResponse.getResponseEntity().getContent()).isEqualTo(contentDesc);
     }
 
     @Test
+    @TestRail(testCaseId = {"13170"})
     @Description("get a valid comments")
     public void getComments() {
         ResponseWrapper<DmsCommentsResponse> responseWrapper = DmsApiTestUtils.getDiscussionComments(currentUser,
@@ -52,6 +57,7 @@ public class DmsCommentsTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"15483"})
     @Description("get a valid comment")
     public void getComment() {
         ResponseWrapper<DmsCommentResponse> responseWrapper = DmsApiTestUtils.getDiscussionComment(currentUser,
@@ -60,6 +66,7 @@ public class DmsCommentsTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"13171"})
     @Description("update a valid comment")
     public void updateComment() {
         ResponseWrapper<DmsCommentResponse> commentUpdateResponse = DmsApiTestUtils.updateComment(commentResponse.getResponseEntity().getStatus(),
@@ -71,7 +78,8 @@ public class DmsCommentsTest extends TestUtil {
     @After
     public void testCleanup() {
         DmsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), currentUser);
-        DmsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), currentUser);
+        DmsApiTestUtils.updateDiscussion(new GenerateStringUtil().generateNotes(),
+            "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
         softAssertions.assertAll();
     }
 }

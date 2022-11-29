@@ -6,6 +6,7 @@ import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.response.Applications;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -150,5 +151,23 @@ public class CasCustomersTests {
 
         customerIdentity = response.getResponseEntity().getIdentity();
         CasTestUtil.resetMfa(customerIdentity);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"16546"})
+    @Description("Return a paged list of applications licensed for a specific customer.")
+    public void getCustomerLicensedApplications() {
+        ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+
+        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
+
+        ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_LICENSED_APP,
+            Applications.class,
+            HttpStatus.SC_OK,
+            customer.getIdentity());
+
+        soft.assertThat(responseApplications.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 }
