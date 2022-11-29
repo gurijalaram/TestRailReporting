@@ -7,11 +7,15 @@ import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParam
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.KeyValueException;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -19,9 +23,12 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class QmsScenarioDiscussionResources {
 
@@ -173,5 +180,68 @@ public class QmsScenarioDiscussionResources {
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Create Scenario Discussion using ScenarioDiscussionRequest builder
+     *
+     * @param scenarioDiscussionRequestBuilder
+     * @param currentUser
+     * @return ResponseWrapper<ScenarioDiscussionResponse>
+     */
+    public static ResponseWrapper<ScenarioDiscussionResponse> createScenarioDiscussion(ScenarioDiscussionRequest scenarioDiscussionRequestBuilder, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionResponse.class)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(scenarioDiscussionRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * get filter scenario discussions based on query params
+     *
+     * @param currentUser
+     * @param paramKeysValues - key, pair values
+     * @return ResponseWrapper<ScenarioDiscussionsResponse>
+     */
+    public static ResponseWrapper<ScenarioDiscussionsResponse> getFilteredScenarioDiscussions(UserCredentials currentUser, String... paramKeysValues) {
+        QueryParams queryParams = new QueryParams();
+
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS_FILTER, ScenarioDiscussionsResponse.class)
+            .queryParams(queryParams.use(paramMap))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * get scenario project users
+     *
+     * @param componentIdentity
+     * @param scenarioIdentity
+     * @param currentUser
+     * @return ResponseWrapper<ScenarioProjectUserResponse>
+     */
+    public static ResponseWrapper<ScenarioProjectUserResponse> getScenarioProjectUsers(String componentIdentity, String scenarioIdentity, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 }
