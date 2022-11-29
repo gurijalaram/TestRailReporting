@@ -449,7 +449,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Gets the value of Value field
+     * Gets the value of the field
      *
      * @return String
      */
