@@ -1,6 +1,5 @@
 package com.apriori.cidappapi.entity.response;
 
-import com.apriori.cidappapi.entity.response.scenarios.Routing;
 import com.apriori.entity.response.CostingInput;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.http.enums.Schema;
@@ -74,7 +73,7 @@ public class CostingTemplate {
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     @Builder.Default
     private List<String> propertiesToReset = null;
-    private List<Routing> routingNodeOptions;
+    private List<RoutingNodeOptions> routingNodeOptions;
     private CostingInput.ProcessSetupOptions processSetupOptions;
     private CostingInput.SecondaryDigitalFactories secondaryDigitalFactories;
     private CostingInput.SecondaryProcesses secondaryProcesses;
