@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.dms.tests.DmsCommentViewTest;
 import com.apriori.dms.tests.DmsCommentsTest;
 import com.apriori.dms.tests.DmsDiscussionTest;
 import com.apriori.utils.ProjectRunID;
@@ -12,7 +13,8 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     DmsDiscussionTest.class,
-    DmsCommentsTest.class
+    DmsCommentsTest.class,
+    DmsCommentViewTest.class
 })
 public class DmsApiSuite {
 }
