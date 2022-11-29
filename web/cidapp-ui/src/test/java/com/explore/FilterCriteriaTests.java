@@ -442,6 +442,6 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getPropertyValue(), is("1"));
+        assertThat(filterPage.getFilterValue(PropertyEnum.CYCLE_TIME), equalTo("1"));
     }
 }

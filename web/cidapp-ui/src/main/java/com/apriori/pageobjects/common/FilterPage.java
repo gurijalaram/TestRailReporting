@@ -55,8 +55,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement deleteFilterBtn;
     @FindBy(xpath = "//button[.='Rename']")
     private WebElement renameFilterBtn;
-    @FindBy(css = "#qa-searchCriterion\\[0\\]\\.target .form-control")
-    private WebElement valueField;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -451,22 +449,15 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Gets the value of Value field (for properties from Cost Results and Material and Process Results)
+     * Gets the value of Value field
      *
      * @return String
      */
-    public String getPropertyValue() {
-        String value = valueField.getAttribute("value");
-        return value;
-    }
-
     public String getFilterValue(PropertyEnum propertyEnum) {
         index = getIndex();
         if (PropertyEnum.inputGroup.contains(propertyEnum)) {
-            return pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index-1))).getAttribute("value");
+            return pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).getAttribute("value");
         }
-        //if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
-           return pageUtils.waitForElementToAppear(By.xpath(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index-1))).getAttribute("value");
-        //}
+        return pageUtils.waitForElementToAppear(By.xpath(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index))).getAttribute("value");
     }
 }
