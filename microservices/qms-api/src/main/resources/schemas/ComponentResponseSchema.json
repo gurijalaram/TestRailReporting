@@ -39,10 +39,10 @@
         "createdBy",
         "customerIdentity",
         "componentName",
-        "componentType",
-        "filename"
+        "componentType"
       ],
       "optional": [
+        "filename",
         "updatedAt",
         "updatedBy"
       ]

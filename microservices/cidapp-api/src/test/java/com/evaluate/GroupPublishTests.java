@@ -6,8 +6,6 @@ import static com.apriori.entity.enums.CssSearch.LAST_ACTION_EQ;
 import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -20,6 +18,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -91,7 +90,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
@@ -112,7 +111,7 @@ public class GroupPublishTests {
         GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
             .componentInfo(componentAssembly)
             .publishRequest(publishRequest2)
-            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .workspaceId(PUBLIC_WORKSPACE)
             .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);

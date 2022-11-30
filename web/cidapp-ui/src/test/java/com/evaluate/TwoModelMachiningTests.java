@@ -1,6 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -105,7 +104,7 @@ public class TwoModelMachiningTests extends TestBase {
 
     @Test
     @Description("Validate the User can open the source part in the evaluate tab")
-    @TestRail(testCaseId = {"6466", "7866"})
+    @TestRail(testCaseId = {"6466", "7866", "12511"})
     public void testOpenSourceModel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
         final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;

@@ -43,6 +43,8 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
+import org.apache.http.HttpStatus;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,6 +63,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Customer> addCustomer(String name, String customerType, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customer.class)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("customer",
                 Customer.builder().name(name)
                     .description("Add new customers api test")
@@ -98,7 +101,7 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Creates customer via CAS API with service acconts
+     * Creates customer via CAS API with service accounts
      *
      * @param name           - the customer name
      * @param cloudReference - the cloud reference name
@@ -128,6 +131,30 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Updates customer by customer id
+     *
+     * @param customerIdentity    - customer identity
+     * @param updatedEmailPattern - new value of email pattern
+     * @return new object
+     */
+    public ResponseWrapper<Customer> updateCustomer(String customerIdentity, String updatedEmailPattern) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Content-Type", "application/json");
+                }
+            })
+            .body("customer",
+                Customer.builder()
+                    .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
+                    .build());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
      * POST call to add a customer
      *
      * @param customerIdentity - the customer id
@@ -138,6 +165,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("user",
                 User.builder().username(userName)
                     .email(userName + "@" + domain + ".com")
@@ -164,6 +192,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<User> patchUser(User user) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK)
             .body("user",
                 User.builder()
                     .identity(user.getIdentity())
@@ -182,15 +211,16 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update the user credentials
      *
-     * @param customerIdentity - the customer id
-     * @param userIdentity - the user id
+     * @param customerIdentity    - the customer id
+     * @param userIdentity        - the user id
      * @param passwordHashCurrent - current hash password
-     * @param passwordSalt - the salt password
+     * @param passwordSalt        - the salt password
      * @return new object
      */
     public ResponseWrapper<CredentialsItems> updateUserCredentials(String customerIdentity, String userIdentity, String passwordHashCurrent, String passwordSalt) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
             .body("userCredential",
                 UpdateCredentials.builder()
                     .currentPasswordHash(passwordHashCurrent)
@@ -213,6 +243,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Site.class)
             .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("site",
                 Site.builder().name(siteName)
                     .description("Site created by automation test")
@@ -234,6 +265,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String deploymentName, String siteIdentity, String deploymentType) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
             .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("deployment",
                 AddDeployment.builder()
                     .name(deploymentName)
@@ -259,6 +291,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
             .inlineVariables(customerIdentity, siteIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .headers(new HashMap<String, String>() {
                 {
                     put("Content-Type", "application/json");
@@ -286,6 +319,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("installation",
                 InstallationItems.builder()
                     .name("Automation Installation")
@@ -320,6 +354,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<InstallationItems> patchInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
             .body("installation",
                 InstallationItems.builder()
                     .cloudReference("eu-1")
@@ -341,6 +376,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
             .inlineVariables(apCustomerIdentity, associationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("userAssociation",
                 AssociationUserItems.builder()
                     .userIdentity(userIdentity)
@@ -363,6 +399,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("userAssociation",
                 AssociationUserItems.builder()
                     .userIdentity(userIdentity)
@@ -383,6 +420,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<IdentityProviderResponse> addSaml(String customerIdentity, String userIdentity, String customerName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("identityProvider",
                 IdentityProviderRequest.builder().contact(userIdentity)
                     .name(customerName + "-idp")
@@ -421,6 +459,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<IdentityProviderResponse> patchIdp(String customerIdentity, String idpIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity, idpIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
             .headers(new HashMap<String, String>() {
                 {
                     put("Content-Type", "application/json");
@@ -449,6 +488,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
             .inlineVariables(customerIdentity, siteIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(LicenseRequest.builder()
                 .license(
                     License.builder()
@@ -473,6 +513,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessControl",
                 AccessControlRequest.builder()
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
@@ -497,6 +538,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
                     .key("department")
@@ -520,6 +562,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<CustomAttribute> putCustomAttribute(String customerIdentity, String userIdentity, String updatedDepartment) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
                     .name("department")
@@ -542,6 +585,7 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<CustomAttribute> updateAttribute(String customerIdentity, String userIdentity, String attributeIdentity, String updatedDepartment) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
                     .value(updatedDepartment)
@@ -555,12 +599,13 @@ public class CdsTestUtil extends TestUtil {
      * Adds new user preference
      *
      * @param customerIdentity - customer id
-     * @param userIdentity - user id
+     * @param userIdentity     - user id
      * @return - new object
      */
     public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("userPreference",
                 UserPreference.builder()
                     .name("Test")
@@ -575,14 +620,15 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Updates existing user preference
      *
-     * @param customerIdentity - customer Id
-     * @param userIdentity - user Id
+     * @param customerIdentity  - customer Id
+     * @param userIdentity      - user Id
      * @param updatedPreference - value of updated preference
      * @return -  new object
      */
     public ResponseWrapper<UserPreference> updatePreference(String customerIdentity, String userIdentity, String preferenceIdentity, String updatedPreference) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("userPreference",
                 UserPreference.builder()
                     .value(updatedPreference)
@@ -596,13 +642,14 @@ public class CdsTestUtil extends TestUtil {
      * Adds or replaces user preferences
      *
      * @param customerIdentity - customer id
-     * @param userIdentity - user id
-     * @param preferenceName - preference name
+     * @param userIdentity     - user id
+     * @param preferenceName   - preference name
      * @return new object
      */
     public ResponseWrapper<UserPreference> putUserPreference(String customerIdentity, String userIdentity, String preferenceName) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceName)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("userPreference",
                 UserPreference.builder()
                     .value("6548")
@@ -615,13 +662,14 @@ public class CdsTestUtil extends TestUtil {
 
     /**
      * @param customerIdentity customer id
-     * @param userIdentity user id
-     * @param serviceAccount service account
+     * @param userIdentity     user id
+     * @param serviceAccount   service account
      * @return new object
      */
     public ResponseWrapper<AccessAuthorization> addAccessAuthorization(String customerIdentity, String userIdentity, String serviceAccount) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorization.class)
             .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessAuthorization",
                 AccessAuthorizationRequest.builder()
                     .userIdentity(userIdentity)
@@ -632,16 +680,17 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * @param customerIdentity customer id
-     * @param deploymentIdentity deployment id
+     * @param customerIdentity     customer id
+     * @param deploymentIdentity   deployment id
      * @param installationIdentity installation id
-     * @param appIdentity application id
-     * @param siteIdentity site id
+     * @param appIdentity          application id
+     * @param siteIdentity         site id
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addApplicationInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String siteIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_INSTALLATION, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("installation",
                 ApplicationInstallationRequest.builder()
                     .applicationIdentity(appIdentity)
@@ -655,7 +704,7 @@ public class CdsTestUtil extends TestUtil {
      * Uploads batch users file via CAS API
      *
      * @param customerIdentity - customerIdentity
-     * @param fileName - name of file
+     * @param fileName         - name of file
      * @return new object
      */
     public ResponseWrapper<PostBatch> addCASBatchFile(String customerIdentity, String fileName) {
@@ -664,6 +713,7 @@ public class CdsTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
             .token(token)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
             .inlineVariables(customerIdentity);
 
@@ -674,12 +724,13 @@ public class CdsTestUtil extends TestUtil {
      * Creates role for a user
      *
      * @param customerIdentity - customer identity
-     * @param userIdentity - user identity
+     * @param userIdentity     - user identity
      * @return new object
      */
     public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
             .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("role",
                 UserRole.builder()
                     .role("ADMIN")

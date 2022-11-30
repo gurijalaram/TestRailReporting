@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
@@ -19,12 +14,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CdsSitesApplicationsTests {
-
+    private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -78,7 +74,6 @@ public class CdsSitesApplicationsTests {
         String appIdentity = Constants.getApProApplicationIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -86,7 +81,8 @@ public class CdsSitesApplicationsTests {
             .siteIdentity(siteIdentity)
             .licenseIdentity(licensedApplicationIdentity)
             .build();
-        assertThat(licensedApp.getResponseEntity().getApplication(), is(equalTo("aPriori Professional")));
+        soft.assertThat(licensedApp.getResponseEntity().getApplication()).isEqualTo("aPriori Professional");
+        soft.assertAll();
     }
 
     @Test
@@ -96,7 +92,6 @@ public class CdsSitesApplicationsTests {
         String appIdentity = Constants.getCiaApplicationIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
              .customerIdentity(customerIdentity)
@@ -111,7 +106,7 @@ public class CdsSitesApplicationsTests {
             siteIdentity
         );
 
-        assertThat(licensedApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(licensedApplications.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             LicensedApplication.class,
@@ -120,7 +115,8 @@ public class CdsSitesApplicationsTests {
             siteIdentity,
             licensedApplicationIdentity
         );
-        assertThat(licensedApplicationResponse.getResponseEntity().getApplication(), is(equalTo("Cost Insight Admin")));
-        assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity(), is(equalTo(Constants.getCiaApplicationIdentity())));
+        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplication()).isEqualTo("Cost Insight Admin");
+        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(Constants.getCiaApplicationIdentity());
+        soft.assertAll();
     }
 }

@@ -1,11 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.entity.response.SubLicense;
@@ -26,6 +20,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +29,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CdsLicenseTests {
-
+    private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private ResponseWrapper<Customer> customer;
@@ -111,7 +106,8 @@ public class CdsLicenseTests {
             customerIdentity
         );
 
-        assertThat(license.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
+        soft.assertThat(license.getResponseEntity().getTotalItemCount()).isEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -124,7 +120,8 @@ public class CdsLicenseTests {
             customerIdentity,
             licenseIdentity
         );
-        assertThat(licenseResponse.getResponseEntity().getIdentity(), is(equalTo(licenseIdentity)));
+        soft.assertThat(licenseResponse.getResponseEntity().getIdentity()).isEqualTo(licenseIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -138,8 +135,8 @@ public class CdsLicenseTests {
             customerIdentity,
             siteIdentity
         );
-
-        assertThat(siteLicenses.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(siteLicenses.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -154,7 +151,8 @@ public class CdsLicenseTests {
             licenseIdentity
         );
 
-        assertThat(licenseById.getResponseEntity().getIdentity(), is(equalTo(licenseIdentity)));
+        soft.assertThat(licenseById.getResponseEntity().getIdentity()).isEqualTo(licenseIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -178,7 +176,8 @@ public class CdsLicenseTests {
             licenseIdentity
         );
 
-        assertThat(subLicense.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(subLicense.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -203,7 +202,8 @@ public class CdsLicenseTests {
             subLicenseIdentity
         );
 
-        assertThat(subLicense.getResponseEntity().getName(), containsString("License"));
+        soft.assertThat(subLicense.getResponseEntity().getName()).contains("License");
+        soft.assertAll();
     }
 
     @Test
@@ -231,8 +231,8 @@ public class CdsLicenseTests {
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
-        assertThat(associationUserItemsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(associationUserItemsResponse.getResponseEntity().getCreatedBy(), is(equalTo("#SYSTEM00000")));
+        soft.assertThat(associationUserItemsResponse.getResponseEntity().getCreatedBy()).isEqualTo("#SYSTEM00000");
+        soft.assertAll();
 
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -278,7 +278,9 @@ public class CdsLicenseTests {
             subLicenseIdentity
         );
 
-        assertThat(associationUserResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(associationUserResponse.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
+
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .siteIdentity(siteIdentity)
@@ -321,7 +323,8 @@ public class CdsLicenseTests {
             userIdentity
         );
 
-        assertThat(licensing.getResponseEntity().getResponse().get(0).getSubLicenseIdentity(), is(equalTo(subLicenseIdentity)));
+        soft.assertThat(licensing.getResponseEntity().getResponse().get(0).getSubLicenseIdentity()).isEqualTo(subLicenseIdentity);
+        soft.assertAll();
 
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -359,13 +362,12 @@ public class CdsLicenseTests {
 
         cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
-        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
+        cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
             customerIdentity,
             siteIdentity,
             licenseIdentity,
             subLicenseIdentity,
             userIdentity
         );
-        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }

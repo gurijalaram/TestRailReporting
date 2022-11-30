@@ -1,10 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -22,6 +17,7 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +42,7 @@ public class CdsAccessAuthorizationsTests {
     private String url;
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private ResponseWrapper<AssociationUserItems> associationUser;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setDetails() {
@@ -87,14 +84,12 @@ public class CdsAccessAuthorizationsTests {
     @Description("Creating a new access authorization for customer and getting it")
     public void addAccessAuthorization() {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
-
-        assertThat(accessAuthorization.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(accessAuthorization.getResponseEntity().getUserIdentity(), is(equalTo(aPStaffIdentity)));
+        soft.assertThat(accessAuthorization.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessAuthorizations> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
-
-        assertThat(authorizationsResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(authorizationsResponse.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertAll();
 
         accessAuthorizationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -109,9 +104,10 @@ public class CdsAccessAuthorizationsTests {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
         LocalDateTime creationDate = accessAuthorization.getResponseEntity().getCreatedAt();
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
-        ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
 
-        assertThat(statusResponse.getResponseEntity().getResponse().get(0).getAssignedAt(), is(equalTo(creationDate)));
+        ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
+        soft.assertThat(statusResponse.getResponseEntity().getResponse().get(0).getAssignedAt()).isEqualTo(creationDate);
+        soft.assertAll();
 
         accessAuthorizationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -127,11 +123,9 @@ public class CdsAccessAuthorizationsTests {
         String authorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessAuthorization> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, AccessAuthorization.class, HttpStatus.SC_OK, customerIdentity, authorizationIdentity);
+        soft.assertThat(authorizationsResponse.getResponseEntity().getIdentity()).isEqualTo(authorizationIdentity);
+        soft.assertAll();
 
-        assertThat(authorizationsResponse.getResponseEntity().getIdentity(), is(equalTo(authorizationIdentity)));
-
-        ResponseWrapper<String> deleteAuthorizationAccess = cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, customerIdentity, authorizationIdentity);
-
-        assertThat(deleteAuthorizationAccess.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, customerIdentity, authorizationIdentity);
     }
 }

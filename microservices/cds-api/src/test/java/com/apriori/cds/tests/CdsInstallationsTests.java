@@ -1,12 +1,5 @@
 package com.apriori.cds.tests;
 
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
@@ -23,11 +16,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 
 public class CdsInstallationsTests {
-
+    private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
@@ -61,8 +55,9 @@ public class CdsInstallationsTests {
     public void getInstallations() {
         ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class, HttpStatus.SC_OK);
 
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getItems().get(0).getRegion(), is(not(nullValue())));
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getRegion()).isNotNull();
+        soft.assertAll();
     }
 
     @Test
@@ -82,17 +77,14 @@ public class CdsInstallationsTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
 
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -102,17 +94,17 @@ public class CdsInstallationsTests {
             .build();
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         String installationIdentity = installation.getResponseEntity().getIdentity();
+
         installationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .deploymentIdentity(deploymentIdentity)
             .installationIdentity(installationIdentity)
             .build();
 
-        assertThat(installation.getResponseEntity().getName(), is(equalTo("Automation Installation")));
-        assertThat(installation.getResponseEntity().getRegion(), is(equalTo("na-1")));
+        soft.assertThat(installation.getResponseEntity().getName()).isEqualTo("Automation Installation");
+        soft.assertThat(installation.getResponseEntity().getRegion()).isEqualTo("na-1");
+        soft.assertAll();
     }
 
     @Test
@@ -132,17 +124,15 @@ public class CdsInstallationsTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+
         licensedAppIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .siteIdentity(siteIdentity)
@@ -150,9 +140,8 @@ public class CdsInstallationsTests {
             .build();
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         String installationIdentity = installation.getResponseEntity().getIdentity();
+
         installationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .deploymentIdentity(deploymentIdentity)
@@ -167,7 +156,8 @@ public class CdsInstallationsTests {
             installationIdentity
         );
 
-        assertThat(identity.getResponseEntity().getIdentity(), is(equalTo(installationIdentity)));
+        soft.assertThat(identity.getResponseEntity().getIdentity()).isEqualTo(installationIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -187,17 +177,15 @@ public class CdsInstallationsTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+
         licensedAppIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .siteIdentity(siteIdentity)
@@ -205,9 +193,8 @@ public class CdsInstallationsTests {
             .build();
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        assertThat(installation.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-
         String installationIdentity = installation.getResponseEntity().getIdentity();
+
         installationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .deploymentIdentity(deploymentIdentity)
@@ -215,6 +202,7 @@ public class CdsInstallationsTests {
             .build();
 
         ResponseWrapper<InstallationItems> installationItemsResponse = cdsTestUtil.patchInstallation(customerIdentity, deploymentIdentity, installationIdentity);
-        assertThat(installationItemsResponse.getResponseEntity().getCloudReference(), is(equalTo("eu-1")));
+        soft.assertThat(installationItemsResponse.getResponseEntity().getCloudReference()).isEqualTo("eu-1");
+        soft.assertAll();
     }
 }

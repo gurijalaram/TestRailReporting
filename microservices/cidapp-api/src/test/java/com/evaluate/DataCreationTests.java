@@ -27,7 +27,7 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioItem data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).createComponent();
+        ScenarioItem data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).searchCreateComponent();
 
         softAssertions = new SoftAssertions();
 

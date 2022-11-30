@@ -22,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -36,6 +37,7 @@ public class PublishTests extends TestBase {
     private ExplorePage explorePage;
     private File resourceFile;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public PublishTests() {
         super();
@@ -74,7 +76,7 @@ public class PublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6743", "6744", "6745", "6747"})
+    @TestRail(testCaseId = {"6743", "6744", "6745", "6747", "6041"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
         final String file = "testpart-4.prt";
@@ -110,5 +112,10 @@ public class PublishTests extends TestBase {
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
+
+        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "");
+
+        softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 }

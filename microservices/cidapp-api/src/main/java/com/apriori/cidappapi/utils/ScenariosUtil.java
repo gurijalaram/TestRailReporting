@@ -20,6 +20,7 @@ import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
+import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -418,6 +419,33 @@ public class ScenariosUtil {
     }
 
     /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> postSimpleEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
+                .body(ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .groupItems(forkRequest.getGroupItems()
+                        .stream()
+                        .map(request -> GroupItems.builder()
+                            .componentIdentity(request.getComponentIdentity())
+                            .scenarioIdentity(request.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Post to cost a group of scenarios
      *
      * @param componentInfo - A number of copy component objects
@@ -558,16 +586,16 @@ public class ScenariosUtil {
      * @return generic object
      */
     public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass, int expectedResponseCode) {
+        componentInfo.setPublishRequest(PublishRequest.builder()
+            .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser())
+                .getIdentity())
+            .build());
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser()).getIdentity())
-                    .costMaturity("Initial".toUpperCase())
-                    .override(false)
-                    .status("New".toUpperCase())
-                    .build())
+                .body("scenario", componentInfo.getPublishRequest())
                 .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).post();
@@ -589,7 +617,7 @@ public class ScenariosUtil {
             ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                     SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .stream()
-                .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
+                .filter(o -> !o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
                 .findFirst()
                 .get();
 
@@ -878,6 +906,22 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
+    }
+
+    /**
+     * GET scenario routings
+     *
+     * @param currentUser     - the user details to obtain a token
+     * @param inlineVariables - usually component/scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+                .inlineVariables(inlineVariables)
+                .token(currentUser.getToken());
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
