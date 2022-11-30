@@ -1,7 +1,25 @@
 package com.evaluate.assemblies;
 
+import static com.utils.PartNamesEnum.CENTRE_BOLT;
+import static com.utils.PartNamesEnum.CENTRE_WASHER;
+import static com.utils.PartNamesEnum.DISPLAY;
+import static com.utils.PartNamesEnum.GASKET;
+import static com.utils.PartNamesEnum.HANDLE;
+import static com.utils.PartNamesEnum.LEFT_PADDLE;
+import static com.utils.PartNamesEnum.LEG;
+import static com.utils.PartNamesEnum.LEG_COVER;
+import static com.utils.PartNamesEnum.MECHANISM_BODY;
+import static com.utils.PartNamesEnum.PADDLE_BAR;
+import static com.utils.PartNamesEnum.PIN;
+import static com.utils.PartNamesEnum.RIGHT_PADDLE;
+import static com.utils.PartNamesEnum.SEAT;
+import static com.utils.PartNamesEnum.SEAT_LOCK;
+import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
+import static com.utils.PartNamesEnum.WASHER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
@@ -33,6 +51,7 @@ public class FiltersTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
@@ -618,5 +637,27 @@ public class FiltersTests extends TestBase {
         soft.assertThat(filterPage.getAllFilters()).as("Cancelled filter name not present in list").doesNotContain(cancelledFilterName);
 
         soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "6532")
+    @Description("User can perform complex searches and be able to find the desired assembly scenario")
+    public void advancedFilterTest() {
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
     }
 }

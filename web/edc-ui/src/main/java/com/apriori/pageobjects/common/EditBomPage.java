@@ -153,6 +153,19 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
     }
 
     /**
+     * Selects Mount Type - old version - introducing while we do not have on qa-test version with mount type radio buttons
+     *
+     * @param mountTypeData - mount type data
+     * @return current page object
+     */
+
+    public EditBomPage enterMountTypeOldVer(String mountTypeData) {
+        getPageUtils().clearValueOfElement(mountTypeInput);
+        mountTypeInput.sendKeys(mountTypeData);
+        return this;
+    }
+
+    /**
      * Enter the Pin Count
      *
      * @param testPinCountData - test pin count data

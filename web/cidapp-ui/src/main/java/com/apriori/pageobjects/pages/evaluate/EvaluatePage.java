@@ -247,6 +247,15 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Checks if annual volume input is enabled
+     *
+     * @return boolean
+     */
+    public boolean isAnnualVolumeInputEnabled() {
+        return pageUtils.isElementEnabled(annualVolumeInput);
+    }
+
+    /**
      * Enters the years of annual volume
      *
      * @param productionLife - the years
@@ -255,6 +264,15 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage enterAnnualYears(String productionLife) {
         inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
+    }
+
+    /**
+     * Checks if years of annual volume input is enabled
+     *
+     * @return boolean
+     */
+    public boolean isAnnualYearsInputEnabled() {
+        return pageUtils.isElementEnabled(productionLifeInput);
     }
 
     /**
