@@ -51,8 +51,8 @@ default:
     api_url: https://cas-api.${default.aws_region}.${env}.apriori.net/%s
 
   cis:
-    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
-    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
+    ui_url: https://cis.${default.aws_region}.${env}-v22-1.apriori.net/
+    api_url: https://cis-api.${default.aws_region}-v22-1.${env}.apriori.net/
 
   cds:
     api_url: https://cds.${default.aws_region}.${env}.apriori.net/

@@ -1,7 +1,9 @@
 package com.apriori.dms.tests;
 
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.ErrorMessage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -13,7 +15,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
 import entity.response.DmsDiscussionResponse;
-import entity.response.DmsDiscussionsResponse;
 import enums.DMSApiEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,7 +23,6 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import utils.DmsApiTestUtils;
 
@@ -49,43 +49,25 @@ public class DmsDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13054"})
+    @TestRail(testCaseId = {"13054", "14217"})
     @Description("update a valid discussion")
-    public void updateValidDiscussion() {
-        ResponseWrapper<DmsDiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
+    public void UpdateValidDiscussion() {
+        String description = new GenerateStringUtil().generateNotes();
+        ResponseWrapper<DmsDiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(description,
             "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
+        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getDescription()).isEqualTo(description);
     }
 
-    @Test
-    @TestRail(testCaseId = {"13053"})
-    @Description("get list of all discussions")
-    public void getDiscussions() {
-        ResponseWrapper<DmsDiscussionsResponse> discussionUpdateResponse = DmsApiTestUtils.getDiscussions(currentUser);
-
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
-    }
 
     @Test
-    @Ignore
     @Description("update a invalid discussion")
     public void UpdateInValidDiscussion() {
         ResponseWrapper<ErrorMessage> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
-            "RESOLVED", "INVALIDDISCUSSION", currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+            "RESOLVED","INVALIDDISCUSSION", currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getMessage()).contains("'discussionIdentity' is not a valid identity");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14217"})
-    @Description("update a discussion description")
-    public void updateDiscussionDescription() {
-        String discussionDesc = RandomStringUtils.randomAlphabetic(12);
-        ResponseWrapper<DmsDiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDesc,
-            "ACTIVE", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
-
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getDescription()).isEqualTo(discussionDesc);
     }
 
     @Test
@@ -113,7 +95,8 @@ public class DmsDiscussionTest extends TestUtil {
 
     @After
     public void testCleanup() {
-        //    DmsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), currentUser);
+        DmsApiTestUtils.updateDiscussion(new GenerateStringUtil().generateNotes(),
+            "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
         softAssertions.assertAll();
     }
 }

@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CasTestUtil extends TestUtil {
 
@@ -218,6 +219,57 @@ public class CasTestUtil extends TestUtil {
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
+                    .useExternalIdentityProvider(false)
+                    .maxCadFileRetentionDays(584)
+                    .maxCadFileSize(51)
+                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Looking for On Prem customer
+     *
+     * @return Customer class
+     */
+    public Customer findOnPremCustomer() {
+        return find(
+            CASAPIEnum.CUSTOMERS,
+            Customers.class,
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            1,
+            1000,
+            null)
+            .getResponseEntity()
+            .getItems()
+            .stream()
+            .filter(customer -> customer.getCustomerType().equals("ON_PREMISE_ONLY"))
+            .collect(Collectors.toList())
+            .get(0);
+    }
+
+    /**
+     * Creates a customer with On Premise customer type
+     *
+     * @param name - customer name
+     * @param email - customer email
+     * @return ResponseWrapper<Customer>
+     */
+    public ResponseWrapper<Customer> createOnPremCustomer(String name, String email) {
+        GenerateStringUtil generator = new GenerateStringUtil();
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body("customer",
+                Customer.builder()
+                    .name(name)
+                    .cloudReference(null)
+                    .description(generator.getRandomString())
+                    .salesforceId(generator.generateSalesForceId())
+                    .customerType("ON_PREMISE_ONLY")
+                    .active(true)
+                    .mfaRequired(false)
                     .useExternalIdentityProvider(false)
                     .maxCadFileRetentionDays(584)
                     .maxCadFileSize(51)

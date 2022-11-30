@@ -28,10 +28,10 @@ public class PartsUtil extends TestUtil {
     public PartsResponse getAllPartsInLineItem(String bomIdentity, String lineItemIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS, PartsResponse.class)
-                .inlineVariables(bomIdentity, lineItemIdentity);
+                .inlineVariables(bomIdentity, lineItemIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<PartsResponse> getAllPartsResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllPartsResponse.getStatusCode());
 
         return getAllPartsResponse.getResponseEntity();
     }
@@ -47,7 +47,8 @@ public class PartsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity)
-                .body(partsInfoBody());
+                .body(partsInfoBody())
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -64,7 +65,8 @@ public class PartsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_UPDATE, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity, partIdentity)
-                .body(partsInfoBody());
+                .body(partsInfoBody())
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -80,7 +82,8 @@ public class PartsUtil extends TestUtil {
     public ResponseWrapper<Parts> postSelectPartForExport(String bomIdentity, String lineItemIdentity, String partIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT, null)
-                .inlineVariables(bomIdentity, lineItemIdentity, partIdentity);
+                .inlineVariables(bomIdentity, lineItemIdentity, partIdentity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -97,7 +100,8 @@ public class PartsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST, null)
                 .inlineVariables(bomIdentity, lineItemIdentity)
-                .body(partIdentity);
+                .body(partIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
     }
