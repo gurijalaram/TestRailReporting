@@ -53,8 +53,8 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
             .selectOptionsTab()
-            .selectNumberOfCavitiesDropdown("8")
-            .overrideWallThickness("0.4")
+            .selectNumberOfCavitiesPiecePartToolingDropdown("8")
+            .overrideWallThicknessPiecePart("0.4")
             .selectAddColorantButton()
             .inputMaterialRegrind("0.3")
             .closePanel()
@@ -73,7 +73,7 @@ public class PsoEditTests extends TestBase {
 
     @Test
     @Issue("BA-2651")
-    @TestRail(testCaseId = {"7269", "7297", "7289"})
+    @TestRail(testCaseId = {"7269", "7297", "7289", "7296"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -103,6 +103,15 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertThat(materialProcessPage.isOptimizeMinCostSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("AISI P20");
         softAssertions.assertThat(materialProcessPage.getPartTolerance()).isEqualTo("Low Tolerance +/-0.254 (+/-0.010\")");
+
+        materialProcessPage.selectNumberOfCavitiesDropdown("4")
+            .closePanel()
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("High Pressure Die Casting")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
 
         softAssertions.assertAll();
     }
@@ -252,7 +261,7 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab()
             .selectCavitiesOptimizeMinCost()
-            .overrideWallThickness("0.13")
+            .overrideWallThicknessPiecePart("0.13")
             .inputColorCharge("0.68")
             .closePanel()
             .costScenario()
@@ -273,7 +282,7 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Structural Foam Molding")
             .selectOptionsTab()
-            .selectNumberOfCavitiesDropdown("4")
+            .selectNumberOfCavitiesPiecePartToolingDropdown("4")
             .selectAddColorantButton()
             .inputMaterialRegrind("1.00")
             .closePanel()
