@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -355,4 +356,39 @@ public class FileResourceUtil {
         }
         return jsonFileContent;
     }
+
+    /**
+     * wait certain time to check if file exists(appear)  - if exists - delete it
+     *
+     * @param path - path to the file
+     * @param waitTimeInSec - how long wait to appear
+     *
+     * @throws Exception
+     */
+    public static Boolean deleteFileWhenAppears(Path path, Integer waitTimeInSec) {
+        long initialTime = System.currentTimeMillis() / 1000;
+        do {
+            try {
+                Thread.sleep(200);
+                if (Files.deleteIfExists(path)) {
+                    log.info("File was removed. File path: {}", path);
+                    return true;
+                }
+            } catch (IOException | InterruptedException e) {
+                log.error("Failed to remove file.");
+                throw new IllegalArgumentException(e);
+            }
+        } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
+
+        return false;
+    }
+
+    /**
+     * wait certain time to check if file exists(appear)
+     *
+     * @param path - path to the file
+     * @param waitTimeInSec - how long wait to appear
+     *
+     * @throws Exception
+     */
 }

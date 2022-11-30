@@ -586,16 +586,16 @@ public class ScenariosUtil {
      * @return generic object
      */
     public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass, int expectedResponseCode) {
+        componentInfo.setPublishRequest(PublishRequest.builder()
+            .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser())
+                .getIdentity())
+            .build());
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser()).getIdentity())
-                    .costMaturity("Initial".toUpperCase())
-                    .override(false)
-                    .status("New".toUpperCase())
-                    .build())
+                .body("scenario", componentInfo.getPublishRequest())
                 .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).post();
@@ -617,7 +617,7 @@ public class ScenariosUtil {
             ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                     SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .stream()
-                .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
+                .filter(o -> !o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
                 .findFirst()
                 .get();
 

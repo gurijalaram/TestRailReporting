@@ -15,6 +15,7 @@ import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public class MountTypePinCountTests extends TestBase {
         BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(getDriver().getCurrentUrl()));
     }
 
+    @Ignore("Ignoring temporarily as we do not have on qa-test version with new feature - mount type as radio button")
     @Test
     @TestRail(testCaseId = "15407")
     @Description("Verify that three variants radio buttons for Mount Type field exists")
@@ -62,6 +64,7 @@ public class MountTypePinCountTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Ignoring temporarily as we do not have on qa-test version with new feature - mount type as radio button")
     @Test
     @TestRail(testCaseId = {"3223", "3217"})
     @Description("Verify Mount Type Accepted Values >=5 Characters ,Verify Pin Count and Mount Type are required fields")
@@ -92,6 +95,7 @@ public class MountTypePinCountTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Ignoring temporarily as we do not have on qa-test version with new feature - mount type as radio button")
     @Test
     @TestRail(testCaseId = "3222")
     @Description("Verify Pin Count only accepts integer values")
@@ -122,5 +126,4 @@ public class MountTypePinCountTests extends TestBase {
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isTrue();
         softAssertions.assertAll();
     }
-
 }

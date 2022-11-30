@@ -9,6 +9,7 @@ import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
 import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -39,7 +40,8 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @Description("get component Details")
+    @TestRail(testCaseId = {"12479"})
+    @Description("get component Details by identity")
     public void getComponentDetails() {
         ResponseWrapper<ComponentResponse> componentResponse = QmsComponentResources.getComponent(userContext,
             scenarioItem.getComponentIdentity());
@@ -48,6 +50,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"12496"})
     @Description("Get the component scenario latest iteration")
     public void getComponentsIterationsLatest() {
         ResponseWrapper<ComponentIteration> componentIterationResponse = QmsComponentResources.getLatestIteration(userContext,
@@ -59,6 +62,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"12983"})
     @Description("Get component Scenario")
     public void getComponentScenario() {
         ResponseWrapper<ScenarioResponse> componentScenarioResponse = QmsComponentResources.getComponentScenario(userContext,
@@ -69,6 +73,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
+    @TestRail(testCaseId = {"12979"})
     @Description("Get component Scenarios")
     public void getComponentScenarios() {
         ResponseWrapper<ScenariosResponse> componentScenariosResponse = QmsComponentResources.getComponentScenarios(userContext,
