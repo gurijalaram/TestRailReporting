@@ -271,7 +271,7 @@ public class UpdateCADFileTests extends TestBase {
             .isTrue();
         soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoArm)).as("Verify Arm sub-component is struck out").isTrue();
 
-       componentsTreePage.openAssembly(autoArm, scenarioName)
+        componentsTreePage.openAssembly(autoArm, scenarioName)
             .clickActions()
             .updateCadFile(autoArmFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
@@ -295,7 +295,7 @@ public class UpdateCADFileTests extends TestBase {
 
         assemblyInfo.getSubComponents().add(armInfo);
 
-       componentsTreePage.openAssembly(autoHead, scenarioName)
+        componentsTreePage.openAssembly(autoHead, scenarioName)
             .clickActions()
             .updateCadFile(modifiedAutoHeadFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
