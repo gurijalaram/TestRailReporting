@@ -239,7 +239,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7854"})
+    @TestRail(testCaseId = {"7854", "12379", "12381", "12382"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -266,6 +266,27 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
+
+        evaluatePage.openMaterialSelectorTable()
+            .selectMaterial("Unsaturated Polyester, CF50")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Compression Molding")
+            .selectOptionsTab()
+            .overrideWallThickness("0.4")
+            .overrideInsertedComponents("5")
+            .selectColorant("Carbon Black Pigment")
+            .closePanel()
+            .costScenario();
+
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Compression Molding")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness")).isEqualTo(0.40);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Inserted Components")).isEqualTo(5);
+        softAssertions.assertThat(materialProcessPage.getColorant()).isEqualTo("Carbon Black Pigment");
         softAssertions.assertAll();
     }
 
@@ -343,7 +364,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7844"})
+    @TestRail(testCaseId = {"7844", "7290", "7291", "7292"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1161,7 +1182,6 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
         softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
-
         softAssertions.assertAll();
     }
 
