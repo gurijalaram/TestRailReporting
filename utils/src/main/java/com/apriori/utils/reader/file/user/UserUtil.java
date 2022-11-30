@@ -51,6 +51,19 @@ public class UserUtil {
     }
 
     /**
+     * Return user by access level
+     *
+     * @param accessLevel - access level of needed user
+     * @return User
+     */
+    public static UserCredentials getUser(String accessLevel) {
+        UserCredentials user = UserSecurityService.getUser(accessLevel).generateToken()
+            .generateCloudContext();
+        logInfo(user);
+        return user;
+    }
+
+    /**
      * Return common user with cloud context
      *
      * @return User
@@ -70,19 +83,6 @@ public class UserUtil {
      */
     public static UserCredentials getUserOnPrem() {
         UserCredentials user = UserCommonService.getUser();
-        logInfo(user);
-        return user;
-    }
-
-    /**
-     * Return user by access level
-     *
-     * @param accessLevel - access level of needed user
-     * @return User
-     */
-    public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel).generateToken()
-            .generateCloudContext();
         logInfo(user);
         return user;
     }
