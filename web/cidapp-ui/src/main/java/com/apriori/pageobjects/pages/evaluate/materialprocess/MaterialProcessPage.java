@@ -387,6 +387,18 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectNumberOfCavitiesDropdown(String value) {
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Number of Cavities", "user"));
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("User defined value"), "User defined value", value);
+        return this;
+    }
+
+    /**
+     * Select defined value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selectNumberOfCavitiesPiecePartToolingDropdown(String value) {
         pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
         pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("User defined value"), "User defined value", value);
         return this;
@@ -448,6 +460,18 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage overrideWallThickness(String value) {
+        psoController.inputOverrideValue(psoController.buildLocator("Nominal Wall Thickness", "userOverride"),
+            psoController.inputLocator("Nominal Wall Thickness"), value);
+        return this;
+    }
+
+    /**
+     * Input nominal override
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage overrideWallThicknessPiecePart(String value) {
         psoController.inputOverrideValue(psoController.buildLocator("Nominal Wall Thickness  (Piece Part Cost Driver)", "userOverride"),
             psoController.inputLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"), value);
         return this;
@@ -466,13 +490,46 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Add colourant
+     * Input nominal override
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage overrideInsertedComponents(String value) {
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Inserted Components", "0"),
+            psoController.inputLocator("Number of Inserted Components"), value);
+        return this;
+    }
+
+
+    /**
+     * Add colorant
      *
      * @return current page object
      */
     public MaterialProcessPage selectAddColorantButton() {
         pageUtils.waitForElementAndClick(addColorantButton);
         return this;
+    }
+
+    /**
+     * Select colorant
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selectColorant(String value) {
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Select Colorant"), "Select Colorant", value);
+        return this;
+    }
+
+    /**
+     * Get colorant
+     *
+     * @return string
+     */
+    public String getColorant() {
+        return psoController.dropdownLocator("Select Colorant").getAttribute("textContent");
     }
 
     /**
