@@ -647,17 +647,14 @@ public class UploadAssembliesTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(subComponentAName, scenarioName, subComponentA, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .costScenario();
-
-        evaluatePage.uploadComponentAndOpen(subComponentBName, scenarioName, subComponentB, currentUser)
+            .costScenario()
+            .uploadComponentAndOpen(subComponentBName, scenarioName, subComponentB, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .costScenario();
-
-        evaluatePage.uploadComponentAndOpen(subComponentCName, scenarioName, subComponentC, currentUser)
+            .costScenario()
+            .uploadComponentAndOpen(subComponentCName, scenarioName, subComponentC, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .costScenario();
-
-        evaluatePage.uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .costScenario()
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .selectProcessGroup(ASSEMBLY)
             .costScenario();
 
