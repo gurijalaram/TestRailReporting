@@ -153,4 +153,24 @@ public class HelpTests extends TestBase {
 
         assertThat(helpDocPage.getChildPageTitle(), is(equalTo("Examine the Cost Results Details")));
     }
+
+    @Test
+    @TestRail(testCaseId = {"6547"})
+    @Description("Have links to a detailed help page in relevant areas of the UI")
+    public void assemblyHelp() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        String componentName = "Hinge assembly";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDASM");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        helpDocPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .openComponents()
+            .selectTableView()
+            .openHelp();
+
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Working in the Assembly Explorer"));
+    }
 }
