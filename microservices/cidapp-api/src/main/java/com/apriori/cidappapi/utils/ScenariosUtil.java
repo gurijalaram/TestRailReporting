@@ -251,13 +251,15 @@ public class ScenariosUtil {
      * @return list of scenario items
      */
     public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfo) {
+        CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("costingInputs", CostingTemplate.builder()
-                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getIdentity())
-                    .deleteTemplateAfterUse(componentInfo.getCostingTemplate().getDeleteTemplateAfterUse())
+                    .costingTemplateIdentity(costingTemplate.getIdentity())
+                    .deleteTemplateAfterUse(costingTemplate.getDeleteTemplateAfterUse())
                     .build());
 
         HTTPRequest.build(requestEntity).post();
@@ -443,7 +445,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity(getCostingTemplateId(componentInfo.getSubComponents().get(0)).getIdentity())
+                    .costingTemplateIdentity(postCostingTemplate(componentInfo.getSubComponents().get(0)).getIdentity())
                     .groupItems(subComponentInfo
                         .stream()
                         .map(component -> GroupItems.builder()
@@ -503,15 +505,6 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Calls an api with the GET verb
-     *
-     * @return scenario object
-     */
-    private CostingTemplate getCostingTemplateId(ComponentInfoBuilder componentInfo) {
-        return postCostingTemplate(componentInfo);
     }
 
     /**
