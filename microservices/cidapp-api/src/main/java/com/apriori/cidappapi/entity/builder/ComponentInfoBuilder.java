@@ -20,7 +20,6 @@ public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
     private String scenarioName;
-    private List<String> scenarioNames;
     private File resourceFile;
     private List<File> resourceFiles;
     private String componentIdentity;
