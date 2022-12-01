@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.evaluate.components;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
@@ -10,6 +11,7 @@ import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -238,6 +240,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public ComponentsTreePage updateCadFile(File filePath) {
         assembliesComponentsController.updateCadFile(filePath, ComponentsTreePage.class);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 2);
         return this;
     }
 
@@ -290,5 +293,68 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
         return assembliesComponentsController.getRowDetails(componentName, scenarioName);
     }
 
+    /**
+     * Gets the data-icon value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return assembliesComponentsController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
+     * Gets list of subcomponent names
+     *
+     * @return string
+     */
+    public List<String> getListOfSubcomponents() {
+        return assembliesComponentsController.getListOfSubcomponents();
+    }
+
+    /**
+     * Checks the subcomponent is in a completed state
+     *
+     * @param componentInfo     - the component info
+     * @param subcomponentNames - the subcomponent names
+     * @return current page object
+     */
+    public ComponentsTreePage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+        assembliesComponentsController.checkSubcomponentState(componentInfo, subcomponentNames);
+        return this;
+    }
+
+    /**
+     * Checks if the cad button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isCadButtonEnabled() {
+        return assembliesComponentsController.isCadButtonEnabled();
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon          - the icon
+     * @param componentName - the component name
+     * @return - boolean
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
+        return assembliesComponentsController.isIconDisplayed(icon, componentName);
+    }
+
+    /**
+     * Opens the assembly
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openAssembly(String componentName, String scenarioName) {
+        assembliesComponentsController.openAssembly(componentName, scenarioName);
+        return new EvaluatePage(driver);
+    }
 
 }
