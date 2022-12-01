@@ -108,7 +108,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "6076"})
+    @TestRail(testCaseId = {"10799", "6076", "6515"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
@@ -140,6 +140,8 @@ public class EditAssembliesTest extends TestBase {
             .openScenario(assemblyName, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
+        softAssertions.assertThat(evaluatePage.isAnnualVolumeInputEnabled()).isEqualTo(false);
+        softAssertions.assertThat(evaluatePage.isAnnualYearsInputEnabled()).isEqualTo(false);
 
         evaluatePage.editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
@@ -515,7 +517,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10814", "6596"})
+    @TestRail(testCaseId = {"10814", "6596", "6046"})
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
         final String assemblyName = "Hinge assembly";
@@ -906,7 +908,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12040", "11954", "6521", "10874"})
+    @TestRail(testCaseId = {"12040", "11954", "6521", "10874", "11027"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
         String assemblyName = "flange c";
