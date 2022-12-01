@@ -4,7 +4,6 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -23,7 +22,6 @@ public class CostingTemplateTests {
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @Test
     public void testCostingTemplateId() {
