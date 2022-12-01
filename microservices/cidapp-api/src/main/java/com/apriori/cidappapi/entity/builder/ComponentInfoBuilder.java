@@ -32,6 +32,5 @@ public class ComponentInfoBuilder {
     private PublishRequest publishRequest;
     @Builder.Default
     private final boolean overrideScenario = false;
-    private String costingTemplateId;
     private CostingTemplate costingTemplate;
 }

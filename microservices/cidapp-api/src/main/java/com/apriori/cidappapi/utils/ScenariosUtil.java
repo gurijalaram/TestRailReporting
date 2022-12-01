@@ -493,7 +493,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity(componentInfo.getCostingTemplateId())
+                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getCostingTemplateIdentity())
                     .groupItems(componentInfo.getSubComponents()
                         .stream()
                         .map(component -> GroupItems.builder()

@@ -205,7 +205,7 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentAssembly.setCostingTemplateId("");
+        componentAssembly.getCostingTemplate().setCostingTemplateIdentity("");
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
