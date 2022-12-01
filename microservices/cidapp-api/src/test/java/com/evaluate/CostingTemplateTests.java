@@ -112,11 +112,13 @@ public class CostingTemplateTests {
 
         CostingTemplate costingTemplate = new ScenariosUtil().postCostingTemplate(costingInfo);
 
-        softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(500);
-        softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(458);
-        softAssertions.assertThat(costingTemplate.getProductionLife()).isEqualTo(5.0);
-        softAssertions.assertThat(costingTemplate.getProductionLife()).isNotEqualTo(9.5);
-        softAssertions.assertThat(costingTemplate.getProcessGroupName()).isNull();
+        CostingTemplate costingDefaultValues = CostingTemplate.builder().build();
+
+        softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(costingDefaultValues.getAnnualVolume());
+        softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(costingDefaultValues.getBatchSize());
+        softAssertions.assertThat(costingTemplate.getProductionLife()).isEqualTo(costingDefaultValues.getProductionLife());
+        softAssertions.assertThat(costingTemplate.getProcessGroupName()).isEqualTo(costingDefaultValues.getProcessGroupName());
+        softAssertions.assertThat(costingTemplate.getMaterialName()).isEqualTo(costingDefaultValues.getMaterialName());
 
         softAssertions.assertAll();
     }
