@@ -5,7 +5,6 @@ import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.Builder;
@@ -27,8 +26,6 @@ public class ComponentInfoBuilder {
     private String componentIdentity;
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
-    @Builder.Default
-    private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
     private List<ComponentInfoBuilder> subComponents;
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
