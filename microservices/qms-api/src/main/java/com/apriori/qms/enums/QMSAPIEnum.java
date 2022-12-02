@@ -33,7 +33,10 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     SCENARIO_DISCUSSION_COMMENT("scenario-discussions/%s/comments/%s"),
 
     //ITERATIONS
-    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest");
+    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest"),
+
+    //PARTICIPANTS
+    PARTICIPANTS("participants");
 
     private final String endpoint;
 
