@@ -15,6 +15,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -425,5 +426,19 @@ public class QmsBidPackageResources {
             .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * get Participants
+     * @param currentUser
+     * @return ResponseWrapper<ParticipantsResponse>
+     */
+    public static ResponseWrapper<ParticipantsResponse> getParticipants(UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PARTICIPANTS, ParticipantsResponse.class)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+
     }
 }

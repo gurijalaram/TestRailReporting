@@ -6,6 +6,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -107,6 +108,17 @@ public class BidPackageProjectUserTest extends TestUtil {
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageProjectUserResponse.getResponseEntity().getRole()).isEqualTo("ADMIN");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14224", "14225", "14236"})
+    @Description("Get list of possible users, pagination and validate json response schema")
+    public void getParticipants() {
+        ResponseWrapper<ParticipantsResponse> participantsResponse = QmsBidPackageResources.getParticipants(currentUser);
+
+        softAssertions.assertThat(participantsResponse.getResponseEntity().getIsFirstPage()).isTrue();
+        softAssertions.assertThat(participantsResponse.getResponseEntity().getPageNumber()).isEqualTo(1);
+        softAssertions.assertThat(participantsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
     
     @After
