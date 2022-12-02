@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "isSystemUser": {
+      "type": "boolean"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "userProfile": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "givenName",
+        "familyName"
+      ]
+    },
+    "email": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "mfaRequired": {
+      "type": "boolean"
+    },
+    "customAttributes": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "workspaceId"
+      ]
+    },
+    "userType": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "isSystemUser",
+    "identity",
+    "createdAt",
+    "createdBy",
+    "customerIdentity",
+    "userProfile",
+    "email",
+    "username",
+    "active",
+    "mfaRequired",
+    "customAttributes",
+    "userType"
+  ]
+}
