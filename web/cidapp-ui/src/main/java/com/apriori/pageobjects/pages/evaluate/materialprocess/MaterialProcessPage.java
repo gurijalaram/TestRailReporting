@@ -90,11 +90,20 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(.,'Number of Cavities')]/..//input[@value='optimize']")
     private WebElement optimizeMinCost;
 
+    @FindBy(xpath = "//h6[starts-with(., 'Colorant   (Piece Part Cost Driver)')]/..//input[@value='defaultColorant']")
+    private WebElement colorantDefaultValue;
+
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
+    @FindBy(xpath = "//h6[starts-with(., 'Number of cavities  (Piece Part & Tooling Cost Driver)')]/..//input[@value='default']")
+    private WebElement cavitiesDefaultValue;
+
     @FindBy(xpath = "//h6[starts-with(., 'Number of cavities  (Piece Part & Tooling Cost Driver)')]/..//input[@value='optimize']")
     private WebElement cavitiesOptimizeMinCost;
+
+    @FindBy(xpath = "//h6[starts-with(., 'Nominal Wall Thickness  (Piece Part Cost Driver)')]/..//input[@value='deriveFromPart']")
+    private WebElement wallThicknessDefault;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -454,6 +463,24 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Select default value
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectWallThicknessDeriveFromPart() {
+        pageUtils.waitForElementAndClick(wallThicknessDefault);
+        return this;
+    }
+
+    /**
+     * Checks default is selected
+     *
+     * @return true/false
+     */
+    public boolean isWallThicknessDeriveFromPartSelected() {
+        return !pageUtils.waitForElementToAppear(wallThicknessDefault).getAttribute("checked").equals("null");
+    }
+    /**
      * Input nominal override
      *
      * @param value - the value
@@ -501,6 +528,24 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         return this;
     }
 
+    /**
+     * Select default value
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectNoColorant() {
+        pageUtils.waitForElementAndClick(colorantDefaultValue);
+        return this;
+    }
+
+    /**
+     * Checks default is selected
+     *
+     * @return true/false
+     */
+    public boolean isNoColorantSelected() {
+        return !pageUtils.waitForElementToAppear(colorantDefaultValue).getAttribute("checked").equals("null");
+    }
 
     /**
      * Add colorant
@@ -608,6 +653,25 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         return this;
     }
 
+    /**
+     * Select default value
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectCavitiesDefaultValue() {
+        pageUtils.waitForElementAndClick(cavitiesDefaultValue);
+        return this;
+    }
+
+    /**
+     * Checks default is selected
+     *
+     * @return true/false
+     */
+    public boolean isCavitiesDefaultValueSelected() {
+        return !pageUtils.waitForElementToAppear(cavitiesDefaultValue).getAttribute("checked").equals("null");
+    }
+
 
     /**
      * Select optimize minimum cost
@@ -627,6 +691,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     public boolean isCavitiesOptimizeMinCostSelected() {
         return !pageUtils.waitForElementToAppear(cavitiesOptimizeMinCost).getAttribute("checked").equals("null");
     }
+
 
     /**
      * Closes current panel

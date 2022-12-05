@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -27,6 +28,7 @@ import java.io.File;
 public class PsoEditTests extends TestBase {
 
     private CidAppLoginPage loginPage;
+    private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
 
     private File resourceFile;
@@ -325,5 +327,79 @@ public class PsoEditTests extends TestBase {
             .selectOptionsTab();
 
         assertThat(String.valueOf(materialProcessPage.getOverriddenPso("Bundle Sawing")), is(not(equalTo("jrigm"))));
+    }
+
+    @Test
+    @Issue("BA-2744")
+    @TestRail(testCaseId = {"16707"})
+    @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
+    public void multiplePSOEdits() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "plasticLid";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+
+        evaluatePage.openMaterialProcess()
+            .selectBarChart("Injection Molding")
+            .selectOptionsTab()
+            .selectCavitiesOptimizeMinCost()
+            .overrideWallThicknessPiecePart("0.52")
+            .inputColorCharge("0.86")
+            .closePanel()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.82), Offset.offset(0.2));
+
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Injection Molding")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.52);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(0.86);
+
+        materialProcessPage.selectNumberOfCavitiesPiecePartToolingDropdown("32")
+            .overrideWallThicknessPiecePart("2.52")
+            .inputColorCharge("2.86")
+            .closePanel()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(5.72), Offset.offset(0.2));
+
+        evaluatePage.openMaterialProcess()
+            .selectBarChart("Injection Molding")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(32);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(2.52);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(2.86);
+
+        materialProcessPage.selectCavitiesDefaultValue()
+            .selectWallThicknessDeriveFromPart()
+            .selectNoColorant()
+            .closePanel()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+
+        evaluatePage.openMaterialProcess()
+            .selectBarChart("Injection Molding")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.isCavitiesDefaultValueSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.isWallThicknessDeriveFromPartSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.isNoColorantSelected()).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }
