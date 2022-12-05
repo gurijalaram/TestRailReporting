@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test-sandbox
+env: qa-test
 
 # Define the global properties not related to environment
 global:
@@ -51,8 +51,8 @@ default:
     api_url: https://cas-api.${default.aws_region}.${env}.apriori.net/%s
 
   cis:
-    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
-    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
+    ui_url: https://cis.${default.aws_region}.${env}-v22-1.apriori.net/
+    api_url: https://cis-api.${default.aws_region}-v22-1.${env}.apriori.net/
 
   cds:
     api_url: https://cds.${default.aws_region}.${env}.apriori.net/
@@ -289,7 +289,7 @@ qa-20-1:
 ######################################################## STAGING ########################################################
 staging:
   ap_user_context:
-  base_url:
+  base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
