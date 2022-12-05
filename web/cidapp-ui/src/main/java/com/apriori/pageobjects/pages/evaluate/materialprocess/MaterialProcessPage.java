@@ -674,7 +674,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         return !pageUtils.waitForElementToAppear(cavitiesDefaultValue).getAttribute("checked").equals("null");
     }
 
-
     /**
      * Select optimize minimum cost
      *
