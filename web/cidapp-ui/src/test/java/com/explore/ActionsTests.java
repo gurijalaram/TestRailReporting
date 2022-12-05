@@ -880,8 +880,10 @@ public class ActionsTests extends TestBase {
 
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
             .updateCadFile(resourceFile2);
 
         String expectedError = "The supplied CAD file (Machined Box AMERICAS.SLDPRT) cannot be used for this scenario. The name of the file must be Bishop.SLDPRT.";
