@@ -1,8 +1,8 @@
 package com.apriori.customer.users.profile;
 
 import com.apriori.common.ModalUserList;
+import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 @Slf4j
-public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
+public final class UserProfilePage extends NavToolbar {
 
     @FindBy(xpath = "//button[.='Edit']")
     private WebElement editButton;
@@ -64,10 +64,9 @@ public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
     private ModalUserList modalUserList;
 
     public UserProfilePage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
         grantedAccessControlsContainer = new SourceListComponent(driver, grantedAccessControlsContainerRoot);
         modalUserList = new ModalUserList(driver);
-        PageFactory.initElements(driver, this);
     }
 
     @Override

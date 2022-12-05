@@ -1,6 +1,6 @@
 package com.apriori.customer.users;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.web.components.RoutingComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
  * Represents the root of the users page that contains the tabs.
  */
 @Slf4j
-public final class UsersPage extends EagerPageComponent<UsersPage> {
+public class UsersPage extends CustomerWorkspacePage {
     @FindBy(xpath = "//a[.='Customer Staff']")
     private WebElement customerStaffTabRoot;
     private final RoutingComponent customerStaffTab;
@@ -35,15 +35,15 @@ public final class UsersPage extends EagerPageComponent<UsersPage> {
      * @param driver The web driver that the page exists on.
      */
     public UsersPage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
 
         // Required Tabs
-        customerStaffTab = new RoutingComponent(getDriver(), customerStaffTabRoot);
-        importTab = new RoutingComponent(getDriver(), importTabRoot);
+        customerStaffTab = new RoutingComponent(driver, customerStaffTabRoot);
+        importTab = new RoutingComponent(driver, importTabRoot);
 
         // Optional Tabs
-        aPrioriStaffTab = getPageUtils().isElementDisplayed(aPrioriStaffTabRoot) ? new RoutingComponent(getDriver(), aPrioriStaffTabRoot) : null;
-        aPrioriAccessHistoryTab = getPageUtils().isElementDisplayed(aPrioriAccessHistoryTabRoot) ? new RoutingComponent(getDriver(), aPrioriAccessHistoryTabRoot) : null;
+        aPrioriStaffTab = getPageUtils().isElementDisplayed(aPrioriStaffTabRoot) ? new RoutingComponent(driver, aPrioriStaffTabRoot) : null;
+        aPrioriAccessHistoryTab = getPageUtils().isElementDisplayed(aPrioriAccessHistoryTabRoot) ? new RoutingComponent(driver, aPrioriAccessHistoryTabRoot) : null;
     }
 
     /**
