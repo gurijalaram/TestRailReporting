@@ -480,6 +480,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     public boolean isWallThicknessDeriveFromPartSelected() {
         return !pageUtils.waitForElementToAppear(wallThicknessDefault).getAttribute("checked").equals("null");
     }
+
     /**
      * Input nominal override
      *
@@ -498,6 +499,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @param value - the value
      * @return current page object
      */
+
     public MaterialProcessPage overrideWallThicknessPiecePart(String value) {
         psoController.inputOverrideValue(psoController.buildLocator("Nominal Wall Thickness  (Piece Part Cost Driver)", "userOverride"),
             psoController.inputLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"), value);
