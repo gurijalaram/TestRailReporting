@@ -5,6 +5,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -29,6 +30,7 @@ public class GroupEditAssemblies extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private EditScenarioStatusPage editScenarioStatusPage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -68,23 +70,22 @@ public class GroupEditAssemblies extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", PIN + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isEditButtonEnabled()).isEqualTo(true);
 
-        componentsTablePage.editSubcomponent(EditComponentsPage.class)
+        componentsTreePage.editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
             .clickContinue(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
+            .close(ComponentsTreePage.class)
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + PIN);
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }

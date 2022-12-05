@@ -546,7 +546,7 @@ public class SecondaryProcessTests extends TestBase {
                 .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
                 .selectProcessGroup(processGroupEnum)
                 .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, Cast, ANSI 1050A")
+                .selectMaterial("Aluminum, ANSI 1050A")
                 .submit(EvaluatePage.class)
                 .costScenario()
                 .goToAdvancedTab()

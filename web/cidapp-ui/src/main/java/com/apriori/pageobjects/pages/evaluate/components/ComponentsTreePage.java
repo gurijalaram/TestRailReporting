@@ -11,7 +11,9 @@ import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -305,12 +307,36 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     }
 
     /**
+     * Gets the scenario state of the component
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @param stateEnum     -  scenario state enum
+     * @return - string
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        return assembliesComponentsController.getScenarioState(componentName, scenarioName, currentUser, stateEnum);
+    }
+
+    /**
      * Gets list of subcomponent names
      *
      * @return string
      */
     public List<String> getListOfSubcomponents() {
         return assembliesComponentsController.getListOfSubcomponents();
+    }
+
+    /**
+     * Gets the number of elements with state present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return boolean
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        return assembliesComponentsController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
     }
 
     /**
@@ -323,6 +349,24 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public ComponentsTreePage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
         assembliesComponentsController.checkSubcomponentState(componentInfo, subcomponentNames);
         return this;
+    }
+
+    /**
+     * clicks the edit button
+     *
+     * @return - the current page object
+     */
+    public <T> T editSubcomponent(Class<T> klass) {
+        return assembliesComponentsController.editSubcomponent(klass);
+    }
+
+    /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonEnabled() {
+        return !assembliesComponentsController.isEditButtonEnabled();
     }
 
     /**

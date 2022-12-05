@@ -203,7 +203,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
+            .selectMaterial("Polyetheretherketone, PEEK")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -214,7 +214,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone, PEEK")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
