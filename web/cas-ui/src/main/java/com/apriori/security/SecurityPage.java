@@ -1,6 +1,6 @@
 package com.apriori.security;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.customer.CustomerWorkspacePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public final class SecurityPage extends EagerPageComponent<SecurityPage> {
+public final class SecurityPage extends CustomerWorkspacePage {
     @FindBy(css = ".apriori-card.card .card-header")
     private WebElement cardHeader;
 
@@ -29,7 +29,7 @@ public final class SecurityPage extends EagerPageComponent<SecurityPage> {
     private WebElement modalSuccessMessage;
 
     public SecurityPage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
     }
 
     @Override
@@ -85,5 +85,4 @@ public final class SecurityPage extends EagerPageComponent<SecurityPage> {
     public String getSuccessTextMessage() {
         return getPageUtils().waitForElementToAppear(modalSuccessMessage).getAttribute("textContent");
     }
-
 }

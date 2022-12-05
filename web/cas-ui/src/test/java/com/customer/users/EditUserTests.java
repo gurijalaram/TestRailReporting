@@ -1,14 +1,9 @@
 package com.customer.users;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
@@ -166,9 +161,10 @@ public class EditUserTests extends TestBase {
     @Description("Status field is greyed out (non editable) if Customer is set to inactive")
     @TestRail(testCaseId = {"10644", "10645"})
     public void testUserStatusFieldNotEditableIfCustomerIsDisabled() {
+        SoftAssertions soft = new SoftAssertions();
         UserProfilePage checkUserStatus = userProfilePage.edit();
 
-        assertThat(checkUserStatus.isStatusCheckboxEditable(), is(equalTo(true)));
+        soft.assertThat(checkUserStatus.isStatusCheckboxEditable()).isTrue();
 
         userProfilePage.cancel();
 
@@ -180,7 +176,7 @@ public class EditUserTests extends TestBase {
                 .changeCustomerStatus()
                 .clickSaveButton();
 
-        assertThat(deactivateCustomer.getStatus(), is(equalTo("Inactive")));
+        soft.assertThat(deactivateCustomer.getStatus()).isEqualTo("Inactive");
 
         customerViewPage = new CustomerWorkspacePage(driver);
         UserProfilePage checkIfReadOnly = customerViewPage.goToUsersPage()
@@ -188,7 +184,7 @@ public class EditUserTests extends TestBase {
                 .selectUser(customerIdentity, userIdentity, USER_NAME)
                 .edit();
 
-        assertThat(checkIfReadOnly.isStatusCheckboxEditable(), is(equalTo(false)));
+        soft.assertThat(checkIfReadOnly.isStatusCheckboxEditable()).isFalse();
 
         checkIfReadOnly.cancel();
 
@@ -198,6 +194,7 @@ public class EditUserTests extends TestBase {
                 .changeCustomerStatus()
                 .clickSaveButton();
 
-        assertThat(activateCustomer.getStatus(), is(equalTo("Active")));
+        soft.assertThat(activateCustomer.getStatus()).isEqualTo("Active");
+        soft.assertAll();
     }
 }
