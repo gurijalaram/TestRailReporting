@@ -9,7 +9,8 @@ public enum DDSApiEnum implements ExternalEndpointEnum {
     CUSTOMER_DISCUSSIONS("%s/discussions"),
     CUSTOMER_DISCUSSION(CUSTOMER_DISCUSSIONS.getEndpointString().concat("/%s")),
     CUSTOMER_DISCUSSION_COMMENTS(CUSTOMER_DISCUSSION.getEndpointString().concat("/comments")),
-    CUSTOMER_DISCUSSION_COMMENT(CUSTOMER_DISCUSSION_COMMENTS.getEndpointString().concat("/%s"));
+    CUSTOMER_DISCUSSION_COMMENT(CUSTOMER_DISCUSSION_COMMENTS.getEndpointString().concat("/%s")),
+    CUSTOMER_SEARCH_DISCUSSIONS("%s/discussions/search");
 
     private final String endpoint;
 
