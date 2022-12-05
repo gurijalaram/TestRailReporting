@@ -1,10 +1,5 @@
 package com.customer;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.CustomerWorkspacePage;
@@ -43,6 +38,7 @@ public class NewCustomerTests extends TestBase {
     private CustomerProfilePage customerProfilePage;
     private CdsTestUtil cdsTestUtil;
     private List<String> created;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setup() {
@@ -56,15 +52,15 @@ public class NewCustomerTests extends TestBase {
 
     @After
     public void teardown() {
-        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
+        if (created != null) {
+            created.forEach(identity -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
+        }
     }
 
     @Test
     @Description("Clicking the New Customer button takes me to the profile form and all displays are valid.")
     @TestRail(testCaseId = {"9600"})
     public void testValidateThatTheFormLabelsAreCorrect() {
-
-        SoftAssertions soft = new SoftAssertions();
         soft.assertThat(customerViewPage.getProfileTab().isActive())
             .overridingErrorMessage("The profile tab not the active tab.")
             .isTrue();
@@ -117,7 +113,8 @@ public class NewCustomerTests extends TestBase {
     public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
 
         CustomerAdminPage actual = customerProfilePage.clickCancelButton(CustomerAdminPage.class);
-        assertThat(actual, is(notNullValue()));
+        soft.assertThat(actual).isNotNull();
+        soft.assertAll();
     }
 
     @Test
@@ -136,9 +133,9 @@ public class NewCustomerTests extends TestBase {
             .enterEmailDomains("apriori.com")
             .enterCustomerName(customerName);
 
-        assertThat(customerProfilePage.isSaveButtonEnabled(), is(equalTo(true)));
+        soft.assertThat(customerProfilePage.isSaveButtonEnabled()).isTrue();
         customerProfilePage.enterCustomerName(null);
-        assertThat(customerProfilePage.isSaveButtonEnabled(), is(equalTo(false)));
+        soft.assertThat(customerProfilePage.isSaveButtonEnabled()).isFalse();
 
         CustomerProfilePage editPage = customerProfilePage
             .enterCustomerName(customerName)
@@ -147,14 +144,15 @@ public class NewCustomerTests extends TestBase {
 
         created.add(customerViewPage.findCustomerIdentity());
 
-        assertThat(editPage, is(notNullValue()));
+        soft.assertThat(editPage).isNotNull();
 
         editPage.clickCancelButton(CustomerProfilePage.class);
 
-        assertThat(customerProfilePage.getCustomerName(), is(equalTo(customerName)));
+        soft.assertThat(customerProfilePage.getCustomerName()).isEqualTo(customerName);
+        soft.assertAll();
     }
 
-    private void testTheNecessaryFieldsAreRequired(SoftAssertions soft) {
+    private void testTheNecessaryFieldsAreRequired() {
 
         customerProfilePage.enterCustomerName(null);
         soft.assertThat(customerProfilePage.getCustomerNameFeedback())
@@ -179,7 +177,7 @@ public class NewCustomerTests extends TestBase {
             .isEqualTo("Enter the max CAD file size.");
     }
 
-    private void testCustomerNameShouldBeNoMoreThan64Characters(SoftAssertions soft) {
+    private void testCustomerNameShouldBeNoMoreThan64Characters() {
 
         String nameTooLong = RandomStringUtils.randomAlphanumeric(65);
         String actual = customerProfilePage
@@ -188,7 +186,7 @@ public class NewCustomerTests extends TestBase {
         soft.assertThat(actual).isEqualTo("Should be no more than 64 characters in length.");
     }
 
-    private void testSalesforceIdShouldBe15Or18Characters(int count, SoftAssertions soft) {
+    private void testSalesforceIdShouldBe15Or18Characters(int count) {
 
         String salesforceId = RandomStringUtils.randomNumeric(count);
         String actual = customerProfilePage
@@ -197,13 +195,13 @@ public class NewCustomerTests extends TestBase {
         soft.assertThat(actual).isEqualTo("Should be 15 or 18 characters.");
     }
 
-    private void testEmailDomainsRequireValidEmails(SoftAssertions soft) {
+    private void testEmailDomainsRequireValidEmails() {
 
         customerProfilePage.enterEmailDomains("aa");
         soft.assertThat(customerProfilePage.getEmailDomFeedback()).isEqualTo("Email domains must be comma separated, contain no spaces, and must include the top level domain of at least 2 characters.");
     }
 
-    private void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days(SoftAssertions soft) {
+    private void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days() {
 
         customerProfilePage.enterCadFileRetentionPolicy("0");
         soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy requires at least 1 day.");
@@ -211,7 +209,7 @@ public class NewCustomerTests extends TestBase {
         soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy allows at most 1095 days.");
     }
 
-    private void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB(SoftAssertions soft) {
+    private void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB() {
 
         customerProfilePage.enterMaxCadFileSize("9");
         soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("You will require at least 10 MB for a CAD file.");
@@ -224,16 +222,15 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = {"9617", "9618", "9622", "9629", "9631", "9634"})
     public void testRequiredValidations() {
 
-        SoftAssertions soft = new SoftAssertions();
-        testTheNecessaryFieldsAreRequired(soft);
-        testCustomerNameShouldBeNoMoreThan64Characters(soft);
-        testSalesforceIdShouldBe15Or18Characters(14, soft);
-        testSalesforceIdShouldBe15Or18Characters(16, soft);
-        testSalesforceIdShouldBe15Or18Characters(17, soft);
-        testSalesforceIdShouldBe15Or18Characters(19, soft);
-        testEmailDomainsRequireValidEmails(soft);
-        testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days(soft);
-        testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB(soft);
+        testTheNecessaryFieldsAreRequired();
+        testCustomerNameShouldBeNoMoreThan64Characters();
+        testSalesforceIdShouldBe15Or18Characters(14);
+        testSalesforceIdShouldBe15Or18Characters(16);
+        testSalesforceIdShouldBe15Or18Characters(17);
+        testSalesforceIdShouldBe15Or18Characters(19);
+        testEmailDomainsRequireValidEmails();
+        testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days();
+        testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB();
         soft.assertAll();
     }
 
@@ -243,17 +240,18 @@ public class NewCustomerTests extends TestBase {
     public void testCloudReferenceIsDisabledForOnPremiseCustomers() {
 
         customerProfilePage.selectCustomerTypeOnPremise();
-        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
+        soft.assertThat(customerProfilePage.isCloudReferenceEnabled()).isFalse();
         customerProfilePage.selectCustomerTypeCloud();
-        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(true)));
+        soft.assertThat(customerProfilePage.isCloudReferenceEnabled()).isTrue();
         customerProfilePage.selectCustomerTypeOnPremiseAndCloud();
-        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(true)));
+        soft.assertThat(customerProfilePage.isCloudReferenceEnabled()).isTrue();
         customerProfilePage.enterCloudRef(null);
-        assertThat(customerProfilePage.getCloudRefFeedback(),  is(equalTo("Enter a cloud reference.")));
+        soft.assertThat(customerProfilePage.getCloudRefFeedback()).isEqualTo("Enter a cloud reference.");
         customerProfilePage.selectCustomerTypeOnPremise();
-        assertThat(customerProfilePage.getCloudRefFeedback(), is(equalTo("")));
-        assertThat(customerProfilePage.getCloudRefValue(), is(equalTo("")));
-        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
+        soft.assertThat(customerProfilePage.getCloudRefFeedback()).isEqualTo("");
+        soft.assertThat(customerProfilePage.getCloudRefValue()).isEqualTo("");
+        soft.assertThat(customerProfilePage.isCloudReferenceEnabled()).isFalse();
+        soft.assertAll();
     }
 
     @Test
@@ -273,7 +271,7 @@ public class NewCustomerTests extends TestBase {
                 .changeCustomerStatus()
                 .clickSaveButton();
 
-        assertThat(customerProfilePage.getStatus(), is(equalTo("Inactive")));
+        soft.assertThat(customerProfilePage.getStatus()).isEqualTo("Inactive");
 
         String customerIdentity = customerViewPage.findCustomerIdentity();
 
@@ -286,6 +284,7 @@ public class NewCustomerTests extends TestBase {
         Obligation.mandatory(customers::getSearch, "Customers list search is missing").search(customerIdentity);
         utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
 
-        assertThat(findCustomer.isStatusIconColour("red"), is(true));
+        soft.assertThat(findCustomer.isStatusIconColour("red")).isTrue();
+        soft.assertAll();
     }
 }

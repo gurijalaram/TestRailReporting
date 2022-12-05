@@ -2,7 +2,6 @@ package com.apriori.customer.users;
 
 import com.apriori.common.UsersTableController;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.components.TableHeaderComponent;
@@ -14,7 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Slf4j
-public final class StaffAccessHistoryPage extends EagerPageComponent<StaffAccessHistoryPage> {
+public final class StaffAccessHistoryPage extends UsersPage {
 
     @FindBy(css = ".search-field-input")
     private WebElement searchField;
@@ -22,7 +21,7 @@ public final class StaffAccessHistoryPage extends EagerPageComponent<StaffAccess
     private UsersTableController usersTableController;
 
     public StaffAccessHistoryPage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
         usersTableController = new UsersTableController(driver);
     }
 
