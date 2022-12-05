@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test-sandbox
+env: qa-test
 
 # Define the global properties not related to environment
 global:
