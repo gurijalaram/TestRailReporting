@@ -9,16 +9,13 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +24,8 @@ import java.util.stream.Collectors;
  * Represents the page under the users tab that contains the users list.
  */
 
-
-public class UsersListPage extends LoadableComponent<UsersListPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(UsersListPage.class);
+@Slf4j
+public class UsersListPage extends UsersPage {
 
     @FindBy(css = ".btn-light")
     private WebElement newUserButton;
@@ -64,19 +59,13 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     @FindBy(css = ".fa-file-circle-minus")
     private WebElement trashcanIcon;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
     private UsersTableController usersTableController;
 
     /**
      * @inheritDoc
      */
     public UsersListPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver);
         usersTableController = new UsersTableController(driver);
         userListCardView = new SourceListComponent(driver, userListCardViewRoot);
         licenseDetailsList = new SourceListComponent(driver, licenseDetailsListRoot);
@@ -89,9 +78,9 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(newUserButton);
-        pageUtils.waitForElementToAppear(tableViewButton);
-        pageUtils.waitForElementToAppear(cardViewButton);
+        getPageUtils().waitForElementToAppear(newUserButton);
+        getPageUtils().waitForElementToAppear(tableViewButton);
+        getPageUtils().waitForElementToAppear(cardViewButton);
     }
 
     /**
@@ -134,7 +123,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return This object
      */
     public UsersListPage clickTableViewButton() {
-        pageUtils.waitForElementAndClick(tableViewButton);
+        getPageUtils().waitForElementAndClick(tableViewButton);
         return this;
     }
 
@@ -144,7 +133,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return This object
      */
     public UsersListPage clickCardViewButton() {
-        pageUtils.waitForElementAndClick(cardViewButton);
+        getPageUtils().waitForElementAndClick(cardViewButton);
         return this;
     }
 
@@ -169,8 +158,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     private WebElement findUser(String customerIdentity, String userIdentity, String userName) {
         By user = By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']/div[.='%s']",
             customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim(), userName.trim()));
-        pageUtils.waitForElementToAppear(user);
-        return pageUtils.scrollWithJavaScript(driver.findElement(user), true);
+        getPageUtils().waitForElementToAppear(user);
+        return getPageUtils().scrollWithJavaScript(getDriver().findElement(user), true);
     }
 
     /**
@@ -182,8 +171,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public UserProfilePage selectUser(String customerIdentity, String userIdentity, String userName) {
-        pageUtils.waitForElementAndClick(findUser(customerIdentity, userIdentity, userName));
-        return new UserProfilePage(driver);
+        getPageUtils().waitForElementAndClick(findUser(customerIdentity, userIdentity, userName));
+        return new UserProfilePage(getDriver());
     }
 
     /**
@@ -192,8 +181,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public NewUserPage clickNew() {
-        pageUtils.waitForElementAndClick(newUserButton);
-        return new NewUserPage(driver);
+        getPageUtils().waitForElementAndClick(newUserButton);
+        return new NewUserPage(getDriver());
     }
 
     /**
@@ -202,7 +191,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return user list
      */
     public SourceListComponent getUserListCardView() {
-        pageUtils.waitForCondition(userListCardView::isStable, PageUtils.DURATION_LOADING);
+        getPageUtils().waitForCondition(userListCardView::isStable, PageUtils.DURATION_LOADING);
         return userListCardView;
     }
 
@@ -216,8 +205,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     private WebElement findCardUser(String customerIdentity, String userIdentity) {
         By user = By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']",
             customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim()));
-        pageUtils.waitForElementToAppear(user);
-        return pageUtils.scrollWithJavaScript(driver.findElement(user), true);
+        getPageUtils().waitForElementToAppear(user);
+        return getPageUtils().scrollWithJavaScript(getDriver().findElement(user), true);
     }
 
     /**
@@ -228,8 +217,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public UserProfilePage selectCard(String customerIdentity, String userIdentity) {
-        pageUtils.waitForElementAndClick(findCardUser(customerIdentity, userIdentity));
-        return new UserProfilePage(driver);
+        getPageUtils().waitForElementAndClick(findCardUser(customerIdentity, userIdentity));
+        return new UserProfilePage(getDriver());
     }
 
     /**
@@ -241,7 +230,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return true or false
      */
     public boolean isIconColour(String customerIdentity, String userIdentity, String color) {
-        return pageUtils.scrollWithJavaScript(findStatusIcon(customerIdentity, userIdentity)
+        return getPageUtils().scrollWithJavaScript(findStatusIcon(customerIdentity, userIdentity)
             .findElement(By.cssSelector("svg")), true).getAttribute("color").equals(color);
     }
 
@@ -253,7 +242,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return web element
      */
     private WebElement findStatusIcon(String customerIdentity, String userIdentity) {
-        return driver.findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']//div[@class='right']",
+        return getDriver().findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']//div[@class='right']",
             customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim()))));
     }
 
@@ -265,7 +254,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return list of fields names
      */
     public List<String> getFieldName(String customerIdentity, String userIdentity) {
-        List<WebElement> fieldName = driver.findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']/following-sibling::div[@class='card-body']//label",
+        List<WebElement> fieldName = getDriver().findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']/following-sibling::div[@class='card-body']//label",
             customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim())));
         return fieldName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
@@ -280,7 +269,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
         SourceListComponent list = getUsersList();
         SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The user search is missing.");
         search.search(name);
-        pageUtils.waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+        getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
 
         list.selectTableLayout();
         Obligation.mandatory(list::getTable, "The table layout is not active")
@@ -290,7 +279,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
             .getCell("username")
             .click();
 
-        return new UserProfilePage(driver);
+        return new UserProfilePage(getDriver());
     }
 
     /**
@@ -300,7 +289,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return this page object
      */
     public UsersListPage clickLicenceDetailsButton(String arrow) {
-        pageUtils.waitForElementAndClick(By.cssSelector(String.format(".apriori-source-list-details-button [data-icon = 'angles-%s']", arrow)));
+        getPageUtils().waitForElementAndClick(By.cssSelector(String.format(".apriori-source-list-details-button [data-icon = 'angles-%s']", arrow)));
         return this;
     }
 
@@ -311,7 +300,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return true or false
      */
     public boolean isDetailsPanelOpened(String arrow) {
-        return pageUtils.isElementPresent(By.cssSelector(String.format(".apriori-source-list-details-button [data-icon = 'angles-%s']", arrow)));
+        return getPageUtils().isElementPresent(By.cssSelector(String.format(".apriori-source-list-details-button [data-icon = 'angles-%s']", arrow)));
     }
 
     /**
@@ -320,7 +309,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return string
      */
     public String getDetailsText() {
-        return pageUtils.waitForElementToAppear(detailsPlaceholder).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(detailsPlaceholder).getAttribute("textContent");
     }
 
     /**
@@ -329,7 +318,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return The license details list.
      */
     public SourceListComponent getLicenseDetailsList() {
-        pageUtils.waitForCondition(licenseDetailsList::isStable, pageUtils.DURATION_LOADING);
+        getPageUtils().waitForCondition(licenseDetailsList::isStable, getPageUtils().DURATION_LOADING);
         return licenseDetailsList;
     }
 
@@ -339,7 +328,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return true or false
      */
     public boolean isDeleteButtonEnable() {
-        return pageUtils.isElementEnabled(deleteUserButton);
+        return getPageUtils().isElementEnabled(deleteUserButton);
     }
 
     /**
@@ -348,7 +337,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return this page object
      */
     public UsersListPage clickDeleteButton() {
-        pageUtils.waitForElementAndClick(deleteUserButton);
+        getPageUtils().waitForElementAndClick(deleteUserButton);
         return this;
     }
 
@@ -358,7 +347,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return this object
      */
     public UsersListPage clickConfirmDeleteOkButton() {
-        pageUtils.waitForElementAndClick(confirmDeleteOkButton);
+        getPageUtils().waitForElementAndClick(confirmDeleteOkButton);
         return this;
     }
 
@@ -368,7 +357,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return this page object
      */
     public UsersListPage clickConfirmDeleteCancelButton() {
-        pageUtils.waitForElementAndClick(confirmDeleteCancelButton);
+        getPageUtils().waitForElementAndClick(confirmDeleteCancelButton);
         return this;
     }
 
@@ -378,7 +367,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return this page object
      */
     public UsersListPage clickOnTrashcanIcon() {
-        pageUtils.waitForElementAndClick(trashcanIcon);
+        getPageUtils().waitForElementAndClick(trashcanIcon);
         return this;
     }
 }

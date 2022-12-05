@@ -1,9 +1,5 @@
 package com.customer.users;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
@@ -29,7 +25,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -143,8 +138,8 @@ public class UsersGrantApplicationAccessTests extends TestBase {
         SourceListComponent applicationCandidates = addModal.getApplicationCandidates();
         utils.waitForCondition(applicationCandidates::isStable, PageUtils.DURATION_LOADING);
 
-        assertThat(userProfilePage.getSiteInDropDown(), is(equalTo(siteName)));
-        assertThat(userProfilePage.getDeploymentInDropDown(), is(equalTo(deploymentName)));
+        soft.assertThat(userProfilePage.getSiteInDropDown()).isEqualTo(siteName);
+        soft.assertThat(userProfilePage.getDeploymentInDropDown()).isEqualTo(deploymentName);
 
         TableComponent appCandidatesTable = Obligation.mandatory(applicationCandidates::getTable, "The candidates table is missing from the add modal.");
         addModal.validateContainerIsPageableAndRefreshable(soft, applicationCandidates);
@@ -162,7 +157,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
         CardsViewComponent controlsCards = Obligation.mandatory(updatedControls::getCardGrid, "The access controls grid is missing");
         long cards = controlsCards.getCards("apriori-card").count();
 
-        assertThat(cards, CoreMatchers.is(CoreMatchers.equalTo(1L)));
+        soft.assertThat(cards).isEqualTo(1L);
         controlsCards.getCards("apriori-card").findFirst().ifPresent((card) -> Obligation.mandatory(card::getCheck, "The check cell is missing").check(true));
 
         soft.assertThat(updated.canRemove())
