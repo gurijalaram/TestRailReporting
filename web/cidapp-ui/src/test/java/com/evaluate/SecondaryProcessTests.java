@@ -79,7 +79,11 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Testing and Inspection")
                 .selectSecondaryProcess("Hydrostatic Leak Testing")
                 .inputOptionsOverride("0.21")
-                .submit(EvaluatePage.class)
+                .submit(AdvancedPage.class)
+                .openSecondaryDF()
+                .usePrimaryDF("No")
+                .selectDropdown(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+                .submit(ExplorePage.class)
                 .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Hydrostatic Leak Testing");
