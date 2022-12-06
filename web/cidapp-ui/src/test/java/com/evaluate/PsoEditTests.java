@@ -11,6 +11,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -345,6 +346,11 @@ public class PsoEditTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("ABS")
+            .selectMaterial("ABS")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
@@ -364,7 +370,7 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isTrue();
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.52);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(0.86);
 
@@ -396,9 +402,9 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.isCavitiesDefaultValueSelected()).isEqualTo(true);
-        softAssertions.assertThat(materialProcessPage.isWallThicknessDeriveFromPartSelected()).isEqualTo(true);
-        softAssertions.assertThat(materialProcessPage.isNoColorantSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.isCavitiesDefaultValueSelected()).isTrue();
+        softAssertions.assertThat(materialProcessPage.isWallThicknessDeriveFromPartSelected()).isTrue();
+        softAssertions.assertThat(materialProcessPage.isNoColorantSelected()).isTrue();
 
         softAssertions.assertAll();
     }
