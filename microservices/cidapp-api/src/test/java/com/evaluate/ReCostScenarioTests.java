@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -198,8 +199,10 @@ public class ReCostScenarioTests {
                 .scenarioName(scenarioName)
                 .componentIdentity(componentInfo.getComponentIdentity())
                 .scenarioIdentity(componentInfo.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(digitalFactory)
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .vpeName(digitalFactory.getDigitalFactory())
+                    .build())
                 .user(currentUser)
                 .build());
     }
