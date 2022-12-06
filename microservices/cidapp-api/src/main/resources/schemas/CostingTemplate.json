@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "locked": {
+              "type": "boolean"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "materialMode": {
+              "type": "string"
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "processGroupName": {
+              "type": "string"
+            },
+            "propertiesToReset": {
+              "type": "array",
+              "items": {}
+            },
+            "routingNodeOptions": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    },
+                    "digitalFactoryName": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "processGroupName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity",
+                    "digitalFactoryName",
+                    "name",
+                    "processGroupName"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "customerIdentity",
+            "locked",
+            "published",
+            "materialMode",
+            "materialName",
+            "processGroupName",
+            "propertiesToReset",
+            "routingNodeOptions"
+          ]
+        }
+      ]
+    }
+  }
+}

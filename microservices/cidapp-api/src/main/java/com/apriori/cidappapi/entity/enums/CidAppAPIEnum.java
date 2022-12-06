@@ -39,6 +39,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
+    COSTING_TEMPLATES_ID("costing-templates/%s"),
 
     //PUBLISH
     PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
