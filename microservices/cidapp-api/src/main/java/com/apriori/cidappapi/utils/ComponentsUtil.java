@@ -305,7 +305,7 @@ public class ComponentsUtil {
      * @return response object
      */
     private ResponseWrapper<ComponentIteration> checkNonNullIterationLatest(RequestEntity requestEntity) {
-        long START_TIME = System.currentTimeMillis() / 1000;
+        final long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 100L;
         final long MAX_WAIT_TIME = 180L;
         ResponseWrapper<ComponentIteration> axesEntriesResponse;
