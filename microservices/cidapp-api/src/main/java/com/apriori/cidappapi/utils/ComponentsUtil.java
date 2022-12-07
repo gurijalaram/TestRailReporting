@@ -188,9 +188,8 @@ public class ComponentsUtil {
         componentInfoBuilder.setComponent(postComponentResponse.getResponseEntity());
 
         return postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
-                getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
-                    .stream())
-            .collect(Collectors.toList());
+            getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
+                .stream()).collect(Collectors.toList());
     }
 
     /**
