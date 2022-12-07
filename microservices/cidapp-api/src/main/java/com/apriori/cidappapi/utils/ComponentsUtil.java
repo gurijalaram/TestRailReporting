@@ -187,17 +187,10 @@ public class ComponentsUtil {
 
         componentInfoBuilder.setComponent(postComponentResponse.getResponseEntity());
 
-        List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
+        return postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
                 getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
                     .stream())
             .collect(Collectors.toList());
-
-        scenarioItemList.forEach(scenario -> {
-            componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());
-            componentInfoBuilder.setScenarioIdentity(scenario.getScenarioIdentity());
-        });
-
-        return scenarioItemList;
     }
 
     /**
