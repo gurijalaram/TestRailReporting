@@ -27,7 +27,6 @@ public class ComponentInfoBuilder {
     private final ProcessGroupEnum processGroup;
     private List<ComponentInfoBuilder> subComponents;
     private ScenarioItem scenarioItem;
-    private List<ScenarioItem> scenarioItems;
     private PostComponentResponse component;
     private PublishRequest publishRequest;
     @Builder.Default

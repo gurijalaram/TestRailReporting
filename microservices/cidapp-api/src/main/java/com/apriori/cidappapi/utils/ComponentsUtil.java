@@ -2,7 +2,6 @@ package com.apriori.cidappapi.utils;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -162,7 +161,7 @@ public class ComponentsUtil {
      * @param componentInfoBuilder - the component object
      * @return response object
      */
-    public ComponentInfoBuilder postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
+    public List<ScenarioItem> postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
         List<CadFile> resources = postCadFiles(componentInfoBuilder);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
@@ -181,14 +180,12 @@ public class ComponentsUtil {
                         .scenarioName(componentInfoBuilder.getScenarioName())
                         .build())
                 .collect(Collectors.toList()))
-            .token(componentInfoBuilder.getUser().getToken());
+            .token(componentInfoBuilder.getUser().getToken())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
 
         componentInfoBuilder.setComponent(postComponentResponse.getResponseEntity());
-
-        // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
-        assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
 
         List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
                 getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
@@ -200,9 +197,7 @@ public class ComponentsUtil {
             componentInfoBuilder.setScenarioIdentity(scenario.getScenarioIdentity());
         });
 
-        componentInfoBuilder.setScenarioItems(scenarioItemList);
-
-        return componentInfoBuilder;
+        return scenarioItemList;
     }
 
     /**
