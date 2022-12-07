@@ -92,6 +92,28 @@ public class BidPackageResources {
         return HTTPRequest.build(requestEntity).post();
     }
 
+
+    /**
+     * Create bid package project
+     *
+     * @param bidPackageProjectRequestBuilder - BidPackageProjectRequest data builder
+     * @param bidPackageIdentity
+     * @param responseClass                   - response of klass name
+     * @param httpStatus                      - http status code
+     * @param <T>                             - response of class type
+     * @return - ResponseWrapper of response klass
+     */
+    public static <T> ResponseWrapper<T> createBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
+            .inlineVariables(bidPackageIdentity)
+            .headers(QdsApiTestUtils.setUpHeader())
+            .body(bidPackageProjectRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
     /**
      * delete Bid Package Project
      *
@@ -148,13 +170,12 @@ public class BidPackageResources {
     }
 
     /**
-     * Update Bid Package Project
-     *
-     * @param bidPackageProjectRequestBuilder - BidPackageProjectRequest
+     * @param bidPackageProjectRequestBuilder
      * @param bidPackageIdentity
      * @param bidPackageProjectIdentity
      * @param currentUser                     - UserCredentials
      * @param klass                           - response of klass name
+     * @param httpStatus                      - http status code
      * @param <T>                             - response of class type
      * @return - ResponseWrapper of response klass
      */
