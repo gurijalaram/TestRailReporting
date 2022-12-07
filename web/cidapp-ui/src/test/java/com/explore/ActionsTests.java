@@ -20,6 +20,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -56,6 +57,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CssComponent cssComponent = new CssComponent();
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -313,7 +315,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser).getScenarioCreatedByName();
 
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -353,7 +355,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser).getScenarioCreatedByName();
 
         assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -394,7 +396,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser).getScenarioCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -754,7 +756,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser).getScenarioCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)

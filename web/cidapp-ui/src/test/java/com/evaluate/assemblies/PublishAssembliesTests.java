@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -49,6 +50,7 @@ public class PublishAssembliesTests extends TestBase {
     private File assembly;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private CssComponent cssComponent = new CssComponent();
     private PublishPage publishPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -468,7 +470,7 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        String scenarioCreatedByName = componentAssembly.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = cssComponent.findFirst(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), currentUser).getScenarioCreatedByName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
