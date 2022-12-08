@@ -4,7 +4,6 @@ import com.apriori.common.UsersTableController;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
  * Represents the root customer list.
  */
 @Slf4j
-public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
+public class CustomerAdminPage extends NavToolbar {
 
     private static final String CUSTOMER_APRIORI_INTERNAL = "aPriori Internal";
 
@@ -46,9 +45,9 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     private UsersTableController usersTableController;
 
     public CustomerAdminPage(WebDriver driver) {
-        super(driver, log);
-        this.customerSourceList = new SourceListComponent(getDriver(), sourceListRoot);
-        this.customersTable = new SourceListComponent(getDriver(), customersTableRoot);
+        super(driver);
+        this.customerSourceList = new SourceListComponent(driver, sourceListRoot);
+        this.customersTable = new SourceListComponent(driver, customersTableRoot);
         usersTableController = new UsersTableController(driver);
     }
 

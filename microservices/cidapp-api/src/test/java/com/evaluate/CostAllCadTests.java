@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -62,9 +63,9 @@ public class CostAllCadTests {
                 .scenarioName(scenarioName)
                 .componentIdentity(componentResponse.getComponentIdentity())
                 .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .mode("manual")
-                .material("Steel, Hot Worked, AISI 1010")
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .build())
                 .user(currentUser)
                 .build());
 
@@ -215,8 +216,10 @@ public class CostAllCadTests {
                 .scenarioName(scenarioName)
                 .componentIdentity(componentResponse.getComponentIdentity())
                 .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .material(material)
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .materialName(material)
+                    .build())
                 .user(currentUser)
                 .build());
 
