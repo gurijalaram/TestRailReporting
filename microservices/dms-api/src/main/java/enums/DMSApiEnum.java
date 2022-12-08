@@ -11,7 +11,9 @@ public enum DMSApiEnum implements ExternalEndpointEnum {
     CUSTOMER_DISCUSSION_COMMENTS(CUSTOMER_DISCUSSION.getEndpointString().concat("/comments")),
     CUSTOMER_DISCUSSION_COMMENT(CUSTOMER_DISCUSSION_COMMENTS.getEndpointString().concat("/%s")),
     CUSTOMER_DISCUSSION_COMMENT_VIEWS(CUSTOMER_DISCUSSION_COMMENT.getEndpointString().concat("/views")),
-    CUSTOMER_DISCUSSION_COMMENT_VIEW(CUSTOMER_DISCUSSION_COMMENT_VIEWS.getEndpointString().concat("/%s"));
+    CUSTOMER_DISCUSSION_COMMENT_VIEW(CUSTOMER_DISCUSSION_COMMENT_VIEWS.getEndpointString().concat("/%s")),
+    CUSTOMER_DISCUSSION_PARTICIPANTS(CUSTOMER_DISCUSSIONS.getEndpointString().concat("/%s/participants")),
+    CUSTOMER_DISCUSSION_PARTICIPANT(CUSTOMER_DISCUSSIONS.getEndpointString().concat("/%s/participants/%s"));
 
     private final String endpoint;
 
