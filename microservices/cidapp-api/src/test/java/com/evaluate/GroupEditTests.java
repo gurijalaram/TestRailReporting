@@ -6,7 +6,6 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
-import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.CssComponent;
@@ -14,7 +13,6 @@ import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -39,9 +37,9 @@ public class GroupEditTests {
     /**
      * Asserts that after editing scenario one iteration of that scenario exists in public workspace and one iteration in the private one
      *
-     * @param scenarioName - the name of the published scenario
+     * @param scenarioName       - the name of the published scenario
      * @param secondScenarioName - the name of the private scenario (it will be the same as scenarioName if override is true, and it will be different if option Rename is selected)
-     * @param subComponentNames - list of subcomponents
+     * @param subComponentNames  - list of subcomponents
      */
     private void verifyEditAction(String scenarioName, String secondScenarioName, List<String> subComponentNames) {
         subComponentNames.forEach(subComponent -> {
@@ -174,7 +172,7 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
@@ -307,7 +305,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
@@ -315,7 +313,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse2 = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
@@ -356,7 +354,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
@@ -364,7 +362,7 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse2 = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
