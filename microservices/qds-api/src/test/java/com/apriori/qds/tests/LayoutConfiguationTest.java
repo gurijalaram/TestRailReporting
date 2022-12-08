@@ -25,9 +25,9 @@ import org.junit.Test;
 public class LayoutConfiguationTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<LayoutResponse> layoutResponse;
-    private static ResponseWrapper<LayoutResponse> layoutConfigurationResponse;
-    private static ResponseWrapper<ViewElementResponse> viewElementsResponse;
+    private static LayoutResponse layoutResponse;
+    private static LayoutResponse layoutConfigurationResponse;
+    private static ViewElementResponse viewElementsResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
     private static String viewElementName;
@@ -40,9 +40,9 @@ public class LayoutConfiguationTest extends TestUtil {
         layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbers();
         layoutName = "LN" + new GenerateStringUtil().getRandomNumbers();
         viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
-        layoutResponse = LayoutResources.createLayout(layoutName,currentUser);
-        viewElementsResponse = LayoutResources.createLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(),viewElementName,currentUser);
-        layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).post();
+        layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
+        viewElementsResponse = LayoutResources.createLayoutViewElement(layoutResponse.getIdentity(), viewElementName, currentUser);
+        layoutConfigurationResponse = (LayoutResponse) HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).post().getResponseEntity();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }
 
@@ -59,31 +59,32 @@ public class LayoutConfiguationTest extends TestUtil {
 
     @Test
     public void createLayoutConfiguration() {
-        softAssertions.assertThat(layoutConfigurationResponse.getResponseEntity().getName()).isEqualTo(layoutConfigName);
+        softAssertions.assertThat(layoutConfigurationResponse.getName()).isEqualTo(layoutConfigName);
         softAssertions.assertAll();
     }
 
     @Test
     public void shareLayoutConfiguration() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, LayoutResponse.class)
-            .inlineVariables(viewElementName, layoutConfigurationResponse.getResponseEntity().getIdentity())
+            .inlineVariables(viewElementName, layoutConfigurationResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader("authorizationKey"))
-            .expectedResponseCode(HttpStatus.SC_OK);;
-        layoutConfigurationResponse = HTTPRequest.build(requestEntity).patch();
-        softAssertions.assertThat(layoutConfigurationResponse.getResponseEntity().getName()).isEqualTo(layoutConfigName);
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ;
+        layoutConfigurationResponse = (LayoutResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        softAssertions.assertThat(layoutConfigurationResponse.getName()).isEqualTo(layoutConfigName);
         softAssertions.assertAll();
     }
 
     @Test
     public void updateLayoutConfiguration() {
-        ResponseWrapper<LayoutResponse>  layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).patch();
+        ResponseWrapper<LayoutResponse> layoutConfigurationResponse = HTTPRequest.build(LayoutResources.getLayoutConfigurationRequestEntity(viewElementName, layoutConfigName, currentUser)).patch();
         softAssertions.assertThat(layoutConfigurationResponse.getResponseEntity().getIdentity()).isNotNull();
     }
 
     @Test
     public void getLayoutConfigurations() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, LayoutsResponse.class)
-            .inlineVariables(viewElementName, layoutConfigurationResponse.getResponseEntity().getIdentity())
+            .inlineVariables(viewElementName, layoutConfigurationResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader("authorizationKey"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -94,7 +95,7 @@ public class LayoutConfiguationTest extends TestUtil {
     @Test
     public void getLayoutConfiguration() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, LayoutsResponse.class)
-            .inlineVariables(viewElementName, layoutConfigurationResponse.getResponseEntity().getIdentity())
+            .inlineVariables(viewElementName, layoutConfigurationResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader("authorizationKey"))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -104,11 +105,5 @@ public class LayoutConfiguationTest extends TestUtil {
 
     @After
     public void testCleanup() {
-    /*  RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, LayoutsResponse.class)
-            .inlineVariables(viewElementName, layoutConfigurationResponse.getResponseEntity().getIdentity())
-            .headers(QdsApiTestUtils.setUpHeader("authorizationKey"));
-
-        ResponseWrapper<LayoutsResponse> layoutConfigurationsResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(layoutConfigurationsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);*/
     }
 }
