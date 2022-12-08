@@ -10,6 +10,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -236,6 +237,18 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsTreePage clickScenarioCheckbox(String componentName, String scenarioName) {
+        assembliesComponentsController.clickScenarioCheckbox(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Updates a cad file
      *
      * @return new page object
@@ -255,6 +268,15 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
         return assembliesComponentsController.getListOfScenarios(componentName, scenarioName);
+    }
+
+    /**
+     * Opens cost inputs page
+     *
+     * @return new page object
+     */
+    public ComponentBasicPage setInputs() {
+        return assembliesComponentsController.setInputs();
     }
 
     /**
@@ -304,6 +326,17 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public String getScenarioState(String componentName, String scenarioName) {
         return assembliesComponentsController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the cost value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        return assembliesComponentsController.getScenarioFullyBurdenedCost(componentName, scenarioName);
     }
 
     /**

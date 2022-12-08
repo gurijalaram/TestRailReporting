@@ -123,7 +123,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -172,7 +172,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -281,7 +281,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -293,7 +293,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()

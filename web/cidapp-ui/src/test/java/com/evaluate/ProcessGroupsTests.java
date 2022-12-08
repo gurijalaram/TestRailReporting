@@ -535,7 +535,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ROTO_BLOW_MOLDING)
             .openMaterialSelectorTable()
-            .selectMaterial("Polyethylene, High Density (HDPE)")
+            .selectMaterial("Polyethylene, High Density, HDPE")
             .submit(EvaluatePage.class)
             .costScenario();
 
