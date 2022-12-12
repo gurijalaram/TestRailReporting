@@ -13,7 +13,7 @@
       "items": {
         "type": "array",
         "items": {
-          "$ref": "DmsDiscussionResponseSchema.json"
+          "$ref": "DmsDiscussionParticipantResponseSchema.json"
         }
       }
     }

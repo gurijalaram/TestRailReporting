@@ -1,4 +1,4 @@
-package com.apriori.qds.entity.request.bidpackage;
+package entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BidPackageItemRequest {
-    BidPackageItemParameters bidPackageItem;
+public class DiscussionParticipantRequest {
+    private DiscussionParticipantParameters participant;
 }
