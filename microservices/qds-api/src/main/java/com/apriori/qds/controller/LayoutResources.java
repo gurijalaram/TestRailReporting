@@ -24,7 +24,7 @@ import org.apache.http.HttpStatus;
 
 public class LayoutResources {
 
-    public static ResponseWrapper<LayoutResponse> createLayout(String layoutName, UserCredentials currentUser) {
+    public static LayoutResponse createLayout(String layoutName, UserCredentials currentUser) {
         LayoutRequest layoutRequest = LayoutRequest.builder()
             .layout(LayoutRequestParameters.builder()
                 .applicationIdentity("AN" + layoutName)
@@ -40,7 +40,7 @@ public class LayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        return HTTPRequest.build(requestEntity).post();
+        return (LayoutResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     public static ResponseWrapper<String> deleteLayout(String layoutIdentity, String userContext) {
@@ -78,7 +78,7 @@ public class LayoutResources {
         return requestEntity;
     }
 
-    public static ResponseWrapper<ViewElementResponse> createLayoutViewElement(String layoutIdentity, String viewElementName, UserCredentials currentUser) {
+    public static ViewElementResponse createLayoutViewElement(String layoutIdentity, String viewElementName, UserCredentials currentUser) {
         ViewElementRequest viewElementRequest = ViewElementRequest.builder()
             .viewElement(ViewElementRequestParameters.builder()
                 .name(viewElementName)
@@ -94,7 +94,7 @@ public class LayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        return HTTPRequest.build(requestEntity).post();
+        return (ViewElementResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
 }

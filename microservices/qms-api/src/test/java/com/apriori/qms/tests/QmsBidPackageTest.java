@@ -29,7 +29,7 @@ import org.junit.Test;
 public class QmsBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
+    private static BidPackageResponse bidPackageResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
@@ -46,7 +46,7 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13361"})
     @Description("Create Bid Package")
     public void createBidPackage() {
-        softAssertions.assertThat(bidPackageResponse.getResponseEntity().getName()).isEqualTo(bidPackageName);
+        softAssertions.assertThat(bidPackageResponse.getName()).isEqualTo(bidPackageName);
     }
 
     @Test
@@ -228,11 +228,11 @@ public class QmsBidPackageTest extends TestUtil {
     @Description("Updated existing Bid Package status")
     public void updateBidPackageStatus() {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
-                    .name(bidPackageResponse.getResponseEntity().getName())
-                    .description(bidPackageResponse.getResponseEntity().getDescription())
+                    .name(bidPackageResponse.getName())
+                    .description(bidPackageResponse.getDescription())
                     .status("ASSIGNED")
                     .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                     .build())
@@ -251,12 +251,12 @@ public class QmsBidPackageTest extends TestUtil {
     public void updateBidPackageDescription() {
         String bpDesc = RandomStringUtils.randomAlphabetic(15);
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
-                    .name(bidPackageResponse.getResponseEntity().getName())
+                    .name(bidPackageResponse.getName())
                     .description(bpDesc)
-                    .status(bidPackageResponse.getResponseEntity().getStatus())
+                    .status(bidPackageResponse.getStatus())
                     .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                     .build())
                 .build())
@@ -274,12 +274,12 @@ public class QmsBidPackageTest extends TestUtil {
     public void updateBidPackageAssigned() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
                     .name(RandomStringUtils.randomAlphabetic(10))
-                    .description(bidPackageResponse.getResponseEntity().getDescription())
-                    .status(bidPackageResponse.getResponseEntity().getStatus())
+                    .description(bidPackageResponse.getDescription())
+                    .status(bidPackageResponse.getStatus())
                     .assignedTo(userIdentity)
                     .build())
                 .build())
@@ -320,7 +320,7 @@ public class QmsBidPackageTest extends TestUtil {
 
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getIsFirstPage()).isTrue();
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getPageNumber()).isEqualTo(1);
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getItems().size()).isEqualTo(0);
+        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -329,7 +329,7 @@ public class QmsBidPackageTest extends TestUtil {
     public void getBidPackage() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .apUserContext(otherUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -354,7 +354,7 @@ public class QmsBidPackageTest extends TestUtil {
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> deleteBidResponse = QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        ResponseWrapper<String> deleteBidResponse = QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(deleteBidResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
         softAssertions.assertAll();
     }
