@@ -6,6 +6,7 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -37,14 +38,14 @@ public class GroupPublishTests extends TestBase {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private AssignPage assignPage;
+    private InfoPage infoPage;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemA;
     private final SoftAssertions softAssertions = new SoftAssertions();
+    private final CssComponent cssComponent = new CssComponent();
     private final AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private CssComponent cssComponent = new CssComponent();
-    private AssignPage assignPage;
-    private InfoPage infoPage;
-
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @TestRail(testCaseId = {"14458"})
@@ -228,7 +229,7 @@ public class GroupPublishTests extends TestBase {
 
         cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        String scenarioAssignedTo = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser).getScenarioCreatedByName();
+        String scenarioAssignedTo = scenariosUtil.getScenarioRepresentation(cidComponentItem).getResponseEntity().getCreatedByName();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
