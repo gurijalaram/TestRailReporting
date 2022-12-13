@@ -88,6 +88,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                    // TODO: 13/12/2022 cn - should be able to just return responseentity here
                     return scenarioRepresentation;
                 }
 
