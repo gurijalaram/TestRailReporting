@@ -171,7 +171,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2634")
     @TestRail(testCaseId = {"6463", "6421", "6414", "6425", "6426"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
