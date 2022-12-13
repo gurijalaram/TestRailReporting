@@ -19,6 +19,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -462,7 +463,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10813", "10815"})
+    @TestRail(testCaseId = {"10813", "10815", "11032"})
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
     public void testShallowEditPrivateLockedRename() {
         final String assemblyName = "Hinge assembly";
@@ -478,6 +479,8 @@ public class EditAssembliesTest extends TestBase {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String refreshMessage = "This assembly has uncosted changes. If you continue, these changes will be lost.";
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -512,6 +515,11 @@ public class EditAssembliesTest extends TestBase {
             .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(newScenarioName)).isTrue();
+
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_GERMANY)
+            .clickRefresh(EvaluatePage.class);
+
+        assertThat(evaluatePage.getWarningMessageText(), containsString(refreshMessage));
 
         softAssertions.assertAll();
     }
@@ -1094,5 +1102,4 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertAll();
     }
-
 }
