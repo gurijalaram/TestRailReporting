@@ -1,5 +1,6 @@
 package com.apriori.cusapi.entity.response;
 
+import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,16 +19,6 @@ import java.util.List;
 @JsonRootName("response")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class PreferenceItemsResponse {
+public class PreferenceItemsResponse extends Pagination {
     List<PreferenceResponse> items;
-    private Boolean isRestrictedByAccessControl;
-    private Boolean isFirstPage;
-    private Boolean isLastPage;
-    private Boolean hasNextPage;
-    private Boolean hasPreviousPage;
-    private int pageNumber;
-    private int pageSize;
-    private int pageItemCount;
-    private int totalItemCount;
-    private int totalPageCount;
 }

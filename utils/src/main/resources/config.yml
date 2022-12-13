@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test
+env: local
 
 # Define the global properties not related to environment
 global:
@@ -368,8 +368,8 @@ local:
 
   ats:
     api_url: ${local.base_url}:8805/
-    token_username: qa-automation-01
-    token_email: qa-automation-01@apriori.com
+    token_username: 3P-kderezinski
+    token_email: 3P-kderezinski@apriori.com
 
   bcs:
     api_url: ${local.base_url}:8810/
