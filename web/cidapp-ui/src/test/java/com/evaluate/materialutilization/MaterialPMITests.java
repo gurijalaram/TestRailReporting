@@ -61,13 +61,13 @@ public class MaterialPMITests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL)
             .openMaterialSelectorTable()
-            .selectMaterial("Aluminum, Stock, ANSI 6061")
+            .selectMaterial("Aluminum, ANSI 6061")
             .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Stock, ANSI 6061"), is(true));
+        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, ANSI 6061"), is(true));
     }
 }
