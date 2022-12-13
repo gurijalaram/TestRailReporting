@@ -1,7 +1,9 @@
 package com.apriori.dms.tests;
 
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.ErrorMessage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -12,6 +14,9 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
+import entity.request.DmsAttributesRequest;
+import entity.response.DmsCommentResponse;
+import entity.response.DmsCommentsResponse;
 import entity.response.DmsDiscussionResponse;
 import entity.response.DmsDiscussionsResponse;
 import enums.DMSApiEnum;
@@ -22,15 +27,14 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import utils.DmsApiTestUtils;
 
 public class DmsDiscussionTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<DmsDiscussionResponse> discussionResponse;
-    UserCredentials currentUser = UserUtil.getUserWithCloudContext();
+    private static DmsDiscussionResponse discussionResponse;
+    UserCredentials currentUser;
     private static String discussionDescription = StringUtils.EMPTY;
 
 
@@ -38,6 +42,7 @@ public class DmsDiscussionTest extends TestUtil {
     public void testSetup() {
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUserWithCloudContext();
         discussionResponse = DmsApiTestUtils.createDiscussion(discussionDescription, currentUser);
     }
 
@@ -45,47 +50,29 @@ public class DmsDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"13052"})
     @Description("create a valid discussion")
     public void createDiscussions() {
-        softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
+        softAssertions.assertThat(discussionResponse.getDescription()).isEqualTo(discussionDescription);
     }
 
     @Test
-    @TestRail(testCaseId = {"13054"})
+    @TestRail(testCaseId = {"13054", "14217"})
     @Description("update a valid discussion")
-    public void updateValidDiscussion() {
-        ResponseWrapper<DmsDiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
-            "RESOLVED", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
+    public void UpdateValidDiscussion() {
+        String description = new GenerateStringUtil().generateNotes();
+        DmsDiscussionResponse discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(description,
+            "RESOLVED", discussionResponse.getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
+        softAssertions.assertThat(discussionUpdateResponse.getStatus()).isEqualTo("RESOLVED");
+        softAssertions.assertThat(discussionUpdateResponse.getDescription()).isEqualTo(description);
     }
 
-    @Test
-    @TestRail(testCaseId = {"13053"})
-    @Description("get list of all discussions")
-    public void getDiscussions() {
-        ResponseWrapper<DmsDiscussionsResponse> discussionUpdateResponse = DmsApiTestUtils.getDiscussions(currentUser);
-
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
-    }
 
     @Test
-    @Ignore
     @Description("update a invalid discussion")
     public void UpdateInValidDiscussion() {
-        ResponseWrapper<ErrorMessage> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
+        ErrorMessage discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription,
             "RESOLVED", "INVALIDDISCUSSION", currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getMessage()).contains("'discussionIdentity' is not a valid identity");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14217"})
-    @Description("update a discussion description")
-    public void updateDiscussionDescription() {
-        String discussionDesc = RandomStringUtils.randomAlphabetic(12);
-        ResponseWrapper<DmsDiscussionResponse> discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDesc,
-            "ACTIVE", discussionResponse.getResponseEntity().getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
-
-        softAssertions.assertThat(discussionUpdateResponse.getResponseEntity().getDescription()).isEqualTo(discussionDesc);
+        softAssertions.assertThat(discussionUpdateResponse.getMessage()).contains("'discussionIdentity' is not a valid identity");
     }
 
     @Test
@@ -110,10 +97,62 @@ public class DmsDiscussionTest extends TestUtil {
         softAssertions.assertThat(errorMessageResponseWrapper.getResponseEntity().getMessage()).contains("'customerIdentity' is not a valid identity");
     }
 
+    @Test
+    @TestRail(testCaseId = {"14221"})
+    @Description("create a discussion with attributes")
+    public void createDiscussionWithAttributes() {
+        String desc = new GenerateStringUtil().getRandomString();
+        DiscussionsRequest discussionsRequestBuilder = DiscussionsRequest.builder()
+            .discussion(DiscussionsRequestParameters.builder()
+                .description(desc)
+                .attributes(DmsAttributesRequest.builder()
+                    .attribute("Monday")
+                    .build())
+                .status("ACTIVE")
+                .build())
+            .build();
+
+        DmsDiscussionResponse cDWAResponse = DmsApiTestUtils.createDiscussion(discussionsRequestBuilder, currentUser);
+        softAssertions.assertThat(cDWAResponse.getDescription()).isEqualTo(desc);
+        softAssertions.assertThat(cDWAResponse.getAttributes().getAttribute()).isEqualTo("Monday");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14221"})
+    @Description("create a discussion with another assignee email address")
+    public void updateDiscussionWithAssigneeEmail() {
+        UserCredentials otherUser = UserUtil.getUser();
+        String desc = new GenerateStringUtil().getRandomString();
+        DiscussionsRequest discussionsRequestBuilder = DiscussionsRequest.builder()
+            .discussion(DiscussionsRequestParameters.builder()
+                .description(desc)
+                .assigneeEmail(otherUser.getEmail())
+                .status("ACTIVE")
+                .build())
+            .build();
+
+        DmsDiscussionResponse cDWAResponse = DmsApiTestUtils.updateDiscussion(discussionsRequestBuilder,
+            discussionResponse.getIdentity(),
+            currentUser,
+            DmsDiscussionResponse.class,
+            HttpStatus.SC_OK);
+        softAssertions.assertThat(cDWAResponse.getDescription()).isEqualTo(desc);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13053", "14223"})
+    @Description("get list of all discussion and verify pagination")
+    public void getDiscussions() {
+        DmsDiscussionsResponse responseWrapper = DmsApiTestUtils.getDiscussions(DmsDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(responseWrapper.getIsFirstPage()).isTrue();
+    }
+
 
     @After
     public void testCleanup() {
-        //    DmsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), currentUser);
+        DmsApiTestUtils.updateDiscussion(new GenerateStringUtil().generateNotes(),
+            "RESOLVED", discussionResponse.getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
         softAssertions.assertAll();
     }
 }

@@ -69,14 +69,18 @@ public class EditCustomerTests extends TestBase {
             .enterCustomerName(customerName)
             .selectCustomerTypeOnPremiseAndCloud()
             .enterCloudRef(cloudRef)
-            .clickSaveButton();
+            .clickSaveButton()
+            .clickEditButton()
+            .clickCancelButton(CustomerProfilePage.class);
 
         created.add(customerViewPage.findCustomerIdentity());
     }
 
     @After
     public void teardown() {
-        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
+        if (created != null) {
+            created.forEach(identity -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
+        }
     }
 
     @FunctionalInterface

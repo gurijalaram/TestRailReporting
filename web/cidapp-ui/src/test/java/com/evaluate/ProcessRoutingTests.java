@@ -33,6 +33,7 @@ import com.utils.ColumnsEnum;
 import com.utils.DecimalPlaceEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.After;
@@ -239,7 +240,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7854"})
+    @TestRail(testCaseId = {"7854", "12379", "12381", "12382"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -266,6 +267,27 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
+
+        evaluatePage.openMaterialSelectorTable()
+            .selectMaterial("Unsaturated Polyester, CF50")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Compression Molding")
+            .selectOptionsTab()
+            .overrideWallThickness("0.4")
+            .overrideInsertedComponents("5")
+            .selectColorant("Carbon Black Pigment")
+            .closePanel()
+            .costScenario();
+
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Compression Molding")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness")).isEqualTo(0.40);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Inserted Components")).isEqualTo(5);
+        softAssertions.assertThat(materialProcessPage.getColorant()).isEqualTo("Carbon Black Pigment");
         softAssertions.assertAll();
     }
 
@@ -289,7 +311,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.67")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -304,7 +326,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.90")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -343,7 +365,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7844"})
+    @TestRail(testCaseId = {"7844", "7290", "7291", "7292"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -575,7 +597,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -608,6 +630,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2757")
     @TestRail(testCaseId = {"14987", "15801"})
     @Description("Validate routings Casting")
     public void routingsCasting() {
@@ -942,7 +965,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(54.74), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(51.41), Offset.offset(3.0));
         softAssertions.assertAll();
     }
 
@@ -1120,7 +1143,7 @@ public class ProcessRoutingTests extends TestBase {
             .enterAnnualVolume("9999")
             .openMaterialSelectorTable()
             .search("1050A")
-            .selectMaterial("Aluminum, Stock, ANSI 1050A")
+            .selectMaterial("Aluminum, ANSI 1050A")
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
@@ -1161,7 +1184,6 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
         softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
-
         softAssertions.assertAll();
     }
 

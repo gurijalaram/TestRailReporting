@@ -31,6 +31,7 @@ import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -108,7 +109,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "6076"})
+    @TestRail(testCaseId = {"10799", "6076", "6515"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
@@ -140,6 +141,8 @@ public class EditAssembliesTest extends TestBase {
             .openScenario(assemblyName, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
+        softAssertions.assertThat(evaluatePage.isAnnualVolumeInputEnabled()).isEqualTo(false);
+        softAssertions.assertThat(evaluatePage.isAnnualYearsInputEnabled()).isEqualTo(false);
 
         evaluatePage.editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
@@ -515,7 +518,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10814", "6596"})
+    @TestRail(testCaseId = {"10814", "6596", "6046"})
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
         final String assemblyName = "Hinge assembly";
@@ -599,7 +602,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -607,14 +609,14 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
         subComponentNames.forEach(subcomponentName ->
-            assertThat(componentsTablePage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTreePage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -656,7 +658,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -665,10 +666,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -769,7 +770,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -781,10 +781,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -892,21 +892,21 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
 
-        componentsTablePage = evaluatePage.openComponents()
-            .selectTableView()
+        componentsTreePage = evaluatePage.openComponents()
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + SMALL_RING + "," + PIN);
 
         subComponentNames.forEach(subcomponent ->
-            assertThat(componentsTablePage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
+            assertThat(componentsTreePage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
 
         subComponentNames.forEach(subcomponent ->
-            softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
+            softAssertions.assertThat(componentsTreePage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"12040", "11954", "6521", "10874"})
+    @Issue("BA-2764")
+    @TestRail(testCaseId = {"12040", "11954", "6521", "10874", "11027"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
         String assemblyName = "flange c";
@@ -972,6 +972,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2764")
     @TestRail(testCaseId = {"12037", "12039"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
