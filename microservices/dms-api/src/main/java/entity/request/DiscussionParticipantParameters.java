@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiscussionsRequest {
-    private DiscussionsRequestParameters discussion;
+public class DiscussionParticipantParameters {
+    private String userIdentity;
+    private String userCustomerIdentity;
 }
