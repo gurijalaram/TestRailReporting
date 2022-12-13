@@ -30,7 +30,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Processes']")
     private WebElement processesTab;
 
-    @FindBy(css = "g[class='recharts-cartesian-grid']")
+    @FindBy(css = "div[class='recharts-wrapper']")
     private WebElement chartContainer;
 
     @FindBy(css = "[id='qa-process-totals-section'] div.left")
