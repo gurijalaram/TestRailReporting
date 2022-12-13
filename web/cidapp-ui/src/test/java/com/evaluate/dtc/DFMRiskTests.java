@@ -360,7 +360,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -402,7 +402,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -445,7 +445,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(857.47), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(1193.06), Offset.offset(30.0));
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
