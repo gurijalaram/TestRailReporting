@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
@@ -36,17 +35,10 @@ public class AssemblyAssociations extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
-    private EditScenarioStatusPage editScenarioStatusPage;
     private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
-    private InfoPage infoPage;
-    private ExplorePage explorePage;
-    private EditComponentsPage editComponentsPage;
-    private EditScenarioStatusPage editStatusPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
-    private static ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder cidComponentItem;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
 
