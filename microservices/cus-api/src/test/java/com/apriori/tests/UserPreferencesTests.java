@@ -45,9 +45,10 @@ public class UserPreferencesTests {
     public void verifyUpdateUserPrefTest() {
         PeopleUtil peopleUtil = new PeopleUtil();
         PreferenceItemsResponse userPreferencesResponse = peopleUtil
-            .getCurrentUserPrefParams(currentUser,new QueryParams().use("pageSize", "100"));
-        String identity = getIdentityByParamName(userPreferencesResponse,"display.decimalPlaces");
-        String value = getValueByParamName(userPreferencesResponse,"display.decimalPlaces");
+            .getCurrentUserPrefParams(currentUser,"pageSize", "100");
+        String identity = getItem(userPreferencesResponse,"display.decimalPlaces")
+            .getIdentity();
+        String value = getItem(userPreferencesResponse,"display.decimalPlaces").getValue();
         String newValue = peopleUtil.ifNumberChangeQty(value);
         Map<String,String> newMap = new HashMap();
         newMap.put(identity, newValue);
@@ -58,26 +59,19 @@ public class UserPreferencesTests {
         peopleUtil.updateCurrentUserPref(currentUser, updateUserPrefRequest);
 
         PreferenceItemsResponse userPreferencesUpdatedResponse = peopleUtil
-            .getCurrentUserPrefParams(currentUser,new QueryParams().use("pageSize", "100"));
+            .getCurrentUserPrefParams(currentUser,"pageSize", "100");
 
         softAssertions.assertThat(userPreferencesUpdatedResponse.getItems()).isNotEmpty();
-        softAssertions.assertThat(getValueByParamName(userPreferencesUpdatedResponse,"display.decimalPlaces")).isEqualTo(newValue);
+        softAssertions.assertThat(getItem(userPreferencesUpdatedResponse,"display.decimalPlaces").getValue())
+            .isEqualTo(newValue);
         softAssertions.assertAll();
     }
 
-    private String getIdentityByParamName(PreferenceItemsResponse userPreferencesResponse, String prefName) {
+    private PreferenceResponse  getItem(PreferenceItemsResponse userPreferencesResponse, String prefName) {
         PreferenceResponse preferenceResponse = userPreferencesResponse.getItems()
             .stream().filter(p -> p.getName().equals(prefName))
             .findFirst()
             .orElse(null);
-        return preferenceResponse.getIdentity();
-    }
-
-    private String getValueByParamName(PreferenceItemsResponse userPreferencesResponse, String prefName) {
-        PreferenceResponse preferenceResponse = userPreferencesResponse.getItems()
-            .stream().filter(p -> p.getName().equals(prefName))
-            .findFirst()
-            .orElse(null);
-        return preferenceResponse.getValue();
+        return preferenceResponse;
     }
 }

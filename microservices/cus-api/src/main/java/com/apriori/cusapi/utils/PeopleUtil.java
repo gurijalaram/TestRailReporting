@@ -14,6 +14,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 
+import java.util.Map;
+
 public class PeopleUtil {
     /**
      * GET current user
@@ -49,7 +51,8 @@ public class PeopleUtil {
      * @param userCredentials - the user credentials
      * @return user object
      */
-    public PreferenceItemsResponse getCurrentUserPrefParams(UserCredentials userCredentials, QueryParams queryParams) {
+    public PreferenceItemsResponse getCurrentUserPrefParams(UserCredentials userCredentials,String queryName,String queryValue) {
+        QueryParams queryParams = new QueryParams().use(queryName, queryValue);
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken());

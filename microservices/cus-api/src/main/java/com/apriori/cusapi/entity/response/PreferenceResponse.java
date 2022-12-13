@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class PreferenceResponse {
     private String identity;
