@@ -48,7 +48,7 @@ public class UserPreferencesTests {
             .getCurrentUserPrefParams(currentUser,new QueryParams().use("pageSize", "100"));
         String identity = getIdentityByParamName(userPreferencesResponse,"display.decimalPlaces");
         String value = getValueByParamName(userPreferencesResponse,"display.decimalPlaces");
-        String newValue = peopleUtil.ifNumberChangeQty(value);        //String newValue = peopleUtil.ifNumberChangeQty(value);
+        String newValue = peopleUtil.ifNumberChangeQty(value);
         Map<String,String> newMap = new HashMap();
         newMap.put(identity, newValue);
 
