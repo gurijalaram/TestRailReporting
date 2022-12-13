@@ -21,7 +21,7 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CostDetailsPage.class);
 
-    @FindBy(css = "g[class='highcharts-series-group']")
+    @FindBy(css = "g[class='recharts-cartesian-grid']")
     private WebElement costResultChart;
 
     @FindBy(css = "div[class='cost-result-list']")
