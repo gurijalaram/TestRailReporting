@@ -52,7 +52,7 @@ public class PeopleUtil {
      * @return user object
      */
     public PreferenceItemsResponse getCurrentUserPrefParams(UserCredentials userCredentials,String queryName,String queryValue) {
-        QueryParams queryParams = new QueryParams().use(queryName, queryValue);
+      
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken());
