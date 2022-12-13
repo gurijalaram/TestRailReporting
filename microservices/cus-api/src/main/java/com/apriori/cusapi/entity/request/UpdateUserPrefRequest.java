@@ -14,6 +14,5 @@ import java.util.Map;
 @Data
 @Builder
 public class UpdateUserPrefRequest {
-    //private UserPreferences userPreferences;
     private Map<String,String> userPreferences;
 }

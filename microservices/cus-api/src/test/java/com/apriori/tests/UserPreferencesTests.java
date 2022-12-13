@@ -42,7 +42,7 @@ public class UserPreferencesTests {
     @Test
     @TestRail(testCaseId = "16828")
     @Description("Verify PATCH(update) user preferences endpoint test")
-    public void verifyCurrentUserTest() {
+    public void verifyUpdateUserPrefTest() {
         PeopleUtil peopleUtil = new PeopleUtil();
         PreferenceItemsResponse userPreferencesResponse = peopleUtil
             .getCurrentUserPrefParams(currentUser,new QueryParams().use("pageSize", "100"));
