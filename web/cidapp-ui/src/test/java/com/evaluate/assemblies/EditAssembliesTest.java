@@ -520,7 +520,7 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_GERMANY)
             .clickRefresh(EvaluatePage.class);
 
-        assertThat(evaluatePage.getWarningMessageText(), containsString(refreshMessage));
+        softAssertions.assertThat(evaluatePage.getWarningMessageText()).contains(refreshMessage);
 
         softAssertions.assertAll();
     }
