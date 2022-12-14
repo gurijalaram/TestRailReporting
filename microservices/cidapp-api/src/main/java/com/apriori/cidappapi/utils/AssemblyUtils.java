@@ -115,7 +115,7 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return scenario object
      */
-    public ResponseWrapper<ScenarioResponse> publishAssembly(ComponentInfoBuilder assembly) {
+    public ScenarioResponse publishAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postPublishScenario(assembly);
     }
 
