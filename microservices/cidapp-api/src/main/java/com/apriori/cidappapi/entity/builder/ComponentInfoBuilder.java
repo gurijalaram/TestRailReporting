@@ -3,7 +3,6 @@ package com.apriori.cidappapi.entity.builder;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -26,7 +25,6 @@ public class ComponentInfoBuilder {
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
     private List<ComponentInfoBuilder> subComponents;
-    private ScenarioItem scenarioItem;
     private PostComponentResponse component;
     private PublishRequest publishRequest;
     @Builder.Default
