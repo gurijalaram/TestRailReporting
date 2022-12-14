@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,5 +15,5 @@ import java.util.ArrayList;
 public class CommentsRequestParameters {
     private String status;
     private String content;
-    private ArrayList<String> mentionedUserEmails;
+    private List<String> mentionedUserEmails;
 }

@@ -23,9 +23,9 @@ import org.junit.Test;
 public class BidPackageProjectUserTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
-    private static ResponseWrapper<BidPackageProjectResponse> bidPackageProjectResponse;
-    private static ResponseWrapper<BidPackageProjectUserResponse> bidPackageProjectUserResponse;
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageProjectResponse bidPackageProjectResponse;
+    private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String projectName;
@@ -36,9 +36,9 @@ public class BidPackageProjectUserTest extends TestUtil {
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
-        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), currentUser);
         bidPackageProjectUserResponse = BidPackageResources.createBidPackageProjectUser("DEFAULT",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
     }
 
     @Test
@@ -46,14 +46,14 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
         UserCredentials defaultUser = UserUtil.getUser();
-        ResponseWrapper<BidPackageProjectUserResponse> bidPackageDefaultProjectUserResponse = BidPackageResources.createBidPackageProjectUser("DEFAULT",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), defaultUser);
+        BidPackageProjectUserResponse bidPackageDefaultProjectUserResponse = BidPackageResources.createBidPackageProjectUser("DEFAULT",
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
 
-        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageDefaultProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageDefaultProjectUserResponse.getIdentity(),
             defaultUser);
     }
 
@@ -62,14 +62,14 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
         UserCredentials adminUser = UserUtil.getUser();
-        ResponseWrapper<BidPackageProjectUserResponse> bidPackageAdminProjectUserResponse = BidPackageResources.createBidPackageProjectUser("ADMIN",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), adminUser);
+        BidPackageProjectUserResponse bidPackageAdminProjectUserResponse = BidPackageResources.createBidPackageProjectUser("ADMIN",
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 
-        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageAdminProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageAdminProjectUserResponse.getIdentity(),
             adminUser);
     }
 
@@ -77,47 +77,46 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"13355"})
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
-        ResponseWrapper<BidPackageProjectUserResponse> getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUserResponse getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(getBidPackageProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13354"})
     @Description("find all bid package project users")
     public void getBidPackageProjectUsers() {
-        ResponseWrapper<BidPackageProjectUsersResponse> getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUsersResponse getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
             currentUser, BidPackageProjectUsersResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(getBidPackageProjectUserResponse.getItems().size()).isGreaterThan(0);
     }
 
     @Test
     @TestRail(testCaseId = {"13356"})
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
-        ResponseWrapper<BidPackageProjectUserResponse> updateBidPackageProjectUserResponse = BidPackageResources.updateBidPackageProjectUser("ADMIN",
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUserResponse updateBidPackageProjectUserResponse = BidPackageResources.updateBidPackageProjectUser("ADMIN",
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageProjectUserResponse.getResponseEntity().getRole()).isEqualTo("ADMIN");
+        softAssertions.assertThat(updateBidPackageProjectUserResponse.getRole()).isEqualTo("ADMIN");
     }
-
 
     @After
     public void testCleanup() {
-        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser);
-        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
-        BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertAll();
     }
 }

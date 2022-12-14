@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.entity.request.GroupPublishRequest;
@@ -17,6 +16,8 @@ import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
@@ -27,8 +28,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -62,7 +61,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -89,7 +88,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -111,7 +110,7 @@ public class ScenariosUtil {
      * @param scenarioState - the scenario state
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -140,7 +139,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && scenarioResponse.get().getScenarioState().equalsIgnoreCase(scenarioState.getState())) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -161,7 +160,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
+    public ScenarioResponse getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -190,7 +189,7 @@ public class ScenariosUtil {
                     scenarioResponse.get().getPublished() == published) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -246,45 +245,22 @@ public class ScenariosUtil {
     }
 
     /**
-     * POST to cost a component
-     *
-     * @param componentInfo - the component object
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(ComponentInfoBuilder componentInfo) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs",
-                    CostRequest.builder().annualVolume(5500)
-                        .batchSize(458)
-                        .materialName("Aluminum, Stock, ANSI 1050A")
-                        .processGroupName(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-                        .productionLife(5.0)
-                        .digitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                        .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * POST to cost a scenario
      *
      * @param componentInfo - the cost component object
      * @return list of scenario items
      */
-    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
+        CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs",
-                    CostRequest.builder()
-                        .costingTemplateIdentity(
-                            getCostingTemplateId(componentInfo)
-                                .getIdentity())
-                        .deleteTemplateAfterUse(true)
-                        .build());
+                .body("costingInputs", CostingTemplate.builder()
+                    .costingTemplateIdentity(costingTemplate.getIdentity())
+                    .deleteTemplateAfterUse(costingTemplate.getDeleteTemplateAfterUse())
+                    .build());
 
         HTTPRequest.build(requestEntity).post();
 
@@ -469,7 +445,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity(getCostingTemplateId(componentInfo.getSubComponents().get(0)).getIdentity())
+                    .costingTemplateIdentity(postCostingTemplate(componentInfo.getSubComponents().get(0)).getIdentity())
                     .groupItems(subComponentInfo
                         .stream()
                         .map(component -> GroupItems.builder()
@@ -517,12 +493,12 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity((componentInfo.getSettings().getUseEmptyCostingTemplateID() ? "" : getCostingTemplateId(componentInfo).getIdentity()))
+                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getCostingTemplateIdentity())
                     .groupItems(componentInfo.getSubComponents()
                         .stream()
                         .map(component -> GroupItems.builder()
-                            .componentIdentity((component.getSettings().getUseEmptyComponentID() ? "" : component.getComponentIdentity()))
-                            .scenarioIdentity((component.getSettings().getUseEmptyScenarioID() ? "" : component.getScenarioIdentity()))
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
                             .build())
                         .collect(Collectors.toList()))
                     .build())
@@ -532,37 +508,51 @@ public class ScenariosUtil {
     }
 
     /**
-     * GET costing template id
+     * Calls an api with the POST verb
      *
-     * @return scenario object
+     * @param componentInfo - the component info object
+     * @return response object
      */
-    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfo) {
-        return postCostingTemplate(componentInfo);
+    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
+                .token(componentInfo.getUser().getToken())
+                .body("costingTemplate", componentInfo.getCostingTemplate());
+
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
     }
 
     /**
-     * POST costing template
+     * Calls an api with the GET verb
      *
-     * @return scenario object
+     * @param userCredentials - the user credentials
+     * @return response object
      */
-    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfo) {
+    public CostingTemplate getCostingTemplateIdentity(UserCredentials userCredentials, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
-                .token(componentInfo.getUser().getToken())
-                .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfo.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfo.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfo.getMode().toUpperCase())
-                    .materialName(componentInfo.getMaterial())
-                    .annualVolume(5500)
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .propertiesToReset(null)
-                    .build());
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES_ID, CostingTemplate.class)
+                .inlineVariables(inlineVariables)
+                .token(userCredentials.getToken());
 
-        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity();
+    }
+
+    /**
+     * Calls an api with the GET verb
+     *
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ResponseWrapper<CostingTemplates> getCostingTemplates(UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplates.class)
+                .token(userCredentials.getToken());
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -571,7 +561,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return - scenarioResponse object
      */
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse postPublishScenario(ComponentInfoBuilder componentInfo) {
         publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
         return getPublishedScenarioRepresentation(componentInfo, "PUBLISH", true);
@@ -903,7 +893,7 @@ public class ScenariosUtil {
      * @param componentScenarioName - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+    public ScenarioResponse patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
     }

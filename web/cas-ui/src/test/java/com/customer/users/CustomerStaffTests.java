@@ -88,7 +88,8 @@ public class CustomerStaffTests extends TestBase {
                 deleteIdentityHolder.userIdentity()
             );
         }
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
+
+        sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -109,7 +110,6 @@ public class CustomerStaffTests extends TestBase {
                 .validateUsersTableHasCorrectColumns("Job Title", "userProfile.jobTitle", soft)
                 .validateUsersTableHasCorrectColumns("Department", "userProfile.department", soft)
                 .validateUsersTableHasCorrectColumns("Created", "createdAt", soft);
-        soft.assertAll();
 
         PageUtils utils = new PageUtils(getDriver());
 
@@ -168,7 +168,7 @@ public class CustomerStaffTests extends TestBase {
 
         long cards = usersGrid.getCards("user-card").count();
         soft.assertThat(cards)
-            .overridingErrorMessage("Expected 10 cards are dislayed")
+            .overridingErrorMessage("Expected 10 cards are displayed")
             .isEqualTo(10L);
         utils.waitForCondition(usersGrid::isStable, PageUtils.DURATION_LOADING);
 

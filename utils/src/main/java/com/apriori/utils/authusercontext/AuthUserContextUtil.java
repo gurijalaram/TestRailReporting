@@ -47,8 +47,8 @@ public class AuthUserContextUtil {
 
 
     /**
-     * Get Autorization user Identity
-     * @param email
+     * Get Authorization user Identity
+     * @param email - the email
      * @return user Identity
      */
     public String getAuthUserIdentity(String email) {

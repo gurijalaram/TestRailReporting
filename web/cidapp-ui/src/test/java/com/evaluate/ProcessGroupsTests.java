@@ -137,7 +137,7 @@ public class ProcessGroupsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -535,7 +535,7 @@ public class ProcessGroupsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ROTO_BLOW_MOLDING)
             .openMaterialSelectorTable()
-            .selectMaterial("Polyethylene, High Density (HDPE)")
+            .selectMaterial("Polyethylene, High Density, HDPE")
             .submit(EvaluatePage.class)
             .costScenario();
 

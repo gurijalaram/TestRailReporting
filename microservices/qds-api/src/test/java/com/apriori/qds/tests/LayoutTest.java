@@ -26,7 +26,7 @@ import org.junit.Test;
 public class LayoutTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<LayoutResponse> layoutResponse;
+    private static LayoutResponse layoutResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
     private static String viewElementName;
@@ -42,13 +42,13 @@ public class LayoutTest extends TestUtil {
 
     @Test
     public void createLayout() {
-        softAssertions.assertThat(layoutResponse.getResponseEntity().getName()).isEqualTo(layoutName);
+        softAssertions.assertThat(layoutResponse.getName()).isEqualTo(layoutName);
     }
 
     @Test
     public void getLayout() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
-            .inlineVariables(layoutResponse.getResponseEntity().getIdentity())
+            .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -61,15 +61,15 @@ public class LayoutTest extends TestUtil {
     public void updateLayout() {
         LayoutRequest layoutRequest = LayoutRequest.builder()
             .layout(LayoutRequestParameters.builder()
-                .applicationIdentity(layoutResponse.getResponseEntity().getApplicationIdentity())
-                .deploymentIdentity(layoutResponse.getResponseEntity().getDeploymentIdentity())
-                .installationIdentity(layoutResponse.getResponseEntity().getInstallationIdentity())
-                .name(layoutResponse.getResponseEntity().getName())
+                .applicationIdentity(layoutResponse.getApplicationIdentity())
+                .deploymentIdentity(layoutResponse.getDeploymentIdentity())
+                .installationIdentity(layoutResponse.getInstallationIdentity())
+                .name(layoutResponse.getName())
                 .published(true)
                 .build())
             .build();
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
-            .inlineVariables(layoutResponse.getResponseEntity().getIdentity())
+            .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
             .apUserContext(userContext)
@@ -94,7 +94,7 @@ public class LayoutTest extends TestUtil {
 
     @After
     public void testCleanup() {
-        LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
+        LayoutResources.deleteLayout(layoutResponse.getIdentity(), userContext);
         softAssertions.assertAll();
 
     }

@@ -120,7 +120,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("11000")
-            .selectMaterial("Copper, Stock, UNS C11000")
+            .selectMaterial("Copper, UNS C11000")
             .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()
