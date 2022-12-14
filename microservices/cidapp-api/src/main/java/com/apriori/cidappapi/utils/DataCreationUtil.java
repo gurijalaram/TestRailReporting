@@ -88,7 +88,7 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
+        return scenariosUtil.postCostScenario(this.componentBuilder);
     }
 
     /**

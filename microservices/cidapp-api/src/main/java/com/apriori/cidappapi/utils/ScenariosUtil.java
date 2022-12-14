@@ -61,7 +61,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -88,7 +88,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -250,7 +250,7 @@ public class ScenariosUtil {
      * @param componentInfo - the cost component object
      * @return list of scenario items
      */
-    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
         CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
         final RequestEntity requestEntity =
@@ -893,7 +893,7 @@ public class ScenariosUtil {
      * @param componentScenarioName - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+    public ScenarioResponse patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
     }
