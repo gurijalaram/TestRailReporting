@@ -89,7 +89,7 @@ int-core:
   base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   name: int-core
-  secret_key: 65J1ID2B6LDG
+  secret_key: DogCatMonkey
   user_identity: 8GFDIG229629
 
   admin:
@@ -389,6 +389,9 @@ local:
   cidapp:
     ui_url: ${local.base_url}:3003/
     api_url: ${local.base_url}:8813/
+
+  cus:
+    api_url: ${local.base_url}:8828/
 
   cis:
     ui_url: ${local.base_url}:3004/
