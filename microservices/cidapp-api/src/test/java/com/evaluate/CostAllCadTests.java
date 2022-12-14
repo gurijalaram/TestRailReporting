@@ -223,8 +223,8 @@ public class CostAllCadTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(componentResponse);
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioRepresentation(componentResponse);
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        assertThat(scenarioRepresentation.getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
 }

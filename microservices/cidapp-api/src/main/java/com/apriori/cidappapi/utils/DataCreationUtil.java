@@ -78,7 +78,7 @@ public class DataCreationUtil {
             .user(this.componentBuilder.getUser())
             .build();
 
-        return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
+        return scenariosUtil.postPublishScenario(publishBuilder);
     }
 
     /**
@@ -89,7 +89,7 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
+        return scenariosUtil.postCostScenario(this.componentBuilder);
     }
 
     /**
@@ -110,6 +110,6 @@ public class DataCreationUtil {
             .user(this.componentBuilder.getUser())
             .build();
 
-        return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
+        return scenariosUtil.postPublishScenario(publishBuilder);
     }
 }

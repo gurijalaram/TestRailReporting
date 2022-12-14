@@ -61,7 +61,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -88,7 +88,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -110,7 +110,7 @@ public class ScenariosUtil {
      * @param scenarioState - the scenario state
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -139,7 +139,7 @@ public class ScenariosUtil {
                 if (scenarioResponse.isPresent() && scenarioResponse.get().getScenarioState().equalsIgnoreCase(scenarioState.getState())) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -160,7 +160,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
+    public ScenarioResponse getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
@@ -189,7 +189,7 @@ public class ScenariosUtil {
                     scenarioResponse.get().getPublished() == published) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
+                    return scenarioRepresentation.getResponseEntity();
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -250,7 +250,7 @@ public class ScenariosUtil {
      * @param componentInfo - the cost component object
      * @return list of scenario items
      */
-    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
         CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
         final RequestEntity requestEntity =
@@ -561,7 +561,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return - scenarioResponse object
      */
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse postPublishScenario(ComponentInfoBuilder componentInfo) {
         publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
         return getPublishedScenarioRepresentation(componentInfo, "PUBLISH", true);
@@ -893,7 +893,7 @@ public class ScenariosUtil {
      * @param componentScenarioName - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+    public ScenarioResponse patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
     }
