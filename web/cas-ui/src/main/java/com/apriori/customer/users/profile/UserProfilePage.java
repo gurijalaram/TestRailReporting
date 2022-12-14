@@ -3,6 +3,7 @@ package com.apriori.customer.users.profile;
 import com.apriori.common.ModalUserList;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.SelectComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,10 @@ public final class UserProfilePage extends NavToolbar {
     private WebElement grantedAccessControlsContainerRoot;
     private SourceListComponent grantedAccessControlsContainer;
 
+    @FindBy(css = ".user-granted-licenses")
+    private WebElement grantedLicensesContainerRoot;
+    private SourceListComponent grantedLicensesContainer;
+
     @FindBy(xpath = "//button[.='Add']")
     private WebElement addApplicationButton;
 
@@ -61,11 +66,38 @@ public final class UserProfilePage extends NavToolbar {
     @FindBy(css = ".access-control-card")
     private WebElement aprioriCard;
 
+    @FindBy(css = ".user-license-assignment-modify-button")
+    private WebElement modifyLicenseButton;
+
+    @FindBy(css = ".user-license-assignment")
+    private WebElement licenseCard;
+
+    @FindBy(css = "[role='dialog']")
+    private WebElement selectLicenseDialog;
+
+    @FindBy(css = ".license-drop-down")
+    private WebElement licenseDropDown;
+    private SelectComponent licenseSelectField;
+
+    @FindBy(css = ".sub-license-drop-down")
+    private WebElement subLicenseDropDown;
+    private SelectComponent subLicenseSelectField;
+
+    @FindBy(css = ".read-field-license")
+    private WebElement licenseNameField;
+
+    @FindBy(css = ".read-field-sub-license")
+    private WebElement subLicenseNameField;
+
+    @FindBy(css = ".user-granted-licenses .fa-arrows-rotate")
+    private WebElement refreshLicenses;
+
     private ModalUserList modalUserList;
 
     public UserProfilePage(WebDriver driver) {
         super(driver);
         grantedAccessControlsContainer = new SourceListComponent(driver, grantedAccessControlsContainerRoot);
+        grantedLicensesContainer = new SourceListComponent(driver, grantedLicensesContainerRoot);
         modalUserList = new ModalUserList(driver);
     }
 
@@ -263,6 +295,16 @@ public final class UserProfilePage extends NavToolbar {
     }
 
     /**
+     * Gets underlying granted licenses source list
+     *
+     * @return granted licenses source list
+     */
+    public SourceListComponent getGrantedLicensesContainer() {
+        getPageUtils().waitForCondition(grantedLicensesContainer::isStable, PageUtils.DURATION_LOADING);
+        return grantedLicensesContainer;
+    }
+
+    /**
      * Clicks on Add Application button
      *
      * @return this object
@@ -428,5 +470,85 @@ public final class UserProfilePage extends NavToolbar {
      */
     public boolean isCardDisplayed() {
         return getPageUtils().isElementDisplayed(aprioriCard);
+    }
+
+    /**
+     * Clicks on Modify button
+     *
+     * @return this object
+     */
+    public UserProfilePage clickModifyLicenseButton() {
+        getPageUtils().waitForElementAndClick(modifyLicenseButton);
+        return this;
+    }
+
+    /**
+     * Selects license from a dropdown
+     *
+     * @param license - name of license
+     * @return this object
+     */
+    public UserProfilePage selectLicense(String license) {
+        this.licenseSelectField = new SelectComponent(getDriver(), licenseDropDown);
+        getPageUtils().waitForElementToAppear(licenseDropDown);
+        licenseSelectField.select(license);
+        return this;
+    }
+
+    /**
+     * Selects sublicense from a dropdown
+     *
+     * @param subLicense - name of sublicense
+     * @return this object
+     */
+    public UserProfilePage selectSubLicense(String subLicense) {
+        this.subLicenseSelectField = new SelectComponent(getDriver(), subLicenseDropDown);
+        getPageUtils().waitForElementToAppear(subLicenseDropDown);
+        subLicenseSelectField.select(subLicense);
+        return this;
+    }
+
+    /**
+     * Clears license from a dropdown
+     *
+     * @return his object
+     */
+    public UserProfilePage deleteLicenseFromUser() {
+        this.licenseSelectField = new SelectComponent(getDriver(), licenseDropDown);
+        getPageUtils().waitForElementToAppear(licenseDropDown);
+        licenseSelectField.clear();
+        return this;
+    }
+
+    /**
+     * Gets name of license from license card
+     *
+     * @return string
+     */
+    public String getLicenseName() {
+        return getPageUtils().waitForElementToAppear(licenseNameField).getAttribute("textContent");
+    }
+
+    /**
+     * Gets name of sublicense from license card
+     *
+     * @return string
+     */
+    public String getSubLicenseName() {
+        return getPageUtils().waitForElementAppear(subLicenseNameField).getAttribute("textContent");
+    }
+
+    /**
+     * Gets message for empty container
+     *
+     * @return string
+     */
+    public String getNoLicensesMessage() {
+        return getPageUtils().waitForElementToAppear(By.cssSelector(".user-granted-licenses .message")).getAttribute("textContent");
+    }
+
+    public UserProfilePage refreshLicensesContainer() {
+        getPageUtils().waitForElementAndClick(refreshLicenses);
+        return this;
     }
 }
