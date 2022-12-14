@@ -168,7 +168,7 @@ public class CustomerStaffTests extends TestBase {
 
         long cards = usersGrid.getCards("user-card").count();
         soft.assertThat(cards)
-            .overridingErrorMessage("Expected 10 cards are dislayed")
+            .overridingErrorMessage("Expected 10 cards are displayed")
             .isEqualTo(10L);
         utils.waitForCondition(usersGrid::isStable, PageUtils.DURATION_LOADING);
 

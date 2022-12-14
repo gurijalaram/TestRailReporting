@@ -26,8 +26,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
-import javax.xml.ws.Response;
-
 public class QmsBidPackageResources {
 
     /**
