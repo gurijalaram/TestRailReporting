@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "componentIdentity": {
+      "type": "string"
+    },
+    "scenarioIdentity": {
+      "type": "string"
+    },
+    "iterationIdentity": {
+      "type": "string"
+    },
+    "bidPackageIdentity": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "componentIdentity",
+    "scenarioIdentity",
+    "iterationIdentity"
+  ],
+  "optional": [
+    "bidPackageIdentity",
+    "updatedBy",
+    "updatedAt"
+  ]
+}
