@@ -1,8 +1,5 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -16,6 +13,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CostingIconEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -92,7 +90,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTreePage.selectTableView()
             .multiSelectSubcomponents(big_ring + "," + scenarioName)
@@ -108,7 +106,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTablePage.closePanel()
             .clickExplore()
@@ -132,7 +130,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTreePage.selectTableView()
             .multiSelectSubcomponents(big_ring + "," + scenarioName)
@@ -148,11 +146,15 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTablePage.openAssembly(big_ring, scenarioName)
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
+            .selectFilter("Private")
+            .openScenario(big_ring, newScenarioName)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .costScenario()
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
@@ -161,11 +163,12 @@ public class AssemblyAssociations extends TestBase {
             .openComponents()
             .selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, newScenarioName)).contains(CostingIconEnum.COSTED.getIcon(),
+            StatusIconEnum.PRIVATE.getStatusIcon());
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(newScenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(newScenarioName);
 
         softAssertions.assertAll();
     }
@@ -221,7 +224,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTablePage.openAssembly(big_ring, scenarioName)
             .publishScenario(PublishPage.class)
@@ -231,6 +234,7 @@ public class AssemblyAssociations extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
+            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
             .clickRefresh(EvaluatePage.class)
             .openComponents()
@@ -240,7 +244,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(newScenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(newScenarioName);
 
         softAssertions.assertAll();
     }
@@ -297,7 +301,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTreePage.closePanel()
             .editScenario(EditScenarioStatusPage.class)
@@ -309,7 +313,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         softAssertions.assertAll();
     }
@@ -372,7 +376,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         componentsTreePage.closePanel()
             .editScenario(EditScenarioStatusPage.class)
@@ -384,7 +388,7 @@ public class AssemblyAssociations extends TestBase {
 
         componentsTablePage.selectTreeView();
 
-        assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring), containsString(scenarioName));
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
 
         softAssertions.assertAll();
     }
