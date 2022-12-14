@@ -46,7 +46,8 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioItem createComponent() {
-        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+        ComponentInfoBuilder componentInfo = scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder);
+        return cssComponent.findFirst(componentInfo.getComponentName(), componentInfo.getScenarioName(), this.userCredentials);
     }
 
     /**
