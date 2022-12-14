@@ -22,12 +22,17 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
@@ -50,6 +55,7 @@ public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private EvaluatePage evaluatePage;
     private ComponentsTablePage componentsTablePage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -646,18 +652,112 @@ public class FiltersTests extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
 
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        SoftAssertions soft = new SoftAssertions();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+        currentUser = UserUtil.getUser();
+        String scenarioName1 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+
+        ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
             componentExtension,
             subComponentProcessGroup,
-            scenarioName,
+            scenarioName1,
             currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly1)
+            .uploadAssembly(componentAssembly1);
+        assemblyUtils.costSubComponents(componentAssembly1)
+            .costAssembly(componentAssembly1);
+
+        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName2,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly2)
+            .uploadAssembly(componentAssembly2);
+
+        ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName3,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly3)
+            .uploadAssembly(componentAssembly3);
+
+        explorePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(assemblyName, scenarioName2)
+            .openComponents()
+            .selectCheckAllBox()
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(subComponentProcessGroup)
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class)
+            .closePanel()
+            .clickExplore();
+        
+        explorePage = explorePage.openScenario(assemblyName, scenarioName3)
+            .openComponents()
+            .selectCheckAllBox()
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(subComponentProcessGroup)
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class)
+            .closePanel()
+            .clickExplore();
+        
+        evaluatePage = explorePage.openScenario(assemblyName, scenarioName2);
+        ComponentsTreePage componentsTreePage = evaluatePage.openComponents();
+        for (String subComponent: subComponentNames) {
+            componentsTreePage.checkSubcomponentState(componentAssembly2, subComponent);
+        }
+
+        explorePage = evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
+            .clickExplore();
+
+        evaluatePage = explorePage.openScenario(assemblyName, scenarioName3);
+        componentsTreePage = evaluatePage.openComponents();
+        for (String subComponent: subComponentNames) {
+            componentsTreePage.checkSubcomponentState(componentAssembly3, subComponent);
+        }
+
+        explorePage = evaluatePage.goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToMachiningTab()
+            .expandSecondaryProcessTree("Deburr")
+            .selectSecondaryProcess("Automated Deburr")
+            .submit(EvaluatePage.class)
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
+            .clickExplore()
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, assemblyName.substring(0, 5))
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "AutoScenario")
+            .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
+            .addCriteria(PropertyEnum.FULLY_BURDENED_COST, OperationEnum.GREATER_THAN, "0.4")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class);
+
+        explorePage.selectFilter(filterName);
+
+        List<String> scenarios = explorePage.getAllScenarioComponentName();
+        soft.assertThat(scenarios.size()).as("Number of scenarios displayed").isEqualTo(1);
+        soft.assertAll();
     }
 }

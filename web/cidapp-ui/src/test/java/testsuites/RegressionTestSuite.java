@@ -24,6 +24,7 @@ import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
+import com.evaluate.assemblies.UpdateCADFileTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -107,7 +108,8 @@ import testsuites.suiteinterface.SmokeTests;
     ProcessRoutingTests.class,
     GroupPublishTests.class,
     MachiningStrategyTests.class,
-    GroupMachineStrategyApplyTests.class
+    GroupMachineStrategyApplyTests.class,
+    UpdateCADFileTests.class
 })
 public class RegressionTestSuite {
 }

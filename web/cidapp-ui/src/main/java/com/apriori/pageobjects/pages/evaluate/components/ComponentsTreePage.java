@@ -10,6 +10,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
@@ -253,6 +254,15 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
         return assembliesComponentsController.getListOfScenarios(componentName, scenarioName);
+    }
+
+    /**
+     * Opens cost inputs page
+     *
+     * @return new page object
+     */
+    public ComponentBasicPage setInputs() {
+        return assembliesComponentsController.setInputs();
     }
 
     /**
