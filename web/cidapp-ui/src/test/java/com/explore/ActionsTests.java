@@ -315,7 +315,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getResponseEntity().getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -355,7 +355,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getResponseEntity().getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -396,7 +396,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getResponseEntity().getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -756,7 +756,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getResponseEntity().getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
