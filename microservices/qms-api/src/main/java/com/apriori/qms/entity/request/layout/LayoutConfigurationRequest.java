@@ -1,4 +1,4 @@
-package com.apriori.qds.entity.request.layout;
+package com.apriori.qms.entity.request.layout;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LayoutConfigRequest {
-    private LayoutConfigRequestParameters layoutConfiguration;
+public class LayoutConfigurationRequest {
+    private LayoutConfigurationParameters layoutConfiguration;
 }
