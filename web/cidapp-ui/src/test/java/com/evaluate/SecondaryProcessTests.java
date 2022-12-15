@@ -58,7 +58,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5140", "5115", "5132"})
+    @TestRail(testCaseId = {"5140", "5115", "5132", "5444"})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
     public void secondaryProcessLeakTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
