@@ -27,11 +27,10 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder data = new DataCreationUtil(componentName, "AutoScenario521-1308300483105300", processGroup, resourceFile, currentUser).searchCreateComponent();
+        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).searchCreateComponent();
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(data.getComponentName()).isEqualTo(componentName);
         softAssertions.assertThat(data.getScenarioIdentity()).isNotEmpty();
         softAssertions.assertThat(data.getComponentIdentity()).isNotEmpty();
 
