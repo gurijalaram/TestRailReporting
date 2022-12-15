@@ -58,7 +58,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5140", "5115", "5132"})
+    @TestRail(testCaseId = {"5140", "5115", "5132", "5444"})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
     public void secondaryProcessLeakTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -70,23 +70,27 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
-                .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToOtherSecProcessesTab()
-                .expandSecondaryProcessTree("Testing and Inspection")
-                .selectSecondaryProcess("Hydrostatic Leak Testing")
-                .inputOptionsOverride("0.21")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
+            .expandSecondaryProcessTree("Testing and Inspection")
+            .selectSecondaryProcess("Hydrostatic Leak Testing")
+            .inputOptionsOverride("0.21")
+            .submit(AdvancedPage.class)
+            .openSecondaryDF()
+            .usePrimaryDF("No")
+            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Hydrostatic Leak Testing");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-                .selectBarChart("Hydrostatic Leak Testing")
-                .selectOptionsTab();
+            .selectBarChart("Hydrostatic Leak Testing")
+            .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getAverageWallThickness()).isEqualTo(0.21);
         softAssertions.assertAll();
@@ -106,31 +110,31 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 7075")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
-                .selectSecondaryProcess("Carburize")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 7075")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
+            .selectSecondaryProcess("Carburize")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Carburize");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-                .selectBarChart("Carburize")
-                .selectOptionsTab()
-                .inputCaseDepth("0.46")
-                .inputMasking("1")
-                .closePanel()
-                .costScenario()
-                .openMaterialProcess()
-                .selectBarChart("Carburize")
-                .selectOptionsTab();
+            .selectBarChart("Carburize")
+            .selectOptionsTab()
+            .inputCaseDepth("0.46")
+            .inputMasking("1")
+            .closePanel()
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Carburize")
+            .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Case Depth Selection")).isEqualTo(0.46);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
@@ -150,24 +154,24 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 7075")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("Atmosphere Oil Harden")
-                .inputMaskingOverride("2")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("Atmosphere Oil Harden");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 7075")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("Atmosphere Oil Harden")
+            .inputMaskingOverride("2")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("Atmosphere Oil Harden");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
         softAssertions.assertAll();
@@ -187,26 +191,26 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 7075")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
-                .selectSecondaryProcess("Standard Anneal")
-                .inputMaskingOverride("1")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 7075")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
+            .selectSecondaryProcess("Standard Anneal")
+            .inputMaskingOverride("1")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Standard Anneal");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-                .selectBarChart("Standard Anneal")
-                .selectOptionsTab();
+            .selectBarChart("Standard Anneal")
+            .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
         softAssertions.assertAll();
@@ -225,24 +229,24 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 7075")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Temper")
-                .selectSecondaryProcess("Vacuum Temper")
-                .inputMaskingOverride("3")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree(" Heat Treat Processes, Temper")
-                .highlightSecondaryProcess("Vacuum Temper");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 7075")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Temper")
+            .selectSecondaryProcess("Vacuum Temper")
+            .inputMaskingOverride("3")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree(" Heat Treat Processes, Temper")
+            .highlightSecondaryProcess("Vacuum Temper");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
         softAssertions.assertAll();
@@ -260,19 +264,19 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("7075")
-                .selectMaterial("Aluminum, ANSI 7075")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes")
-                .selectSecondaryProcess("Stress Relief")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("7075")
+            .selectMaterial("Aluminum, ANSI 7075")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes")
+            .selectSecondaryProcess("Stress Relief")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stress Relief");
 
@@ -291,19 +295,19 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("ANSI AL380")
-                .selectMaterial("Aluminum, ANSI AL380.0")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .expandSecondaryProcessTree("Anodize, Anodizing Tank")
-                .selectSecondaryProcess("Anodize:Anodize Type I")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, ANSI AL380.0")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Anodize, Anodizing Tank")
+            .selectSecondaryProcess("Anodize:Anodize Type I")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Anodize");
 
@@ -322,17 +326,17 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Stainless Steel, 440B")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .selectSecondaryProcess("Certification")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Stainless Steel, 440B")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Certification")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Certification");
 
@@ -352,23 +356,23 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Stainless Steel, 440B")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .expandSecondaryProcessTree("Paint")
-                .selectSecondaryProcess("Powder Coat Cart")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Stainless Steel, 440B")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Paint")
+            .selectSecondaryProcess("Powder Coat Cart")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Powder Coat Cart");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-                .selectBarChart("Powder Coat Cart");
+            .selectBarChart("Powder Coat Cart");
 
         softAssertions.assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart")).contains("289.91s (96.29%)");
 
@@ -389,22 +393,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         materialProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
-                .openMaterialSelectorTable()
-                .selectMaterial("Stainless Steel, 440B")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .expandSecondaryProcessTree("Paint")
-                .selectSecondaryProcess("Powder Coat Cart")
-                .inputFractionPartArea("0.30")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .openMaterialProcess()
-                .selectBarChart("Powder Coat Cart")
-                .selectOptionsTab();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
+            .openMaterialSelectorTable()
+            .selectMaterial("Stainless Steel, 440B")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Paint")
+            .selectSecondaryProcess("Powder Coat Cart")
+            .inputFractionPartArea("0.30")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Powder Coat Cart")
+            .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Fraction of Part Area that is Powder Coated")).isEqualTo(0.30);
 
@@ -425,23 +429,23 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         materialProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .expandSecondaryProcessTree("Paint")
-                .selectSecondaryProcess("Wet Coat Line")
-                .inputFractionOverride("0.40")
-                .inputMaskedFeatures("1")
-                .inputBatchSizeOverride("254")
-                .inputCompLoadBar("1")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .openMaterialProcess()
-                .selectBarChart("Wet Coat Line")
-                .selectOptionsTab();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Paint")
+            .selectSecondaryProcess("Wet Coat Line")
+            .inputFractionOverride("0.40")
+            .inputMaskedFeatures("1")
+            .inputBatchSizeOverride("254")
+            .inputCompLoadBar("1")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Wet Coat Line")
+            .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.40);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features")).isEqualTo(1.0);
@@ -462,17 +466,17 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Stainless Steel, 440B")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .selectSecondaryProcess("Passivation")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Stainless Steel, 440B")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Passivation");
 
@@ -493,34 +497,34 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Stainless Steel, 440B")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .selectSecondaryProcess("Passivation")
-                .goToOtherSecProcessesTab()
-                .selectSecondaryProcess("Packaging")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Stainless Steel, 440B")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Passivation / Carton Forming / Pack & Load");
 
         evaluatePage.publishScenario(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, scenarioName)
-                .submit(ExplorePage.class)
-                .openScenario("SheetMetal", scenarioName)
-                .goToAdvancedTab();
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, scenarioName)
+            .submit(ExplorePage.class)
+            .openScenario("SheetMetal", scenarioName)
+            .goToAdvancedTab();
 
         softAssertions.assertThat(evaluatePage.isSecondaryProcessButtonEnabled()).isEqualTo(false);
 
@@ -542,21 +546,21 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 1050A")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .expandSecondaryProcessTree("Anodize, Anodizing Tank")
-                .selectSecondaryProcess("Anodize:Anodize Type I")
-                .goToOtherSecProcessesTab()
-                .selectSecondaryProcess("Packaging")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 1050A")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Anodize, Anodizing Tank")
+            .selectSecondaryProcess("Anodize:Anodize Type I")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Anodize / Carton Forming / Pack & Load");
 
@@ -577,25 +581,25 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 1050A")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
-                .selectSecondaryProcess("Carbonitride")
-                .inputMasking("1")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
-                .highlightSecondaryProcess("Carbonitride");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 1050A")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
+            .selectSecondaryProcess("Carbonitride")
+            .inputMasking("1")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
+            .highlightSecondaryProcess("Carbonitride");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
         softAssertions.assertAll();
@@ -614,25 +618,25 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 1050A")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("Vacuum Air Harden")
-                .inputMasking("2")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("Vacuum Air Harden");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 1050A")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("Vacuum Air Harden")
+            .inputMasking("2")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("Vacuum Air Harden");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
         softAssertions.assertAll();
@@ -651,25 +655,25 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("Aluminum, ANSI 1050A")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("Vacuum Air Harden with High Temper")
-                .inputMasking("1")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("Vacuum Air Harden with High Temper");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("Aluminum, ANSI 1050A")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("Vacuum Air Harden with High Temper")
+            .inputMasking("1")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("Vacuum Air Harden with High Temper");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
         softAssertions.assertAll();
@@ -688,22 +692,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("Spring Steel Harden")
-                .inputMasking("3")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("Spring Steel Harden");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("Spring Steel Harden")
+            .inputMasking("3")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("Spring Steel Harden");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
         softAssertions.assertAll();
@@ -722,22 +726,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("Stainless Steel Harden")
-                .inputMasking("1")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("Stainless Steel Harden");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("Stainless Steel Harden")
+            .inputMasking("1")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("Stainless Steel Harden");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
         softAssertions.assertAll();
@@ -756,22 +760,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .selectSecondaryProcess("High Speed Steel Harden")
-                .inputMasking("3")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
-                .highlightSecondaryProcess("High Speed Steel Harden");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .selectSecondaryProcess("High Speed Steel Harden")
+            .inputMasking("3")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
+            .highlightSecondaryProcess("High Speed Steel Harden");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
         softAssertions.assertAll();
@@ -790,22 +794,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
-                .selectSecondaryProcess("Low Temp Vacuum Anneal")
-                .inputMasking("4")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
-                .highlightSecondaryProcess("Low Temp Vacuum Anneal");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
+            .selectSecondaryProcess("Low Temp Vacuum Anneal")
+            .inputMasking("4")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
+            .highlightSecondaryProcess("Low Temp Vacuum Anneal");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(4.0);
         softAssertions.assertAll();
@@ -825,22 +829,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
-                .selectSecondaryProcess("High Temp Vacuum Anneal")
-                .inputMasking("2")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
-                .highlightSecondaryProcess("High Temp Vacuum Anneal");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
+            .selectSecondaryProcess("High Temp Vacuum Anneal")
+            .inputMasking("2")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
+            .highlightSecondaryProcess("High Temp Vacuum Anneal");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
         softAssertions.assertAll();
@@ -859,22 +863,22 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         secondaryProcessPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Temper")
-                .selectSecondaryProcess("Standard Temper")
-                .inputMasking("1")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToHeatTreatmentTab()
-                .expandSecondaryProcessTree("Heat Treat Processes, Temper")
-                .highlightSecondaryProcess("Standard Temper");
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Temper")
+            .selectSecondaryProcess("Standard Temper")
+            .inputMasking("1")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToHeatTreatmentTab()
+            .expandSecondaryProcessTree("Heat Treat Processes, Temper")
+            .highlightSecondaryProcess("Standard Temper");
 
         softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
         softAssertions.assertAll();
@@ -922,14 +926,14 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .selectSecondaryProcess("Passivation")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
         softAssertions.assertAll();
@@ -990,21 +994,21 @@ public class SecondaryProcessTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         advancedPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("ABS, 10% Glass")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS, 10% Glass")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab();
 
         softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("No Processes Selected...");
 
         evaluatePage = advancedPage.openSecondaryProcesses()
-                .goToOtherSecProcessesTab()
-                .expandSecondaryProcessTree("Testing and Inspection")
-                .selectSecondaryProcess("Xray Inspection")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
+            .goToOtherSecProcessesTab()
+            .expandSecondaryProcessTree("Testing and Inspection")
+            .selectSecondaryProcess("Xray Inspection")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
 
