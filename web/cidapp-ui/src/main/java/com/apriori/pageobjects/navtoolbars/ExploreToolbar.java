@@ -453,9 +453,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath - location of the file
      * @return new page object
      */
-    public EvaluatePage updateCadFile(File filePath) {
+    public UpdateCadFilePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
+        return new UpdateCadFilePage(driver).enterFilePath(filePath);
     }
 
     /**

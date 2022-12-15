@@ -97,6 +97,7 @@ public class UpdateCADFileTests extends TestBase {
             .openScenario(autoBotAsm, scenarioName);
         componentsTreePage = evaluatePage.clickActions()
             .updateCadFile(modifiedAutoAsm)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
@@ -274,6 +275,7 @@ public class UpdateCADFileTests extends TestBase {
         componentsTreePage.openAssembly(autoArm, scenarioName)
             .clickActions()
             .updateCadFile(autoArmFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .closeNewlyOpenedTab()
             .clickRefresh(EvaluatePage.class)
@@ -298,6 +300,7 @@ public class UpdateCADFileTests extends TestBase {
         componentsTreePage.openAssembly(autoHead, scenarioName)
             .clickActions()
             .updateCadFile(modifiedAutoHeadFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .closeNewlyOpenedTab()
             .clickRefresh(EvaluatePage.class)

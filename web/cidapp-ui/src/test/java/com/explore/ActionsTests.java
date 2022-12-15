@@ -7,6 +7,7 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
@@ -873,22 +874,23 @@ public class ActionsTests extends TestBase {
     public void updateWithDifferentCADFile() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName = "Bishop";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String componentName = "Bishop";
+        final String extension = ".SLDPRT";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        String componentName2 = "Machined Box AMERICAS";
-        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
+        final String componentName2 = "Machined Box AMERICAS";
+        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension);
 
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        updateCadFilePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .clickActions()
             .updateCadFile(resourceFile2);
 
-        String expectedError = "The supplied CAD file (Machined Box AMERICAS.SLDPRT) cannot be used for this scenario. The name of the file must be Bishop.SLDPRT.";
-        assertThat(updateCadFilePage.getFileInputError(), is(equalTo(expectedError)));
+        final String expectedError = "The supplied CAD file (" + componentName2 + extension + ") cannot be used for this scenario. The name of the file must be " + componentName + extension;
+        assertThat(updateCadFilePage.getFileInputError(), containsString(expectedError));
     }
 }
