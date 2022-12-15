@@ -455,6 +455,7 @@ public class IncludeAndExcludeTests extends TestBase {
         componentsTreePage.closePanel()
             .clickActions()
             .updateCadFile(assemblyResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
