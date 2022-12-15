@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -56,6 +57,7 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -313,7 +315,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -353,7 +355,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -394,7 +396,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -754,7 +756,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
