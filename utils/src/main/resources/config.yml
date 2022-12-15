@@ -89,7 +89,7 @@ int-core:
   base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   name: int-core
-  secret_key: DogCatMonkey
+  secret_key: 65J1ID2B6LDG
   user_identity: 8GFDIG229629
 
   admin:
