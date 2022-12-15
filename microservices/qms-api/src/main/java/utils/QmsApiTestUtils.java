@@ -17,6 +17,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.io.File;
@@ -36,6 +37,16 @@ public class QmsApiTestUtils {
         header.put("Content-Type", "application/json");
         header.put("ap-cloud-context", cloudContext);
         return header;
+    }
+
+    public static UserCredentials getCustomerUser() {
+        UserCredentials otherCustomerUser;
+        switch (PropertiesContext.get("customer")) {
+            case "ap-int":
+                return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
+            default:
+                return new UserCredentials().setEmail("qa-automation-01@apriori.com");
+        }
     }
 }
 

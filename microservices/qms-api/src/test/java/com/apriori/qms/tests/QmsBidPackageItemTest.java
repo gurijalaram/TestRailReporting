@@ -116,7 +116,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     public void testCleanup() {
         QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

@@ -11,6 +11,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -378,6 +379,15 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     }
 
     /**
+     * clicks the delete button
+     *
+     * @return - the current page object
+     */
+    public DeletePage deleteSubcomponent() {
+        return assembliesComponentsController.deleteSubComponent();
+    }
+
+    /**
      * Checks the subcomponent is in a completed state
      *
      * @param componentInfo     - the component info
@@ -495,16 +505,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     }
 
     /**
-     * Gets subcomponent scenario name
-     *
-     * @param componentName - the component name
-     * @return string
-     */
-    public String getSubcomponentScenarioName(String componentName) {
-        return assembliesComponentsController.getSubcomponentScenarioName(componentName);
-    }
-
-    /**
      * Gets list of subcomponent names
      *
      * @return string
@@ -601,5 +601,16 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      */
     public boolean isComponentNameDisplayedInTreeView(String componentName) {
         return assembliesComponentsController.isComponentNameDisplayedInTreeView(componentName);
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ComponentsTablePage addColumn(ColumnsEnum columnToAdd) {
+        assembliesComponentsController.addColumn(columnToAdd);
+        return this;
     }
 }

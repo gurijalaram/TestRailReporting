@@ -46,7 +46,8 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioItem createComponent() {
-        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+        ComponentInfoBuilder componentInfo = scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder);
+        return cssComponent.findFirst(componentInfo.getComponentName(), componentInfo.getScenarioName(), this.userCredentials);
     }
 
     /**
@@ -77,7 +78,7 @@ public class DataCreationUtil {
             .user(this.componentBuilder.getUser())
             .build();
 
-        return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
+        return scenariosUtil.postPublishScenario(publishBuilder);
     }
 
     /**
@@ -88,7 +89,7 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        return scenariosUtil.postCostScenario(this.componentBuilder).getResponseEntity();
+        return scenariosUtil.postCostScenario(this.componentBuilder);
     }
 
     /**
@@ -109,6 +110,6 @@ public class DataCreationUtil {
             .user(this.componentBuilder.getUser())
             .build();
 
-        return scenariosUtil.postPublishScenario(publishBuilder).getResponseEntity();
+        return scenariosUtil.postPublishScenario(publishBuilder);
     }
 }
