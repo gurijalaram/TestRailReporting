@@ -1,12 +1,13 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.COST_COMPLETE;
 import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -189,11 +190,13 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                 .scenarioName(scenarioName)
                 .componentIdentity(scenarioItem.getComponentIdentity())
                 .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(digitalFactoryEnum)
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .vpeName(digitalFactoryEnum.getDigitalFactory())
+                    .build())
                 .user(userCredentials)
                 .build());
-        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + COST_COMPLETE);
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + COST_COMPLETE);
         scenariosUtil.postPublishScenario(scenarioItem);
         return this;
     }
@@ -262,7 +265,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
             .user(userCredentials)
             .build());
 
-        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_IDENTITY_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
+        cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
         scenariosUtil.postPublishScenario(myComponent);
         return this;
     }

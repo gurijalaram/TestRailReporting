@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "ScenariosResponseSchema.json")
+@Schema(location = "ScenarioDiscussionsResponseSchema.json")
 public class ScenariosResponse extends Pagination {
     private List<ScenarioResponse> items;
 }

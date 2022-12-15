@@ -69,7 +69,6 @@ public class PartsTest extends PartsUtil {
         String lineItemIdentity = allLineItems.get(0).getIdentity();
 
         ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, partsRequest.getStatusCode());
 
         softAssertions.assertThat(partsRequest.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(partsRequest.getResponseEntity().getLineItemIdentity()).isEqualTo(lineItemIdentity);
@@ -91,7 +90,6 @@ public class PartsTest extends PartsUtil {
         String partIdentity = partsRequest.getResponseEntity().getIdentity();
 
         ResponseWrapper<Parts> partsResponseWrapper = patchUpdatePart(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
 
         softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getIdentity()).isEqualTo(partIdentity);
         softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getPinCount()).isEqualTo(5456);
@@ -112,8 +110,7 @@ public class PartsTest extends PartsUtil {
 
         String partIdentity = partsRequest.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Parts> partsResponseWrapper = postSelectPartForExport(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, partsResponseWrapper.getStatusCode());
+        postSelectPartForExport(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
     }
 
     @Test
@@ -128,7 +125,6 @@ public class PartsTest extends PartsUtil {
 
         List<String> identityList = itemPartsList.stream().map(LineItemParts::getIdentity).collect(Collectors.toList());
 
-        ResponseWrapper<Parts> partsResponseWrapper = postSelectPartsToCost(billOfMaterialsIdentity, lineItemIdentity, identityList);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
+        postSelectPartsToCost(billOfMaterialsIdentity, lineItemIdentity, identityList);
     }
 }

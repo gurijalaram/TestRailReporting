@@ -8,7 +8,6 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -277,7 +276,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser   - the user credentials
      * @return response object
      */
-    public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
+    public List<ScenarioItem> uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
         return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
             .resourceFiles(resourceFiles)
             .scenarioName(scenarioName)

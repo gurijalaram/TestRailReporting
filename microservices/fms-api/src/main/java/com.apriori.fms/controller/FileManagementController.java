@@ -94,7 +94,7 @@ public class FileManagementController {
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
             .queryParams(requestQueryParams)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return (FileResponse) HTTPRequest.build(requestEntity).postMultipart().getResponseEntity();
     }

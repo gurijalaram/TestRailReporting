@@ -23,7 +23,7 @@ public class DmsCommentResponse {
     private ArrayList<DmsParticipant> mentionedUsers;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime publishedAt;
-    private ArrayList<Object> commentView;
+    private ArrayList<DmsCommentViewResponse> commentView;
     private String updatedBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;

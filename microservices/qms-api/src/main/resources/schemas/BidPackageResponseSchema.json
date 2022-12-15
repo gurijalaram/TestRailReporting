@@ -37,6 +37,18 @@
         },
         "assignedTo": {
           "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "BidPackageItemSchema.json"
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "BidPackageProjectSchema.json"
+          }
         }
       },
       "required": [
@@ -52,7 +64,9 @@
         "updatedAt",
         "customerIdentity",
         "assignedTo",
-        "updatedByName"
+        "updatedByName",
+        "items",
+        "projects"
       ]
     }
   },

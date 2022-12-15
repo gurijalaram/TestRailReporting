@@ -22,6 +22,9 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     //ITERATIONS
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations/latest"),
 
+    //ROUTINGS
+    ROUTINGS("components/%s/scenarios/%s/available-routings"),
+
     //PREFERENCES
     PREFERENCES("users/current/preferences"),
     PREFERENCES_PAGE_SIZE("users/current/preferences?pageSize=100"),
@@ -36,6 +39,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
+    COSTING_TEMPLATES_ID("costing-templates/%s"),
 
     //PUBLISH
     PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),

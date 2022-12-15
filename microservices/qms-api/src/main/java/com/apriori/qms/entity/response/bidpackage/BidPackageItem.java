@@ -1,9 +1,14 @@
 package com.apriori.qms.entity.response.bidpackage;
 
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -16,4 +21,7 @@ public class BidPackageItem {
     private String componentIdentity;
     private String scenarioIdentity;
     private String iterationIdentity;
+    private String createdBy;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
 }

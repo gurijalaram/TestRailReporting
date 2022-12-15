@@ -1,4 +1,3 @@
-
 {
   "type": "object",
   "default": {},
@@ -14,7 +13,7 @@
       "items": {
         "type": "array",
         "items": {
-          "$ref": "DiscussionResponseSchema.json"
+          "$ref": "DmsDiscussionResponseSchema.json"
         }
       }
     }

@@ -28,18 +28,6 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static Set<String> connectionsToDelete = new HashSet<>();
 
-
-    //    @AfterClass
-    //    public static void clearTestingData() {
-    //        if (!connectionsToDelete.isEmpty()) {
-    //            connectionsToDelete.forEach(ConnectionsTest::deleteConnection);
-    //        }
-    //
-    //        connectionsToDelete = new HashSet<>();
-    //        postConnection();
-    //    }
-
-
     @Test
     @TestRail(testCaseId = {"6936"})
     @Description("Find connections for a customer matching a specified query.")
@@ -50,10 +38,10 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static List<Connection> getConnections() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ConnectionsItemsResponse> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
     }
@@ -88,10 +76,10 @@ public class ConnectionsTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.PATCH_CONNECTIONS_BY_ID, Connection.class)
                 .inlineVariables(postConnection().getIdentity())
-                .body("connection", connectionRequest);
+                .body("connection", connectionRequest)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).patch();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+        HTTPRequest.build(requestEntity).patch();
     }
 
     private static Connection postConnection() {
@@ -109,10 +97,10 @@ public class ConnectionsTest extends SDSTestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
-                .body("connection", connectionRequest);
+                .body("connection", connectionRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<Connection> response = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
         connectionsToDelete.add(response.getResponseEntity().getIdentity());
 
@@ -138,10 +126,10 @@ public class ConnectionsTest extends SDSTestUtil {
     private static String deleteConnection(String identityToDelete) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
-                .inlineVariables(identityToDelete);
+                .inlineVariables(identityToDelete)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).delete();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, response.getStatusCode());
+        HTTPRequest.build(requestEntity).delete();
 
         connectionsToDelete.remove(identityToDelete);
 

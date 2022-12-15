@@ -22,10 +22,10 @@ public class UserPreferencesUtil extends TestUtil {
      */
     protected static List<UserPreferencesResponse> getUserPreferences() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CisAPIEnum.USERS_CURRENT_PREFERENCES, UserPreferencesItemsResponse.class);
+            RequestEntityUtil.init(CisAPIEnum.USERS_CURRENT_PREFERENCES, UserPreferencesItemsResponse.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<UserPreferencesItemsResponse> getAllResponses = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllResponses.getStatusCode());
 
         return getAllResponses.getResponseEntity().getItems();
     }

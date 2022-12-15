@@ -23,10 +23,32 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     //SCENARIOS
     COMPONENT_SCENARIOS("components/%s/scenarios"),
     COMPONENT_SCENARIO("components/%s/scenarios/%s"),
+    COMPONENT_SCENARIO_USERS("components/%s/scenarios/%s/users"),
 
+    //SCENARIO_DISCUSSIONS
+    SCENARIO_DISCUSSIONS("scenario-discussions"),
+    SCENARIO_DISCUSSIONS_FILTER("scenario-discussions/filter"),
+    SCENARIO_DISCUSSION("scenario-discussions/%s"),
+    SCENARIO_DISCUSSION_COMMENTS("scenario-discussions/%s/comments"),
+    SCENARIO_DISCUSSION_COMMENT("scenario-discussions/%s/comments/%s"),
 
     //ITERATIONS
-    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest");
+    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest"),
+
+    //PARTICIPANTS
+    PARTICIPANTS("participants"),
+
+    //LAYOUTS AND VIEW ELEMENTS
+    LAYOUTS("layouts"),
+    LAYOUT(LAYOUTS.getEndpointString().concat("/%s")),
+    LAYOUT_VIEW_ELEMENTS(LAYOUT.getEndpointString().concat("/view-elements")),
+    LAYOUT_VIEW_ELEMENT(LAYOUT_VIEW_ELEMENTS.getEndpointString().concat("/%s")),
+
+    VIEW_ELEMENTS("view-elements"),
+    VIEW_ELEMENT(VIEW_ELEMENTS.getEndpointString().concat("/%s")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATIONS(VIEW_ELEMENT.getEndpointString().concat("/layout-configurations")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATION(VIEW_ELEMENT_LAYOUT_CONFIGURATIONS.getEndpointString().concat("/%s")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE(VIEW_ELEMENT_LAYOUT_CONFIGURATION.getEndpointString().concat("/share"));
 
     private final String endpoint;
 
