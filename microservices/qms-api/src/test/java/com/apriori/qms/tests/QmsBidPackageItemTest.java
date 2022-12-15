@@ -26,8 +26,8 @@ import org.junit.Test;
 public class QmsBidPackageItemTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
-    private static ResponseWrapper<BidPackageItemResponse> bidPackageItemResponse;
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageItemResponse bidPackageItemResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
@@ -43,7 +43,7 @@ public class QmsBidPackageItemTest extends TestUtil {
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
     }
@@ -53,17 +53,17 @@ public class QmsBidPackageItemTest extends TestUtil {
     @Description("Create and delete Bid Package Item")
     public void createAndDeleteBidPackageItem() {
 
-        QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(), currentUser);
 
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
-        softAssertions.assertThat(bidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(bidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -76,47 +76,47 @@ public class QmsBidPackageItemTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<BidPackageItemResponse> updateBidPackageItemResponse = QmsBidPackageResources.updateBidPackageItem(
+        BidPackageItemResponse updateBidPackageItemResponse = QmsBidPackageResources.updateBidPackageItem(
             bidPackageItemRequestBuilder,
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13765"})
     @Description("Get Bid Package Item")
     public void getBidPackageItem() {
-        ResponseWrapper<BidPackageItemResponse> updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItem(
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(),
+        BidPackageItemResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItem(
+            bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13763", "13764"})
     @Description("Find list of  Bid Package Items and verify pagination")
     public void getBidPackageItems() {
-        ResponseWrapper<BidPackageItemsResponse> updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItems(
-            bidPackageResponse.getResponseEntity().getIdentity(),
+        BidPackageItemsResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItems(
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemsResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getIsFirstPage()).isTrue();
+        softAssertions.assertThat(updateBidPackageItemResponse.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(updateBidPackageItemResponse.getIsFirstPage()).isTrue();
     }
 
     @After
     public void testCleanup() {
-        QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

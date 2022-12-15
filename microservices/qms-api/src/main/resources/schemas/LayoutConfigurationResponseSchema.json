@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "configuration": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shareable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "configuration",
+        "name",
+        "shareable"
+      ],
+      "optional": [
+        "identity",
+        "customerIdentity"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}
