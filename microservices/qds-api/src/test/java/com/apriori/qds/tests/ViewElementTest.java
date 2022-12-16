@@ -29,8 +29,8 @@ public class ViewElementTest extends TestUtil {
 
     private static String viewElementName;
     private static String layoutIdentity;
-    private static ResponseWrapper<ViewElementResponse> viewElementResponse;
-    private static ResponseWrapper<LayoutResponse> layoutResponse;
+    private static ViewElementResponse viewElementResponse;
+    private static LayoutResponse layoutResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static String userContext;
@@ -44,54 +44,54 @@ public class ViewElementTest extends TestUtil {
         layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
-        viewElementResponse = LayoutResources.createLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(), viewElementName, currentUser);
+        viewElementResponse = LayoutResources.createLayoutViewElement(layoutResponse.getIdentity(), viewElementName, currentUser);
 
     }
 
     @Test
     public void createLayoutViewElements() {
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
+        softAssertions.assertThat(viewElementResponse.getName()).isNotNull();
     }
 
     @Test
     public void updateLayoutViewElements() {
         ViewElementRequest viewElementRequest = ViewElementRequest.builder()
             .viewElement(ViewElementRequestParameters.builder()
-                .name(viewElementResponse.getResponseEntity().getName())
+                .name(viewElementResponse.getName())
                 .configuration(ViewElementRequestConfig.builder()
                     .foo("Test")
                     .build())
                 .build())
             .build();
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, ViewElementsResponse.class)
-            .inlineVariables(viewElementResponse.getResponseEntity().getIdentity())
+            .inlineVariables(viewElementResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        viewElementResponse = HTTPRequest.build(requestEntity).patch();
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
+        viewElementResponse = (ViewElementResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        softAssertions.assertThat(viewElementResponse.getName()).isNotNull();
     }
 
     @Test
     public void getLayoutViewElements() {
 
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementsResponse.class)
-            .inlineVariables(layoutResponse.getResponseEntity().getIdentity())
+            .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        viewElementResponse = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(viewElementResponse.getResponseEntity().getName()).isNotNull();
+        viewElementResponse = (ViewElementResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        softAssertions.assertThat(viewElementResponse.getName()).isNotNull();
     }
 
     @After
     public void testCleanup() {
-        LayoutResources.deleteLayoutViewElement(layoutResponse.getResponseEntity().getIdentity(),
-            viewElementResponse.getResponseEntity().getIdentity(), userContext);
-        LayoutResources.deleteLayout(layoutResponse.getResponseEntity().getIdentity(), userContext);
+        LayoutResources.deleteLayoutViewElement(layoutResponse.getIdentity(),
+            viewElementResponse.getIdentity(), userContext);
+        LayoutResources.deleteLayout(layoutResponse.getIdentity(), userContext);
         softAssertions.assertAll();
     }
 }

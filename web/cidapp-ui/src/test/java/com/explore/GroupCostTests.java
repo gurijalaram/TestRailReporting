@@ -77,7 +77,7 @@ public class GroupCostTests extends TestBase {
             .enterAnnualVolume("6000")
             .openMaterialSelectorTable()
             .search("1050A")
-            .selectMaterial("Aluminum, Stock, ANSI 1050A")
+            .selectMaterial("Aluminum, ANSI 1050A")
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)

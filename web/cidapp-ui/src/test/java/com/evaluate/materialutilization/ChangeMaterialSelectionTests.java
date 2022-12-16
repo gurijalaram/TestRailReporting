@@ -60,25 +60,24 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("270")
-            .selectMaterial("Brass, Cast, Yellow 270")
+            .selectMaterial("Brass, Yellow 270")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Yellow 270")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6187"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
@@ -94,19 +93,19 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("C28000")
-            .selectMaterial("Copper, Cast, UNS C28000")
+            .selectMaterial("Copper, UNS C28000")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, UNS C28000")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -145,7 +144,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6189"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
@@ -203,7 +201,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Polyetheretherketone (PEEK)")
+            .selectMaterial("Polyetheretherketone, PEEK")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -214,13 +212,12 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 
-        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)")).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone, PEEK")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6191"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
@@ -241,11 +238,11 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .costScenario()
             .openMaterialSelectorTable()
             .search("PEEK")
-            .selectMaterial("Polyetheretherketone (PEEK)")
+            .selectMaterial("Polyetheretherketone, PEEK")
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
+        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone, PEEK"), is(true));
     }
 
     @Test
@@ -371,7 +368,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .openMaterialSelectorTable()
             .search("316")
-            .selectMaterial("Stainless Steel, Stock, AISI 316")
+            .selectMaterial("Stainless Steel, AISI 316")
             .cancel(EvaluatePage.class)
             .costScenario();
 

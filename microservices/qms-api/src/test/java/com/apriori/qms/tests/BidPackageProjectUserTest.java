@@ -10,7 +10,6 @@ import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -24,9 +23,9 @@ import org.junit.Test;
 public class BidPackageProjectUserTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
-    private static ResponseWrapper<BidPackageProjectResponse> bidPackageProjectResponse;
-    private static ResponseWrapper<BidPackageProjectUserResponse> bidPackageProjectUserResponse;
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageProjectResponse bidPackageProjectResponse;
+    private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String projectName;
@@ -37,10 +36,10 @@ public class BidPackageProjectUserTest extends TestUtil {
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), currentUser);
         UserCredentials newUser = UserUtil.getUser();
         bidPackageProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), newUser);
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newUser);
     }
 
     @Test
@@ -48,13 +47,13 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
         UserCredentials defaultUser = UserUtil.getUser();
-        ResponseWrapper<BidPackageProjectUserResponse> bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), defaultUser);
-        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        BidPackageProjectUserResponse bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
+        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageDefaultProjectUserResponse.getResponseEntity().getIdentity(),
+        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageDefaultProjectUserResponse.getIdentity(),
             defaultUser);
     }
 
@@ -63,14 +62,14 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
         UserCredentials adminUser = UserUtil.getUser();
-        ResponseWrapper<BidPackageProjectUserResponse> bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN",
-            bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), adminUser);
+        BidPackageProjectUserResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN",
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 
-        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageAdminProjectUserResponse.getResponseEntity().getIdentity(),
+        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageAdminProjectUserResponse.getIdentity(),
             adminUser);
     }
 
@@ -78,57 +77,57 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"13793"})
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
-        ResponseWrapper<BidPackageProjectUserResponse> getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUserResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(getBidPackageProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13790"})
     @Description("find all bid package project users")
     public void getBidPackageProjectUsers() {
-        ResponseWrapper<BidPackageProjectUsersResponse> getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUsersResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
             currentUser, BidPackageProjectUsersResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectUserResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(getBidPackageProjectUserResponse.getItems().size()).isGreaterThan(0);
     }
 
     @Test
     @TestRail(testCaseId = {"13786"})
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
-        ResponseWrapper<BidPackageProjectUserResponse> updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser("ADMIN",
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        BidPackageProjectUserResponse updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser("ADMIN",
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageProjectUserResponse.getResponseEntity().getRole()).isEqualTo("ADMIN");
+        softAssertions.assertThat(updateBidPackageProjectUserResponse.getRole()).isEqualTo("ADMIN");
     }
 
     @Test
     @TestRail(testCaseId = {"14224", "14225", "14236"})
     @Description("Get list of possible users, pagination and validate json response schema")
     public void getParticipants() {
-        ResponseWrapper<ParticipantsResponse> participantsResponse = QmsBidPackageResources.getParticipants(currentUser);
+        ParticipantsResponse participantsResponse = QmsBidPackageResources.getParticipants(currentUser);
 
-        softAssertions.assertThat(participantsResponse.getResponseEntity().getIsFirstPage()).isTrue();
-        softAssertions.assertThat(participantsResponse.getResponseEntity().getPageNumber()).isEqualTo(1);
-        softAssertions.assertThat(participantsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(participantsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(participantsResponse.getPageNumber()).isEqualTo(1);
+        softAssertions.assertThat(participantsResponse.getItems().size()).isGreaterThan(0);
     }
     
     @After
     public void testCleanup() {
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectResponse.getResponseEntity().getIdentity(),
-            bidPackageProjectUserResponse.getResponseEntity().getIdentity(),
+        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageProjectUserResponse.getIdentity(),
             currentUser);
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getResponseEntity().getIdentity(), bidPackageProjectResponse.getResponseEntity().getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(),null,HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

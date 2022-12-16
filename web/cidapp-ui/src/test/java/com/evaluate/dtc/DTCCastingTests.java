@@ -68,7 +68,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario(8);
 
@@ -232,7 +232,7 @@ public class DTCCastingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial("Aluminum, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
             .costScenario()

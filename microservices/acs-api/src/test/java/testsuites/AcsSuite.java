@@ -13,6 +13,7 @@ import tests.acs.AvailableRoutingsTests;
 import tests.acs.CreateMissingScenarioTests;
 import tests.acs.DisplayUnitsTests;
 import tests.acs.EnabledCurrencyRateVersionsTests;
+import tests.acs.LoadCadFileTests;
 import tests.acs.PartPrimaryProcessGroupsTests;
 import tests.acs.ProductionDefaultsTests;
 import tests.acs.ProductionInfoTests;
@@ -44,7 +45,8 @@ import tests.acs.UserPreferencesTests;
     UserPreferencesTests.class,
     UnitVariantSettingsTests.class,
     TwoDImageByScenarioIterationKeyTests.class,
-    RoutingSelectionTests.class
+    RoutingSelectionTests.class,
+    LoadCadFileTests.class
 })
 
 public class AcsSuite {

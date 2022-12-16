@@ -7,16 +7,19 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -56,8 +59,10 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UpdateCadFilePage updateCadFilePage;
 
     public ActionsTests() {
         super();
@@ -313,7 +318,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -353,7 +358,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -394,7 +399,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -418,7 +423,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187", "7271", "6199", "6339"})
+    @TestRail(testCaseId = {"7187", "7271", "6199", "6339", "5438"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -754,7 +759,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -861,5 +866,31 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5440"})
+    @Description("User can not update the 3D CAD with a differently named 3D CAD file")
+    public void updateWithDifferentCADFile() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName = "Bishop";
+        final String extension = ".SLDPRT";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String componentName2 = "Machined Box AMERICAS";
+        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension);
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        updateCadFilePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
+            .updateCadFile(resourceFile2);
+
+        final String expectedError = "The supplied CAD file (" + componentName2 + extension + ") cannot be used for this scenario. The name of the file must be " + componentName + extension;
+        assertThat(updateCadFilePage.getFileInputError(), containsString(expectedError));
     }
 }

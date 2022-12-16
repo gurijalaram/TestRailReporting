@@ -30,7 +30,7 @@ import org.junit.Test;
 public class BidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
+    private static BidPackageResponse bidPackageResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
@@ -47,7 +47,7 @@ public class BidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13312"})
     @Description("Create Bid Package")
     public void createBidPackage() {
-        softAssertions.assertThat(bidPackageResponse.getResponseEntity().getName()).isEqualTo(bidPackageName);
+        softAssertions.assertThat(bidPackageResponse.getName()).isEqualTo(bidPackageName);
     }
 
     @Test
@@ -261,11 +261,11 @@ public class BidPackageTest extends TestUtil {
     @Description("Updated existing Bid Package status")
     public void updateBidPackageStatus() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
-                    .name(bidPackageResponse.getResponseEntity().getName())
-                    .description(bidPackageResponse.getResponseEntity().getDescription())
+                    .name(bidPackageResponse.getName())
+                    .description(bidPackageResponse.getDescription())
                     .status("ASSIGNED")
                     .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                     .build())
@@ -285,12 +285,12 @@ public class BidPackageTest extends TestUtil {
     public void updateBidPackageDescription() {
         String bpDesc = RandomStringUtils.randomAlphabetic(15);
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
-                    .name(bidPackageResponse.getResponseEntity().getName())
+                    .name(bidPackageResponse.getName())
                     .description(bpDesc)
-                    .status(bidPackageResponse.getResponseEntity().getStatus())
+                    .status(bidPackageResponse.getStatus())
                     .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                     .build())
                 .build())
@@ -309,12 +309,12 @@ public class BidPackageTest extends TestUtil {
     public void updateBidPackageAssigned() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
                     .name(RandomStringUtils.randomAlphabetic(10))
-                    .description(bidPackageResponse.getResponseEntity().getDescription())
-                    .status(bidPackageResponse.getResponseEntity().getStatus())
+                    .description(bidPackageResponse.getDescription())
+                    .status(bidPackageResponse.getStatus())
                     .assignedTo(userIdentity)
                     .build())
                 .build())
@@ -367,7 +367,7 @@ public class BidPackageTest extends TestUtil {
     public void getBidPackage() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
-            .inlineVariables(bidPackageResponse.getResponseEntity().getIdentity())
+            .inlineVariables(bidPackageResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(otherUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -394,7 +394,7 @@ public class BidPackageTest extends TestUtil {
 
     @After
     public void testCleanup() {
-        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(deleteBidResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
         softAssertions.assertAll();
     }
