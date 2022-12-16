@@ -23,6 +23,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
@@ -90,7 +91,7 @@ public class SettingsTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS, Plating")
+            .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
             .inputAnnualVolume("3000")
             .inputYears("7")
@@ -267,7 +268,7 @@ public class SettingsTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .openMaterialSelectorTable()
-            .selectMaterial("HIPS Extrusion")
+            .selectMaterial(MaterialNameEnum.HIPS_EXTRUSION.getMaterialName())
             .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .openSettings()
@@ -295,7 +296,7 @@ public class SettingsTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005 Sponge")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005_SPONGE.getMaterialName())
             .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .logout()
@@ -458,7 +459,7 @@ public class SettingsTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 

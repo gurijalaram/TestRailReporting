@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -58,7 +59,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(5)
             .openDesignGuidance()
@@ -69,7 +70,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
             .search("Nylon, Type 6")
-            .selectMaterial("Nylon, Type 6")
+            .selectMaterial(MaterialNameEnum.NYLON_TYPE_6.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -132,7 +133,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -159,7 +160,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -228,7 +229,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -253,7 +254,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -286,7 +287,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -296,7 +297,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()

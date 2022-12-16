@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -78,7 +79,7 @@ public class DecimalPlaceTests extends TestBase {
                 .selectDigitalFactory(APRIORI_USA)
                 .openMaterialSelectorTable()
                 .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
+                .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
                 .submit(EvaluatePage.class)
                 .costScenario();
 
