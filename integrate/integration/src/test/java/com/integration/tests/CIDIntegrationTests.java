@@ -23,6 +23,7 @@ import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -114,7 +115,7 @@ public class CIDIntegrationTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS, Plating")
+            .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
             .inputAnnualVolume("3000")
             .inputYears("7")
