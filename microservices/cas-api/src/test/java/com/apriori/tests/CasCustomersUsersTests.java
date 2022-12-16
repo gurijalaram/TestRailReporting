@@ -8,20 +8,35 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CasCustomersUsersTests {
+    private static final Logger logger = LoggerFactory.getLogger(CasCustomersUsersTests.class);
     private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -100,19 +115,57 @@ public class CasCustomersUsersTests {
         CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
     }
 
+    private List<String[]> getFileContent(InputStream response, String filename) {
+        File file = FileResourceUtil.copyIntoTempFile(response, null, filename);
+        List<String[]> fileData = null;
+        try {
+            FileReader fileReader = new FileReader(file);
+            CSVReader csvReader = new CSVReaderBuilder(fileReader)
+                .build();
+            fileData = csvReader.readAll();
+            fileReader.close();
+            csvReader.close();
+        } catch (Exception e) {
+            logger.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
+        }
+        return fileData;
+    }
+
     @Test
-    @TestRail(testCaseId = {"16378", "16379"})
-    @Description("Export users template and export customer users")
-    public void exportUsers() {
-        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
-        String userName = user.getResponseEntity().getUsername();
+    @TestRail(testCaseId = {"16379"})
+    @Description("Export users template")
+    public void exportUsersTemplate() {
+        List<String> headers = Arrays.asList(
+            "loginID", "email", "firstName", "lastName", "fullName", "isAdmin", "isVPEAdmin", "isJasperAdmin", "AppStream", "ReportUser", "defaultPassword", "resetPassword",
+            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "roles", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
+            "department", "city/town", "state/province", "county", "countryCode", "timezone"
+        );
 
         ResponseWrapper<String> template = casTestUtil.getCommonRequest(CASAPIEnum.EXPORT_TEMPLATE, null, HttpStatus.SC_OK, customerIdentity);
-        soft.assertThat(template).isNotNull();
+        InputStream responseTemplate = new ByteArrayInputStream(template.getBody().getBytes(StandardCharsets.UTF_8));
+        List<String[]> templateData = getFileContent(responseTemplate, "template.csv");
 
-        ResponseWrapper<String> usersExport = casTestUtil.getCommonRequest(CASAPIEnum.EXPORT_USERS, null, HttpStatus.SC_OK, customerIdentity);
-        soft.assertThat(usersExport).isNotNull();
-        soft.assertThat(usersExport.getBody()).contains(userName);
+        soft.assertThat(Arrays.stream(templateData.get(0)).collect(Collectors.toList())).isEqualTo(headers);
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"16378"})
+    @Description("Export customer users")
+    public void exportCustomerUsers() {
+        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
+        String cloudRef = newCustomer.getCloudReference();
+        String userName = user.getResponseEntity().getUsername();
+
+        ResponseWrapper<String> users = casTestUtil.getCommonRequest(CASAPIEnum.EXPORT_USERS, null, HttpStatus.SC_OK, customerIdentity);
+        InputStream usersResponse = new ByteArrayInputStream(users.getBody().getBytes(StandardCharsets.UTF_8));
+        List<String[]> usersData = getFileContent(usersResponse, "users.csv");
+
+        soft.assertThat(Arrays.stream(usersData.get(1)).anyMatch(x -> x.contains(cloudRef + ".service-account.1"))).isTrue();
+        soft.assertThat(Arrays.stream(usersData.get(2)).anyMatch(x -> x.contains(cloudRef + ".service-account.2"))).isTrue();
+        soft.assertThat(Arrays.stream(usersData.get(3)).anyMatch(x -> x.contains(cloudRef + ".service-account.3"))).isTrue();
+        soft.assertThat(Arrays.stream(usersData.get(4)).anyMatch(x -> x.contains(cloudRef + ".service-account.4"))).isTrue();
+        soft.assertThat(Arrays.stream(usersData.get(5)).anyMatch(x -> x.contains(userName))).isTrue();
         soft.assertAll();
     }
 }
