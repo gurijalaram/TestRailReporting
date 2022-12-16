@@ -1,5 +1,8 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
@@ -1017,5 +1020,32 @@ public class SecondaryProcessTests extends TestBase {
         softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("[Other Secondary Processes] Xray Inspection");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9106"})
+    @Description("Check that Powder Coat Conveyor is available in Surface Treatment")
+    public void secondaryProcessPowderCoatConveyor() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        advancedPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Paint, Conveyor Processes")
+            .selectSecondaryProcess("Powder Coat Conveyor")
+            .submit(EvaluateToolbar.class)
+            .costScenario()
+            .goToAdvancedTab();
+
+        assertThat(advancedPage.getSecondaryProcesses(), hasItem("[Surface Treatment] Powder Coat Conveyor"));
     }
 }
