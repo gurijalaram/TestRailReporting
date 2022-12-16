@@ -17,7 +17,7 @@ import java.util.ArrayList;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorMessage {
+public class QmsErrorMessage {
     private String timestamp;
     private Integer status;
     private String method;

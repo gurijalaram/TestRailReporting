@@ -127,7 +127,7 @@ public class BidPackageProjectUserTest extends TestUtil {
             bidPackageProjectUserResponse.getIdentity(),
             currentUser);
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(),null,HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

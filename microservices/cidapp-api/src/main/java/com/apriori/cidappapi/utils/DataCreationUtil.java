@@ -11,6 +11,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.io.File;
+import java.util.Optional;
 
 public class DataCreationUtil {
 
@@ -45,8 +46,8 @@ public class DataCreationUtil {
      *
      * @return response object
      */
-    public ScenarioItem createComponent() {
-        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder).getScenarioItem();
+    public ComponentInfoBuilder createComponent() {
+        return scenariosUtil.getComponentsUtil().postComponentQueryCSSUncosted(this.componentBuilder);
     }
 
     /**
@@ -54,11 +55,16 @@ public class DataCreationUtil {
      *
      * @return response object
      */
-    public ScenarioItem searchCreateComponent() {
-        if (cssComponent.getBaseCssComponents(this.userCredentials, COMPONENT_NAME_EQ.getKey() + this.componentName, SCENARIO_NAME_EQ.getKey() + this.scenarioName).size() < 1) {
-            return createComponent();
+    public ComponentInfoBuilder searchCreateComponent() {
+        Optional<ScenarioItem> scenarioItem = cssComponent.getBaseCssComponents(this.userCredentials, COMPONENT_NAME_EQ.getKey() + this.componentName, SCENARIO_NAME_EQ.getKey() + this.scenarioName)
+            .stream().findFirst();
+
+        if (scenarioItem.isPresent()) {
+            this.componentBuilder.setComponentIdentity(scenarioItem.get().getComponentIdentity());
+            this.componentBuilder.setScenarioIdentity(scenarioItem.get().getScenarioIdentity());
+            return componentBuilder;
         }
-        return cssComponent.findFirst(this.componentName, this.scenarioName, this.userCredentials);
+        return createComponent();
     }
 
     /**
@@ -67,13 +73,13 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioResponse createPublishComponent() {
-        ScenarioItem scenarioItem = createComponent();
+        ComponentInfoBuilder component = createComponent();
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
             .componentName(this.componentBuilder.getComponentName())
             .scenarioName(this.componentBuilder.getScenarioName())
-            .componentIdentity(scenarioItem.getComponentIdentity())
-            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .componentIdentity(component.getComponentIdentity())
+            .scenarioIdentity(component.getScenarioIdentity())
             .user(this.componentBuilder.getUser())
             .build();
 
@@ -97,15 +103,15 @@ public class DataCreationUtil {
      * @return response object
      */
     public ScenarioResponse createCostPublishComponent() {
-        ScenarioItem scenarioItem = createComponent();
+        ComponentInfoBuilder component = createComponent();
 
         scenariosUtil.postCostScenario(this.componentBuilder);
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
             .componentName(this.componentBuilder.getComponentName())
             .scenarioName(this.componentBuilder.getScenarioName())
-            .componentIdentity(scenarioItem.getComponentIdentity())
-            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .componentIdentity(component.getComponentIdentity())
+            .scenarioIdentity(component.getScenarioIdentity())
             .user(this.componentBuilder.getUser())
             .build();
 

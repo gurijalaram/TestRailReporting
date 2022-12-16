@@ -8,13 +8,13 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -49,13 +49,12 @@ public class FilterCriteriaTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private File resourceFile;
-    private ComponentsTablePage componentsTablePage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
     private FilterPage filterPage;
     private SoftAssertions softAssertion = new SoftAssertions();
-    private DisplayPreferencesPage displayPreferencesPage;
+    private CssComponent cssComponent = new CssComponent();
 
     public FilterCriteriaTests() {
         super();
@@ -277,7 +276,7 @@ public class FilterCriteriaTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        ScenarioItem scenarioCreated = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .publishScenario(PublishPage.class)
@@ -289,7 +288,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
@@ -298,10 +297,10 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .newFilter()
             .inputName(filterName2)
-            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cidComponentItem.getScenarioItem().getScenarioCreatedAt())
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, scenarioCreated.getScenarioCreatedAt())
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
