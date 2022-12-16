@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
+import com.apriori.pageobjects.navtoolbars.ScenarioPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -36,6 +37,7 @@ public class NewScenarioNameTests extends TestBase {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private ScenarioPage scenarioPage;
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -134,5 +136,26 @@ public class NewScenarioNameTests extends TestBase {
         softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC)).isEqualTo(1);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5425"})
+    @Description("Failure to create a new scenario that is named identical to existing scenario")
+    public void usingAnExistingScenarioName() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        scenarioPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .createScenario()
+            .enterScenarioName(scenarioName)
+            .submit(ScenarioPage.class);
+
+        assertThat(scenarioPage.getErrorMessage(), is("Must be unique."));
     }
 }

@@ -3,11 +3,14 @@ package com.settings;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -28,6 +31,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class DecimalPlaceTests extends TestBase {
     File resourceFile;
@@ -36,6 +41,10 @@ public class DecimalPlaceTests extends TestBase {
     private UserCredentials currentUser;
     private MaterialProcessPage materialProcessPage;
     private CostDetailsPage costDetailsPage;
+    private PreviewPage previewPage;
+    private ExplorePage explorePage;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public DecimalPlaceTests() {
         super();
@@ -162,6 +171,84 @@ public class DecimalPlaceTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(00.00000), Offset.offset(15.0));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5293"})
+    @Description("Ensure number of decimal places is respected in Preview Panel")
+    public void decimalPlacesInPreviewPanel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        previewPage = loginPage.login(currentUser)
+            .openSettings()
+            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickExplore()
+            .highlightScenario(componentName, scenarioName)
+            .openPreviewPanel();
+
+        softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
+        softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
+        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5294"})
+    @Description("Ensure number of decimal places is respected in Assemblies")
+    public void decimalPlacesForAssembly() {
+        final String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
+        final String subComponentExtension = ".CATPart";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .openSettings()
+            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
+            .submit(ExplorePage.class)
+            .openScenario(assemblyName, scenarioName);
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Assembly Process Cost")).isCloseTo(Double.valueOf(1.439584), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Cost")).isCloseTo(Double.valueOf(25.392278), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Investments")).isCloseTo(Double.valueOf(1065.994403), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(2.456686), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Assembly Time")).isCloseTo(Double.valueOf(110.000000), Offset.offset(15.0));
 
         softAssertions.assertAll();
     }

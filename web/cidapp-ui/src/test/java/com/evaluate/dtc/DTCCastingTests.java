@@ -217,7 +217,7 @@ public class DTCCastingTests extends TestBase {
 
     @Test
     @Issue("BA-2313")
-    @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
+    @TestRail(testCaseId = {"6385", "6393", "6394", "8333", "6469"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -228,7 +228,7 @@ public class DTCCastingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -236,8 +236,11 @@ public class DTCCastingTests extends TestBase {
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
+
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
