@@ -1,11 +1,7 @@
 package com.evaluate;
 
-import static io.netty.util.internal.SystemPropertyUtil.contains;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.containsString;
-
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
