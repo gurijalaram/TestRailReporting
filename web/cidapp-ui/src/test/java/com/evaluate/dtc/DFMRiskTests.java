@@ -237,6 +237,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -281,6 +282,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -326,6 +328,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -369,6 +372,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -411,6 +415,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -449,6 +454,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
