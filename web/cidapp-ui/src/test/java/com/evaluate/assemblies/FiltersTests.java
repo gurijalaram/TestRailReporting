@@ -707,9 +707,8 @@ public class FiltersTests extends TestBase {
             .clickApplyAndCost(SetInputStatusPage.class)
             .close(ComponentsTreePage.class)
             .closePanel()
-            .clickExplore();
-        
-        explorePage = explorePage.openScenario(assemblyName, scenarioName3)
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName3)
             .openComponents()
             .selectCheckAllBox()
             .setInputs()
