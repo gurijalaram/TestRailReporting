@@ -4,7 +4,6 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientState;
-import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -85,7 +84,6 @@ public class ScenariosUtil {
 
                 if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation.getResponseEntity();
                 }
 
@@ -129,7 +127,6 @@ public class ScenariosUtil {
 
                 if (scenarioResponse.isPresent() && scenarioResponse.get().getScenarioState().equalsIgnoreCase(scenarioState.getState())) {
 
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation.getResponseEntity();
                 }
 
@@ -172,7 +169,6 @@ public class ScenariosUtil {
                     scenarioResponse.get().getLastAction().equals(lastAction) &&
                     scenarioResponse.get().getPublished() == published) {
 
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation.getResponseEntity();
                 }
 
