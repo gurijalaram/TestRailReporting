@@ -630,7 +630,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10896", "10898", "5619"})
+    @TestRail(testCaseId = {"10896", "10898", "5619", "5428"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
