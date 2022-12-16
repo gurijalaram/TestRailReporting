@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.acs.tolerancepolicydefaults;
+package com.apriori.acs.entity.response.acs.allmaterialstocksinfo;
 
 import com.apriori.acs.entity.response.acs.genericclasses.GenericPropertyInfoItem;
 import lombok.Data;
