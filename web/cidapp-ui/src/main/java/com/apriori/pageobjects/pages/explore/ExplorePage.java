@@ -100,7 +100,7 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
-        return this;
+        return new ExplorePage(driver);
     }
 
     /**

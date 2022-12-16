@@ -652,6 +652,8 @@ public class FiltersTests extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
 
+        final LocalDateTime testStart = LocalDateTime.now();
+
         SoftAssertions soft = new SoftAssertions();
 
         currentUser = UserUtil.getUser();
@@ -735,7 +737,8 @@ public class FiltersTests extends TestBase {
             componentsTreePage.checkSubcomponentState(componentAssembly3, subComponent);
         }
 
-        explorePage = evaluatePage.goToAdvancedTab()
+        explorePage = evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToMachiningTab()
             .expandSecondaryProcessTree("Deburr")
@@ -747,6 +750,7 @@ public class FiltersTests extends TestBase {
             .filter()
             .newFilter()
             .inputName(filterName)
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, testStart)
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, assemblyName.substring(0, 5))
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "AutoScenario")
             .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
