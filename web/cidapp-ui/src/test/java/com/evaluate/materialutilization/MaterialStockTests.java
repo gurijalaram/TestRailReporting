@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -54,7 +55,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
@@ -65,13 +66,13 @@ public class MaterialStockTests extends TestBase {
 
         materialUtilizationPage.closePanel()
             .openMaterialSelectorTable()
-            .selectMaterial("FN-0205")
+            .selectMaterial(MaterialNameEnum.STEEL_FN025.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .openMaterialUtilizationTab();
 
-        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Name")).isEqualTo("FN-0205");
+        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Name")).isEqualTo(MaterialNameEnum.STEEL_FN025.getMaterialName());
         softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code")).isEqualTo("2.1");
 
         softAssertions.assertAll();
@@ -141,7 +142,7 @@ public class MaterialStockTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
@@ -154,7 +155,7 @@ public class MaterialStockTests extends TestBase {
             .selectProcessGroup(FORGING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()

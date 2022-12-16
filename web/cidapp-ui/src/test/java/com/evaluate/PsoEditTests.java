@@ -12,6 +12,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -349,7 +350,7 @@ public class PsoEditTests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .openMaterialSelectorTable()
             .search("ABS")
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
