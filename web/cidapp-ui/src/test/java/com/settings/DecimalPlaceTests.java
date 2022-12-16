@@ -15,7 +15,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -214,21 +213,15 @@ public class DecimalPlaceTests extends TestBase {
     @TestRail(testCaseId = {"5294"})
     @Description("Ensure number of decimal places is respected in Assemblies")
     public void decimalPlacesForAssembly() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        final String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
+        final String subComponentExtension = ".CATPart";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .openSettings()
-            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
-            .submit(ExplorePage.class);
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -241,20 +234,21 @@ public class DecimalPlaceTests extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
-        evaluatePage = explorePage.refresh()
-            .openScenario(assemblyName, scenarioName)
-            .selectDigitalFactory(APRIORI_USA)
-            .costScenario();
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .openSettings()
+            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
+            .submit(ExplorePage.class)
+            .openScenario(assemblyName, scenarioName);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Assembly Process Cost")).isCloseTo(Double.valueOf(0.523424), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Cost")).isCloseTo(Double.valueOf(0.523424), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Investments")).isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Assembly Time")).isCloseTo(Double.valueOf(40.000000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Assembly Process Cost")).isCloseTo(Double.valueOf(1.439584), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Cost")).isCloseTo(Double.valueOf(25.392278), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Investments")).isCloseTo(Double.valueOf(1065.994403), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(2.456686), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Assembly Time")).isCloseTo(Double.valueOf(110.000000), Offset.offset(15.0));
 
         softAssertions.assertAll();
-
     }
-
 }

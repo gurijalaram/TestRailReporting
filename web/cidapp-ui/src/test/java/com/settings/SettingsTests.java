@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
@@ -30,10 +31,13 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
+import com.utils.ColumnsEnum;
+import com.utils.ComparisonCardEnum;
 import com.utils.CurrencyEnum;
 import com.utils.DecimalPlaceEnum;
 import com.utils.LengthEnum;
 import com.utils.MassEnum;
+import com.utils.SortOrderEnum;
 import com.utils.TimeEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -48,6 +52,7 @@ import java.io.File;
 
 public class SettingsTests extends TestBase {
     private File resourceFile;
+    private File resourceFile2;
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
@@ -58,6 +63,7 @@ public class SettingsTests extends TestBase {
     private AdvancedPage advancedPage;
     private MaterialSelectorPage materialSelectorPage;
     private StockPage stockPage;
+    private ComparePage comparePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @After
@@ -504,7 +510,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6360", "6367"})
+    @TestRail(testCaseId = {"6360", "6361", "6367"})
     @Description("Validate when a user uploads and costs a component their customer choice is shown")
     public void customUnitsAreDisplayedCorrectly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -552,4 +558,44 @@ public class SettingsTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = {"6368"})
+    @Description("Validate when a user changes their unit settings comparison values update")
+    public void customUnitsDisplayedInComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String componentName2 = "Push Pin";
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .costScenario()
+            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .costScenario()
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison()
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .selectMass(MassEnum.GRAM)
+            .selectTime(TimeEnum.MINUTE)
+            .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
+        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60600min");
+        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,995.20620");
+
+        softAssertions.assertAll();
+    }
 }
