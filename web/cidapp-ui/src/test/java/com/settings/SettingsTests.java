@@ -510,55 +510,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6360", "6361", "6367"})
-    @Description("Validate when a user uploads and costs a component their customer choice is shown")
-    public void customUnitsAreDisplayedCorrectly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .selectDigitalFactory(APRIORI_USA)
-            .openMaterialSelectorTable()
-            .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Total Cycle Time")).isCloseTo(Double.valueOf(168.04), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.31), Offset.offset(15.0));
-
-        stockPage = evaluatePage.openMaterialProcess()
-            .openStockTab();
-
-        softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("154.00mm");
-
-        evaluatePage = stockPage.closePanel()
-            .openSettings()
-            .selectUnits(UnitsEnum.CUSTOM)
-            .selectLength(LengthEnum.METER)
-            .selectMass(MassEnum.GRAM)
-            .selectTime(TimeEnum.MINUTE)
-            .submit(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Total Cycle Time")).isCloseTo(Double.valueOf(2.80), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5309.46), Offset.offset(15.0));
-
-        stockPage = evaluatePage.openMaterialProcess()
-            .openStockTab();
-
-        softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("0.15m");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(testCaseId = {"6368"})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
