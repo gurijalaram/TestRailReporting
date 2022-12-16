@@ -54,6 +54,11 @@ public class ScenariosUtil {
 
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final int POLL_TIME = 2;
+    private final int WAIT_TIME = 240;
+    private final int SOCKET_TIMEOUT = 240000;
+    private final long START_TIME = System.currentTimeMillis() / 1000;
+    private final int METHOD_TIMEOUT = 30;
 
     /**
      * GET scenario representation of a part
@@ -64,10 +69,6 @@ public class ScenariosUtil {
     public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
-
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
             do {
@@ -111,10 +112,6 @@ public class ScenariosUtil {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
 
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
         try {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
@@ -157,10 +154,6 @@ public class ScenariosUtil {
     public ScenarioResponse getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final String componentName = componentInfo.getComponentName();
         final String scenarioName = componentInfo.getScenarioName();
-
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
             do {
@@ -214,7 +207,6 @@ public class ScenariosUtil {
      * @return response - A response object
      */
     public ResponseWrapper<Object> getScenarioRepresentationExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
-        final int METHOD_TIMEOUT = 30;
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
         String scenarioId = componentInfo.getScenarioIdentity();
@@ -232,7 +224,6 @@ public class ScenariosUtil {
     }
 
     private ResponseWrapper<ScenarioResponse> scenarioRequestEntity(ComponentInfoBuilder componentInfo) {
-        final int SOCKET_TIMEOUT = 240000;
         String componentId = componentInfo.getComponentIdentity();
         String scenarioId = componentInfo.getScenarioIdentity();
 
@@ -705,10 +696,6 @@ public class ScenariosUtil {
         RequestEntity scenarioRequest =
             genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
 
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
         try {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
@@ -747,10 +734,6 @@ public class ScenariosUtil {
 
         RequestEntity scenarioRequest =
             genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
-
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
             do {
