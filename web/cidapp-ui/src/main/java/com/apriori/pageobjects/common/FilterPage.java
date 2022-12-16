@@ -466,5 +466,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      *
      * @return Boolean value of Save button status
      */
-    public Boolean isSaveEnabled() { return modalDialogController.isSaveEnabled(); }
+    public Boolean isSaveEnabled() {
+        return modalDialogController.isSaveEnabled();
+    }
 }
