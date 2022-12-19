@@ -48,7 +48,7 @@ public class QmsBidPackageTest extends TestUtil {
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, userContext);
+        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
     @Test
@@ -56,12 +56,12 @@ public class QmsBidPackageTest extends TestUtil {
     @Description("Create, Delete and verify Bid Package is deleted")
     public void createDeleteAndVerifyBidPackage() {
         String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        BidPackageResponse createBidPackageResponse = QmsBidPackageResources.createBidPackage(bpName, userContext);
+        BidPackageResponse createBidPackageResponse = QmsBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
-        QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),null,HttpStatus.SC_NO_CONTENT, currentUser);
+        QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
         QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),
-            QmsErrorMessage.class,HttpStatus.SC_NOT_FOUND,currentUser);
+            QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
     }
@@ -376,7 +376,7 @@ public class QmsBidPackageTest extends TestUtil {
         softAssertions.assertThat(getBidPackageResp.getName()).isEqualTo(bidPackageName);
         softAssertions.assertThat(getBidPackageResp.getItems().size()).isGreaterThan(0);
 
-        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(bidProjectName,bidPackageResponse.getIdentity(),currentUser);
+        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(bidProjectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         softAssertions.assertThat(bidPackageProjectResponse.getName()).isEqualTo(bidProjectName);
 
         BidPackageResponse getBidPackageProjectResp = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
