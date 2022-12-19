@@ -758,9 +758,7 @@ public class FiltersTests extends TestBase {
             .submit(ExplorePage.class);
 
         explorePage.selectFilter(filterName);
-
-        List<String> scenarios = explorePage.getAllScenarioComponentName();
-        soft.assertThat(scenarios.size()).as("Number of scenarios displayed").isEqualTo(1);
+        soft.assertThat(explorePage.getAllScenarioComponentName().size()).as("Number of scenarios displayed").isEqualTo(1);
         soft.assertAll();
     }
 }
