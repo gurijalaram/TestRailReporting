@@ -22,6 +22,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -223,7 +224,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -269,7 +270,7 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Unsaturated Polyester, CF50")
+            .selectMaterial(MaterialNameEnum.UNSATURATED_POLYESTER_CF50.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
@@ -431,7 +432,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("ABS");
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName());
 
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
             .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Thermoset", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
@@ -457,7 +458,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Visijet M3 Black")
+            .selectMaterial(MaterialNameEnum.VISIJET_M3_BLACK.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -468,7 +469,7 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Printing / Breakoff");
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Aluminum AlSi10Mg")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -597,7 +598,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -1143,7 +1144,7 @@ public class ProcessRoutingTests extends TestBase {
             .enterAnnualVolume("9999")
             .openMaterialSelectorTable()
             .search("1050A")
-            .selectMaterial("Aluminum, ANSI 1050A")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_1050A.getMaterialName())
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
