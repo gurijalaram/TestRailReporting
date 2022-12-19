@@ -697,7 +697,7 @@ public class FiltersTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly3)
             .uploadAssembly(componentAssembly3);
 
-        explorePage = new CidAppLoginPage(driver).login(currentUser)
+        ComponentsTreePage componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(assemblyName, scenarioName2)
             .openComponents()
             .selectCheckAllBox()
@@ -717,26 +717,28 @@ public class FiltersTests extends TestBase {
             .clickApplyAndCost(SetInputStatusPage.class)
             .close(ComponentsTreePage.class)
             .closePanel()
-            .clickExplore();
-        
-        evaluatePage = explorePage.openScenario(assemblyName, scenarioName2);
-        ComponentsTreePage componentsTreePage = evaluatePage.openComponents();
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName2)
+            .openComponents();
+
         for (String subComponent: subComponentNames) {
             componentsTreePage.checkSubcomponentState(componentAssembly2, subComponent);
         }
 
-        explorePage = evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+        componentsTreePage = componentsTreePage.closePanel()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .clickCostButton()
             .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
-            .clickExplore();
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName3)
+            .openComponents();
 
-        evaluatePage = explorePage.openScenario(assemblyName, scenarioName3);
-        componentsTreePage = evaluatePage.openComponents();
         for (String subComponent: subComponentNames) {
             componentsTreePage.checkSubcomponentState(componentAssembly3, subComponent);
         }
 
-        explorePage = evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+        explorePage = componentsTreePage.closePanel()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToMachiningTab()
