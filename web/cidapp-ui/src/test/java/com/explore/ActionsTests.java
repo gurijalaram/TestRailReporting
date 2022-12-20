@@ -893,4 +893,23 @@ public class ActionsTests extends TestBase {
         final String expectedError = "The supplied CAD file (" + componentName2 + extension + ") cannot be used for this scenario. The name of the file must be " + componentName + extension;
         assertThat(updateCadFilePage.getFileInputError(), containsString(expectedError));
     }
+
+    @Test
+    @TestRail(testCaseId = {"5443"})
+    @Description("Toolbar options are disabled correctly in appropriate contexts")
+    public void buttonsDisabledByDefault() {
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isEditButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isActionsDropdownEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isCostButtonEnabled()).isFalse();
+
+        softAssertions.assertAll();
+    }
 }

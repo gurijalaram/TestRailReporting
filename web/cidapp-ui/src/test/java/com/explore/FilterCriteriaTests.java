@@ -260,7 +260,7 @@ public class FilterCriteriaTests extends TestBase {
     @Test
     @Issue("BA-2610")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6221"})
+    @TestRail(testCaseId = {"6221", "6532"})
     @Description("Test multiple attributes")
     public void testFilterAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
