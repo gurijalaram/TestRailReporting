@@ -103,7 +103,6 @@ public class ScenariosUtil {
         if (Objects.equals(scenarioRepresentation.getScenarioState(), scenarioState.getState())) {
             return scenarioRepresentation;
         }
-
         throw new RuntimeException(String.format("Failed to get the correct state of the component. Expected: '%s' but found '%s'", scenarioState, scenarioRepresentation.getScenarioState()));
     }
 
