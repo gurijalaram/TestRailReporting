@@ -85,7 +85,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo(MaterialNameEnum.ALUMINIUM_ANSI_AL380);
+        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName());
         softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName)).isEqualTo(true);
 
         softAssertions.assertAll();
