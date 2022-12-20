@@ -58,17 +58,17 @@ public class ScenariosUtil {
     private final int METHOD_TIMEOUT = 30;
 
     /**
-     * GET scenario representation of a part
+     * GET completed scenario representation of a part
      *
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenarioRepresentationCompleted(ComponentInfoBuilder componentInfo) {
         try {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ScenarioResponse scenarioRepresentation = getBaseScenarioComponent(componentInfo).getResponseEntity();
+                ScenarioResponse scenarioRepresentation = getScenarioRepresentation(componentInfo).getResponseEntity();
 
                 if (scenarioRepresentation != null &&
 
@@ -91,14 +91,14 @@ public class ScenariosUtil {
     }
 
     /**
-     * GET scenario representation of a part
+     * GET state of scenario representation of a part
      *
      * @param componentInfo - the component info builder object
      * @param scenarioState - the scenario state
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
-        final ScenarioResponse scenarioRepresentation = getScenarioRepresentation(componentInfo);
+    public ScenarioResponse getScenarioRepresentationState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
 
         if (Objects.equals(scenarioRepresentation.getScenarioState(), scenarioState.getState())) {
             return scenarioRepresentation;
@@ -113,7 +113,7 @@ public class ScenariosUtil {
      * @return response object
      */
     public ScenarioResponse getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
-        final ScenarioResponse scenarioRepresentation = getScenarioRepresentation(componentInfo);
+        final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
 
         if (scenarioRepresentation != null &&
             scenarioRepresentation.getLastAction().equals(lastAction) &&
@@ -124,7 +124,13 @@ public class ScenariosUtil {
         throw new RuntimeException("Scenario has not been published");
     }
 
-    private ResponseWrapper<ScenarioResponse> getBaseScenarioComponent(ComponentInfoBuilder componentInfo) {
+    /**
+     * GET scenario representation of a part
+     *
+     * @param componentInfo - the component info builder object
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
@@ -179,7 +185,7 @@ public class ScenariosUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentation(componentInfo);
+        return getScenarioRepresentationCompleted(componentInfo);
     }
 
     /**
