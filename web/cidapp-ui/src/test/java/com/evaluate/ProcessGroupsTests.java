@@ -522,7 +522,7 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Roto and Blow Molding")
-    @TestRail(testCaseId = {"6061"})
+    @TestRail(testCaseId = {"6061", "8336"})
     public void testProcessGroupBlowMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 

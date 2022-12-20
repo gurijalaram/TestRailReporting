@@ -1,4 +1,4 @@
-package com.apriori.nts.pdf;
+package com.apriori.utils.pdf;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
