@@ -26,7 +26,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     @FindBy(css = ".secondary-digital-factory-modal-select-field button")
     private WebElement secondaryDFPencil;
 
-    @FindBy(css = "[id='qa-secondary-digital-factory-select']")
+    @FindBy(css = ".secondary-digital-factory-modal-select-field")
     private WebElement secDigitalFactoryList;
 
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom']")
