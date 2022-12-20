@@ -18,6 +18,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -41,6 +42,7 @@ public class GroupEditAssemblies extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10882", "10890", "10893"})
     @Description("Group edit subcomponents")
     public void editButtonAvailable() {
