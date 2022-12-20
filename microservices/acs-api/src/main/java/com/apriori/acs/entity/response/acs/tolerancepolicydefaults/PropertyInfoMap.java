@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.acs.tolerancepolicydefaults;
 
 import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
+
 import lombok.Data;
 
 @Data
