@@ -122,7 +122,7 @@ public class ScenariosUtil {
 
             return scenarioRepresentation;
         }
-        throw new RuntimeException(String.format("Failed to get the correct state of the component. Expected: '%s' but found '%s'", scenarioState, scenarioRepresentation.getScenarioState()));
+        throw new RuntimeException("Scenario has not been published");
     }
 
     private ResponseWrapper<ScenarioResponse> getBaseScenarioComponent(ComponentInfoBuilder componentInfo) {
