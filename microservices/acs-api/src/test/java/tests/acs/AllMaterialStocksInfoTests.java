@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
-import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.PropertyInfoItem;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
@@ -31,7 +31,7 @@ public class AllMaterialStocksInfoTests extends TestUtil {
 
         assertThat(allMaterialStocksInfoResponse.getPropertyValuesList().size(), is(greaterThan(0)));
 
-        PropertyInfoItem costPerKG = allMaterialStocksInfoResponse.getPropertyInfoMap().getCostPerKG();
+        GenericExtendedPropertyInfoItem costPerKG = allMaterialStocksInfoResponse.getPropertyInfoMap().getCostPerKG();
         assertThat(costPerKG.getName(), is(equalTo("costPerKG")));
         assertThat(costPerKG.getUnitTypeName(), is(equalTo("USD / kg")));
         assertThat(costPerKG.getSupportedSerializedType(), is(equalTo("DOUBLE")));
