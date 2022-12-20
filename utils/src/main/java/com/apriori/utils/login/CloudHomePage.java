@@ -21,6 +21,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -38,7 +39,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
      * @return UserProfilePage object
      */
     public UserProfilePage goToProfilePage() {
-        isLoaded();
         driver.get(PropertiesContext.get("${env}.cloud.ui_url").concat("user-profile"));
         return new UserProfilePage(driver);
     }

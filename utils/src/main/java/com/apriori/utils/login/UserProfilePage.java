@@ -23,6 +23,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -41,12 +42,11 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
 
     public List<String> getAllInputFieldsName() {
         pageUtils.waitForElementsToAppear(By.xpath("//form/div/div"));
-        List<WebElement> element = driver.findElements(By.xpath("//form/div/div"));
-        List<String> list = element.stream().map(m -> m.getText())
+        List<WebElement> elements = driver.findElements(By.xpath("//form/div/div"));
+        List<String> listOfElements = elements.stream().map(m -> m.getText())
             .collect(Collectors.toList());
 
-        String str = list.get(10).split("\n")[0];
-        return cutOffStringsAfterNewLineChar(list);
+        return cutOffStringsAfterNewLineChar(listOfElements);
     }
 
     /**
