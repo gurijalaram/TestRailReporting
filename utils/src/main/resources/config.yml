@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test
+env: dev-cfirst
 
 # Define the global properties not related to environment
 global:
@@ -484,6 +484,17 @@ qa-test:
 
   qms:
     api_url: https://qms.na-1-v23-1.qa-test.apriori.net/
+
+######################################################## DEV-CFIRST ########################################################
+dev-cfirst:
+  name: dev-cfirst
+  base_url: https://cloud.na-1.dev-cfirst.apriori.net/
+  secret_key: 9FRTP0TSZO5W
+
+  profile_page: ${dev-cfirst.base_url}user-profile
+
+  cus:
+    api_url: https://cus.${default.aws_region}.${env}.apriori.net/
 
 ######################################################## QA-TEST-V22 ########################################################
 qa-test-v22:
