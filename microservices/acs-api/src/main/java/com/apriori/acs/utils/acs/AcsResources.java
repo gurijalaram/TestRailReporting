@@ -98,7 +98,7 @@ public class AcsResources {
      * @param materialName - String
      * @return instance of AllMaterialSocksInfoResponse
      */
-    public AllMaterialStocksInfoResponse getAllMaterialStocksInfoTests(String vpeName, String processGroup, String materialName) {
+    public AllMaterialStocksInfoResponse getAllMaterialStocksInfo(String vpeName, String processGroup, String materialName) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil

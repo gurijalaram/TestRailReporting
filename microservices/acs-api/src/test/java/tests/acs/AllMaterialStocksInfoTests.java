@@ -23,7 +23,7 @@ public class AllMaterialStocksInfoTests extends TestUtil {
     public void testGetAllMaterialStocksInfo() {
         AcsResources acsResources = new AcsResources();
         AllMaterialStocksInfoResponse allMaterialStocksInfoResponse = acsResources
-            .getAllMaterialStocksInfoTests(
+            .getAllMaterialStocksInfo(
                 "aPriori USA",
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup(),
                 "Steel, Cold Worked, AISI 1020"
