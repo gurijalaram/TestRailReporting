@@ -557,4 +557,13 @@ public class ExploreToolbar extends MainNavBar {
     public boolean isPublishButtonEnabled() {
         return pageUtils.waitForElementToAppear(publishButton).isEnabled();
     }
+
+    /**
+     * Checks if actions button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isActionsDropdownEnabled() {
+        return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
+    }
 }

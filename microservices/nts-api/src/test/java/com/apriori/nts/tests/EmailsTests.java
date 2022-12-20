@@ -11,6 +11,8 @@ import com.apriori.nts.entity.response.SendEmail;
 import com.apriori.nts.utils.Constants;
 import com.apriori.utils.TestHelper;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.email.GraphEmailService;
+import com.apriori.utils.email.response.EmailMessage;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -24,8 +26,8 @@ public class EmailsTests extends TestHelper {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         EmailService emailService = new EmailService();
-
         String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+
         SoftAssertions soft = new SoftAssertions();
 
         //Send Email
