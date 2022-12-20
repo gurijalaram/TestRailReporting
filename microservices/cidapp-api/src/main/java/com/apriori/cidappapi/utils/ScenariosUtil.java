@@ -112,7 +112,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ScenarioResponse getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
+    public ScenarioResponse getScenarioRepresentationPublished(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
 
         if (scenarioRepresentation != null &&
@@ -485,7 +485,7 @@ public class ScenariosUtil {
     public ScenarioResponse postPublishScenario(ComponentInfoBuilder componentInfo) {
         publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
-        return getPublishedScenarioRepresentation(componentInfo, "PUBLISH", true);
+        return getScenarioRepresentationPublished(componentInfo, "PUBLISH", true);
     }
 
     /**
