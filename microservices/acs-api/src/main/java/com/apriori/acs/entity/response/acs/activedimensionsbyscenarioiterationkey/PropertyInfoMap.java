@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey;
 
 import com.apriori.acs.entity.response.acs.genericclasses.GenericPropertyInfoItem;
+
 import lombok.Data;
 
 @Data

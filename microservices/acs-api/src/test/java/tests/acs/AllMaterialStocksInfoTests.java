@@ -2,7 +2,6 @@ package tests.acs;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
@@ -12,6 +11,7 @@ import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 
