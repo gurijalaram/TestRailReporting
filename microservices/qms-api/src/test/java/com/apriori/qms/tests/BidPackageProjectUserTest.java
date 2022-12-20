@@ -35,8 +35,8 @@ public class BidPackageProjectUserTest extends TestUtil {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), currentUser);
+        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
+        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         UserCredentials newUser = UserUtil.getUser();
         bidPackageProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newUser);
@@ -119,15 +119,15 @@ public class BidPackageProjectUserTest extends TestUtil {
         softAssertions.assertThat(participantsResponse.getPageNumber()).isEqualTo(1);
         softAssertions.assertThat(participantsResponse.getItems().size()).isGreaterThan(0);
     }
-    
+
     @After
     public void testCleanup() {
         QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageProjectUserResponse.getIdentity(),
             currentUser);
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(),null,HttpStatus.SC_NO_CONTENT, currentUser);
+        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }
