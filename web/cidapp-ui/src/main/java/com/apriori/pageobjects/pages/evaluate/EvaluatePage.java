@@ -852,6 +852,5 @@ public class EvaluatePage extends EvaluateToolbar {
     public boolean isSelectSourceButtonEnabled() {
         return inputsController.isSelectSourceButtonEnabled(sourceComponentPencil);
     }
-
 }
 
