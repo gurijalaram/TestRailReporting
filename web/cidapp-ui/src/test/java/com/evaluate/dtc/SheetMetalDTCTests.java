@@ -76,7 +76,7 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Hole - Min Diameter", "Simple Hole", "SimpleHole:2");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole can not be made by a Plasma Cutting operation on the Plasma Cut process as the kerf width is too small.");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole cannot be made by a Plasma Cutting operation on the Plasma Cut process as the kerf width is too large.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
