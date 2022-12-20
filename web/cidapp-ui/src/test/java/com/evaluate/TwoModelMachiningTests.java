@@ -430,7 +430,6 @@ public class TwoModelMachiningTests extends TestBase {
         softAssertions.assertAll();
     }
 
-
     /*@Test
     @Description("Validate the user can fix the source scenario but selecting the continue button to return to the part")
     @TestRail(testCaseId = {"7879"})
