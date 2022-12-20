@@ -1,21 +1,5 @@
 package com.evaluate.assemblies;
 
-import static com.utils.PartNamesEnum.CENTRE_BOLT;
-import static com.utils.PartNamesEnum.CENTRE_WASHER;
-import static com.utils.PartNamesEnum.DISPLAY;
-import static com.utils.PartNamesEnum.GASKET;
-import static com.utils.PartNamesEnum.HANDLE;
-import static com.utils.PartNamesEnum.LEFT_PADDLE;
-import static com.utils.PartNamesEnum.LEG;
-import static com.utils.PartNamesEnum.LEG_COVER;
-import static com.utils.PartNamesEnum.MECHANISM_BODY;
-import static com.utils.PartNamesEnum.PADDLE_BAR;
-import static com.utils.PartNamesEnum.PIN;
-import static com.utils.PartNamesEnum.RIGHT_PADDLE;
-import static com.utils.PartNamesEnum.SEAT;
-import static com.utils.PartNamesEnum.SEAT_LOCK;
-import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
-import static com.utils.PartNamesEnum.WASHER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -25,7 +9,6 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -55,8 +38,8 @@ public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
@@ -478,7 +461,7 @@ public class FiltersTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(currentUser)
-        .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
             .selectTableView()
             .selectFilter("Assigned To Me");
@@ -573,8 +556,8 @@ public class FiltersTests extends TestBase {
         topScenarioName = topScenarioDetails[1];
 
         softAssert.assertThat(explorePage.getCreatedAt(topComponentName, topScenarioName))
-                .as("Created At date of oldest scenario in Recent")
-                .isAfterOrEqualTo(filterStartTime);
+            .as("Created At date of oldest scenario in Recent")
+            .isAfterOrEqualTo(filterStartTime);
 
         softAssert.assertAll();
     }
@@ -697,7 +680,7 @@ public class FiltersTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly3)
             .uploadAssembly(componentAssembly3);
 
-        ComponentsTreePage componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
+        componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
             .openScenario(assemblyName, scenarioName2)
             .openComponents()
             .selectCheckAllBox()
@@ -721,9 +704,7 @@ public class FiltersTests extends TestBase {
             .openScenario(assemblyName, scenarioName2)
             .openComponents();
 
-        for (String subComponent: subComponentNames) {
-            componentsTreePage.checkSubcomponentState(componentAssembly2, subComponent);
-        }
+        subComponentNames.forEach(subcomponent -> componentsTreePage.checkSubcomponentState(componentAssembly2, subcomponent));
 
         componentsTreePage = componentsTreePage.closePanel()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
@@ -733,9 +714,7 @@ public class FiltersTests extends TestBase {
             .openScenario(assemblyName, scenarioName3)
             .openComponents();
 
-        for (String subComponent: subComponentNames) {
-            componentsTreePage.checkSubcomponentState(componentAssembly3, subComponent);
-        }
+        subComponentNames.forEach(subcomponent -> componentsTreePage.checkSubcomponentState(componentAssembly3, subcomponent));
 
         explorePage = componentsTreePage.closePanel()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
@@ -757,9 +736,9 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
             .addCriteria(PropertyEnum.FULLY_BURDENED_COST, OperationEnum.GREATER_THAN, "0.4")
             .save(FilterPage.class)
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .selectFilter(filterName);
 
-        explorePage.selectFilter(filterName);
         soft.assertThat(explorePage.getAllScenarioComponentName().size()).as("Number of scenarios displayed").isEqualTo(1);
         soft.assertAll();
     }
