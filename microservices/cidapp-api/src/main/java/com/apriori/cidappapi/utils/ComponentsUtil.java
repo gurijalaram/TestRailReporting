@@ -239,23 +239,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * GET components for the current user matching an identity
-     *
-     * @param componentInfo - the component info builder object
-     * @return response object
-     */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentInfo.getComponentIdentity())
-                .token(componentInfo.getUser().getToken())
-                .followRedirection(true)
-                .expectedResponseCode(expectedStatusCode);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Part/Assembly
      *
      * @param componentInfo      - the component info builder object
@@ -284,6 +267,23 @@ public class ComponentsUtil {
             Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+    }
+
+    /**
+     * GET components for the current user matching an identity
+     *
+     * @param componentInfo - the component info builder object
+     * @return response object
+     */
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
+                .inlineVariables(componentInfo.getComponentIdentity())
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(true)
+                .expectedResponseCode(expectedStatusCode);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
