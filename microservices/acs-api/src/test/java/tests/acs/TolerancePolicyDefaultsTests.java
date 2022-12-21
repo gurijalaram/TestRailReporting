@@ -8,8 +8,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
-import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.PropertyInfoItem;
 import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.PropertyValueMap;
 import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -34,7 +34,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
         assertThat(propertyValueMap.getToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"), equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
-        PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
+        GenericExtendedPropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
 
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
         assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
