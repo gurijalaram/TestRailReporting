@@ -48,18 +48,18 @@ public class ComponentsUtil {
     /**
      * POST cad files
      *
-     * @param componentBuilder - the component object
+     * @param componentInfo - the component object
      * @return cad file response object
      */
-    public List<CadFile> postCadFiles(ComponentInfoBuilder componentBuilder) {
-        if (componentBuilder.getResourceFiles().size() > MAX_FILES) {
-            throw new RuntimeException("Attempted to upload '" + componentBuilder.getResourceFiles().size() + "' files. A maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
+    public List<CadFile> postCadFiles(ComponentInfoBuilder componentInfo) {
+        if (componentInfo.getResourceFiles().size() > MAX_FILES) {
+            throw new RuntimeException("Attempted to upload '" + componentInfo.getResourceFiles().size() + "' files. A maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
         }
 
         List<CadFile> cadFiles = new ArrayList<>();
 
-        Iterators.partition(componentBuilder.getResourceFiles().iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
-            cadFiles.addAll(postCadFile(componentBuilder, cadFile).getResponseEntity().getCadFiles()));
+        Iterators.partition(componentInfo.getResourceFiles().iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
+            cadFiles.addAll(postCadFile(componentInfo, cadFile).getResponseEntity().getCadFiles()));
 
         return cadFiles;
     }
@@ -67,11 +67,11 @@ public class ComponentsUtil {
     /**
      * POST cad files
      *
-     * @param componentBuilder - the component object
+     * @param componentInfo - the component object
      * @return cad file response object
      */
-    public ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder) {
-        return postCadFile(componentBuilder, Collections.singletonList(componentBuilder.getResourceFile()));
+    public ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentInfo) {
+        return postCadFile(componentInfo, Collections.singletonList(componentInfo.getResourceFile()));
     }
 
     /**
@@ -93,23 +93,23 @@ public class ComponentsUtil {
     /**
      * POST new component
      *
-     * @param componentBuilder - the component object
+     * @param componentInfo - the component object
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
-    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder) {
-        String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
+    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
+        String resourceName = postCadFile(componentInfo).getResponseEntity().getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
-                        .filename(componentBuilder.getResourceFile().getName())
-                        .override(componentBuilder.isOverrideScenario())
+                        .filename(componentInfo.getResourceFile().getName())
+                        .override(componentInfo.isOverrideScenario())
                         .resourceName(resourceName)
-                        .scenarioName(componentBuilder.getScenarioName())
+                        .scenarioName(componentInfo.getScenarioName())
                         .build()))
-                .token(componentBuilder.getUser().getToken());
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -117,40 +117,40 @@ public class ComponentsUtil {
     /**
      * POST new component and query CSS
      *
-     * @param componentBuilder - the component object
+     * @param componentInfo - the component object
      * @return response object
      */
-    public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentBuilder) {
+    public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponent(componentBuilder).getResponseEntity().getSuccesses().stream().findFirst().get();
+        Successes componentSuccess = postComponent(componentInfo).getResponseEntity().getSuccesses().stream().findFirst().get();
 
         ScenarioItem scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
-            componentBuilder.getUser()).stream().findFirst().get();
+            componentInfo.getUser()).stream().findFirst().get();
 
-        componentBuilder.setComponentIdentity(scenarioItemResponse.getComponentIdentity());
-        componentBuilder.setScenarioIdentity(scenarioItemResponse.getScenarioIdentity());
+        componentInfo.setComponentIdentity(scenarioItemResponse.getComponentIdentity());
+        componentInfo.setScenarioIdentity(scenarioItemResponse.getScenarioIdentity());
 
-        return componentBuilder;
+        return componentInfo;
     }
 
     /**
      * Calls an api with POST verb and query CID
      *
-     * @param componentBuilder - the component object
+     * @param componentInfo - the component object
      * @return response object
      */
-    public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentBuilder) {
+    public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponent(componentBuilder).getResponseEntity().getSuccesses().stream().findFirst().get();
+        Successes componentSuccess = postComponent(componentInfo).getResponseEntity().getSuccesses().stream().findFirst().get();
 
-        componentBuilder.setComponentIdentity(componentSuccess.getComponentIdentity());
-        componentBuilder.setScenarioIdentity(componentSuccess.getScenarioIdentity());
+        componentInfo.setComponentIdentity(componentSuccess.getComponentIdentity());
+        componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());
 
-        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentBuilder, HttpStatus.SC_OK);
+        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo, HttpStatus.SC_OK);
 
-        componentBuilder.setComponentIdentity(componentIdentityResponse.getIdentity());
+        componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
 
-        return componentBuilder;
+        return componentInfo;
     }
 
 
@@ -178,14 +178,14 @@ public class ComponentsUtil {
     /**
      * POST new multicomponent
      *
-     * @param componentInfoBuilder - the component object
+     * @param componentInfo - the component object
      * @return response object
      */
-    public List<ScenarioItem> postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
-        List<CadFile> resources = postCadFiles(componentInfoBuilder);
+    public List<ScenarioItem> postMultiComponentsQueryCss(ComponentInfoBuilder componentInfo) {
+        List<CadFile> resources = postCadFiles(componentInfo);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-            .body("groupItems", componentInfoBuilder.getResourceFiles()
+            .body("groupItems", componentInfo.getResourceFiles()
                 .stream()
                 .map(resourceFile ->
                     ComponentRequest.builder()
@@ -197,33 +197,33 @@ public class ComponentsUtil {
                             .collect(Collectors.toList())
                             .get(0))
                         // TODO: 04/04/2022 cn - need to find a way to make this work for 1 scenario name also
-                        .scenarioName(componentInfoBuilder.getScenarioName())
+                        .scenarioName(componentInfo.getScenarioName())
                         .build())
                 .collect(Collectors.toList()))
-            .token(componentInfoBuilder.getUser().getToken())
+            .token(componentInfo.getUser().getToken())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
 
-        componentInfoBuilder.setComponent(postComponentResponse.getResponseEntity());
+        componentInfo.setComponent(postComponentResponse.getResponseEntity());
 
         return postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
-            getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfoBuilder.getUser())
+            getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfo.getUser())
                 .stream()).collect(Collectors.toList());
     }
 
     /**
      * Upload a component
      *
-     * @param componentBuilder - the component
+     * @param componentInfo - the component
      * @return response object
      */
-    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
+    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentInfo) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentInfo.getProcessGroup(), componentInfo.getComponentName() + componentInfo.getExtension());
 
-        componentBuilder.setResourceFile(resourceFile);
+        componentInfo.setResourceFile(resourceFile);
 
-        return postComponentQueryCSSUncosted(componentBuilder);
+        return postComponentQueryCSSUncosted(componentInfo);
     }
 
     /**
