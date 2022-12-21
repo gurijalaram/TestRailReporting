@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "customerIdentity",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "mfaRequired",
+        "customAttributes",
+        "userType"
+      ],
+      "optional": [
+        "customProperties",
+        "updatedAt"
+      ],
+      "properties": {
+        "isSystemUser": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "userProfile": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "givenName",
+            "familyName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            }
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "mfaRequired": {
+          "type": "boolean"
+        },
+        "customProperties": {
+          "type": "object"
+        },
+        "customAttributes": {
+          "type": "object"
+        },
+        "resourcesAllowedToCreate": {
+          "type": "array"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -34,6 +35,7 @@ import java.io.File;
 public class TwoModelMachiningTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
 
     private File resourceFile;
     private File twoModelFile;
@@ -69,7 +71,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -83,7 +85,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo("Aluminum, Cast, ANSI AL380.0");
+        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName());
         softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName)).isEqualTo(true);
 
         softAssertions.assertAll();
@@ -123,7 +125,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -172,7 +174,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -281,7 +283,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -293,7 +295,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -346,7 +348,7 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(wrongSourcePartName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -370,6 +372,63 @@ public class TwoModelMachiningTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = {"7878"})
+    @Description("Validate the select source button is not clickable in the public workspace")
+    public void selectSourceButtonDisabledInPublicWorkspace() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
+
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
+        String sourcePartName = "Raw Casting";
+        String twoModelPartName = "Machined Casting";
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
+        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".prt");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickExplore()
+            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
+            .selectProcessGroup(processGroupEnumTwoModel)
+            .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(sourcePartName)
+            .highlightScenario(sourcePartName, sourceScenarioName)
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickExplore()
+            .openScenario(sourcePartName, sourceScenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
+            .clickExplore()
+            .openScenario(twoModelPartName, twoModelScenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
+            .clickExplore()
+            .selectFilter("Public");
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(sourcePartName, sourceScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(twoModelPartName, twoModelScenarioName)).isEqualTo(1);
+
+        evaluatePage = explorePage.openScenario(twoModelPartName, twoModelScenarioName);
+
+        softAssertions.assertThat(evaluatePage.isSelectSourceButtonEnabled()).isFalse();
+
+        softAssertions.assertAll();
+    }
 
     /*@Test
     @Description("Validate the user can fix the source scenario but selecting the continue button to return to the part")

@@ -120,16 +120,13 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentBuilder) {
 
-        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
+        Successes componentSuccess = postComponent(componentBuilder).getResponseEntity().getSuccesses().stream().findFirst().get();
 
-        componentSuccesses.forEach(componentSuccess -> {
-            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
-                componentBuilder.getUser());
-            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-            // TODO: 26/10/2022 see where needed and remove/fix up if necessary
-            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
-        });
+        ScenarioItem scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
+            componentBuilder.getUser()).stream().findFirst().get();
+
+        componentBuilder.setComponentIdentity(scenarioItemResponse.getComponentIdentity());
+        componentBuilder.setScenarioIdentity(scenarioItemResponse.getScenarioIdentity());
 
         return componentBuilder;
     }
@@ -305,7 +302,7 @@ public class ComponentsUtil {
      * @return response object
      */
     private ResponseWrapper<ComponentIteration> checkNonNullIterationLatest(RequestEntity requestEntity) {
-        long START_TIME = System.currentTimeMillis() / 1000;
+        final long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 100L;
         final long MAX_WAIT_TIME = 180L;
         ResponseWrapper<ComponentIteration> axesEntriesResponse;

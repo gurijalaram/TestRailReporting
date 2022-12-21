@@ -1,7 +1,7 @@
 package com.apriori.utils;
 
 import io.qameta.allure.Attachment;
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

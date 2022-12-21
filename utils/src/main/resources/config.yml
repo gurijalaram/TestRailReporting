@@ -44,7 +44,7 @@ default:
     automation_password: TrumpetSnakeFridgeToasty18!%
 
   bcs:
-    api_url: https://bcs.${default.aws_region}-v22-1.${env}.apriori.net/
+    api_url: https://bcs-http.${default.aws_region}-v22-1.${env}.apriori.net/
 
   cas:
     ui_url: https://cas.${default.aws_region}.${env}.apriori.net/
@@ -78,7 +78,7 @@ default:
     api_url: https://nts.${default.aws_region}.${env}.apriori.net/
 
   sds:
-    api_url: https://sds.${default.aws_region}-v23-1.${env}.apriori.net/
+    api_url: https://sds-http.${default.aws_region}-v23-1.${env}.apriori.net/
 
   vds:
     api_url: https://vds.${default.aws_region}-v23-1.${env}.apriori.net/
@@ -426,6 +426,9 @@ local:
     ui_url: ${local.base_url}:3003/
     api_url: ${local.base_url}:8813/
 
+  cus:
+    api_url: ${local.base_url}:8828/
+
   cis:
     ui_url: ${local.base_url}:3004/
 
@@ -460,7 +463,7 @@ qa-test:
     ui_url: ${qa-test.base_url}apriori/login
 
   bcs:
-    api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
+    api_url: https://bcs-http.na-1-v23-1.qa-test.apriori.net/
     number_of_parts: 5
 
   cas:
@@ -518,13 +521,24 @@ qa-test:
   qms:
     api_url: https://qms.na-1-v23-1.qa-test.apriori.net/
 
+######################################################## DEV-CFIRST ########################################################
+dev-cfirst:
+  name: dev-cfirst
+  base_url: https://cloud.na-1.dev-cfirst.apriori.net/
+  secret_key: 9FRTP0TSZO5W
+
+  profile_page: ${dev-cfirst.base_url}user-profile
+
+  cus:
+    api_url: https://cus.${default.aws_region}.${env}.apriori.net/
+
 ######################################################## QA-TEST-V22 ########################################################
 qa-test-v22:
   application_name: cid
   base_url: https://na-1-v22-1-demo.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   deployment_name: production
-  installation_name: core-na-1 - 22.1 production deployment
+  installation_name: core-na-1 - 22 production deployment
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
@@ -541,6 +555,7 @@ qa-test-v22:
     api_url: https://cas-api.na-1.qa-test.apriori.net/
 
   cds:
+    api_url: https://cds.${default.aws_region}.qa-test.apriori.net/
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
     apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94

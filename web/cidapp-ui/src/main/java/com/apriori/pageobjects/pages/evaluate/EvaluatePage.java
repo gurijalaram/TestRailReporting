@@ -833,5 +833,23 @@ public class EvaluatePage extends EvaluateToolbar {
     public boolean isMachineOptionsCheckboxSelected() {
         return inputsController.isMachineOptionsCheckboxSelected(checkBoxInput);
     }
-}
 
+    /**
+     * Get warning message
+     *
+     * @return string
+     */
+    public String getWarningMessageText() {
+        By refreshWarningMessage = By.xpath("//div[@role='dialog']//div[contains(text(),'This assembly has uncosted changes.')]");
+        return pageUtils.waitForElementToAppear(refreshWarningMessage).getAttribute("textContent");
+    }
+
+    /**
+     * Checks if the select source model button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isSelectSourceButtonEnabled() {
+        return inputsController.isSelectSourceButtonEnabled(sourceComponentPencil);
+    }
+}

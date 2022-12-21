@@ -11,7 +11,6 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -67,10 +66,10 @@ public class FileUploadAPI {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(scenarioItem);
+        ScenarioResponse publishResponse = scenariosUtil.postPublishScenario(scenarioItem);
 
-        assertThat(publishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(publishResponse.getResponseEntity().getPublished(), is(true));
+        assertThat(publishResponse.getLastAction(), is("PUBLISH"));
+        assertThat(publishResponse.getPublished(), is(true));
     }
 
     public static class CustomMapper extends IdentityMapper {

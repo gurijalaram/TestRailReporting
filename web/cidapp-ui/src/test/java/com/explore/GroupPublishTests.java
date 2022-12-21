@@ -6,6 +6,7 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -37,27 +38,27 @@ public class GroupPublishTests extends TestBase {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private AssignPage assignPage;
+    private InfoPage infoPage;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemA;
     private final SoftAssertions softAssertions = new SoftAssertions();
+    private final CssComponent cssComponent = new CssComponent();
     private final AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private CssComponent cssComponent = new CssComponent();
-    private AssignPage assignPage;
-    private InfoPage infoPage;
-
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @TestRail(testCaseId = {"14458"})
     @Description("Publish multiple components")
     public void testGroupPublishPartScenarios() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName1 = "titan charger lead";
+        final String componentName1 = "titan charger lead";
         final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
         final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName2 = "Part0004";
+        final String componentName2 = "Part0004";
         final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
@@ -211,13 +212,13 @@ public class GroupPublishTests extends TestBase {
     @Description("Publish multiple components and set inputs in modal")
     public void testGroupPublishWithInputs() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName1 = "titan charger lead";
+        final String componentName1 = "titan charger lead";
         final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
         final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName2 = "Part0004";
+        final String componentName2 = "Part0004";
         final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
@@ -227,7 +228,8 @@ public class GroupPublishTests extends TestBase {
             .uploadComponent(componentName1, scenarioName1, resourceFile1, currentUser);
 
         cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-        String scenarioAssignedTo = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+
+        String scenarioAssignedTo = scenariosUtil.getScenarioRepresentation(cidComponentItem).getCreatedByName();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
@@ -285,7 +287,7 @@ public class GroupPublishTests extends TestBase {
     @Description("Attempt to publish more than 10 components/assemblies")
     public void testGroupPublishMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));
