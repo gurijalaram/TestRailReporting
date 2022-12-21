@@ -253,11 +253,11 @@ public class ComponentsUtil {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ComponentIdentityResponse scenarioItemList = getComponentIdentity(componentInfo, expectedStatusCode).getResponseEntity();
+                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo, expectedStatusCode).getResponseEntity();
 
-                if (scenarioItemList != null && !scenarioItemList.getComponentType().equalsIgnoreCase("unknown")) {
+                if (componentIdentityResponse != null && !componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
 
-                    return scenarioItemList;
+                    return componentIdentityResponse;
                 }
 
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
