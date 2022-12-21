@@ -288,6 +288,7 @@ public class ComponentsUtil {
      * @param httpStatus    - The expected return code as an int
      * @return response object
      */
+    // TODO: 21/12/2022 method needs revised, may not work as expected
     public ResponseWrapper<Object> getComponentIdentityExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
         final int SOCKET_TIMEOUT = 240000;
         final int METHOD_TIMEOUT = 30;
@@ -311,6 +312,7 @@ public class ComponentsUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
+    // TODO: 21/12/2022 why is this method needed or even used here? check IterationsUtil for duplication
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
@@ -327,6 +329,7 @@ public class ComponentsUtil {
      * @param httpStatus    - The expected return code as an int
      * @return response object
      */
+    // TODO: 21/12/2022 method needs revised, may not work as expected
     public ResponseWrapper<Object> getComponentIterationLatestExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
         final int SOCKET_TIMEOUT = 240000;
         final int METHOD_TIMEOUT = 30;
