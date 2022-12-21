@@ -134,6 +134,27 @@ public class ComponentsUtil {
     }
 
     /**
+     * POST new component and query CSS
+     *
+     * @param componentBuilder - the component object
+     * @return response object
+     */
+    public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentBuilder) {
+
+        Successes componentSuccess = postComponent(componentBuilder).getResponseEntity().getSuccesses().stream().findFirst().get();
+
+        componentBuilder.setComponentIdentity(componentSuccess.getComponentIdentity());
+        componentBuilder.setScenarioIdentity(componentSuccess.getScenarioIdentity());
+
+        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentBuilder,HttpStatus.SC_OK);
+
+        componentBuilder.setComponentIdentity(componentIdentityResponse.getIdentity());
+
+        return componentBuilder;
+    }
+
+
+    /**
      * Gets the uncosted component from CSS
      *
      * @param componentName   - the component name

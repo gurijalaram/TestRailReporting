@@ -129,7 +129,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSSUncosted(
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
