@@ -146,7 +146,7 @@ public class ComponentsUtil {
         componentBuilder.setComponentIdentity(componentSuccess.getComponentIdentity());
         componentBuilder.setScenarioIdentity(componentSuccess.getScenarioIdentity());
 
-        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentBuilder,HttpStatus.SC_OK);
+        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentBuilder, HttpStatus.SC_OK);
 
         componentBuilder.setComponentIdentity(componentIdentityResponse.getIdentity());
 
@@ -255,7 +255,14 @@ public class ComponentsUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfoBuilder, int expectedStatusCode) {
+    /**
+     * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Part/Assembly
+     *
+     * @param componentInfo      - the component info builder object
+     * @param expectedStatusCode - the expected status code
+     * @return response object
+     */
+    public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -263,11 +270,9 @@ public class ComponentsUtil {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ComponentIdentityResponse scenarioItemList = getComponentIdentity(componentInfoBuilder, expectedStatusCode).getResponseEntity();
+                ComponentIdentityResponse scenarioItemList = getComponentIdentity(componentInfo, expectedStatusCode).getResponseEntity();
 
-                if (scenarioItemList != null &&
-
-                    !scenarioItemList.getComponentType().equalsIgnoreCase("unknown"))  {
+                if (scenarioItemList != null && !scenarioItemList.getComponentType().equalsIgnoreCase("unknown")) {
 
                     return scenarioItemList;
                 }
