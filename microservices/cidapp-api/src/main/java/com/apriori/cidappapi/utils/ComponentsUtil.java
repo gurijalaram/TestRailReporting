@@ -134,7 +134,7 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST new component and query CSS
+     * Calls an api with POST verb and query CID
      *
      * @param componentBuilder - the component object
      * @return response object
