@@ -13,6 +13,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class AllMaterialStocksInfoTests extends TestUtil {
@@ -29,11 +30,15 @@ public class AllMaterialStocksInfoTests extends TestUtil {
                 "Steel, Cold Worked, AISI 1020"
         );
 
-        assertThat(allMaterialStocksInfoResponse.getPropertyValuesList().size(), is(greaterThan(0)));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(allMaterialStocksInfoResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
         GenericExtendedPropertyInfoItem costPerKG = allMaterialStocksInfoResponse.getPropertyInfoMap().getCostPerKG();
-        assertThat(costPerKG.getName(), is(equalTo("costPerKG")));
-        assertThat(costPerKG.getUnitTypeName(), is(equalTo("USD / kg")));
-        assertThat(costPerKG.getSupportedSerializedType(), is(equalTo("DOUBLE")));
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
     }
 }
