@@ -8,12 +8,13 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
+import com.apriori.entity.response.UsersData;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.InitFileData;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -33,13 +34,13 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class CasCustomersUsersTests {
     private static final Logger logger = LoggerFactory.getLogger(CasCustomersUsersTests.class);
     private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
@@ -159,13 +160,13 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<String> users = casTestUtil.getCommonRequest(CASAPIEnum.EXPORT_USERS, null, HttpStatus.SC_OK, customerIdentity);
         InputStream usersResponse = new ByteArrayInputStream(users.getBody().getBytes(StandardCharsets.UTF_8));
-        List<String[]> usersData = getFileContent(usersResponse, "users.csv");
+        ConcurrentLinkedQueue<UsersData> usersData = new InitFileData().initRows(UsersData.class, FileResourceUtil.copyIntoTempFile(usersResponse, null, "users.csv"));
 
-        soft.assertThat(Arrays.stream(usersData.get(1)).anyMatch(x -> x.contains(cloudRef + ".service-account.1"))).isTrue();
-        soft.assertThat(Arrays.stream(usersData.get(2)).anyMatch(x -> x.contains(cloudRef + ".service-account.2"))).isTrue();
-        soft.assertThat(Arrays.stream(usersData.get(3)).anyMatch(x -> x.contains(cloudRef + ".service-account.3"))).isTrue();
-        soft.assertThat(Arrays.stream(usersData.get(4)).anyMatch(x -> x.contains(cloudRef + ".service-account.4"))).isTrue();
-        soft.assertThat(Arrays.stream(usersData.get(5)).anyMatch(x -> x.contains(userName))).isTrue();
+        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.1"));
+        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.2"));
+        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.3"));
+        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.4"));
+        soft.assertThat(usersData.poll().getLoginID().equals(userName));
         soft.assertAll();
     }
 }
