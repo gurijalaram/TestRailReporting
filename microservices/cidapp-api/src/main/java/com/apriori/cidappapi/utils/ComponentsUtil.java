@@ -42,6 +42,8 @@ public class ComponentsUtil {
 
     private final int MAX_FILES = 20;
     private final int CHUNK_SIZE = 10;
+    private final int POLL_TIME = 1;
+    private final int WAIT_TIME = 600;
 
     /**
      * POST cad files
@@ -221,11 +223,13 @@ public class ComponentsUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(true)
+                .expectedResponseCode(expectedStatusCode);
 
         return HTTPRequest.build(requestEntity).get();
     }
