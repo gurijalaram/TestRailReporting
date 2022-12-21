@@ -5,6 +5,10 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum QMSAPIEnum implements ExternalEndpointEnum {
 
+    // PROJECTS
+    PROJECTS("projects"),
+    PROJECT("projects/%s"),
+
     //BID PACKAGE
     BID_PACKAGES("bid-packages"),
     BID_PACKAGE("bid-packages/%s"),
@@ -36,7 +40,19 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest"),
 
     //PARTICIPANTS
-    PARTICIPANTS("participants");
+    PARTICIPANTS("participants"),
+
+    //LAYOUTS AND VIEW ELEMENTS
+    LAYOUTS("layouts"),
+    LAYOUT(LAYOUTS.getEndpointString().concat("/%s")),
+    LAYOUT_VIEW_ELEMENTS(LAYOUT.getEndpointString().concat("/view-elements")),
+    LAYOUT_VIEW_ELEMENT(LAYOUT_VIEW_ELEMENTS.getEndpointString().concat("/%s")),
+
+    VIEW_ELEMENTS("view-elements"),
+    VIEW_ELEMENT(VIEW_ELEMENTS.getEndpointString().concat("/%s")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATIONS(VIEW_ELEMENT.getEndpointString().concat("/layout-configurations")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATION(VIEW_ELEMENT_LAYOUT_CONFIGURATIONS.getEndpointString().concat("/%s")),
+    VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE(VIEW_ELEMENT_LAYOUT_CONFIGURATION.getEndpointString().concat("/share"));
 
     private final String endpoint;
 

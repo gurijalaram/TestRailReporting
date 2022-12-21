@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -58,7 +59,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -85,7 +86,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -111,7 +112,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -138,7 +139,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -160,7 +161,7 @@ public class DFMRiskTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(3);
 
@@ -194,7 +195,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -228,7 +229,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(5);
 
@@ -237,6 +238,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -272,7 +274,7 @@ public class DFMRiskTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(3);
 
@@ -281,6 +283,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -317,7 +320,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -326,6 +329,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -360,7 +364,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -369,6 +373,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -402,7 +407,7 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -411,6 +416,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -449,6 +455,7 @@ public class DFMRiskTests extends TestBase {
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
+            .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();

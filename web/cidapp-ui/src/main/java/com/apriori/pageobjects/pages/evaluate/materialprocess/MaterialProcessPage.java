@@ -242,9 +242,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
-        pageUtils.waitForElementToAppear(By.cssSelector(".highcharts-data-labels"));
-        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
-        pageUtils.actionClick(chart.get(position));
+        pageUtils.waitForElementAndClick(By.cssSelector(String.format("path[name='%s']",axisLabel)));
         return this;
     }
 

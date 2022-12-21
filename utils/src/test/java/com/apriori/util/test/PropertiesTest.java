@@ -4,15 +4,33 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+import com.apriori.utils.email.GraphEmailService;
+import com.apriori.utils.email.response.EmailMessage;
+import com.apriori.utils.pdf.PDFDocument;
 import com.apriori.utils.properties.PropertiesContext;
 
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+
+import java.io.IOException;
+
 
 /**
  * Contain tests for the basic functionality of @{@link PropertiesContext}
  */
+@Slf4j
 public class PropertiesTest {
 
+    @Test
+    public void testEncrypt() throws IOException {
+        SoftAssertions softAssertions = new SoftAssertions();
+        EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments("ap-int123456");
+        PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
+        log.info(pdfDocument.getDocumentContents());
+        softAssertions.assertThat(pdfDocument).isNotNull();
+        softAssertions.assertAll();
+    }
 
     @Test
     public void testGetGlobalProperty() {

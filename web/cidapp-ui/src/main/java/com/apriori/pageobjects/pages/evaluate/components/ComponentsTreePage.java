@@ -362,6 +362,16 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     }
 
     /**
+     * Gets subcomponent scenario name
+     *
+     * @param componentName - the component name
+     * @return string
+     */
+    public String getSubcomponentScenarioName(String componentName) {
+        return assembliesComponentsController.getSubcomponentScenarioName(componentName);
+    }
+
+    /**
      * Gets the number of elements with state present on the page
      *
      * @param componentName - name of the part

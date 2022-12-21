@@ -89,7 +89,7 @@ int-core:
   base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   name: int-core
-  secret_key: DogCatMonkey
+  secret_key: 65J1ID2B6LDG
   user_identity: 8GFDIG229629
 
   admin:
@@ -502,7 +502,7 @@ qa-test-v22:
   base_url: https://na-1-v22-1-demo.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   deployment_name: production
-  installation_name: core-na-1 - 22.1 production deployment
+  installation_name: core-na-1 - 22 production deployment
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
@@ -519,6 +519,7 @@ qa-test-v22:
     api_url: https://cas-api.na-1.qa-test.apriori.net/
 
   cds:
+    api_url: https://cds.${default.aws_region}.qa-test.apriori.net/
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
     apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94
