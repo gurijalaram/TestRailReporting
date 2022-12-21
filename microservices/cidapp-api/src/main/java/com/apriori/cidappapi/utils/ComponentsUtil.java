@@ -234,6 +234,32 @@ public class ComponentsUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
+    public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfoBuilder, int expectedStatusCode) {
+
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ComponentIdentityResponse scenarioItemList = getComponentIdentity(componentInfoBuilder, expectedStatusCode).getResponseEntity();
+
+                if (scenarioItemList != null &&
+
+                    !scenarioItemList.getComponentType().equalsIgnoreCase("unknown"))  {
+
+                    return scenarioItemList;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+    }
+
     /**
      * GET components for the current user matching an identity ewith an expected Return Code
      *
