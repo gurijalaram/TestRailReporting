@@ -1,8 +1,8 @@
 package com.evaluate;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.DataCreationUtil;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -27,11 +27,10 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioItem data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).searchCreateComponent();
+        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).searchCreateComponent();
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(data.getComponentName()).isEqualTo(componentName);
         softAssertions.assertThat(data.getScenarioIdentity()).isNotEmpty();
         softAssertions.assertThat(data.getComponentIdentity()).isNotEmpty();
 

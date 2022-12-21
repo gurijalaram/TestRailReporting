@@ -16,6 +16,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -77,7 +78,7 @@ public class IgnoredTests extends TestBase {
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -115,7 +116,7 @@ public class IgnoredTests extends TestBase {
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -155,7 +156,7 @@ public class IgnoredTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)

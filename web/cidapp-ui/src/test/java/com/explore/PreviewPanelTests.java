@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
@@ -63,7 +64,7 @@ public class PreviewPanelTests extends TestBase {
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .search("ABS, 10")
-            .selectMaterial("ABS, 10% Glass")
+            .selectMaterial(MaterialNameEnum.ABS_10_GLASS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -95,7 +96,7 @@ public class PreviewPanelTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("ABS, 10")
-            .selectMaterial("ABS, 10% Glass")
+            .selectMaterial(MaterialNameEnum.ABS_10_GLASS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -108,7 +109,7 @@ public class PreviewPanelTests extends TestBase {
         softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
         softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(0.48), Offset.offset(3.0));
         softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(0.86), Offset.offset(3.0));
-        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(12274.53), Offset.offset(50.00));
+        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(11972.41), Offset.offset(50.00));
 
         softAssertions.assertAll();
     }

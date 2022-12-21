@@ -5,6 +5,7 @@ import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -36,6 +37,7 @@ public class GroupCostingTests {
     private String subComponentExtension = ".SLDPRT";
     private String assemblyName = "RandomShapeAsm";
     private String assemblyExtension = ".SLDASM";
+    private CssComponent cssComponent = new CssComponent();
 
     @Test
     @TestRail(testCaseId = {"10620", "11845"})
@@ -143,7 +145,8 @@ public class GroupCostingTests {
 
         softAssertions = new SoftAssertions();
 
-        componentAssembly.getSubComponents().forEach(o -> softAssertions.assertThat(o.getScenarioItem().getScenarioState()).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+        componentAssembly.getSubComponents().forEach(component -> softAssertions.assertThat(scenariosUtil.getScenarioRepresentation(component).getScenarioState())
+            .isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         softAssertions.assertThat(error.getResponseEntity().getMessage()).contains("validation failures were found");
 

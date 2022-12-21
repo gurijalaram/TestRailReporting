@@ -191,6 +191,15 @@ public class ModalDialogController {
     }
 
     /**
+     * Check if save button is enabled
+     *
+     * @return Boolean of Save button status
+     */
+    public Boolean isSaveEnabled() {
+        return pageUtils.isElementEnabled(saveButton);
+    }
+
+    /**
      * Select all
      *
      * @return current page object

@@ -453,9 +453,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath - location of the file
      * @return new page object
      */
-    public EvaluatePage updateCadFile(File filePath) {
+    public UpdateCadFilePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
+        return new UpdateCadFilePage(driver).enterFilePath(filePath);
     }
 
     /**
@@ -556,5 +556,14 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isPublishButtonEnabled() {
         return pageUtils.waitForElementToAppear(publishButton).isEnabled();
+    }
+
+    /**
+     * Checks if actions button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isActionsDropdownEnabled() {
+        return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
     }
 }

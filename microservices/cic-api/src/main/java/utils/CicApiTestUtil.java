@@ -235,7 +235,7 @@ public class CicApiTestUtil extends TestUtil {
         List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getResponseEntity().getStatus();
-        while (!jobStatusList.contains(finalJobStatus)) {
+        while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }

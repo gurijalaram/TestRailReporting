@@ -25,6 +25,9 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(xpath = "//form //button[.='Submit']")
     private WebElement submitButton;
 
+    @FindBy(css = ".invalid-feedback-for-scenario-name")
+    private WebElement invalidScenarioNameMessage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -77,5 +80,14 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Gets text in error form
+     *
+     * @return string
+     */
+    public String getErrorMessage() {
+        return pageUtils.waitForElementToAppear(invalidScenarioNameMessage).getText();
     }
 }

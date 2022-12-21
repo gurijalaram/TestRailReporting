@@ -40,6 +40,9 @@ public class UserCredentials {
         this.password = password;
     }
 
+    public UserCredentials() {
+    }
+
     public String getAccessLevel() {
         return accessLevel;
     }

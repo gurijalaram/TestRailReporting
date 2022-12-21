@@ -22,6 +22,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -33,6 +34,7 @@ import com.utils.ColumnsEnum;
 import com.utils.DecimalPlaceEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.After;
@@ -222,7 +224,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -268,7 +270,7 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Unsaturated Polyester, CF50")
+            .selectMaterial(MaterialNameEnum.UNSATURATED_POLYESTER_CF50.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
@@ -310,7 +312,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.96")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.67")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -325,7 +327,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$5.19")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.90")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -430,7 +432,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("ABS");
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName());
 
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
             .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Thermoset", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
@@ -456,7 +458,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openMaterialSelectorTable()
-            .selectMaterial("Visijet M3 Black")
+            .selectMaterial(MaterialNameEnum.VISIJET_M3_BLACK.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -467,7 +469,7 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Printing / Breakoff");
 
         evaluatePage.openMaterialSelectorTable()
-            .selectMaterial("Aluminum AlSi10Mg")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -596,7 +598,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
@@ -629,6 +631,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2757")
     @TestRail(testCaseId = {"14987", "15801"})
     @Description("Validate routings Casting")
     public void routingsCasting() {
@@ -963,7 +966,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(54.74), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(51.41), Offset.offset(3.0));
         softAssertions.assertAll();
     }
 
@@ -1141,7 +1144,7 @@ public class ProcessRoutingTests extends TestBase {
             .enterAnnualVolume("9999")
             .openMaterialSelectorTable()
             .search("1050A")
-            .selectMaterial("Aluminum, Stock, ANSI 1050A")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_1050A.getMaterialName())
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)

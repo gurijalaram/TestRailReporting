@@ -135,7 +135,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param email    - the email
      * @param password - the password
      */
-    private void executeLogin(String email, String password) {
+    public void executeLogin(String email, String password) {
         enterEmail(email);
         enterPassword(password);
         submitLogin();

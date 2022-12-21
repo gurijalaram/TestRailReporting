@@ -8,11 +8,13 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
@@ -92,7 +94,7 @@ public class DeleteTests extends TestBase {
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -161,11 +163,55 @@ public class DeleteTests extends TestBase {
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
+            .submit(ExplorePage.class);
+
+        assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6737", "6738"})
+    @Description("Test an edited private scenario and the original public scenario, which is locked, can be deleted from the evaluate view")
+    public void testDeletePublicAndPrivateScenarios() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(STOCK_MACHINING)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .lock()
+            .publish(cidComponentItem, EvaluatePage.class)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .selectFilter("Public")
+            .openScenario(componentName, scenarioName)
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
