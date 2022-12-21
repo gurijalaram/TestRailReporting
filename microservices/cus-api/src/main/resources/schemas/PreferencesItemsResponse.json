@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+
+      "allOf": [
+        {
+          "$ref": "common/PaginationSchema.json"
+        },
+        {
+          "required": [
+            "items"
+          ],
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "Preferences.json"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

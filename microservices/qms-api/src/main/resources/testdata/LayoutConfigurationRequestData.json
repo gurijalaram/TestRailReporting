@@ -1,0 +1,9 @@
+{
+  "layoutConfiguration": {
+    "configuration": "{\"viewType\":\"PERSONAL\",\"layout\":\"ROW\",\"visibleColumns\":[\"image\",\"componentName\",\"scenarioName\",\"componentType\",\"scenarioState\",\"costingInput.processGroupName\",\"costingInput.vpeName\",\"scenarioCreatedAt\",\"scenarioCreatedByName\",\"analysisOfScenario.annualVolume\",\"analysisOfScenario.batchSize\",\"analysisOfScenario.DFMRisk\",\"analysisOfScenario.materialStockFormName\",\"analysisOfScenario.fullyBurdenedCost\",\"iterationIsCadConnected\",\"scenarioAssignedToName\",\"scenarioAssignedAt\"],\"sortModel\":[{\"field\":\"scenarioCreatedAt\",\"sort\":\"desc\"}],\"pinnedColumns\":[\"componentName\",\"scenarioName\"],\"pageSize\":10,\"filters\":[]}",
+    "name": "",
+    "shareable": false,
+    "deploymentIdentity": "",
+    "installationIdentity": ""
+  }
+}

@@ -12,6 +12,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -61,13 +62,13 @@ public class MaterialPMITests extends TestBase {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_BRAZIL)
             .openMaterialSelectorTable()
-            .selectMaterial("Aluminum, Stock, ANSI 6061")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_6061.getMaterialName())
             .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Stock, ANSI 6061"), is(true));
+        assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.ALUMINIUM_ANSI_6061.getMaterialName()), is(true));
     }
 }

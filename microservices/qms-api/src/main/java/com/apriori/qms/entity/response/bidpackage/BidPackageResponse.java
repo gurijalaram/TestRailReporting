@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -28,4 +29,6 @@ public class BidPackageResponse {
     private LocalDateTime updatedAt;
     private String customerIdentity;
     private String assignedTo;
+    private List<BidPackageItemResponse> items;
+    private List<BidPackageProjectResponse> projects;
 }

@@ -22,6 +22,10 @@ public class EncryptionUtil {
         return crypto(Cipher.DECRYPT_MODE, key, inputStream, null);
     }
 
+    public static String encryptFile(String key, InputStream inputStream, File file) throws Exception {
+        return crypto(Cipher.ENCRYPT_MODE, key, inputStream, file);
+    }
+
     private static String crypto(int cipherMode, String key, InputStream inputStream,
                                File outputFile) throws Exception {
 
