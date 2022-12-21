@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -221,7 +222,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5161"})
+    @TestRail(testCaseId = {"5161", "8866"})
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -1048,5 +1049,45 @@ public class SecondaryProcessTests extends TestBase {
             .goToAdvancedTab();
 
         assertThat(advancedPage.getSecondaryProcesses(), hasItem("[Surface Treatment] Powder Coat Conveyor"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"8867"})
+    @Description("Validate the user can select a different secondary DF for each type of secondary process")
+    public void secondaryProcessNotDefaultDigitalFactory() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        advancedPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToMachiningTab()
+            .selectSecondaryProcess("Deburr")
+            .goToHeatTreatmentTab()
+            .selectSecondaryProcess("Heat Treat Processes")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Vibratory Finishing")
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Cleaning")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryDF()
+            .usePrimaryDF("No")
+            .selectDropdown("Heat Treatment", DigitalFactoryEnum.APRIORI_CHINA)
+            .selectDropdown("Machining", DigitalFactoryEnum.APRIORI_MEXICO)
+            .selectDropdown("Surface Treatment", DigitalFactoryEnum.APRIORI_INDIA)
+            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_BRAZIL)
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab();
+
+        assertThat(advancedPage.getListOfSecondaryDigitalFactory(), hasItems("[Heat Treatment] aPriori China", "[Machining] aPriori Mexico", "[Surface Treatment] aPriori India", "[Other Secondary Processes] aPriori Brazil"));
     }
 }

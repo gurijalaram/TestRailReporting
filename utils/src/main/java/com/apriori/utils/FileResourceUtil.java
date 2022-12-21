@@ -28,9 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @Slf4j
@@ -286,6 +288,17 @@ public class FileResourceUtil {
 
     }
 
+    public static File copyIntoTempFile(final String contentBytes, final String additionalPath, final String fileName) {
+        File tempFile = new File(createTempDir(additionalPath), fileName);
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            byte[] data = Base64.getMimeDecoder().decode(contentBytes.getBytes(StandardCharsets.UTF_8));
+            out.write(data);
+        } catch (Exception e) {
+            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName, e));
+        }
+        return tempFile;
+    }
+
     public static File createTempDir(String path) {
 
         File baseDir = new File(System.getProperty("java.io.tmpdir"));
@@ -360,9 +373,8 @@ public class FileResourceUtil {
     /**
      * wait certain time to check if file exists(appear)  - if exists - delete it
      *
-     * @param path - path to the file
+     * @param path          - path to the file
      * @param waitTimeInSec - how long wait to appear
-     *
      * @throws Exception
      */
     public static Boolean deleteFileWhenAppears(Path path, Integer waitTimeInSec) {
