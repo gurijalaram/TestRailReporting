@@ -196,7 +196,6 @@ public class ComponentsUtil {
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())
                             .get(0))
-                        // TODO: 04/04/2022 cn - need to find a way to make this work for 1 scenario name also
                         .scenarioName(componentInfo.getScenarioName())
                         .build())
                 .collect(Collectors.toList()))
