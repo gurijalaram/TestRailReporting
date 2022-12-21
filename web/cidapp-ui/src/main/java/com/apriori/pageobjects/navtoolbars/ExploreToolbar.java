@@ -277,7 +277,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public List<ScenarioItem> uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
-        return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
+        return new ComponentsUtil().postMultiComponentsQueryCSS(ComponentInfoBuilder.builder()
             .resourceFiles(resourceFiles)
             .scenarioName(scenarioName)
             .user(currentUser)

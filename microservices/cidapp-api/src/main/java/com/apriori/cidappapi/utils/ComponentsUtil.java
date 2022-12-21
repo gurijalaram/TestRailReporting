@@ -181,7 +181,7 @@ public class ComponentsUtil {
      * @param componentInfo - the component object
      * @return response object
      */
-    public List<ScenarioItem> postMultiComponentsQueryCss(ComponentInfoBuilder componentInfo) {
+    public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
         List<CadFile> resources = postCadFiles(componentInfo);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
