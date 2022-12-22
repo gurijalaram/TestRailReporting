@@ -162,6 +162,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".PrivateSwitchBase-input")
     private WebElement checkBoxInput;
 
+    @FindBy(css = "[data-icon = 'xmark']")
+    private WebElement closeInvalidSourcePanelButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -851,5 +854,15 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isSelectSourceButtonEnabled() {
         return inputsController.isSelectSourceButtonEnabled(sourceComponentPencil);
+    }
+
+    /**
+     * Closes the source model invalid message
+     *
+     * @return new page object
+     */
+    public EvaluatePage closeMessagePanel() {
+        inputsController.closeMessagePanel(closeInvalidSourcePanelButton);
+        return this;
     }
 }

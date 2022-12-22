@@ -470,7 +470,7 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentation(componentAssembly).getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(componentAssembly).getCreatedByName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
