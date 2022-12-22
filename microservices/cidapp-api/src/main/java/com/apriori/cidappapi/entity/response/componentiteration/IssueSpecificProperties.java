@@ -39,4 +39,5 @@ public class IssueSpecificProperties  {
     private String thinnerStock;
     private String thickerStock;
     private String allStockThicknesses;
+    private OdSuggest odSuggest;
 }

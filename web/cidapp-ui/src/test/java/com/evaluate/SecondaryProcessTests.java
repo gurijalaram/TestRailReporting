@@ -1025,7 +1025,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9106"})
+    @TestRail(testCaseId = {"9106", "9102"})
     @Description("Check that Powder Coat Conveyor is available in Surface Treatment")
     public void secondaryProcessPowderCoatConveyor() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -1036,19 +1036,25 @@ public class SecondaryProcessTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB)
+            .selectProcessGroup(ProcessGroupEnum.CASTING)
+            .costScenario()
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Paint, Conveyor Processes")
             .selectSecondaryProcess("Powder Coat Conveyor")
             .submit(EvaluateToolbar.class)
-            .costScenario()
-            .goToAdvancedTab();
+            .costScenario();
 
-        assertThat(advancedPage.getSecondaryProcesses(), hasItem("[Surface Treatment] Powder Coat Conveyor"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Conveyor Powder Coating");
+
+        advancedPage = evaluatePage.goToAdvancedTab();
+
+        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("[Surface Treatment] Powder Coat Conveyor");
+
+        softAssertions.assertAll();
     }
 
     @Test
