@@ -3,6 +3,7 @@ package com.apriori.acs.utils.acs;
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
+import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
@@ -43,6 +44,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import com.google.common.net.UrlEscapers;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -88,6 +90,28 @@ public class AcsResources {
         return (MissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
+    /**
+     * Gets All Material Stocks Info
+     *
+     * @param vpeName - String
+     * @param processGroup - String
+     * @param materialName - String
+     * @return instance of AllMaterialSocksInfoResponse
+     */
+    public AllMaterialStocksInfoResponse getAllMaterialStocksInfo(String vpeName, String processGroup, String materialName) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.ALL_MATERIAL_STOCKS_INFO, AllMaterialStocksInfoResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                vpeName,
+                processGroup,
+                materialName
+            ).expectedResponseCode(HttpStatus.SC_OK);
+
+        return (AllMaterialStocksInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
 
     /**
      * Gets Scenario Information by Scenario Iteration Key
