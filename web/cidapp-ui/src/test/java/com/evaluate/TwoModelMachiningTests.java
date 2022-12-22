@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -426,6 +427,53 @@ public class TwoModelMachiningTests extends TestBase {
         evaluatePage = explorePage.openScenario(twoModelPartName, twoModelScenarioName);
 
         softAssertions.assertThat(evaluatePage.isSelectSourceButtonEnabled()).isFalse();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7877"})
+    @Description("Validate the status icon updates if the source component is updated")
+    public void updateSourceModel() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
+
+        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
+        String sourcePartName = "Raw Casting";
+        String twoModelPartName = "Machined Casting";
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
+        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".prt");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .clickExplore()
+            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
+            .selectProcessGroup(processGroupEnumTwoModel)
+            .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(sourcePartName)
+            .highlightScenario(sourcePartName, sourceScenarioName)
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+
+        evaluatePage.clickExplore()
+            .openScenario(sourcePartName, sourceScenarioName)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
+            .clickCostButton()
+            .clickExplore()
+            .openScenario(twoModelPartName, twoModelScenarioName)
+            .closeMessagePanel();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
