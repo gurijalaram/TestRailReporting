@@ -54,6 +54,7 @@ public class DevTests extends TestBase {
 
         componentItems.forEach(component -> softAssertions.assertThat(component.getIdentity()).isNotEmpty());
 
+        explorePage = new ExplorePage(driver);
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 
