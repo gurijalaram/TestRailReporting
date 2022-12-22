@@ -13,8 +13,10 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -31,7 +33,9 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CastingDtcReportTests extends TestBase {
@@ -42,6 +46,8 @@ public class CastingDtcReportTests extends TestBase {
     private static final String gbpCurrency = CurrencyEnum.GBP.getCurrency();
     private static final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String reportCurrencyTestPartName = "40137441.MLDES.0002 (Initial)";
+
+    private Map<String, String> inputControlNames = new HashMap<>();
 
     /**
      * This before class method skips the invalid ssl cert issue we have with on prem installs
@@ -54,6 +60,9 @@ public class CastingDtcReportTests extends TestBase {
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
         jSessionId = auth.authenticateJasperApi(driver);
+        inputControlNames.put("Cost Metric", "costMetric");
+        inputControlNames.put("Mass Metric", "massMetric");
+        inputControlNames.put("Process Group", "processGroup");
     }
 
     @Test
@@ -68,15 +77,6 @@ public class CastingDtcReportTests extends TestBase {
         String exportSetValue = inputControl.getExportSetName().getOption(exportSetName).getValue();
 
         // 1 - Generate report with USD currency setting
-        /*reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(usdCurrency));
-
-        reportRequest.getParameters().getReportParameterByName("exportSetName")
-            .setValue(Collections.singletonList(exportSetValue));
-
-        reportRequest.getParameters().getReportParameterByName("latestExportDate")
-            .setValue(Collections.singletonList(currentDateTime));*/
-
         String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
 
         reportRequest = setReportParameterByName(reportRequest, "currencyCode", usdCurrency);
@@ -93,8 +93,6 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(usdFullyBurdenedCost, is(notNullValue()));
         assertThat(usdAnnualSpend, is(notNullValue()));
 
-        /*reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(gbpCurrency));*/
         reportRequest = setReportParameterByName(reportRequest, "currencyCode", gbpCurrency);
 
         ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
@@ -113,7 +111,10 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
-        costMetricInputControlGenericTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
+        inputControlGenericTest(
+            "Cost Metric",
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
     }
 
     @Test
@@ -121,23 +122,78 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"7408"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
-        costMetricInputControlGenericTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
+        inputControlGenericTest(
+            "Cost Metric",
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
     }
 
-    private void costMetricInputControlGenericTest(String costMetricValue) {
+    @Test
+    @TestRail(testCaseId = {"1696"})
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
+    public void testMassMetricInputControlFinishMass() {
+        inputControlGenericTest(
+            "Mass Metric",
+            MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7388"})
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlGenericTest(
+            "Mass Metric",
+            MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7454"})
+    @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
+    public void testProcessGroupInputControlDieCastingOnly() {
+        inputControlGenericTest(
+            "Process Group",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7453"})
+    @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
+    public void testProcessGroupInputControlSandCastingOnly() {
+        inputControlGenericTest(
+            "Process Group",
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7455"})
+    @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
+    public void testProcessGroupInputControlDieAndSandCasting() {
+        inputControlGenericTest(
+            "Process Group",
+            ""
+        );
+    }
+
+    private void inputControlGenericTest(String inputControlToSet, String valueToSet) {
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
 
         InputControl inputControl = JasperReportUtil.init(jSessionId).getInputControls();
         String currentExportSet = inputControl.getExportSetName().getOption(exportSetName).getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
 
-        reportRequest = setReportParameterByName(reportRequest, "costMetric", costMetricValue);
+        reportRequest = !valueToSet.isEmpty()
+            ? setReportParameterByName(reportRequest, inputControlNames.get(inputControlToSet), valueToSet) :
+            reportRequest;
         reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
         reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
-        List<Element> elements = JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(costMetricValue);
-        List<Element> tdPPCElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        assertThat(tdPPCElements.toString().contains(costMetricValue), is(equalTo(true)));
+        List<Element> elements = JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
     }
 
     private ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {

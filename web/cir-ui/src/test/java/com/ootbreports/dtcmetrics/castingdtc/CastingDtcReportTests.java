@@ -255,7 +255,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"1696"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report ")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
