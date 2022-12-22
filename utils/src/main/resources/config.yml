@@ -6,9 +6,9 @@ global:
   console_log_level: "OFF"
   db_recording: true
   different_parts: true
-  different_users: true
+  different_users: false
   schema_base_path: schemas/
-  users_csv_file: common-users.csv
+  users_csv_file: onprem-users.csv
 
 # Define the customer
 customer: ap-int

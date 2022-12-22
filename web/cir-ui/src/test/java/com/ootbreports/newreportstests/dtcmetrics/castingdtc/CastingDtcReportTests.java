@@ -20,7 +20,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsApiTest;
@@ -151,19 +150,5 @@ public class CastingDtcReportTests extends TestBase {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
             .generateJasperReportSummary(reportRequest);
         return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
-    }
-
-    /**
-     * Example, created by Vlad Z
-     */
-    @Test
-    @Ignore
-    public void exampleOfInputParamsUsage() {
-        InputControl inputControl =  JasperReportUtil.init(jSessionId)
-            .getInputControls();
-
-        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
-        inputControl.getCostMetric().getValue();
-        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
     }
 }
