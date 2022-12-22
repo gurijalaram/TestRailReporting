@@ -27,6 +27,7 @@ import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -298,6 +299,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"5620", "6513", "6514"})
     @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
     public void uploadAnAssemblyExistingInThePublicWorkspace() {
@@ -626,6 +628,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Issue("SC-377")
     @TestRail(testCaseId = {"6564"})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {

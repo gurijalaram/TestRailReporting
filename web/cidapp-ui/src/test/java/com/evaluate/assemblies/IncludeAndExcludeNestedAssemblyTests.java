@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -153,6 +154,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Issue("SC-377")
     @TestRail(testCaseId = "12196")
     @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")
     public void testExcludeRepeatingComponent() {

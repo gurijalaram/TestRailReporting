@@ -93,6 +93,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
+    @Issue("SC-377")
     @TestRail(testCaseId = {"10891", "11132"})
     @Description("Group edit subcomponents")
     public void overridePrivateSubComponent() {
@@ -142,6 +143,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
+    @Issue("SC-377")
     @TestRail(testCaseId = {"10889", "11953"})
     @Description("Group edit subcomponents")
     public void privateAndPublicSubComponents() {

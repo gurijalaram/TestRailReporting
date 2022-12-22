@@ -36,6 +36,7 @@ import com.utils.DirectionEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -831,6 +832,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"6533"})
     @Description("User can add assemblies to a blank new comparison")
     public void addPublicAndPrivateAssemblyToComparison() {

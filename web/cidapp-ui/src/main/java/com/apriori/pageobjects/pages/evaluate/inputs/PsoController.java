@@ -86,6 +86,13 @@ public class PsoController {
         while (Objects.equals(inputLocator(pso).getAttribute("value"), "") && attempts < 11) {
             attempts++;
         }
-        return Double.parseDouble(inputLocator(pso).getAttribute("value"));
+
+        if (inputLocator(pso).getAttribute("value").isEmpty())
+        {
+            return -0.0;
+        }
+        else {
+            return Double.parseDouble(inputLocator(pso).getAttribute("value"));
+        }
     }
 }
