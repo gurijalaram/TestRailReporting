@@ -425,7 +425,7 @@ public class AssembliesComponentsController {
                 .findFirst()
                 .get();
 
-            new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
+            new ScenariosUtil().getScenarioRepresentationCompleted(componentInfo.getSubComponents()
                 .stream()
                 .filter(x -> x.getComponentName().equalsIgnoreCase(componentName)
                     && x.getComponentIdentity().equalsIgnoreCase(componentDetails.getComponentIdentity())
