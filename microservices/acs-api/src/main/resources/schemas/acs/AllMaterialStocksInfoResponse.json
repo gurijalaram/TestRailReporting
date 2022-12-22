@@ -1,0 +1,3679 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "costPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "thickness": {
+              "type": "number"
+            },
+            "length": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "formName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "width": {
+              "type": "number"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "costPerKG",
+            "hardnessSystem",
+            "thickness",
+            "length",
+            "baseCostPerUnit",
+            "hardness",
+            "formName",
+            "name",
+            "width",
+            "costUnits",
+            "costPerUnit"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "costPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "thickness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "length": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "formName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "width": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "costPerKG",
+        "hardnessSystem",
+        "thickness",
+        "length",
+        "description",
+        "baseCostPerUnit",
+        "hardness",
+        "formName",
+        "name",
+        "width",
+        "sourceName",
+        "costUnits",
+        "dataSource",
+        "costPerUnit"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}
