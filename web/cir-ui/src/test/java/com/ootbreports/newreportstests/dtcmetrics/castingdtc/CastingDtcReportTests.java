@@ -66,19 +66,23 @@ public class CastingDtcReportTests extends TestBase {
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();
-        String value = inputControl.getExportSetName().getOption(exportSetName).getValue();
+        String exportSetValue = inputControl.getExportSetName().getOption(exportSetName).getValue();
 
         // 1 - Generate report with USD currency setting
-        reportRequest.getParameters().getReportParameterByName("currencyCode")
+        /*reportRequest.getParameters().getReportParameterByName("currencyCode")
             .setValue(Collections.singletonList(usdCurrency));
 
         reportRequest.getParameters().getReportParameterByName("exportSetName")
-            .setValue(Collections.singletonList(value));
+            .setValue(Collections.singletonList(exportSetValue));
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
-        String currentDateTime = dtf.format(LocalDateTime.now());
         reportRequest.getParameters().getReportParameterByName("latestExportDate")
-            .setValue(Collections.singletonList(currentDateTime));
+            .setValue(Collections.singletonList(currentDateTime));*/
+
+        String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
+
+        reportRequest = setReportParameterByName(reportRequest, "currencyCode", usdCurrency);
+        reportRequest = setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
+        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
         ChartDataPoint usdChartDataPoint = generateReportAndGetSummary(reportRequest);
 
@@ -90,8 +94,9 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(usdFullyBurdenedCost, is(notNullValue()));
         assertThat(usdAnnualSpend, is(notNullValue()));
 
-        reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(gbpCurrency));
+        /*reportRequest.getParameters().getReportParameterByName("currencyCode")
+            .setValue(Collections.singletonList(gbpCurrency));*/
+        reportRequest = setReportParameterByName(reportRequest, "currencyCode", gbpCurrency);
 
         ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
 
@@ -109,26 +114,37 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
+        costMetricInputControlGenericTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
+    }
+
+    @Test
+    @Category(ReportsApiTest.class)
+    @TestRail(testCaseId = {"7408"})
+    @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
+    public void testCostMetricInputControlFbc() {
+        costMetricInputControlGenericTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
+    }
+
+    private void costMetricInputControlGenericTest(String costMetricValue) {
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
 
-        InputControl inputControl = JasperReportUtil.init(jSessionId)
-                .getInputControls();
-        String value = inputControl.getExportSetName().getOption(exportSetName).getValue();
+        InputControl inputControl = JasperReportUtil.init(jSessionId).getInputControls();
+        String currentExportSet = inputControl.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
 
-        reportRequest.getParameters().getReportParameterByName("costMetric")
-                .setValue(Collections.singletonList(CostMetricEnum.PIECE_PART_COST.getCostMetricName()));
+        reportRequest = setReportParameterByName(reportRequest, "costMetric", costMetricValue);
+        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
-        reportRequest.getParameters().getReportParameterByName("exportSetName")
-                .setValue(Collections.singletonList(value));
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
-        String currentDateTime = dtf.format(LocalDateTime.now());
-        reportRequest.getParameters().getReportParameterByName("latestExportDate")
-                .setValue(Collections.singletonList(currentDateTime));
-
-        List<Element> elements = JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText("Piece Part Cost");
+        List<Element> elements = JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(costMetricValue);
         List<Element> tdPPCElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        assertThat(tdPPCElements.toString().contains("Piece Part Cost"), is(equalTo(true)));
+        assertThat(tdPPCElements.toString().contains(costMetricValue), is(equalTo(true)));
+    }
+
+    private ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
+        reportRequest.getParameters().getReportParameterByName(valueToGet)
+            .setValue(Collections.singletonList(valueToSet));
+        return reportRequest;
     }
 
     private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
@@ -136,7 +152,6 @@ public class CastingDtcReportTests extends TestBase {
             .generateJasperReportSummary(reportRequest);
         return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
     }
-
 
     /**
      * Example, created by Vlad Z
