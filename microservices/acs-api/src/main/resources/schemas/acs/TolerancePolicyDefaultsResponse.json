@@ -70,29 +70,7 @@
         }
       },
       "required": [
-        "toleranceMode",
         "useCadToleranceThreshhold"
-      ],
-      "optional": [
-        "minCadToleranceThreshhold",
-        "cadToleranceReplacement",
-        "flatnessOverride",
-        "toleranceOverride",
-        "bendAngleToleranceOverride",
-        "circularityOverride",
-        "concentricityOverride",
-        "cylindricityOverride",
-        "diamToleranceOverride",
-        "parallelismOverride",
-        "perpendicularityOverride",
-        "positionToleranceOverride",
-        "profileOfSurfaceOverride",
-        "roughnessOverride",
-        "roughnessRzOverride",
-        "runoutOverride",
-        "straightnessOverride",
-        "symmetryOverride",
-        "totalRunoutOverride"
       ]
     },
     "propertyInfoMap": {
