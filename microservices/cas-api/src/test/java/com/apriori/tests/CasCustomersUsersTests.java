@@ -128,6 +128,7 @@ public class CasCustomersUsersTests {
             csvReader.close();
         } catch (Exception e) {
             logger.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
+            throw new IllegalArgumentException(e);
         }
         return fileData;
     }
