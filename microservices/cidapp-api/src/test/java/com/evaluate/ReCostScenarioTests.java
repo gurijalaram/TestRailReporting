@@ -208,7 +208,7 @@ public class ReCostScenarioTests {
     }
 
     private ScenarioResponse getScenarioResponseResponseWrapper(ComponentInfoBuilder componentInfo) {
-        return scenariosUtil.getScenarioRepresentation(componentInfo);
+        return scenariosUtil.getScenarioRepresentationCompleted(componentInfo);
     }
 
     private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(ComponentInfoBuilder componentInfo) {

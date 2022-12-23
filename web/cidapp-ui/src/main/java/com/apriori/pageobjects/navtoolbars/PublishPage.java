@@ -9,6 +9,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -181,7 +182,8 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public <T> T publish(ComponentInfoBuilder cidComponentItem, Class<T> klass) {
         modalDialogController.publish(klass);
-        new ScenariosUtil().getPublishedScenarioRepresentation(cidComponentItem, "PUBLISH", true);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector("div[data-testid='loader']"));
+        new ScenariosUtil().getScenarioRepresentationPublished(cidComponentItem, "PUBLISH", true);
         return PageFactory.initElements(driver, klass);
     }
 

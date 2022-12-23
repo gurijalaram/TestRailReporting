@@ -16,8 +16,9 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
     CIC_AGENT_WORKFLOW_RUN("api/workflows/%s/run"),
     CIC_AGENT_WORKFLOW_JOB_CANCEL("api/workflows/%s/jobs/%s/cancel"),
     CIC_UI_CREATE_WORKFLOW("Thingworx/Things/PLMC_NewSchedulePopup/Services/CreateJobDefinition"),
-    CIC_UI_DELETE_WORKFLOW("Thingworx/Things/PLMC_JobManagement/Services/DeleteJobDefinition");
+    CIC_UI_DELETE_WORKFLOW("Thingworx/Things/PLMC_JobManagement/Services/DeleteJobDefinition"),
 
+    CIC_PLM_WC_SEARCH("Windchill/servlet/rest/search/objects");
 
     private final String endpoint;
 
@@ -35,9 +36,10 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
         String cicUri = StringUtils.EMPTY;
         if (this.endpoint.contains("Thingworx")) {
             cicUri = PropertiesContext.get("${env}.ci-connect.ui_url") + String.format(getEndpointString(), variables);
+        } else if (this.endpoint.contains("Windchill")) {
+            cicUri = PropertiesContext.get("${env}.ci-connect.plm_wc_api_url") + String.format(getEndpointString(), variables);
         } else {
             cicUri = PropertiesContext.get("${env}.ci-connect.${customer}.agent_api_url") + String.format(getEndpointString(), variables);
-
         }
         return cicUri;
     }

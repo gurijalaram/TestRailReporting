@@ -3,8 +3,10 @@ package utils;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.KeyValueException;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
@@ -15,6 +17,8 @@ import entity.request.workflow.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobRun;
+import entity.response.PlmPart;
+import entity.response.PlmParts;
 import enums.CICAPIEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -26,10 +30,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class CicApiTestUtil extends TestUtil {
+
+    private static PlmParts plmParts;
 
     /**
      * Deserialize workflow data from json file to string.
@@ -95,7 +103,7 @@ public class CicApiTestUtil extends TestUtil {
      * Submit request to get CIC agent workflow job
      *
      * @param workFlowID - id of workflow to get job from
-     * @param jobID - id of job to get
+     * @param jobID      - id of job to get
      * @return response of AgentWorkflowJob object
      */
     public static ResponseWrapper<AgentWorkflowJob> getCicAgentWorkflowJob(String workFlowID, String jobID) {
@@ -227,12 +235,12 @@ public class CicApiTestUtil extends TestUtil {
      * Track the job status by workflow
      *
      * @param workflowID - workflow id to track status with
-     * @param jobID - job id to track status with
+     * @param jobID      - job id to track status with
      * @return boolean - true or false (true - Job is in finished state)
      */
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
-        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getResponseEntity().getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -258,5 +266,51 @@ public class CicApiTestUtil extends TestUtil {
      */
     public static String getCustomerName() {
         return PropertiesContext.get("${env}.ci-connect.${customer}.customer_name");
+    }
+
+    /**
+     * This method execute PLM Windchill Search REST API
+     * to search with partial part name or part number
+     *
+     * @param searchFilter SearchFilter ( created sample tests for usage)
+     * @return PlmParts Response object
+     */
+    public static PlmParts searchPlmWindChillParts(SearchFilter searchFilter) {
+        PlmPart plmPart = null;
+        QueryParams queryParams = new QueryParams();
+        List<String[]> paramKeyValue = Arrays.stream(searchFilter.getQueryParams()).map(o -> o.split(":")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_PLM_WC_SEARCH, PlmParts.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
+            {
+                put("Authorization", "Basic " + PropertiesContext.get("${env}.ci-connect.plm_wc_api_token"));
+            }
+        }).expectedResponseCode(HttpStatus.SC_OK);
+
+        return (PlmParts) HTTPRequest.build(requestEntity).get().getResponseEntity();
+
+    }
+
+    /**
+     * search and return single Plm Windchill Part
+     *
+     * @param searchFilter
+     * @return PlmPart response class
+     */
+    public static PlmPart getPlmPart(SearchFilter searchFilter) {
+        PlmParts plmParts = searchPlmWindChillParts(searchFilter);
+        PlmPart plmPart;
+        if (plmParts.getItems().size() > 1) {
+            plmPart = plmParts
+                .getItems()
+                .get(new Random().nextInt(plmParts.getItems().size()));
+        } else {
+            plmPart = plmParts.getItems().get(0);
+        }
+        return plmPart;
     }
 }
