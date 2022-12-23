@@ -451,6 +451,8 @@ qa-test:
     agent_api_authorization_key: DogCatMonkey
     agent_api_url: http://conqsct01:8811/
     plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
+    plm_wc_api_url: https://consvwc02.fbc.com/
+    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
     ap-int:
       customer_identity: 6C1F8C1D4D75
       agent_api_url: http://conqsct01:8811/
