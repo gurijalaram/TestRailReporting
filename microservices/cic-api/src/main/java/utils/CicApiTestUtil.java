@@ -139,14 +139,14 @@ public class CicApiTestUtil extends TestUtil {
     }
 
     /**
-     * Submit request to get CIC agent workflow job
+     * Submit request to get CIC agent workflow job status
      *
      * @param workFlowID - id of workflow to get job from
      * @param jobID      - id of job to get
      * @return response of AgentWorkflowJob object
      */
     public static AgentWorkflowJob getCicAgentWorkflowJob(String workFlowID, String jobID) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB, AgentWorkflowJob.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_STATUS, AgentWorkflowJob.class)
             .inlineVariables(workFlowID, jobID)
             .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setupHeader());
@@ -301,7 +301,7 @@ public class CicApiTestUtil extends TestUtil {
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getStatus();
-        while (!jobStatusList.contains(finalJobStatus)) {
+        while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }
@@ -330,8 +330,44 @@ public class CicApiTestUtil extends TestUtil {
             .body(workflowPartsRequestBuilder)
             .expectedResponseCode(expectedHttpStatus);
 
-
         return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Submit request to get CIC agent Workflow job results
+     *
+     * @param workFlowIdentity workflow identity
+     * @param jobIdentity      Workflow job Identity
+     * @param responseClass    expected response class
+     * @param httpStatus       expected http status code
+     * @param <T>              expected response type
+     * @return response class type
+     */
+    public static <T> T getCicAgentWorkflowJobResult(String workFlowIdentity, String jobIdentity, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_RESULT, responseClass)
+            .inlineVariables(workFlowIdentity, jobIdentity)
+            .expectedResponseCode(httpStatus);
+        requestEntity.headers(setupHeader());
+        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Submit request to get CIC agent Workflow job Parts results
+     *
+     * @param workFlowIdentity Workflow Identity
+     * @param jobIdentity      Workflow Job Identity
+     * @param partIdentity     workflow Job Part identity
+     * @param responseClass    expected response class
+     * @param httpStatus       expected http status code
+     * @param <T>              expected response type
+     * @return response class type
+     */
+    public static <T> T getCicAgentWorkflowJobPartsResult(String workFlowIdentity, String jobIdentity, String partIdentity, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, responseClass)
+            .inlineVariables(workFlowIdentity, jobIdentity, partIdentity)
+            .expectedResponseCode(httpStatus);
+        requestEntity.headers(setupHeader());
+        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
