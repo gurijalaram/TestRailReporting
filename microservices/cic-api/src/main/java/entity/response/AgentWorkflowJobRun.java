@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @JsonRootName("response")
 @Schema(location = "AgentWorkflowJobRunSchema.json")
 public class AgentWorkflowJobRun {
-    public String jobId;
+    private String jobId;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    public LocalDateTime startedAt;
+    private LocalDateTime startedAt;
 }

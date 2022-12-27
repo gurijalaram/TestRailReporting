@@ -48,7 +48,7 @@ public class CICIntegrationTests extends TestBase {
     UserCredentials currentUser = UserUtil.getUser();
     private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
-    private static ResponseWrapper<AgentWorkflowJobRun> agentWorkflowJobRunResponse;
+    private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
     private static String workflowName;
     private static String scenarioName;
     private static String workflowData;
@@ -120,11 +120,10 @@ public class CICIntegrationTests extends TestBase {
 
         //Run the workflow
         agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getResponseEntity().getJobId()).isNotNull();
+        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // Verify workflow job is finished.
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getResponseEntity().getJobId())).isTrue();
+        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
 
         // Delete the workflow
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
@@ -164,11 +163,10 @@ public class CICIntegrationTests extends TestBase {
 
         //Run the workflow
         agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getResponseEntity().getJobId()).isNotNull();
+        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // verify workflow job is finished
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getResponseEntity().getJobId())).isTrue();
+        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
 
         // Delete the workflow
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");

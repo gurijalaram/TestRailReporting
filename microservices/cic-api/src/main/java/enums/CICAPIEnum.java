@@ -15,6 +15,8 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
     CIC_AGENT_WORKFLOW_JOB("api/workflows/%s/jobs/%s"),
     CIC_AGENT_WORKFLOW_RUN("api/workflows/%s/run"),
     CIC_AGENT_WORKFLOW_JOB_CANCEL("api/workflows/%s/jobs/%s/cancel"),
+    CIC_AGENT_WORKFLOW_RUN_PARTS_LIST("api/workflows/%s/runPartList"),
+
     CIC_UI_CREATE_WORKFLOW("Thingworx/Things/PLMC_NewSchedulePopup/Services/CreateJobDefinition"),
     CIC_UI_DELETE_WORKFLOW("Thingworx/Things/PLMC_JobManagement/Services/DeleteJobDefinition"),
 
