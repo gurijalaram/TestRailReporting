@@ -12,6 +12,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
@@ -28,6 +29,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class UsersGrantApplicationAccessTests extends TestBase {
 
@@ -116,6 +118,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
 
     @Test
     @Description("Validate granted applications can be added by Add button")
+    @Category({SmokeTest.class})
     @TestRail(testCaseId = {"12515"})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
