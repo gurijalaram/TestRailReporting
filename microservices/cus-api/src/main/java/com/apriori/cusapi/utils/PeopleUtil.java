@@ -1,7 +1,12 @@
 package com.apriori.cusapi.utils;
 
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.objects.response.Users;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cusapi.entity.enums.CusAppAPIEnum;
 import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
+import com.apriori.cusapi.entity.request.UpdateUserRequest;
+import com.apriori.cusapi.entity.response.ErrorResponse;
 import com.apriori.cusapi.entity.response.PreferenceItemsResponse;
 import com.apriori.cusapi.entity.response.User;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -11,12 +16,13 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 
-import java.util.Map;
-
+@Slf4j
 public class PeopleUtil {
+
     /**
      * GET current user
      *
@@ -29,6 +35,42 @@ public class PeopleUtil {
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
+    }
+
+    /**
+     * UPDATE (PATCH) current user
+     *
+     * @param userCredentials - the user credentials
+     * @return user object
+     */
+    public User updateCurrentUser(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
+            .token(userCredentials.getToken())
+            .body(updateUserRequest);
+
+        ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).patch();
+        return userResponse.getResponseEntity();
+    }
+
+    /**
+     * UPDATE (PATCH) current user - bad request
+     *
+     * @param userCredentials - the user credentials
+     * @return ErrorResponse object
+     */
+    public ErrorResponse updateCurrentUserBadRequest(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, ErrorResponse.class)
+            .token(userCredentials.getToken())
+            .body(updateUserRequest);
+
+        return (ErrorResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+    }
+
+    private boolean verifyCurrentUserFromResponse(UserCredentials userCredentials, ResponseWrapper<Users> response) {
+        return response.getResponseEntity().getItems().stream()
+            .filter(w -> w.getEmail().equals(userCredentials.getEmail()))
+            .findFirst()
+            .isPresent();
     }
 
     /**
