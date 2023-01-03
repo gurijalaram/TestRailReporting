@@ -4,7 +4,6 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -39,7 +38,6 @@ public class GroupEditTests extends TestBase {
     private ExplorePage explorePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
-    private ComponentInfoBuilder componentInfoBuilder;
 
     @Test
     @TestRail(testCaseId = {"14723"})
@@ -207,7 +205,7 @@ public class GroupEditTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         List<ScenarioItem> componentItems = loginPage.login(currentUser)
-            .uploadMultiComponents(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
+            .uploadMultiComponentsCSS(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
                 scenarioName, currentUser);
 
         componentItems.forEach(component ->

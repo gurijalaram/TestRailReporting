@@ -41,7 +41,7 @@ public class RequestEntity {
     private EndpointEnum endpoint;
     private EndpointType endpointType = EndpointType.EXTERNAL;
     private Integer expectedResponseCode;
-    private boolean followRedirection = false;
+    private boolean followRedirection = true;
     private QueryParams queryParams;
     @Singular
     private Map<String, String> headers = new HashMap<>();
