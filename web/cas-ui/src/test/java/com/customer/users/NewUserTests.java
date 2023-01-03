@@ -25,13 +25,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class NewUserTests extends TestBase {
-
-    private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
 
     private Customer targetCustomer;
     private CdsTestUtil cdsTestUtil;
@@ -42,16 +38,13 @@ public class NewUserTests extends TestBase {
 
     @Before
     public void setup() {
-        Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
+        String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        email = STAFF_TEST_CUSTOMER.toLowerCase();
+        email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
-        targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
-                : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
 
         newUserPage = new CasLoginPage(driver)
