@@ -87,11 +87,9 @@ public class PsoController {
             attempts++;
         }
 
-        if (inputLocator(pso).getAttribute("value").isEmpty())
-        {
+        if (inputLocator(pso).getAttribute("value").isEmpty()) {
             return -0.0;
-        }
-        else {
+        } else {
             return Double.parseDouble(inputLocator(pso).getAttribute("value"));
         }
     }
