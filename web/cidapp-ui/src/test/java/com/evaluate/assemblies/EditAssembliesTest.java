@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -34,6 +35,7 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -1105,6 +1107,56 @@ public class EditAssembliesTest extends TestBase {
         componentsTreePage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "6595")
+    @Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
+    public void testEditPublicAssembly() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .openScenario(assemblyName, scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .setPagination();
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
+        softAssertions.assertThat(explorePage.getListOfScenarios(FLANGE, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }

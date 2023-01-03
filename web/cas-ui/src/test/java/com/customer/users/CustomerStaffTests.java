@@ -4,7 +4,6 @@ import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -34,20 +33,17 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.NoSuchElementException;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBase {
 
-    private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
-
     private UsersListPage usersListPage;
     private Customer targetCustomer;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
+    private String customerName;
     private String customerIdentity;
     private UserCreation userCreation;
     private IdentityHolder deleteIdentityHolder;
@@ -55,16 +51,12 @@ public class CustomerStaffTests extends TestBase {
 
     @Before
     public void setup() {
-        Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
+        customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String email = STAFF_TEST_CUSTOMER.toLowerCase();
+        String email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
-
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
-        targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
-                : targetCustomer;
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
@@ -212,7 +204,7 @@ public class CustomerStaffTests extends TestBase {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, STAFF_TEST_CUSTOMER, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         String licenseIdentity = license.getResponseEntity().getIdentity();
         String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
