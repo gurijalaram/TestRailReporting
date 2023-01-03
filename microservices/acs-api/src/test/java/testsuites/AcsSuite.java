@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.acs.ActiveAxesByScenarioIterationKeyTests;
 import tests.acs.ActiveDimensionsByScenarioIterationKeyTests;
+import tests.acs.AllMaterialStocksInfoTests;
 import tests.acs.ArtifactPropertiesTests;
 import tests.acs.ArtifactTableInfoTests;
 import tests.acs.AvailableRoutingsTests;
@@ -29,24 +30,25 @@ import tests.acs.UserPreferencesTests;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     AvailableRoutingsTests.class,
-    CreateMissingScenarioTests.class,
     ActiveAxesByScenarioIterationKeyTests.class,
     ActiveDimensionsByScenarioIterationKeyTests.class,
+    AllMaterialStocksInfoTests.class,
     ArtifactTableInfoTests.class,
     ArtifactPropertiesTests.class,
-    EnabledCurrencyRateVersionsTests.class,
-    PartPrimaryProcessGroupsTests.class,
-    ScenariosInfoTests.class,
+    CreateMissingScenarioTests.class,
     DisplayUnitsTests.class,
+    EnabledCurrencyRateVersionsTests.class,
+    LoadCadFileTests.class,
+    PartPrimaryProcessGroupsTests.class,
     ProductionDefaultsTests.class,
     ProductionInfoTests.class,
-    TolerancePolicyDefaultsTests.class,
-    UserPreferenceByNameTests.class,
-    UserPreferencesTests.class,
-    UnitVariantSettingsTests.class,
-    TwoDImageByScenarioIterationKeyTests.class,
     RoutingSelectionTests.class,
-    LoadCadFileTests.class
+    ScenariosInfoTests.class,
+    TolerancePolicyDefaultsTests.class,
+    TwoDImageByScenarioIterationKeyTests.class,
+    UnitVariantSettingsTests.class,
+    UserPreferenceByNameTests.class,
+    UserPreferencesTests.class
 })
 
 public class AcsSuite {

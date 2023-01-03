@@ -180,4 +180,15 @@ public class InputsController {
     public boolean isSelectSourceButtonEnabled(WebElement sourceComponentPencil) {
         return pageUtils.isElementEnabled(sourceComponentPencil);
     }
+
+    /**
+     * Closes the source model invalid message
+     *
+     * @param  closeButton
+     * @return new page object
+     */
+    public InputsController closeMessagePanel(WebElement closeButton) {
+        pageUtils.waitForElementAndClick(closeButton);
+        return this;
+    }
 }

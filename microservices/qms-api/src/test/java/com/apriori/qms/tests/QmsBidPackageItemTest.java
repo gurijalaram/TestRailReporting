@@ -25,7 +25,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.jws.soap.SOAPBinding;
 
 public class QmsBidPackageItemTest extends TestUtil {
 

@@ -207,7 +207,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1834", "1835", "1836", "1837"})
+    @TestRail(testCaseId = {"1834", "1835", "1836", "1837", "6491"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 

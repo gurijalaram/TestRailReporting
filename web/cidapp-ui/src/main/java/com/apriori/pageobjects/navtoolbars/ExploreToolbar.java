@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -276,8 +277,24 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser   - the user credentials
      * @return response object
      */
-    public List<ScenarioItem> uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
-        return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
+    public List<ScenarioItem> uploadMultiComponentsCSS(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
+        return new ComponentsUtil().postMultiComponentsQueryCSS(ComponentInfoBuilder.builder()
+            .resourceFiles(resourceFiles)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .build());
+    }
+
+    /**
+     * Upload multi-components via api
+     *
+     * @param resourceFiles - the resource files
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the user credentials
+     * @return response object
+     */
+    public List<ComponentIdentityResponse> uploadMultiComponentsCID(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
+        return new ComponentsUtil().postMultiComponentsQueryCID(ComponentInfoBuilder.builder()
             .resourceFiles(resourceFiles)
             .scenarioName(scenarioName)
             .user(currentUser)

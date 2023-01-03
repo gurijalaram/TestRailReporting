@@ -176,12 +176,12 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST new multicomponent
+     * Calls an api with POST verb to post multiple components
      *
      * @param componentInfo - the component object
      * @return response object
      */
-    public List<ScenarioItem> postMultiComponentsQueryCss(ComponentInfoBuilder componentInfo) {
+    public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
         List<CadFile> resources = postCadFiles(componentInfo);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
@@ -196,7 +196,6 @@ public class ComponentsUtil {
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())
                             .get(0))
-                        // TODO: 04/04/2022 cn - need to find a way to make this work for 1 scenario name also
                         .scenarioName(componentInfo.getScenarioName())
                         .build())
                 .collect(Collectors.toList()))
@@ -210,6 +209,44 @@ public class ComponentsUtil {
         return postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
             getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfo.getUser())
                 .stream()).collect(Collectors.toList());
+    }
+
+    /**
+     * Calls an api with POST verb to post multiple components
+     *
+     * @param componentInfo - the component object
+     * @return response object
+     */
+    public List<ComponentIdentityResponse> postMultiComponentsQueryCID(ComponentInfoBuilder componentInfo) {
+        List<CadFile> resources = postCadFiles(componentInfo);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+            .body("groupItems", componentInfo.getResourceFiles()
+                .stream()
+                .map(resourceFile ->
+                    ComponentRequest.builder()
+                        .filename(resourceFile.getName())
+                        .override(false)
+                        .resourceName(resources.stream()
+                            .filter(x -> x.getFilename().equals(resourceFile.getName()))
+                            .map(CadFile::getResourceName)
+                            .collect(Collectors.toList())
+                            .get(0))
+                        .scenarioName(componentInfo.getScenarioName())
+                        .build())
+                .collect(Collectors.toList()))
+            .token(componentInfo.getUser().getToken())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
+
+        componentInfo.setComponent(postComponentResponse.getResponseEntity());
+
+        return postComponentResponse.getResponseEntity().getSuccesses().stream().map(component ->
+            getComponentIdentityPart(ComponentInfoBuilder.builder()
+                .componentIdentity(component.getComponentIdentity())
+                .user(componentInfo.getUser())
+                .build(), HttpStatus.SC_OK)).collect(Collectors.toList());
     }
 
     /**

@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "cidPartNumber": {
+      "type": "string"
+    },
+    "cicStatus": {
+      "type": "string"
+    },
+    "cidPartLink": {
+      "type": "string"
+    },
+    "partId": {
+      "type": "string"
+    },
+    "partNumber": {
+      "type": "string"
+    },
+    "revisionNumber": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "scenarioName": {
+      "type": "string"
+    },
+    "costingResult": {
+      "type": "string"
+    },
+    "partType": {
+      "type": "string"
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "materialName": {
+          "type": "string"
+        },
+        "processGroupName": {
+          "type": "string"
+        },
+        "vpeName": {
+          "type": "string"
+        },
+        "annualVolume": {
+          "type": "integer"
+        },
+        "batchSize": {
+          "type": "integer"
+        },
+        "productionLife": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "materialName",
+        "processGroupName",
+        "vpeName",
+        "annualVolume",
+        "batchSize",
+        "productionLife"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "fullyBurdenedCost": {
+          "type": "number"
+        },
+        "dfmRisk": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number"
+        },
+        "materialCost": {
+          "type": "number"
+        },
+        "cycleTime": {
+          "type": "number"
+        },
+        "laborTime": {
+          "type": "number"
+        },
+        "finishMass": {
+          "type": "number"
+        },
+        "roughMass": {
+          "type": "number"
+        },
+        "utilization": {
+          "type": "number"
+        },
+        "routingName": {
+          "type": "string"
+        },
+        "dfmScore": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "fullyBurdenedCost",
+        "totalCost",
+        "materialCost",
+        "cycleTime",
+        "laborTime",
+        "finishMass",
+        "roughMass",
+        "utilization",
+        "routingName"
+      ],
+      "optional": [
+        "dfmRisk",
+        "dfmScore"
+      ]
+    }
+  },
+  "required": [
+    "cidPartNumber",
+    "cicStatus",
+    "cidPartLink",
+    "partId",
+    "partNumber",
+    "revisionNumber",
+    "description",
+    "scenarioName",
+    "costingResult",
+    "partType",
+    "input",
+    "result"
+  ]
+}
