@@ -528,7 +528,7 @@ public class ScenariosUtil {
         componentScenarioNames.forEach(component -> {
 
             ScenarioItem scenarioItem = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + component[0],
-                    SCENARIO_NAME_EQ.getKey() + component[1], SCENARIO_PUBLISHED_EQ.getKey() + "false")
+                    SCENARIO_NAME_EQ.getKey() + component[1], SCENARIO_PUBLISHED_EQ.getKey() + groupPublishRequest.getScenarioPublished())
                 .stream()
                 .findFirst()
                 .get();
