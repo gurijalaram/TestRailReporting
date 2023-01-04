@@ -3,8 +3,10 @@ package com.evaluate.dtc;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -30,6 +32,9 @@ public class SheetMetalDTCTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
+    private ToleranceDefaultsPage toleranceDefaultsPage;
+    private ExplorePage explorePage;
+    private InvestigationPage investigationPage;
     SoftAssertions softAssertions = new SoftAssertions();
 
     private UserCredentials currentUser;
@@ -205,9 +210,9 @@ public class SheetMetalDTCTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1834", "1835", "1836", "1837", "6491"})
+    @TestRail(testCaseId = {"1834", "1835", "1836", "1837", "6491", "6492", "6493", "6494"})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 
@@ -219,34 +224,33 @@ public class SheetMetalDTCTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
+        explorePage = loginPage.login(currentUser)
             .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class);
 
-        settingsPage = new SettingsPage(driver);
-        investigationPage = settingsPage.save(ExplorePage.class)
+        investigationPage = explorePage
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum.SHEET_METAL)
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
-            .selectInvestigationTopic("Holes and Fillets");
+            .selectTopic("Holes and Fillets");
 
-        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "Tool Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("Hole - Standard", "GCD Count"), is(equalTo("4")));
+        softAssertions.assertThat(investigationPage.getGcdCount("Hole - Standard (2 Tools)")).isEqualTo(4);
 
-        investigationPage.selectInvestigationTopic("Distinct Sizes Count");
+        investigationPage.selectTopic("Distinct Sizes Count");
 
-        assertThat(investigationPage.getInvestigationCell("Bend Radius", "Tool Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("Bend Radius", "GCD Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("Hole Size", "Tool Count"), is(equalTo("2")));
-        assertThat(investigationPage.getInvestigationCell("Hole Size", "GCD Count"), is(equalTo("4")));
+        softAssertions.assertThat(investigationPage.getGcdCount("Bend Radius (1 Tool)")).isEqualTo(1);
+        softAssertions.assertThat(investigationPage.getGcdCount("Hole Size (2 Tools)")).isEqualTo(4);
 
-        investigationPage.selectInvestigationTopic("Machining Setups");
+        investigationPage.selectTopic("Machining Setups");
 
-        assertThat(investigationPage.getInvestigationCell("SetupAxis:1", "GCD Count"), is(equalTo("14")));
-    }*/
+        softAssertions.assertThat(investigationPage.getGcdCount("SetupAxis:1")).isEqualTo(14);
+
+        softAssertions.assertAll();
+    }
 
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
