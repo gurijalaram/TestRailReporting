@@ -3,7 +3,9 @@ package utils;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
@@ -11,8 +13,13 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import entity.request.CostingInputs;
+import entity.request.WorkflowPart;
+import entity.request.WorkflowParts;
+import entity.request.WorkflowRequest;
 import entity.request.workflow.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
@@ -20,12 +27,14 @@ import entity.response.AgentWorkflowJobRun;
 import entity.response.PlmPart;
 import entity.response.PlmParts;
 import enums.CICAPIEnum;
+import enums.CICPartSelectionType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +45,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class CicApiTestUtil extends TestUtil {
-
-    private static PlmParts plmParts;
 
     /**
      * Deserialize workflow data from json file to string.
@@ -53,6 +60,38 @@ public class CicApiTestUtil extends TestUtil {
             log.error("FILE NOT FOUND!!!! " + fileName);
         }
         return fileContent;
+    }
+
+    /**
+     * De-serialize base workflow requests test data from json file
+     *
+     * @param cicPartSelectionType Enum CICPartSelectionType (REST or QUERY)
+     * @return WorkFlowRequest builder object
+     */
+    public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType) {
+        WorkflowRequest workflowRequestDataBuilder = null;
+        switch (cicPartSelectionType.getPartSelectionType()) {
+            case "REST":
+                workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateRestWorkFlowData.json", WorkflowRequest.class);
+                break;
+            default:
+                workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateQueryWorkFlowData.json", WorkflowRequest.class);
+        }
+        workflowRequestDataBuilder.setCustomer(getCustomerName());
+        workflowRequestDataBuilder.setPlmSystem(getAgent());
+        workflowRequestDataBuilder.setName("CIC_AGENT" + System.currentTimeMillis());
+        workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
+
+        return workflowRequestDataBuilder;
+    }
+
+    /**
+     * De-serialize base Job Definition from json file
+     *
+     * @return JobDefinition
+     */
+    public static JobDefinition getJobDefinitionData() {
+        return new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
     }
 
     /**
@@ -77,12 +116,12 @@ public class CicApiTestUtil extends TestUtil {
      * @param workFlowID - id of workflow to get
      * @return response of AgentWorkflow object
      */
-    public static ResponseWrapper<AgentWorkflow> getCicAgentWorkflow(String workFlowID) {
+    public static AgentWorkflow getCicAgentWorkflow(String workFlowID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW, AgentWorkflow.class)
             .inlineVariables(workFlowID)
             .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setupHeader());
-        return HTTPRequest.build(requestEntity).get();
+        return (AgentWorkflow) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -100,32 +139,32 @@ public class CicApiTestUtil extends TestUtil {
     }
 
     /**
-     * Submit request to get CIC agent workflow job
+     * Submit request to get CIC agent workflow job status
      *
      * @param workFlowID - id of workflow to get job from
      * @param jobID      - id of job to get
      * @return response of AgentWorkflowJob object
      */
-    public static ResponseWrapper<AgentWorkflowJob> getCicAgentWorkflowJob(String workFlowID, String jobID) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB, AgentWorkflowJob.class)
+    public static AgentWorkflowJob getCicAgentWorkflowJob(String workFlowID, String jobID) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_STATUS, AgentWorkflowJob.class)
             .inlineVariables(workFlowID, jobID)
             .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setupHeader());
-        return HTTPRequest.build(requestEntity).get();
+        return (AgentWorkflowJob) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
      * Submit request to run the CIC agent workflow
      *
-     * @param workflowId -
+     * @param workflowId - workflow identity
      * @return response of AgentWorkflowJob object
      */
-    public static ResponseWrapper<AgentWorkflowJobRun> runCicAgentWorkflow(String workflowId) {
+    public static AgentWorkflowJobRun runCicAgentWorkflow(String workflowId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, AgentWorkflowJobRun.class)
             .inlineVariables(workflowId)
             .expectedResponseCode(HttpStatus.SC_OK);
         requestEntity.headers(setupHeader());
-        return HTTPRequest.build(requestEntity).post();
+        return (AgentWorkflowJobRun) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -143,6 +182,25 @@ public class CicApiTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(header)
             .customBody(workflowData)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Submit CIC thingworx API to create a new workflow
+     *
+     * @param workflowRequestDataBuilder De-serialized worflow base json data file to WorkflowRequest Builder class
+     * @param session                    - Login to CI-Connect GUI to get JSession
+     * @return ResponseWrapper<String>
+     */
+    public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "*/*");
+        header.put("Content-Type", "application/json");
+        header.put("cookie", session.replace("[", "").replace("]", ""));
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
+            .headers(header)
+            .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -242,14 +300,14 @@ public class CicApiTestUtil extends TestUtil {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
-        finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getResponseEntity().getStatus();
+        finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }
             try {
                 TimeUnit.SECONDS.sleep(30);
-                finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getResponseEntity().getStatus();
+                finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getStatus();
                 logger.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
@@ -257,6 +315,59 @@ public class CicApiTestUtil extends TestUtil {
             }
         }
         return true;
+    }
+
+    /**
+     * submit run parts list api for cic agent workflow
+     *
+     * @param workflowId workflow Identity
+     * @return response class object
+     */
+    public static <T> T runCicAgentWorkflowPartList(String workflowId, WorkflowParts workflowPartsRequestBuilder, Class<T> responseClass, Integer expectedHttpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN_PARTS_LIST, responseClass)
+            .inlineVariables(workflowId)
+            .headers(setupHeader())
+            .body(workflowPartsRequestBuilder)
+            .expectedResponseCode(expectedHttpStatus);
+
+        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Submit request to get CIC agent Workflow job results
+     *
+     * @param workFlowIdentity workflow identity
+     * @param jobIdentity      Workflow job Identity
+     * @param responseClass    expected response class
+     * @param httpStatus       expected http status code
+     * @param <T>              expected response type
+     * @return response class type
+     */
+    public static <T> T getCicAgentWorkflowJobResult(String workFlowIdentity, String jobIdentity, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_RESULT, responseClass)
+            .inlineVariables(workFlowIdentity, jobIdentity)
+            .expectedResponseCode(httpStatus);
+        requestEntity.headers(setupHeader());
+        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Submit request to get CIC agent Workflow job Parts results
+     *
+     * @param workFlowIdentity Workflow Identity
+     * @param jobIdentity      Workflow Job Identity
+     * @param partIdentity     workflow Job Part identity
+     * @param responseClass    expected response class
+     * @param httpStatus       expected http status code
+     * @param <T>              expected response type
+     * @return response class type
+     */
+    public static <T> T getCicAgentWorkflowJobPartsResult(String workFlowIdentity, String jobIdentity, String partIdentity, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, responseClass)
+            .inlineVariables(workFlowIdentity, jobIdentity, partIdentity)
+            .expectedResponseCode(httpStatus);
+        requestEntity.headers(setupHeader());
+        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -312,5 +423,34 @@ public class CicApiTestUtil extends TestUtil {
             plmPart = plmParts.getItems().get(0);
         }
         return plmPart;
+    }
+
+    /**
+     * Build workflow run parts request data builder
+     *
+     * @param plmParts   PlmParts response class
+     * @param numOfParts - number of parts to build
+     * @return WorkflowParts data builder class
+     */
+    public static WorkflowParts getWorkflowPartDataBuilder(PlmParts plmParts, Integer numOfParts) {
+        List<PartData> partDataList = new TestDataService().getPartsFromCloud(numOfParts);
+        ArrayList<WorkflowPart> part = new ArrayList<>();
+        for (int i = 0; i < numOfParts; i++) {
+            part.add(WorkflowPart.builder()
+                .id(plmParts.getItems().get(i).getId())
+                .costingInputs(CostingInputs.builder()
+                    .processGroupName(partDataList.get(i).getProcessGroup())
+                    .materialName(partDataList.get(i).getMaterial())
+                    .vpeName(partDataList.get(i).getDigitalFactory())
+                    .scenarioName("SN" + System.currentTimeMillis())
+                    .annualVolume(partDataList.get(i).getAnnualVolume())
+                    .batchSize(partDataList.get(i).getBatchSize())
+                    .description("DS" + System.currentTimeMillis())
+                    .build())
+                .build());
+        }
+        return WorkflowParts.builder()
+            .parts(part)
+            .build();
     }
 }

@@ -1,0 +1,54 @@
+{
+  "customer": "%s",
+  "plmSystem": "%s",
+  "name": "%s",
+  "description": "%s",
+  "schedule": "0 0 0 1/1 * ? *",
+  "selectedEmailTemplate": "none",
+  "isEmailTemplateSelected": false,
+  "emailConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [{
+      "key": "CostRounding",
+      "value": "true"
+    }, {
+      "key": "aPrioriCost",
+      "value": "fullyBurdenedCost"
+    }]
+  },
+  "emailRecipientType": "field",
+  "isSchedulerEnabled": false,
+  "isEmailReportNameSelected": false,
+  "selectedEmailReportName": "none",
+  "isPlmWriteReportNameSelected": false,
+  "selectedPlmWriteReportName": "none",
+  "emailPartFilter": {},
+  "applyEmailFilter": false,
+  "applyEmailReportsFilter": false,
+  "applyPlmWriteReportsFilter": false,
+  "applyPlmWritePartFilter": false,
+  "useLatestRevision": false,
+  "jobMonitoringRecipients": "",
+  "partSelectionType": "REST"
+}
