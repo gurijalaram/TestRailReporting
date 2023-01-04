@@ -62,8 +62,8 @@ public class PeopleUtil {
             .token(userCredentials.getToken())
             .body(updateUserRequest)
             .expectedResponseCode(SC_BAD_REQUEST);
-
-        return (ErrorResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).patch();
+        return errorResponse.getResponseEntity();
     }
 
     /**
