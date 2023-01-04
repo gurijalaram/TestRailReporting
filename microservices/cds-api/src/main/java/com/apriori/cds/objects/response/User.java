@@ -43,7 +43,6 @@ public class User {
     private String customerIdentity;
     private String userType;
     private Boolean mfaRequired;
-    private Boolean hasCompleteProfile;
     private String mfaAuthenticator;
     private List<String> roles;
 }
