@@ -90,7 +90,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -110,7 +110,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, DRIVE);
 
         cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + DRIVE, SCENARIO_NAME_EQ.getKey() + newScenarioName, LAST_ACTION_EQ.getKey() + " publish")
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
@@ -160,7 +160,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -215,7 +215,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -271,7 +271,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -279,7 +279,7 @@ public class GroupPublishTests {
 
         scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND + "," + scenarioName);
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -340,7 +340,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(false)
@@ -361,7 +361,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -419,7 +419,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -439,7 +439,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND, DRIVE, JOINT);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -499,7 +499,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -520,7 +520,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND, DRIVE, JOINT);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -578,7 +578,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -599,7 +599,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
 
         PublishRequest publishRequest3 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -615,7 +615,7 @@ public class GroupPublishTests {
             .scenarioPublished(true)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, STAND + "," + scenarioName);
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, componentAssembly, STAND);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -665,7 +665,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -685,7 +685,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName);
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -738,7 +738,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)

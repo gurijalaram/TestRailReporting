@@ -2,7 +2,6 @@ package com.apriori.cidappapi.utils;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -23,7 +22,6 @@ import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -516,26 +514,25 @@ public class ScenariosUtil {
     /**
      * Post to publish group of scenarios
      *
-     * @param groupPublishRequest   - the group publish request object
-     * @param componentScenarioName - component and scenario name
+     * @param groupPublishRequest - the group publish request object
+     * @param componentInfo       - the component info builder object
+     * @param componentName       - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(GroupPublishRequest groupPublishRequest, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(GroupPublishRequest groupPublishRequest, ComponentInfoBuilder componentInfo, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        componentScenarioNames.forEach(component -> {
-
-            ScenarioItem scenarioItem = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + component[0],
-                    SCENARIO_NAME_EQ.getKey() + component[1], SCENARIO_PUBLISHED_EQ.getKey() + groupPublishRequest.getScenarioPublished())
+        Arrays.stream(componentName).forEach(component -> {
+            final ComponentInfoBuilder componentIdentifier = componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
                 .stream()
                 .findFirst()
                 .get();
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
-                .componentIdentity(scenarioItem.getComponentIdentity())
-                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .componentIdentity(componentIdentifier.getComponentIdentity())
+                .scenarioIdentity(componentIdentifier.getScenarioIdentity())
                 .build());
         });
 
