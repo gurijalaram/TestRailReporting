@@ -1160,4 +1160,63 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"6601", "6602"})
+    @Description("Validate user can open a public component from a private workspace")
+    public void testOpeningPublicComponentFromPrivateWorkspace() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails("PIN", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        evaluatePage = componentsTreePage.openAssembly(PIN, scenarioName);
+
+        softAssertions.assertThat(evaluatePage.getTabTitle()).contains("PIN");
+        softAssertions.assertThat(evaluatePage.getTabCount()).isEqualTo(2);
+
+        evaluatePage.editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }
