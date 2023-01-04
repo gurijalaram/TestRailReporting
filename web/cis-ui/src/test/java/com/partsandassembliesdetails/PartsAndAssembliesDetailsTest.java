@@ -1233,13 +1233,11 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("You");
 
-        partsAndAssembliesDetailsPage.shareScenario();
-
-        partsAndAssembliesDetailsPage.selectAUser("qa-automation-22@apriori.com")
+        partsAndAssembliesDetailsPage.shareScenario()
+                .selectAUser("qa-automation-22@apriori.com")
                 .clickOnInvite()
                 .clickOnCreatedDiscussion()
                 .clickMoreOption();
-        ;
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isUnAssignOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickUnAssignOption()
