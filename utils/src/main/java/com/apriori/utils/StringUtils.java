@@ -48,15 +48,15 @@ public class StringUtils {
     public static String generateString(int max) {
         Random random = new Random();
         return random.ints(97, 123)
-                .limit(max)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+            .limit(max)
+            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+            .toString();
     }
 
     /**
      * Generate a random string with special characters
      *
-     * @param max the maximum number of characters
+     * @param max               the maximum number of characters
      * @param specialCharacters an array of special characters to concatenate to the string
      * @return random string
      */
