@@ -15,9 +15,10 @@ import org.openqa.selenium.WebElement;
  * it to do a tri state checkbox.
  */
 public final class CheckboxComponent extends CommonComponent {
-    private static final String ATTRIBUTE_CHECK_ICON = "data-icon";
-    private static final String ATTRIBUTE_CHECK_ICON_CHECKED = "square-check";
-    private static final String ATTRIBUTE_CHECK_ICON_INDETERMINATE = "square-minus";
+    private static final String ATTRIBUTE_CHECK_ICON = "data-testid";
+    private static final String ATTRIBUTE_CHECK_ICON_CHECKED = "CheckBoxIcon";
+    private static final String ATTRIBUTE_CHECK_ICON_INDETERMINATE = "IndeterminateCheckBoxIcon";
+    private static final By BY_INPUT_CHECKBOX = By.cssSelector(".PrivateSwitchBase-input");
     private static final By BY_SVG = By.tagName("svg");
 
     /**
@@ -34,6 +35,15 @@ public final class CheckboxComponent extends CommonComponent {
      */
     private WebElement getSvg() {
         return getPageUtils().waitForElementToAppear(BY_SVG, PageUtils.DURATION_INSTANT, getRoot());
+    }
+
+    /**
+     * Gets the underlying checkbox input.
+     *
+     * @return the underlying checkbox input element
+     */
+    private WebElement getCheckboxInput() {
+        return getPageUtils().waitForElementToAppear(BY_INPUT_CHECKBOX, PageUtils.DURATION_INSTANT, getRoot());
     }
 
     /**
@@ -88,11 +98,11 @@ public final class CheckboxComponent extends CommonComponent {
         if (isIndeterminate() && !checked) {
             // This is a special case where if we want the check state to be empty, and the
             // current check state is indeterminate, then we have to check it twice.
-            getSvg().click();
+            getCheckboxInput().click();
             getPageUtils().waitForCondition(this::isChecked, PageUtils.DURATION_FAST);
         }
 
-        getSvg().click();
+        getCheckboxInput().click();
         return this;
     }
 }
