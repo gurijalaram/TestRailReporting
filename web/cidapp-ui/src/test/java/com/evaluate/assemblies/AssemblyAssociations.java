@@ -41,7 +41,7 @@ public class AssemblyAssociations extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     @Test
-    @TestRail(testCaseId = {"11955", "11956", "11957", "6522"})
+    @TestRail(testCaseId = {"11955", "11956", "11957", "6522", "6605"})
     @Description("Validate assembly associations takes preference for private sub-components")
     public void testPrivateAssemblyAssociationsPrivatePreference() {
         final String hinge_assembly = "Hinge assembly";
@@ -250,7 +250,7 @@ public class AssemblyAssociations extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11960"})
+    @TestRail(testCaseId = {"11960", "6600"})
     @Description("Validate a private sub component will take preference over a public iteration when editing a public assembly")
     public void testEditPublicAssemblyAssociationsPrivatePreference() {
         final String hinge_assembly = "Hinge assembly";
