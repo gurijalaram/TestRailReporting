@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cusapi.entity.request.UpdateUserRequest;
 import com.apriori.cusapi.entity.request.UserProfile;
 import com.apriori.cusapi.entity.response.ErrorResponse;
@@ -18,9 +17,11 @@ import org.junit.Test;
 
 public class UserTests {
     private static UserCredentials currentUser;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private PeopleUtil peopleUtil = new PeopleUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private static String badRequest = "Bad Request";
+    private static String expectedMessageFamilyName = "'familyName' can not be changed";
+    private static String expectedMessageGivenName = "'givenName' can not be changed";
 
     @Before
     public void setupUser() {
@@ -32,7 +33,7 @@ public class UserTests {
     @Description("Verify GET current user endpoint test")
     public void verifyCurrentUserTest() {
         User user = new PeopleUtil().getCurrentUser(currentUser);
-        softAssertions.assertThat(user.getUserType()).isEqualTo("AP_STAFF_USER");
+        softAssertions.assertThat(user.getEmail()).isEqualTo(currentUser.getEmail());
         softAssertions.assertAll();
     }
 
@@ -113,9 +114,8 @@ public class UserTests {
 
         ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest);
 
-        softAssertions.assertThat(response.getMessage()).isEqualTo("'familyName' can not be changed");
-        softAssertions.assertThat(response.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(response.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(response.getMessage()).isEqualTo(expectedMessageFamilyName);
+        softAssertions.assertThat(response.getError()).isEqualTo(badRequest);
         softAssertions.assertAll();
 
         UpdateUserRequest  updateUserRequest2 = UpdateUserRequest.builder()
@@ -126,9 +126,8 @@ public class UserTests {
 
         ErrorResponse response2 = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest2);
 
-        softAssertions.assertThat(response2.getMessage()).isEqualTo("'givenName' can not be changed");
-        softAssertions.assertThat(response2.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(response2.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(response2.getMessage()).isEqualTo(expectedMessageGivenName);
+        softAssertions.assertThat(response2.getError()).isEqualTo(badRequest);
         softAssertions.assertAll();
     }
 
@@ -144,9 +143,8 @@ public class UserTests {
 
         ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest);
 
-        softAssertions.assertThat(response.getMessage()).isEqualTo("'familyName' can not be changed");
-        softAssertions.assertThat(response.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(response.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(response.getMessage()).isEqualTo(expectedMessageFamilyName);
+        softAssertions.assertThat(response.getError()).isEqualTo(badRequest);
         softAssertions.assertAll();
 
         UpdateUserRequest  updateUserRequest2 = UpdateUserRequest.builder()
@@ -157,9 +155,8 @@ public class UserTests {
 
         ErrorResponse response2 = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest2);
 
-        softAssertions.assertThat(response2.getMessage()).isEqualTo("'givenName' can not be changed");
-        softAssertions.assertThat(response2.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(response2.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(response2.getMessage()).isEqualTo(expectedMessageGivenName);
+        softAssertions.assertThat(response2.getError()).isEqualTo(badRequest);
         softAssertions.assertAll();
     }
 }

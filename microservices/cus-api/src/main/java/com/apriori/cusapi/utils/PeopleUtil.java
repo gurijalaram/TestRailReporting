@@ -1,8 +1,7 @@
 package com.apriori.cusapi.utils;
 
-import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Users;
-import com.apriori.cds.utils.CdsTestUtil;
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+
 import com.apriori.cusapi.entity.enums.CusAppAPIEnum;
 import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
 import com.apriori.cusapi.entity.request.UpdateUserRequest;
@@ -61,16 +60,10 @@ public class PeopleUtil {
     public ErrorResponse updateCurrentUserBadRequest(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, ErrorResponse.class)
             .token(userCredentials.getToken())
-            .body(updateUserRequest);
+            .body(updateUserRequest)
+            .expectedResponseCode(SC_BAD_REQUEST);
 
         return (ErrorResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
-    }
-
-    private boolean verifyCurrentUserFromResponse(UserCredentials userCredentials, ResponseWrapper<Users> response) {
-        return response.getResponseEntity().getItems().stream()
-            .filter(w -> w.getEmail().equals(userCredentials.getEmail()))
-            .findFirst()
-            .isPresent();
     }
 
     /**
