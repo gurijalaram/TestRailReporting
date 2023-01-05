@@ -1,20 +1,15 @@
 package com.apriori.customeradmin;
 
-import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.login.CasLoginPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class NavToolbar extends LoadableComponent<NavToolbar> {
-
-    private static final Logger logger = LoggerFactory.getLogger(NavToolbar.class);
+@Slf4j
+public class NavToolbar extends EagerPageComponent<NavToolbar> {
 
     @FindBy(css = "img[alt='Application Logo']")
     private WebElement aprioriLogo;
@@ -43,15 +38,8 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     @FindBy(xpath = "//button[.='Logout']")
     private WebElement logoutLink;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-
     public NavToolbar(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
     }
 
     @Override
@@ -61,8 +49,8 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(aprioriLogo);
-        pageUtils.waitForElementAppear(customersButton);
+        getPageUtils().waitForElementAppear(aprioriLogo);
+        getPageUtils().waitForElementAppear(customersButton);
     }
 
     /**
@@ -71,13 +59,13 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
      * @return new page object
      */
     public CasLoginPage logout() {
-        pageUtils.waitForElementAndClick(userDropdown);
-        pageUtils.waitForElementAndClick(logoutLink);
-        return new CasLoginPage(driver);
+        getPageUtils().waitForElementAndClick(userDropdown);
+        getPageUtils().waitForElementAndClick(logoutLink);
+        return new CasLoginPage(getDriver());
     }
 
     public CustomerAdminPage clickCustomersButton() {
-        pageUtils.waitForElementAndClick(customersButton);
-        return new CustomerAdminPage(driver);
+        getPageUtils().waitForElementAndClick(customersButton);
+        return new CustomerAdminPage(getDriver());
     }
 }

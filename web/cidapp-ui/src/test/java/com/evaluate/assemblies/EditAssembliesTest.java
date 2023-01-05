@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -19,6 +20,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -31,7 +33,9 @@ import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -108,7 +112,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "6076"})
+    @TestRail(testCaseId = {"10799", "6076", "6515"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
@@ -140,6 +144,8 @@ public class EditAssembliesTest extends TestBase {
             .openScenario(assemblyName, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
+        softAssertions.assertThat(evaluatePage.isAnnualVolumeInputEnabled()).isEqualTo(false);
+        softAssertions.assertThat(evaluatePage.isAnnualYearsInputEnabled()).isEqualTo(false);
 
         evaluatePage.editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
@@ -460,7 +466,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10813", "10815"})
+    @TestRail(testCaseId = {"10813", "10815", "11032"})
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
     public void testShallowEditPrivateLockedRename() {
         final String assemblyName = "Hinge assembly";
@@ -476,6 +482,8 @@ public class EditAssembliesTest extends TestBase {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String refreshMessage = "This assembly has uncosted changes. If you continue, these changes will be lost.";
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -511,11 +519,16 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(newScenarioName)).isTrue();
 
+        evaluatePage.selectDigitalFactory(DigitalFactoryEnum.APRIORI_GERMANY)
+            .clickRefresh(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getWarningMessageText()).contains(refreshMessage);
+
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"10814", "6596"})
+    @TestRail(testCaseId = {"10814", "6596", "6046"})
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
         final String assemblyName = "Hinge assembly";
@@ -599,7 +612,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -607,20 +619,20 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
         subComponentNames.forEach(subcomponentName ->
-            assertThat(componentsTablePage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTreePage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTablePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"10896", "10898", "5619"})
+    @TestRail(testCaseId = {"10896", "10898", "5619", "5428"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -656,7 +668,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
@@ -665,10 +676,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -769,7 +780,6 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)
@@ -781,10 +791,10 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
 
-        componentsTablePage = editScenarioStatusPage.close(ComponentsTablePage.class);
+        componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsTablePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -892,21 +902,21 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
 
-        componentsTablePage = evaluatePage.openComponents()
-            .selectTableView()
+        componentsTreePage = evaluatePage.openComponents()
             .checkSubcomponentState(componentAssembly, BIG_RING + "," + SMALL_RING + "," + PIN);
 
         subComponentNames.forEach(subcomponent ->
-            assertThat(componentsTablePage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
+            assertThat(componentsTreePage.getRowDetails(subcomponent, scenarioName), hasItem(StatusIconEnum.PUBLIC.getStatusIcon())));
 
         subComponentNames.forEach(subcomponent ->
-            softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
+            softAssertions.assertThat(componentsTreePage.getListOfScenariosWithStatus(subcomponent, scenarioName, ScenarioStateEnum.NOT_COSTED)).isEqualTo(true));
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"12040", "11954", "6521", "10874"})
+    @Issue("BA-2764")
+    @TestRail(testCaseId = {"12040", "11954", "6521", "10874", "11027"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
         String assemblyName = "flange c";
@@ -972,6 +982,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2764")
     @TestRail(testCaseId = {"12037", "12039"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
@@ -1093,4 +1104,112 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = "6595")
+    @Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
+    public void testEditPublicAssembly() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .openScenario(assemblyName, scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .setPagination();
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
+        softAssertions.assertThat(explorePage.getListOfScenarios(FLANGE, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6601", "6602"})
+    @Description("Validate user can open a public component from a private workspace")
+    public void testOpeningPublicComponentFromPrivateWorkspace() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails("PIN", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        evaluatePage = componentsTreePage.openAssembly(PIN, scenarioName);
+
+        softAssertions.assertThat(evaluatePage.getTabTitle()).contains("PIN");
+        softAssertions.assertThat(evaluatePage.getTabCount()).isEqualTo(2);
+
+        evaluatePage.editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }

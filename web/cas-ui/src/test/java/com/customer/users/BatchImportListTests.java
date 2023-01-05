@@ -1,11 +1,5 @@
 package com.customer.users;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.core.IsEqual.equalTo;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
@@ -15,8 +9,8 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
-import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
@@ -35,6 +29,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +44,7 @@ public class BatchImportListTests extends TestBase {
     private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
 
     private ImportPage importPage;
+    private SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
@@ -97,7 +93,6 @@ public class BatchImportListTests extends TestBase {
     @Description("New CSV file with users can be uploaded in CAS")
     @TestRail(testCaseId = {"4344", "4361", "4354", "4357", "4352", "13234"})
     public void testUploadCsvNewUsers() {
-        SoftAssertions soft = new SoftAssertions();
         cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
         ImportPage uploadUsers = importPage.refreshBatchFilesList()
             .validateImportUsersTableHasCorrectColumns("User Name", "userName", soft)
@@ -110,7 +105,6 @@ public class BatchImportListTests extends TestBase {
             .validateImportUsersTableHasCorrectColumns("Department", "department", soft)
             .validateImportUsersTableHasCorrectColumns("Created At", "createdAt", soft)
             .validateImportUsersTableHasCorrectColumns("Created By", "createdByName", soft);
-        soft.assertAll();
 
         PageUtils utils = new PageUtils(getDriver());
         long pageSize = 10;
@@ -135,15 +129,16 @@ public class BatchImportListTests extends TestBase {
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         long expected = usersTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
-        assertThat("The selection is not holding across pages.", expected, is(equalTo(selected)));
-        assertThat(importPage.canLoad(), is(true));
+        soft.assertThat(expected).overridingErrorMessage("The selection is not holding across pages.").isEqualTo(selected);
+        soft.assertThat(importPage.canLoad()).isTrue();
 
         importPage.clickRemoveButton()
             .clickCancelConfirmRemove()
             .clickRemoveButton()
             .clickOkConfirmRemove(fileName);
 
-        assertThat(importPage.isBatchFileDisplayed(fileName), is(equalTo(false)));
+        soft.assertThat(importPage.isBatchFileDisplayed(fileName)).isFalse();
+        soft.assertAll();
     }
 
     private List<User> collectUsers(String customerIdentity) {
@@ -157,13 +152,14 @@ public class BatchImportListTests extends TestBase {
     }
 
     @Test
+    @Category({SmokeTest.class})
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(testCaseId = {"5598", "5599", "4360", "4353", "4358", "4359"})
     public void testLoadUsersFromFile() {
         cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
 
-        assertThat(uploadUsers.getFieldName(), containsInRelativeOrder("Users in Total:", "Successfully Loaded:", "Failed Loaded:", "Created By:", "Created At:"));
+        soft.assertThat(uploadUsers.getFieldName()).containsExactly("Users in Total:", "Successfully Loaded:", "Failed Loaded:", "Created By:", "Created At:");
 
         PageUtils utils = new PageUtils(getDriver());
         long pageSize = 10;
@@ -176,7 +172,7 @@ public class BatchImportListTests extends TestBase {
         checkHeader.check(true);
 
         long expected = usersTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
-        assertThat("The selection is not holding across pages.", expected, is(equalTo(pageSize)));
+        soft.assertThat(expected).overridingErrorMessage("The selection is not holding across pages.").isEqualTo(pageSize);
 
         importPage.loadUsers()
             .refreshUsersList();
@@ -186,20 +182,21 @@ public class BatchImportListTests extends TestBase {
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         long loaded = usersTable.getRows().filter((row) -> row.getCell("cdsStatus").hasValue("loaded")).count();
-        assertThat("The new batch import users were not loaded", loaded, is(greaterThan(0L)));
+        soft.assertThat(loaded).overridingErrorMessage("The new batch import users were not loaded").isGreaterThan(0L);
 
-        UsersListPage newUsers = new UsersPage(driver).goToCustomerStaff();
+        UsersListPage newUsers = importPage.goToCustomerStaff();
 
         SourceListComponent uploadedUsers = newUsers.getUsersList();
         TableComponent uploadUsersTable = Obligation.mandatory(uploadedUsers::getTable, "The users table is missing.");
 
         long addedUsers = uploadUsersTable.getRows().count();
-        assertThat(addedUsers, is(equalTo(pageSize)));
+        soft.assertThat(addedUsers).isEqualTo(pageSize);
 
-        importPage = new UsersPage(driver).goToImport()
+        importPage = newUsers.goToImport()
             .refreshBatchFilesList();
 
-        assertThat(importPage.getCardFieldValue("successUsers"), is(equalTo("10")));
+        soft.assertThat(importPage.getCardFieldValue("successUsers")).isEqualTo("10");
+        soft.assertAll();
 
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
@@ -230,7 +227,8 @@ public class BatchImportListTests extends TestBase {
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         long loaded = usersTable.getRows().filter((row) -> row.getCell("cdsStatus").hasValue("failed")).count();
-        assertThat("The new batch import users were not loaded", loaded, is(greaterThan(1L)));
+        soft.assertThat(loaded).overridingErrorMessage("The new batch import users were not loaded").isGreaterThan(1L);
+        soft.assertAll();
 
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);

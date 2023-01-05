@@ -20,6 +20,7 @@ import static com.utils.PartNamesEnum.WASHER;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -43,6 +44,7 @@ public class LargeGroupAssemblyTests extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private static UserCredentials currentUser;
     private static String scenarioName;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -83,10 +85,9 @@ public class LargeGroupAssemblyTests extends TestBase {
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void testPublishButtonAvailability() {
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(
                 CENTRE_BOLT.getPartName() + ", " + scenarioName + "",
                 CENTRE_WASHER.getPartName() + ", " + scenarioName + "",
@@ -99,11 +100,11 @@ public class LargeGroupAssemblyTests extends TestBase {
                 MECHANISM_BODY.getPartName() + ", " + scenarioName + "",
                 PADDLE_BAR.getPartName() + ", " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
-        componentsTablePage.multiSelectSubcomponents(PIN.getPartName() + ", " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents(PIN.getPartName() + ", " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
 
         softAssertions.assertAll();
     }

@@ -7,22 +7,26 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
@@ -56,8 +60,10 @@ public class ActionsTests extends TestBase {
     private AssignPage assignPage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UpdateCadFilePage updateCadFilePage;
 
     public ActionsTests() {
         super();
@@ -82,7 +88,7 @@ public class ActionsTests extends TestBase {
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -131,7 +137,7 @@ public class ActionsTests extends TestBase {
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -183,7 +189,7 @@ public class ActionsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -233,7 +239,7 @@ public class ActionsTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .clickActions()
             .info()
@@ -313,12 +319,12 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
 
         infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -353,12 +359,12 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
 
         assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
+            .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -394,12 +400,12 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -418,7 +424,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187", "7271", "6199", "6339"})
+    @TestRail(testCaseId = {"7187", "7271", "6199", "6339", "5438"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -437,7 +443,7 @@ public class ActionsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -511,7 +517,7 @@ public class ActionsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -754,7 +760,7 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
@@ -859,6 +865,51 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
         softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
         softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5440"})
+    @Description("User can not update the 3D CAD with a differently named 3D CAD file")
+    public void updateWithDifferentCADFile() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName = "Bishop";
+        final String extension = ".SLDPRT";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String componentName2 = "Machined Box AMERICAS";
+        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension);
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        updateCadFilePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
+            .updateCadFile(resourceFile2);
+
+        final String expectedError = "The supplied CAD file (" + componentName2 + extension + ") cannot be used for this scenario. The name of the file must be " + componentName + extension;
+        assertThat(updateCadFilePage.getFileInputError(), containsString(expectedError));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5443"})
+    @Description("Toolbar options are disabled correctly in appropriate contexts")
+    public void buttonsDisabledByDefault() {
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isEditButtonEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isActionsDropdownEnabled()).isFalse();
+        softAssertions.assertThat(explorePage.isCostButtonEnabled()).isFalse();
 
         softAssertions.assertAll();
     }

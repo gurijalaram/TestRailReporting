@@ -2,7 +2,6 @@ package com.apriori.newcustomer;
 
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage> {
+public class CustomerProfilePage extends CustomerWorkspacePage {
     @FindBy(className = "customer-profile")
     private WebElement root;
 
@@ -81,14 +80,13 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     @FindBy(className = "checkbox-icon")
     private WebElement statusCheckbox;
 
-
     /**
      * Initializes a new instance of this object.
      *
      * @param driver The web driver used to query the entire page.
      */
     public CustomerProfilePage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
     }
 
     /**

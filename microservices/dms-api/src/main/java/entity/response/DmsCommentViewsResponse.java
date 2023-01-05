@@ -12,5 +12,5 @@ import java.util.ArrayList;
 @JsonRootName("response")
 @Schema(location = "DmsCommentViewsResponseSchema.json")
 public class DmsCommentViewsResponse extends Pagination {
-    public ArrayList<DmsCommentViewResponse> items;
+    private ArrayList<DmsCommentViewResponse> items;
 }

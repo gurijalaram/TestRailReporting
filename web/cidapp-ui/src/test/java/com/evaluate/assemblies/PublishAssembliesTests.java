@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -49,6 +50,7 @@ public class PublishAssembliesTests extends TestBase {
     private File assembly;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private PublishPage publishPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -105,7 +107,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11812"})
+    @TestRail(testCaseId = {"11812", "6042"})
     @Description("Verify publish scenario modal appears when publish button is clicked")
     public void testIncludeSubcomponentsAndCost() {
         final String FLANGE = "flange";
@@ -313,7 +315,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11813", "11814", "11808"})
+    @TestRail(testCaseId = {"11813", "11814", "11808", "6051"})
     @Description("Validate public scenarios are overridden from publish modal")
     public void testOverridePublicScenarios() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -437,7 +439,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778", "6746", "6615", "6616", "6617"})
+    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778", "6746", "6615", "6616", "6617", "6056", "6057"})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();
@@ -468,7 +470,7 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        String scenarioCreatedByName = componentAssembly.getScenarioItem().getScenarioCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(componentAssembly).getCreatedByName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)

@@ -368,16 +368,7 @@ public abstract class SDSTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
-                    .materialName(componentInfoBuilder.getMaterial())
-                    .annualVolume(5500)
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .propertiesToReset(null)
-                    .build());
+                .body("costingTemplate", componentInfoBuilder.getCostingTemplate());
 
         ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
 

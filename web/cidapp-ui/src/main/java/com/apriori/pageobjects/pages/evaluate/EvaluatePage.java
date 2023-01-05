@@ -162,6 +162,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".PrivateSwitchBase-input")
     private WebElement checkBoxInput;
 
+    @FindBy(css = "[data-icon = 'xmark']")
+    private WebElement closeInvalidSourcePanelButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -247,6 +250,15 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Checks if annual volume input is enabled
+     *
+     * @return boolean
+     */
+    public boolean isAnnualVolumeInputEnabled() {
+        return pageUtils.isElementEnabled(annualVolumeInput);
+    }
+
+    /**
      * Enters the years of annual volume
      *
      * @param productionLife - the years
@@ -255,6 +267,15 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage enterAnnualYears(String productionLife) {
         inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
+    }
+
+    /**
+     * Checks if years of annual volume input is enabled
+     *
+     * @return boolean
+     */
+    public boolean isAnnualYearsInputEnabled() {
+        return pageUtils.isElementEnabled(productionLifeInput);
     }
 
     /**
@@ -815,5 +836,42 @@ public class EvaluatePage extends EvaluateToolbar {
     public boolean isMachineOptionsCheckboxSelected() {
         return inputsController.isMachineOptionsCheckboxSelected(checkBoxInput);
     }
-}
 
+    /**
+     * Get warning message
+     *
+     * @return string
+     */
+    public String getWarningMessageText() {
+        By refreshWarningMessage = By.xpath("//div[@role='dialog']//div[contains(text(),'This assembly has uncosted changes.')]");
+        return pageUtils.waitForElementToAppear(refreshWarningMessage).getAttribute("textContent");
+    }
+
+    /**
+     * Checks if the select source model button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isSelectSourceButtonEnabled() {
+        return inputsController.isSelectSourceButtonEnabled(sourceComponentPencil);
+    }
+
+    /**
+     * Closes the source model invalid message
+     *
+     * @return new page object
+     */
+    public EvaluatePage closeMessagePanel() {
+        inputsController.closeMessagePanel(closeInvalidSourcePanelButton);
+        return this;
+    }
+
+    /**
+     *  Gets count of open tabs
+     *
+     * @return int - number of open tabs
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
+    }
+}

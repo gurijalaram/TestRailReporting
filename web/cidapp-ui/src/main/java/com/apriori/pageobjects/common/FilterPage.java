@@ -33,7 +33,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement saveAsButton;
     @FindBy(css = "[data-icon='pencil']")
     private WebElement renameButton;
-    @FindBy(css = "button [data-icon='times-circle']")
+    @FindBy(css = "button [data-icon='circle-xmark']")
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
@@ -51,6 +51,10 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement clearAllCriteriaBtn;
     @FindBy(xpath = "//button[contains(.,'Cancel')]")
     private WebElement cancelBtn;
+    @FindBy(css = ".btn-danger")
+    private WebElement deleteFilterBtn;
+    @FindBy(xpath = "//button[.='Rename']")
+    private WebElement renameFilterBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -406,5 +410,63 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public <T> T save(Class<T> klass) {
         return modalDialogController.save(klass);
+    }
+
+    /**
+     * Checks if delete button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteFilterBtn).isEnabled();
+    }
+
+    /**
+     * Checks if rename button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isRenameButtonEnabled() {
+        return pageUtils.waitForElementToAppear(renameFilterBtn).isEnabled();
+    }
+
+    /**
+     * Checks if Name field is displayed
+     *
+     * @return true/false
+     */
+    public boolean isNameFieldDisplayed() {
+        return pageUtils.waitForElementToAppear(nameInput).isDisplayed();
+    }
+
+    /**
+     * Checks if Cancel button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isCancelBtnDisplayed() {
+        return pageUtils.waitForElementToAppear(cancelBtn).isDisplayed();
+    }
+
+    /**
+     * Gets the value of the field
+     *
+     * @return String
+     */
+    public String getFilterValue(PropertyEnum propertyEnum) {
+        index = getIndex();
+        if (PropertyEnum.inputGroup.contains(propertyEnum)) {
+            return pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).getAttribute("value");
+        }
+        return pageUtils.waitForElementToAppear(By.xpath(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index))).getAttribute("value");
+    }
+
+    /**
+     * Get clickable status of Save button
+     *
+     * @return Boolean value of Save button status
+     */
+    public Boolean isSaveEnabled() {
+        return modalDialogController.isSaveEnabled();
     }
 }

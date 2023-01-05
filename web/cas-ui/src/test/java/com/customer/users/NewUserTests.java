@@ -1,10 +1,5 @@
 package com.customer.users;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
@@ -30,13 +25,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class NewUserTests extends TestBase {
-
-    private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
 
     private Customer targetCustomer;
     private CdsTestUtil cdsTestUtil;
@@ -47,16 +38,13 @@ public class NewUserTests extends TestBase {
 
     @Before
     public void setup() {
-        Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
+        String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        email = STAFF_TEST_CUSTOMER.toLowerCase();
+        email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
-        targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
-                : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
 
         newUserPage = new CasLoginPage(driver)
@@ -69,7 +57,9 @@ public class NewUserTests extends TestBase {
 
     @After
     public void teardown() {
-        cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+        if (userIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+        }
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
@@ -113,8 +103,6 @@ public class NewUserTests extends TestBase {
         soft.assertThat(newUserPage.getFieldFeedback("family-name"))
                 .isEqualTo("Enter a family name.");
 
-        soft.assertAll();
-
         newUserPage.inputGivenName("Test")
                .inputFamilyName("User")
                .save(UserProfilePage.class);
@@ -126,16 +114,19 @@ public class NewUserTests extends TestBase {
         TableComponent usersTable = Obligation.mandatory(users::getTable, "The users list table is missing");
 
         long rows = usersTable.getRows().count();
-        assertThat("There are no users on a page.", rows, is(greaterThan(0L)));
+        soft.assertThat(rows).overridingErrorMessage("There are no users on a page.").isGreaterThan(0L);
+        soft.assertAll();
     }
 
     @Test
     @Description("Clicking the cancel button returns the user to the user list.")
     @TestRail(testCaseId = {"4072"})
     public void testCancelReturnsToTheUserListPage() {
+        SoftAssertions soft = new SoftAssertions();
         UsersListPage actual = newUserPage
                 .formFillNewUserDetails("newUser", "email@com", "givenName", "familyName")
                 .cancel(UsersListPage.class);
-        assertThat(actual, is(notNullValue()));
+        soft.assertThat(actual).isNotNull();
+        soft.assertAll();
     }
 }

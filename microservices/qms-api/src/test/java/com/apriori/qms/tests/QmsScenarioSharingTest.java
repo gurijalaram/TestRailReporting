@@ -50,9 +50,9 @@ public class QmsScenarioSharingTest extends TestUtil {
     @TestRail(testCaseId = {"15475"})
     @Description("get project users ")
     public void getScenarioProjectUsers() {
-        ResponseWrapper<ScenarioProjectUserResponse> responseWrapper = QmsScenarioDiscussionResources.getScenarioProjectUsers(
+        ScenarioProjectUserResponse responseWrapper = QmsScenarioDiscussionResources.getScenarioProjectUsers(
             scenarioItem.getComponentIdentity(),scenarioItem.getScenarioIdentity(),currentUser);
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
     }
 
     @After

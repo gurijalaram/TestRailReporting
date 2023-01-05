@@ -9,7 +9,6 @@ import com.apriori.customer.users.StaffPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.customer.users.profile.UserProfilePage;
-import com.apriori.customeradmin.NavToolbar;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.GenerateStringUtil;
@@ -85,8 +84,7 @@ public class CustomerAccessTests extends TestBase {
             .overridingErrorMessage("Expected Edit button to be disabled for service account.")
             .isFalse();
 
-        serviceAccountProfile.backToUsersListPage(CustomerWorkspacePage.class);
-        CustomerWorkspacePage customerAccess = new CustomerWorkspacePage(driver);
+        CustomerWorkspacePage customerAccess = serviceAccountProfile.backToUsersListPage(CustomerWorkspacePage.class);
 
         soft.assertThat(customerAccess.canRevoke())
             .overridingErrorMessage("Expected revoke access button to be disabled.")
@@ -130,10 +128,9 @@ public class CustomerAccessTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
         candidatesTable.getRows().forEach((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
 
-        aPrioriUsers.clickCandidatesAddButton()
-            .clickCandidatesConfirmOkButton();
-
-        CustomerWorkspacePage customerAccess = new NavToolbar(driver)
+        CustomerWorkspacePage customerAccess = aPrioriUsers
+            .clickCandidatesAddButton()
+            .clickCandidatesConfirmOkButton()
             .logout()
             .login(new UserCredentials(email, password).generateToken())
             .openCustomer(customerIdentity)
@@ -162,7 +159,7 @@ public class CustomerAccessTests extends TestBase {
             .overridingErrorMessage("Expected request access button to be enabled.")
             .isTrue();
 
-        StaffAccessHistoryPage goToHistoryTab = new CustomerWorkspacePage(driver)
+        StaffAccessHistoryPage goToHistoryTab = customerAccess
             .goToUsersPage()
             .goToAccessHistory()
             .validateStaffHistoryTableArePageableRefreshable(soft)
@@ -203,10 +200,8 @@ public class CustomerAccessTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
         candidatesTable.getRows().forEach((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
 
-        aPrioriUsers.clickCandidatesAddButton()
+        CustomerWorkspacePage errorMessage = aPrioriUsers.clickCandidatesAddButton()
             .clickCandidatesConfirmOkButton();
-
-        CustomerWorkspacePage errorMessage = new CustomerWorkspacePage(driver);
 
         soft.assertThat(errorMessage.getTextErrorMessage())
             .isEqualTo("HTTP 403: User cannot add self to a customer.");

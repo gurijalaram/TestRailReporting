@@ -1,11 +1,13 @@
 package testsuites;
 
 import com.apriori.tests.ApplicationsTests;
+import com.apriori.tests.CasAccessAuthorizationTests;
 import com.apriori.tests.CasBatchItemTests;
 import com.apriori.tests.CasBulkGrantDenyAccessTests;
 import com.apriori.tests.CasConfigurationsTests;
 import com.apriori.tests.CasCustomerAssociationTests;
 import com.apriori.tests.CasCustomerBatchTests;
+import com.apriori.tests.CasCustomerServiceAccountsTests;
 import com.apriori.tests.CasCustomerUserAccessControlsTests;
 import com.apriori.tests.CasCustomerUserAssociationTests;
 import com.apriori.tests.CasCustomersTests;
@@ -42,7 +44,9 @@ import org.junit.runners.Suite;
     CasCustomerUserAccessControlsTests.class,
     CasBulkGrantDenyAccessTests.class,
     CasSiteLicenseTests.class,
-    CasSiteLicenseSublicenseTests.class
+    CasSiteLicenseSublicenseTests.class,
+    CasAccessAuthorizationTests.class,
+    CasCustomerServiceAccountsTests.class
 })
 public class CasAPISuite {
 }

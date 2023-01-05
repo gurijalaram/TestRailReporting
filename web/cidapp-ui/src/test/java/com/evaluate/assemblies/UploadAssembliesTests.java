@@ -623,7 +623,46 @@ public class UploadAssembliesTests extends TestBase {
             .submit(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("0.11kg");
-
     }
 
+    @Test
+    @TestRail(testCaseId = {"6564"})
+    @Description("Assembly costs with multiple quantity of parts")
+    public void costAssemblyWithMultipleQuantityOfParts() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        String subComponentAName = "flange";
+        String subComponentBName = "nut";
+        String subComponentCName = "bolt";
+        String assemblyName = "flange c";
+
+        subComponentA = FileResourceUtil.getCloudFile(processGroupEnum, subComponentAName + ".CATPart");
+        subComponentB = FileResourceUtil.getCloudFile(processGroupEnum, subComponentBName + ".CATPart");
+        subComponentC = FileResourceUtil.getCloudFile(processGroupEnum, subComponentCName + ".CATPart");
+        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".CATProduct");
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(subComponentAName, scenarioName, subComponentA, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .uploadComponentAndOpen(subComponentBName, scenarioName, subComponentB, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .uploadComponentAndOpen(subComponentCName, scenarioName, subComponentC, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .selectProcessGroup(ASSEMBLY)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+
+        softAssertions.assertThat(evaluatePage.getComponentResults("Total")).isEqualTo(10);
+        softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3);
+
+        softAssertions.assertAll();
+    }
 }

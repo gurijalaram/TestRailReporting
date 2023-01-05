@@ -1,6 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "response"
@@ -31,71 +29,71 @@
         "createdByName",
         "cdsStatus"
       ],
-                "properties": {
-                  "identity": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "customerIdentity": {
-                    "type": "string"
-                  },
-                  "batchIdentity": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "userName": {
-                    "type": "string"
-                  },
-                  "givenName": {
-                    "type": "string"
-                  },
-                  "familyName": {
-                    "type": "string"
-                  },
-                  "prefix": {
-                    "type": "string"
-                  },
-                  "suffix": {
-                    "type": "string"
-                  },
-                  "jobTitle": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "department": {
-                    "type": "string"
-                  },
-                  "cityTown": {
-                    "type": "string"
-                  },
-                  "stateProvince": {
-                    "type": "string"
-                  },
-                  "county": {
-                    "type": "string"
-                  },
-                  "countryCode": {
-                    "type": "string"
-                  },
-                  "timezone": {
-                    "type": "string"
-                  },
-                  "createdByName": {
-                    "type": "string"
-                  },
-                  "cdsStatus": {
-                    "type": "string"
-                  }
-                }
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "batchIdentity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "cityTown": {
+          "type": "string"
+        },
+        "stateProvince": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "cdsStatus": {
+          "type": "string"
+        }
+      }
     }
   }
 }

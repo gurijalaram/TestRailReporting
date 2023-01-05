@@ -12,7 +12,6 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -26,8 +25,8 @@ import org.junit.Test;
 public class BidPackageItemTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static ResponseWrapper<BidPackageResponse> bidPackageResponse;
-    private static ResponseWrapper<BidPackageItemResponse> bidPackageItemResponse;
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageItemResponse bidPackageItemResponse;
     UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
@@ -43,7 +42,7 @@ public class BidPackageItemTest extends TestUtil {
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class,
             HttpStatus.SC_CREATED);
@@ -53,17 +52,17 @@ public class BidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13390", "13403"})
     @Description("Create and delete Bid Package Item")
     public void createAndDeleteBidPackageItem() {
-        BidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(), currentUser);
 
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
-        softAssertions.assertThat(bidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(bidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -76,47 +75,47 @@ public class BidPackageItemTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<BidPackageItemResponse> updateBidPackageItemResponse = BidPackageResources.updateBidPackageItem(
+        BidPackageItemResponse updateBidPackageItemResponse = BidPackageResources.updateBidPackageItem(
             bidPackageItemRequestBuilder,
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(),
+            bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13401"})
     @Description("Get Bid Package Item")
     public void getBidPackageItem() {
-        ResponseWrapper<BidPackageItemResponse> updateBidPackageItemResponse = BidPackageResources.getBidPackageItem(
-            bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(),
+        BidPackageItemResponse updateBidPackageItemResponse = BidPackageResources.getBidPackageItem(
+            bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getResponseEntity().getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
     @TestRail(testCaseId = {"13396", "13400"})
     @Description("Find list of  Bid Package Items and verify pagination")
     public void getBidPackageItems() {
-        ResponseWrapper<BidPackageItemsResponse> updateBidPackageItemResponse = BidPackageResources.getBidPackageItems(
-            bidPackageResponse.getResponseEntity().getIdentity(),
+        BidPackageItemsResponse updateBidPackageItemResponse = BidPackageResources.getBidPackageItems(
+            bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemsResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
-        softAssertions.assertThat(updateBidPackageItemResponse.getResponseEntity().getIsFirstPage()).isTrue();
+        softAssertions.assertThat(updateBidPackageItemResponse.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(updateBidPackageItemResponse.getIsFirstPage()).isTrue();
     }
 
     @After
     public void testCleanup() {
-        BidPackageResources.deleteBidPackageItem(bidPackageResponse.getResponseEntity().getIdentity(),
-            bidPackageItemResponse.getResponseEntity().getIdentity(), currentUser);
-        BidPackageResources.deleteBidPackage(bidPackageResponse.getResponseEntity().getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
+            bidPackageItemResponse.getIdentity(), currentUser);
+        BidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertAll();
     }
 }

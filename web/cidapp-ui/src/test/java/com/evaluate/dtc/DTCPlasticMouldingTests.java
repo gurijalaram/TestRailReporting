@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -58,7 +59,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(5)
             .openDesignGuidance()
@@ -69,7 +70,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
             .search("Nylon, Type 6")
-            .selectMaterial("Nylon, Type 6")
+            .selectMaterial(MaterialNameEnum.NYLON_TYPE_6.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -132,7 +133,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -159,7 +160,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -171,7 +172,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2634")
     @TestRail(testCaseId = {"6463", "6421", "6414", "6425", "6426"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
@@ -229,7 +229,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -254,7 +254,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -287,7 +287,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
@@ -297,7 +297,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
-            .selectMaterial("Polyurethane, Polymeric MDI")
+            .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
             .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -339,6 +339,40 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         softAssertions.assertThat(investigationPage.getGcdCount("Threading Mechanisms")).isEqualTo(9);
         softAssertions.assertThat(investigationPage.getGcdCount("Ribs")).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6422"})
+    @Description("Max. wall thickness for Structural Foam Moulding")
+    public void maxThicknessStructuralFoamMolding() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        guidanceIssuesPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("Polystyrene")
+            .selectMaterial("Polystyrene")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("15.00mm");
 
         softAssertions.assertAll();
     }

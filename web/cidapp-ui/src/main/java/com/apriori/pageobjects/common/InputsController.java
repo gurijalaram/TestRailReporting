@@ -171,4 +171,24 @@ public class InputsController {
     public boolean isMachineOptionsCheckboxSelected(WebElement checkBoxInput) {
         return pageUtils.isCheckboxSelected(checkBoxInput);
     }
+
+    /**
+     * Checks if the select source model button is enabled
+     * @param sourceComponentPencil - Source Model pencil icon
+     * @return boolean
+     */
+    public boolean isSelectSourceButtonEnabled(WebElement sourceComponentPencil) {
+        return pageUtils.isElementEnabled(sourceComponentPencil);
+    }
+
+    /**
+     * Closes the source model invalid message
+     *
+     * @param  closeButton
+     * @return new page object
+     */
+    public InputsController closeMessagePanel(WebElement closeButton) {
+        pageUtils.waitForElementAndClick(closeButton);
+        return this;
+    }
 }

@@ -1,7 +1,7 @@
 package com.apriori.utils;
 
 import io.qameta.allure.Attachment;
-import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,12 +181,30 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a specific length character alpanumeric string
+     *
+     * @return string
+     */
+    public String getRandomStringSpecLength(int length) {
+        return RandomStringUtils.randomAlphanumeric(length);
+    }
+
+    /**
      * Generates a 12 character numeric string
      *
      * @return String
      */
     public String getRandomNumbers() {
         return RandomStringUtils.randomNumeric(8);
+    }
+
+    /**
+     * Generates a specific length character numeric string
+     *
+     * @return String
+     */
+    public String getRandomNumbersSpecLength(int length) {
+        return RandomStringUtils.randomNumeric(length);
     }
 
     /**

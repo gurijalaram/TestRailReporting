@@ -3,6 +3,7 @@ package com.apriori.utils.enums;
 public enum StatusIconEnum {
     CUBE("cube"),
     CAD("link"),
+    DISCONNECTED("link-slash"),
     LOCK("lock"),
     UNLOCK("lock-open"),
     USER("user"),

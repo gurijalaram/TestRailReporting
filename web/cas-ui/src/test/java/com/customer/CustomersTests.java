@@ -1,11 +1,5 @@
 package com.customer;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-import static org.hamcrest.Matchers.greaterThan;
-
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customeradmin.CustomerAdminPage;
@@ -69,7 +63,6 @@ public class CustomersTests extends TestBase {
             .validateCustomersTableIsSortable("cloudReference", soft)
             .validateCustomersTableIsSortable("createdAt", soft)
             .validateCustomersTableIsSortable("updatedAt", soft);
-        soft.assertAll();
 
         PageUtils utils = new PageUtils(getDriver());
 
@@ -80,7 +73,7 @@ public class CustomersTests extends TestBase {
         TableComponent customersTable = Obligation.mandatory(customers::getTable, "The customers list table is missing");
 
         long rows = customersTable.getRows().count();
-        assertThat("There are no customers on next page.", rows, is(greaterThan(0L)));
+        soft.assertThat(rows).overridingErrorMessage("There are no customers on next page.").isGreaterThan(0L);
 
         paginator.clickFirstPage().getPageSize().select("20");
         utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
@@ -92,15 +85,16 @@ public class CustomersTests extends TestBase {
         SourceListComponent searchResult = customerAdminPage.getSourceList();
         TableComponent customerFound = Obligation.mandatory(searchResult::getTable, "The customer was not found");
         long count = customerFound.getRows().count();
-        assertThat(count, is(equalTo(1L)));
+        soft.assertThat(count).isEqualTo(1L);
 
         customers.getSearch().search(customerIdentity);
         long identityFound = customerFound.getRows().count();
-        assertThat(identityFound, is(equalTo(1L)));
+        soft.assertThat(identityFound).isEqualTo(1L);
 
         customers.getSearch().search(customerSalesforceID);
         long salesforceFound = customerFound.getRows().count();
-        assertThat(salesforceFound, is(equalTo(1L)));
+        soft.assertThat(salesforceFound).isEqualTo(1L);
+        soft.assertAll();
     }
 
     @Test
@@ -108,6 +102,7 @@ public class CustomersTests extends TestBase {
     @Category(SmokeTest.class)
     @TestRail(testCaseId = {"13249", "13250", "13251"})
     public void testCustomerStaffCardView() {
+        SoftAssertions soft = new SoftAssertions();
         CustomerAdminPage goToCardView = customerAdminPage
             .clickCardViewButton();
 
@@ -121,13 +116,15 @@ public class CustomersTests extends TestBase {
         CardsViewComponent customersGrid = Obligation.mandatory(customers::getCardGrid, "The customers grid is missing");
 
         long cards = customersGrid.getCards("apriori-card").count();
-        assertThat(cards, is(equalTo(10L)));
+        soft.assertThat(cards).isEqualTo(10L);
         utils.waitForCondition(customersGrid::isStable, PageUtils.DURATION_LOADING);
 
         Obligation.mandatory(customers::getSearch, "Customers search is missing").search(customerIdentity);
         utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
 
-        assertThat(customerAdminPage.getFieldName(), containsInRelativeOrder("Salesforce ID:", "Cloud Reference:", "Customer Type:", "Created:"));
-        assertThat(customerAdminPage.isStatusIconColour("green"), is(true));
+        soft.assertThat(customerAdminPage.getFieldName())
+                .containsExactly("Salesforce ID:", "Cloud Reference:", "Customer Type:", "Created:");
+        soft.assertThat(customerAdminPage.isStatusIconColour("green")).isTrue();
+        soft.assertAll();
     }
 }

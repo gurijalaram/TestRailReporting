@@ -1,23 +1,18 @@
 package com.apriori.newcustomer;
 
 import com.apriori.common.ModalUserList;
-import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.PageUtils;
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.SourceListComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(InfrastructurePage.class);
+@Slf4j
+public class InfrastructurePage extends CustomerWorkspacePage {
 
     @FindBy(className = "infrastructure-workspace")
     private WebElement infrastructureWorkspace;
@@ -43,18 +38,10 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     @FindBy(css = ".Toastify__close-button.Toastify__close-button--success")
     private WebElement closeMessage;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private NavToolbar navToolbar;
     private ModalUserList modalUserList;
 
     public InfrastructurePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.navToolbar = new NavToolbar(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver);
         modalUserList = new ModalUserList(driver);
     }
 
@@ -65,7 +52,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(infrastructureWorkspace);
+        getPageUtils().waitForElementAppear(infrastructureWorkspace);
     }
 
     /**
@@ -79,7 +66,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
         for (String infrastructure : listInfrastructure) {
             By dropdown = By.xpath(String.format("//li[.='%s']//div[@class='rstm-toggle-icon-symbol']", infrastructure));
-            pageUtils.waitForElementAndClick(dropdown);
+            getPageUtils().waitForElementAndClick(dropdown);
         }
         return this;
     }
@@ -91,7 +78,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      */
     public InfrastructurePage selectApplication(String application) {
         By data = By.xpath(String.format("//li[.='%s']", application));
-        pageUtils.waitForElementAndClick(data);
+        getPageUtils().waitForElementAndClick(data);
         return this;
     }
 
@@ -102,7 +89,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      */
     public String getApplicationDetails(String field) {
         By fieldName = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::div[@class='py-2 ']", field));
-        return pageUtils.waitForElementToAppear(fieldName).getText();
+        return getPageUtils().waitForElementToAppear(fieldName).getText();
     }
 
     /**
@@ -124,7 +111,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this object
      */
     public InfrastructurePage clickGrantAllButton() {
-        pageUtils.waitForElementAndClick(grantAllButton);
+        getPageUtils().waitForElementAndClick(grantAllButton);
         return this;
     }
 
@@ -134,7 +121,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this object
      */
     public InfrastructurePage clickDenyAllButton() {
-        pageUtils.waitForElementAndClick(denyAllButton);
+        getPageUtils().waitForElementAndClick(denyAllButton);
         return this;
     }
 
@@ -207,7 +194,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this object
      */
     public InfrastructurePage clickAllCancelButton() {
-        pageUtils.waitForElementAndClick(confirmAllCancelButton);
+        getPageUtils().waitForElementAndClick(confirmAllCancelButton);
         return this;
     }
 
@@ -217,7 +204,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this object
      */
     public InfrastructurePage clickAllOkButton() {
-        pageUtils.waitForElementAndClick(confirmAllOkButton);
+        getPageUtils().waitForElementAndClick(confirmAllOkButton);
         return this;
     }
 
@@ -227,7 +214,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return string success message
      */
     public String getTextSuccessMessage() {
-        return pageUtils.waitForElementToAppear(successMessage).getAttribute(("textContent"));
+        return getPageUtils().waitForElementToAppear(successMessage).getAttribute(("textContent"));
     }
 
     /**
@@ -236,7 +223,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this page object
      */
     public InfrastructurePage closeMessage() {
-        pageUtils.waitForElementAndClick(closeMessage);
+        getPageUtils().waitForElementAndClick(closeMessage);
         return this;
     }
 }

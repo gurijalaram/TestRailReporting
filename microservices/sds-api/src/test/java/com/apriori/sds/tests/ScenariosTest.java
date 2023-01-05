@@ -1,8 +1,7 @@
 package com.apriori.sds.tests;
 
-import static org.junit.Assert.assertNotEquals;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -351,10 +350,12 @@ public class ScenariosTest extends SDSTestUtil {
                 .scenarioName(scenarioName)
                 .componentIdentity(componentId)
                 .scenarioIdentity(scenarioId)
-                .processGroup(pg)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .mode(mode)
-                .material(materialName)
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(pg.getProcessGroup())
+                    .vpeName(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+                    .materialMode(mode)
+                    .materialName(materialName)
+                    .build())
                 .user(testingUser)
                 .build());
 

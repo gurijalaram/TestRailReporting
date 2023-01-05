@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -8,7 +9,6 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -130,7 +130,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSSUncosted(
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -277,8 +277,24 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser   - the user credentials
      * @return response object
      */
-    public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
-        return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
+    public List<ScenarioItem> uploadMultiComponentsCSS(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
+        return new ComponentsUtil().postMultiComponentsQueryCSS(ComponentInfoBuilder.builder()
+            .resourceFiles(resourceFiles)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .build());
+    }
+
+    /**
+     * Upload multi-components via api
+     *
+     * @param resourceFiles - the resource files
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the user credentials
+     * @return response object
+     */
+    public List<ComponentIdentityResponse> uploadMultiComponentsCID(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
+        return new ComponentsUtil().postMultiComponentsQueryCID(ComponentInfoBuilder.builder()
             .resourceFiles(resourceFiles)
             .scenarioName(scenarioName)
             .user(currentUser)
@@ -454,9 +470,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath - location of the file
      * @return new page object
      */
-    public EvaluatePage updateCadFile(File filePath) {
+    public UpdateCadFilePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
+        return new UpdateCadFilePage(driver).enterFilePath(filePath);
     }
 
     /**
@@ -557,5 +573,14 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isPublishButtonEnabled() {
         return pageUtils.waitForElementToAppear(publishButton).isEnabled();
+    }
+
+    /**
+     * Checks if actions button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isActionsDropdownEnabled() {
+        return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
     }
 }

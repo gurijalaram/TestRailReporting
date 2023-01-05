@@ -132,6 +132,32 @@ public class FileUploadResources {
     }
 
     /**
+     * Upload part, suppress 500 error (retry file upload three times) and give option to supply parameters to workorder
+     *
+     * @param fileResponse response from file upload initialize
+     * @param scenarioName scenario name to use
+     * @return FileUploadOutputs instance
+     */
+    public FileUploadOutputs createFileUploadWorkorderWithParameters(FileResponse fileResponse, String scenarioName, Boolean keepFreeBodies, Boolean freeBodiesPreserveCad, Boolean freeBodiesIgnoreMissingComponents) {
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+            FileUploadInputs.builder()
+                .keepFreeBodies(keepFreeBodies)
+                .freeBodiesPreserveCad(freeBodiesPreserveCad)
+                .freeBodiesIgnoreMissingComponents(freeBodiesIgnoreMissingComponents)
+                .scenarioName(scenarioName)
+                .fileKey(fileResponse.getIdentity())
+                .fileName(fileResponse.getFilename())
+                .build(),
+            true
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(fileUploadWorkorderId),
+            FileUploadOutputs.class
+        );
+    }
+
+    /**
      * Create file upload workorder for assembly, inc subcomponents
      *
      * @param assembly - Assembly object to use in request

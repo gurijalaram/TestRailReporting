@@ -4,7 +4,7 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 public class GroupEditTests extends TestBase {
 
@@ -37,7 +38,6 @@ public class GroupEditTests extends TestBase {
     private ExplorePage explorePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
-    private ComponentInfoBuilder componentInfoBuilder;
 
     @Test
     @TestRail(testCaseId = {"14723"})
@@ -204,11 +204,11 @@ public class GroupEditTests extends TestBase {
         final File resourceFile11 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
 
         loginPage = new CidAppLoginPage(driver);
-        componentInfoBuilder = loginPage.login(currentUser)
-            .uploadMultiComponents(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
+        List<ScenarioItem> componentItems = loginPage.login(currentUser)
+            .uploadMultiComponentsCSS(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
                 scenarioName, currentUser);
 
-        componentInfoBuilder.getScenarioItems().forEach(component ->
+        componentItems.forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
@@ -231,7 +231,7 @@ public class GroupEditTests extends TestBase {
             .publish(PublishPage.class)
             .close(ExplorePage.class);
 
-        componentInfoBuilder.getScenarioItems().forEach(component ->
+        componentItems.forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 

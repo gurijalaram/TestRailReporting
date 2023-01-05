@@ -2,14 +2,20 @@ package com.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
@@ -33,6 +39,8 @@ public class FiltersTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
@@ -453,7 +461,7 @@ public class FiltersTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(currentUser)
-        .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .openComponents()
             .selectTableView()
             .selectFilter("Assigned To Me");
@@ -548,8 +556,8 @@ public class FiltersTests extends TestBase {
         topScenarioName = topScenarioDetails[1];
 
         softAssert.assertThat(explorePage.getCreatedAt(topComponentName, topScenarioName))
-                .as("Created At date of oldest scenario in Recent")
-                .isAfterOrEqualTo(filterStartTime);
+            .as("Created At date of oldest scenario in Recent")
+            .isAfterOrEqualTo(filterStartTime);
 
         softAssert.assertAll();
     }
@@ -574,5 +582,164 @@ public class FiltersTests extends TestBase {
             .selectFilter(filterName);
 
         assertThat(explorePage.getCurrentFilter()).isEqualTo(filterName);
+    }
+
+    @Test
+    @TestRail(testCaseId = "6100")
+    @Description("Validate that user can cancel action New, Rename, Save As before saving")
+    public void cancelFilterTest() {
+        SoftAssertions soft = new SoftAssertions();
+
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+        String cancelledFilterName = generateStringUtil.generateFilterName();
+
+        explorePage = loginPage.login(currentUser)
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .submit(ExplorePage.class);
+
+        filterPage = explorePage.filter()
+            .newFilter()
+            .inputName(cancelledFilterName);
+
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (New)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (New)").isFalse();
+
+        filterPage.saveAs()
+            .inputName(cancelledFilterName);
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (Save As)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (Save As)").isFalse();
+        explorePage = filterPage.cancel(ExplorePage.class);
+
+        filterPage = explorePage.filter()
+            .selectFilter(filterName)
+            .rename()
+            .inputName(cancelledFilterName);
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is enabled (Rename)").isTrue();
+        filterPage.cancelInput();
+        soft.assertThat(filterPage.isSaveEnabled()).as("Verify Save button is disabled (Rename)").isFalse();
+        soft.assertThat(filterPage.getAllFilters()).as("Cancelled filter name not present in list").doesNotContain(cancelledFilterName);
+
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "6532")
+    @Description("User can perform complex searches and be able to find the desired assembly scenario")
+    public void advancedFilterTest() {
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+
+        final LocalDateTime testStart = LocalDateTime.now();
+
+        SoftAssertions soft = new SoftAssertions();
+
+        currentUser = UserUtil.getUser();
+        String scenarioName1 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+
+        ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName1,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly1)
+            .uploadAssembly(componentAssembly1);
+        assemblyUtils.costSubComponents(componentAssembly1)
+            .costAssembly(componentAssembly1);
+
+        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName2,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly2)
+            .uploadAssembly(componentAssembly2);
+
+        ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName3,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly3)
+            .uploadAssembly(componentAssembly3);
+
+        componentsTreePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(assemblyName, scenarioName2)
+            .openComponents()
+            .selectCheckAllBox()
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(subComponentProcessGroup)
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class)
+            .closePanel()
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName3)
+            .openComponents()
+            .selectCheckAllBox()
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(subComponentProcessGroup)
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class)
+            .closePanel()
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName2)
+            .openComponents();
+
+        subComponentNames.forEach(subcomponent -> componentsTreePage.checkSubcomponentState(componentAssembly2, subcomponent));
+
+        componentsTreePage = componentsTreePage.closePanel()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
+            .clickExplore()
+            .openScenario(assemblyName, scenarioName3)
+            .openComponents();
+
+        subComponentNames.forEach(subcomponent -> componentsTreePage.checkSubcomponentState(componentAssembly3, subcomponent));
+
+        explorePage = componentsTreePage.closePanel()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToMachiningTab()
+            .expandSecondaryProcessTree("Deburr")
+            .selectSecondaryProcess("Automated Deburr")
+            .submit(EvaluatePage.class)
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2)
+            .clickExplore()
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, testStart)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, assemblyName.substring(0, 5))
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, "AutoScenario")
+            .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory())
+            .addCriteria(PropertyEnum.FULLY_BURDENED_COST, OperationEnum.GREATER_THAN, "0.4")
+            .save(FilterPage.class)
+            .submit(ExplorePage.class)
+            .selectFilter(filterName);
+
+        soft.assertThat(explorePage.getAllScenarioComponentName().size()).as("Number of scenarios displayed").isEqualTo(1);
+        soft.assertAll();
     }
 }

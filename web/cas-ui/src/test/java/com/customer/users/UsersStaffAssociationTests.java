@@ -1,17 +1,11 @@
 package com.customer.users;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.core.Is.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
@@ -28,7 +22,7 @@ import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.StringUtils;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +44,7 @@ public class UsersStaffAssociationTests extends TestBase {
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private StaffPage staffPage;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setup() {
@@ -82,7 +77,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
     @After
     public void teardown() {
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
+        sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -145,7 +140,7 @@ public class UsersStaffAssociationTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
         long expected = userCandidatesTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
-        assertThat("The selection is not holding across pages.", expected, is(equalTo(expected)));
+        soft.assertThat(expected).overridingErrorMessage("The selection is not holding across pages.").isEqualTo(expected);
 
         StaffPage updated = addModal
             .clickCandidatesAddButton()
@@ -161,7 +156,8 @@ public class UsersStaffAssociationTests extends TestBase {
         utils.waitForCondition(staffList::isStable, PageUtils.DURATION_LOADING);
         TableComponent staffTable = Obligation.mandatory(staffList::getTable, "The staff list table is missing.");
         long count = staffTable.getRows().count();
-        assertThat(count, is(equalTo(selected)));
+        soft.assertThat(count).isEqualTo(selected);
+        soft.assertAll();
     }
 
     @Test
@@ -187,26 +183,26 @@ public class UsersStaffAssociationTests extends TestBase {
         Obligation.mandatory(staffList::getSearch, "Staff list search is missing").search(STAFF_TEST_USER);
 
         long count = staffTable.getRows().count();
-        assertThat("The candidates were not added.", count, is(greaterThan(0L)));
-
+        soft.assertThat(count).overridingErrorMessage("The candidates were not added.").isGreaterThan(0L);
         checkHeader.check(true);
         updated.clickRemoveButton()
                 .clickConfirmRemoveCancelButton();
         utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
         long usersNotDeleted = staffTable.getRows().count();
-        assertThat("The associated users were removed.", usersNotDeleted, is(equalTo(count)));
+        soft.assertThat(usersNotDeleted).overridingErrorMessage("The associated users were removed.").isEqualTo(count);
 
         updated.clickRemoveButton()
                 .clickConfirmRemoveOkButton();
         utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
         long usersAdded = staffTable.getRows().count();
-        assertThat("The associated users were not removed.", usersAdded, is(equalTo(0L)));
+        soft.assertThat(usersAdded).overridingErrorMessage("The associated users were not removed.").isEqualTo(0L);
 
         staffPage.clickAddFromList();
         SourceListComponent candidatesUpd = staffPage.getCandidates();
         TableComponent candidatesUpdTable = Obligation.mandatory(candidatesUpd::getTable, "The candidate table is missing.");
         Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search(STAFF_TEST_USER);
         long removedUser = candidatesUpdTable.getRows().count();
-        assertThat("Users do not appear in the list of aPriori staff candidates", removedUser, is(equalTo(count)));
+        soft.assertThat(removedUser).overridingErrorMessage("Users do not appear in the list of aPriori staff candidates").isEqualTo(count);
+        soft.assertAll();
     }
 }

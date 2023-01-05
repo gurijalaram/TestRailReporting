@@ -7,9 +7,11 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -19,6 +21,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -75,6 +78,9 @@ public class AssembliesComponentsController {
 
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
+
+    @FindBy(css = ".sub-components-action-bar [id='qa-sub-header-delete-button']")
+    private WebElement deleteButton;
 
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
@@ -333,6 +339,16 @@ public class AssembliesComponentsController {
     }
 
     /**
+     * clicks the delete button
+     *
+     * @return - the current page object
+     */
+    public DeletePage deleteSubComponent() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new DeletePage(driver);
+    }
+
+    /**
      * Gets the background colour of the cell
      *
      * @param componentName - the component name
@@ -409,7 +425,7 @@ public class AssembliesComponentsController {
                 .findFirst()
                 .get();
 
-            new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
+            new ScenariosUtil().getScenarioRepresentationCompleted(componentInfo.getSubComponents()
                 .stream()
                 .filter(x -> x.getComponentName().equalsIgnoreCase(componentName)
                     && x.getComponentIdentity().equalsIgnoreCase(componentDetails.getComponentIdentity())
@@ -527,6 +543,25 @@ public class AssembliesComponentsController {
      */
     public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
         return scenarioTableController.getColumnData(column, scenarioId, userCredentials);
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public AssembliesComponentsController addColumn(ColumnsEnum columnToAdd) {
+        if (!getTableHeaders().contains(columnToAdd.toString())) {
+            componentTableActions.configure(configureButton)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.RIGHT)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .submit(ComponentsTablePage.class);
+        }
+        return this;
     }
 
     /**

@@ -3,12 +3,12 @@ package com.apriori.customer;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.customeradmin.CustomerAdminPage;
+import com.apriori.customeradmin.NavToolbar;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.security.SecurityPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.RoutingComponent;
 import com.apriori.utils.web.components.SelectComponent;
 
@@ -24,7 +24,7 @@ import java.util.Arrays;
  * Represents the root of the customer page that contains all the tabs for customer editing.
  */
 @Slf4j
-public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspacePage> {
+public class CustomerWorkspacePage extends NavToolbar {
     @FindBy(xpath = "//a[.='Profile']")
     private WebElement profileTabRoot;
     private RoutingComponent profileTab;
@@ -79,16 +79,18 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @param driver The web driver that the page exists on.
      */
     public CustomerWorkspacePage(WebDriver driver) {
-        super(driver, log);
+        super(driver);
 
         // Required Tabs
-        profileTab = new RoutingComponent(getDriver(), profileTabRoot);
-        usersTab = new RoutingComponent(getDriver(), usersTabRoot);
-        infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
-        systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
+        profileTab = new RoutingComponent(driver, profileTabRoot);
+        usersTab = new RoutingComponent(driver, usersTabRoot);
+        infrastructureTab = new RoutingComponent(driver, infrastructureTabRoot);
+
+        // System configuration tab was hidden from CAS
+        //  systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
 
         // Optional Tabs
-        securityTab = getPageUtils().isElementDisplayed(securityTabRoot) ? new RoutingComponent(getDriver(), securityTabRoot) : null;
+        securityTab = getPageUtils().isElementDisplayed(securityTabRoot) ? new RoutingComponent(driver, securityTabRoot) : null;
     }
 
     /**
@@ -101,7 +103,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         getPageUtils().waitForElementAppear(profileTabRoot);
         getPageUtils().waitForElementAppear(usersTabRoot);
         getPageUtils().waitForElementToAppear(infrastructureTabRoot);
-        getPageUtils().waitForElementToAppear(systemConfigurationTabRoot);
+        //       getPageUtils().waitForElementToAppear(systemConfigurationTabRoot);
     }
 
     /**
@@ -203,7 +205,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * Attempts to discover the customer identity.
      *
      * @return The customer identity for an existing customer, "new" for a new customer,
-     *         and the empty string if it cannot determine the identity.
+     * and the empty string if it cannot determine the identity.
      */
     public String findCustomerIdentity() {
         String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
@@ -213,6 +215,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
 
     /**
      * Same as findCustomerIdentity() but only succeeds if an existing customer identity is found.
+     *
      * @return The identity of an existing customer.
      */
     public String findExistingCustomerIdentity() {
@@ -225,7 +228,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     /**
      * Retrieves CustomerProfilePage for customer via URL and returns Page object.
      *
-     * @param driver - WebDriver
+     * @param driver   - WebDriver
      * @param customer - Customer ID
      * @return CustomerWorkspacePage
      */

@@ -14,6 +14,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
+import entity.request.SearchDiscussionsRequest;
 import entity.response.DiscussionResponse;
 import entity.response.DiscussionsResponse;
 import enums.DDSApiEnum;
@@ -26,6 +27,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DdsApiTestUtils;
+
+import java.util.Collections;
 
 public class DiscussionTest extends TestUtil {
 
@@ -209,6 +212,23 @@ public class DiscussionTest extends TestUtil {
             .get();
 
         softAssertions.assertThat(discussionErrorResponse.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12410"})
+    @Description("Search discussions")
+    public void searchDiscussions() {
+        SearchDiscussionsRequest searchDiscussionsRequest = SearchDiscussionsRequest.builder()
+            .discussionIds(Collections.singletonList(discussionResponse.getResponseEntity().getIdentity())).build();
+        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_SEARCH_DISCUSSIONS, DiscussionsResponse.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .headers(DdsApiTestUtils.setUpHeader())
+            .body(searchDiscussionsRequest)
+            .apUserContext(userContext)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<DiscussionsResponse> discussionsResponse = HTTPRequest.build(requestEntity).post();
+        softAssertions.assertThat(discussionsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @After

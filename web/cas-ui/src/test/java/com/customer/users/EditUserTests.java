@@ -1,14 +1,8 @@
 package com.customer.users;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
@@ -28,13 +22,10 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class EditUserTests extends TestBase {
 
-    private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
     private static final String USER_NAME = new GenerateStringUtil().generateUserName();
 
     private Customer targetCustomer;
@@ -46,16 +37,13 @@ public class EditUserTests extends TestBase {
 
     @Before
     public void setup() {
-        Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
+        String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String email = STAFF_TEST_CUSTOMER.toLowerCase();
+        String email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
-        targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
-                : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
 
         userProfilePage = new CasLoginPage(driver)
@@ -166,9 +154,10 @@ public class EditUserTests extends TestBase {
     @Description("Status field is greyed out (non editable) if Customer is set to inactive")
     @TestRail(testCaseId = {"10644", "10645"})
     public void testUserStatusFieldNotEditableIfCustomerIsDisabled() {
+        SoftAssertions soft = new SoftAssertions();
         UserProfilePage checkUserStatus = userProfilePage.edit();
 
-        assertThat(checkUserStatus.isStatusCheckboxEditable(), is(equalTo(true)));
+        soft.assertThat(checkUserStatus.isStatusCheckboxEditable()).isTrue();
 
         userProfilePage.cancel();
 
@@ -180,7 +169,7 @@ public class EditUserTests extends TestBase {
                 .changeCustomerStatus()
                 .clickSaveButton();
 
-        assertThat(deactivateCustomer.getStatus(), is(equalTo("Inactive")));
+        soft.assertThat(deactivateCustomer.getStatus()).isEqualTo("Inactive");
 
         customerViewPage = new CustomerWorkspacePage(driver);
         UserProfilePage checkIfReadOnly = customerViewPage.goToUsersPage()
@@ -188,7 +177,7 @@ public class EditUserTests extends TestBase {
                 .selectUser(customerIdentity, userIdentity, USER_NAME)
                 .edit();
 
-        assertThat(checkIfReadOnly.isStatusCheckboxEditable(), is(equalTo(false)));
+        soft.assertThat(checkIfReadOnly.isStatusCheckboxEditable()).isFalse();
 
         checkIfReadOnly.cancel();
 
@@ -198,6 +187,7 @@ public class EditUserTests extends TestBase {
                 .changeCustomerStatus()
                 .clickSaveButton();
 
-        assertThat(activateCustomer.getStatus(), is(equalTo("Active")));
+        soft.assertThat(activateCustomer.getStatus()).isEqualTo("Active");
+        soft.assertAll();
     }
 }

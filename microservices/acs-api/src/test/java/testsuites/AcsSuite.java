@@ -7,12 +7,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.acs.ActiveAxesByScenarioIterationKeyTests;
 import tests.acs.ActiveDimensionsByScenarioIterationKeyTests;
+import tests.acs.AllMaterialStocksInfoTests;
 import tests.acs.ArtifactPropertiesTests;
 import tests.acs.ArtifactTableInfoTests;
 import tests.acs.AvailableRoutingsTests;
 import tests.acs.CreateMissingScenarioTests;
 import tests.acs.DisplayUnitsTests;
 import tests.acs.EnabledCurrencyRateVersionsTests;
+import tests.acs.LoadCadFileTests;
 import tests.acs.PartPrimaryProcessGroupsTests;
 import tests.acs.ProductionDefaultsTests;
 import tests.acs.ProductionInfoTests;
@@ -28,23 +30,25 @@ import tests.acs.UserPreferencesTests;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     AvailableRoutingsTests.class,
-    CreateMissingScenarioTests.class,
     ActiveAxesByScenarioIterationKeyTests.class,
     ActiveDimensionsByScenarioIterationKeyTests.class,
+    AllMaterialStocksInfoTests.class,
     ArtifactTableInfoTests.class,
     ArtifactPropertiesTests.class,
-    EnabledCurrencyRateVersionsTests.class,
-    PartPrimaryProcessGroupsTests.class,
-    ScenariosInfoTests.class,
+    CreateMissingScenarioTests.class,
     DisplayUnitsTests.class,
+    EnabledCurrencyRateVersionsTests.class,
+    LoadCadFileTests.class,
+    PartPrimaryProcessGroupsTests.class,
     ProductionDefaultsTests.class,
     ProductionInfoTests.class,
+    RoutingSelectionTests.class,
+    ScenariosInfoTests.class,
     TolerancePolicyDefaultsTests.class,
-    UserPreferenceByNameTests.class,
-    UserPreferencesTests.class,
-    UnitVariantSettingsTests.class,
     TwoDImageByScenarioIterationKeyTests.class,
-    RoutingSelectionTests.class
+    UnitVariantSettingsTests.class,
+    UserPreferenceByNameTests.class,
+    UserPreferencesTests.class
 })
 
 public class AcsSuite {

@@ -26,6 +26,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //APPLICATIONS
     CUSTOMER_APPLICATIONS(CUSTOMER.getEndpointString().concat("/applications")),
+    CUSTOMER_LICENSED_APP(CUSTOMER.getEndpointString().concat("/licensed-applications")),
 
     //LICENSES
     LICENSE_BY_CUSTOMER_SITE_IDS(SITE_ID.getEndpointString().concat("/licenses")),
@@ -43,6 +44,8 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     USERS(CUSTOMER.getEndpointString().concat("/users")),
     USER(USERS.getEndpointString().concat("/%s")),
     USERS_SUBLICENSES(USER.getEndpointString().concat("/licensing")),
+    EXPORT_TEMPLATE(USERS.getEndpointString().concat("/export-template")),
+    EXPORT_USERS(USERS.getEndpointString().concat("/export")),
 
     //BATCHES
     BATCHES(CUSTOMER.getEndpointString().concat("/batches")),
@@ -69,7 +72,10 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //ACCESS AUTHORIZATIONS
     ACCESS_AUTHORIZATIONS(CUSTOMER.getEndpointString().concat("/access-authorizations")),
-    ACCESS_AUTHORIZATION_BY_ID(ACCESS_AUTHORIZATIONS.getEndpointString().concat("/%s"));
+    ACCESS_AUTHORIZATION_BY_ID(ACCESS_AUTHORIZATIONS.getEndpointString().concat("/%s")),
+
+    //CUSTOMER SERVICE ACCOUNTS
+    SERVICE_ACCOUNTS(CUSTOMER.getEndpointString().concat("/service-accounts"));
 
     private final String endpoint;
 

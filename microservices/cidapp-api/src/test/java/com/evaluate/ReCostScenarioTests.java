@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -64,9 +65,9 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
+        ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
 
         softAssertions.assertAll();
     }
@@ -112,9 +113,9 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
+        ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
     }
 
     @Test
@@ -184,9 +185,9 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, digitalFactoryEnum);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
+        ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
 
         softAssertions.assertAll();
     }
@@ -198,14 +199,16 @@ public class ReCostScenarioTests {
                 .scenarioName(scenarioName)
                 .componentIdentity(componentInfo.getComponentIdentity())
                 .scenarioIdentity(componentInfo.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(digitalFactory)
+                .costingTemplate(CostingTemplate.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .vpeName(digitalFactory.getDigitalFactory())
+                    .build())
                 .user(currentUser)
                 .build());
     }
 
-    private ResponseWrapper<ScenarioResponse> getScenarioResponseResponseWrapper(ComponentInfoBuilder componentInfo) {
-        return scenariosUtil.getScenarioRepresentation(componentInfo);
+    private ScenarioResponse getScenarioResponseResponseWrapper(ComponentInfoBuilder componentInfo) {
+        return scenariosUtil.getScenarioRepresentationCompleted(componentInfo);
     }
 
     private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(ComponentInfoBuilder componentInfo) {

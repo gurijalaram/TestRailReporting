@@ -1,23 +1,21 @@
 package utils;
 
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import entity.request.CommentsRequest;
-import entity.request.CommentsRequestParameters;
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
-import entity.response.CommentResponse;
 import entity.response.DiscussionResponse;
 import enums.DDSApiEnum;
 import org.apache.http.HttpStatus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DdsApiTestUtils {
@@ -77,28 +75,23 @@ public class DdsApiTestUtils {
     }
 
     /**
-     * Create Discussion comment
      *
-     * @param commentDesc        - description
-     * @param users              - list of users
-     * @param discussionIdentity - discussion identity
-     * @param userContext        - user context
-     * @return - ResponseWrapper of CommentResponse object
+     * @param commentsRequestBuilder
+     * @param discussionIdentity
+     * @param currentUser - UserCredentials class object
+     * @param responseClass - response Class Name
+     * @param httpStatus - Http status code
+     * @param <T> - Response class Type
+     * @return ResponseWrapper of response class object
      */
-    public static ResponseWrapper<CommentResponse> createComment(String commentDesc, List<String> users, String discussionIdentity, String userContext) {
-        CommentsRequest commentsRequest = CommentsRequest.builder()
-            .comment(CommentsRequestParameters.builder()
-                .status("ACTIVE")
-                .content(commentDesc)
-                .mentionedUserEmails((ArrayList<String>) users).build())
-            .build();
+    public static <T> ResponseWrapper<T> createComment(CommentsRequest commentsRequestBuilder, String discussionIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
-            .body(commentsRequest)
+            .body(commentsRequestBuilder)
             .headers(DdsApiTestUtils.setUpHeader())
-            .apUserContext(userContext)
-            .expectedResponseCode(HttpStatus.SC_CREATED);
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
 
         return HTTPRequest.build(requestEntity).post();
     }

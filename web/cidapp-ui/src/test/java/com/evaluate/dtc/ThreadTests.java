@@ -10,6 +10,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -120,7 +121,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("11000")
-            .selectMaterial("Copper, Stock, UNS C11000")
+            .selectMaterial(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()
@@ -379,7 +380,7 @@ public class ThreadTests extends TestBase {
             .selectProcessGroup(processGroupEnum.SHEET_METAL)
             .openMaterialSelectorTable()
             .search("1095")
-            .selectMaterial("Steel, Hot Worked, AISI 1095")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1095.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()

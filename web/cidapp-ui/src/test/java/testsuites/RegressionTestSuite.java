@@ -17,6 +17,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.AssemblyAssociations;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.FiltersTests;
 import com.evaluate.assemblies.GroupCostingTests;
@@ -24,6 +25,7 @@ import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
+import com.evaluate.assemblies.UpdateCADFileTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -107,7 +109,9 @@ import testsuites.suiteinterface.SmokeTests;
     ProcessRoutingTests.class,
     GroupPublishTests.class,
     MachiningStrategyTests.class,
-    GroupMachineStrategyApplyTests.class
+    GroupMachineStrategyApplyTests.class,
+    AssemblyAssociations.class,
+    UpdateCADFileTests.class
 })
 public class RegressionTestSuite {
 }

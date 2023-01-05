@@ -23,10 +23,10 @@ public class LineItemsUtil extends TestUtil {
      */
     public List<LineItemsResponse> getAllLineItems(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.LINE_ITEMS, LineItemsItemsResponse.class)
-            .inlineVariables(identity);
+            .inlineVariables(identity)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<LineItemsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllResponse.getStatusCode());
 
         return getAllResponse.getResponseEntity().getItems();
     }

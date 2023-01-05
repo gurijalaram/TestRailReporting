@@ -115,7 +115,7 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return scenario object
      */
-    public ResponseWrapper<ScenarioResponse> publishAssembly(ComponentInfoBuilder assembly) {
+    public ScenarioResponse publishAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postPublishScenario(assembly);
     }
 
@@ -157,7 +157,7 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public ResponseWrapper<ScenarioResponse> costAssembly(ComponentInfoBuilder assembly) {
+    public ScenarioResponse costAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postCostScenario(assembly);
     }
 
@@ -255,6 +255,21 @@ public class AssemblyUtils {
         costAssembly(componentAssembly);
         publishSubComponents(componentAssembly);
         publishAssembly(componentAssembly);
+        return this;
+    }
+
+    /**
+     * Delete an assembly and all it's sub-components
+     *
+     * @param componentAssembly - The Assembly ComponentIfo
+     * @param currentUser - The current user
+     * @return - Current Object
+     */
+    public AssemblyUtils deleteAssemblyAndComponents(ComponentInfoBuilder componentAssembly, UserCredentials currentUser) {
+        scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
+        componentAssembly.getSubComponents().forEach(
+            subComponent -> scenariosUtil.deleteScenario(subComponent.getComponentIdentity(), subComponent.getScenarioIdentity(), currentUser));
+
         return this;
     }
 }
