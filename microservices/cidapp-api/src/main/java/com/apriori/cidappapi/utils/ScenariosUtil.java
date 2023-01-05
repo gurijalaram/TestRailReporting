@@ -1,8 +1,5 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -22,7 +19,6 @@ import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -271,30 +267,27 @@ public class ScenariosUtil {
     /**
      * Post to edit group of scenarios
      *
-     * @param componentInfo         - the component info object
-     * @param forkRequest           - the fork request
-     * @param componentScenarioName - component and scenario name
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @param componentName - component name
      * @return response object
      */
-    public ResponseWrapper<ScenarioSuccessesFailures> postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ResponseWrapper<ScenarioSuccessesFailures> postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        for (String[] componentScenario : componentScenarioNames) {
-            if (componentInfo.getSubComponents().stream()
-                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+        Arrays.stream(componentName).forEach(component -> {
+            final ComponentInfoBuilder componentIdentifier = componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
+                .stream()
+                .findFirst()
+                .get();
 
-                new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
-                        SCENARIO_NAME_EQ.getKey() + componentScenario[1])
-                    .forEach(o -> new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
-                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
-
-                subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
-                    .collect(Collectors.toList()).get(0));
-            }
-        }
+            subComponentInfo.add(ComponentInfoBuilder.builder()
+                .componentIdentity(componentIdentifier.getComponentIdentity())
+                .scenarioIdentity(componentIdentifier.getScenarioIdentity())
+                .build());
+        });
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
@@ -533,6 +526,7 @@ public class ScenariosUtil {
             subComponentInfo.add(ComponentInfoBuilder.builder()
                 .componentIdentity(componentIdentifier.getComponentIdentity())
                 .scenarioIdentity(componentIdentifier.getScenarioIdentity())
+                .user(componentInfo.getUser())
                 .build());
         });
 
@@ -555,7 +549,11 @@ public class ScenariosUtil {
                     .build())
                 .token(groupPublishRequest.getComponentInfo().getUser().getToken());
 
-        return HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
+
+        subComponentInfo.forEach(component -> getScenarioRepresentationPublished(component, "PUBLISH", true));
+
+        return response;
     }
 
     /**
