@@ -3,7 +3,6 @@ package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
@@ -175,40 +174,6 @@ public class CastingDtcReportTests extends TestBase {
             "Process Group",
             ""
         );
-    }
-
-    @Test
-    @TestRail(testCaseId = "1709")
-    @Description("Validate chart tool-tips")
-    public void testChartToolTips() {
-        ReportRequest reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-
-        InputControl inputControl = JasperReportUtil.init(jSessionId)
-            .getInputControls();
-        String exportSetValue = inputControl.getExportSetName().getOption(exportSetName).getValue();
-
-        // 1 - Generate report with USD currency setting
-        String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
-
-        reportRequest = setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
-
-        ChartDataPoint chartDataPoint = generateReportAndGetChartDataPoint(reportRequest);
-
-        // need UI to hover over a part to activate tooltip I think - thus can't be done via api
-
-        /*
-        Finish Mass Name");
-        assertIsTooltipElementVisible("Finish Mass Value");
-        assertIsTooltipElementVisible("FBC Name");
-        assertIsTooltipElementVisible("FBC Value");
-        assertIsTooltipElementVisible("DTC Score Name");
-        assertIsTooltipElementVisible("DTC Score Value");
-        assertIsTooltipElementVisible("Annual Spend Name");
-        assertIsTooltipElementVisible("Annual Spend Value");
-         */
-
-        assertThat(true, is(equalTo(true)));
     }
 
     @Test
