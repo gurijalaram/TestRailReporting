@@ -386,6 +386,16 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//button[contains(@data-testid,'undo-icon-button')]")
     private WebElement undoDeleteButton;
 
+    @FindBy(xpath = "//div[@id='more-options-menu-popper']//li[@data-testid='menu-item-ASSIGN']//*[local-name()='svg']")
+    private WebElement assignToOption;
+
+    @FindBy(xpath = "//div[contains(@id,'popover-select-control')]")
+    private WebElement assignToParticipantsList;
+
+    @FindBy(xpath = "//div[@id='more-options-menu-popper']//p[contains(text(),'Unassign')]")
+    private WebElement unAssignOption;
+
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -2146,6 +2156,112 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickUndoDeleteDiscussionButton() {
         getPageUtils().waitForElementAppear(undoDeleteButton).click();
+        return this;
+    }
+
+    /**
+     * Checks if assign to option displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssignToOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(assignToOption).isDisplayed();
+    }
+
+    /**
+     * clicks on assign to option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickAssignToOption() {
+        getPageUtils().waitForElementAppear(assignToOption);
+        getPageUtils().moveAndClick(assignToOption);
+        return this;
+    }
+
+    /**
+     * checks if assign to participants list displayed
+     *
+     * @return true/false
+     */
+    public boolean isParticipantsListDisplayed() {
+        return getPageUtils().waitForElementAppear(assignToParticipantsList).isDisplayed();
+    }
+
+    /**
+     * clicks on a participant
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectAParticipant(String participantName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@role='button']//span[contains(text(),'" + participantName + "')]"));
+        return this;
+    }
+
+    /**
+     * get assigned state
+     *
+     * @return a String
+     */
+    public String getAssignedState() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementAndClick(createdDiscussion);
+        return getPageUtils().waitForElementToAppear(createdDiscussion).getAttribute("innerText");
+    }
+
+    /**
+     * clicks on share button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage shareScenario() {
+        getPageUtils().waitForElementAndClick(costIcon);
+        getPageUtils().waitForElementAndClick(btnShare);
+        return this;
+    }
+
+    /**
+     * Checks if un-assign option displayed
+     *
+     * @return true/false
+     */
+    public boolean isUnAssignOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(unAssignOption).isDisplayed();
+    }
+
+    /**
+     * clicks on un-assign option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickUnAssignOption() {
+        getPageUtils().waitForElementToAppear(unAssignOption);
+        getPageUtils().javaScriptClick(unAssignOption);
+        return this;
+    }
+
+    /**
+     * clicks on created comment thread
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnCreatedDiscussion() {
+        getPageUtils().waitForElementToAppear(createdDiscussion);
+        getPageUtils().javaScriptClick(createdDiscussion);
+        return this;
+    }
+
+    /**
+     * re-assign the discussion
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage reassignDiscussion(String participantName) {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementToAppear(discussionMenuIcon);
+        getPageUtils().moveAndClick(discussionMenuIcon);
+        clickAssignToOption();
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@role='button']//span[contains(text(),'" + participantName + "')]"));
         return this;
     }
 }
