@@ -314,12 +314,13 @@ public class ScenariosUtil {
         ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
         Arrays.stream(componentName).forEach(component -> {
-            List<ScenarioItem> scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
+            ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
                 COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
-                CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + " false");
+                CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + " false").stream()
+                .findFirst().get();
 
             componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
-                    .forEach(x -> x.setScenarioIdentity(scenarioItem.get(0).getScenarioIdentity()));
+                    .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
         });
         return response;
     }
