@@ -1,5 +1,8 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -19,6 +22,9 @@ import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.entity.enums.CssSearch;
+import com.apriori.entity.response.ScenarioItem;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -107,7 +113,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentationPublished(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
+    public ScenarioResponse getScenarioRepresentationActioned(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
 
         if (scenarioRepresentation != null &&
@@ -304,7 +310,17 @@ public class ScenariosUtil {
                     .build())
                 .token(componentInfo.getUser().getToken());
 
-        return HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
+
+        Arrays.stream(componentName).forEach(component -> {
+            List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(componentInfo.getUser(),
+                COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
+                CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + " false");
+
+            componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
+                    .forEach(x -> x.setScenarioIdentity(scenarioItem.get(0).getScenarioIdentity()));
+        });
+        return response;
     }
 
     /**
@@ -477,7 +493,7 @@ public class ScenariosUtil {
     public ScenarioResponse postPublishScenario(ComponentInfoBuilder componentInfo) {
         publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
-        return getScenarioRepresentationPublished(componentInfo, "PUBLISH", true);
+        return getScenarioRepresentationActioned(componentInfo, "PUBLISH", true);
     }
 
     /**
@@ -541,7 +557,7 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .options(Options.builder()
-                        .scenarioName(groupPublishRequest.getPublishRequest().getScenarioName())
+                        .scenarioName(groupPublishRequest.getComponentInfo().getScenarioName())
                         .override(groupPublishRequest.getPublishRequest().getOverride())
                         .costMaturity(groupPublishRequest.getPublishRequest().getCostMaturity().toUpperCase())
                         .status(groupPublishRequest.getPublishRequest().getStatus().toUpperCase())
@@ -551,7 +567,7 @@ public class ScenariosUtil {
 
         ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
-        subComponentInfo.forEach(component -> getScenarioRepresentationPublished(component, "PUBLISH", true));
+        subComponentInfo.forEach(component -> getScenarioRepresentationActioned(component, "PUBLISH", true));
 
         return response;
     }
