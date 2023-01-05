@@ -23,8 +23,6 @@ import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsApiTest;
 import utils.JasperApiAuthenticationUtil;
 
 import java.io.IOException;
@@ -71,7 +69,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsApiTest.class)
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -105,7 +102,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsApiTest.class)
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -116,7 +112,6 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsApiTest.class)
     @TestRail(testCaseId = {"7408"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
