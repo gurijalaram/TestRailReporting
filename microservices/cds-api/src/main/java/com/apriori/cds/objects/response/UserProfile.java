@@ -41,4 +41,6 @@ public class UserProfile {
     private String suffix;
     private String stateProvince;
     private String county;
+    private String officePhoneCountryCode;
+    private String officePhoneNumber;
 }
