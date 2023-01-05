@@ -52,6 +52,7 @@ public class ScenariosUtil {
 
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private CssComponent cssComponent = new CssComponent();
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 240;
     private final int SOCKET_TIMEOUT = 240000;
@@ -313,7 +314,7 @@ public class ScenariosUtil {
         ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
         Arrays.stream(componentName).forEach(component -> {
-            List<ScenarioItem> scenarioItem = new CssComponent().getComponentParts(componentInfo.getUser(),
+            List<ScenarioItem> scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
                 COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
                 CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + " false");
 
