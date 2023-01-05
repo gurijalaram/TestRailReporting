@@ -1194,4 +1194,57 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"14191","14192","14193","14194","14628","14689","14690"})
+    @Description("Verify that assign and un-assign a discussion to a project participant ")
+    public void testAssignUnAssignACommentThread()  {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .clickMoreOption();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssignToOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickAssignToOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isParticipantsListDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectAParticipant("QA Automation Account");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("You");
+
+        partsAndAssembliesDetailsPage.shareScenario()
+                .selectAUser("qa-automation-22@apriori.com")
+                .clickOnInvite()
+                .clickOnCreatedDiscussion()
+                .clickMoreOption();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isUnAssignOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickUnAssignOption()
+                .reassignDiscussion("QA Automation Account 22");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
+
+        softAssertions.assertAll();
+    }
 }
