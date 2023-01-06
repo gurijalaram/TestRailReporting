@@ -1,4 +1,4 @@
-package com.apriori.cis.tests.suite;
+package com.apriori.cis.testsuite;
 
 import com.apriori.cis.tests.UserPreferencesTest;
 import com.apriori.utils.ProjectRunID;
@@ -12,5 +12,5 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     UserPreferencesTest.class
 })
-public class CISApiSuite {
+public class RegressionSuite {
 }
