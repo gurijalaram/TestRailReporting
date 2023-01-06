@@ -19,6 +19,7 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -33,6 +34,7 @@ import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -46,6 +48,7 @@ import java.util.List;
 public class UploadComponentTests extends TestBase {
 
     private File resourceFile;
+    private File resourceFile1;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private UserCredentials currentUser;
@@ -106,7 +109,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11884")
+    @TestRail(testCaseId = {"11884", "11895"})
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -440,6 +443,107 @@ public class UploadComponentTests extends TestBase {
             .login(UserUtil.getUser());
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11890"})
+    @Description("Validate override existing scenario tooltip")
+    public void existingScenarioTooltip() {
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile();
+
+        assertThat(importCadFilePage.getTooltipMessage(), is("If unchecked, import will fail when the scenario already exists. Delete failed scenarios and repeat import."));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11900"})
+    @Description("Validate multiple upload of same components is blocked")
+    public void multipleUploadOfSameComponents() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents);
+
+        assertThat(importCadFilePage.getAlertWarning(), is("piston_pin.prt.1 is already selected."));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11893"})
+    @Description("Validate that scroll function is enabled")
+    public void scrollFunctionEnabled() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents);
+
+        assertThat(importCadFilePage.isTheScrollBarDisplayed(), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11910"})
+    @Description("Upload different Creo versions of files")
+    public void uploadDifferentCreoVersions() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String componentName1 = "piston";
+        final String extension1 = ".prt.5";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName1 + extension1);
+        final String componentName2 = "piston";
+        final String extension2 = ".prt.6";
+        resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension2);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
+            .clickExplore()
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile1)
+            .tick("Override existing scenario")
+            .waitForUploadStatus(componentName2 + extension2, UploadStatusEnum.UPLOADED)
+            .submit()
+            .clickClose()
+            .openScenario(componentName2, scenarioName)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
+
+        explorePage = evaluatePage.clickExplore()
+            .clickSearch(componentName2)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }

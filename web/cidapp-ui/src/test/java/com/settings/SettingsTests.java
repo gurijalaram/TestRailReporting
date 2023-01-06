@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
@@ -62,6 +63,7 @@ public class SettingsTests extends TestBase {
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
     private AdvancedPage advancedPage;
+    private ImportCadFilePage importCadFilePage;
     private MaterialSelectorPage materialSelectorPage;
     private StockPage stockPage;
     private ComparePage comparePage;
@@ -598,5 +600,46 @@ public class SettingsTests extends TestBase {
         softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("0.15m");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"8762"})
+    @Description("Verify default Display Preferences")
+    public void defaultDisplayPreferences() {
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        displayPreferencesPage = loginPage.login(currentUser)
+            .openSettings();
+
+        softAssertions.assertThat(displayPreferencesPage.getUnits()).isEqualTo("MMKS");
+        softAssertions.assertThat(displayPreferencesPage.isSystemChecked("Metric")).isTrue();
+        softAssertions.assertThat(displayPreferencesPage.getLength()).isEqualTo("Millimeter");
+        softAssertions.assertThat(displayPreferencesPage.getMass()).isEqualTo("Kilogram");
+        softAssertions.assertThat(displayPreferencesPage.getTime()).isEqualTo("Second");
+        softAssertions.assertThat(displayPreferencesPage.getDecimalPlaces()).isEqualTo("2");
+        softAssertions.assertThat(displayPreferencesPage.getLanguage()).isEqualTo("English");
+        softAssertions.assertThat(displayPreferencesPage.getCurrency()).isEqualTo("USD (United States Dollar)");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11885"})
+    @Description("Validate that default scenario name can be adjusted through user preferences")
+    public void changeTheDefaultScenarioName() {
+        currentUser = UserUtil.getUser();
+        String MYSCENARIONAME = "My Test Scenario Name";
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .openSettings()
+            .goToProductionTab()
+            .inputScenarioName(MYSCENARIONAME)
+            .submit(ExplorePage.class)
+            .importCadFile();
+
+        assertThat(importCadFilePage.getDefaultScenarioName(), is(MYSCENARIONAME));
     }
 }
