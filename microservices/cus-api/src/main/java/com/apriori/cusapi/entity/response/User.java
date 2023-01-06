@@ -31,6 +31,7 @@ public class User {
     private String customerIdentity;
     private UserProfile userProfile;
     private String email;
+    private boolean hasCompleteProfile;
     private String username;
     private Boolean active;
     private Boolean mfaRequired;
