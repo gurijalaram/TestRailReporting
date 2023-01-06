@@ -183,7 +183,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public <T> T publish(ComponentInfoBuilder cidComponentItem, Class<T> klass) {
         modalDialogController.publish(klass);
         pageUtils.waitForElementsToNotAppear(By.cssSelector("div[data-testid='loader']"));
-        new ScenariosUtil().getScenarioRepresentationPublished(cidComponentItem, "PUBLISH", true);
+        new ScenariosUtil().getScenarioRepresentationActioned(cidComponentItem, "PUBLISH", true);
         return PageFactory.initElements(driver, klass);
     }
 
