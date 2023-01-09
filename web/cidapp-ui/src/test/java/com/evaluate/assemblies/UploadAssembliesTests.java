@@ -704,9 +704,9 @@ public class UploadAssembliesTests extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("edon+")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(EDON)).isTrue();
 
-        evaluatePage = componentsTreePage.openAssembly("edon+", scenarioName);
+        evaluatePage = componentsTreePage.openAssembly(EDON, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.DISCONNECTED)).isTrue();
 
@@ -718,7 +718,7 @@ public class UploadAssembliesTests extends TestBase {
 
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("edon+")).isFalse();
 
-        componentsTreePage.openAssembly("edon+", scenarioName);
+        componentsTreePage.openAssembly(EDON, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
 
@@ -771,9 +771,9 @@ public class UploadAssembliesTests extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("Hex Drive")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SUBASSEMBLY)).isTrue();
 
-        evaluatePage = componentsTreePage.openAssembly("Hex Drive", scenarioName);
+        evaluatePage = componentsTreePage.openAssembly(SUBASSEMBLY, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.DISCONNECTED)).isTrue();
 
@@ -783,9 +783,9 @@ public class UploadAssembliesTests extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("Hex Drive")).isFalse();
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SUBASSEMBLY)).isFalse();
 
-        componentsTreePage.openAssembly("Hex Drive", scenarioName);
+        componentsTreePage.openAssembly(SUBASSEMBLY, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
 
