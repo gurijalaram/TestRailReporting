@@ -716,7 +716,7 @@ public class UploadAssembliesTests extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut("edon+")).isFalse();
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(EDON)).isFalse();
 
         componentsTreePage.openAssembly(EDON, scenarioName);
 
