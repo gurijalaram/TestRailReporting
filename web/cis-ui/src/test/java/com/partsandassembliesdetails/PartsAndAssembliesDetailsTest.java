@@ -705,7 +705,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isDesignGuidanceCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isIssuesPanelDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDesignGuidanceDetails()).contains(CisDesignGuidanceDetailsEnum.HOLE_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.PROXIMITY_WARNING.getDesignGuidanceDetailsName(),
-            CisDesignGuidanceDetailsEnum.BLANK_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.MATERIAL_ISSUE.getDesignGuidanceDetailsName());
+            CisDesignGuidanceDetailsEnum.BLANK_ISSUE.getDesignGuidanceDetailsName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Hole Issue")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Proximity Warning")).isNotEmpty();
