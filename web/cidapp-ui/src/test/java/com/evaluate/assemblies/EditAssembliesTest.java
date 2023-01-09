@@ -1162,7 +1162,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6601", "6602"})
+    @TestRail(testCaseId = {"6601", "6602", "11869"})
     @Description("Validate user can open a public component from a private workspace")
     public void testOpeningPublicComponentFromPrivateWorkspace() {
         String assemblyName = "Hinge assembly";
