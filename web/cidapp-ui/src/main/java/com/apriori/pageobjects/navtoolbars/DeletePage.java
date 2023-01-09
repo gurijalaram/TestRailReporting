@@ -25,7 +25,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = "[role='dialog'] li")
     private List<WebElement> componentScenarioNames;
 
-    @FindBy(id = "qa-delete-confirmation-submit-button")
+    @FindBy(css = "[data-testid = 'primary-button']")
     private WebElement deleteButton;
 
     private PageUtils pageUtils;
