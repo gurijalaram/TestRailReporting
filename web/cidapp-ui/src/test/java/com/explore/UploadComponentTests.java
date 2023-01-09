@@ -204,7 +204,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11898")
+    @TestRail(testCaseId = {"11898", "11893"})
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -232,18 +232,24 @@ public class UploadComponentTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
+            .inputScenarioName(scenarioName);
+
+        softAssertions.assertThat(importCadFilePage.isTheScrollBarDisplayed()).isTrue();
+
+        explorePage = importCadFilePage
             .submit()
             .clickClose()
             .setPagination()
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            softAssertions.assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName())).isEqualTo(1));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -448,20 +454,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11890"})
-    @Description("Validate override existing scenario tooltip")
-    public void existingScenarioTooltip() {
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        importCadFilePage = loginPage.login(currentUser)
-            .importCadFile();
-
-        assertThat(importCadFilePage.getTooltipMessage(), is("If unchecked, import will fail when the scenario already exists. Delete failed scenarios and repeat import."));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"11900"})
+    @TestRail(testCaseId = {"11900", "11890"})
     @Description("Validate multiple upload of same components is blocked")
     public void multipleUploadOfSameComponents() {
         currentUser = UserUtil.getUser();
@@ -477,36 +470,11 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents);
 
-        assertThat(importCadFilePage.getAlertWarning(), is("piston_pin.prt.1 is already selected."));
-    }
+        softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo("piston_pin.prt.1 is already selected.");
 
-    @Test
-    @TestRail(testCaseId = {"11893"})
-    @Description("Validate that scroll function is enabled")
-    public void scrollFunctionEnabled() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        softAssertions.assertThat(importCadFilePage.getTooltipMessage()).isEqualTo("If unchecked, import will fail when the scenario already exists. Delete failed scenarios and repeat import.");
 
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
-
-        loginPage = new CidAppLoginPage(driver);
-        importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents);
-
-        assertThat(importCadFilePage.isTheScrollBarDisplayed(), is(true));
+        softAssertions.assertAll();
     }
 
     @Test
