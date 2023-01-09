@@ -2,6 +2,7 @@ package com.evaluate;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -45,9 +46,9 @@ public class GroupEditTests {
     private void verifyEditAction(String scenarioName, String secondScenarioName, List<String> subComponentNames) {
         subComponentNames.forEach(subComponent -> {
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + secondScenarioName,
-                "scenarioPublished[EQ], false")).hasSize(1);
+                SCENARIO_PUBLISHED_EQ.getKey() + false)).hasSize(1);
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSize(1);
+                SCENARIO_PUBLISHED_EQ.getKey() + true)).hasSize(1);
         });
 
         softAssertions.assertAll();

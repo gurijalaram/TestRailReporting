@@ -150,6 +150,8 @@ public class ComponentsUtil {
 
         componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
 
+        new ScenariosUtil().getScenarioCompleted(componentInfo);
+
         return componentInfo;
     }
 

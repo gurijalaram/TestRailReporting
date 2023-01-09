@@ -2,6 +2,7 @@ package com.apriori.cidappapi.utils;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -22,7 +23,6 @@ import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.entity.enums.CssSearch;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
@@ -242,10 +242,8 @@ public class ScenariosUtil {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         Arrays.stream(componentName).forEach(component -> {
-            final ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
-                    COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
-                    CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + true).stream()
-                .findFirst().get();
+            final ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + component,
+                SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(), SCENARIO_PUBLISHED_EQ.getKey() + true).stream().findFirst().get();
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
                 .componentIdentity(scenarioItem.getComponentIdentity())
@@ -270,15 +268,6 @@ public class ScenariosUtil {
 
         ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
-        Arrays.stream(componentName).forEach(component -> {
-            ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
-                    COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
-                    CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + false).stream()
-                .findFirst().get();
-
-            componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
-                .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
-        });
         return response.getResponseEntity();
     }
 
