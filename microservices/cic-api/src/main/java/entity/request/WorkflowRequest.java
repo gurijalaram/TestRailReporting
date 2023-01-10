@@ -22,6 +22,7 @@ public class WorkflowRequest {
     private Boolean isEmailTemplateSelected;
     private EmailConfiguration emailConfiguration;
     private String emailRecipientType;
+    private DefaultValues defaultValues;
     private Boolean isSchedulerEnabled;
     private Boolean isEmailReportNameSelected;
     private String selectedEmailReportName;

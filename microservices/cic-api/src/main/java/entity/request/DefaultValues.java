@@ -6,17 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Row {
-    public String key;
-    public String value;
-    public String identifier;
-    public boolean isValid;
-    public String mappingRule;
-    public String twxAttributeName;
-    public boolean _isSelected;
+public class DefaultValues {
+    public DataShape dataShape;
+    public List<Row> rows;
+    public String name;
+    public String description;
 }
