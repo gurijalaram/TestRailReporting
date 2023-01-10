@@ -48,6 +48,7 @@ import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -161,6 +162,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6285", "6286", "5429"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -189,6 +191,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -513,6 +516,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6368"})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {

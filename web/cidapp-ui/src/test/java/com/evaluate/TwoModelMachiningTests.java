@@ -29,6 +29,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -151,6 +152,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(testCaseId = {"7865", "7869", "7872"})
     public void multiLevel2Model() {
@@ -260,6 +262,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {

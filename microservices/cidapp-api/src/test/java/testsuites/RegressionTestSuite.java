@@ -25,6 +25,7 @@ import testsuites.suiteinterfaces.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
+    ComponentRedirectTests.class,
     CostAllCadTests.class,
     ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,

@@ -24,6 +24,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -53,6 +54,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6468", "6379", "6383", "6389", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
@@ -145,6 +147,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6379", "6384", "6388"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
