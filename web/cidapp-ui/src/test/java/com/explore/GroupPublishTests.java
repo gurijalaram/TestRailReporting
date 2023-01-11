@@ -27,6 +27,8 @@ import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -95,6 +97,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"14463", "14460"})
     @Description("Publish multiple assemblies")
     public void testGroupPublishAssemblyScenarios() {
