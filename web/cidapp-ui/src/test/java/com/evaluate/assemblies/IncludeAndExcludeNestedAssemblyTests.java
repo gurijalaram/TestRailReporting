@@ -23,6 +23,8 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +77,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = "11979")
     @Description("Verify Include and Exclude buttons disabled for a component that is part both of the top level assembly and sub-assembly")
     public void testIncludeAndExcludeDisabledForAssembly() {
@@ -92,6 +95,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = "11158")
     @Description("Verify Exclude button disabled when selecting included sub-component from sub-assembly")
     public void testExcludeButtonDisabledWithSubcomponentsFromSubAssembly() {
@@ -106,6 +110,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"11157", "11862", "6556"})
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
@@ -133,6 +138,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"11827", "11826"})
     @Description("Validate  the publish button will only be enabled in the tree view and now the list view")
     public void testPublishButtonEnabledInTreeView() {
@@ -154,6 +160,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-377")
     @TestRail(testCaseId = "12196")
     @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")

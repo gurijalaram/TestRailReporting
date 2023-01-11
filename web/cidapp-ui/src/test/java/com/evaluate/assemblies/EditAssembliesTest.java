@@ -39,6 +39,7 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.util.Arrays;
@@ -312,6 +313,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-337")
     @TestRail(testCaseId = {"10806", "10807", "10809", "6614"})
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
@@ -469,6 +471,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-337")
     @TestRail(testCaseId = {"10813", "10815", "11032"})
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
@@ -1157,6 +1160,65 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(explorePage.getListOfScenarios(FLANGE, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(explorePage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(explorePage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6601", "6602", "11869"})
+    @Description("Validate user can open a public component from a private workspace")
+    public void testOpeningPublicComponentFromPrivateWorkspace() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails("PIN", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        evaluatePage = componentsTreePage.openAssembly(PIN, scenarioName);
+
+        softAssertions.assertThat(evaluatePage.getTabTitle()).contains("PIN");
+        softAssertions.assertThat(evaluatePage.getTabCount()).isEqualTo(2);
+
+        evaluatePage.editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 
         softAssertions.assertAll();
     }

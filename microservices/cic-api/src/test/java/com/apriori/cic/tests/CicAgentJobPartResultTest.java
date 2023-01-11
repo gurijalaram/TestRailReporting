@@ -5,11 +5,10 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import entity.request.JobDefinition;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
-import entity.request.workflow.JobDefinition;
 import entity.response.AgentWorkflow;
-import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobRun;
 import entity.response.PlmParts;
@@ -44,7 +43,7 @@ public class CicAgentJobPartResultTest extends TestBase {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NAME_ENDS_WITH.getFilterKey(), "prt"))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build());
-        workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST);
+        workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
         createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, loginSession);
 
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
@@ -67,9 +66,6 @@ public class CicAgentJobPartResultTest extends TestBase {
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJob agentWorkflowJob = CicApiTestUtil.getCicAgentWorkflowJob(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
-        softAssertions.assertThat(agentWorkflowJob.getStatus()).isEqualTo("Finished");
 
         AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
             agentWorkflowJobRunResponse.getJobId(),

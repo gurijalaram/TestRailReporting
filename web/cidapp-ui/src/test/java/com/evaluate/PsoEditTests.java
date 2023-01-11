@@ -25,6 +25,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -75,6 +78,8 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7269", "7297", "7289", "7296"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
@@ -152,6 +157,8 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7293"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
@@ -208,6 +215,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("BA-2651")
     @TestRail(testCaseId = {"7300"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
@@ -238,6 +246,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8972"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {

@@ -40,6 +40,7 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -103,6 +104,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7035"})
     @Description("Validate user can select explore tab and then comparison tab again")
     public void goToExploreReturnCompare() {
@@ -362,6 +364,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"5784"})
     @Description("User can add columns to the part table within the Add Scenarios dialog box")
     public void addColumnsConfigure() {
@@ -468,6 +471,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7033"})
     @Description("Validate user can drag and drop rows of comparison")
     public void dragAndDropCard() {
@@ -775,6 +779,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6534"})
     @Description("User can add assemblies to existing comparison containing part scenario")
     public void addAssemblyToExistingComparison() {
@@ -832,6 +837,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-337")
     @TestRail(testCaseId = {"6533"})
     @Description("User can add assemblies to a blank new comparison")
@@ -919,6 +925,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6537", "6535"})
     @Description("Assemblies in comparison can be interacted with in a similar way as part scenarios - open, basis, delete")
     public void interactWithAssemblyInComparison() {
@@ -1018,6 +1025,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6482", "6483"})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {

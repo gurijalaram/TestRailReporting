@@ -22,6 +22,7 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.util.Arrays;
@@ -93,6 +94,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-377")
     @TestRail(testCaseId = {"10891", "11132"})
     @Description("Group edit subcomponents")
@@ -143,6 +145,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("SC-377")
     @TestRail(testCaseId = {"10889", "11953"})
     @Description("Group edit subcomponents")

@@ -15,7 +15,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import entity.request.workflow.JobDefinition;
+import entity.request.JobDefinition;
 import entity.response.AgentConfiguration;
 import entity.response.AgentStatus;
 import entity.response.AgentWorkflow;
@@ -107,7 +107,7 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5582"})
     @Description("Get Workflow using workflow id and job ID")
     public void testHCAgentWorkflowJob() {
-        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJob(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
+        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
         assertThat(agentWorkflowJobResponse.getIdentity(), is(equalTo(agentWorkflowJobResponse.getIdentity())));
     }
 

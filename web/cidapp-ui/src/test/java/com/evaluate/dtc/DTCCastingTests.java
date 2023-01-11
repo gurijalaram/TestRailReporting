@@ -24,6 +24,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -53,6 +54,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6468", "6379", "6383", "6389", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
@@ -145,6 +147,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6379", "6384", "6388"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
@@ -289,6 +292,43 @@ public class DTCCastingTests extends TestBase {
         guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6387"})
+    @Description("MAX. thickness checks for Die casting-Al. 38.1mm MAX. for high pressure, 50.5mm MAX. for gravity die casting")
+    public void maxThicknessForDieCasting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        guidanceIssuesPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 38.10mm");
+
+        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Gravity Die Cast")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 50.50mm");
 
         softAssertions.assertAll();
     }

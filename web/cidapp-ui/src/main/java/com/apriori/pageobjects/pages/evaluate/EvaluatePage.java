@@ -865,4 +865,13 @@ public class EvaluatePage extends EvaluateToolbar {
         inputsController.closeMessagePanel(closeInvalidSourcePanelButton);
         return this;
     }
+
+    /**
+     *  Gets count of open tabs
+     *
+     * @return int - number of open tabs
+     */
+    public int getTabCount() {
+        return pageUtils.getCountOfOpenTabs();
+    }
 }
