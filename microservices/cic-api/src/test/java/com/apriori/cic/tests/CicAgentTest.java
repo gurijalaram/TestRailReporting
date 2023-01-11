@@ -24,6 +24,7 @@ import entity.response.AgentWorkflowJobRun;
 import enums.CICAPIEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5585"})
     @Description("Initiate the execution of Workflow")
     public void testCAgentWorkflowJobRun() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);;
         assertNotNull(agentWorkflowJobRunResponse.getJobId());
     }
 

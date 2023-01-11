@@ -173,17 +173,20 @@ public class CicApiTestUtil extends TestUtil {
     }
 
     /**
-     * Submit request to run the CIC agent workflow
+     * submit request to run the workflow
      *
-     * @param workflowId - workflow identity
-     * @return response of AgentWorkflowJob object
+     * @param workflowId    workflow identity
+     * @param responseClass expected response class
+     * @param httpStatus    expected http status code
+     * @param <T>           response class type
+     * @return object of expected response class
      */
-    public static AgentWorkflowJobRun runCicAgentWorkflow(String workflowId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, AgentWorkflowJobRun.class)
+    public static <T> T runCicAgentWorkflow(String workflowId, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, responseClass)
             .inlineVariables(workflowId)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (AgentWorkflowJobRun) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -279,6 +282,7 @@ public class CicApiTestUtil extends TestUtil {
     public static Map<String, String> setupHeader() {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
+        header.put("Accept", "application/json");
         header.put("Authorization", PropertiesContext.get("${env}.ci-connect.agent_api_authorization_key"));
         return header;
     }
@@ -391,7 +395,12 @@ public class CicApiTestUtil extends TestUtil {
             .inlineVariables(workFlowIdentity, jobIdentity)
             .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+
+        if (null != responseClass) {
+            return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        } else {
+            return (T) HTTPRequest.build(requestEntity).get();
+        }
     }
 
     /**
@@ -488,7 +497,6 @@ public class CicApiTestUtil extends TestUtil {
                     .scenarioName("SN" + System.currentTimeMillis())
                     .annualVolume(partDataList.get(i).getAnnualVolume())
                     .batchSize(partDataList.get(i).getBatchSize())
-                    .description("DS" + System.currentTimeMillis())
                     .build())
                 .build());
         }
