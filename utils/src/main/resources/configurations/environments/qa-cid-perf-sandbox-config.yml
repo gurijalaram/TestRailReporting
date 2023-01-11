@@ -1,0 +1,26 @@
+########################################################################################################################
+# If there is no variable for this environment,
+# check global-config.yml file,
+# if the value in the file is missing or does not match the required one, add it to the current file
+######################################################## QA-CID-PERF-SANDBOX ########################################################
+qa-cid-perf-sandbox:
+  env_url_specification: update_this_value_in_environment_file
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
+  name: qa-cid-perf-sandbox
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+
+  bcs:
+    api_url: https://bcs.na-1-v22-1.qa-cid-perf.apriori.net/
+    number_of_parts: 5
+
+  edc:
+    ui_url: https://edc.na-1.qa-cid-perf.apriori.net/
+    api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/
+
+  sds:
+    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+
+  vds:
+    api_url: https://vds.na-1.qa-cid-perf.apriori.net/

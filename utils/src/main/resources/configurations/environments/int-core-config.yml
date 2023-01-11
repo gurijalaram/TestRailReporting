@@ -1,0 +1,69 @@
+#  Specific environment configurations
+######################################################## INT-CORE ########################################################
+int-core:
+  base_url: https://cost.apriori-internal.int.apriori.net/
+  customer_identity: H337GKD0LA0M
+  name: int-core
+  secret_key: 65J1ID2B6LDG
+  user_identity: 8GFDIG229629
+
+  admin:
+    ui_url: ${int-core.base_url}apriori/login
+
+  ats:
+    api_url: https://ats.core.int.apriori.net/
+
+  bcs:
+    api_url: https://bcs.core.int.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+  ci-connect:
+    ui_url: https://ci-connect.core.int.apriori.net/
+
+  cidapp:
+    ui_url: https://cid.core.int.apriori.net/
+    api_url: https://cid-api.core.int.apriori.net/
+
+  cis:
+    ui_url: https://cis.core.int.apriori.net/
+    api_url: https://cis-api.core.int.apriori.net/
+
+  cas:
+    ui_url: https://cas.core.int.apriori.net/
+    api_url: https://cas-api.core.int.apriori.net/
+
+  cds:
+    api_url: https://cds.core.int.apriori.net/
+    apriori_core_services_installation_identity: 70EGN68B5CMH
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: H337GKD0LA0N
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
+  css:
+    api_url: https://css.core.int.apriori.net/
+
+  edc:
+    ui_url: https://edc.core.int.apriori.net/
+    api_url: https://edc-api.core.int.apriori.net/
+
+  fms:
+    api_url: https://fms.core.int.apriori.net/
+
+  nts:
+    api_url: https://nts.core.int.apriori.net/
+
+  reports:
+    ui_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
+
+  sds:
+    api_url: https://sds.core.int.apriori.net/
+
+  vds:
+    api_url: https://vds.core.int.apriori.net/

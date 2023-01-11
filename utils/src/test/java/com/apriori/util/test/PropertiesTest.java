@@ -3,6 +3,7 @@ package com.apriori.util.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.email.GraphEmailService;
 import com.apriori.utils.email.response.EmailMessage;
@@ -42,10 +43,17 @@ public class PropertiesTest {
     @Test
     public void testGetEnvironmentProperty() {
         final String envValue = PropertiesContext.get("env");
-        final String specificEnvPropertyValue = PropertiesContext.get("${env}.secret_key");
+        final String specificEnvPropertyValue = PropertiesContext.get("${env}.bcs.api_url");
+//        final String specificEnvPropertyValue = PropertiesContext.get("https://bcs-http.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/");
 
-        assertFalse("Environment property should exist.", envValue.isEmpty());
-        assertFalse("Specific environment property should exist.", specificEnvPropertyValue.isEmpty());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.update_this_value_in_environment_file.apriori.net/");
+        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.qa-test.apriori.net/");
+        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v23-1.qa-test.apriori.net/");
+
+        softAssertions.assertAll();
+//        assertFalse("Environment property should exist.", envValue.isEmpty());
+//        assertFalse("Specific environment property should exist.", specificEnvPropertyValue.isEmpty());
     }
 
     @Test

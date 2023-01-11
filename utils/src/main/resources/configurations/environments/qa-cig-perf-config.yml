@@ -1,0 +1,34 @@
+########################################################################################################################
+# If there is no variable for this environment,
+# check global-config.yml file,
+# if the value in the file is missing or does not match the required one, add it to the current file
+######################################################## QA-CIG-PERF ########################################################
+qa-cig-perf:
+  env_url_specification: update_this_value_in_environment_file
+  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
+  customer_identity: C339C55A8155
+  name: qa-cig-perf
+  user_identity: C339C55A8155
+  secret_key: WJIM0HV7Z6U1
+
+  admin:
+    ui_url: ${qa-cig-perf.base_url}apriori/login
+
+  bcs:
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+  cds:
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJ94
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
+  reports:
+    ui_url: ${qa-cig-perf.base_url}jasperserver-pro/login.html

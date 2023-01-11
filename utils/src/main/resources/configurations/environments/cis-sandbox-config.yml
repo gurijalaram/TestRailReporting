@@ -1,0 +1,22 @@
+
+######################################################## CIS_SANDBOX ########################################################
+cis-sbx:
+  aws_region: na-1
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
+  name: cis-sbx
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+
+  ats:
+    api_url: https://ats.na-1.qa-cid-perf.apriori.net/
+
+  cidapp:
+    api_url: https://cid-api.dev-cis-sbx.apriori.net/
+    ui_url:  https://cid.dev-cis-sbx.apriori.net/
+
+  cis:
+    ui_url: https://cis.dev-cis-sbx.apriori.net/
+
+  css:
+    api_url: https://css.dev-cis-sbx.apriori.net/

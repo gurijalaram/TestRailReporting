@@ -1,0 +1,15 @@
+
+######################################################## MIGRATION-PREVIEW #####################################################
+migration-preview:
+  name: migration-preview
+  secret_key: X0V4XXK2SF87
+
+  ats:
+    api_url: https://ats.na-1.qa-20-1.apriori.net/
+
+  cidapp:
+    ui_url: https://ci-design.na-1-v22-1.preview.qa-20-1.apriori.net/
+    api_url: https://cid-api.na-1-v22-1.preview.qa-20-1.apriori.net/
+
+  css:
+    api_url: https://css.na-1-v22-1.preview.qa-20-1.apriori.net/

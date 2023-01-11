@@ -1,0 +1,40 @@
+########################################################################################################################
+# If there is no variable for this environment,
+# check global-config.yml file,
+# if the value in the file is missing or does not match the required one, add it to the current file
+######################################################## STAGING ########################################################
+staging:
+  env_url_specification: update_this_value_in_environment_file
+  ap_user_context:
+  base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
+  customer_identity: 7G0JGBE2N4GM
+  secret_key: K6JWVF8KV884
+  user_identity: 6AHL1HHGB15E
+
+  ats:
+    api_url: https://ats.na-1.${env}.apriori.net/
+
+  cds:
+    api_url: https://cds.na-1.staging.apriori.net/
+    apriori_core_services_installation_identity: 2GIKI57NE7M4
+    appro_application_identity: 1J8M416FBJ94
+    cia_application_identity: 1J8M416FBJCD
+    apriori_production_deployment_identity: 7G0JGBE2N4GN
+    apriori_cloud_home_identity: 1J8M416FBJDE
+    automation_user_identity02: 6AHL3EHF264K
+    automation_user_identity03: 1K2LKIB78J6A
+    identity_role: 7G0JGBE2N2GE
+
+  bcs:
+    api_url: https://bcs.us.staging.apriori.net/
+
+  cidapp:
+    ui_url: https://ci-design.na-1-v22-1.${env}.apriori.net/
+    api_url: https://cid-api.na-1-v22-1.${env}.apriori.net/
+
+  css:
+    api_url: https://css.na-1-v22-1.${env}.apriori.net/
+
+  cis:
+    ui_url: https://cis.na-1-v22-1.staging.apriori.net/
+    api_url: https://cis-api.na-1-v22-1.staging.apriori.net/
