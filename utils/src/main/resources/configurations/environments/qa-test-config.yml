@@ -5,7 +5,6 @@
 ######################################################## QA-TEST ########################################################
 qa-test:
   env_url_specification: qa-test
-#  env_url_specification: -v22-1.sandbox.qa-test-12.vjkdshdfkj
   application_name: cid
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
@@ -20,7 +19,7 @@ qa-test:
 
   bcs:
     api_url: https://bcs-http.na-1-v23-1.${${env}.env_url_specification}.apriori.net/
-#    number_of_parts: 5
+    number_of_parts: 5
 
   cas:
     ui_url: https://cas.na-1.qa-test.apriori.net/

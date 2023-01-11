@@ -1,22 +1,17 @@
 package com.apriori.utils.properties;
 
-import com.apriori.utils.FileResourceUtil;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.FileInputStream;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Stack;
 
+@Slf4j
 public class PropertiesContext {
 
     private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -34,6 +29,13 @@ public class PropertiesContext {
         propertiesContext = mergeCollection(globalPropertiesContext, envPropertiesContext);
     }
 
+    @SneakyThrows
+    private static JsonNode loadProperties(final String fileName) {
+        return mapper.readTree(
+            ClassLoader.getSystemClassLoader().getResourceAsStream(fileName)
+        );
+    }
+
     public static JsonNode mergeCollection(JsonNode globalProperties, JsonNode envProperties) {
         ObjectNode objectNode = mapper.createObjectNode();
 
@@ -49,7 +51,8 @@ public class PropertiesContext {
     }
 
     /**
-     * Get property from config.yml file.
+     * Get property from configurations files.
+     *  see {@link configurations}
      *
      * @param propertyName
      * @return
@@ -58,34 +61,28 @@ public class PropertiesContext {
         return Optional.ofNullable(
             System.getProperty(convertToSystemPropertyTemplate(propertyName))
         ).orElseGet(
-//            () -> getFromPropertyContext(convertToPropertyPathTemplate(propertyName))
             () -> getFromPropertyContext(convertToPropertyPathTemplate(propertyName))
         );
     }
 
-    @SneakyThrows
-    private static JsonNode loadProperties(final String fileName) {
-        // TODO z: add
-        return mapper.readTree(
-//            new FileInputStream(
-            ClassLoader.getSystemClassLoader().getResourceAsStream(fileName)
-//            )
-        );
-    }
-
     private static String getFromPropertyContext(String propertyName) {
-        final String readyToWorkPropertyPath = parsePropertyOnReferencesPresents(propertyName);
+        final String readyToWorkPropertyPath = parsePropertyOnReferencesPresentsAndGetValue(propertyName);
+
         String propertyValue = propertiesContext.at(readyToWorkPropertyPath).asText();
 
         if (StringUtils.isBlank(propertyValue)) {
-            propertyValue = getDefaultValueThrowExceptionIfMissed(convertToPropertyPathTemplate(readyToWorkPropertyPath));
+            propertyValue = getDefaultValueThrowExceptionIfMissed(readyToWorkPropertyPath);
+        }
+
+        if (isPropertyContainPropertyReference(propertyValue)) {
+            return parsePropertyOnReferencesPresentsAndGetValue(propertyValue);
         }
 
         return propertyValue;
     }
 
     private static String getDefaultValueThrowExceptionIfMissed(String propertyPath) {
-        String propertyValue = parsePropertyOnReferencesPresents(
+        String propertyValue = parsePropertyOnReferencesPresentsAndGetValue(
             propertiesContext.at(
                 updateToDefaultPropertyPath(propertyPath)
             ).asText()
@@ -107,65 +104,86 @@ public class PropertiesContext {
             );
     }
 
-    private static String parsePropertyOnReferencesPresents(String propertyPath) {
-//        propertyPath = convertToPropertyPathTemplate(propertyPath);
-
+    private static String parsePropertyOnReferencesPresentsAndGetValue(String propertyPath) {
         if (isPropertyContainPropertyReference(propertyPath)) {
 
-            Stack<StringBuilder> propertiesReferencesQueue = new Stack<>();
-            propertiesReferencesQueue.add(new StringBuilder());
+            Stack<StringBuilder> propertiesDividedPathAndReferences = divideReferencesAndPropertyPath(propertyPath);
+            String finalPath = combineReferencesValuesAndPropertyPath(propertiesDividedPathAndReferences);
 
-            char[] propertyToParse = propertyPath.toCharArray();
-
-            for (char element : propertyToParse) {
-                if (element == '$') {
-                    propertiesReferencesQueue.add(new StringBuilder(String.valueOf(element)));
-                } else {
-                    propertiesReferencesQueue.peek().append(element);
-                    if (element == '}') {
-                        propertiesReferencesQueue.add(new StringBuilder());
-                    }
-                }
-            }
-
-            StringBuilder finalPath = new StringBuilder();
-
-            for (StringBuilder pathPart : propertiesReferencesQueue) {
-
-                String property = pathPart.toString();
-                if (isPropertyContainPropertyReference(property)) {
-//                    finalPath.append(replacePropertyReferenceWithAppropriateValue(property));
-                    String value = replacePropertyReferenceWithAppropriateValue(property);
-                    if(StringUtils.isEmpty(value)) {
-                        value = getDefaultValue(property);
-                    }
-                    finalPath.append(value);
-                    continue;
-                }
-
-                finalPath.append(property);
-            }
-
-            return parsePropertyOnReferencesPresents(finalPath.toString());
-//            return getFromPropertyContext(finalPath.toString());
-
-//            for (String reference : StringUtils.substringsBetween(propertyPath, variableMarker[0], variableMarker[1])) {
-//                propertyPath = replacePropertyReferenceWithAppropriateValue(propertyPath, reference);
-//            }
-
+            return parsePropertyOnReferencesPresentsAndGetValue(finalPath);
         }
 
         return propertyPath;
     }
 
-    private static String getDefaultValue(String property) {
-        return propertiesContext.at( updateToDefaultPropertyPath("/" + StringUtils.substringBetween(property.replace(".", "/"), variableMarker[0], variableMarker[1]))).asText();
+    private static String combineReferencesValuesAndPropertyPath(Stack<StringBuilder> propertiesDividedPathAndReferences) {
+        StringBuilder finalPath = new StringBuilder();
 
+        for (StringBuilder pathPart : propertiesDividedPathAndReferences) {
+            String property = pathPart.toString();
+
+            // If stack element is reference, get the value by this reference
+            if (isPropertyContainPropertyReference(property)) {
+                String workingPath = updateReferenceToWorkingPath(property);
+                String value = getValueByWorkingPath(workingPath);
+
+                if(StringUtils.isEmpty(value)) {
+                    log.warn("Property: {}, doesn't exist for the current environment. Getting the default property.", property);
+                    value = updateToDefaultPathAndGetValue(workingPath);
+                }
+
+                finalPath.append(value);
+                continue;
+            }
+
+            finalPath.append(property);
+        }
+
+        return finalPath.toString();
     }
 
-    private static String replacePropertyReferenceWithAppropriateValue(final String reference) {
-//        return propertyValue.replace(variableMarker[0] + reference + variableMarker[1], get(reference));
-        return propertiesContext.at("/" + StringUtils.substringBetween(reference.replace(".", "/"), variableMarker[0], variableMarker[1])).asText();
+    private static Stack<StringBuilder> divideReferencesAndPropertyPath(String propertyPath) {
+        Stack<StringBuilder> parsedProperties = new Stack<StringBuilder>() {{
+            add(new StringBuilder());
+        }};
+
+        for (char propertySymbol : propertyPath.toCharArray()) {
+            // if it is reference start, create a new stack element and start recording into this
+            // else append symbol to existing stack element
+            if (propertySymbol == '$') {
+                parsedProperties.add(new StringBuilder(String.valueOf(propertySymbol)));
+            } else {
+                parsedProperties.peek().append(propertySymbol);
+
+                // if it is reference end, create a new stack element for the next data
+                if (propertySymbol == '}') {
+                    parsedProperties.add(new StringBuilder());
+                }
+            }
+        }
+
+        return parsedProperties;
+    }
+
+    private static String updateToDefaultPathAndGetValue(String property) {
+        final String defaultPropertyPath = updateToDefaultPropertyPath(property);
+        final String propertyValue =  propertiesContext.at(defaultPropertyPath).asText();
+
+        if(StringUtils.isEmpty(propertyValue)) {
+            log.error("Default property: {} doesn't exist. Please add required property into default section from global-config.yml file \n" +
+                "or add required property into appropriate <environment>-config.yml file.", defaultPropertyPath);
+            throw new IllegalArgumentException();
+        }
+
+        return propertyValue;
+    }
+
+    private static String getValueByWorkingPath(final String property) {
+        return propertiesContext.at(property).asText();
+    }
+
+    private static String updateReferenceToWorkingPath(String reference) {
+       return "/" + StringUtils.substringBetween(reference.replace(".", "/"), variableMarker[0], variableMarker[1]);
     }
 
     private static boolean isPropertyContainPropertyReference(String propertyValue) {

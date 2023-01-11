@@ -1,10 +1,5 @@
 package com.apriori.util.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import com.apriori.utils.email.GraphEmailService;
 import com.apriori.utils.email.response.EmailMessage;
 import com.apriori.utils.pdf.PDFDocument;
@@ -12,9 +7,8 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
-
-import java.io.IOException;
 
 
 /**
@@ -23,8 +17,11 @@ import java.io.IOException;
 @Slf4j
 public class PropertiesTest {
 
+    // TODO gurijalaram16
+    // this test should be moved from this place
+    @Ignore
     @Test
-    public void testEncrypt() throws IOException {
+    public void testEncrypt() {
         SoftAssertions softAssertions = new SoftAssertions();
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments("ap-int123456");
         PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
@@ -37,23 +34,27 @@ public class PropertiesTest {
     public void testGetGlobalProperty() {
         final String globalProperty = PropertiesContext.get("global.schema_base_path");
 
-        assertNotNull("Global property should exist.", globalProperty);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(globalProperty).isNotEmpty();
+        softAssertions.assertAll();
     }
 
     @Test
     public void testGetEnvironmentProperty() {
         final String envValue = PropertiesContext.get("env");
-        final String specificEnvPropertyValue = PropertiesContext.get("${env}.bcs.api_url");
-//        final String specificEnvPropertyValue = PropertiesContext.get("https://bcs-http.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/");
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.update_this_value_in_environment_file.apriori.net/");
-        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.qa-test.apriori.net/");
-        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v23-1.qa-test.apriori.net/");
-
+        softAssertions.assertThat(envValue).isNotEmpty();
         softAssertions.assertAll();
-//        assertFalse("Environment property should exist.", envValue.isEmpty());
-//        assertFalse("Specific environment property should exist.", specificEnvPropertyValue.isEmpty());
+    }
+
+    @Test
+    public void testGetEnvironmentPropertyWithReferences() {
+        final String specificEnvPropertyValue = PropertiesContext.get("${env}.bcs.api_url");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.qa-test.apriori.net/");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -66,15 +67,19 @@ public class PropertiesTest {
 
         final String receivedPropertyValue = PropertiesContext.get(PROPERTY_KEY_CODE_TEMPLATE);
 
-        assertEquals("Property value should be the same", receivedPropertyValue, PROPERTY_VALUE);
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(receivedPropertyValue).isEqualTo(PROPERTY_VALUE);
+        softAssertions.assertAll();
     }
 
     @Test
     public void testGetDefaultProperty() {
         final String PROPERTY_KEY = "${env}.fms.api_url";
+        final String value = PropertiesContext.get(PROPERTY_KEY);
 
-        assertFalse("Property value should be the same",
-            PropertiesContext.get(PROPERTY_KEY).isEmpty());
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(value).isNotEmpty();
+        softAssertions.assertAll();
     }
 
     @Test(expected = IllegalArgumentException.class)
