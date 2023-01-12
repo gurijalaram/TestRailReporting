@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "integer"
+    },
+    "error": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "integer"
+    },
+    "method": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "error",
+    "message",
+    "path",
+    "method"
+  ]
+}
