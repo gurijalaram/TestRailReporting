@@ -24,6 +24,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -97,6 +98,7 @@ public class ThreadTests extends TestBase {
     }*/
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8902"})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
@@ -356,6 +358,7 @@ public class ThreadTests extends TestBase {
     }*/
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8903"})
     @Description("Testing thread length persist when attributes are changed from process group")
     public void maintainingThreadChangeAttributes() {
@@ -393,6 +396,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8904", "6358", "6359"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
@@ -465,6 +469,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8906"})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {

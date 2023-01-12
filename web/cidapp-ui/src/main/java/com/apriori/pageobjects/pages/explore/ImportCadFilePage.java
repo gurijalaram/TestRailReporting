@@ -55,6 +55,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(xpath = "//div[@role='rowgroup']//div[@data-header-id='name']")
     private List<WebElement> fileName;
 
+    @FindBy(css = ".info-icon")
+    private WebElement infoIcon;
+
+    @FindBy(css = ".file-selection-list.scrollable-y")
+    private WebElement scrollableElement;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -336,5 +342,33 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      */
     public <T> T closeDialog(Class<T> klass) {
         return modalDialogController.closeDialog(klass);
+    }
+
+    /**
+     * Gets the default scenario name
+     *
+     * @return string
+     */
+    public String getDefaultScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioNameInput).getAttribute("value");
+    }
+
+    /**
+     * Moves the mouse on the info icon and gets the tooltip message
+     *
+     * @return String
+     */
+    public String getTooltipMessage() {
+        pageUtils.mouseMove(infoIcon);
+        return driver.findElement(By.cssSelector("span div[aria-label]")).getAttribute("aria-label");
+    }
+
+    /**
+     * Checks if the scroll bar is displayed
+     *
+     * @return true/false
+     */
+    public boolean isTheScrollBarDisplayed() {
+        return pageUtils.isElementDisplayed(scrollableElement);
     }
 }
