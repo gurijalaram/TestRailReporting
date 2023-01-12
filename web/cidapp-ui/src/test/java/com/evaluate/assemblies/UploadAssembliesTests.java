@@ -185,7 +185,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11905", "10764"})
+    @TestRail(testCaseId = {"11905", "10764", "12168"})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

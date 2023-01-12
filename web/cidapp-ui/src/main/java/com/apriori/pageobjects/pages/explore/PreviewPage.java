@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
@@ -33,6 +34,9 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
 
     @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
+
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button']")
+    private WebElement previewButtonOnComponentsPage;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -160,5 +164,15 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      */
     private By getByScenario(String componentName, String scenarioName) {
         return By.xpath(String.format("//div[.='%s / %s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+    }
+
+    /**
+     * Opens the preview panel in components tree page
+     *
+     * @return new page object
+     */
+    public ComponentsTreePage closePreviewPanelOnComponentsPage() {
+        componentTableActions.closePreviewPanel(previewButtonOnComponentsPage);
+        return new ComponentsTreePage(driver);
     }
 }
