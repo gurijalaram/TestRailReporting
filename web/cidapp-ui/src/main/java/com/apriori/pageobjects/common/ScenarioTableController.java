@@ -558,7 +558,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
-        new ScenariosUtil().getScenarioRepresentationState(componentInfo, scenarioState);
+        new ScenariosUtil().getScenarioState(componentInfo, scenarioState);
         return this;
     }
 

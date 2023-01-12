@@ -84,6 +84,9 @@
         },
         "mfaRequired": {
           "type": "boolean"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -100,7 +103,8 @@
         "roles",
         "customerIdentity",
         "userType",
-        "mfaRequired"
+        "mfaRequired",
+        "hasCompleteProfile"
       ]
     }
   }
