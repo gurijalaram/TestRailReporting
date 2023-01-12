@@ -15,7 +15,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import entity.request.workflow.JobDefinition;
+import entity.request.JobDefinition;
 import entity.response.AgentConfiguration;
 import entity.response.AgentStatus;
 import entity.response.AgentWorkflow;
@@ -24,6 +24,7 @@ import entity.response.AgentWorkflowJobRun;
 import enums.CICAPIEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5585"})
     @Description("Initiate the execution of Workflow")
     public void testCAgentWorkflowJobRun() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);;
         assertNotNull(agentWorkflowJobRunResponse.getJobId());
     }
 
@@ -107,7 +108,7 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5582"})
     @Description("Get Workflow using workflow id and job ID")
     public void testHCAgentWorkflowJob() {
-        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJob(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
+        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
         assertThat(agentWorkflowJobResponse.getIdentity(), is(equalTo(agentWorkflowJobResponse.getIdentity())));
     }
 
