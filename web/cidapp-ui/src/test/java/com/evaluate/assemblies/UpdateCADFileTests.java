@@ -213,7 +213,7 @@ public class UpdateCADFileTests extends TestBase {
 
         soft.assertThat(componentsTreePage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update is being processed").isEqualTo("gear");
-        scenarioUtil.getScenarioRepresentationCompleted(subAssemblyInfo);
+        scenarioUtil.getScenarioCompleted(subAssemblyInfo);
         evaluatePage.clickRefresh(EvaluatePage.class);
         soft.assertThat(componentsTreePage.getScenarioState(autoSword, scenarioName))
             .as("Verify that sub-assembly CAD file update completed successfully").isEqualTo("circle-minus");

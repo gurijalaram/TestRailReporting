@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class GroupPublishRequest {
     private ComponentInfoBuilder componentInfo;
     private PublishRequest publishRequest;
-    private int workspaceId;
+    @Builder.Default
+    private Boolean scenarioPublished = false;
 }

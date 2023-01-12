@@ -232,7 +232,7 @@ public class GroupPublishTests extends TestBase {
 
         cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        String scenarioAssignedTo = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
+        String scenarioAssignedTo = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
