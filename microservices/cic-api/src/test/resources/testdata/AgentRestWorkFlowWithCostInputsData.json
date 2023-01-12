@@ -1,0 +1,241 @@
+{
+  "customer": "%s",
+  "plmSystem": "%s",
+  "name": "%s",
+  "description": "%s",
+  "schedule": "0 0 0 1/1 * ? *",
+  "selectedEmailTemplate": "none",
+  "isEmailTemplateSelected": false,
+  "emailConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+      {
+        "key": "CostRounding",
+        "value": "true"
+      },
+      {
+        "key": "aPrioriCost",
+        "value": "fullyBurdenedCost"
+      }
+    ]
+  },
+  "emailRecipientType": "field",
+  "defaultValues": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "dataType": {
+          "name": "dataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 12,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "displayDataType": {
+          "name": "displayDataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 18,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 13,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isMandatoryField": {
+          "name": "isMandatoryField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 10,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isSaved": {
+          "name": "isSaved",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 14,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isStandardField": {
+          "name": "isStandardField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 9,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 17,
+          "aspects": {
+            "defaultValue": true,
+            "isPrimaryKey": false
+          }
+        },
+        "mappingRule": {
+          "name": "mappingRule",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 15,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "plmAttributeName": {
+          "name": "plmAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 5,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "readOnly": {
+          "name": "readOnly",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 19,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "twxAttributeName": {
+          "name": "twxAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 6,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "usageType": {
+          "name": "usageType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 11,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 16,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+      {
+        "identifier": "f8dc364c-556b-4c2f-8b76-7f2f6f4b09b9",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Scenario Name",
+        "value": "%s",
+        "_isSelected": false
+      },
+      {
+        "identifier": "fbf646af-a8f9-4dff-91a7-5b4111549220",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Process Group",
+        "value": "Sheet Metal",
+        "_isSelected": false
+      },
+      {
+        "identifier": "4d2445cc-e96d-4e85-b744-df85df04f761",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Material",
+        "value": "Steel, Cold Worked, AISI 1020",
+        "_isSelected": false
+      },
+      {
+        "identifier": "dca97769-48e3-46ad-bb51-346b4ea349d3",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Digital Factory",
+        "value": "aPriori Brazil",
+        "_isSelected": false
+      },
+      {
+        "identifier": "9f5544cc-8a30-418f-8b9a-759cb03a3bc3",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Description",
+        "value": "test api",
+        "_isSelected": false
+      },
+      {
+        "identifier": "f04edf6d-6647-4dbb-8240-09bdd74adb2d",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Annual Volume",
+        "value": "1000",
+        "_isSelected": false
+      },
+      {
+        "identifier": "1fe0cbea-1d5f-4db3-bedf-f4924e7e4ebc",
+        "isValid": true,
+        "mappingRule": "Constant",
+        "twxAttributeName": "Batch Size",
+        "value": "50",
+        "_isSelected": false
+      }
+    ],
+    "name": "",
+    "description": ""
+  },
+  "isSchedulerEnabled": false,
+  "isEmailReportNameSelected": false,
+  "selectedEmailReportName": "none",
+  "isPlmWriteReportNameSelected": false,
+  "selectedPlmWriteReportName": "none",
+  "emailPartFilter": {},
+  "applyEmailFilter": false,
+  "applyEmailReportsFilter": false,
+  "applyPlmWriteReportsFilter": false,
+  "applyPlmWritePartFilter": false,
+  "useLatestRevision": false,
+  "jobMonitoringRecipients": "",
+  "partSelectionType": "REST"
+}

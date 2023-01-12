@@ -81,11 +81,13 @@ public class PsoController {
      * @return double
      */
     public double getOverriddenPso(String pso) {
-        int attempts = 0;
 
-        while (Objects.equals(inputLocator(pso).getAttribute("value"), "") && attempts < 11) {
-            attempts++;
+        final String value = inputLocator(pso).getAttribute("value");
+
+        if (value.isEmpty()) {
+            return -0.0;
+        } else {
+            return Double.parseDouble(value);
         }
-        return Double.parseDouble(inputLocator(pso).getAttribute("value"));
     }
 }

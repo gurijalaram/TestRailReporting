@@ -39,6 +39,7 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.util.Arrays;
@@ -157,6 +158,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10801"})
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
     public void testShallowEditRetainStatus() {
@@ -208,6 +210,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10802", "10803", "10835", "6613"})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
@@ -310,6 +313,8 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10806", "10807", "10809", "6614"})
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
     public void testShallowEditPublishPublicWorkspaceLockNotes() {
@@ -466,6 +471,8 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10813", "10815", "11032"})
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
     public void testShallowEditPrivateLockedRename() {
@@ -577,6 +584,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10895", "10897"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndOverridePrivateSubcomponent() {
@@ -632,6 +640,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10896", "10898", "5619", "5428"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
@@ -744,6 +753,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("SC-337")
     @TestRail(testCaseId = "10900")
     @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
@@ -1155,7 +1165,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6601", "6602"})
+    @TestRail(testCaseId = {"6601", "6602", "11869"})
     @Description("Validate user can open a public component from a private workspace")
     public void testOpeningPublicComponentFromPrivateWorkspace() {
         String assemblyName = "Hinge assembly";

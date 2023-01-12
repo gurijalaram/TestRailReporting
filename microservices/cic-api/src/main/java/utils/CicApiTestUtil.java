@@ -17,16 +17,21 @@ import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import entity.request.CostingInputs;
+import entity.request.DefaultValues;
+import entity.request.JobDefinition;
+import entity.request.Row;
 import entity.request.WorkflowPart;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
-import entity.request.workflow.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
+import entity.response.AgentWorkflowJobPartsResult;
+import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;
 import entity.response.PlmPart;
 import entity.response.PlmParts;
 import enums.CICAPIEnum;
+import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -66,13 +71,27 @@ public class CicApiTestUtil extends TestUtil {
      * De-serialize base workflow requests test data from json file
      *
      * @param cicPartSelectionType Enum CICPartSelectionType (REST or QUERY)
+     * @param isCostingInputData
      * @return WorkFlowRequest builder object
      */
-    public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType) {
+    public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType, Boolean isCostingInputData) {
         WorkflowRequest workflowRequestDataBuilder = null;
         switch (cicPartSelectionType.getPartSelectionType()) {
             case "REST":
-                workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateRestWorkFlowData.json", WorkflowRequest.class);
+                if (isCostingInputData) {
+                    workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class);
+                    DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
+                    List<Row> rows = defaultValues.getRows();
+                    rows.stream().forEach(row -> {
+                        if (row.getTwxAttributeName().equals("Scenario Name")) {
+                            row.setValue("SN" + System.currentTimeMillis());
+                        }
+                    });
+                    defaultValues.setRows(rows);
+                    workflowRequestDataBuilder.setDefaultValues(defaultValues);
+                } else {
+                    workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
+                }
                 break;
             default:
                 workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateQueryWorkFlowData.json", WorkflowRequest.class);
@@ -145,7 +164,7 @@ public class CicApiTestUtil extends TestUtil {
      * @param jobID      - id of job to get
      * @return response of AgentWorkflowJob object
      */
-    public static AgentWorkflowJob getCicAgentWorkflowJob(String workFlowID, String jobID) {
+    public static AgentWorkflowJob getCicAgentWorkflowJobStatus(String workFlowID, String jobID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_STATUS, AgentWorkflowJob.class)
             .inlineVariables(workFlowID, jobID)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -154,17 +173,20 @@ public class CicApiTestUtil extends TestUtil {
     }
 
     /**
-     * Submit request to run the CIC agent workflow
+     * submit request to run the workflow
      *
-     * @param workflowId - workflow identity
-     * @return response of AgentWorkflowJob object
+     * @param workflowId    workflow identity
+     * @param responseClass expected response class
+     * @param httpStatus    expected http status code
+     * @param <T>           response class type
+     * @return object of expected response class
      */
-    public static AgentWorkflowJobRun runCicAgentWorkflow(String workflowId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, AgentWorkflowJobRun.class)
+    public static <T> T runCicAgentWorkflow(String workflowId, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_RUN, responseClass)
             .inlineVariables(workflowId)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (AgentWorkflowJobRun) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -260,6 +282,7 @@ public class CicApiTestUtil extends TestUtil {
     public static Map<String, String> setupHeader() {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
+        header.put("Accept", "application/json");
         header.put("Authorization", PropertiesContext.get("${env}.ci-connect.agent_api_authorization_key"));
         return header;
     }
@@ -300,14 +323,34 @@ public class CicApiTestUtil extends TestUtil {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
-        finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getStatus();
+        finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }
             try {
                 TimeUnit.SECONDS.sleep(30);
-                finalJobStatus = getCicAgentWorkflowJob(workflowID, jobID).getStatus();
+                finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+                logger.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+            } catch (InterruptedException e) {
+                logger.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        }
+        return true;
+    }
+
+    public static Boolean waitUntilExpectedJobStatusMatched(String workflowID, String jobID, CICAgentStatus cicAgentStatus) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(2);
+        String finalJobStatus;
+        finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+        while (!finalJobStatus.contains(cicAgentStatus.getAgentStatus())) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                return false;
+            }
+            try {
+                TimeUnit.SECONDS.sleep(30);
+                finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
                 logger.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
@@ -330,7 +373,11 @@ public class CicApiTestUtil extends TestUtil {
             .body(workflowPartsRequestBuilder)
             .expectedResponseCode(expectedHttpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        if (null != responseClass) {
+            return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        } else {
+            return (T) HTTPRequest.build(requestEntity).post();
+        }
     }
 
     /**
@@ -348,7 +395,12 @@ public class CicApiTestUtil extends TestUtil {
             .inlineVariables(workFlowIdentity, jobIdentity)
             .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+
+        if (null != responseClass) {
+            return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        } else {
+            return (T) HTTPRequest.build(requestEntity).get();
+        }
     }
 
     /**
@@ -445,12 +497,51 @@ public class CicApiTestUtil extends TestUtil {
                     .scenarioName("SN" + System.currentTimeMillis())
                     .annualVolume(partDataList.get(i).getAnnualVolume())
                     .batchSize(partDataList.get(i).getBatchSize())
-                    .description("DS" + System.currentTimeMillis())
                     .build())
                 .build());
         }
         return WorkflowParts.builder()
             .parts(part)
             .build();
+    }
+
+    /**
+     * Get Duplicate parts worflow part data builder
+     *
+     * @param plmParts   PlmParts
+     * @param numOfParts number of times same part
+     * @return WorflowParts class
+     */
+    public static WorkflowParts getDuplicateWorkflowPartDataBuilder(PlmParts plmParts, Integer numOfParts) {
+        ArrayList<WorkflowPart> part = new ArrayList<>();
+        for (int i = 0; i < numOfParts; i++) {
+            part.add(WorkflowPart.builder()
+                .id(plmParts.getItems().get(0).getId())
+                .costingInputs(CostingInputs.builder().build())
+                .build());
+        }
+        return WorkflowParts.builder()
+            .parts(part)
+            .build();
+    }
+
+    /**
+     * Verify the message from list of job parts result
+     *
+     * @param agentWorkflowJobResults AgentWorkflowJobResults
+     * @param errorMessage            expected message
+     * @return boolean
+     */
+    public static Boolean verifyAgentErrorMessage(AgentWorkflowJobResults agentWorkflowJobResults, String errorMessage) {
+        Boolean isTextMatched = false;
+        for (AgentWorkflowJobPartsResult result : agentWorkflowJobResults) {
+            if (null != result.getErrorMessage()) {
+                if (result.getErrorMessage().contains(errorMessage)) {
+                    isTextMatched = true;
+                    break;
+                }
+            }
+        }
+        return isTextMatched;
     }
 }
