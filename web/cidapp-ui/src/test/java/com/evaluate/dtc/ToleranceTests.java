@@ -31,6 +31,7 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -645,6 +646,7 @@ public class ToleranceTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6465", "6978", "7814"})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {

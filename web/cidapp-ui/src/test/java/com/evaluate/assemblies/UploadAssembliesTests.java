@@ -32,6 +32,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -301,6 +302,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"5620", "6513", "6514"})
     @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
     public void uploadAnAssemblyExistingInThePublicWorkspace() {
@@ -359,6 +361,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = "5621")
     @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
     public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
@@ -512,6 +515,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"12139", "12101", "12136"})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
@@ -629,6 +633,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6564"})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {

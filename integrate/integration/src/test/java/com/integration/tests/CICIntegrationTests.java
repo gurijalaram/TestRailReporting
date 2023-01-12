@@ -119,7 +119,7 @@ public class CICIntegrationTests extends TestBase {
         softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
 
         //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // Verify workflow job is finished.
@@ -161,7 +161,7 @@ public class CICIntegrationTests extends TestBase {
         softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
 
         //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // verify workflow job is finished
