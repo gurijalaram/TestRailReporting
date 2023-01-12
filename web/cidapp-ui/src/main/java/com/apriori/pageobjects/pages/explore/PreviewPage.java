@@ -171,6 +171,7 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      *
      * @return new page object
      */
+    //TODO 12/01/2023 a common page object for the preview page on Explore and ComponentsTable/Tree should be created
     public ComponentsTreePage closePreviewPanelOnComponentsPage() {
         componentTableActions.closePreviewPanel(previewButtonOnComponentsPage);
         return new ComponentsTreePage(driver);
