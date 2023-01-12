@@ -63,7 +63,7 @@ public class ScenariosTests {
         softAssertions.assertThat(copyScenarioResponse.getResponseEntity().getLastAction()).isEqualTo("COPY");
 
         //Rechecking the original scenario has not changed
-        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioRepresentationCompleted(postComponentResponse);
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(postComponentResponse);
 
         softAssertions.assertThat(scenarioRepresentation.getScenarioName()).isEqualTo(scenarioName);
 
