@@ -90,7 +90,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(.,'Number of Cavities')]/..//input[@value='optimize']")
     private WebElement optimizeMinCost;
 
-    @FindBy(xpath = "//h6[starts-with(., 'Colorant   (Piece Part Cost Driver)')]/..//input[@value='defaultColorant']")
+    @FindBy(xpath = "//h6[starts-with(., 'Colorant (Piece Part Cost Driver)')]/..//input[@value='defaultColorant']")
     private WebElement colorantDefaultValue;
 
     @FindBy(css = "[value='colorantAdded']")
@@ -511,8 +511,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance (Piece Part Cost Driver)", "userDefinedMode"),
-            psoController.inputLocator("Material Regrind Allowance (Piece Part Cost Driver)"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance (%) (Piece Part Cost Driver)", "userOverride"),
+            psoController.inputLocator("Material Regrind Allowance (%) (Piece Part Cost Driver)"), value);
         return this;
     }
 
@@ -648,8 +648,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputColorCharge(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Colorant   (Piece Part Cost Driver)", "userDefined"),
-            psoController.inputLocator("Colorant   (Piece Part Cost Driver)"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Colorant (Piece Part Cost Driver)", "userDefined"),
+            psoController.inputLocator("Colorant (Piece Part Cost Driver)"), value);
         return this;
     }
 

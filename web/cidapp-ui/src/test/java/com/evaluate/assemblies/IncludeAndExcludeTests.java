@@ -27,6 +27,8 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Issues;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 
 import java.io.File;
 import java.util.Arrays;
@@ -124,6 +126,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"11874", "11843", "11842", "11155", "11148"})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
@@ -220,6 +223,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"11150", "11149", "11156"})
     @Description("Include all sub-components from top-level assembly")
     public void testExcludeButtonEnabledWithCostedComponents() {
@@ -263,6 +267,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"12089", "6554"})
     @Description("Verify Excluded scenarios are not highlighted in flattened view")
     public void testExcludedScenarioInFlattenedView() {
@@ -300,6 +305,8 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
+    @Issue("SC-377")
     @TestRail(testCaseId = {"11921", "11920", "11919"})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
@@ -359,6 +366,8 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
+    @Issue("SC-377")
     @TestRail(testCaseId = {"11918", "11917", "11916"})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeSubcomponentsAndCost() {
@@ -413,7 +422,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issues({@Issue("AP-74028"), @Issue("BA-2658")})
+    @Issues({@Issue("AP-74028"), @Issue("BA-2658"), @Issue("SC-377")})
     @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {

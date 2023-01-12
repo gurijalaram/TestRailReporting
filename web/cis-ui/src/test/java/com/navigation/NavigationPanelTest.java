@@ -84,7 +84,7 @@ public class NavigationPanelTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(termsOfUsePage.getTermsOfUseUrl()).contains("/terms-of-use");
-        softAssertions.assertThat(termsOfUsePage.getTermsOfUseText()).contains("This Cost Insight Source application (“Application”), including the intellectual property rights and trade secrets contained therein");
+        softAssertions.assertThat(termsOfUsePage.getTermsOfUseText()).contains("This aP Workspace application (“Application”), including the intellectual property rights and trade secrets contained therein");
 
         softAssertions.assertAll();
     }

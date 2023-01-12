@@ -395,6 +395,12 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@id='more-options-menu-popper']//p[contains(text(),'Unassign')]")
     private WebElement unAssignOption;
 
+    @FindBy(xpath = "//div[text()='New Reply']//..//..//..//button[contains(@data-testid,'more-options-menu-icon-button')]")
+    private WebElement commentMoreOptionIcon;
+
+    @FindBy(xpath = "//div[@id='more-options-menu-popper']//li[@data-testid='menu-item-DELETE']//p[contains(text(),'Delete Comment')]")
+    private WebElement deleteCommentOption;
+
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -2263,5 +2269,63 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         clickAssignToOption();
         getPageUtils().waitForElementAndClick(By.xpath("//div[@role='button']//span[contains(text(),'" + participantName + "')]"));
         return this;
+    }
+
+    /**
+     * Checks if comment more option menu displayed
+     *
+     * @return true/false
+     */
+    public boolean isCommentMoreOptionMenuDisplayed() {
+        return getPageUtils().waitForElementAppear(commentMoreOptionIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on more option comment icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnCommentMoreOption() {
+        getPageUtils().waitForElementAndClick(commentMoreOptionIcon);
+        return this;
+    }
+
+    /**
+     * Checks if delete comment option displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteCommentOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(deleteCommentOption).isDisplayed();
+    }
+
+    /**
+     * clicks on delete comment option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnDeleteCommentOption() {
+        getPageUtils().waitForElementToAppear(deleteCommentOption);
+        getPageUtils().moveAndClick(deleteCommentOption);
+        return this;
+    }
+
+    /**
+     * clicks un-delete comment option
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickUnDeleteCommentOption() {
+        getPageUtils().waitForElementAppear(undoDeleteButton).click();
+        return this;
+    }
+
+    /**
+     * Checks if  deleted reply displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeletedReplyDisplayed() {
+        return getPageUtils().waitForElementAppear(replyMessage).isDisplayed();
     }
 }

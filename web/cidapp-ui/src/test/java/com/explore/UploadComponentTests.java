@@ -19,6 +19,7 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -33,6 +34,7 @@ import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -46,6 +48,7 @@ import java.util.List;
 public class UploadComponentTests extends TestBase {
 
     private File resourceFile;
+    private File resourceFile1;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private UserCredentials currentUser;
@@ -106,7 +109,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11884")
+    @TestRail(testCaseId = {"11884", "11895"})
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -201,7 +204,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11898")
+    @TestRail(testCaseId = {"11898", "11893"})
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -229,18 +232,24 @@ public class UploadComponentTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
+            .inputScenarioName(scenarioName);
+
+        softAssertions.assertThat(importCadFilePage.isTheScrollBarDisplayed()).isTrue();
+
+        explorePage = importCadFilePage
             .submit()
             .clickClose()
             .setPagination()
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            softAssertions.assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName())).isEqualTo(1));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -440,6 +449,69 @@ public class UploadComponentTests extends TestBase {
             .login(UserUtil.getUser());
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11900", "11890"})
+    @Description("Validate multiple upload of same components is blocked")
+    public void multipleUploadOfSameComponents() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents);
+
+        softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo("piston_pin.prt.1 is already selected.");
+
+        softAssertions.assertThat(importCadFilePage.getTooltipMessage()).isEqualTo("If unchecked, import will fail when the scenario already exists. Delete failed scenarios and repeat import.");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11910"})
+    @Description("Upload different Creo versions of files")
+    public void uploadDifferentCreoVersions() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String componentName1 = "piston";
+        final String extension1 = ".prt.5";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName1 + extension1);
+        final String componentName2 = "piston";
+        final String extension2 = ".prt.6";
+        resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension2);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
+            .clickExplore()
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile1)
+            .tick("Override existing scenario")
+            .waitForUploadStatus(componentName2 + extension2, UploadStatusEnum.UPLOADED)
+            .submit()
+            .clickClose()
+            .openScenario(componentName2, scenarioName)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
+
+        explorePage = evaluatePage.clickExplore()
+            .clickSearch(componentName2)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }

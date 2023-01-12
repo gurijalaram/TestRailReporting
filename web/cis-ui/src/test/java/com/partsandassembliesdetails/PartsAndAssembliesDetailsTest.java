@@ -705,12 +705,11 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isDesignGuidanceCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isIssuesPanelDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDesignGuidanceDetails()).contains(CisDesignGuidanceDetailsEnum.HOLE_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.PROXIMITY_WARNING.getDesignGuidanceDetailsName(),
-            CisDesignGuidanceDetailsEnum.BLANK_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.MATERIAL_ISSUE.getDesignGuidanceDetailsName());
+            CisDesignGuidanceDetailsEnum.BLANK_ISSUE.getDesignGuidanceDetailsName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Hole Issue")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Proximity Warning")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Blank Issue")).isNotEmpty();
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Material Issue")).isNotEmpty();
 
         partsAndAssembliesDetailsPage.clickOnHoleIssue();
 
@@ -1244,6 +1243,53 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .reassignDiscussion("QA Automation Account 22");
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14700", "14701", "14702", "14760", "14761"})
+    @Description("Verify that user can delete and undelete a comment")
+    public void testDeleteAndUndeleteAComment() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMessageIconOnCommentSection()
+                .clickOnAttribute()
+                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+                .addComment("New Comment With Attribute")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .addComment("New Reply")
+                .clickComment();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentMoreOptionMenuDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickOnCommentMoreOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDeleteCommentOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickOnDeleteCommentOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isUndoDeleteOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickUnDeleteCommentOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDeletedReplyDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }

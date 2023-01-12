@@ -294,6 +294,22 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the processing failed state
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @return - String
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
      * Open filters page
      *
      * @return new page object
@@ -402,22 +418,6 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getSortOrder(ColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
-    }
-
-    /**
-     * Gets the processing failed state
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param currentUser   -  current user
-     * @return - String
-     */
-    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + stateEnum.getState());
-
-        return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 
     /**

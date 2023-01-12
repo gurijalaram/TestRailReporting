@@ -21,6 +21,7 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -40,6 +41,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"5922"})
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
@@ -94,6 +96,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7698"})
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
@@ -118,6 +121,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("Cost-280")
     @TestRail(testCaseId = {"7699"})
     @Description("Select Machine Default method of Part Nesting and cost")

@@ -41,6 +41,7 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -241,6 +242,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7854", "12379", "12381", "12382"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
@@ -283,7 +285,6 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-            .selectBarChart("Compression Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness")).isEqualTo(0.40);
@@ -366,6 +367,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"7844", "7290", "7291", "7292"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
@@ -401,7 +403,6 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Waterjet Cut")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getPartOrientation()).contains("Position Bend with Smallest Radius Parallel to Grain");
@@ -579,6 +580,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"14984", "15798"})
     @Description("Validate routings 2-Model Machining")
     public void routings2mm() {
@@ -1089,6 +1091,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"16095", "16099"})
     @Description("Validate group cost behaviour against routings")
     public void routingsAndGroupCost() {
