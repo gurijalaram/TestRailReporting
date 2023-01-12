@@ -8,6 +8,7 @@ import com.apriori.utils.web.driver.TestBase;
 import entity.request.JobDefinition;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
+import entity.response.AgentErrorMessage;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
@@ -221,6 +222,48 @@ public class CicAgentRunPartsTest extends TestBase {
             agentWorkflowJobRunResponse.getJobId());
 
         softAssertions.assertThat(agentWorkflowJobResult.getErrorMessage()).contains("Transition from state 'CAD_DOWNLOAD_FAILED' to state 'CAD_DOWNLOAD_FAILED' is not allowed");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15584"})
+    @Description("Submit run parts list with workflow with partSelectionType 'Query'")
+    public void testGetWorkflowJobResultPartSelectionQuery() {
+        JobDefinition jdData = CicApiTestUtil.getJobDefinitionData();
+        WorkflowRequest wfrQueryDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.QUERY, false);
+        ResponseWrapper<String> cwfResponse = CicApiTestUtil.CreateWorkflow(wfrQueryDataBuilder, loginSession);
+        softAssertions.assertThat(cwfResponse.getBody()).contains("CreateJobDefinition");
+        softAssertions.assertThat(cwfResponse.getBody()).contains(">true<");
+        AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());
+
+        WorkflowParts wfPartRequestDataBuilder  = CicApiTestUtil.getWorkflowPartDataBuilder(plmParts, 5);
+
+        AgentErrorMessage errorMessage = CicApiTestUtil.runCicAgentWorkflowPartList(
+            awfResponse.getId(),
+            wfPartRequestDataBuilder,
+            AgentErrorMessage.class,
+            HttpStatus.SC_BAD_REQUEST);
+
+        softAssertions.assertThat(errorMessage.getMessage()).contains(String.format("Workflow with id %s of type 'QUERY' doesn't support the action 'runPartList'", awfResponse.getId()));
+
+        jdData.setJobDefinition(awfResponse.getId() + "_Job");
+        CicApiTestUtil.deleteWorkFlow(loginSession, jdData);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15579"})
+    @Description("Submit run request for workflows with partSelectionType REST and verify error")
+    public void testGetWorkflowRunErrorForRest() {
+        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
+        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
+
+        AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
+
+        AgentErrorMessage errorMessage = CicApiTestUtil.runCicAgentWorkflow(
+            awfResponse.getId(),
+            AgentErrorMessage.class,
+            HttpStatus.SC_BAD_REQUEST);
+
+        softAssertions.assertThat(errorMessage.getMessage()).contains(String.format("Workflow with id %s of type 'REST' doesn't support the action 'run'", awfResponse.getId()));
     }
 
     @After

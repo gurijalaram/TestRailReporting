@@ -24,6 +24,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -257,6 +258,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @Issue("BA-2315")
     @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
