@@ -285,7 +285,6 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-            .selectBarChart("Compression Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness")).isEqualTo(0.40);
@@ -404,7 +403,6 @@ public class ProcessRoutingTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Waterjet Cut")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getPartOrientation()).contains("Position Bend with Smallest Radius Parallel to Grain");
