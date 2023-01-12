@@ -145,7 +145,7 @@ public class GroupCostingTests {
 
         softAssertions = new SoftAssertions();
 
-        componentAssembly.getSubComponents().forEach(component -> softAssertions.assertThat(scenariosUtil.getScenarioRepresentationCompleted(component).getScenarioState())
+        componentAssembly.getSubComponents().forEach(component -> softAssertions.assertThat(scenariosUtil.getScenarioCompleted(component).getScenarioState())
             .isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         softAssertions.assertThat(error.getResponseEntity().getMessage()).contains("validation failures were found");

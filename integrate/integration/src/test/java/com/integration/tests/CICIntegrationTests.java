@@ -26,7 +26,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import entity.request.workflow.JobDefinition;
+import entity.request.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobRun;
 import io.qameta.allure.Description;
@@ -119,7 +119,7 @@ public class CICIntegrationTests extends TestBase {
         softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
 
         //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // Verify workflow job is finished.
@@ -161,7 +161,7 @@ public class CICIntegrationTests extends TestBase {
         softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
 
         //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId());
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         // verify workflow job is finished

@@ -52,7 +52,7 @@ public enum ProcessGroupEnum {
         return Arrays.stream(ProcessGroupEnum.values())
             .filter(value -> value.processGroup.equals(pg))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
+            .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ", pg)));
     }
 
     public static EnumSet<ProcessGroupEnum> machinePartPG = EnumSet.of(ADDITIVE_MANUFACTURING, CASTING, CASTING_DIE, CASTING_INVESTMENT, FORGING);

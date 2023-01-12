@@ -1,4 +1,4 @@
 package testsuites.suiteinterface;
 
-public interface ReportsApiTest {
+public interface ExtendedRegression {
 }

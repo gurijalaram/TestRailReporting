@@ -10,6 +10,7 @@ import lombok.Data;
 @Schema(location = "AgentWorkflowJobPartResultSchema.json")
 public class AgentWorkflowJobPartsResult {
     private String cidPartNumber;
+    private String errorMessage;
     private String cicStatus;
     private String cidPartLink;
     private String partId;

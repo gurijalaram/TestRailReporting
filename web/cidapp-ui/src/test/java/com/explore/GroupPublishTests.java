@@ -27,6 +27,8 @@ import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -95,6 +97,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"14463", "14460"})
     @Description("Publish multiple assemblies")
     public void testGroupPublishAssemblyScenarios() {
@@ -229,7 +232,7 @@ public class GroupPublishTests extends TestBase {
 
         cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        String scenarioAssignedTo = scenariosUtil.getScenarioRepresentationCompleted(cidComponentItem).getCreatedByName();
+        String scenarioAssignedTo = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));

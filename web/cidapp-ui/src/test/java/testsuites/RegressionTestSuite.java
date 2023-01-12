@@ -55,13 +55,14 @@ import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("768")
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
+@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
 @Suite.SuiteClasses({
     EditAssembliesTest.class,
     GroupCostingTests.class,

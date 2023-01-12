@@ -28,6 +28,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -63,6 +64,7 @@ public class PublishAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("SC-337")
     @TestRail(testCaseId = {"10763", "10768"})
     @Description("Publish an assembly with no missing sub-components")
     public void shallowPublishAssemblyTest() {
@@ -470,7 +472,7 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioRepresentationCompleted(componentAssembly).getCreatedByName();
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(componentAssembly).getCreatedByName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)

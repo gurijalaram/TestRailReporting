@@ -150,6 +150,8 @@ public class ComponentsUtil {
 
         componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
 
+        new ScenariosUtil().getScenarioCompleted(componentInfo);
+
         return componentInfo;
     }
 
@@ -331,8 +333,7 @@ public class ComponentsUtil {
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
                 .token(componentInfo.getUser().getToken())
-                .followRedirection(true)
-                .expectedResponseCode(expectedStatusCode);
+                .followRedirection(true);
 
         return HTTPRequest.build(requestEntity).get();
     }

@@ -4,12 +4,13 @@ import com.apriori.utils.authorization.AuthorizationUtil;
 
 import com.auth0.jwt.JWT;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
-public class UserCredentials {
+public class UserCredentials implements Serializable {
 
     private String email;
     private String password;
