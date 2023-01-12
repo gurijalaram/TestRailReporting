@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
@@ -47,6 +48,7 @@ import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -62,6 +64,7 @@ public class SettingsTests extends TestBase {
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
     private AdvancedPage advancedPage;
+    private ImportCadFilePage importCadFilePage;
     private MaterialSelectorPage materialSelectorPage;
     private StockPage stockPage;
     private ComparePage comparePage;
@@ -159,6 +162,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6285", "6286", "5429"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -187,6 +191,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -511,6 +516,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6368"})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
@@ -598,5 +604,46 @@ public class SettingsTests extends TestBase {
         softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("0.15m");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"8762"})
+    @Description("Verify default Display Preferences")
+    public void defaultDisplayPreferences() {
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        displayPreferencesPage = loginPage.login(currentUser)
+            .openSettings();
+
+        softAssertions.assertThat(displayPreferencesPage.getUnits()).isEqualTo("MMKS");
+        softAssertions.assertThat(displayPreferencesPage.isSystemChecked("Metric")).isTrue();
+        softAssertions.assertThat(displayPreferencesPage.getLength()).isEqualTo("Millimeter");
+        softAssertions.assertThat(displayPreferencesPage.getMass()).isEqualTo("Kilogram");
+        softAssertions.assertThat(displayPreferencesPage.getTime()).isEqualTo("Second");
+        softAssertions.assertThat(displayPreferencesPage.getDecimalPlaces()).isEqualTo("2");
+        softAssertions.assertThat(displayPreferencesPage.getLanguage()).isEqualTo("English");
+        softAssertions.assertThat(displayPreferencesPage.getCurrency()).isEqualTo("USD (United States Dollar)");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11885"})
+    @Description("Validate that default scenario name can be adjusted through user preferences")
+    public void changeTheDefaultScenarioName() {
+        currentUser = UserUtil.getUser();
+        String MYSCENARIONAME = "My Test Scenario Name";
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .openSettings()
+            .goToProductionTab()
+            .inputScenarioName(MYSCENARIONAME)
+            .submit(ExplorePage.class)
+            .importCadFile();
+
+        assertThat(importCadFilePage.getDefaultScenarioName(), is(MYSCENARIONAME));
     }
 }
