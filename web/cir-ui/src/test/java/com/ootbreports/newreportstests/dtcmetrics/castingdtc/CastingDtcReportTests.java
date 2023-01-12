@@ -62,7 +62,7 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
-        ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
+        ReportRequest reportRequest = ReportRequest.initFromJsonFile("CastingDtcReportRequest");
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();

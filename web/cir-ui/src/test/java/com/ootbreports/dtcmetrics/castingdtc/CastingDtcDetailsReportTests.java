@@ -89,7 +89,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7655"})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Details Report")
-    public void testRollupDropDown() {
+    public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
             ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
@@ -252,7 +252,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7507"})
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report ")
+    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
