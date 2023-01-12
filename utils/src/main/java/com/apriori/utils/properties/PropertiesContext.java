@@ -52,7 +52,7 @@ public class PropertiesContext {
 
     /**
      * Get property from configurations files.
-     *  see {@link configurations}
+     * see {@link configurations}
      *
      * @param propertyName
      * @return
@@ -127,7 +127,7 @@ public class PropertiesContext {
                 String workingPath = updateReferenceToWorkingPath(property);
                 String value = getValueByWorkingPath(workingPath);
 
-                if(StringUtils.isEmpty(value)) {
+                if (StringUtils.isEmpty(value)) {
                     log.warn("Property: {}, doesn't exist for the current environment. Getting the default property.", property);
                     value = updateToDefaultPathAndGetValue(workingPath);
                 }
@@ -144,8 +144,8 @@ public class PropertiesContext {
 
     private static Stack<StringBuilder> divideReferencesAndPropertyPath(String propertyPath) {
         Stack<StringBuilder> parsedProperties = new Stack<StringBuilder>() {{
-            add(new StringBuilder());
-        }};
+                add(new StringBuilder());
+            }};
 
         for (char propertySymbol : propertyPath.toCharArray()) {
             // if it is reference start, create a new stack element and start recording into this
@@ -167,9 +167,9 @@ public class PropertiesContext {
 
     private static String updateToDefaultPathAndGetValue(String property) {
         final String defaultPropertyPath = updateToDefaultPropertyPath(property);
-        final String propertyValue =  propertiesContext.at(defaultPropertyPath).asText();
+        final String propertyValue = propertiesContext.at(defaultPropertyPath).asText();
 
-        if(StringUtils.isEmpty(propertyValue)) {
+        if (StringUtils.isEmpty(propertyValue)) {
             log.error("Default property: {} doesn't exist. Please add required property into default section from global-config.yml file \n" +
                 "or add required property into appropriate <environment>-config.yml file.", defaultPropertyPath);
             throw new IllegalArgumentException();
@@ -183,7 +183,7 @@ public class PropertiesContext {
     }
 
     private static String updateReferenceToWorkingPath(String reference) {
-       return "/" + StringUtils.substringBetween(reference.replace(".", "/"), variableMarker[0], variableMarker[1]);
+        return "/" + StringUtils.substringBetween(reference.replace(".", "/"), variableMarker[0], variableMarker[1]);
     }
 
     private static boolean isPropertyContainPropertyReference(String propertyValue) {
