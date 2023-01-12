@@ -22,6 +22,7 @@ import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.entity.enums.CssSearch;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
@@ -51,6 +52,7 @@ public class ScenariosUtil {
 
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private CssComponent cssComponent = new CssComponent();
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 240;
     private final int SOCKET_TIMEOUT = 240000;
@@ -63,12 +65,12 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentationCompleted(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
         try {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ScenarioResponse scenarioRepresentation = getScenarioRepresentation(componentInfo).getResponseEntity();
+                ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
 
                 if (scenarioRepresentation != null &&
 
@@ -97,8 +99,8 @@ public class ScenariosUtil {
      * @param scenarioState - the scenario state
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentationState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
-        final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
+    public ScenarioResponse getScenarioState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        final ScenarioResponse scenarioRepresentation = getScenarioCompleted(componentInfo);
 
         if (Objects.equals(scenarioRepresentation.getScenarioState(), scenarioState.getState())) {
             return scenarioRepresentation;
@@ -112,8 +114,8 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ScenarioResponse getScenarioRepresentationPublished(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
-        final ScenarioResponse scenarioRepresentation = getScenarioRepresentationCompleted(componentInfo);
+    public ScenarioResponse getScenarioActioned(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
+        final ScenarioResponse scenarioRepresentation = getScenarioCompleted(componentInfo);
 
         if (scenarioRepresentation != null &&
             scenarioRepresentation.getLastAction().equals(lastAction) &&
@@ -130,7 +132,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+    public ResponseWrapper<ScenarioResponse> getScenario(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
@@ -148,7 +150,7 @@ public class ScenariosUtil {
      * @param httpStatus    - The expected return code as an int
      * @return response - A response object
      */
-    public ResponseWrapper<Object> getScenarioRepresentationExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+    public ResponseWrapper<Object> getScenarioExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
         String scenarioId = componentInfo.getScenarioIdentity();
@@ -185,7 +187,7 @@ public class ScenariosUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentationCompleted(componentInfo);
+        return getScenarioCompleted(componentInfo);
     }
 
     /**
@@ -231,25 +233,28 @@ public class ScenariosUtil {
     /**
      * Post to edit group of scenarios
      *
-     * @param componentInfo         - the component info object
-     * @param forkRequest           - the fork request
-     * @param componentScenarioName - component and scenario name
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @param componentName - component name
      * @return response object
      */
-    public ResponseWrapper<ScenarioSuccessesFailures> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ScenarioSuccessesFailures postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        for (String[] componentScenario : componentScenarioNames) {
-            if (componentInfo.getSubComponents().stream()
-                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+        //iterate the assembly, filter by subcomponent and set the component/scenario Id
+        Arrays.stream(componentName).forEach(component -> {
+            final ComponentInfoBuilder componentIdentifier = componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
+                .stream()
+                .findFirst()
+                .get();
 
-                subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
-                    .collect(Collectors.toList()).get(0));
-            }
-        }
+            subComponentInfo.add(ComponentInfoBuilder.builder()
+                .componentIdentity(componentIdentifier.getComponentIdentity())
+                .scenarioIdentity(componentIdentifier.getScenarioIdentity())
+                .build());
+        });
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
@@ -266,53 +271,19 @@ public class ScenariosUtil {
                     .build())
                 .token(componentInfo.getUser().getToken());
 
-        return HTTPRequest.build(requestEntity).post();
-    }
+        ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
-    /**
-     * Post to edit group of scenarios
-     *
-     * @param componentInfo         - the component info object
-     * @param forkRequest           - the fork request
-     * @param componentScenarioName - component and scenario name
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioSuccessesFailures> postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentScenarioName) {
+        //query css and set the new scenario Id
+        Arrays.stream(componentName).forEach(component -> {
+            ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
+                    COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
+                    CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + false).stream()
+                .findFirst().get();
 
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
-        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
-
-        for (String[] componentScenario : componentScenarioNames) {
-            if (componentInfo.getSubComponents().stream()
-                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
-
-                new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
-                        SCENARIO_NAME_EQ.getKey() + componentScenario[1])
-                    .forEach(o -> new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
-                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
-
-                subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
-                    .collect(Collectors.toList()).get(0));
-            }
-        }
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
-                .body(ForkRequest.builder()
-                    .scenarioName(forkRequest.getScenarioName())
-                    .override(forkRequest.getOverride())
-                    .groupItems(subComponentInfo
-                        .stream()
-                        .map(component -> GroupItems.builder()
-                            .componentIdentity(component.getComponentIdentity())
-                            .scenarioIdentity(component.getScenarioIdentity())
-                            .build())
-                        .collect(Collectors.toList()))
-                    .build())
-                .token(componentInfo.getUser().getToken());
-
-        return HTTPRequest.build(requestEntity).post();
+            componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
+                .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
+        });
+        return response.getResponseEntity();
     }
 
     /**
@@ -485,7 +456,7 @@ public class ScenariosUtil {
     public ScenarioResponse postPublishScenario(ComponentInfoBuilder componentInfo) {
         publishScenario(componentInfo, ScenarioResponse.class, HttpStatus.SC_CREATED);
 
-        return getScenarioRepresentationPublished(componentInfo, "PUBLISH", true);
+        return getScenarioActioned(componentInfo, "PUBLISH", true);
     }
 
     /**
@@ -515,30 +486,28 @@ public class ScenariosUtil {
     /**
      * Post to publish group of scenarios
      *
-     * @param groupPublishRequest   - the group publish request object
-     * @param componentScenarioName - component and scenario name
+     * @param groupPublishRequest - the group publish request object
+     * @param componentInfo       - the component info builder object
+     * @param componentName       - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(GroupPublishRequest groupPublishRequest, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(GroupPublishRequest groupPublishRequest, ComponentInfoBuilder componentInfo, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        for (String[] componentScenario : componentScenarioNames) {
-            ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
-                    SCENARIO_NAME_EQ.getKey() + componentScenario[1])
+        Arrays.stream(componentName).forEach(component -> {
+            final ComponentInfoBuilder componentIdentifier = componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
                 .stream()
-                .filter(o -> !o.getScenarioIterationKey().getWorkspaceId().equals(groupPublishRequest.getWorkspaceId()))
                 .findFirst()
                 .get();
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
-                .componentName(component.getComponentName())
-                .scenarioName(component.getScenarioName())
-                .componentIdentity(component.getComponentIdentity())
-                .scenarioIdentity(component.getScenarioIdentity())
+                .componentIdentity(componentIdentifier.getComponentIdentity())
+                .scenarioIdentity(componentIdentifier.getScenarioIdentity())
+                .user(componentInfo.getUser())
                 .build());
-        }
+        });
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
@@ -551,7 +520,7 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .options(Options.builder()
-                        .scenarioName(groupPublishRequest.getPublishRequest().getScenarioName())
+                        .scenarioName(groupPublishRequest.getComponentInfo().getScenarioName())
                         .override(groupPublishRequest.getPublishRequest().getOverride())
                         .costMaturity(groupPublishRequest.getPublishRequest().getCostMaturity().toUpperCase())
                         .status(groupPublishRequest.getPublishRequest().getStatus().toUpperCase())
@@ -559,7 +528,11 @@ public class ScenariosUtil {
                     .build())
                 .token(groupPublishRequest.getComponentInfo().getUser().getToken());
 
-        return HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
+
+        subComponentInfo.forEach(component -> getScenarioActioned(component, "PUBLISH", true));
+
+        return response;
     }
 
     /**
@@ -599,7 +572,7 @@ public class ScenariosUtil {
      * @return response object
      */
     public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfo);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCID(componentInfo);
 
         postPublishScenario(postComponentResponse);
 
