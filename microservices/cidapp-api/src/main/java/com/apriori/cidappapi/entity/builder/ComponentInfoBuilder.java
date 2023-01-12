@@ -10,11 +10,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 @Builder
 @Data
-public class ComponentInfoBuilder {
+public class ComponentInfoBuilder implements Serializable {
     private final UserCredentials user;
     private final String componentName;
     private final String extension;
