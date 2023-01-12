@@ -16,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Percentage;
 import org.junit.Test;
@@ -111,6 +112,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
+    @Issue("SC-377")
     @TestRail(testCaseId = {"11097", "11090", "11092", "11094", "11091"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {

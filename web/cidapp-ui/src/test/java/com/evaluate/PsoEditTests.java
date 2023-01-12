@@ -2,6 +2,7 @@ package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -41,7 +42,6 @@ public class PsoEditTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @Issue("BA-2651")
     @TestRail(testCaseId = {"7286", "7287", "7288", "7289", "6634", "6635"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
@@ -67,13 +67,12 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(8);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.40);
         softAssertions.assertThat(materialProcessPage.isColorantSelected()).isEqualTo(true);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance (Piece Part Cost Driver)")).isEqualTo(0.30);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance (%) (Piece Part Cost Driver)")).isEqualTo(0.30);
 
         softAssertions.assertAll();
     }
@@ -105,7 +104,6 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario(7)
             .openMaterialProcess()
-            .selectBarChart("High Pressure Die Casting")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.isOptimizeMinCostSelected()).isEqualTo(true);
@@ -116,7 +114,6 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("High Pressure Die Casting")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
@@ -184,14 +181,12 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Band Saw")
             .selectOptionsTab();
 
         assertThat(materialProcessPage.getOverriddenPso("Bundle Sawing"), is(3.0));
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(testCaseId = {"7299"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
@@ -214,7 +209,6 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Compaction Pressing")
             .selectOptionsTab();
 
         assertThat(materialProcessPage.getOverriddenPso("Material Allowance (Piece Part Cost Driver)"), is(0.61));
@@ -277,12 +271,11 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.13);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(0.68);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant (Piece Part Cost Driver)")).isEqualTo(0.68);
 
         materialProcessPage.closePanel()
             .goToAdvancedTab()
@@ -299,18 +292,16 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Structural Foam Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
         softAssertions.assertThat(materialProcessPage.isColorantSelected()).isEqualTo(true);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance (Piece Part Cost Driver)")).isEqualTo(1.00);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance (%) (Piece Part Cost Driver)")).isEqualTo(1.00);
 
         softAssertions.assertAll();
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(testCaseId = {"7275"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
@@ -332,14 +323,12 @@ public class PsoEditTests extends TestBase {
             .inputBundleCount("jrigm")
             .closePanel()
             .openMaterialProcess()
-            .selectBarChart("Band Saw")
             .selectOptionsTab();
 
         assertThat(String.valueOf(materialProcessPage.getOverriddenPso("Bundle Sawing")), is(not(equalTo("jrigm"))));
     }
 
     @Test
-    @Issue("BA-2744")
     @TestRail(testCaseId = {"16707"})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
@@ -375,12 +364,11 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.82), Offset.offset(0.2));
 
         materialProcessPage = evaluatePage.openMaterialProcess()
-            .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isTrue();
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.52);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(0.86);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant (Piece Part Cost Driver)")).isEqualTo(0.86);
 
         materialProcessPage.selectNumberOfCavitiesPiecePartToolingDropdown("32")
             .overrideWallThicknessPiecePart("2.52")
@@ -388,15 +376,14 @@ public class PsoEditTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(5.72), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(5.51), Offset.offset(0.2));
 
         evaluatePage.openMaterialProcess()
-            .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(32);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(2.52);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(2.86);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant (Piece Part Cost Driver)")).isEqualTo(2.86);
 
         materialProcessPage.selectCavitiesDefaultValue()
             .selectWallThicknessDeriveFromPart()
@@ -407,7 +394,6 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
 
         evaluatePage.openMaterialProcess()
-            .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.isCavitiesDefaultValueSelected()).isTrue();
