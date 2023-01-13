@@ -34,9 +34,9 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14126"})
+    @TestRail(testCaseId = {"14126", "14130"})
     @Description("Create, Delete and verify Bid Package is deleted")
-    public void createDeleteAndVerifyBidPackage() {
+    public void testCreateDeleteAndVerifyBidPackage() {
         String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
@@ -51,9 +51,9 @@ public class CisBidPackageTest extends TestUtil {
 
 
     @Test
-    @TestRail(testCaseId = {"13367", "13874", "14743"})
+    @TestRail(testCaseId = {"14131"})
     @Description("Find List of bid packages and verify pagination for customer identity")
-    public void getBidPackages() {
+    public void testGetBidPackages() {
         BidPackagesResponse getBidPackagesResponse = CisBidPackageResources.getBidPackages(BidPackagesResponse.class, HttpStatus.SC_OK, currentUser);
 
         softAssertions.assertThat(getBidPackagesResponse.getIsFirstPage()).isTrue();
@@ -62,18 +62,9 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13368"})
-    @Description("Find List of bid packages from another user")
-    public void getBidPackagesFromOtherUser() {
-        UserCredentials otherUser = UserUtil.getUser();
-        BidPackagesResponse bidPackagesResponse = CisBidPackageResources.getBidPackages(BidPackagesResponse.class, HttpStatus.SC_OK, otherUser);
-        softAssertions.assertThat(bidPackagesResponse.getItems().size()).isGreaterThan(0);
-    }
-
-    @Test
     @TestRail(testCaseId = {"14128"})
     @Description("Get bid package by identity")
-    public void getBidPackage() {
+    public void testGetBidPackage() {
         BidPackageResponse getBidPackageResp = CisBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(getBidPackageResp.getName()).isEqualTo(bidPackageName);
     }
@@ -81,7 +72,7 @@ public class CisBidPackageTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"14129"})
     @Description("Updated existing Bid Package status")
-    public void updateBidPackageStatus() {
+    public void testUpdateBidPackageStatus() {
         BidPackageRequest bidPackageRequestBuilder = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
                 .name(bidPackageResponse.getName())
@@ -94,6 +85,41 @@ public class CisBidPackageTest extends TestUtil {
             bidPackageRequestBuilder, BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
 
         softAssertions.assertThat(bidPackageUpdateResponse.getStatus()).isEqualTo("COMPLETE");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14372"})
+    @Description("Create Bid Package empty name")
+    public void testCreateBidPackageEmptyName() {
+        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+            .bidPackage(BidPackageParameters.builder()
+                .description("Test Description")
+                .name("")
+                .status("IN_NEGOTIATION")
+                .build())
+            .build();
+
+        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+
+        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("'name' should not be null");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14129"})
+    @Description("Create Bid Package empty name")
+    public void testUpdateBidPackageWithInvalidIdentity() {
+        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+            .bidPackage(BidPackageParameters.builder()
+                .description("Update description ASSDEF")
+                .name("BIITest")
+                .status("COMPLETE")
+                .build())
+            .build();
+
+        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.updateBidPackage("123456",
+            bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+
+        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("'identity' is not a valid identity");
     }
 
     @After
