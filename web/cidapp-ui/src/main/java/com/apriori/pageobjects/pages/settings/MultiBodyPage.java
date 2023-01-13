@@ -89,7 +89,9 @@ public class MultiBodyPage extends LoadableComponent<MultiBodyPage> {
      *
      * @return Boolean of visibility
      */
-    public Boolean isAssemblyStrategyDropdownVisible() { return assemblyStrategyDropdown.isDisplayed(); }
+    public Boolean isAssemblyStrategyDropdownVisible() {
+        return assemblyStrategyDropdown.isDisplayed();
+    }
 
     /**
      * Select value from Assembly Strategy Dropdown

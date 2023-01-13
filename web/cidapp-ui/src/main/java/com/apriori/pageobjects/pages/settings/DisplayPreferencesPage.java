@@ -104,7 +104,9 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      *
      * @return new page object
      */
-    public MultiBodyPage goToMultiBodyTab() { return settingsNavigation.goToMultiBodyTab(); }
+    public MultiBodyPage goToMultiBodyTab() {
+        return settingsNavigation.goToMultiBodyTab();
+    }
 
     /**
      * Go to tolerances default tab
