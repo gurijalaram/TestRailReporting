@@ -15,19 +15,19 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CisBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
 
-    @Before
-    public void testSetup() {
+    @BeforeClass
+    public static void testSetup() {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
@@ -122,8 +122,8 @@ public class CisBidPackageTest extends TestUtil {
         softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("'identity' is not a valid identity");
     }
 
-    @After
-    public void testCleanup() {
+    @AfterClass
+    public static void testCleanup() {
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }

@@ -1,5 +1,6 @@
 package com.apriori.cisapi.utils;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
