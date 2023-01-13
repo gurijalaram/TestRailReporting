@@ -733,7 +733,7 @@ public class CdsTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("role",
                 UserRole.builder()
-                    .role("ADMIN")
+                    .role("AP_ADMIN")
                     .createdBy("#SYSTEM00000")
                     .build());
 
