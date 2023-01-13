@@ -40,7 +40,7 @@ public class UploadTests extends TestBase {
     private ComponentInfoBuilder cidComponentItem;
 
     @Test
-    @TestRail(testCaseId = {"5422"})
+    @TestRail(testCaseId = {"5422", "12167"})
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
         resourceFile = FileResourceUtil.getResourceAsFile("InvalidFileType.txt");
