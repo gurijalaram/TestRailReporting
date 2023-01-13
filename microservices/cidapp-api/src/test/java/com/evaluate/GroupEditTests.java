@@ -1,7 +1,9 @@
 package com.evaluate;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
@@ -17,11 +19,13 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -30,6 +34,7 @@ public class GroupEditTests {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder clonedComponentAssembly;
     private static UserCredentials currentUser;
     private CssComponent cssComponent = new CssComponent();
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -44,9 +49,9 @@ public class GroupEditTests {
     private void verifyEditAction(String scenarioName, String secondScenarioName, List<String> subComponentNames) {
         subComponentNames.forEach(subComponent -> {
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + secondScenarioName,
-                "scenarioPublished[EQ], false")).hasSize(1);
+                SCENARIO_PUBLISHED_EQ.getKey() + false, LATEST_EQ.getKey() + true)).hasSize(1);
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                "scenarioPublished[EQ], true")).hasSize(1);
+                SCENARIO_PUBLISHED_EQ.getKey() + true, LATEST_EQ.getKey() + true)).hasSize(1);
         });
 
         softAssertions.assertAll();
@@ -67,7 +72,7 @@ public class GroupEditTests {
         final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        final List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Collections.singletonList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -89,8 +94,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -130,8 +134,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -172,8 +175,7 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -205,21 +207,21 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
+        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
-            STAND + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(clonedComponentAssembly, forkRequest2, STAND);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -252,21 +254,21 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
+        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
-            STAND + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(clonedComponentAssembly, forkRequest2, STAND);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -300,21 +302,21 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
+        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(clonedComponentAssembly, forkRequest2, STAND, DRIVE, JOINT);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -349,21 +351,21 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
+        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest2,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        scenariosUtil.postEditPublicGroupScenarios(clonedComponentAssembly, forkRequest2, STAND, DRIVE, JOINT);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }

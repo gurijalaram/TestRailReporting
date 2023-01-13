@@ -1,15 +1,14 @@
 package testsuites;
 
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.utils.ProjectRunID;
+import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
-import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.ReportsApiTest;
 
-@RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(ReportsApiTest.class)
+@ProjectRunID("261")
+@RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     CastingDtcReportTests.class
 })
