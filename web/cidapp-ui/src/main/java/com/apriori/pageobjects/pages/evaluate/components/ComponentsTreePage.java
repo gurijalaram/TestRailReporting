@@ -469,5 +469,4 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public boolean isPreviewPanelDisplayed() {
         return pageUtils.isElementDisplayed(previewDataPanel);
     }
-
 }
