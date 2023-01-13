@@ -27,11 +27,13 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private UserProfile userProfile;
     private String email;
     private String username;
     private Boolean active;
+    private Boolean hasCompleteProfile;
     private Boolean mfaRequired;
     private CustomAttributes customAttributes;
     private CustomProperties customProperties;

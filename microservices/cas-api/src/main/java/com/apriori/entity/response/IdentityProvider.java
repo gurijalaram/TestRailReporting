@@ -24,6 +24,7 @@ public class IdentityProvider {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String customerIdentity;
     private Boolean active;
     private String name;
     private IdentityProviderPlatform identityProviderPlatform;

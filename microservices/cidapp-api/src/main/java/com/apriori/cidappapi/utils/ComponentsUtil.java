@@ -150,6 +150,8 @@ public class ComponentsUtil {
 
         componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
 
+        new ScenariosUtil().getScenarioCompleted(componentInfo);
+
         return componentInfo;
     }
 
@@ -250,7 +252,7 @@ public class ComponentsUtil {
     }
 
     /**
-     * Upload a component
+     * Upload a component via CSS
      *
      * @param componentInfo - the component
      * @return response object
@@ -261,6 +263,20 @@ public class ComponentsUtil {
         componentInfo.setResourceFile(resourceFile);
 
         return postComponentQueryCSSUncosted(componentInfo);
+    }
+
+    /**
+     * Upload a component via CID
+     *
+     * @param componentInfo - the component
+     * @return response object
+     */
+    public ComponentInfoBuilder setFilePostComponentQueryCID(ComponentInfoBuilder componentInfo) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentInfo.getProcessGroup(), componentInfo.getComponentName() + componentInfo.getExtension());
+
+        componentInfo.setResourceFile(resourceFile);
+
+        return postComponentQueryCID(componentInfo);
     }
 
     /**

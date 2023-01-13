@@ -255,7 +255,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"1696"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report ")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -328,7 +328,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7505"})
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report ")
+    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -353,7 +353,7 @@ public class CastingDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7511"})
-    @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report ")
+    @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreMainReports(
