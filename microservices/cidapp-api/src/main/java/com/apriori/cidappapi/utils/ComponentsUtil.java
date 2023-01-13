@@ -146,10 +146,9 @@ public class ComponentsUtil {
         componentInfo.setComponentIdentity(componentSuccess.getComponentIdentity());
         componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());
 
-        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo, HttpStatus.SC_OK);
-
-        componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
-
+        // TODO: 13/01/2023 needs refactoring
+        new ScenariosUtil().getScenario(componentInfo);
+        // TODO: 13/01/2023 needs refactoring
         new ScenariosUtil().getScenarioCompleted(componentInfo);
 
         return componentInfo;
