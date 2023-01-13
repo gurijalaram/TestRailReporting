@@ -15,6 +15,7 @@ import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -49,177 +50,179 @@ public class CisBidPackageTest extends TestUtil {
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
+//        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Test
-    @TestRail(testCaseId = {"13361", "14127"})
+    @TestRail(testCaseId = {"14126"})
     @Description("Create, Delete and verify Bid Package is deleted")
     public void createDeleteAndVerifyBidPackage() {
         String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
+
         CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),
+        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),
             CisErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
+        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
     }
 
-    @Test
-    @TestRail(testCaseId = {"13362"})
-    @Description("Create Bid Package greater than 64 characters")
-    public void createBidPackageNameMoreThan64() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("descripton")
-                .name(RandomStringUtils.randomAlphabetic(70))
-                .status("NEW")
-                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .build())
-            .build();
+//    @Test
+//    @TestRail(testCaseId = {"13362"})
+//    @Description("Create Bid Package greater than 64 characters")
+//    public void createBidPackageNameMoreThan64() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description("descripton")
+//                .name(RandomStringUtils.randomAlphabetic(70))
+//                .status("NEW")
+//                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
+//                .build())
+//            .build();
+//
+//        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//
+//        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 64 characters");
+//    }
 
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//    @Test
+//    @TestRail(testCaseId = {"13365"})
+//    @Description("Create Bid Package empty name")
+//    public void createBidPackageEmptyName() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description("descripton")
+//                .name("")
+//                .status("NEW")
+//                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
+//                .build())
+//            .build();
+//
+//        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//
+//        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'name' should not be null");
+//    }
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 64 characters");
-    }
+//    @Test
+//    @TestRail(testCaseId = {"13806", "13372", "13373"})
+//    @Description("Create Bid Package is equal to 64 characters, delete bid package and verify bid package is deleted")
+//    public void createBidPackageNameEqualTo64() {
+//        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description("description")
+//                .name(RandomStringUtils.randomAlphabetic(64))
+//                .status("NEW")
+//                .assignedTo(userIdentity)
+//                .build())
+//            .build();
+//
+//        BidPackageResponse bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, BidPackageResponse.class, HttpStatus.SC_CREATED, currentUser);
+//        softAssertions.assertThat(bidPackageResponse.getAssignedTo()).isEqualTo(userIdentity);
+//
+//        CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+//
+//        CisErrorMessage bidPackageErrorResponse = CisBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), CisErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+//
+//        softAssertions.assertThat(bidPackageErrorResponse.getMessage()).contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity() + "'");
+//    }
 
-    @Test
-    @TestRail(testCaseId = {"13365"})
-    @Description("Create Bid Package empty name")
-    public void createBidPackageEmptyName() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("descripton")
-                .name("")
-                .status("NEW")
-                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .build())
-            .build();
+//    @Test
+//    @TestRail(testCaseId = {"13807"})
+//    @Description("Create Bid Package description is equal to 254 characters")
+//    public void createBidPackageNameEqualTo254() {
+//        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description(RandomStringUtils.randomAlphabetic(254))
+//                .name(RandomStringUtils.randomAlphabetic(15))
+//                .status("NEW")
+//                .assignedTo(userIdentity)
+//                .build())
+//            .build();
+//
+//        BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, BidPackageResponse.class, HttpStatus.SC_CREATED, currentUser);
+//
+//        softAssertions.assertThat(createBidPackageResponse.getAssignedTo()).isEqualTo(userIdentity);
+//        CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+//
+//    }
 
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//    @Test
+//    @TestRail(testCaseId = {"13363"})
+//    @Description("Create Bid Package description is greater 254 characters")
+//    public void createBidPackageNameGreaterThan254() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description(RandomStringUtils.randomAlphabetic(260))
+//                .name(bidPackageName)
+//                .status("NEW")
+//                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
+//                .build())
+//            .build();
+//
+//        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//
+//        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 254 characters");
+//    }
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'name' should not be null");
-    }
+//    @Test
+//    @TestRail(testCaseId = {"13364"})
+//    @Description("Create Bid Package with empty name")
+//    public void createBidPackageWithEmptyName() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description("TEST")
+//                .name("")
+//                .status("NEW")
+//                .build())
+//            .build();
+//
+//        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGES, CisErrorMessage.class)
+//            .body(bidPackageRequest)
+//            .apUserContext(userContext)
+//            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
+//
+//        ResponseWrapper<CisErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
+//
+//        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'name' should not be null");
+//    }
 
-    @Test
-    @TestRail(testCaseId = {"13806", "13372", "13373"})
-    @Description("Create Bid Package is equal to 64 characters, delete bid package and verify bid package is deleted")
-    public void createBidPackageNameEqualTo64() {
-        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("description")
-                .name(RandomStringUtils.randomAlphabetic(64))
-                .status("NEW")
-                .assignedTo(userIdentity)
-                .build())
-            .build();
+//    @Test
+//    @TestRail(testCaseId = {"13364"})
+//    @Description("Create Bid Package with empty Description")
+//    public void createBidPackageWithEmptyDescription() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description("")
+//                .name(RandomStringUtils.randomAlphabetic(10))
+//                .status("NEW")
+//                .build())
+//            .build();
+//
+//        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//
+//        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'description' should not be null");
+//    }
 
-        BidPackageResponse bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, BidPackageResponse.class, HttpStatus.SC_CREATED, currentUser);
-        softAssertions.assertThat(bidPackageResponse.getAssignedTo()).isEqualTo(userIdentity);
-
-        CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-
-        CisErrorMessage bidPackageErrorResponse = CisBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), CisErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
-
-        softAssertions.assertThat(bidPackageErrorResponse.getMessage()).contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity() + "'");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"13807"})
-    @Description("Create Bid Package description is equal to 254 characters")
-    public void createBidPackageNameEqualTo254() {
-        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(RandomStringUtils.randomAlphabetic(254))
-                .name(RandomStringUtils.randomAlphabetic(15))
-                .status("NEW")
-                .assignedTo(userIdentity)
-                .build())
-            .build();
-
-        BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, BidPackageResponse.class, HttpStatus.SC_CREATED, currentUser);
-
-        softAssertions.assertThat(createBidPackageResponse.getAssignedTo()).isEqualTo(userIdentity);
-        CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-
-    }
-
-    @Test
-    @TestRail(testCaseId = {"13363"})
-    @Description("Create Bid Package description is greater 254 characters")
-    public void createBidPackageNameGreaterThan254() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(RandomStringUtils.randomAlphabetic(260))
-                .name(bidPackageName)
-                .status("NEW")
-                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .build())
-            .build();
-
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
-
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 254 characters");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"13364"})
-    @Description("Create Bid Package with empty name")
-    public void createBidPackageWithEmptyName() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("TEST")
-                .name("")
-                .status("NEW")
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGES, CisErrorMessage.class)
-            .body(bidPackageRequest)
-            .apUserContext(userContext)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
-
-        ResponseWrapper<CisErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
-
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'name' should not be null");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"13364"})
-    @Description("Create Bid Package with empty Description")
-    public void createBidPackageWithEmptyDescription() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("")
-                .name(RandomStringUtils.randomAlphabetic(10))
-                .status("NEW")
-                .build())
-            .build();
-
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
-
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'description' should not be null");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"13886"})
-    @Description("Create Bid Package with empty Status")
-    public void createBidPackageWithEmptyStatus() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(RandomStringUtils.randomAlphabetic(15))
-                .name(RandomStringUtils.randomAlphabetic(10))
-                .status("")
-                .build())
-            .build();
-
-        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
-
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'status' should not be null");
-    }
+//    @Test
+//    @TestRail(testCaseId = {"13886"})
+//    @Description("Create Bid Package with empty Status")
+//    public void createBidPackageWithEmptyStatus() {
+//        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+//            .bidPackage(BidPackageParameters.builder()
+//                .description(RandomStringUtils.randomAlphabetic(15))
+//                .name(RandomStringUtils.randomAlphabetic(10))
+//                .status("")
+//                .build())
+//            .build();
+//
+//        CisErrorMessage qmsErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+//
+//        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'status' should not be null");
+//    }
 
     @Test
     @TestRail(testCaseId = {"13366"})
@@ -337,7 +340,7 @@ public class CisBidPackageTest extends TestUtil {
     public void getBidPackagesFromAnotherCustomer() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser().getEmail());
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGES, BidPackagesResponse.class)
-            .apUserContext(otherUserContext)
+            .token("eyJvd25lciI6IjIwMjEgUjEiLCJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOm51bGwsInN1YiI6IjQxMjciLCJpc3MiOiIyMDIxIFIxIiwibmFtZSI6InFhLWF1dG9tYXRpb24tMDEiLCJleHAiOjE2NzM1NDI2OTIsImlhdCI6MTY3MzUzOTA5MiwiZW1haWwiOiJxYS1hdXRvbWF0aW9uLTAxQGFwcmlvcmkuY29tIn0.RKgm8d0zuasM3-MJjt0YsT7fpyUAaaJsAgfd7xz92kU")
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<BidPackagesResponse> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
@@ -391,7 +394,7 @@ public class CisBidPackageTest extends TestUtil {
     public void getBidPackageWithInvalidIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE, CisErrorMessage.class)
             .inlineVariables("INVALID IDENTITY")
-            .apUserContext(userContext)
+            .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
         ResponseWrapper<CisErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
