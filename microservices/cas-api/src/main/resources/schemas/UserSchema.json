@@ -17,13 +17,15 @@
         "email",
         "username",
         "active",
+        "hasCompleteProfile",
         "mfaRequired",
         "customAttributes",
         "resourcesAllowedToCreate",
         "userType"
       ],
       "optional": [
-        "customProperties"
+        "customProperties",
+        "updatedBy"
       ],
       "properties": {
         "isSystemUser": {
@@ -80,6 +82,9 @@
         "active": {
           "type": "boolean"
         },
+        "hasCompleteProfile": {
+          "type": "boolean"
+        },
         "mfaRequired": {
           "type": "boolean"
         },
@@ -97,6 +102,9 @@
           "type": "array"
         },
         "userType": {
+          "type": "string"
+        },
+        "updatedBy": {
           "type": "string"
         }
       }
