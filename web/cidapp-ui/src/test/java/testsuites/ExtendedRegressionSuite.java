@@ -24,10 +24,11 @@ import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.IgnoreTests;
 
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(ExtendedRegressionSuite.class)
+@Categories.IncludeCategory(ExtendedRegression.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
 @Suite.SuiteClasses({
     ComparisonTests.class,
