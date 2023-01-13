@@ -277,7 +277,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
@@ -346,7 +346,7 @@ public class GroupPublishTests {
             .override(false)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -425,7 +425,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -505,7 +505,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -584,7 +584,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -671,7 +671,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -744,7 +744,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
