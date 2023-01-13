@@ -17,6 +17,7 @@
         "email",
         "username",
         "active",
+        "hasCompleteProfile",
         "mfaRequired",
         "customAttributes",
         "userType"
@@ -78,6 +79,9 @@
           "type": "string"
         },
         "active": {
+          "type": "boolean"
+        },
+        "hasCompleteProfile": {
           "type": "boolean"
         },
         "mfaRequired": {

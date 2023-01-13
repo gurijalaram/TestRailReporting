@@ -33,6 +33,7 @@ public class User {
     private String email;
     private String username;
     private Boolean active;
+    private Boolean hasCompleteProfile;
     private Boolean mfaRequired;
     private CustomAttributes customAttributes;
     private CustomProperties customProperties;
