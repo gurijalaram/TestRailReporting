@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CisErrorMessage {
-    private String timestamp;
+    private Double timestamp;
     private Integer status;
     private String method;
     private String error;

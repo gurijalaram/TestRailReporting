@@ -126,7 +126,7 @@ public class CisBidPackageResources {
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE, responseClass)
             .inlineVariables(bidPackageIdentity)
             .body(bidPackageRequestBuilder)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
         return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
