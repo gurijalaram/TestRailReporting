@@ -24,8 +24,8 @@ public class CdsRolesTests {
     public void getRoles() {
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, HttpStatus.SC_OK);
 
-        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(2);
-        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("USER", "ADMIN");
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(4);
+        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("AP_USER", "AP_ADMIN");
         soft.assertAll();
     }
 
@@ -39,7 +39,7 @@ public class CdsRolesTests {
 
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class,HttpStatus.SC_OK,  roleIdentity);
 
-        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("ADMIN");
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("AP_ADMIN");
         soft.assertAll();
     }
 }

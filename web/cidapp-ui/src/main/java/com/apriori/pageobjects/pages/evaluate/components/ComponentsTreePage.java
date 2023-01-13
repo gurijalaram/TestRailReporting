@@ -7,10 +7,12 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
+import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -48,6 +50,12 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
     @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
     private WebElement subcomponentCard;
+
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button']")
+    private WebElement previewButtonOnComponentsPage;
+
+    @FindBy(css = ".scenario-preview")
+    private WebElement previewDataPanel;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -444,4 +452,21 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
         return new EvaluatePage(driver);
     }
 
+    /**
+     * Opens preview panel page
+     *
+     * @return new page object
+     */
+    public PreviewPage openPreviewPanel() {
+        return componentTableActions.openPreviewPanel(previewButtonOnComponentsPage);
+    }
+
+    /**
+     * Checks if the preview panel is displayed
+     *
+     * @return true/false
+     */
+    public boolean isPreviewPanelDisplayed() {
+        return pageUtils.isElementDisplayed(previewDataPanel);
+    }
 }
