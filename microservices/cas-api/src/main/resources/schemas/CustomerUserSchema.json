@@ -19,7 +19,8 @@
         "mfaRequired",
         "customAttributes",
         "createdByName",
-        "userType"
+        "userType",
+        "hasCompleteProfile"
       ],
       "optional": [
         "customProperties",
@@ -121,6 +122,9 @@
         },
         "userType": {
           "type": "string"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
         }
       }
     }

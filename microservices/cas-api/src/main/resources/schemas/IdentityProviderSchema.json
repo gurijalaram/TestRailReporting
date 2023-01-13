@@ -10,6 +10,7 @@
         "identity",
         "createdAt",
         "createdBy",
+        "customerIdentity",
         "active",
         "name",
         "identityProviderPlatform",
@@ -34,6 +35,9 @@
           "type": "string"
         },
         "createdBy": {
+          "type": "string"
+        },
+        "customerIdentity": {
           "type": "string"
         },
         "active": {
