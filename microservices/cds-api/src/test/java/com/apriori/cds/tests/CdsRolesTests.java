@@ -19,13 +19,13 @@ public class CdsRolesTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"3243"})
+    @TestRail(testCaseId = {"3243","17159"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, HttpStatus.SC_OK);
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(4);
-        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("AP_USER", "AP_ADMIN");
+        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("AP_USER", "AP_ADMIN", "AP_DESIGN_ENGINEER", "AP_DF_MANAGER");
         soft.assertAll();
     }
 
