@@ -583,6 +583,7 @@ public class ProcessRoutingTests extends TestBase {
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"14984", "15798"})
     @Description("Validate routings 2-Model Machining")
+    @Issue("CID-1455")
     public void routings2mm() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
