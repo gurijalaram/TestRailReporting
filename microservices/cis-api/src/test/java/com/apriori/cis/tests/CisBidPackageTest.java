@@ -114,7 +114,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14129"})
+    @TestRail(testCaseId = {"14375"})
     @Description("Create Bid Package empty name")
     public void testUpdateBidPackageWithInvalidIdentity() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -129,6 +129,32 @@ public class CisBidPackageTest extends TestUtil {
             bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         assertThat(cisErrorMessageResponse.getMessage(), containsString("'identity' is not a valid identity"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14371"})
+    @Description("Create Bid Package empty name")
+    public void testCreateBidPackageWithExistingName() {
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
+
+        softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bidPackageName);
+
+        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
+            .bidPackage(BidPackageParameters.builder()
+                .description("Test Description")
+                .name(createBidPackageResponse.getName())
+                .status("ASSIGNED")
+                .build())
+            .build();
+
+        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
+
+        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).isEqualTo("BidPackage with name '"
+            + createBidPackageResponse.getName() + "' already exists for Customer '"
+            + createBidPackageResponse.getCustomerIdentity() + "'.");
+
+        softAssertions.assertAll();
     }
 
     @AfterClass
