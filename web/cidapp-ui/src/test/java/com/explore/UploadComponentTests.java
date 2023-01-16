@@ -87,7 +87,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"11879", "11878"})
+    @TestRail(testCaseId = {"11879", "11878", "12161"})
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
         UserCredentials currentUser = UserUtil.getUser();

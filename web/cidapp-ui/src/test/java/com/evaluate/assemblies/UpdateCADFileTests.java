@@ -79,7 +79,7 @@ public class UpdateCADFileTests extends TestBase {
     private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
-    @TestRail(testCaseId = {"10903", "10961"})
+    @TestRail(testCaseId = {"10903", "10961", "12032"})
     @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
