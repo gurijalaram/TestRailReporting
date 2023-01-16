@@ -1,5 +1,9 @@
 package com.apriori.cis.tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
@@ -47,6 +51,8 @@ public class CisBidPackageTest extends TestUtil {
             CisErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
+
+        softAssertions.assertAll();
     }
 
 
@@ -59,6 +65,8 @@ public class CisBidPackageTest extends TestUtil {
         softAssertions.assertThat(getBidPackagesResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(getBidPackagesResponse.getPageNumber()).isEqualTo(1);
         softAssertions.assertThat(getBidPackagesResponse.getItems().size()).isGreaterThan(0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -66,6 +74,7 @@ public class CisBidPackageTest extends TestUtil {
     @Description("Get bid package by identity")
     public void testGetBidPackage() {
         BidPackageResponse getBidPackageResp = CisBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
+
         softAssertions.assertThat(getBidPackageResp.getName()).isEqualTo(bidPackageName);
     }
 
@@ -84,7 +93,7 @@ public class CisBidPackageTest extends TestUtil {
         BidPackageResponse bidPackageUpdateResponse = CisBidPackageResources.updateBidPackage(bidPackageResponse.getIdentity(),
             bidPackageRequestBuilder, BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
 
-        softAssertions.assertThat(bidPackageUpdateResponse.getStatus()).isEqualTo("COMPLETE");
+        assertThat(bidPackageUpdateResponse.getStatus(), equalTo("COMPLETE"));
     }
 
     @Test
@@ -101,7 +110,7 @@ public class CisBidPackageTest extends TestUtil {
 
         CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.createBidPackage(bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("'name' should not be null");
+        assertThat(cisErrorMessageResponse.getMessage(), containsString("'name' should not be null"));
     }
 
     @Test
@@ -119,12 +128,11 @@ public class CisBidPackageTest extends TestUtil {
         CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.updateBidPackage("123456",
             bidPackageRequest, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("'identity' is not a valid identity");
+        assertThat(cisErrorMessageResponse.getMessage(), containsString("'identity' is not a valid identity"));
     }
 
     @AfterClass
     public static void testCleanup() {
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        softAssertions.assertAll();
     }
 }
