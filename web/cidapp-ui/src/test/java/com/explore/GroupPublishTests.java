@@ -212,7 +212,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14464"})
+    @TestRail(testCaseId = {"14464", "21551"})
     @Description("Publish multiple components and set inputs in modal")
     public void testGroupPublishWithInputs() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
