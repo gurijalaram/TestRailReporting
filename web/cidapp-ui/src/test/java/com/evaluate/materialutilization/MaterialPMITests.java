@@ -19,6 +19,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -48,6 +49,7 @@ public class MaterialPMITests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6283", "5917"})
+    @Issue("CID-1451")
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
