@@ -53,6 +53,77 @@ public class UserPreferencesUtil {
     }
 
     /**
+     * Put/update preferences
+     *
+     * @param userCredentials - the user credentials
+     * @param preferences      - the preferences to be updated
+     *
+     * @return response object
+     */
+    public ResponseWrapper<String> putPreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
+        String updatePreferences = "";
+        PreferenceResponse preference;
+
+        List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
+
+        for (Map.Entry<PreferencesEnum, String> update : preferences.entrySet()) {
+            System.out.println(update.getKey() + "/" + update.getValue());
+            preference = getPreference(userCredentials, update.getKey());
+
+            if (!updatePreferences.isEmpty()) {
+                updatePreferences = updatePreferences + ",";
+            }
+
+            updatePreferences = updatePreferences + "{" +
+                "\"name\": \"" + preference.getName() + "\", " +
+                "\"type\": \"" + preference.getType() + "\", " +
+                "\"value\": ";
+            if (preference.getType().equals("STRING")) {
+                updatePreferences = updatePreferences + "\"" + update.getValue() + "\", ";
+            } else {
+                updatePreferences = updatePreferences + update.getValue() + ", ";
+            }
+
+            updatePreferences = updatePreferences + "\"updatedBy\": \"" + preference.getUpdatedBy() + "\"}";
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+            .token(userCredentials.getToken())
+            .customBody("{\"userPreferences\": [ " + updatePreferences + " ]}");
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * Get the list of current preferences
+     *
+     * @param userCredentials - the user credentials
+     *
+     * @return List of preferences
+     */
+    public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+            .token(userCredentials.getToken());
+
+        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
+
+        return preferencesResponse.getResponseEntity().getItems();
+    }
+
+    /**
+     * Get the list of current preferences
+     *
+     * @param userCredentials - the user credentials
+     *
+     * @return List of preferences
+     */
+    public PreferenceResponse getPreference(UserCredentials userCredentials, PreferencesEnum preference) {
+        List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
+
+        return preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
+    }
+
+    /**
      * Resets all settings in Cidapp
      *
      * @param userCredentials - the user credentials
@@ -72,6 +143,7 @@ public class UserPreferencesUtil {
 
         preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
 
+        String asmStrategyIdentity = mappedResponse.get(PreferencesEnum.ASSEMBLY_STRATEGY.getPreference());
         String areaIdentity = mappedResponse.get(PreferencesEnum.AREA_UNITS.getPreference());
         String currencyIdentity = mappedResponse.get(PreferencesEnum.CURRENCY.getPreference());
         String unitIdentity = mappedResponse.get(PreferencesEnum.UNITS_GROUP.getPreference());
@@ -95,6 +167,7 @@ public class UserPreferencesUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
             .token(token)
             .customBody("{\"userPreferences\": {"
+                + "\"" + asmStrategyIdentity + "\":\"\","
                 + "\"" + areaIdentity + "\":\"mm2\","
                 + "\"" + currencyIdentity + "\":\"" + CurrencyEnum.USD.getCurrency() + "\","
                 + "\"" + unitIdentity + "\":\"" + UnitsEnum.MMKS.getUnits() + "\","
