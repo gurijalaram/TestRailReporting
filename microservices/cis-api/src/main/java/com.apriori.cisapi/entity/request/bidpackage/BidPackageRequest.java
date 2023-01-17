@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BidPackageRequest {
-    BidPackageParameters bidPackage;
+    private BidPackageParameters bidPackage;
 }

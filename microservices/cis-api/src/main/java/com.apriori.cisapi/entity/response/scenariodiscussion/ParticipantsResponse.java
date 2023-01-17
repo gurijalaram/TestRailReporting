@@ -1,6 +1,5 @@
 package com.apriori.cisapi.entity.response.scenariodiscussion;
 
-import com.apriori.qms.entity.response.scenariodiscussion.Assignee;
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
@@ -13,5 +12,5 @@ import java.util.List;
 @JsonRootName("response")
 @Schema(location = "UsersResponseSchema.json")
 public class ParticipantsResponse extends Pagination {
-    List<Assignee> items;
+    private List<Assignee> items;
 }
