@@ -480,7 +480,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
         softAssertions.assertAll();
 
-        componentsTablePage.closePanel()
+        componentsTreePage.closePanel()
             .clickExplore()
             .selectFilter("Recent")
             .highlightScenario(assemblyName, scenarioName)
