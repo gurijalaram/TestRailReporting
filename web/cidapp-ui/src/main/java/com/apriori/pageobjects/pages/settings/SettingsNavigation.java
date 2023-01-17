@@ -15,6 +15,9 @@ public class SettingsNavigation {
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement toleranceTab;
 
+    @FindBy(xpath = "//button[.='Multi-Body']")
+    private WebElement multiBodyTab;
+
     @FindBy(xpath = "//button[.='Production Defaults']")
     private WebElement productionsTab;
 
@@ -64,6 +67,16 @@ public class SettingsNavigation {
     public SelectionPage goToSelectionTab() {
         pageUtils.waitForElementAndClick(selectionTab);
         return new SelectionPage(driver);
+    }
+
+    /**
+     * Go to Multi-Body tab
+     *
+     * @return new page object
+     */
+    public MultiBodyPage goToMultiBodyTab() {
+        pageUtils.waitForElementAndClick(multiBodyTab);
+        return new MultiBodyPage(driver);
     }
 
     /**

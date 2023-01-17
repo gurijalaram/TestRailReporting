@@ -238,7 +238,7 @@ public class ScenariosUtil {
      * @param componentName - component name
      * @return response object
      */
-    public ScenarioSuccessesFailures postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
+    public ScenarioSuccessesFailures postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         //iterate the assembly, filter by subcomponent and set the component/scenario Id
@@ -293,7 +293,7 @@ public class ScenariosUtil {
      * @param forkRequest   - the fork request
      * @return response object
      */
-    public <T> ResponseWrapper<T> postSimpleEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
+    public <T> ResponseWrapper<T> postSimpleEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
@@ -317,22 +317,18 @@ public class ScenariosUtil {
      * Post to cost a group of scenarios
      *
      * @param componentInfo - A number of copy component objects
+     * @param componentName - the component name
      * @return response object
      */
-    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        for (String[] componentScenario : componentScenarioNames) {
-            if (componentInfo.getSubComponents().stream()
-                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
-
-                subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
-                    .collect(Collectors.toList()).get(0));
-            }
-        }
+        Arrays.stream(componentName).forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
+            .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+            .collect(Collectors.toList())
+            .stream()
+            .findFirst()
+            .get()));
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
