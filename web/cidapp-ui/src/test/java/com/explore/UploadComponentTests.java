@@ -34,7 +34,6 @@ import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -136,7 +135,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "{11878},{11883}")
+    @TestRail(testCaseId = {"11878", "11883"})
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
         currentUser = UserUtil.getUser();
@@ -160,7 +159,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "{11881},{11882}")
+    @TestRail(testCaseId = {"11881, 11882", "21547"})
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
         currentUser = UserUtil.getUser();
@@ -172,10 +171,15 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile);
+            .importCadFile();
 
-        assertThat(importCadFilePage.getFileInputErrorMessage(), is(message));
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private. This setting can be changed in User Preferences.");
+
+        importCadFilePage.inputComponentDetails(scenarioName, resourceFile);
+
+        softAssertions.assertThat(importCadFilePage.getFileInputErrorMessage()).isEqualTo(message);
+
+        softAssertions.assertAll();
     }
 
     @Test
