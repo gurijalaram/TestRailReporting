@@ -1,7 +1,10 @@
 package com.apriori.cds.utils;
 
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.AttributeMappings;
+import com.apriori.cds.entity.response.ErrorResponse;
 import com.apriori.cds.entity.response.IdentityProviderRequest;
 import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.entity.response.LicenseResponse;
@@ -727,16 +730,37 @@ public class CdsTestUtil extends TestUtil {
      * @param userIdentity     - user identity
      * @return new object
      */
-    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity) {
+    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity,String role) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("role",
                 UserRole.builder()
-                    .role("ADMIN")
+                    .role(role)
                     .createdBy("#SYSTEM00000")
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Creates invalid role for a user and get error response
+     *
+     * @param customerIdentity - customer identity
+     * @param userIdentity     - user identity
+     * @return new object
+     */
+    public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity,String role) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("role",
+                UserRole.builder()
+                    .role(role)
+                    .createdBy("#SYSTEM00000")
+                    .build())
+            .expectedResponseCode(SC_NOT_FOUND);
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
+
+        return errorResponse.getResponseEntity();
     }
 }

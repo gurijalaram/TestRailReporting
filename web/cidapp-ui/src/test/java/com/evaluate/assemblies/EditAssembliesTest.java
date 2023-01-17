@@ -17,6 +17,7 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -57,6 +58,7 @@ public class EditAssembliesTest extends TestBase {
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
     private EditScenarioStatusPage editStatusPage;
+    private PreviewPage previewPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
     private static ComponentInfoBuilder componentAssembly;
@@ -1165,7 +1167,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6601", "6602", "11869"})
+    @TestRail(testCaseId = {"6601", "6602", "11869", "12022", "12023"})
     @Description("Validate user can open a public component from a private workspace")
     public void testOpeningPublicComponentFromPrivateWorkspace() {
         String assemblyName = "Hinge assembly";
@@ -1209,6 +1211,15 @@ public class EditAssembliesTest extends TestBase {
         componentsTreePage = evaluatePage.openComponents();
 
         softAssertions.assertThat(componentsTreePage.getRowDetails("PIN", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        previewPage = componentsTreePage.clickScenarioCheckbox(PIN)
+            .openPreviewPanel();
+
+        softAssertions.assertThat(previewPage.isPreviewPanelDisplayed()).isTrue();
+
+        componentsTreePage = previewPage.closePreviewPanelOnComponentsPage();
+
+        softAssertions.assertThat(componentsTreePage.isPreviewPanelDisplayed()).isFalse();
 
         evaluatePage = componentsTreePage.openAssembly(PIN, scenarioName);
 

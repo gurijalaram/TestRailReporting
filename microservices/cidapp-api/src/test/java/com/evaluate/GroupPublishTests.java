@@ -241,7 +241,7 @@ public class GroupPublishTests {
         final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        final List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Collections.singletonList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -277,7 +277,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
 
@@ -346,7 +346,7 @@ public class GroupPublishTests {
             .override(false)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -425,7 +425,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -505,7 +505,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -548,7 +548,7 @@ public class GroupPublishTests {
         final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        final List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Collections.singletonList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -584,7 +584,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -635,7 +635,7 @@ public class GroupPublishTests {
         final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        final List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Collections.singletonList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -671,7 +671,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -705,7 +705,7 @@ public class GroupPublishTests {
         final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        final List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Collections.singletonList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -744,7 +744,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
