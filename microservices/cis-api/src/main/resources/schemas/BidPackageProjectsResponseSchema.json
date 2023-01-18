@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$ref": "common/PaginationSchema.json",
+      "required": [
+        "items"
+      ],
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "BidPackageProjectResponseSchema.json"
+        }
+      }
+    }
+  }
+}

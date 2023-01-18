@@ -7,16 +7,19 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
+import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -48,6 +51,12 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
     @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
     private WebElement subcomponentCard;
+
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button']")
+    private WebElement previewButtonOnComponentsPage;
+
+    @FindBy(css = ".scenario-preview")
+    private WebElement previewDataPanel;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -442,6 +451,35 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public EvaluatePage openAssembly(String componentName, String scenarioName) {
         assembliesComponentsController.openAssembly(componentName, scenarioName);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Opens preview panel page
+     *
+     * @return new page object
+     */
+    public PreviewPage openPreviewPanel() {
+        return componentTableActions.openPreviewPanel(previewButtonOnComponentsPage);
+    }
+
+    /**
+     * Checks if the preview panel is displayed
+     *
+     * @return true/false
+     */
+    public boolean isPreviewPanelDisplayed() {
+        return pageUtils.isElementDisplayed(previewDataPanel);
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return assembliesComponentsController.getCellColour(componentName, scenarioName);
     }
 
 }

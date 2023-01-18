@@ -498,6 +498,9 @@ dev-cfirst:
   cus:
     api_url: https://cus.${default.aws_region}.${env}.apriori.net/
 
+  cds:
+    api_url: https://cds.${default.aws_region}.${env}.apriori.net/
+
 ######################################################## QA-TEST-V22 ########################################################
 qa-test-v22:
   application_name: cid
