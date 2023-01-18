@@ -25,6 +25,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
@@ -187,7 +188,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11905", "10764", "12168"})
+    @TestRail(testCaseId = {"11905", "10764", "11867"})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -205,11 +206,21 @@ public class UploadAssembliesTests extends TestBase {
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase())).isTrue());
+
+        componentsTreePage.clickScenarioCheckbox("stand", scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.getCellColour("stand", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        componentsTablePage = componentsTreePage.selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getCellColour("stand", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"11906", "10765"})
+    @TestRail(testCaseId = {"11906", "10765", "11868"})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -228,7 +239,18 @@ public class UploadAssembliesTests extends TestBase {
             .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
 
         componentNames.forEach(component ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase())).isTrue());
+
+        componentsTablePage = componentsTreePage.selectTableView()
+            .clickScenarioCheckbox("piston_model1", scenarioName);
+
+        softAssertions.assertThat(componentsTablePage.getCellColour("piston_model1", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        componentsTreePage = componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getCellColour("piston_model1", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertAll();
     }
 
     @Test

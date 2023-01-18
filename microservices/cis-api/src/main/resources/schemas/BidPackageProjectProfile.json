@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "emailReminder",
+    "commentReminder"
+  ],
+  "optional": [
+    "identity",
+    "supplierViewPermissionIdentity",
+    "updatedBy",
+    "updatedAt",
+    "createdBy",
+    "createdAt"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "supplierViewPermissionIdentity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "emailReminder": {
+      "type": "object",
+      "required": [
+        "active",
+        "startDuration",
+        "frequencyValue"
+      ],
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "startDuration": {
+          "type": "string"
+        },
+        "frequencyValue": {
+          "type": "string"
+        }
+      }
+    },
+    "commentReminder": {
+      "type": "object",
+      "required": [
+        "active",
+        "startDuration",
+        "frequencyValue"
+      ],
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "startDuration": {
+          "type": "string"
+        },
+        "frequencyValue": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

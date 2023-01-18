@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "projectIdentity": {
+          "type": "string"
+        },
+        "userIdentity": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "UserResponseSchema.json"
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "projectIdentity",
+        "userIdentity",
+        "role",
+        "userEmail",
+        "user"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}
