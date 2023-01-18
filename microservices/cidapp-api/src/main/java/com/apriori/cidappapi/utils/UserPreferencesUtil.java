@@ -60,31 +60,23 @@ public class UserPreferencesUtil {
      *
      * @return response object
      */
-    public ResponseWrapper<String> putPreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
-        String updatePreferences = "";
+    public ResponseWrapper<String> updatePreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
+        StringBuilder updatePreferences = new StringBuilder();
         PreferenceResponse preference;
 
-        List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
-
         for (Map.Entry<PreferencesEnum, String> update : preferences.entrySet()) {
-            System.out.println(update.getKey() + "/" + update.getValue());
+
             preference = getPreference(userCredentials, update.getKey());
 
-            if (!updatePreferences.isEmpty()) {
-                updatePreferences = updatePreferences + ",";
-            }
-
-            updatePreferences = updatePreferences + "{" +
-                "\"name\": \"" + preference.getName() + "\", " +
-                "\"type\": \"" + preference.getType() + "\", " +
-                "\"value\": ";
-            if (preference.getType().equals("STRING")) {
-                updatePreferences = updatePreferences + "\"" + update.getValue() + "\", ";
-            } else {
-                updatePreferences = updatePreferences + update.getValue() + ", ";
-            }
-
-            updatePreferences = updatePreferences + "\"updatedBy\": \"" + preference.getUpdatedBy() + "\"}";
+            updatePreferences
+                .append(updatePreferences.length() > 0 ? "," : "")
+                .append("{")
+                .append("\"name\":\"").append(preference.getName()).append("\",")
+                .append("\"type\":\"").append(preference.getType()).append("\",")
+                .append("\"value\":") .append(preference.getType().equals("STRING") ? "\"" : "")
+                .append(update.getValue()).append(preference.getType().equals("STRING") ? "\"" : "")
+                .append(",\"updatedBy\":\"").append(preference.getUpdatedBy())
+                .append("\"}");
         }
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
@@ -120,7 +112,11 @@ public class UserPreferencesUtil {
     public PreferenceResponse getPreference(UserCredentials userCredentials, PreferencesEnum preference) {
         List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
 
-        return preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
+//        return preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
+        return preferencesItems.stream()
+            .filter(x -> x.getName().equals(preference.getPreference()))
+            .findFirst()
+            .orElse(null);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.PreferencesEnum;
@@ -13,7 +12,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SettingsTests {
@@ -43,7 +41,7 @@ public class SettingsTests {
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
 
-        userPreferencesUtil.putPreferences(currentUser, updateStrategy);
+        userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.ASSEMBLY_STRATEGY).getValue())
             .as("Updated Assembly Strategy").isEqualTo(asmStrategy);
@@ -66,7 +64,7 @@ public class SettingsTests {
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
 
-        userPreferencesUtil.putPreferences(currentUser, updatedPreferences);
+        userPreferencesUtil.updatePreferences(currentUser, updatedPreferences);
 
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.ASSEMBLY_STRATEGY).getValue())
             .as("Updated Assembly Strategy").isEqualTo(asmStrategy);
@@ -93,7 +91,7 @@ public class SettingsTests {
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
         updatedPreferences.put(PreferencesEnum.SELECTION_COLOUR, selectionColour);
 
-        userPreferencesUtil.putPreferences(currentUser, updatedPreferences);
+        userPreferencesUtil.updatePreferences(currentUser, updatedPreferences);
 
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.ASSEMBLY_STRATEGY).getValue())
             .as("Updated Assembly Strategy").isEqualTo(asmStrategy);
