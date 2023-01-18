@@ -1,6 +1,4 @@
-package testsuites;
-
-import com.apriori.cis.tests.suite.CISApiSuite;
+package com.apriori.cis.testsuite;
 
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
@@ -21,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestMain {
-    public static Class defaultTest = CISApiSuite.class;
+    public static Class defaultTest = RegressionSuite.class;
 
     public static void main(String[] args) {
 
