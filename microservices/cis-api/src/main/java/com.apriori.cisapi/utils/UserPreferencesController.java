@@ -13,7 +13,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.List;
 
-public class UserPreferencesUtil extends TestUtil {
+public class UserPreferencesController extends TestUtil {
 
     /**
      * Get all User Preferences
