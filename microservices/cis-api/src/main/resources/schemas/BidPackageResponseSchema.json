@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedByName": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "BidPackageItemSchema.json"
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "BidPackageProjectSchema.json"
+          }
+        }
+      },
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "status"
+      ],
+      "optional": [
+        "updatedBy",
+        "updatedAt",
+        "customerIdentity",
+        "assignedTo",
+        "updatedByName",
+        "items",
+        "projects"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

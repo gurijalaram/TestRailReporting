@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "assignedTo",
+    "name",
+    "customerIdentity",
+    "description",
+    "status"
+  ],
+  "optional": [
+    "updatedBy",
+    "updatedAt"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "assignedTo": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    }
+  }
+}
