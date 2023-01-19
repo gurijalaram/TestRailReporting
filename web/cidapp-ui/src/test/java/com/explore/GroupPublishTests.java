@@ -40,6 +40,7 @@ public class GroupPublishTests extends TestBase {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private PublishPage publishPage;
     private AssignPage assignPage;
     private InfoPage infoPage;
     private ComponentInfoBuilder cidComponentItem;
@@ -211,7 +212,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14464"})
+    @TestRail(testCaseId = {"14464", "21551"})
     @Description("Publish multiple components and set inputs in modal")
     public void testGroupPublishWithInputs() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -238,12 +239,15 @@ public class GroupPublishTests extends TestBase {
         multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
         multiComponents.add(new MultiUpload(resourceFile2, scenarioName2));
 
-        explorePage = new ExplorePage(driver).refresh()
+        publishPage = new ExplorePage(driver).refresh()
             .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "")
             .publishScenario(PublishPage.class)
             .override()
-            .clickContinue(PublishPage.class)
-            .selectStatus("Analysis")
+            .clickContinue(PublishPage.class);
+
+        softAssertions.assertThat(publishPage.getAssociationAlert()).contains("High maturity and complete status scenarios can be prioritized to make more accurate associations when uploading new assemblies.");
+
+        publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
             .publish(PublishPage.class)

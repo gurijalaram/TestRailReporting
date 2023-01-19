@@ -31,6 +31,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='alert-messaging']")
     private WebElement conflictMessage;
 
+    @FindBy(css = "[data-testid='alert-messaging']")
+    private WebElement alertMessage;
+
     @FindBy(css = "input[value='override']")
     private WebElement overrideButton;
 
@@ -139,6 +142,15 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public String getConflictMessage() {
         return pageUtils.waitForElementToAppear(conflictMessage).getAttribute("textContent");
+    }
+
+    /**
+     * Gets assembly association alert
+     *
+     * @return string
+     */
+    public String getAssociationAlert() {
+        return pageUtils.waitForElementToAppear(alertMessage).getText();
     }
 
     /**
