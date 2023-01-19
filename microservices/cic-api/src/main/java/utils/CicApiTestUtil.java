@@ -2,6 +2,8 @@ package utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.pages.login.CicLoginPage;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
@@ -16,22 +18,28 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import entity.request.ConnectorRequest;
 import entity.request.CostingInputs;
 import entity.request.DefaultValues;
 import entity.request.JobDefinition;
-import entity.request.Row;
 import entity.request.WorkflowPart;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
+import entity.request.WorkflowRow;
+import entity.response.AgentConnectionInfo;
+import entity.response.AgentConnectionOptions;
+import entity.response.AgentConnectionsInfo;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
-import entity.response.AgentWorkflowJobRun;
+import entity.response.ConnectorInfo;
+import entity.response.ConnectorsResponse;
 import entity.response.PlmPart;
 import entity.response.PlmParts;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
+import enums.CICAgentType;
 import enums.CICPartSelectionType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -71,17 +79,17 @@ public class CicApiTestUtil extends TestUtil {
      * De-serialize base workflow requests test data from json file
      *
      * @param cicPartSelectionType Enum CICPartSelectionType (REST or QUERY)
-     * @param isCostingInputData
+     * @param isCostingInputData boolean
      * @return WorkFlowRequest builder object
      */
     public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType, Boolean isCostingInputData) {
-        WorkflowRequest workflowRequestDataBuilder = null;
+        WorkflowRequest workflowRequestDataBuilder;
         switch (cicPartSelectionType.getPartSelectionType()) {
             case "REST":
                 if (isCostingInputData) {
                     workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class);
                     DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
-                    List<Row> rows = defaultValues.getRows();
+                    List<WorkflowRow> rows = defaultValues.getRows();
                     rows.stream().forEach(row -> {
                         if (row.getTwxAttributeName().equals("Scenario Name")) {
                             row.setValue("SN" + System.currentTimeMillis());
@@ -543,5 +551,89 @@ public class CicApiTestUtil extends TestUtil {
             }
         }
         return isTextMatched;
+    }
+
+    /**
+     * Get Connector request base data based on CICAgentType (Windchill, Team_Center or File_system)
+     *
+     * @param cicAgentType CICAgentType (Windchill, Team_Center or File_system)
+     * @return ConnectorRequest java class object
+     */
+    public static ConnectorRequest getConnectorBaseData(CICAgentType cicAgentType) {
+        ConnectorRequest connectorRequestDataBuilder = null;
+        switch (cicAgentType.getAgentType()) {
+            default:
+                connectorRequestDataBuilder = new TestDataService().getTestData("CicCreateConnectorData.json", ConnectorRequest.class);
+                connectorRequestDataBuilder.setCustomer(getCustomerName());
+                connectorRequestDataBuilder.setDisplayName("WC-" + DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMdd));
+                connectorRequestDataBuilder.setAgentType(cicAgentType.getAgentType());
+        }
+        return connectorRequestDataBuilder;
+    }
+
+    /**
+     * Create Connector using Thingworx create agent api
+     *
+     * @param connectorRequestDataBuilder ConnectorRequest request data builder object
+     * @param session                     - Login session
+     * @return ResponseWrapper of String
+     */
+    public static ResponseWrapper<String> CreateConnector(ConnectorRequest connectorRequestDataBuilder, String session) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "*/*");
+        header.put("Content-Type", "application/json");
+        header.put("cookie", session.replace("[", "").replace("]", ""));
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_CONNECTOR, null)
+            .headers(header)
+            .body(connectorRequestDataBuilder)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Get matched connector from list of get connectors API
+     *
+     * @param connectorName - expected connector Name
+     * @param session       Login session
+     * @return ConnectorInfo response class object
+     */
+    public static ConnectorInfo getMatchedConnector(String connectorName, String session) {
+        String getConnectorJson = String.format("{\"customerThingName\": \"%s\"}", getCustomerName());
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "application/json");
+        header.put("Content-Type", "application/json");
+        header.put("cookie", session.replace("[", "").replace("]", ""));
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_CONNECTORS, ConnectorsResponse.class)
+            .headers(header)
+            .customBody(getConnectorJson)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ConnectorsResponse connectorResponse = (ConnectorsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+
+        return connectorResponse.getRows().stream()
+            .filter(conn -> conn.getDisplayName().equals(connectorName))
+            .findFirst()
+            .get();
+    }
+
+    /**
+     * Get connector connection info contains appKey and wss URL options
+     *
+     * @param connectorIdentity connector name
+     * @param session           login session
+     * @return AgentConnectionInfo
+     */
+    public static AgentConnectionInfo getAgentConnectionOptions(String connectorIdentity, String session) {
+        AgentConnectionOptions agentConnectionOptions = new AgentConnectionOptions();
+        String getConnectorJson = String.format("{\"connectorName\": \"%s\"}", connectorIdentity);
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "application/json");
+        header.put("Content-Type", "application/json");
+        header.put("cookie", session.replace("[", "").replace("]", ""));
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_AGENT_CONNECTION_INFO, AgentConnectionsInfo.class)
+            .headers(header)
+            .customBody(getConnectorJson)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        AgentConnectionsInfo agentConnectionInfo = (AgentConnectionsInfo) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return agentConnectionInfo.getRows().get(0);
     }
 }
