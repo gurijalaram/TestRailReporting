@@ -19,6 +19,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -469,4 +470,16 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public boolean isPreviewPanelDisplayed() {
         return pageUtils.isElementDisplayed(previewDataPanel);
     }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return assembliesComponentsController.getCellColour(componentName, scenarioName);
+    }
+
 }
