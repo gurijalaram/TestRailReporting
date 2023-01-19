@@ -13,6 +13,7 @@ import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Successes;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
@@ -25,6 +26,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.google.common.collect.Iterators;
+import io.restassured.http.Header;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -147,9 +149,22 @@ public class ComponentsUtil {
         componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());
 
         // TODO: 13/01/2023 needs refactoring
-        new ScenariosUtil().getScenario(componentInfo);
+        //new ScenariosUtil().getScenario(componentInfo);
         // TODO: 13/01/2023 needs refactoring
+        // Ciene, this was my idea.  Follow Redirects is on by default, so wait for part to be in a completed state
+        // which it should do so following the redirect to the new component/scenario or remain the current one if its a new part
         new ScenariosUtil().getScenarioCompleted(componentInfo);
+
+        // then query the original component/scenario one more time, with Redirect explicitly set to False.
+        // if its a new component it will return a 200, but if its a redirect will return 301 with the Location Header Value
+        // equal to the new path,  parse that for the new component and we should be good?
+
+        ResponseWrapper<ScenarioResponse> scenarioResponse = new ScenariosUtil().getScenarioRedirectLocation(componentInfo);
+
+        if (scenarioResponse.getStatusCode() == HttpStatus.SC_MOVED_PERMANENTLY) {
+            String location = scenarioResponse.getHeaders().get("location").getValue();
+            componentInfo.setComponentIdentity(location.substring(12,24));
+        }
 
         return componentInfo;
     }

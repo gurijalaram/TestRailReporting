@@ -138,7 +138,24 @@ public class ScenariosUtil {
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT)
-                .expectedResponseCode(HttpStatus.SC_OK);
+                .followRedirection(true);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * GET scenario redirection location header
+     *
+     * @param componentInfo - the component info builder object
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getScenarioRedirectLocation(ComponentInfoBuilder componentInfo) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken())
+                .socketTimeout(SOCKET_TIMEOUT)
+                .followRedirection(false);
 
         return HTTPRequest.build(requestEntity).get();
     }
