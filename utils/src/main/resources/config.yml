@@ -281,7 +281,7 @@ qa-cig-perf:
 
 ######################################################## On Prem ########################################################
 onprem:
-  base_url: https://conqbaci02/
+  base_url: https://conqbaci01/
   name: onprem
 
   admin:
