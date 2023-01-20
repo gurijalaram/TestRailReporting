@@ -979,8 +979,8 @@ public class ProcessRoutingTests extends TestBase {
     public void routingsSheetPlastic() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
 
-        String componentName = "sheet_plastic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
+        String componentName = "5d51749fig01";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -992,18 +992,18 @@ public class ProcessRoutingTests extends TestBase {
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Single Cavity Mold", "2x1-Cavity Mold", "2x2-Cavity Mold");
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Single Station Thermoforming", "Shuttle Station Thermoforming", "3 Station Rotary Thermoforming", "4 Station Rotary Thermoforming");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Single Cavity Mold")
+        routingSelectionPage.selectRoutingPreferenceByName("Single Station Thermoforming")
             .submit(EvaluatePage.class)
             .costScenario();
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectProcessTab()
-            .selectBarChart("Single Cavity Drape Forming");
+            .selectBarChart("Single Station Thermoforming");
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Process Group Name")).contains("Sheet Plastic");
-        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Single Cavity Drape Forming");
+        softAssertions.assertThat(materialProcessPage.getProcessResult("Process Name")).contains("Single Station Thermoforming");
         softAssertions.assertAll();
     }
 
@@ -1136,9 +1136,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectFilter("Private")
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        String sheetMetalIdentity = cssComponent.findFirst(componentName, scenarioName, currentUser).getScenarioIdentity();
-
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Waterjet");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Material Stock / Waterjet Cut / Bend Brake");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1155,7 +1153,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Waterjet");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Material Stock / Waterjet Cut / Bend Brake");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1165,20 +1163,20 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming");
 
         explorePage.openScenario(componentName, scenarioName)
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        routingSelectionPage.selectRoutingPreferenceByName("Single Cavity Mold")
+        routingSelectionPage.selectRoutingPreferenceByName("3 Station Rotary Thermoforming")
             .submit(EvaluatePage.class)
             .costScenario();
 
         evaluatePage.clickExplore()
             .selectFilter("Private");
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("Single Cavity Material Conversion");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1188,7 +1186,8 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.PROCESS_ROUTING, sheetMetalIdentity, currentUser)).contains("4 Cavities Material Conversion");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming");
+
         softAssertions.assertAll();
     }
 
@@ -1249,8 +1248,8 @@ public class ProcessRoutingTests extends TestBase {
     public void routingsAndUserPreferences() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
 
-        String componentName = "sheet_plastic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
+        String componentName = "5d51749fig01";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -1262,7 +1261,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$2.15")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -1271,7 +1270,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Cavity Mold", "$13.98022")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$2.14955")).isTrue();
         softAssertions.assertAll();
     }
 }

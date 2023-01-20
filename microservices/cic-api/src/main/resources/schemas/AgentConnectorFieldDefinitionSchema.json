@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "connectionStatus": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "customerId": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "description": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "displayName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "displayNameNoBreakSpaces": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "hasRelatedWorkflows": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "id": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "isPlmConnected": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "name": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "type": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "typeDisplayName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "useLocalConfiguration": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    }
+  },
+  "required": [
+    "connectionStatus",
+    "customerId",
+    "description",
+    "displayName",
+    "displayNameNoBreakSpaces",
+    "hasRelatedWorkflows",
+    "id",
+    "isPlmConnected",
+    "name",
+    "type",
+    "typeDisplayName",
+    "useLocalConfiguration"
+  ]
+}
