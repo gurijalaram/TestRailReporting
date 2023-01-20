@@ -10,6 +10,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase {
@@ -45,7 +46,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7425"})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlPpc() {
@@ -57,7 +58,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7426"})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlFbc() {

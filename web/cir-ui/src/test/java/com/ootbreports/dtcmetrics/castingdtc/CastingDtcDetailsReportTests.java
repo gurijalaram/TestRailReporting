@@ -30,6 +30,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -67,7 +68,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7249"})
     @Description("Verify report is available by search - Casting DTC Details Report")
     public void testReportAvailabilityBySearch() {
@@ -85,7 +86,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7655"})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Details Report")
     public void testRollupDropDown() {
@@ -97,7 +98,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7344"})
     @Description("Verify apply button functionality - Casting DTC Details Report")
     public void testApplyButton() {
@@ -110,7 +111,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7349"})
     @Description("Verify cancel button functionality - Casting DTC Details Report")
     public void testCancelButton() {
@@ -119,7 +120,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7351"})
     @Description("Verify reset button functionality - Casting DTC Details Report")
     public void testResetButton() {
@@ -152,7 +153,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7429"})
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Details Report")
     public void testBothExportDatesUsingInputField() {
@@ -210,7 +211,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7412"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
@@ -236,7 +237,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7392"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
@@ -274,7 +275,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7513"})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
@@ -300,7 +301,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7657"})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
@@ -355,7 +356,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7632"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
