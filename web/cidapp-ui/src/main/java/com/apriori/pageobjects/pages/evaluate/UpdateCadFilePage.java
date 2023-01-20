@@ -33,6 +33,9 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
+    @FindBy(css = "[data-testid='apriori-alert']")
+    private WebElement associationAlert;
+
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
@@ -87,6 +90,15 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
      */
     public String getAlertWarning() {
         return pageUtils.waitForElementToAppear(alertWarning).getText();
+    }
+
+    /**
+     * Gets assembly association alert
+     *
+     * @return string
+     */
+    public String getAssociationAlert() {
+        return pageUtils.waitForElementToAppear(associationAlert).getText();
     }
 
     /**

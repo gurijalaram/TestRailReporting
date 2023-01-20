@@ -43,6 +43,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
+    @FindBy(css = "[data-testid='alert-messaging']")
+    private WebElement associationAlert;
+
     @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
@@ -198,6 +201,16 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public String getAlertWarning() {
         return pageUtils.waitForElementToAppear(alertWarning).getText();
     }
+
+    /**
+     * Gets assembly association alert
+     *
+     * @return string
+     */
+    public String getAssociationAlert() {
+        return pageUtils.waitForElementToAppear(associationAlert).getText();
+    }
+
 
     /**
      * Gets scenario name warning
