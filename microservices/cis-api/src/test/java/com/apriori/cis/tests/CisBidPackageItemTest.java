@@ -1,11 +1,5 @@
 package com.apriori.cis.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemRequest;
@@ -106,7 +100,7 @@ public class CisBidPackageItemTest extends TestUtil {
             bidPackageItemResponse.getIdentity(),
             BidPackageItemResponse.class, HttpStatus.SC_OK, currentUser);
 
-        assertThat(updateBidPackageItemResponse.getIterationIdentity(), not(equalTo(bidPackageItemResponse.getIterationIdentity())));
+        softAssertions.assertThat(updateBidPackageItemResponse.getIterationIdentity()).isNotEqualTo(bidPackageItemResponse.getIterationIdentity());
     }
 
     @Test
@@ -125,9 +119,9 @@ public class CisBidPackageItemTest extends TestUtil {
             "Invalid bidPackageItemIdentity",
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        assertThat(cisErrorMessage.getMessage(), containsString("2 validation failures were found:\n" +
+        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("2 validation failures were found:\n" +
             "* 'bidPackageIdentity' is not a valid identity.\n" +
-            "* 'identity' is not a valid identity."));
+            "* 'identity' is not a valid identity.");
     }
 
     @Test
@@ -157,7 +151,7 @@ public class CisBidPackageItemTest extends TestUtil {
             "Invalid bidPackageItemIdentity",
             HttpStatus.SC_BAD_REQUEST, currentUser, CisErrorMessage.class);
 
-        assertThat(cisErrorMessage.getMessage(), containsString("'bidPackageIdentity' is not a valid identity."));
+        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
@@ -170,7 +164,7 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        assertThat(updateBidPackageItemResponse.getBidPackageIdentity(), is(equalTo(bidPackageItemResponse.getBidPackageIdentity())));
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageItemResponse.getBidPackageIdentity());
     }
 
     @Test
@@ -183,9 +177,9 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        assertThat(cisInvalidErrorMessage.getMessage(), is(equalTo("2 validation failures were found:\n" +
+        softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("2 validation failures were found:\n" +
             "* 'bidPackageIdentity' is not a valid identity.\n" +
-            "* 'identity' is not a valid identity.")));
+            "* 'identity' is not a valid identity.");
     }
 
     @Test
@@ -199,8 +193,6 @@ public class CisBidPackageItemTest extends TestUtil {
 
         softAssertions.assertThat(getBidPackageItemsResponse.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(getBidPackageItemsResponse.getIsFirstPage()).isTrue();
-
-        softAssertions.assertAll();
     }
 
     @Test
@@ -212,7 +204,7 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        assertThat(cisInvalidErrorMessage.getMessage(), is(equalTo("'bidPackageIdentity' is not a valid identity.")));
+        softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
@@ -226,7 +218,7 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        assertThat(cisErrorMessage.getMessage(), containsString("'bidPackageIdentity' is not a valid identity."));
+        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
@@ -240,11 +232,12 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        assertThat(cisErrorMessage.getMessage(), containsString("'identity' is not a valid identity"));
+        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("'identity' is not a valid identity.");
     }
 
     @After
     public void testCleanup() {
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        softAssertions.assertAll();
     }
 }
