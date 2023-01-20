@@ -154,8 +154,8 @@ public class CisBidPackageResources {
      * Create Bid Package Item
      *
      * @param <T>                          - response class type
-     * @param bidPackageItemRequestBuilder
-     * @param bidPackageIdentity
+     * @param bidPackageItemRequestBuilder - BidPackageItemRequest request data builder
+     * @param bidPackageIdentity           - bid package identity
      * @param currentUser                  - UserCredentials
      * @param klass                        - response class name
      * @param httpStatus                   - Integer
@@ -175,9 +175,9 @@ public class CisBidPackageResources {
      * Update Bid Package Item
      *
      * @param <T>                          - response class type
-     * @param bidPackageItemRequestBuilder
-     * @param bidPackageIdentity
-     * @param bidPackageItemIdentity
+     * @param bidPackageItemRequestBuilder - BidPackageItemRequest request data builder
+     * @param bidPackageIdentity           - bid package identity
+     * @param bidPackageItemIdentity       - bid package item identity
      * @param klass                        - response class name
      * @param httpStatus                   - Integer
      * @param currentUser                  - UserCredentials
@@ -197,8 +197,8 @@ public class CisBidPackageResources {
      * Get Bid Package Item
      *
      * @param <T>                    - response class type
-     * @param bidPackageIdentity
-     * @param bidPackageItemIdentity
+     * @param bidPackageIdentity     - bid package identity
+     * @param bidPackageItemIdentity - bid package item identity
      * @param currentUser            - UserCredentials
      * @param klass                  - response class name
      * @param httpStatus             - Integer
@@ -217,7 +217,7 @@ public class CisBidPackageResources {
      * Get List of all bid package items
      *
      * @param <T>                - response class type
-     * @param bidPackageIdentity
+     * @param bidPackageIdentity - bid package identity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
      * @return klass object
@@ -239,7 +239,7 @@ public class CisBidPackageResources {
      * @param httpStatus             - expected http status code
      * @param currentUser            - UserCredentials class object
      * @param klass                  - response class name
-     * @param <T>                    - response class tupe
+     * @param <T>                    - response class type
      * @return klass object
      */
     public static <T> T deleteBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, Integer httpStatus, UserCredentials currentUser, Class<T> klass) {
@@ -254,9 +254,9 @@ public class CisBidPackageResources {
     /**
      * Delete bid package item
      *
-     * @param bidPackageIdentity
-     * @param bidPackageItemIdentity
-     * @param currentUser
+     * @param bidPackageIdentity     - bid package identity
+     * @param bidPackageItemIdentity - bid package item identity
+     * @param currentUser            - UserCredentials class object
      * @return ResponseWrapper of String
      */
     public static ResponseWrapper<String> deleteBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser) {
@@ -272,9 +272,9 @@ public class CisBidPackageResources {
     /**
      * Create and get BidPackageItemRequestBuilder
      *
-     * @param componentIdentity
-     * @param scenarioIdentity
-     * @param iterationIdentity
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @param iterationIdentity - the iteration identity
      * @return BidPackageItemRequest
      */
     public static BidPackageItemRequest bidPackageItemRequestBuilder(String componentIdentity, String scenarioIdentity, String iterationIdentity) {
