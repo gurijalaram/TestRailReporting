@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "dataShape": {
+      "type": "object",
+      "properties": {
+        "fieldDefinitions": {
+          "type": "object",
+          "properties": {
+            "appKey": {
+              "$ref": "AgentConnectorPropertiesSchema.json"
+            },
+            "connectionInfo": {
+              "$ref": "AgentConnectorPropertiesSchema.json"
+            }
+          },
+          "required": [
+            "appKey",
+            "connectionInfo"
+          ]
+        }
+      },
+      "required": [
+        "fieldDefinitions"
+      ]
+    },
+    "rows": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "appKey": {
+              "type": "string"
+            },
+            "connectionInfo": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "appKey",
+            "connectionInfo"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "dataShape",
+    "rows"
+  ]
+}
