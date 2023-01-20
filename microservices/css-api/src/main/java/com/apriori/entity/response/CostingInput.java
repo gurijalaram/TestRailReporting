@@ -36,6 +36,7 @@ public class CostingInput {
     private Tolerances tolerances;
     private Thumbnail thumbnail;
     private String materialUtilizationMode;
+    private List<RoutingNodeOptions> routingNodeOptions;
 
     public static class ProcessSetupOptions {
     }
