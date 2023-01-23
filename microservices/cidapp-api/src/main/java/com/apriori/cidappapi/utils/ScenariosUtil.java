@@ -66,8 +66,8 @@ public class ScenariosUtil {
      * @return response object
      */
     public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
-        try {
-            do {
+        do {
+            try {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
                 ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
@@ -79,13 +79,15 @@ public class ScenariosUtil {
 
                     return scenarioRepresentation;
                 }
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } catch (AssertionError a) {
+                log.error(a.getMessage());
+            }
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
                 componentInfo.getComponentName(), componentInfo.getScenarioName(), WAIT_TIME)
@@ -139,21 +141,9 @@ public class ScenariosUtil {
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT)
-                .expectedResponseCode(HttpStatus.SC_OK)
-                .followRedirection(true);
+                .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioResponse> response = null;
-        try {
-            response = HTTPRequest.build(requestEntity).get();
-
-        } catch (AssertionError e) {
-            log.debug(e.getMessage());
-
-            while (response.getStatusCode() == HttpStatus.SC_NOT_FOUND) {
-                response = HTTPRequest.build(requestEntity).get();
-            }
-        }
-        return response;
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
