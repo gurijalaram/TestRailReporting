@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesResponse;
-import com.apriori.cisapi.utils.UserPreferencesUtil;
+import com.apriori.cisapi.utils.UserPreferencesController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class UserPreferencesTest extends UserPreferencesUtil {
+public class UserPreferencesTest extends UserPreferencesController {
 
     @BeforeClass
     public static void setUp() {

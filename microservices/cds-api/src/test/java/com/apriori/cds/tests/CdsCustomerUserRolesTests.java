@@ -1,5 +1,6 @@
 package com.apriori.cds.tests;
 
+import com.apriori.cds.entity.response.ErrorResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
@@ -30,6 +31,8 @@ public class CdsCustomerUserRolesTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
+    private final String role = "AP_ADMIN";
+    private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
 
     @Before
@@ -69,10 +72,10 @@ public class CdsCustomerUserRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13415", "13417", "13422"})
+    @TestRail(testCaseId = {"13415", "13417", "13422","17166"})
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
-        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity);
+        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity,role);
         String roleId = newRole.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
@@ -81,5 +84,18 @@ public class CdsCustomerUserRolesTests {
         soft.assertAll();
 
         cdsTestUtil.delete(CDSAPIEnum.USER_ROLES_BY_ID, customerIdentity, userIdentity, roleId);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17165"})
+    @Description("Try to create an invalid role (without AP_* prefix) for a user and verify that it fails")
+    public void postInvalidUserRoles() {
+        String expectedMessage = "Resource 'Role' with identity 'ADMIN' was not found";
+        String expectedError = "Not Found";
+        ErrorResponse response = cdsTestUtil.createInvalidRoleForUser(customerIdentity, userIdentity,invalidRole);
+
+        soft.assertThat(response.getMessage()).isEqualTo(expectedMessage);
+        soft.assertThat(response.getError()).isEqualTo(expectedError);
+        soft.assertAll();
     }
 }

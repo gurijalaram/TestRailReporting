@@ -36,6 +36,7 @@ public class PublishTests extends TestBase {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private PublishPage publishPage;
     private File resourceFile;
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -77,7 +78,7 @@ public class PublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6743", "6744", "6745", "6747", "6041"})
+    @TestRail(testCaseId = {"6743", "6744", "6745", "6747", "6041", "21550"})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
         final String file = "testpart-4.prt";
@@ -93,30 +94,34 @@ public class PublishTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+        publishPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario(PublishPage.class)
-            .selectStatus("Analysis")
+            .publishScenario(PublishPage.class);
+
+        softAssertions.assertThat(publishPage.getAssociationAlert()).contains("High maturity and complete status scenarios can be prioritized to make more accurate associations when uploading new assemblies.");
+
+        publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(currentUser)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .clickExplore()
+            .selectAssignee(currentUser);
+
+        explorePage = publishPage.publish(cidComponentItem, EvaluatePage.class).clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isGreaterThan(0);
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "");
 
         softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isEqualTo(false);
+
         softAssertions.assertAll();
     }
 }
