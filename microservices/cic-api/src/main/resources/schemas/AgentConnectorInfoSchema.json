@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "connectionStatus": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "hasRelatedWorkflows": {
+      "type": "boolean"
+    },
+    "id": {
+      "type": "string"
+    },
+    "isPlmConnected": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "typeDisplayName": {
+      "type": "string"
+    },
+    "useLocalConfiguration": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "connectionStatus",
+    "customerId",
+    "description",
+    "displayName",
+    "hasRelatedWorkflows",
+    "id",
+    "isPlmConnected",
+    "name",
+    "type",
+    "typeDisplayName",
+    "useLocalConfiguration"
+  ]
+}

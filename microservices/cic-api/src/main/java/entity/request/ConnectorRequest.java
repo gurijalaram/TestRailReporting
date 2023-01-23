@@ -11,12 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Row {
-    public String key;
-    public String value;
-    public String identifier;
-    public boolean isValid;
-    public String mappingRule;
-    public String twxAttributeName;
-    public boolean _isSelected;
+public class ConnectorRequest {
+    private String customer;
+    private String description;
+    private DefaultValues standardMappings;
+    private String displayName;
+    private String agentType;
 }
