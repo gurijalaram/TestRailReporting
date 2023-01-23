@@ -145,14 +145,14 @@ public class ScenariosUtil {
         ResponseWrapper<ScenarioResponse> response = null;
         try {
             response = HTTPRequest.build(requestEntity).get();
-        } catch (AssertionError e) {
 
+        } catch (AssertionError e) {
             log.debug(e.getMessage());
+
             while (response.getStatusCode() == HttpStatus.SC_NOT_FOUND) {
                 response = HTTPRequest.build(requestEntity).get();
             }
         }
-
         return response;
     }
 
