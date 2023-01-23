@@ -133,14 +133,27 @@ public class ScenariosUtil {
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenario(ComponentInfoBuilder componentInfo) {
+
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT)
-                .expectedResponseCode(HttpStatus.SC_OK);
+                .expectedResponseCode(HttpStatus.SC_OK)
+                .followRedirection(true);
 
-        return HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ScenarioResponse> response = null;
+        try {
+            response = HTTPRequest.build(requestEntity).get();
+        } catch (AssertionError e) {
+
+            log.debug(e.getMessage());
+            while (response.getStatusCode() == HttpStatus.SC_NOT_FOUND) {
+                response = HTTPRequest.build(requestEntity).get();
+            }
+        }
+
+        return response;
     }
 
     /**
