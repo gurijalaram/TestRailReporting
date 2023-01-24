@@ -2,6 +2,7 @@ package com.apriori.tests;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.PreferencesEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -16,16 +17,22 @@ import java.util.Map;
 
 public class SettingsTests {
 
+    final String asmPreferenceDefault = "";
+    final String batchSizeDefault = "458";
+    final String selectionColourDefault = ColourEnum.YELLOW.getColour();
+
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
     UserCredentials currentUser;
     SoftAssertions softAssertions;
+    Map<PreferencesEnum, String> preferencesToReset = new HashMap<>();
 
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSpecificSettings(currentUser, preferencesToReset);
         }
+        preferencesToReset.clear();
     }
 
     @Test
@@ -40,6 +47,7 @@ public class SettingsTests {
 
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
+        preferencesToReset.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmPreferenceDefault);
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
@@ -63,6 +71,9 @@ public class SettingsTests {
         Map<PreferencesEnum, String> updatedPreferences = new HashMap<>();
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
+
+        preferencesToReset.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmPreferenceDefault);
+        preferencesToReset.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSizeDefault);
 
         userPreferencesUtil.updatePreferences(currentUser, updatedPreferences);
 
@@ -90,6 +101,10 @@ public class SettingsTests {
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
         updatedPreferences.put(PreferencesEnum.SELECTION_COLOUR, selectionColour);
+
+        preferencesToReset.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmPreferenceDefault);
+        preferencesToReset.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSizeDefault);
+        preferencesToReset.put(PreferencesEnum.SELECTION_COLOUR, selectionColourDefault);
 
         userPreferencesUtil.updatePreferences(currentUser, updatedPreferences);
 

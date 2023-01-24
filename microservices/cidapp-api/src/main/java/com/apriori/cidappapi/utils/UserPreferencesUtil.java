@@ -112,7 +112,6 @@ public class UserPreferencesUtil {
     public PreferenceResponse getPreference(UserCredentials userCredentials, PreferencesEnum preference) {
         List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
 
-//        return preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
         return preferencesItems.stream()
             .filter(x -> x.getName().equals(preference.getPreference()))
             .findFirst()
@@ -128,16 +127,9 @@ public class UserPreferencesUtil {
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
         String token = new AuthorizationUtil(userCredentials).getTokenAsString();
 
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
-            .token(token);
+        Map<String, String> mappedResponse;
 
-        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
-
-        List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
-
-        Map<String, String> mappedResponse = new HashMap<>();
-
-        preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
+        mappedResponse = getPreferenceIdentities(token);
 
         String asmStrategyIdentity = mappedResponse.get(PreferencesEnum.ASSEMBLY_STRATEGY.getPreference());
         String areaIdentity = mappedResponse.get(PreferencesEnum.AREA_UNITS.getPreference());
@@ -186,5 +178,52 @@ public class UserPreferencesUtil {
                 + "}}");
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Resets specified settings in Cidapp
+     *
+     * @param userCredentials - the user credentials
+     * @param preferencesToReset - Map of preferences to be reset with the value to reset to
+     *
+     * @return response object
+     */
+    public ResponseWrapper<String> resetSpecificSettings(UserCredentials userCredentials, Map<PreferencesEnum, String> preferencesToReset) {
+        StringBuilder customBody = new StringBuilder();
+        String token = new AuthorizationUtil(userCredentials).getTokenAsString();
+
+        Map<String, String> mappedResponse = getPreferenceIdentities(token);
+
+        customBody.append("{\"userPreferences\": {");
+        preferencesToReset.forEach((preference, defaultValue) -> customBody.append("\"" + mappedResponse.get(preference.getPreference()) + "\":\"" + defaultValue + "\","));
+        customBody.deleteCharAt(customBody.length() - 1)
+            .append("}}");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+            .token(token)
+            .customBody(customBody.toString());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Resets all settings in Cidapp
+     *
+     * @param token - the authentication token
+     * @return response object
+     */
+    private Map<String, String> getPreferenceIdentities(String token) {
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+            .token(token);
+
+        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
+
+        List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
+
+        Map<String, String> mappedResponse = new HashMap<>();
+
+        preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
+
+        return mappedResponse;
     }
 }
