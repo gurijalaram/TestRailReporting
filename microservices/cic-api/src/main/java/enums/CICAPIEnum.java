@@ -22,6 +22,10 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
     CIC_UI_CREATE_WORKFLOW("Thingworx/Things/PLMC_NewSchedulePopup/Services/CreateJobDefinition"),
     CIC_UI_DELETE_WORKFLOW("Thingworx/Things/PLMC_JobManagement/Services/DeleteJobDefinition"),
 
+    CIC_UI_CREATE_CONNECTOR("Thingworx/Things/PLMC_NewAgentPopup/Services/CreateAgent"),
+    CIC_UI_GET_CONNECTORS("Thingworx/Things/PLMC_NewAgentPopup/Services/GetConnectors"),
+    CIC_UI_GET_AGENT_CONNECTION_INFO("Thingworx/Things/PLMC_NewAgentPopup/Services/GetThingworxConnectionInfo"),
+
     CIC_PLM_WC_SEARCH("Windchill/servlet/rest/search/objects");
 
     private final String endpoint;

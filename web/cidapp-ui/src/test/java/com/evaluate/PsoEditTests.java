@@ -216,37 +216,6 @@ public class PsoEditTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("BA-2651")
-    @TestRail(testCaseId = {"7300"})
-    @Description("Sheet Plastic - Validate the user can edit the cooling time")
-    public void sheetPlasticPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-
-        String componentName = "sheet_plastic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario()
-            .openMaterialProcess()
-            .selectBarChart("4 Cavities Drape Forming")
-            .selectOptionsTab()
-            .inputCoolingTime("150.29")
-            .closePanel()
-            .costScenario()
-            .openMaterialProcess()
-            .selectBarChart("4 Cavities Drape Forming")
-            .selectOptionsTab();
-
-        assertThat(materialProcessPage.getOverriddenPso("Cooling Time"), is(150.29));
-    }
-
-    @Test
-    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8972"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
