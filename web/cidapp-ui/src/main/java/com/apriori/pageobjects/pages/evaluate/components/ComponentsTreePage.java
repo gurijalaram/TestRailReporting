@@ -482,4 +482,26 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
         return assembliesComponentsController.getCellColour(componentName, scenarioName);
     }
 
+    /**
+     * Checks if the scenario checkbox is selected
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return true/false
+     */
+    public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
+        return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the column data from a table
+     *
+     * @param column          - the column
+     * @param scenarioId      - the scenario identity
+     * @param userCredentials - the user credentials
+     * @return string
+     */
+    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
+        return assembliesComponentsController.getColumnData(column, scenarioId, userCredentials);
+    }
 }
