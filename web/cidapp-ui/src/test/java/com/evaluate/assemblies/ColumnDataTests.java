@@ -5,6 +5,7 @@ import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.CssComponent;
@@ -28,7 +29,10 @@ public class ColumnDataTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private CssComponent cssComponent = new CssComponent();
+    private UserCredentials currentUser;
+    private SoftAssertions softAssertions;
 
     public ColumnDataTests() {
         super();
@@ -81,12 +85,16 @@ public class ColumnDataTests extends TestBase {
 
         PersonResponse person = new PeopleUtil().getCurrentPerson(currentUser);
 
-        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.DIGITAL_FACTORY, bigRingIdentity, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.LAST_UPDATED_BY, pinIdentity, currentUser))
             .isEqualTo(person.getGivenName() + " " + person.getFamilyName());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, smallRingIdentity, currentUser)).isNotEqualTo("21700.29");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.FINISH_MASS, smallRingIdentity, currentUser)).isNotEqualTo("0.03kg");
+
+        componentsTreePage = componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
 
         softAssertions.assertAll();
     }
