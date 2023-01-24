@@ -58,10 +58,10 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
     @FindBy(css = "ul[id=menuList] > li:nth-child(2)")
     private WebElement viewRepositoryMenuOption;
 
-    @FindBy(css = "ul[id=menuList] > li:nth-child(3)")
+    @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
     private WebElement viewSchedulesMenuOption;
 
-    @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
+    @FindBy(css = "ul[id=menuList] > li:nth-child(5)")
     private WebElement viewMessagesMenuOption;
 
     @FindBy(id = "main_manage")

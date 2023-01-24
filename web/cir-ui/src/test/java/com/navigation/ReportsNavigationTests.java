@@ -153,7 +153,7 @@ public class ReportsNavigationTests extends TestBase {
             .login()
             .navigateToViewMessagesPage();
 
-        assertThat(messages.getMessagesTitleText(), is(equalTo("Messages:")));
+        assertThat(messages.getMessagesTitleText(), is(equalTo("Messages")));
     }
 
     @Test

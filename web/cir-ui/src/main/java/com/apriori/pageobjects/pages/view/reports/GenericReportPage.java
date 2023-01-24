@@ -832,7 +832,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectSortOrder(String sortOrder) {
-        pageUtils.waitFor(1000);
+        pageUtils.waitFor(2000);
         pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
         pageUtils.waitForElementToAppear(sortOrderDropdown);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
@@ -1453,6 +1453,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickApply() {
+        pageUtils.waitFor(1000);
         pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
@@ -1894,7 +1895,7 @@ public class GenericReportPage extends ReportsPageHeader {
         String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
                 ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
-            pageUtils.waitFor(1000);
+            pageUtils.waitFor(2000);
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
