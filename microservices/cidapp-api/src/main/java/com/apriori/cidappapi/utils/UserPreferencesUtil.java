@@ -73,7 +73,7 @@ public class UserPreferencesUtil {
                 .append("{")
                 .append("\"name\":\"").append(preference.getName()).append("\",")
                 .append("\"type\":\"").append(preference.getType()).append("\",")
-                .append("\"value\":") .append(preference.getType().equals("STRING") ? "\"" : "")
+                .append("\"value\":").append(preference.getType().equals("STRING") ? "\"" : "")
                 .append(update.getValue()).append(preference.getType().equals("STRING") ? "\"" : "")
                 .append(",\"updatedBy\":\"").append(preference.getUpdatedBy())
                 .append("\"}");
