@@ -17,7 +17,6 @@
         "email",
         "username",
         "active",
-        "hasCompleteProfile",
         "mfaRequired",
         "customAttributes",
         "userType"

@@ -401,6 +401,17 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@id='more-options-menu-popper']//li[@data-testid='menu-item-DELETE']//p[contains(text(),'Delete Comment')]")
     private WebElement deleteCommentOption;
 
+    @FindBy(id = "popover-select-control-mention-textfield")
+    private WebElement mentionUserPicker;
+
+    @FindBy(xpath = "//input[@type='checkbox']")
+    private WebElement assignToCheckBox;
+
+    @FindBy(id = "popover-select-control-user-list")
+    private WebElement assignToMentionUserList;
+
+    @FindBy(xpath = "//button[@data-testid='icon-button']")
+    private WebElement changeAssigneeCaretIcon;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1969,6 +1980,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectCreatedDiscussion() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(createdDiscussion);
         return this;
     }
@@ -2034,6 +2046,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickDigitalFactoryMessageIcon() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementToAppear(proximityLbl);
         getPageUtils().mouseMove(attributeDigitalFactory);
         getPageUtils().moveAndClick(attributeMessageIcon);
@@ -2327,5 +2340,85 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isDeletedReplyDisplayed() {
         return getPageUtils().waitForElementAppear(replyMessage).isDisplayed();
+    }
+
+    /**
+     * Add a comment with a mention
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage addCommentWithMention(String comment) {
+        getPageUtils().waitForElementToAppear(commentField).sendKeys(comment);
+        return this;
+    }
+
+    /**
+     * Checks if mention user selection list displayed
+     *
+     * @return true/false
+     */
+    public boolean isMentionUserPickerDisplayed() {
+        return getPageUtils().waitForElementAppear(mentionUserPicker).isDisplayed();
+    }
+
+    /**
+     * clicks to select a user
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectMentionUser(String mentionUser) {
+        getPageUtils().waitForElementAppear(mentionUserPicker);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + mentionUser + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on change assignee icon
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickChangeAssigneeOption() {
+        getPageUtils().waitForElementAppear(changeAssigneeCaretIcon).click();
+        return this;
+    }
+
+    /**
+     * Checks if assign to-mention user list displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssignToAMentionUserListDisplayed() {
+        return getPageUtils().waitForElementAppear(assignToMentionUserList).isDisplayed();
+    }
+
+
+    /**
+     * clicks to change assign to user
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectMentionUserToAssignDiscussion(String mentionUser) {
+        getPageUtils().waitForElementAppear(assignToMentionUserList);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + mentionUser + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on assign-to checkbox
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickToAssign() {
+        getPageUtils().waitForElementAppear(assignToCheckBox).click();
+        return this;
+    }
+
+    /**
+     * Checks if mention user tag displayed
+     *
+     * @return true/false
+     */
+    public boolean isAMentionUserTagDisplayed(String mentionUser) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[contains(@id,'" + mentionUser + "')]")).isDisplayed();
     }
 }
