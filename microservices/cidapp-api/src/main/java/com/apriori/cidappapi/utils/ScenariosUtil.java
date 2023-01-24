@@ -147,23 +147,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * GET scenario redirection location header
-     *
-     * @param componentInfo - the component info builder object
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioResponse> getScenarioRedirectLocation(ComponentInfoBuilder componentInfo) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
-                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT)
-                .followRedirection(false);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
      * Call GET on Scenario Representation by Component Endpoint with an expected Return Code
      *
      * @param componentInfo - The component info builder object
