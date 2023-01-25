@@ -36,7 +36,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14378", "14373"})
+    @TestRail(testCaseId = {"14378", "14098"})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         BidPackageProjectResponse bppResponse = CisBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
