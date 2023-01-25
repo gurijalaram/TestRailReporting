@@ -140,8 +140,7 @@ public class ScenariosUtil {
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT)
-                .followRedirection(true);
+                .socketTimeout(SOCKET_TIMEOUT);
 
         return HTTPRequest.build(requestEntity).get();
     }
