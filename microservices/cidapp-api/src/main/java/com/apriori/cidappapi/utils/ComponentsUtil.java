@@ -317,6 +317,7 @@ public class ComponentsUtil {
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
+
         } catch (AssertionError a) {
             log.error(a.getMessage());
         }
