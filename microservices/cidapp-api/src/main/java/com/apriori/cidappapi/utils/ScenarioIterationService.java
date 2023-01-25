@@ -112,7 +112,7 @@ public class ScenarioIterationService {
             File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
             String scenarioName = ("AutoAPI" + entry.getValue() + component[0]).replace(" ", "");
 
-            componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+            componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
                 .resourceFile(resourceFile)
