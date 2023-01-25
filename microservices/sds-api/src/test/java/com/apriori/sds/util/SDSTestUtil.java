@@ -211,8 +211,8 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return response object
      */
     public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + " not_costed");
+        return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.split("\\.", 2)[0], SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED);
     }
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
