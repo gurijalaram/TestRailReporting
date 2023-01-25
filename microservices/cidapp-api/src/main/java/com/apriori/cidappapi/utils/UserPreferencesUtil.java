@@ -207,10 +207,10 @@ public class UserPreferencesUtil {
     }
 
     /**
-     * Resets all settings in Cidapp
+     * Get the identity values for all user preferences
      *
      * @param token - the authentication token
-     * @return response object
+     * @return Hashmap of preference names and associated identities
      */
     private Map<String, String> getPreferenceIdentities(String token) {
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
