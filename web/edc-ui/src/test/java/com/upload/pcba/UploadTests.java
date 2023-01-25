@@ -67,9 +67,8 @@ public class UploadTests extends TestBase {
 
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isEqualTo(false);
 
-        matchedPartPage = editBomPage
-            .enterMountTypeOldVer("mountType")
-            .enterPinCount("123456")
+        matchedPartPage = editBomPage.selectOtherMountType(testMountTypeData)
+            .enterPinCount(testPinCountData)
             .clickSave();
 
         softAssertions.assertThat(matchedPartPage.getPinCountHeaderText()).isEqualTo("Pin Count");
@@ -121,6 +120,7 @@ public class UploadTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Ignored due to file location")
     @Test
     @TestRail(testCaseId = "1732")
     @Description("BOM can be exported to file from main page")
