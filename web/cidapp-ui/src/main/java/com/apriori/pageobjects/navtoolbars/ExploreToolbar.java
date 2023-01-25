@@ -261,7 +261,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+        return new ComponentsUtil().postComponentQueryCID(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)

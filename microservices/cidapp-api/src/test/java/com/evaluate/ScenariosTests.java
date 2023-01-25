@@ -42,7 +42,7 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
