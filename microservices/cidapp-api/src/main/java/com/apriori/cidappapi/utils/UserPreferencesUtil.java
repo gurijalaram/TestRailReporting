@@ -70,8 +70,7 @@ public class UserPreferencesUtil {
 
             preference = getPreference(userCredentials, update.getKey());
 
-            if (preference == null && update.getKey() == PreferencesEnum.ASSEMBLY_STRATEGY)
-            {
+            if (preference == null && update.getKey() == PreferencesEnum.ASSEMBLY_STRATEGY) {
                 updatePreferences
                     .append(updatePreferences.length() > 0 ? "," : "")
                     .append("{")
@@ -80,8 +79,7 @@ public class UserPreferencesUtil {
                     .append("\"value\":").append("\"").append(update.getValue()).append("\"")
                     .append(",\"updatedBy\":\"").append(userID)
                     .append("\"}");
-            }
-            else {
+            } else {
                 updatePreferences
                     .append(updatePreferences.length() > 0 ? "," : "")
                     .append("{")
