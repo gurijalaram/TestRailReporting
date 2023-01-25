@@ -54,6 +54,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @Description("Get list of all Bid Package Projects and verify pagination")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = CisBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser);
+
         softAssertions.assertThat(projectsResponse.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(projectsResponse.getIsFirstPage()).isTrue();
     }
@@ -64,6 +65,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
+
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 

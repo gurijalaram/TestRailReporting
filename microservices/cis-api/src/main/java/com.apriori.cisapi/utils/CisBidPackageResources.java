@@ -338,7 +338,8 @@ public class CisBidPackageResources {
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
@@ -374,7 +375,8 @@ public class CisBidPackageResources {
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).delete().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
@@ -394,7 +396,8 @@ public class CisBidPackageResources {
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
