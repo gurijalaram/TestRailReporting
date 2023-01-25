@@ -440,7 +440,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public void waitForCADViewerLoad() {
         getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='layout-pane layout-pane-primary']//div[@data-testid='loader']"),1);
     }
 
     /**
