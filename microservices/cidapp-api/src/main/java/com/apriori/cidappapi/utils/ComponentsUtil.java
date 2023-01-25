@@ -294,15 +294,15 @@ public class ComponentsUtil {
     /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Part/Assembly
      *
-     * @param componentInfo      - the component info builder object
+     * @param componentInfo - the component info builder object
      * @return response object
      */
     public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfo) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
-        try {
-            do {
+        do {
+            try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo).getResponseEntity();
@@ -311,16 +311,14 @@ public class ComponentsUtil {
 
                     return componentIdentityResponse;
                 }
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-
-        } catch (AssertionError a) {
-            log.error(a.getMessage());
-        }
+            } catch (AssertionError a) {
+                log.error(a.getMessage());
+            }
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
         throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
