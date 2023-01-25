@@ -4,6 +4,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.utils.authorization.AuthorizationUtil;
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DecimalPlaceEnum;
@@ -62,21 +63,35 @@ public class UserPreferencesUtil {
      */
     public ResponseWrapper<String> updatePreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
         StringBuilder updatePreferences = new StringBuilder();
+        String userID = new AuthUserContextUtil().getAuthUserIdentity(userCredentials.getEmail());
         PreferenceResponse preference;
 
         for (Map.Entry<PreferencesEnum, String> update : preferences.entrySet()) {
 
             preference = getPreference(userCredentials, update.getKey());
 
-            updatePreferences
-                .append(updatePreferences.length() > 0 ? "," : "")
-                .append("{")
-                .append("\"name\":\"").append(preference.getName()).append("\",")
-                .append("\"type\":\"").append(preference.getType()).append("\",")
-                .append("\"value\":").append(preference.getType().equals("STRING") ? "\"" : "")
-                .append(update.getValue()).append(preference.getType().equals("STRING") ? "\"" : "")
-                .append(",\"updatedBy\":\"").append(preference.getUpdatedBy())
-                .append("\"}");
+            if (preference == null && update.getKey() == PreferencesEnum.ASSEMBLY_STRATEGY)
+            {
+                updatePreferences
+                    .append(updatePreferences.length() > 0 ? "," : "")
+                    .append("{")
+                    .append("\"name\":\"").append(PreferencesEnum.ASSEMBLY_STRATEGY.getPreference()).append("\",")
+                    .append("\"type\":\"").append("STRING").append("\",")
+                    .append("\"value\":").append("\"").append(update.getValue()).append("\"")
+                    .append(",\"updatedBy\":\"").append(userID)
+                    .append("\"}");
+            }
+            else {
+                updatePreferences
+                    .append(updatePreferences.length() > 0 ? "," : "")
+                    .append("{")
+                    .append("\"name\":\"").append(preference.getName()).append("\",")
+                    .append("\"type\":\"").append(preference.getType()).append("\",")
+                    .append("\"value\":").append(preference.getType().equals("STRING") ? "\"" : "")
+                    .append(update.getValue()).append(preference.getType().equals("STRING") ? "\"" : "")
+                    .append(",\"updatedBy\":\"").append(preference.getUpdatedBy())
+                    .append("\"}");
+            }
         }
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)

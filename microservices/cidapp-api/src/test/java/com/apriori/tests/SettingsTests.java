@@ -28,7 +28,7 @@ public class SettingsTests {
     Map<PreferencesEnum, String> preferencesToReset = new HashMap<>();
 
     @After
-    public void resetAllSettings() {
+    public void resetSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSpecificSettings(currentUser, preferencesToReset);
         }
