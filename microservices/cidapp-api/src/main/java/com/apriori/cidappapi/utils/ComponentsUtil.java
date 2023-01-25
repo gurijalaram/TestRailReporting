@@ -317,6 +317,8 @@ public class ComponentsUtil {
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
+        } catch (AssertionError a) {
+            log.error(a.getMessage());
         }
         throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
