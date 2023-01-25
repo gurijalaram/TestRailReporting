@@ -120,6 +120,7 @@ public class UploadTests extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Ignored due to file location")
     @Test
     @TestRail(testCaseId = "1732")
     @Description("BOM can be exported to file from main page")
