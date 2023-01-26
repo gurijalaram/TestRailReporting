@@ -4,6 +4,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.utils.authorization.AuthorizationUtil;
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DecimalPlaceEnum;
@@ -53,6 +54,84 @@ public class UserPreferencesUtil {
     }
 
     /**
+     * Put/update preferences
+     *
+     * @param userCredentials - the user credentials
+     * @param preferences      - the preferences to be updated
+     *
+     * @return response object
+     */
+    public ResponseWrapper<String> updatePreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
+        StringBuilder updatePreferences = new StringBuilder();
+        String userID = new AuthUserContextUtil().getAuthUserIdentity(userCredentials.getEmail());
+        PreferenceResponse preference;
+
+        for (Map.Entry<PreferencesEnum, String> update : preferences.entrySet()) {
+
+            preference = getPreference(userCredentials, update.getKey());
+
+            if (preference == null && update.getKey() == PreferencesEnum.ASSEMBLY_STRATEGY) {
+                updatePreferences
+                    .append(updatePreferences.length() > 0 ? "," : "")
+                    .append("{")
+                    .append("\"name\":\"").append(PreferencesEnum.ASSEMBLY_STRATEGY.getPreference()).append("\",")
+                    .append("\"type\":\"").append("STRING").append("\",")
+                    .append("\"value\":").append("\"").append(update.getValue()).append("\"")
+                    .append(",\"updatedBy\":\"").append(userID)
+                    .append("\"}");
+            } else {
+                updatePreferences
+                    .append(updatePreferences.length() > 0 ? "," : "")
+                    .append("{")
+                    .append("\"name\":\"").append(preference.getName()).append("\",")
+                    .append("\"type\":\"").append(preference.getType()).append("\",")
+                    .append("\"value\":").append(preference.getType().equals("STRING") ? "\"" : "")
+                    .append(update.getValue()).append(preference.getType().equals("STRING") ? "\"" : "")
+                    .append(",\"updatedBy\":\"").append(preference.getUpdatedBy())
+                    .append("\"}");
+            }
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+            .token(userCredentials.getToken())
+            .customBody("{\"userPreferences\": [ " + updatePreferences + " ]}");
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * Get the list of current preferences
+     *
+     * @param userCredentials - the user credentials
+     *
+     * @return List of preferences
+     */
+    public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+            .token(userCredentials.getToken());
+
+        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
+
+        return preferencesResponse.getResponseEntity().getItems();
+    }
+
+    /**
+     * Get the list of current preferences
+     *
+     * @param userCredentials - the user credentials
+     *
+     * @return List of preferences
+     */
+    public PreferenceResponse getPreference(UserCredentials userCredentials, PreferencesEnum preference) {
+        List<PreferenceResponse> preferencesItems = getPreferences(userCredentials);
+
+        return preferencesItems.stream()
+            .filter(x -> x.getName().equals(preference.getPreference()))
+            .findFirst()
+            .orElse(null);
+    }
+
+    /**
      * Resets all settings in Cidapp
      *
      * @param userCredentials - the user credentials
@@ -61,17 +140,11 @@ public class UserPreferencesUtil {
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
         String token = new AuthorizationUtil(userCredentials).getTokenAsString();
 
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
-            .token(token);
+        Map<String, String> mappedResponse;
 
-        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
+        mappedResponse = getPreferenceIdentities(token);
 
-        List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
-
-        Map<String, String> mappedResponse = new HashMap<>();
-
-        preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
-
+        String asmStrategyIdentity = mappedResponse.get(PreferencesEnum.ASSEMBLY_STRATEGY.getPreference());
         String areaIdentity = mappedResponse.get(PreferencesEnum.AREA_UNITS.getPreference());
         String currencyIdentity = mappedResponse.get(PreferencesEnum.CURRENCY.getPreference());
         String unitIdentity = mappedResponse.get(PreferencesEnum.UNITS_GROUP.getPreference());
@@ -95,6 +168,7 @@ public class UserPreferencesUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
             .token(token)
             .customBody("{\"userPreferences\": {"
+                + "\"" + asmStrategyIdentity + "\":\"\","
                 + "\"" + areaIdentity + "\":\"mm2\","
                 + "\"" + currencyIdentity + "\":\"" + CurrencyEnum.USD.getCurrency() + "\","
                 + "\"" + unitIdentity + "\":\"" + UnitsEnum.MMKS.getUnits() + "\","
@@ -117,5 +191,52 @@ public class UserPreferencesUtil {
                 + "}}");
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Resets specified settings in Cidapp
+     *
+     * @param userCredentials - the user credentials
+     * @param preferencesToReset - Map of preferences to be reset with the value to reset to
+     *
+     * @return response object
+     */
+    public ResponseWrapper<String> resetSpecificSettings(UserCredentials userCredentials, Map<PreferencesEnum, String> preferencesToReset) {
+        StringBuilder customBody = new StringBuilder();
+        String token = new AuthorizationUtil(userCredentials).getTokenAsString();
+
+        Map<String, String> mappedResponse = getPreferenceIdentities(token);
+
+        customBody.append("{\"userPreferences\": {");
+        preferencesToReset.forEach((preference, defaultValue) -> customBody.append("\"" + mappedResponse.get(preference.getPreference()) + "\":\"" + defaultValue + "\","));
+        customBody.deleteCharAt(customBody.length() - 1)
+            .append("}}");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+            .token(token)
+            .customBody(customBody.toString());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Get the identity values for all user preferences
+     *
+     * @param token - the authentication token
+     * @return Hashmap of preference names and associated identities
+     */
+    private Map<String, String> getPreferenceIdentities(String token) {
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+            .token(token);
+
+        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
+
+        List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
+
+        Map<String, String> mappedResponse = new HashMap<>();
+
+        preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
+
+        return mappedResponse;
     }
 }

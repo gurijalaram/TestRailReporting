@@ -48,5 +48,4 @@ public class CustomerUser {
     private String updatedByName;
     private List<Object> licenseAssignments = null;
     private String userType;
-    private Boolean hasCompleteProfile;
 }
