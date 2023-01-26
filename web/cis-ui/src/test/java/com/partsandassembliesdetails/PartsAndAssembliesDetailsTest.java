@@ -1293,4 +1293,52 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"14728","14729","14731","14736","14733","14734"})
+    @Description("Verify that mention users in a comment and assign comment to a mention user ")
+    public void testMentionUsersOnACommentThread()  {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .addCommentWithMention("This is a new reply with a mention user @22");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMentionUserPickerDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectMentionUser("QA Automation Account");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAMentionUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.addCommentWithMention("second mention user @23")
+                .selectMentionUser("qa-automation-23@apriori.com")
+                .clickChangeAssigneeOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssignToAMentionUserListDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectMentionUserToAssignDiscussion("qa-automation-23@apriori.com")
+                .clickToAssign()
+                .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 23");
+
+        softAssertions.assertAll();
+    }
 }

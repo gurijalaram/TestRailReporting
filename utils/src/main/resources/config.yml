@@ -78,7 +78,7 @@ default:
     api_url: https://nts.${default.aws_region}.${env}.apriori.net/
 
   sds:
-    api_url: https://sds-http.${default.aws_region}-v23-1.${env}.apriori.net/
+    api_url: https://sds.${default.aws_region}-v23-1.${env}.apriori.net/
 
   vds:
     api_url: https://vds.${default.aws_region}-v23-1.${env}.apriori.net/
