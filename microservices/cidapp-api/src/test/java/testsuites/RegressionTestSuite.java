@@ -1,6 +1,7 @@
 package testsuites;
 
 import com.apriori.tests.MaterialSelectionTests;
+import com.apriori.tests.SettingsTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
@@ -36,7 +37,8 @@ import testsuites.suiteinterfaces.SmokeTests;
     GroupEditTests.class,
     GroupPublishTests.class,
     ComponentRedirectTests.class,
-    MaterialSelectionTests.class
+    MaterialSelectionTests.class,
+    SettingsTests.class
 })
 public class RegressionTestSuite {
 }
