@@ -27,8 +27,8 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     AVAILABLE_ROUTINGS("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/routing-selection?vpeName=%s&pgName=%s"),
     ROUTING_SELECTION("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/routing-selection"),
     UNIT_VARIANT_SETTINGS("ws/workspace/global-info/unitVariantSettings"),
-    WEB_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/web"),
-    DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/desktop"),
+    WEB_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/images/web"),
+    DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/images/desktop"),
     TWO_DIMENSIONAL_IMAGE("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-2d");
 
     private final String endpoint;
