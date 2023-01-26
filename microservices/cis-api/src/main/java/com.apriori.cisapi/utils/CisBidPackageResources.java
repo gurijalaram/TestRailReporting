@@ -349,13 +349,33 @@ public class CisBidPackageResources {
      * @param currentUser        - UserCredentials
      * @return BidPackageProjectsResponse
      */
-    public static BidPackageProjectsResponse getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser) {
+    public static BidPackageProjectsResponse getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, BidPackageProjectsResponse.class)
             .inlineVariables(bidPackageIdentity)
             .token(currentUser.getToken())
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         ResponseWrapper<BidPackageProjectsResponse> bppResponse = HTTPRequest.build(requestEntity).get();
+        return bppResponse.getResponseEntity();
+    }
+
+    /**
+     * Get Bid Package Item
+     *
+     * @param <T>                - response class type
+     * @param bidPackageIdentity - bid package identity
+     * @param currentUser        - UserCredentials
+     * @param klass              - response class name
+     * @param httpStatus         - Integer
+     * @return klass object
+     */
+    public static <T> T getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, klass)
+            .inlineVariables(bidPackageIdentity)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> bppResponse = HTTPRequest.build(requestEntity).get();
         return bppResponse.getResponseEntity();
     }
 
