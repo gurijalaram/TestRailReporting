@@ -50,10 +50,10 @@ public class PropertiesTest {
 
     @Test
     public void testGetEnvironmentPropertyWithReferences() {
-        final String specificEnvPropertyValue = PropertiesContext.get("${env}.bcs.api_url");
+        final String specificEnvPropertyValue = PropertiesContext.get("bcs.api_url");
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v22-1.qa-test.apriori.net/");
+        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v23-1.qa-test.apriori.net/");
         softAssertions.assertAll();
     }
 
