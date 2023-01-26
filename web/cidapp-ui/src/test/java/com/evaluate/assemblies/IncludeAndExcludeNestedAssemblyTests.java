@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ButtonTypeEnum;
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -170,6 +171,8 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     public void testExcludeRepeatingComponent() {
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(SUB_ASSEMBLY, scenarioName)
             .openComponents()
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
@@ -226,7 +229,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11873", "11863"})
+    @TestRail(testCaseId = {"11873", "11863", "11950"})
     @Description("Validate that in instances where multiple iterations of a part exist in an assembly, selection of this in table view will highlight all upon switch to tree view")
     public void testMultipleIterationOfPartHighlightedInTreeAndTableView() {
 
@@ -247,11 +250,14 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
         softAssertions.assertThat(componentsTreePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
-        componentsTreePage.clickScenarioCheckbox(SUB_ASSEMBLY);
+        componentsTreePage.multiSelectSubcomponents(SUB_ASSEMBLY + "," + scenarioName + "")
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName);
 
-        componentsTreePage.expandSubAssembly(SUB_ASSEMBLY, scenarioName);
+        softAssertions.assertThat(componentsTreePage.isScenarioCheckboxSelected(SUB_ASSEMBLY, scenarioName)).isTrue();
 
         softAssertions.assertThat(componentsTreePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertThat(componentsTreePage.isScenarioCheckboxSelected("0200613", scenarioName)).isFalse();
 
         componentsTreePage.expandSubAssembly(SUB_SUB_ASSEMBLY, scenarioName);
 

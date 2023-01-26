@@ -18,7 +18,6 @@
         "email",
         "username",
         "active",
-        "hasCompleteProfile",
         "mfaRequired",
         "customAttributes",
         "createdByName",
@@ -101,9 +100,6 @@
           "type": "string"
         },
         "active": {
-          "type": "boolean"
-        },
-        "hasCompleteProfile": {
           "type": "boolean"
         },
         "mfaRequired": {
