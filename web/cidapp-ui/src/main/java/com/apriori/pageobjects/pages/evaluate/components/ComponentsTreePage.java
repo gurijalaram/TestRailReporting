@@ -492,16 +492,4 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
         return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
     }
-
-    /**
-     * Gets the column data from a table
-     *
-     * @param column          - the column
-     * @param scenarioId      - the scenario identity
-     * @param userCredentials - the user credentials
-     * @return string
-     */
-    public String getColumnData(ColumnsEnum column, String scenarioId, UserCredentials userCredentials) {
-        return assembliesComponentsController.getColumnData(column, scenarioId, userCredentials);
-    }
 }

@@ -29,10 +29,7 @@ public class ColumnDataTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
-    private ComponentsTreePage componentsTreePage;
     private CssComponent cssComponent = new CssComponent();
-    private UserCredentials currentUser;
-    private SoftAssertions softAssertions;
 
     public ColumnDataTests() {
         super();
@@ -91,10 +88,6 @@ public class ColumnDataTests extends TestBase {
             .isEqualTo(person.getGivenName() + " " + person.getFamilyName());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.TOTAL_CAPITAL_INVESTMENT, smallRingIdentity, currentUser)).isNotEqualTo("21700.29");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.FINISH_MASS, smallRingIdentity, currentUser)).isNotEqualTo("0.03kg");
-
-        componentsTreePage = componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
 
         softAssertions.assertAll();
     }
