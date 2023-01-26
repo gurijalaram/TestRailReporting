@@ -17,7 +17,7 @@ dependencies {
     implementation project(':apibase')
     implementation project(':utils')
     implementation project(':microservices:css-api')
-    implementation project(':microservices:cas-api')
+    implementation project(':microservices:cds-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:fms-api')
 
