@@ -583,8 +583,9 @@ public class AssembliesComponentsController {
      * @return true/false
      */
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
-        return pageUtils.isElementDisplayed(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//*[local-name() = 'svg'][@data-testid ='CheckBoxIcon']",
-            componentName.toUpperCase().trim(), scenarioName.trim())));
+        By element = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//*[local-name() = 'svg'][@data-testid ='CheckBoxIcon']",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
+        return pageUtils.isElementDisplayed(element);
     }
 }
 
