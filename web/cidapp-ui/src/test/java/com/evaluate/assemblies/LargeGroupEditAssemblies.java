@@ -101,7 +101,7 @@ public class LargeGroupEditAssemblies extends TestBase {
                 PADDLE_BAR.getPartName() + "," + scenarioName + "",
                 PIN.getPartName() + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
         componentsTablePage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")
             .editSubcomponent(EditComponentsPage.class)
