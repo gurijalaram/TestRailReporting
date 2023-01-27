@@ -78,7 +78,7 @@ public class GroupEditAssemblies extends TestBase {
             .openComponents()
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", PIN + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsTreePage.isEditButtonEnabled()).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isEditButtonDisabled()).isEqualTo(false);
 
         componentsTreePage.editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
@@ -186,7 +186,7 @@ public class GroupEditAssemblies extends TestBase {
             .checkSubcomponentState(componentAssembly, BOLT)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", FLANGE + "," + scenarioName + "");
 
-        softAssertions.assertThat(componentsTreePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isEditButtonDisabled()).isEqualTo(true);
         softAssertions.assertThat(componentsTreePage.getRowDetails(FLANGE, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(NUT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());

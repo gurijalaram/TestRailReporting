@@ -7,7 +7,6 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -19,7 +18,6 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
-import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -417,8 +415,8 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      *
      * @return boolean
      */
-    public boolean isEditButtonEnabled() {
-        return !assembliesComponentsController.isEditButtonEnabled();
+    public boolean isEditButtonDisabled() {
+        return !assembliesComponentsController.isEditButtonDisabled();
     }
 
     /**

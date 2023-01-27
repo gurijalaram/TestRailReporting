@@ -69,13 +69,13 @@ public class LargeGroupEditAssemblies2 extends TestBase {
             .selectTableView()
             .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
-        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
         componentsTablePage.multiSelectSubcomponents("centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "");
-        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
         componentsTablePage.multiSelectSubcomponents("left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "steer wheel support, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "");
-        softAssertions.assertThat(componentsTablePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
