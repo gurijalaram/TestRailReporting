@@ -124,14 +124,18 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
      *
      * @return - Boolean of visibility state
      */
-    public Boolean isUsingDefaultsMessageVisible() { return usingDefaultMessage.isDisplayed(); }
+    public Boolean isUsingDefaultsMessageVisible() {
+        return usingDefaultMessage.isDisplayed();
+    }
 
     /**
      * Get message to user if no strategy selected
      *
      * @return - The use default message
      */
-    public String getUsingDefaultsMessage() { return usingDefaultMessage.getText(); }
+    public String getUsingDefaultsMessage() {
+        return usingDefaultMessage.getText();
+    }
 
     /**
      * Get number of strategy cards currently displayed
