@@ -469,7 +469,7 @@ qa-test:
     ui_url: https://ci-design.${default.aws_region}-v23-1.${env}.apriori.net/
 
   css:
-    api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
+    api_url: https://css.${default.aws_region}-v22-1.${env}.apriori.net/
 
   dds:
     api_url: https://dds.na-1-v23-1.qa-test.apriori.net/
