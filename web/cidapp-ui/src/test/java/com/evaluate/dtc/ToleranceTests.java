@@ -26,6 +26,7 @@ import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
@@ -617,6 +618,7 @@ public class ToleranceTests extends TestBase {
     }*/
 
     @Test
+    @Issue("COST-685")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6975", "6967"})
     @Description("Validate 'Replace values less than' button")
