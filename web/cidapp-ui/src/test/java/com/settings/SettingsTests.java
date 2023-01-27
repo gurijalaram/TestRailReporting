@@ -18,6 +18,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
+import com.apriori.pageobjects.pages.settings.MultiBodyPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.settings.SelectionPage;
 import com.apriori.utils.FileResourceUtil;
@@ -468,7 +469,7 @@ public class SettingsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost").contains("€"));
+        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost")).contains("€");
         softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
 
         softAssertions.assertAll();
@@ -645,5 +646,40 @@ public class SettingsTests extends TestBase {
             .importCadFile();
 
         assertThat(importCadFilePage.getDefaultScenarioName(), is(MYSCENARIONAME));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17154", "17155", "17156", "17157"})
+    @Description("Assembly Strategy stuff")
+    public void testAssemblyStrategyDropdown() {
+        currentUser = UserUtil.getUser();
+
+        String preferPublic = "Prefer Public Scenarios";
+        String preferPrivate = "Prefer Private Scenarios";
+
+        loginPage = new CidAppLoginPage(driver);
+        MultiBodyPage multiBodyPage = loginPage.login(currentUser)
+            .openSettings()
+            .goToMultiBodyTab();
+
+        softAssertions.assertThat(multiBodyPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
+
+        multiBodyPage.selectAssemblyStrategy(preferPublic);
+        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify Public is selected").isEqualTo(preferPublic);
+
+        multiBodyPage = multiBodyPage.submit(ExplorePage.class)
+            .openSettings()
+            .goToMultiBodyTab();
+
+        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify strategy was saved").isEqualTo(preferPublic);
+
+        multiBodyPage = multiBodyPage.selectAssemblyStrategy(preferPrivate)
+            .submit(ExplorePage.class)
+            .openSettings()
+            .goToMultiBodyTab();
+
+        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferPrivate);
+
+        softAssertions.assertAll();
     }
 }
