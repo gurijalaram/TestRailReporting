@@ -52,7 +52,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15151"})
+    @TestRail(testCaseId = {"15151", "14384"})
     @Description("Get list of all Bid Package Projects and verify pagination")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = CisBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser, HttpStatus.SC_OK);
@@ -62,7 +62,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14381", "14383"})
+    @TestRail(testCaseId = {"14381", "14383", "14376"})
     @Description("Find Project By ID")
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
@@ -72,7 +72,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14383"})
+    @TestRail(testCaseId = {"14384"})
     @Description("Find Projects - Invalid BidPackageID")
     public void testGetProjectsWithInvalidBidPackageId() {
         CisErrorMessage bidPackageProjectsError = CisBidPackageResources.getBidPackageProjects(
