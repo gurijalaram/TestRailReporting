@@ -15,7 +15,7 @@ import org.junit.Test;
  * Contain tests for the basic functionality of @{@link PropertiesContext}
  */
 @Slf4j
-public class PropertiesTest {
+public class PropertiesContextTest {
 
     // TODO gurijalaram16
     // this test should be moved from this place
