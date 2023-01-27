@@ -360,7 +360,7 @@ public class CisBidPackageResources {
     }
 
     /**
-     * Get Bid Package Item
+     * Get Bid Package Projects
      *
      * @param <T>                - response class type
      * @param bidPackageIdentity - bid package identity
