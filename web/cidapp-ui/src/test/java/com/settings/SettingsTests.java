@@ -469,7 +469,7 @@ public class SettingsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost").contains("€"));
+        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost")).contains("€");
         softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
 
         softAssertions.assertAll();
