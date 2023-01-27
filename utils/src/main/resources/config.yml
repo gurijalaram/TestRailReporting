@@ -427,7 +427,7 @@ qa-test:
     ui_url: ${qa-test.base_url}apriori/login
 
   bcs:
-    api_url: https://bcs-http.na-1-v23-1.qa-test.apriori.net/
+    api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
     number_of_parts: 5
 
   cas:

@@ -57,7 +57,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Part Nesting']")
     private WebElement partNestingTab;
 
-    @FindBy(css = ".process-routing-chart-column .apriori-select")
+    @FindBy(css = "[id='qa-process-chart-type-select']")
     private WebElement processDropdown;
 
     @FindBy(css = "[value='defaultBatchSetupTime']")
@@ -169,7 +169,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDropdown(String filter) {
-        pageUtils.optionsTypeAheadSelect(processDropdown, root, filter);
+        pageUtils.typeAheadSelect(processDropdown, filter);
         return this;
     }
 
@@ -242,7 +242,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
-        pageUtils.waitForElementAndClick(By.cssSelector(String.format("path[name='%s']",axisLabel)));
+        pageUtils.actionClick(By.cssSelector(String.format("path[name='%s']", axisLabel)));
         return this;
     }
 
