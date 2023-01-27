@@ -17,7 +17,6 @@
         "email",
         "username",
         "active",
-        "hasCompleteProfile",
         "mfaRequired",
         "customAttributes",
         "resourcesAllowedToCreate",
@@ -80,9 +79,6 @@
           "type": "string"
         },
         "active": {
-          "type": "boolean"
-        },
-        "hasCompleteProfile": {
           "type": "boolean"
         },
         "mfaRequired": {

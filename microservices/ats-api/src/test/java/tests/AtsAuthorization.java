@@ -36,8 +36,7 @@ public class AtsAuthorization extends TestUtil {
     public void authorizeUserTest() {
         final UserCredentials userCredentials = UserUtil.getUser();
 
-        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(
-            userCredentials.getCloudContext(), userCredentials.getToken());
+        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(userCredentials.generateCloudContext().getCloudContext(), userCredentials.getToken());
 
         assertThat(response.getResponseEntity().getEmail(), is(equalTo(userCredentials.getEmail())));
     }

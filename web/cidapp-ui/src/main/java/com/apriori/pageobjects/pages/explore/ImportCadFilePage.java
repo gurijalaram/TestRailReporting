@@ -43,6 +43,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
+    @FindBy(css = "[data-testid='alert-messaging']")
+    private WebElement associationAlert;
+
     @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
@@ -200,6 +203,16 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Gets assembly association alert
+     *
+     * @return string
+     */
+    public String getAssociationAlert() {
+        return pageUtils.waitForElementToAppear(associationAlert).getText();
+    }
+
+
+    /**
      * Gets scenario name warning
      *
      * @return string
@@ -289,7 +302,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return - current page object
      */
     public ImportCadFilePage waitForUploadStatus(String componentName, UploadStatusEnum uploadStatusEnum) {
-        By byUploadStatus = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, uploadStatusEnum.getUploadStatus()));
+        By byUploadStatus = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class, 'alert-%s')]", componentName, uploadStatusEnum.getUploadStatus()));
         pageUtils.waitForElementToAppear(byUploadStatus);
         return this;
     }
@@ -301,8 +314,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage waitForUploadToBeDone(String componentName) {
-        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "succeeded"));
-        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "failed"));
+        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'alert-success')]", componentName));
+        // TODO: 26/01/2023 this locator 'alert-failed' might be incorrect because i haven't seen a failure
+        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'alert-failed')]", componentName));
         pageUtils.waitForEitherElementAppear(bySucceeded, byFailed);
         return this;
     }

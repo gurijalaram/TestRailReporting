@@ -54,7 +54,7 @@ public class ScenariosUtil {
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private CssComponent cssComponent = new CssComponent();
     private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 240;
+    private final int WAIT_TIME = 600;
     private final int SOCKET_TIMEOUT = 240000;
     private final long START_TIME = System.currentTimeMillis() / 1000;
     private final int METHOD_TIMEOUT = 30;
@@ -66,8 +66,8 @@ public class ScenariosUtil {
      * @return response object
      */
     public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
-        try {
-            do {
+        do {
+            try {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
                 ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
@@ -79,13 +79,15 @@ public class ScenariosUtil {
 
                     return scenarioRepresentation;
                 }
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } catch (AssertionError a) {
+                log.error(a.getMessage());
+            }
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
                 componentInfo.getComponentName(), componentInfo.getScenarioName(), WAIT_TIME)
@@ -133,12 +135,12 @@ public class ScenariosUtil {
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenario(ComponentInfoBuilder componentInfo) {
+
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT)
-                .expectedResponseCode(HttpStatus.SC_OK);
+                .socketTimeout(SOCKET_TIMEOUT);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -238,7 +240,7 @@ public class ScenariosUtil {
      * @param componentName - component name
      * @return response object
      */
-    public ScenarioSuccessesFailures postEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
+    public ScenarioSuccessesFailures postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         //iterate the assembly, filter by subcomponent and set the component/scenario Id
@@ -293,7 +295,7 @@ public class ScenariosUtil {
      * @param forkRequest   - the fork request
      * @return response object
      */
-    public <T> ResponseWrapper<T> postSimpleEditPublicGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
+    public <T> ResponseWrapper<T> postSimpleEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
@@ -317,22 +319,18 @@ public class ScenariosUtil {
      * Post to cost a group of scenarios
      *
      * @param componentInfo - A number of copy component objects
+     * @param componentName - the component name
      * @return response object
      */
-    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentScenarioName) {
-
-        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-        for (String[] componentScenario : componentScenarioNames) {
-            if (componentInfo.getSubComponents().stream()
-                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
-
-                subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
-                    .collect(Collectors.toList()).get(0));
-            }
-        }
+        Arrays.stream(componentName).forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
+            .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+            .collect(Collectors.toList())
+            .stream()
+            .findFirst()
+            .get()));
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)

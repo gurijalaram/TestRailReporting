@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "dataShape": {
+      "type": "object",
+      "properties": {
+        "fieldDefinitions": {
+          "$ref": "AgentConnectorFieldDefinitionSchema.json"
+        }
+      },
+      "required": [
+        "fieldDefinitions"
+      ]
+    },
+    "rows": {
+      "type": "array",
+      "items": [
+        {
+          "$ref": "AgentConnectorInfoSchema.json"
+        }
+      ]
+    }
+  },
+  "required": [
+    "dataShape",
+    "rows"
+  ]
+}

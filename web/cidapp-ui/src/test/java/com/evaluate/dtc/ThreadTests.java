@@ -100,6 +100,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8902"})
+    @Issue("CID-1455")
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -360,6 +361,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8903"})
+    @Issue("CID-1455")
     @Description("Testing thread length persist when attributes are changed from process group")
     public void maintainingThreadChangeAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -471,6 +473,7 @@ public class ThreadTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8906"})
+    @Issue("CID-1455")
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
