@@ -31,6 +31,9 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     @FindBy(css = "[id='qa-assembly-association-strategy-preset'] .apriori-select [data-testid='text-overflow']")
     private WebElement assemblyStrategyDropdownValue;
 
+    @FindBy(css = "p[data-testid='summary-message']")
+    private WebElement usingDefaultMessage;
+
     @FindBy(css = "div[data-testid='step-cards'] div")
     private WebElement assemblyStrategyCards;
 
@@ -115,6 +118,20 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     public String getCurrentAsmStrategy() {
         return pageUtils.waitForElementToAppear(assemblyStrategyDropdownValue).getAttribute("textContent");
     }
+
+    /**
+     * Get visibility of using defaults message
+     *
+     * @return - Boolean of visibility state
+     */
+    public Boolean isUsingDefaultsMessageVisible() { return usingDefaultMessage.isDisplayed(); }
+
+    /**
+     * Get message to user if no strategy selected
+     *
+     * @return - The use default message
+     */
+    public String getUsingDefaultsMessage() { return usingDefaultMessage.getText(); }
 
     /**
      * Get number of strategy cards currently displayed

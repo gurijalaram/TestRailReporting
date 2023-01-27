@@ -104,7 +104,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      *
      * @return new page object
      */
-    public AssemblyDefaultsPage goToMultiBodyTab() {
+    public AssemblyDefaultsPage goToAssemblyDefaultsTab() {
         return settingsNavigation.goToAssemblyDefaultsTab();
     }
 
