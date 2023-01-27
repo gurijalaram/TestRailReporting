@@ -589,6 +589,10 @@ qa-test-v22:
   qms:
     api_url: https://qms.na-1-v22-1.qa-test.apriori.net/
 
+  cis:
+    ui_url: https://cis.${default.aws_region}.${env}-v22-1.apriori.net/
+    api_url: https://cis-api.${default.aws_region}-v22-1.${env}.apriori.net/
+
 ######################################################## CIS_SANDBOX ########################################################
 cis-sbx:
   aws_region: na-1
