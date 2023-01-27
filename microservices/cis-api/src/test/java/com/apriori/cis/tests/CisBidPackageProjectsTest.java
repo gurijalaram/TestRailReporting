@@ -1,11 +1,6 @@
 package com.apriori.cis.tests;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectProfile;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectRequest;
-import com.apriori.cisapi.entity.request.bidpackage.CommentReminder;
-import com.apriori.cisapi.entity.request.bidpackage.EmailReminder;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
@@ -101,50 +96,29 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @Description("Find Project - Invalid Data")
     public void testCreateProjectWithInvalidData() {
         CisErrorMessage bidPackageProjectsError = CisBidPackageResources.createBidPackageProject(
-            projectName, "Invalid BidPackageID", CisErrorMessage.class, HttpStatus.SC_INTERNAL_SERVER_ERROR, currentUser);
+            projectName, "Invalid BidPackageID", CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("")
+    @TestRail(testCaseId = "14379")
+    @Description("Create Project with Existing Name")
     public void testCreateProjectWithExistingName() {
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
 
-        BidPackageProjectResponse bppResponse = CisBidPackageResources.createBidPackageProject(projectName,
+        BidPackageProjectResponse bppResponse = CisBidPackageResources.createBidPackageProject(newProjectName,
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getName()).isEqualTo(bidPackageName);
+        softAssertions.assertThat(bppResponse.getName()).isEqualTo(newProjectName);
 
-        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .name(bppResponse.getName())
-                .description("sample2")
-                .status("COMPLETED")
-                .type("INTERNAL")
-                .projectProfile(BidPackageProjectProfile.builder()
-                    .emailReminder(EmailReminder.builder()
-                        .active(true)
-                        .startDuration("P1DT5M")
-                        .frequencyValue("R2/P1D")
-                        .build())
-                    .commentReminder(CommentReminder.builder()
-                        .active(true)
-                        .startDuration("P1D")
-                        .frequencyValue("R/P4H")
-                        .build())
-                    .build())
-                .build())
-            .build();
-
-        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), CisErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
+        CisErrorMessage cisErrorMessageResponse = CisBidPackageResources.createBidPackageProject(newProjectName, bidPackageResponse.getIdentity(), CisErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
 
         softAssertions.assertThat(cisErrorMessageResponse.getMessage()).isEqualTo("Project named '"
-            + bppResponse.getName() + "' already exists for Customer '"
+            + bppResponse.getName() + "' already exists for bid package with identity '"
             + bppResponse.getBidPackageIdentity() + "'.");
     }
 
