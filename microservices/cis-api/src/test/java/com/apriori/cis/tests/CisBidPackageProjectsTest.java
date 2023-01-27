@@ -88,7 +88,9 @@ public class CisBidPackageProjectsTest extends TestUtil {
         CisErrorMessage bidPackageProjectsError = CisBidPackageResources.getBidPackageProject(
             "Invalid BidPackageID", "Invalid ProjectID", CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("'bidPackageIdentity' is not a valid identity.");
+        softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("2 validation failures were found:\n" +
+            "* 'bidPackageIdentity' is not a valid identity.\n" +
+            "* 'projectIdentity' is not a valid identity.");
     }
 
     @Test
