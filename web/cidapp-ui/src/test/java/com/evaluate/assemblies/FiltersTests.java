@@ -26,6 +26,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -563,6 +564,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2610")
     @TestRail(testCaseId = "6094")
     @Description("Validate Private filter displays only Private Scenarios")
     public void verifyFilterPersistenceTest() {

@@ -5,7 +5,7 @@ import java.util.EnumSet;
 public enum UploadStatusEnum {
 
     FAILED("failed"),
-    UPLOADED("succeeded"),
+    UPLOADED("success"),
     UPLOADING("submitting"),
     PENDING("pending");
 
