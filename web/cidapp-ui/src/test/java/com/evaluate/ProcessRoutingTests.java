@@ -709,7 +709,7 @@ public class ProcessRoutingTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_INVESTMENT;
 
         String componentName = "case_012_009-0020647_hinge_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -1014,7 +1014,7 @@ public class ProcessRoutingTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
 
         String componentName = "116-5809";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
@@ -1028,14 +1028,14 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
 
         advancedPage.goToBasicTab()
-            .selectProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING)
+            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB)
             .costScenario()
             .goToAdvancedTab();
 
         softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
 
         advancedPage.goToBasicTab()
-            .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB)
+            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .costScenario()
             .goToAdvancedTab();
 

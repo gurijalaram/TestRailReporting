@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -184,6 +185,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Issue("COST-685")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"6377"})
     @Description("Validate Tolerance counts are correct")
