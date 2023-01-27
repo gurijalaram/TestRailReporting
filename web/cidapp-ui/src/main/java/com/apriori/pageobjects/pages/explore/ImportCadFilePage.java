@@ -314,8 +314,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage waitForUploadToBeDone(String componentName) {
-        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "succeeded"));
-        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "failed"));
+        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'alert-success')]", componentName));
+        // TODO: 26/01/2023 this locator 'alert-failed' might be incorrect because i haven't seen a failure
+        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'alert-failed')]", componentName));
         pageUtils.waitForEitherElementAppear(bySucceeded, byFailed);
         return this;
     }
