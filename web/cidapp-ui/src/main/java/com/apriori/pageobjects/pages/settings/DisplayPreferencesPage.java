@@ -29,8 +29,8 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
-    @FindBy(xpath = "//button[.='Multi-Body']")
-    private WebElement multiBodyTab;
+    @FindBy(xpath = "//button[.='Assembly Defaults']")
+    private WebElement assemblyDefaultsTab;
 
     @FindBy(css = "[id='qa-preferences-unit-group-select'] .apriori-select")
     private WebElement unitsDropdown;
@@ -104,8 +104,8 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      *
      * @return new page object
      */
-    public MultiBodyPage goToMultiBodyTab() {
-        return settingsNavigation.goToMultiBodyTab();
+    public AssemblyDefaultsPage goToMultiBodyTab() {
+        return settingsNavigation.goToAssemblyDefaultsTab();
     }
 
     /**
