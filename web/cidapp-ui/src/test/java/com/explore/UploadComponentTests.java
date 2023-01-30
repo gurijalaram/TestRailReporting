@@ -163,7 +163,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11881, 11882", "21547"})
+    @TestRail(testCaseId = {"11881, 11882"})
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
         currentUser = UserUtil.getUser();
@@ -177,7 +177,8 @@ public class UploadComponentTests extends TestBase {
         importCadFilePage = loginPage.login(currentUser)
             .importCadFile();
 
-        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private. This setting can be changed in User Preferences.");
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("No Assembly Association Strategy has been selected. " +
+            "The default strategy: Prefer Private Scenarios will be used until updated in User Preferences.");
 
         importCadFilePage.inputComponentDetails(scenarioName, resourceFile);
 

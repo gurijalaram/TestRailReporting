@@ -365,8 +365,8 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      *
      * @return boolean
      */
-    public boolean isEditButtonEnabled() {
-        return !assembliesComponentsController.isEditButtonEnabled();
+    public boolean isEditButtonDisabled() {
+        return !assembliesComponentsController.isEditButtonDisabled();
     }
 
     /**
