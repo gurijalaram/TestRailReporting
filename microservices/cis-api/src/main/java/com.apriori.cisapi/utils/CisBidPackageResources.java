@@ -12,7 +12,6 @@ import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
 import com.apriori.cisapi.entity.request.bidpackage.CommentReminder;
 import com.apriori.cisapi.entity.request.bidpackage.EmailReminder;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.entity.enums.CssSearch;
 import com.apriori.entity.response.ScenarioItem;
@@ -340,23 +339,6 @@ public class CisBidPackageResources {
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
-    }
-
-    /**
-     * Get All bid Package Projects
-     *
-     * @param bidPackageIdentity - bid package identity
-     * @param currentUser        - UserCredentials
-     * @return BidPackageProjectsResponse
-     */
-    public static BidPackageProjectsResponse getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, BidPackageProjectsResponse.class)
-            .inlineVariables(bidPackageIdentity)
-            .token(currentUser.getToken())
-            .expectedResponseCode(httpStatus);
-
-        ResponseWrapper<BidPackageProjectsResponse> bppResponse = HTTPRequest.build(requestEntity).get();
-        return bppResponse.getResponseEntity();
     }
 
     /**

@@ -40,7 +40,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"14378", "14098"})
     @Description("Create and Delete Bid Package Project")
-    public void createAndDeleteProject() {
+    public void testCreateAndDeleteProject() {
         BidPackageProjectResponse bppResponse = CisBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
@@ -54,8 +54,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"15151", "14384"})
     @Description("Get list of all Bid Package Projects and verify pagination")
-    public void getBidPackageProjects() {
-        BidPackageProjectsResponse projectsResponse = CisBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser, HttpStatus.SC_OK);
+    public void testGetBidPackageProjects() {
+        BidPackageProjectsResponse projectsResponse = CisBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser, BidPackageProjectsResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(projectsResponse.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(projectsResponse.getIsFirstPage()).isTrue();
@@ -64,7 +64,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"14381", "14383", "14376"})
     @Description("Find Project By ID")
-    public void getBidPackageProject() {
+    public void testGetBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
 
