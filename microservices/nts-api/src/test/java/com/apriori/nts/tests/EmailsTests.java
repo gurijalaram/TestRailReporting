@@ -26,7 +26,7 @@ public class EmailsTests extends TestHelper {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         EmailService emailService = new EmailService();
-        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+        String subject = "\"" + Constants.EMAIL_SUBJECT + System.currentTimeMillis() + "\"";
 
         SoftAssertions soft = new SoftAssertions();
 
@@ -57,7 +57,7 @@ public class EmailsTests extends TestHelper {
         EmailService emailService = new EmailService();
 
         SoftAssertions soft = new SoftAssertions();
-        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+        String subject = "\"" + Constants.EMAIL_SUBJECT + System.currentTimeMillis() + "\"";
 
         //Send Email
         SendEmail sendEmail = emailService.sendEmailWithAttachment(
