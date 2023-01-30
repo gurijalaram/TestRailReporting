@@ -3,7 +3,6 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,16 +13,16 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class MultiBodyPage extends LoadableComponent<MultiBodyPage> {
+public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage> {
 
     @FindBy(css = ".user-preferences [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(xpath = "//button[.='Multi-Body']")
-    private WebElement multiBodyTab;
+    @FindBy(xpath = "//button[.='Assembly Defaults']")
+    private WebElement assemblyDefaultsTab;
 
-    @FindBy(css = ".multi-body-preferences")
-    private WebElement multiBody;
+    @FindBy(css = ".assembly-default-preferences")
+    private WebElement assemblyDefaultsBody;
 
     @FindBy(css = "[id='qa-assembly-association-strategy-preset'] .apriori-select")
     private WebElement assemblyStrategyDropdown;
@@ -36,7 +35,7 @@ public class MultiBodyPage extends LoadableComponent<MultiBodyPage> {
     private ModalDialogController modalDialogController;
     private SettingsNavigation settingsNavigation;
 
-    public MultiBodyPage(WebDriver driver) {
+    public AssemblyDefaultsPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -53,8 +52,8 @@ public class MultiBodyPage extends LoadableComponent<MultiBodyPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Multi-Body tab is not active", multiBodyTab.getAttribute("class").contains("active"));
-        assertTrue("Multi-Body is not displayed", multiBody.isDisplayed());
+        assertTrue("Assembly Defaults tab is not active", assemblyDefaultsTab.getAttribute("class").contains("active"));
+        assertTrue("Assembly Defaults is not displayed", assemblyDefaultsBody.isDisplayed());
     }
 
     /**
@@ -98,9 +97,9 @@ public class MultiBodyPage extends LoadableComponent<MultiBodyPage> {
      *
      * @return This Page Object
      */
-    public MultiBodyPage selectAssemblyStrategy(String strategy) {
+    public AssemblyDefaultsPage selectAssemblyStrategy(String strategy) {
 
-        pageUtils.modalTypeAheadSelect(assemblyStrategyDropdown, "Assembly Strategy", strategy);
+        pageUtils.modalTypeAheadSelect(assemblyStrategyDropdown, "Assembly Association Strategy ", strategy);
         return this;
     }
 

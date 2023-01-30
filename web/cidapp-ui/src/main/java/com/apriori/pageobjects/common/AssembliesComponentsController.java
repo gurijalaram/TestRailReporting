@@ -324,7 +324,7 @@ public class AssembliesComponentsController {
      *
      * @return boolean
      */
-    public boolean isEditButtonEnabled() {
+    public boolean isEditButtonDisabled() {
         return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
