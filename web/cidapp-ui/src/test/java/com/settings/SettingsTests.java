@@ -12,13 +12,14 @@ import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.AssemblyDefaultsPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
-import com.apriori.pageobjects.pages.settings.MultiBodyPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.settings.SelectionPage;
 import com.apriori.utils.FileResourceUtil;
@@ -60,12 +61,15 @@ public class SettingsTests extends TestBase {
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
     private ProductionDefaultsPage productionDefaultPage;
+    private AssemblyDefaultsPage assemblyDefaultsPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
     private AdvancedPage advancedPage;
     private ImportCadFilePage importCadFilePage;
+    private UpdateCadFilePage updateCadFilePage;
     private MaterialSelectorPage materialSelectorPage;
     private StockPage stockPage;
     private ComparePage comparePage;
@@ -649,36 +653,87 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"17154", "17155", "17156", "17157"})
+    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21547", "21548"})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
-        currentUser = UserUtil.getUser();
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         String preferPublic = "Prefer Public Scenarios";
         String preferPrivate = "Prefer Private Scenarios";
+        String preferMaturityAndStatus = "Prefer High Maturity and Complete Status";
+        String componentName = "Hinge assembly";
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDASM");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        MultiBodyPage multiBodyPage = loginPage.login(currentUser)
+        assemblyDefaultsPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .openSettings()
-            .goToMultiBodyTab();
+            .goToAssemblyDefaultsTab();
 
-        softAssertions.assertThat(multiBodyPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
+        softAssertions.assertThat(assemblyDefaultsPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
 
-        multiBodyPage.selectAssemblyStrategy(preferPublic);
-        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify Public is selected").isEqualTo(preferPublic);
+        assemblyDefaultsPage.selectAssemblyStrategy(preferPublic);
 
-        multiBodyPage = multiBodyPage.submit(ExplorePage.class)
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify Public is selected").isEqualTo(preferPublic);
+
+        importCadFilePage = assemblyDefaultsPage.submit(EvaluatePage.class).importCadFile();
+
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
+            "This setting can be changed in User Preferences.");
+
+        updateCadFilePage = importCadFilePage.closeDialog(EvaluatePage.class).clickActions().updateCadFile(resourceFile);
+
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
+            "This setting can be changed in User Preferences.");
+
+        updateCadFilePage.cancel(EvaluatePage.class)
             .openSettings()
-            .goToMultiBodyTab();
+            .goToAssemblyDefaultsTab();
 
-        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify strategy was saved").isEqualTo(preferPublic);
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify strategy was saved").isEqualTo(preferPublic);
 
-        multiBodyPage = multiBodyPage.selectAssemblyStrategy(preferPrivate)
-            .submit(ExplorePage.class)
+        assemblyDefaultsPage.selectAssemblyStrategy(preferMaturityAndStatus)
+            .submit(EvaluatePage.class)
+            .importCadFile();
+
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer High Maturity and Complete Status. " +
+            "This setting can be changed in User Preferences.");
+
+        importCadFilePage.closeDialog(EvaluatePage.class)
+            .clickActions()
+            .updateCadFile(resourceFile);
+
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer High Maturity and Complete Status. " +
+            "This setting can be changed in User Preferences.");
+
+        updateCadFilePage.cancel(EvaluatePage.class)
             .openSettings()
-            .goToMultiBodyTab();
+            .goToAssemblyDefaultsTab();
 
-        softAssertions.assertThat(multiBodyPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferPrivate);
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferMaturityAndStatus);
+
+        assemblyDefaultsPage.selectAssemblyStrategy(preferPrivate)
+            .submit(EvaluatePage.class)
+            .importCadFile();
+
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private Scenarios. " +
+            "This setting can be changed in User Preferences.");
+
+        importCadFilePage.closeDialog(EvaluatePage.class)
+            .clickActions()
+            .updateCadFile(resourceFile);
+
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private Scenarios. " +
+            "This setting can be changed in User Preferences.");
+
+        updateCadFilePage.cancel(EvaluatePage.class)
+            .openSettings()
+            .goToAssemblyDefaultsTab();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was saved").isEqualTo(preferPrivate);
 
         softAssertions.assertAll();
     }
