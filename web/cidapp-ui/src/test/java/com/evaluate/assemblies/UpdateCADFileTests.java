@@ -81,7 +81,7 @@ public class UpdateCADFileTests extends TestBase {
     private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
-    @TestRail(testCaseId = {"10903", "10961", "12032", "21548"})
+    @TestRail(testCaseId = {"10903", "10961", "12032"})
     @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -100,7 +100,8 @@ public class UpdateCADFileTests extends TestBase {
             .clickActions()
             .updateCadFile(modifiedAutoAsm);
 
-        soft.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private. This setting can be changed in User Preferences.");
+        soft.assertThat(updateCadFilePage.getAssociationAlert()).contains("No Assembly Association Strategy has been selected. " +
+            "The default strategy: Prefer Private Scenarios will be used until updated in User Preferences.");
 
         componentsTreePage = updateCadFilePage.submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)

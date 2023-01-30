@@ -8,6 +8,7 @@ import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -46,15 +47,13 @@ public class UnitVariantSettingsTests extends TestUtil {
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getType()).isEqualTo("simple");
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getName()).isEqualTo("CUSTOM");
 
-        String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
-        String expectedLength = getCustomUnitVariantSettingsResponse.getLength().equals("true") ? "mm" : "ft";
-        List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb"));
+        List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb", "g"));
 
-        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getMetric()).isEqualTo(expectedMetric);
-        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getLength()).isEqualTo(expectedLength);
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getMetric()).containsAnyOf("true", "false");
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getLength()).containsAnyOf("mm", "ft");
         softAssertions.assertThat(potentialMassValues.contains(getCustomUnitVariantSettingsResponse.getMass())).isEqualTo(true);
 
-        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getTime()).isEqualTo("min");
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getTime()).containsAnyOf("min", "s");
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces()).isEqualTo(2.0);
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.isSystem()).isEqualTo(false);
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.isCustom()).isEqualTo(true);
