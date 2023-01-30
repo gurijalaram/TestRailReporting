@@ -50,7 +50,7 @@ public class UnitVariantSettingsTests extends TestUtil {
         List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb", "g"));
 
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getMetric()).containsAnyOf("true", "false");
-        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getLength()).containsAnyOf("mm", "ft");
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getLength()).containsAnyOf("m", "mm", "ft");
         softAssertions.assertThat(potentialMassValues.contains(getCustomUnitVariantSettingsResponse.getMass())).isEqualTo(true);
 
         softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getTime()).containsAnyOf("min", "s");

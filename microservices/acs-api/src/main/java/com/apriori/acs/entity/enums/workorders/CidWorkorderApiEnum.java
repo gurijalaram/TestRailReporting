@@ -10,7 +10,7 @@ public enum CidWorkorderApiEnum implements ExternalEndpointEnum {
     WORKORDER_DETAILS("ws/workorder/orders/%s"),
     CHECK_WORKORDER_STATUS("ws/workorder/orderstatus/%s"),
     ADMIN_INFO("ws/workspace/%s/scenarios/%s/%s/%s/iterations/latest/admin-info"),
-    IMAGES("ws/viz/images/%s"),
+    IMAGES("ws/workspace/images/%s"),
     IMAGE_INFO("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info"),
     LATEST_ITERATION("ws/workspace/%s/scenarios/%s/%s/%s"),
     CAD_METADATA("ws/workspace/cad-metadata/%s"),
