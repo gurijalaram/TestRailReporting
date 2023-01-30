@@ -8,9 +8,7 @@
     "updatedAt",
     "customerIdentity",
     "componentName",
-    "componentType",
-    "isJtComponent",
-    "isStepComponent"
+    "componentType"
   ],
   "properties": {
     "identity": {
