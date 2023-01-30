@@ -10,6 +10,10 @@
     "componentName",
     "componentType"
   ],
+  "optional": [
+    "isJtComponent",
+    "isStepComponent"
+  ],
   "properties": {
     "identity": {
       "type": "string"
