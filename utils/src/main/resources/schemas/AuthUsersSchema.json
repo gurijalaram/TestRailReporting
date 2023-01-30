@@ -14,7 +14,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "UserSchema.json"
+            "$ref": "AuthUserSchema.json"
           }
         }
       }
