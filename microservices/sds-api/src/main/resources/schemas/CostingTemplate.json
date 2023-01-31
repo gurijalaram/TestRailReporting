@@ -46,6 +46,15 @@
     "processSetupOptions": {
       "type": "object"
     },
+    "propertiesToReset": {
+      "type": "array"
+    },
+    "routingNodeOptions": {
+      "type": "array"
+    },
+    "secondaryDigitalFactories": {
+      "type": "object"
+    },
     "secondaryProcesses": {
       "type": "object"
     },

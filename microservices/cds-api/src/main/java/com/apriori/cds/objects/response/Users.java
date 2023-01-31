@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "UsersSchema.json")
+@Schema(location = "AuthUsersSchema.json")
 @JsonRootName("response")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

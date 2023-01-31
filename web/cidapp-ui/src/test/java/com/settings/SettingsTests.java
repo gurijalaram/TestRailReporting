@@ -12,6 +12,7 @@ import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -60,12 +61,15 @@ public class SettingsTests extends TestBase {
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
     private ProductionDefaultsPage productionDefaultPage;
+    private AssemblyDefaultsPage assemblyDefaultsPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
     private AdvancedPage advancedPage;
     private ImportCadFilePage importCadFilePage;
+    private UpdateCadFilePage updateCadFilePage;
     private MaterialSelectorPage materialSelectorPage;
     private StockPage stockPage;
     private ComparePage comparePage;
@@ -649,151 +653,87 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21653", "21654", "21655", "21656"})
-    @Description("Verify Assembly Strategy Dropdown and Description Cards")
+    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21547", "21548"})
+    @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
-        currentUser = UserUtil.getUser();
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
         String preferPublic = "Prefer Public Scenarios";
         String preferPrivate = "Prefer Private Scenarios";
-        String preferMaturity = "Prefer High Maturity and Complete Status";
-        String sameNameCriteria = "Same name as assembly";
-        String mostRecentCriteria = "Most recent";
-        String completeCriteria = "Complete status, Highest maturity";
-        String maturityCriteria = "Highest maturity";
+        String preferMaturityAndStatus = "Prefer High Maturity and Complete Status";
+        String componentName = "Hinge assembly";
 
-        String defaultMessage = "No Assembly Association Strategy has been selected. The default strategy, Prefer Private Scenarios, will be used.";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDASM");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        AssemblyDefaultsPage assemblyDefaultsPage = loginPage.login(currentUser)
+        assemblyDefaultsPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .openSettings()
             .goToAssemblyDefaultsTab();
 
         softAssertions.assertThat(assemblyDefaultsPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
 
-        softAssertions.assertThat(assemblyDefaultsPage.isUsingDefaultsMessageVisible()).as("Using default message displayed").isTrue();
-        softAssertions.assertThat(assemblyDefaultsPage.getUsingDefaultsMessage()).as("Default message presented").isEqualTo(defaultMessage);
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed for default").isEqualTo(4);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(1))
-            .as("Default selection is Prefer Private").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(1))
-            .as("Verify Default Criteria").isEqualTo(sameNameCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(2))
-            .as("Default selection is Prefer Private").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(2))
-            .as("Verify Default Criteria").isEqualTo(mostRecentCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(3))
-            .as("Default selection is Prefer Private").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(3))
-            .as("Verify Default Criteria").isEqualTo(sameNameCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(4))
-            .as("Default selection is Prefer Private").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(4))
-            .as("Verify Default Criteria").isEqualTo(mostRecentCriteria);
-
         assemblyDefaultsPage.selectAssemblyStrategy(preferPublic);
+
         softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify Public is selected").isEqualTo(preferPublic);
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed").isEqualTo(4);
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(1))
-            .as("Public Workspace checked initially").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(1))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
+        importCadFilePage = assemblyDefaultsPage.submit(EvaluatePage.class).importCadFile();
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(2))
-            .as("Public Workspace checked initially").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(2))
-            .as("Verify Criteria").isEqualTo(mostRecentCriteria);
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
+            "This setting can be changed in User Preferences.");
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(3))
-            .as("Private Workspace checked second").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(3))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
+        updateCadFilePage = importCadFilePage.closeDialog(EvaluatePage.class).clickActions().updateCadFile(resourceFile);
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(4))
-            .as("Private Workspace checked second").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(4))
-            .as("Verify Criteria").isEqualTo(mostRecentCriteria);
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
+            "This setting can be changed in User Preferences.");
 
-        assemblyDefaultsPage = assemblyDefaultsPage.submit(ExplorePage.class)
+        updateCadFilePage.cancel(EvaluatePage.class)
             .openSettings()
             .goToAssemblyDefaultsTab();
 
         softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify strategy was saved").isEqualTo(preferPublic);
 
-        assemblyDefaultsPage = assemblyDefaultsPage.selectAssemblyStrategy(preferPrivate);
+        assemblyDefaultsPage.selectAssemblyStrategy(preferMaturityAndStatus)
+            .submit(EvaluatePage.class)
+            .importCadFile();
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed").isEqualTo(4);
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer High Maturity and Complete Status. " +
+            "This setting can be changed in User Preferences.");
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(1))
-            .as("Private Workspace checked initially").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(1))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
+        importCadFilePage.closeDialog(EvaluatePage.class)
+            .clickActions()
+            .updateCadFile(resourceFile);
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(2))
-            .as("Private Workspace checked initially").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(2))
-            .as("Verify Criteria").isEqualTo(mostRecentCriteria);
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer High Maturity and Complete Status. " +
+            "This setting can be changed in User Preferences.");
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(3))
-            .as("Public Workspace checked second").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(3))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(4))
-            .as("Public Workspace checked second").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(4))
-            .as("Verify Criteria").isEqualTo(mostRecentCriteria);
-
-        assemblyDefaultsPage.submit(ExplorePage.class)
+        updateCadFilePage.cancel(EvaluatePage.class)
             .openSettings()
             .goToAssemblyDefaultsTab();
 
-        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferPrivate);
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferMaturityAndStatus);
 
-        assemblyDefaultsPage = assemblyDefaultsPage.selectAssemblyStrategy(preferMaturity);
+        assemblyDefaultsPage.selectAssemblyStrategy(preferPrivate)
+            .submit(EvaluatePage.class)
+            .importCadFile();
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 6 cards displayed").isEqualTo(6);
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private Scenarios. " +
+            "This setting can be changed in User Preferences.");
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(1))
-            .as("Public Workspace checked initially").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(1))
-            .as("Verify Criteria").isEqualTo(completeCriteria);
+        importCadFilePage.closeDialog(EvaluatePage.class)
+            .clickActions()
+            .updateCadFile(resourceFile);
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(2))
-            .as("Public Workspace checked initially").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(2))
-            .as("Verify Criteria").isEqualTo(maturityCriteria);
+        softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private Scenarios. " +
+            "This setting can be changed in User Preferences.");
 
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(3))
-            .as("Public Workspace checked initially").isEqualTo("Public");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(3))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(4))
-            .as("Private Workspace checked second").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(4))
-            .as("Verify Criteria").isEqualTo(completeCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(5))
-            .as("Private Workspace checked second").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(5))
-            .as("Verify Criteria").isEqualTo(maturityCriteria);
-
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardWorkspace(6))
-            .as("Private Workspace checked second").isEqualTo("Private");
-        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCriteria(6))
-            .as("Verify Criteria").isEqualTo(sameNameCriteria);
-
-        assemblyDefaultsPage.submit(ExplorePage.class)
+        updateCadFilePage.cancel(EvaluatePage.class)
             .openSettings()
             .goToAssemblyDefaultsTab();
 
-        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferMaturity);
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was saved").isEqualTo(preferPrivate);
 
         softAssertions.assertAll();
     }

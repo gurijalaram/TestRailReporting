@@ -20,10 +20,10 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     private WebElement submitButton;
 
     @FindBy(xpath = "//button[.='Assembly Defaults']")
-    private WebElement assemblyDefaultTab;
+    private WebElement assemblyDefaultsTab;
 
     @FindBy(css = ".assembly-default-preferences")
-    private WebElement assemblyDefault;
+    private WebElement assemblyDefaultsBody;
 
     @FindBy(css = "[id='qa-assembly-association-strategy-preset'] .apriori-select")
     private WebElement assemblyStrategyDropdown;
@@ -59,8 +59,8 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Multi-Body tab is not active", assemblyDefaultTab.getAttribute("class").contains("active"));
-        assertTrue("Multi-Body is not displayed", assemblyDefault.isDisplayed());
+        assertTrue("Assembly Defaults tab is not active", assemblyDefaultsTab.getAttribute("class").contains("active"));
+        assertTrue("Assembly Defaults is not displayed", assemblyDefaultsBody.isDisplayed());
     }
 
     /**
