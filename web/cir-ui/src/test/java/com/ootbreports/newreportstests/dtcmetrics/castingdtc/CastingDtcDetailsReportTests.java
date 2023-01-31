@@ -41,7 +41,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
 
     private static String jSessionId = "";
 
-    private static final String reportsJsonFileName = "CastingDtcDetailsReportRequest";
+    private static final String reportsJsonFileName = "schemas/api-test-reports-schemas/castingdtc/CastingDtcDetailsReportRequest";
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static final String usdCurrency = CurrencyEnum.USD.getCurrency();
     private static final String gbpCurrency = CurrencyEnum.GBP.getCurrency();
@@ -102,6 +102,16 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "7411")
+    @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
+    public void testMassMetricInputControlRoughMass() {
+        inputControlGenericTest(
+            "Mass Metric",
+            MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
     @TestRail(testCaseId = "7507")
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report")
     public void testDtcScoreNoSelection() {
@@ -142,13 +152,19 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "7411")
-    @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
-    public void testMassMetricInputControlRoughMass() {
+    @TestRail(testCaseId = "7657")
+    @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
+    public void testMinimumAnnualSpend() {
+        String minimumAnnualSpendValue = "7820000";
         inputControlGenericTest(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            "Minimum Annual Spend",
+            minimumAnnualSpendValue
         );
+
+        JasperReportSummary reportSummary = generateReportSummary(reportRequest);
+        String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
+
+        assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
     }
 
     private void inputControlGenericTest(String inputControlToSet, String valueToSet) {

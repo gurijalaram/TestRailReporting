@@ -19,6 +19,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class CastingDtcReportTests extends TestBase {
     private static final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
     private static final String reportCurrencyTestPartName = "40137441.MLDES.0002 (Initial)";
 
-    private static final String reportsJsonFileName = "ReportCastingDTCRequest";
+    private static final String reportsJsonFileName = "schemas/api-test-reports-schemas/castingdtc/CastingDtcReportRequest";
     private static ReportRequest reportRequest;
 
     private Map<String, String> inputControlNames = new HashMap<>();
@@ -256,7 +257,11 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     private ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest) {
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer));
         return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
     }
 
