@@ -33,7 +33,7 @@ public class PropertiesContext {
     private static JsonNode loadProperties(final String fileName) {
         InputStream fileData = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
 
-        if(fileData == null) {
+        if (fileData == null) {
             log.error("Property file {} was not found. Please check the utils/resource folder on file presence", fileName);
             throw new IllegalArgumentException();
         }
@@ -66,21 +66,21 @@ public class PropertiesContext {
         propertyName = convertToPropertyPathTemplate(propertyName);
 
         // try to find property
-        if(StringUtils.isEmpty(propertyValue)) {
+        if (StringUtils.isEmpty(propertyValue)) {
             propertyValue = getFromPropertyContext(propertyName);
         }
 
         // try to find environment property
-        if(StringUtils.isEmpty(propertyValue) && !propertyName.startsWith("/" + ENVIRONMENT_NAME )) {
-            if(!propertyName.startsWith("/${env}")) {
-                propertyName =  ENVIRONMENT_NAME + propertyName;
+        if (StringUtils.isEmpty(propertyValue) && !propertyName.startsWith("/" + ENVIRONMENT_NAME)) {
+            if (!propertyName.startsWith("/${env}")) {
+                propertyName = ENVIRONMENT_NAME + propertyName;
             }
 
             propertyValue = getEnvironmentValue(propertyName);
         }
 
         // try to find default property
-        if(StringUtils.isEmpty(propertyValue)) {
+        if (StringUtils.isEmpty(propertyValue)) {
             propertyValue = getDefaultValueThrowExceptionIfMissed(propertyName);
         }
 
@@ -98,7 +98,7 @@ public class PropertiesContext {
 
         String propertyValue = propertiesContext.at(propertyPath).asText();
 
-        if(isPropertyContainPropertyReference(propertyValue)) {
+        if (isPropertyContainPropertyReference(propertyValue)) {
             propertyValue = findAndReplaceVariables(propertyValue);
         }
 
@@ -115,7 +115,7 @@ public class PropertiesContext {
         Integer startIndex;
 
         do {
-             startIndex = result.lastIndexOf(variableMarker[0]);
+            startIndex = result.lastIndexOf(variableMarker[0]);
 
             int endIndex = result.indexOf(variableMarker[1], startIndex);
 
