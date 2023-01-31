@@ -143,7 +143,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return true/false
      */
     public MessagesPage clickOnUnread() {
-        getPageUtils().waitForElementAppear(unreadFilterIcon).click();
+        getPageUtils().waitForElementAndClick(unreadFilterIcon);
         return this;
     }
 

@@ -40,6 +40,8 @@ public class MessagesTest extends TestBase {
     @TestRail(testCaseId = {"13317","13318","13319","13554","13561"})
     @Description("Verify messages page navigation and view all messages on the page")
     public void testMessagePageContent() {
+        SoftAssertions softAssertions = new SoftAssertions();
+
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
 
@@ -47,8 +49,11 @@ public class MessagesTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+
+        softAssertions.assertThat(leftHandNavigationBar.isMessagesLinkDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -63,12 +68,8 @@ public class MessagesTest extends TestBase {
                 .clickComment()
                 .selectCreatedDiscussion();
 
-        LeftHandNavigationBar leftHandNavigationBar = new LeftHandNavigationBar(driver);
-
         messagesPage = leftHandNavigationBar.clickMessages()
                 .clickOnUnread();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(messagesPage.getMessagesHeaderTitle()).contains("All Messages");
         softAssertions.assertThat(messagesPage.isMessagesDisplayed()).isEqualTo(true);
@@ -95,8 +96,8 @@ public class MessagesTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -110,8 +111,6 @@ public class MessagesTest extends TestBase {
                 .addComment("New Reply")
                 .clickComment()
                 .selectCreatedDiscussion();
-
-        LeftHandNavigationBar leftHandNavigationBar = new LeftHandNavigationBar(driver);
 
         messagesPage = leftHandNavigationBar.clickMessages();
 
