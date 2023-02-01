@@ -1384,7 +1384,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveButton();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isEqualTo(false);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse;
 
         softAssertions.assertAll();
     }
