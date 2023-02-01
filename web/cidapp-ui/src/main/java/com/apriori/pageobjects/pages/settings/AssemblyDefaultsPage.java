@@ -13,6 +13,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage> {
 
@@ -138,6 +141,18 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     }
 
     /**
+     * Get the Assembly Association Strategy Cards
+     *
+     * @return - List of all cards displayed in format [Workspace name]|[Criteria]
+     */
+    public List<String> getAsmStrategyCardDetails() {
+
+        List<WebElement> cards = pageUtils.waitForElementsToAppear(By.cssSelector("div[data-testid='step-cards'] div"));
+
+        return cards.stream().map(card -> card.getText().split("\n")[1] + "|" + card.getText().split("\n")[3]).collect(Collectors.toList());
+    }
+
+    /**
      * Get number of strategy cards currently displayed
      *
      * @return - Number of cards displayed
@@ -145,28 +160,6 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     public Integer getAsmStrategyCardCount() {
         By locator = By.cssSelector("div[data-testid='step-cards'] div");
         return driver.findElements(locator).size();
-    }
-
-    /**
-     * Get workspace from specified card
-     *
-     * @param cardNum - The card to retrieve data from (1-index)
-     * @return - The workspace text of the specified card
-     */
-    public String getAsmStrategyCardWorkspace(Integer cardNum) {
-        WebElement cardWorkspace = driver.findElement(By.cssSelector("div[data-testid='step-cards'] div:nth-of-type(" + cardNum + ") p:nth-of-type(1)"));
-        return cardWorkspace.getText();
-    }
-
-    /**
-     * Get criteria from specified card
-     *
-     * @param cardNum - The card to retrieve data from (1-index)
-     * @return - The workspace text of the specified card
-     */
-    public String getAsmStrategyCardCriteria(Integer cardNum) {
-        WebElement cardWorkspace = driver.findElement(By.cssSelector("div[data-testid='step-cards'] div:nth-of-type(" + cardNum + ") p:nth-of-type(2)"));
-        return cardWorkspace.getText();
     }
 
     /**

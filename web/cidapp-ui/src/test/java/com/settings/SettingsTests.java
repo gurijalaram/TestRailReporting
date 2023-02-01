@@ -54,6 +54,7 @@ import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+import java.util.List;
 
 public class SettingsTests extends TestBase {
     private File resourceFile;
@@ -734,6 +735,128 @@ public class SettingsTests extends TestBase {
             .goToAssemblyDefaultsTab();
 
         softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was saved").isEqualTo(preferPrivate);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21653", "21654", "21655", "21656"})
+    @Description("Verify Assembly Strategy Dropdown and Description Cards")
+    public void testAssemblyStrategyDropdownCards() {
+        currentUser = UserUtil.getUser();
+
+        String preferPublic = "Prefer Public Scenarios";
+        String preferPrivate = "Prefer Private Scenarios";
+        String preferMaturity = "Prefer High Maturity and Complete Status";
+        String sameNameCriteria = "Same name as assembly";
+        String mostRecentCriteria = "Most recent";
+        String completeCriteria = "Complete status, Highest maturity";
+        String maturityCriteria = "Highest maturity";
+
+        String defaultMessage = "No Assembly Association Strategy has been selected. The default strategy, Prefer Private Scenarios, will be used.";
+
+        List<String> cardDetails;
+
+        loginPage = new CidAppLoginPage(driver);
+        AssemblyDefaultsPage assemblyDefaultsPage = loginPage.login(currentUser)
+            .openSettings()
+            .goToAssemblyDefaultsTab();
+
+        cardDetails = assemblyDefaultsPage.getAsmStrategyCardDetails();
+
+        softAssertions.assertThat(assemblyDefaultsPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
+
+        softAssertions.assertThat(assemblyDefaultsPage.isUsingDefaultsMessageVisible()).as("Using default message displayed").isTrue();
+        softAssertions.assertThat(assemblyDefaultsPage.getUsingDefaultsMessage()).as("Default message presented").isEqualTo(defaultMessage);
+        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed for default").isEqualTo(4);
+
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[0]).as("Default selection is Prefer Private").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[1]).as("Verify Default Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[0]).as("Default selection is Prefer Private").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[1]).as("Verify Default Criteria").isEqualTo(mostRecentCriteria);
+
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[0]).as("Default selection is Prefer Private").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[1]).as("Verify Default Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[0]).as("Default selection is Prefer Private").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[1]).as("Verify Default Criteria").isEqualTo(mostRecentCriteria);
+
+        assemblyDefaultsPage.selectAssemblyStrategy(preferPublic);
+        cardDetails = assemblyDefaultsPage.getAsmStrategyCardDetails();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify Public is selected").isEqualTo(preferPublic);
+        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed").isEqualTo(4);
+
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[0]).as("Public Workspace checked initially").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[0]).as("Public Workspace checked initially").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[1]).as("Verify Criteria").isEqualTo(mostRecentCriteria);
+
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[0]).as("Private Workspace checked second").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[0]).as("Private Workspace checked second").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[1]).as("Verify Criteria").isEqualTo(mostRecentCriteria);
+
+        assemblyDefaultsPage = assemblyDefaultsPage.submit(ExplorePage.class)
+            .openSettings()
+            .goToAssemblyDefaultsTab();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify strategy was saved").isEqualTo(preferPublic);
+
+        assemblyDefaultsPage = assemblyDefaultsPage.selectAssemblyStrategy(preferPrivate);
+        cardDetails = assemblyDefaultsPage.getAsmStrategyCardDetails();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed").isEqualTo(4);
+
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[0]).as("Private Workspace checked initially").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[0]).as("Private Workspace checked initially").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[1]).as("Verify Criteria").isEqualTo(mostRecentCriteria);
+
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[0]).as("Public Workspace checked second").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[0]).as("Public Workspace checked second").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[1]).as("Verify Criteria").isEqualTo(mostRecentCriteria);
+
+        assemblyDefaultsPage.submit(ExplorePage.class)
+            .openSettings()
+            .goToAssemblyDefaultsTab();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferPrivate);
+
+        assemblyDefaultsPage = assemblyDefaultsPage.selectAssemblyStrategy(preferMaturity);
+        cardDetails = assemblyDefaultsPage.getAsmStrategyCardDetails();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 6 cards displayed").isEqualTo(6);
+
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[0]).as("Public Workspace checked initially").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(0).split("\\|")[1]).as("Verify Criteria").isEqualTo(completeCriteria);
+
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[0]).as("Public Workspace checked initially").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(1).split("\\|")[1]).as("Verify Criteria").isEqualTo(maturityCriteria);
+
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[0]).as("Public Workspace checked initially").isEqualTo("Public");
+        softAssertions.assertThat(cardDetails.get(2).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[0]).as("Private Workspace checked second").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(3).split("\\|")[1]).as("Verify Criteria").isEqualTo(completeCriteria);
+
+        softAssertions.assertThat(cardDetails.get(4).split("\\|")[0]).as("Private Workspace checked second").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(4).split("\\|")[1]).as("Verify Criteria").isEqualTo(maturityCriteria);
+
+        softAssertions.assertThat(cardDetails.get(5).split("\\|")[0]).as("Private Workspace checked second").isEqualTo("Private");
+        softAssertions.assertThat(cardDetails.get(5).split("\\|")[1]).as("Verify Criteria").isEqualTo(sameNameCriteria);
+
+        assemblyDefaultsPage.submit(ExplorePage.class)
+            .openSettings()
+            .goToAssemblyDefaultsTab();
+
+        softAssertions.assertThat(assemblyDefaultsPage.getCurrentAsmStrategy()).as("Verify that strategy was updated").isEqualTo(preferMaturity);
 
         softAssertions.assertAll();
     }
