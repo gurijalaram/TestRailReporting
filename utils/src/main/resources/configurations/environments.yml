@@ -71,67 +71,7 @@ int-core:
   vds:
     api_url: https://vds.core.int.apriori.net/
 
-######################################################## QA-CID-PERF ########################################################
-qa-cid-perf:
-  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
-  customer_identity: 92E1E4E9DFCD
-  name: qa-cid-perf
-  secret_key: 502M4JBUCE36
-  user_identity: 1F7GAI5DLI2B
 
-  cds:
-    apriori_core_services_installation_identity: 8E9MK02F4H9F
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity: CNLKB29B4GN8
-    cia_application_identity: 1J8M416FBJCD
-    automation_user_identity02: 1F4GF3E20D38
-    automation_user_identity03: 1F4HJ2A9GM9C
-    identity_role: 67J517C9L763
-
-  ci-connect:
-    second_page_starting_range_number: 26
-    default_connector: Automation - NA - WC
-    agent_api_url: http://conqsct01:8810/
-    agent_api_authorization_key: DogCatMonkey
-
-  reports:
-    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
-
-######################################################## QA-CID-PERF-SANDBOX ########################################################
-qa-cid-perf-sandbox:
-  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
-  customer_identity: 92E1E4E9DFCD
-  name: qa-cid-perf-sandbox
-  secret_key: 502M4JBUCE36
-  user_identity: 1F7GAI5DLI2B
-
-######################################################## QA-CIG-PERF ########################################################
-qa-cig-perf:
-  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
-  customer_identity: C339C55A8155
-  name: qa-cig-perf
-  user_identity: C339C55A8155
-  secret_key: WJIM0HV7Z6U1
-
-  bcs:
-    report_identity: 50A4DFJF3NC7
-    reportType_identity: 0J3JMAA4MCAJ
-    part_identity: 6E5GDN0CHB95
-    batch_identity: 6N92EN8EHM52
-
-  cds:
-    apriori_core_services_installation_identity:
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity:
-    cia_application_identity: 1J8M416FBJ94
-    automation_user_identity02: 9671G0C4GNK2
-    automation_user_identity03: 775K40H47HEF
-    identity_role: 67J517C9L762
-
-  reports:
-    ui_url: ${qa-cig-perf.base_url}jasperserver-pro/login.html
 
 ######################################################## On Prem ########################################################
 onprem:
@@ -153,18 +93,6 @@ onprem:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
-######################################################## QA-20-1 ########################################################
-qa-20-1:
-  base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
-  name: qa-20-1
-  secret_key: LZJM8S47H5S8
-
-  admin:
-    ui_url: ${qa-20-1.base_url}apriori/login
-
-  ats:
-    token_issuer: 2020 R1
-
 ######################################################## STAGING ########################################################
 staging:
   ap_user_context:
@@ -185,18 +113,6 @@ staging:
 
   bcs:
     api_url: https://bcs.us.staging.apriori.net/
-
-######################################################## MIGRATION #####################################################
-migration:
-#  name: migration
-#  customer_identity: 3KED5H5BKN85
-#  secret_key: X0V4XXK2SF87
-
-######################################################## MIGRATION-PREVIEW #####################################################
-migration-preview:
-#  name: migration-preview
-#  secret_key: X0V4XXK2SF87
-
 
 ######################################################## LOCAL ########################################################
 local:
@@ -296,6 +212,105 @@ qa-test:
       agent_api_url: http://conqsct01:8817/
       plm_agent_id: 3e5056e2-dc98-4ef4-a2d3-e6f7b97147db_Agent
       customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
+
+
+######################################################## QA-CID-PERF ########################################################
+qa-cid-perf:
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
+  name: qa-cid-perf
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+
+  cds:
+    apriori_core_services_installation_identity: 8E9MK02F4H9F
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: CNLKB29B4GN8
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 1F4GF3E20D38
+    automation_user_identity03: 1F4HJ2A9GM9C
+    identity_role: 67J517C9L763
+
+  ci-connect:
+    second_page_starting_range_number: 26
+    default_connector: Automation - NA - WC
+    agent_api_url: http://conqsct01:8810/
+    agent_api_authorization_key: DogCatMonkey
+
+  reports:
+    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
+
+
+#                                                                                                                              #
+#                                                                                                                              #
+#                                                                                                                              #
+#                                                                                                                              #
+######################################################## DO WE NEED IT? ########################################################
+#                                                                                                                              #
+#                                                                                                                              #
+#                                                                                                                              #
+#                                                                                                                              #
+
+######################################################## QA-CID-PERF-SANDBOX ########################################################
+qa-cid-perf-sandbox:
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  customer_identity: 92E1E4E9DFCD
+  name: qa-cid-perf-sandbox
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+
+######################################################## QA-CIG-PERF ########################################################
+qa-cig-perf:
+  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
+  customer_identity: C339C55A8155
+  name: qa-cig-perf
+  user_identity: C339C55A8155
+  secret_key: WJIM0HV7Z6U1
+
+  bcs:
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+  cds:
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJ94
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
+  reports:
+    ui_url: ${qa-cig-perf.base_url}jasperserver-pro/login.html
+
+######################################################## QA-20-1 ########################################################
+qa-20-1:
+  base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
+  name: qa-20-1
+  secret_key: LZJM8S47H5S8
+
+  admin:
+    ui_url: ${qa-20-1.base_url}apriori/login
+
+  ats:
+    token_issuer: 2020 R1
+
+
+######################################################## MIGRATION #####################################################
+migration:
+#  name: migration
+#  customer_identity: 3KED5H5BKN85
+#  secret_key: X0V4XXK2SF87
+
+######################################################## MIGRATION-PREVIEW #####################################################
+migration-preview:
+#  name: migration-preview
+#  secret_key: X0V4XXK2SF87
+
 
 
 ######################################################## DEV-CFIRST ########################################################
