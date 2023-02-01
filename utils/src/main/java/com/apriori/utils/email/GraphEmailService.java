@@ -7,7 +7,9 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -59,7 +62,9 @@ public class GraphEmailService {
      *                         (Example: "$search, \"ap-int12345\"", "hasAttachments[eq], true"
      * @return EmailMessage
      */
+    @SneakyThrows
     public static EmailMessage searchEmailMessage(String... emailParamValues) {
+        final long START_TIME = System.currentTimeMillis();
         QueryParams queryParams = new QueryParams();
 
         List<String[]> paramKeyValue = Arrays.stream(emailParamValues).map(o -> o.split(",")).collect(Collectors.toList());
@@ -77,8 +82,13 @@ public class GraphEmailService {
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
-        EmailResponse emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<EmailResponse> emailResponse = HTTPRequest.build(requestEntity).get();
 
-        return emailResponse.getValue().get(0);
+        while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
+            TimeUnit.SECONDS.sleep(5);
+            emailResponse = HTTPRequest.build(requestEntity).get();
+        }
+
+        return emailResponse.getResponseEntity().getValue().get(0);
     }
 }
