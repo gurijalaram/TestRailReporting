@@ -319,8 +319,10 @@ public class ComponentsUtil {
                 log.error(a.getMessage());
             }
         } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component id: '%s', scenario id: '%s', scenario name: '%s' after '%d' seconds", componentInfo.getComponentIdentity(),
-            componentInfo.getScenarioIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
+
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
+                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
     }
 
     /**

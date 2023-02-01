@@ -45,7 +45,6 @@ public class LargeGroupAssemblyTests extends TestBase {
     private CidAppLoginPage loginPage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;
-    private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
     private static UserCredentials currentUser;
     private static String scenarioName;
