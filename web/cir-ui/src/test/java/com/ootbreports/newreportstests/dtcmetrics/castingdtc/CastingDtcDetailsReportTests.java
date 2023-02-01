@@ -18,6 +18,7 @@ import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
+import com.apriori.utils.enums.reports.SortOrderEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -165,6 +166,86 @@ public class CastingDtcDetailsReportTests extends TestBase {
         String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
 
         assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "7629")
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
+    public void testSortOrderInputControlManufacturingCasting() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7630")
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
+    public void testSortOrderInputControlManufacturingMachining() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7631")
+    @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Details Report")
+    public void testSortOrderInputControlMaterialScrap() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7632")
+    @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
+    public void testSortOrderInputControlTolerances() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.TOLERANCES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7633")
+    @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
+    public void testSortOrderInputControlSlowOperations() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7634")
+    @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Details Report")
+    public void testSortOrderInputControlSpecialTooling() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7635")
+    @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Details Report")
+    public void testSortOrderInputControlAnnualSpend() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TestRail(testCaseId = "7636")
+    @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
+    public void testSortOrderInputControlDtcRank() {
+        inputControlGenericTest(
+            "Sort Order",
+            SortOrderEnum.DTC_RANK.getSortOrderEnum()
+        );
     }
 
     private void inputControlGenericTest(String inputControlToSet, String valueToSet) {

@@ -315,8 +315,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7629"})
-    @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - " +
-            "Casting DTC Details Report")
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingCasting() {
         commonReportTests = new CommonReportTests(driver);
         ArrayList<String> assertValues = new ArrayList<>();
@@ -329,8 +328,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7630"})
-    @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - " +
-            "Casting DTC Details Report")
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingMachining() {
         commonReportTests = new CommonReportTests(driver);
         ArrayList<String> assertValues = new ArrayList<>();
