@@ -166,7 +166,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      * @return boolean
      */
     public boolean isRoutingSelectionButtonEnabled() {
-       return pageUtils.isElementClickable(routingSelectionButton);
+        return pageUtils.isElementClickable(routingSelectionButton);
     }
 
     /**
