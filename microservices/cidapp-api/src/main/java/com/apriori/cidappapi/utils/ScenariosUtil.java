@@ -54,7 +54,7 @@ public class ScenariosUtil {
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private CssComponent cssComponent = new CssComponent();
     private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 600;
+    private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
     private final long START_TIME = System.currentTimeMillis() / 1000;
     private final int METHOD_TIMEOUT = 30;

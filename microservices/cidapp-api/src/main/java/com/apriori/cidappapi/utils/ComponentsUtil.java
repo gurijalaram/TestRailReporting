@@ -43,7 +43,7 @@ public class ComponentsUtil {
     private final int MAX_FILES = 20;
     private final int CHUNK_SIZE = 10;
     private final int POLL_TIME = 1;
-    private final int WAIT_TIME = 600;
+    private final int WAIT_TIME = 570;
 
     /**
      * POST cad files
