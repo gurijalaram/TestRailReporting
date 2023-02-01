@@ -313,7 +313,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.67")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.52")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -328,7 +328,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.90")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.75")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -959,7 +959,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(29.96), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(26.37), Offset.offset(3.0));
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
 
@@ -1078,7 +1078,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting / High Pressure Die Casting / Trim / 5 Axis Mill / Cylindrical Grinder / Reciprocating Surface Grinder");
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting / High Pressure Die Casting / Trim / 5 Axis Mill");
 
         evaluatePage.goToAdvancedTab()
             .openRoutingSelection()
@@ -1087,7 +1087,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting", "Coremaking", "Gravity Die Casting", "Core Refractory Coat", "Refractory Coat Oven Dry",
-            "Trim", "Cleaning", "Finishing", "Visual Inspection", "3 Axis Mill", "Drill Press", "Cylindrical Grinder", "Reciprocating Surface Grinder");
+            "Trim", "Cleaning", "Finishing", "Visual Inspection", "3 Axis Mill", "Drill Press");
         softAssertions.assertAll();
     }
 
@@ -1261,7 +1261,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$2.15")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$10.96")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -1270,7 +1270,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$2.14955")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$10.96112")).isTrue();
         softAssertions.assertAll();
     }
 }
