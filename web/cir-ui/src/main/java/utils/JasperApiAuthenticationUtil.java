@@ -9,6 +9,8 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
@@ -23,25 +25,31 @@ import javax.net.ssl.TrustManager;
 
 public class JasperApiAuthenticationUtil extends TestBase {
 
+    public static String jSessionId;
+
+    @BeforeClass
+    public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
+        auth.authenticateJasperApi();
+    }
+
     /**
      * Authenticates jasper api, opening session
      *
-     * @param driver - instance of driver to use for cloud auth
-     * @return String jSessionId
      * @throws NoSuchAlgorithmException - potentially thrown by on prem auth
      * @throws IOException - potentially thrown by on prem auth
      * @throws KeyManagementException - potentially thrown by on prem auth
      */
-    public String authenticateJasperApi(WebDriver driver) throws NoSuchAlgorithmException, IOException, KeyManagementException {
-        this.driver = driver;
-
-        String jSessionId = PropertiesContext.get("env").equals("onprem") ? authenticateOnPrem() : authenticateCloud();
+    public void authenticateJasperApi() throws NoSuchAlgorithmException, IOException, KeyManagementException {
+        if (PropertiesContext.get("env").equals("onprem")) {
+            authenticateOnPrem();
+        } else {
+            authenticateCloud();
+        }
         assertThat(jSessionId, is(notNullValue()));
-
-        return jSessionId;
     }
 
-    private String authenticateOnPrem() throws NoSuchAlgorithmException, KeyManagementException, IOException {
+    private void authenticateOnPrem() throws NoSuchAlgorithmException, KeyManagementException, IOException {
         skipSslCheck();
 
         String usernamePassword = UserUtil.getUserOnPrem().getUsername();
@@ -59,21 +67,18 @@ public class JasperApiAuthenticationUtil extends TestBase {
         con.connect();
         System.out.println("Login response code :" + con.getResponseCode());
         String sessionId = con + "";
-        return sessionId.split(";")[1].substring(11, 43);
+        jSessionId = sessionId.split(";")[1].substring(11, 43);
     }
 
     /**
      * Authenticate jasper api for cloud, opening session
-     *
-     * @return String jSessionId
      */
-    @Test
-    public String authenticateCloud() {
+    public void authenticateCloud() {
         new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
 
-        return driver.manage().getCookieNamed("JSESSIONID").getValue();
+        jSessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();
     }
 
     private void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {

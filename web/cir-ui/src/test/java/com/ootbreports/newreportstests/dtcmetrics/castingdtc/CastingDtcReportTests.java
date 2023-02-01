@@ -17,57 +17,25 @@ import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
-import org.junit.Before;
 import org.junit.Test;
+import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CastingDtcReportTests extends TestBase {
+public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
-    private static String jSessionId = "";
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private static final String usdCurrency = CurrencyEnum.USD.getCurrency();
-    private static final String gbpCurrency = CurrencyEnum.GBP.getCurrency();
-    private static final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
-    private static final String reportCurrencyTestPartName = "40137441.MLDES.0002 (Initial)";
-
-    private static final String reportsJsonFileName = "schemas/api-test-reports-schemas/castingdtc/CastingDtcReportRequest";
     private static ReportRequest reportRequest;
-
-    private Map<String, String> inputControlNames = new HashMap<>();
-
-    /**
-     * This before class method skips the invalid ssl cert issue we have with on prem installs
-     *
-     * @throws IOException - potential exception
-     * @throws NoSuchAlgorithmException - potential exception
-     * @throws KeyManagementException - potential exception
-     */
-    @Before
-    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        jSessionId = auth.authenticateJasperApi(driver);
-        inputControlNames.put("Cost Metric", "costMetric");
-        inputControlNames.put("Mass Metric", "massMetric");
-        inputControlNames.put("Process Group", "processGroup");
-        inputControlNames.put("DTC Score", "dtcScore");
-        inputControlNames.put("Minimum Annual Spend", "annualSpendMin");
-    }
 
     @Test
     @TestRail(testCaseId = {"1699"})
@@ -80,9 +48,9 @@ public class CastingDtcReportTests extends TestBase {
             .getInputControls();
         String exportSetValue = inputControl.getExportSetName().getOption(exportSetName).getValue();
 
-        String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        reportRequest = setReportParameterByName(reportRequest, currencyCode, usdCurrency);
+        reportRequest = setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
         reportRequest = setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
         reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
@@ -91,7 +59,7 @@ public class CastingDtcReportTests extends TestBase {
         String usdFullyBurdenedCost = getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
         double usdAnnualSpend = getAnnualSpendFromChartDataPoint(usdChartDataPoint);
 
-        reportRequest = setReportParameterByName(reportRequest, currencyCode, gbpCurrency);
+        reportRequest = setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
 
         ChartDataPoint gbpChartDataPoint = generateReportAndGetChartDataPoint(reportRequest);
 
@@ -235,10 +203,10 @@ public class CastingDtcReportTests extends TestBase {
 
         InputControl inputControl = JasperReportUtil.init(jSessionId).getInputControls();
         String currentExportSet = inputControl.getExportSetName().getOption(exportSetName).getValue();
-        String currentDateTime = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now());
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         reportRequest = !valueToSet.isEmpty()
-            ? setReportParameterByName(reportRequest, inputControlNames.get(inputControlToSet), valueToSet) :
+            ? setReportParameterByName(reportRequest, Constants.inputControlNames.get(inputControlToSet), valueToSet) :
             reportRequest;
         reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
         reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
@@ -262,7 +230,7 @@ public class CastingDtcReportTests extends TestBase {
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
         timer.stop();
         logger.debug(String.format("Report generation took: %s", timer));
-        return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
+        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 
     private JasperReportSummary generateReportSummary(ReportRequest reportRequest) {
