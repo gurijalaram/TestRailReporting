@@ -1380,7 +1380,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveCancelButton();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue;
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveButton();
 
