@@ -50,10 +50,20 @@ public class PropertiesContextTest {
 
     @Test
     public void testGetEnvironmentPropertyWithReferences() {
-        final String specificEnvPropertyValue = PropertiesContext.get("bcs.api_url");
+        final String deploymentUrlPart = PropertiesContext.get("${${deployment}.url_part}");
+        final String env = PropertiesContext.get("env");
+        final String version = PropertiesContext.get("version");
+        final String awsRegion = PropertiesContext.get("aws_region");
+
+        final String expectedCasCoreServiceValue = String.format("https://cas-api.%s.%s.apriori.net/", awsRegion, env);
+        final String expectedBcsDeploymentValue = String.format("https://bcs-http.%s-v%s.%s.apriori.net/", awsRegion, version, deploymentUrlPart);
+
+        final String specificEnvPropertyCoreServiceValue = PropertiesContext.get("cas.api_url");
+        final String specificEnvDeploymentValue = PropertiesContext.get("bcs.api_url");
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(specificEnvPropertyValue).isEqualTo("https://bcs-http.na-1-v23-1.qa-test.apriori.net/");
+        softAssertions.assertThat(specificEnvPropertyCoreServiceValue).isEqualTo(expectedCasCoreServiceValue);
+        softAssertions.assertThat(specificEnvDeploymentValue).isEqualTo(expectedBcsDeploymentValue);
         softAssertions.assertAll();
     }
 

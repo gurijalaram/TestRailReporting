@@ -6,19 +6,19 @@
 ############################################# Global properties ########################################################
 # Define the environment
 env: qa-test
-
-# Define the global properties not related to environment
-global:
-  console_log_level: "OFF"
-  db_recording: true
-  different_parts: true
-  different_users: true
-  schema_base_path: schemas/
-  users_csv_file: common-users.csv
-
-# Define the customer
+version: 23-1
+deployment: production
 customer: ap-int
 
+# Deployment
+production:
+  url_part: ${env}
+
+sandbox:
+  url_part: sandbox.${env}
+#==========================================================
+
+# Define the customer
 ap-int:
   token_subject: 4127
 
@@ -30,20 +30,34 @@ widgets:
 
 sprockets:
   token_subject: c8fc
+#==========================================================
+
+# Define the global properties not related to environment
+global:
+  console_log_level: "OFF"
+  db_recording: true
+  different_parts: true
+  different_users: true
+  schema_base_path: schemas/
+  users_csv_file: common-users.csv
+
 
 ################################################################################################################################
 #  Variables in the default section that will be used if there is no equivalent variable in the environment file
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
-  aws_region_full: na-1-v23-1
   env_url_specification: update_this_value_in_environment_file
 
+###########################
+#  Core services
+  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
+
   cloud:
-    ui_url: https://cloud.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
+    ui_url: https://cloud.${default.core_service_url_template}
 
   ats:
-    api_url: https://ats.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
+    api_url: https://ats.${default.core_service_url_template}
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
@@ -52,42 +66,70 @@ default:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
-  bcs:
-    api_url: https://bcs-http.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/
-
   cas:
-    ui_url: https://cas.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
-    api_url: https://cas-api.${default.aws_region}.${${env}.env_url_specification}.apriori.net/%s
+    ui_url: https://cas.${default.core_service_url_template}
+    api_url: https://cas-api.${default.core_service_url_template}
 
-  cis:
-    ui_url: https://cis.${default.aws_region}.${${env}.env_url_specification}-v22-1.apriori.net/
-    api_url: https://cis-api.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/
+  cus:
+    api_url: https://cus.${default.core_service_url_template}
 
   cds:
-    api_url: https://cds.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
-
-  cidapp:
-    api_url: https://cid-api.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/
-    ui_url: https://ci-design.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/
-
-  cnh:
-    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
-
-  css:
-    api_url: https://css.${default.aws_region}-v22-1.${${env}.env_url_specification}.apriori.net/
+    api_url: https://cds.${default.core_service_url_template}
 
   edc:
-    ui_url: https://edc.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
-    api_url: https://edc-api.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
-
-  fms:
-    api_url: https://fms.${default.aws_region_full}.${${env}.env_url_specification}.apriori.net/
+    ui_url: https://edc.${default.core_service_url_template}
+    api_url: https://edc-api.${default.core_service_url_template}
 
   nts:
-    api_url: https://nts.${default.aws_region}.${${env}.env_url_specification}.apriori.net/
+    api_url: https://nts.${default.core_service_url_template}
+###########################
+
+###########################
+#  Deployment URL
+  deployment_url_template: ${default.aws_region}-v${version}.${${deployment}.url_part}.apriori.net/
+
+  admin:
+    ui_url: https://${default.deployment_url_template}apriori/login
+
+  bcs:
+    api_url: https://bcs-http.${default.deployment_url_template}
+    number_of_parts: 5
+
+  cidapp:
+    api_url: https://cid-api.${default.deployment_url_template}
+    ui_url: https://ci-design.${default.deployment_url_template}
+
+  cis:
+    ui_url: https://cis.${default.deployment_url_template}
+    api_url: https://cis-api.${default.deployment_url_template}
+
+  ci-connect:
+    ui_url: https://ci-connect.${default.deployment_url_template}
+
+  css:
+    api_url: https://css.${default.deployment_url_template}
+
+  dds:
+    api_url: https://dds.${default.deployment_url_template}
+
+  dms:
+    api_url: https://dms.${default.deployment_url_template}
+
+  fms:
+    api_url: https://fms.${default.deployment_url_template}
 
   sds:
-    api_url: https://sds-http.${default.aws_region}-v23-1.${${env}.env_url_specification}.apriori.net/
+    api_url: https://sds-http.${default.deployment_url_template}
 
   vds:
-    api_url: https://vds.${default.aws_region}-v23-1.${${env}.env_url_specification}.apriori.net/
+    api_url: https://vds.${default.deployment_url_template}
+
+  reports:
+    ui_url: https://${default.deployment_url_template}jasperserver-pro/
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+###########################
+
+###########################
+# Other URL
+  cnh:
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/

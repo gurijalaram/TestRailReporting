@@ -71,7 +71,7 @@ public class PropertiesContext {
         }
 
         // try to find environment property
-        if (StringUtils.isEmpty(propertyValue) && !propertyName.startsWith("/" + ENVIRONMENT_NAME)) {
+        if (StringUtils.isEmpty(propertyValue) && !propertyName.startsWith("/" + ENVIRONMENT_NAME) ) {
             if (!propertyName.startsWith("/${env}")) {
                 propertyName = ENVIRONMENT_NAME + propertyName;
             }
@@ -94,6 +94,10 @@ public class PropertiesContext {
 
         if (isPropertyContainPropertyReference(propertyPath)) {
             propertyPath = findAndReplaceVariables(propertyPath);
+        }
+
+        if (propertyPath.equals("/" + ENVIRONMENT_NAME)) {
+            return ENVIRONMENT_NAME;
         }
 
         String propertyValue = propertiesContext.at(propertyPath).asText();
