@@ -12,25 +12,25 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class ModalUserList {
 
-    @FindBy(css = ".modal-body .apriori-source-list")
+    @FindBy(css = ".MuiPaper-root[role='dialog']")
     private WebElement candidatesSourceListRoot;
 
-    @FindBy(css = ".modal-footer .btn-primary")
+    @FindBy(css = "[data-testid='primary-button']")
     private WebElement candidatesAddButton;
 
-    @FindBy(css = ".modal-footer .btn-secondary")
+    @FindBy(css = "[data-testid='secondary-button']")
     private WebElement candidatesCancelButton;
 
     @FindBy(css = ".close-modal")
     private WebElement candidatesCloseButton;
 
-    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-primary")
+    @FindBy(xpath = "//button[.='Ok']")
     private WebElement candidatesConfirmOkButton;
 
-    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-secondary")
+    @FindBy(css = ".candidate-confirm-modal .MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement candidatesConfirmCancelButton;
 
-    @FindBy(xpath = "//div[.='Confirmation']//button[@class='light background-animation small close-modal btn btn-link']")
+    @FindBy(css = ".candidate-confirm-modal .fa-circle-xmark")
     private WebElement candidatesConfirmCloseButton;
 
     private WebDriver driver;

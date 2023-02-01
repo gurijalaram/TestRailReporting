@@ -57,10 +57,10 @@ public final class UserProfilePage extends NavToolbar {
     @FindBy(css = ".deployment-drop-down")
     private WebElement deploymentDropDown;
 
-    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    @FindBy(xpath = "//button[@data-testid='primary-button'][.='Ok']")
     private WebElement confirmRemoveOkButton;
 
-    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    @FindBy(xpath = "//button[@data-testid='secondary-button'][.='Cancel']")
     private WebElement confirmRemoveCancelButton;
 
     @FindBy(css = ".access-control-card")
