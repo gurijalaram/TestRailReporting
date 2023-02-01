@@ -5,10 +5,10 @@
 ######################################################## INT-CORE ########################################################
 int-core:
   base_url: https://cost.apriori-internal.int.apriori.net/
-  customer_identity: H337GKD0LA0M
-  name: int-core
-  secret_key: 65J1ID2B6LDG
-  user_identity: 8GFDIG229629
+#  customer_identity: H337GKD0LA0M  - can be added to customer's yml properties
+#  name: int-core - looks like we don't need it
+#  secret_key: 65J1ID2B6LDG  - can be added to deployment properties
+#  user_identity: 8GFDIG229629  - can be added to deployment properties
 
   admin:
     ui_url: ${int-core.base_url}apriori/login

@@ -1,0 +1,24 @@
+########################################################################################################################
+# Customers variables file
+# Contains variables
+#  - related to specific customer
+############################################# Global properties ########################################################
+# Define the environment
+
+
+# We can add customer_identity and other information related to customer, so remove from environment properties
+customer: ap-int
+
+# Define the customer
+ap-int:
+  token_subject: 4127
+
+gadgets:
+  token_subject: 247f
+
+widgets:
+  token_subject: 739e
+
+sprockets:
+  token_subject: c8fc
+#==========================================================
