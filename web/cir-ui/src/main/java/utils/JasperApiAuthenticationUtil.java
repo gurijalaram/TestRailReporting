@@ -9,10 +9,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
