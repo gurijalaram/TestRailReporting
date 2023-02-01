@@ -2471,7 +2471,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return true/false
      */
-    public String isRemoveTextDisplayed() {
+    public String getRemoveParticipantMessageText() {
         return getPageUtils().waitForElementAppear(confirmationText).getText();
     }
 

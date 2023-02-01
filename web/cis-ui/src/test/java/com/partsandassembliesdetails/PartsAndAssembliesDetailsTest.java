@@ -1369,22 +1369,22 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isTrue();
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveIcon();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveModalDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveTextDisplayed()).contains("Are you want to remove yourself from the workspace?");
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveButtonDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveCancelButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveModalDisplayed()).isTrue();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getRemoveParticipantMessageText()).contains("Are you want to remove yourself from the workspace?");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveButtonDisplayed()).isTrue();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveCancelButtonDisplayed()).isTrue();
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveCancelButton();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue;
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue();
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveButton();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse;
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse();
 
         softAssertions.assertAll();
     }
