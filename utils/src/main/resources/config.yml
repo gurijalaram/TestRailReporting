@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-test
+env: onprem
 
 # Define the global properties not related to environment
 global:
@@ -246,7 +246,7 @@ qa-cig-perf:
 
 ######################################################## On Prem ########################################################
 onprem:
-  base_url: https://conqbaci01/
+  base_url: https://conqbaci02/
   name: onprem
 
   admin:
