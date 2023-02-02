@@ -139,6 +139,7 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario()
             .openMaterialProcess()
             .selectDropdown("Fully Burdened Cost")
+            .selectBarChart("Melting")
             .selectBarChart("Carburize")
             .selectOptionsTab();
 
