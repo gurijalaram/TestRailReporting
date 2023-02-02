@@ -9,6 +9,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
@@ -24,8 +25,8 @@ public class JasperApiAuthenticationUtil extends TestBase {
 
     public static String jSessionId;
 
-    @BeforeClass
-    public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    @Before
+    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
         auth.authenticateJasperApi();
     }
