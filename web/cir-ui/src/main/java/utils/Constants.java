@@ -1,11 +1,14 @@
 package utils;
 
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class Constants {
@@ -68,4 +71,18 @@ public class Constants {
     public static final String INVALID_EMAIL_ERROR_MESSAGE = "Invalid";
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
+    public static Map<String, String> inputControlNames = new HashMap<String, String>() {{
+            put("Cost Metric", "costMetric");
+            put("Mass Metric", "massMetric");
+            put("Process Group", "processGroup");
+            put("DTC Score", "dtcScore");
+            put("Minimum Annual Spend", "annualSpendMin");
+            put("Sort Order", "sortOrder");
+        }};
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas/";
+    public static Map<String, String> currencies = new HashMap<String, String>() {{
+            put("GBP", CurrencyEnum.USD.getCurrency());
+            put("USD", CurrencyEnum.GBP.getCurrency());
+        }};
 }

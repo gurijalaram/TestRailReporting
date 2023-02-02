@@ -20,7 +20,7 @@ public class JasperReportTest {
         // TODO z: usage example.
 
         // How to init a request data
-        ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest"); // will map ReportCastingDTCRequest.json to object
+        ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest"); // will map CastingDtcReportRequest.json to object
 
         // to update request data, update object fields
         reportRequest.setReportUnitUri("newReportUnitURI");
