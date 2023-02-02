@@ -184,7 +184,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3022"})
     @Description("Verify Roll-up input control functions correctly")
-    public void testRollupDropDown() {
+    public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
             ReportNamesEnum.MACHINING_DTC.getReportName(),

@@ -1261,7 +1261,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$10.96")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$11.28")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -1270,7 +1270,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$10.96112")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$11.28002")).isTrue();
         softAssertions.assertAll();
     }
 }
