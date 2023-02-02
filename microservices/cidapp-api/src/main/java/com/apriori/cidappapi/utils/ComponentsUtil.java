@@ -43,7 +43,7 @@ public class ComponentsUtil {
     private final int MAX_FILES = 20;
     private final int CHUNK_SIZE = 10;
     private final int POLL_TIME = 1;
-    private final int WAIT_TIME = 600;
+    private final int WAIT_TIME = 570;
 
     /**
      * POST cad files
@@ -319,7 +319,10 @@ public class ComponentsUtil {
                 log.error(a.getMessage());
             }
         } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
+                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
     }
 
     /**

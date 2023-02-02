@@ -51,7 +51,7 @@ public class UploadAssembliesTests extends TestBase {
     private File subComponentB;
     private File subComponentC;
     private File assembly;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
