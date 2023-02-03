@@ -88,7 +88,7 @@ public class ScenariosUtil {
             }
         } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        throw new IllegalArgumentException(
+        throw new RuntimeException(
             String.format("Failed to get uploaded component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
                 componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
     }
@@ -614,7 +614,7 @@ public class ScenariosUtil {
             log.error(ie.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
+        throw new RuntimeException(
             String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
                 componentIdentity, scenarioIdentity, WAIT_TIME)
         );
@@ -653,7 +653,7 @@ public class ScenariosUtil {
             log.error(ie.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
+        throw new RuntimeException(
             String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
                 componentIdentity, scenarioIdentity, WAIT_TIME)
         );

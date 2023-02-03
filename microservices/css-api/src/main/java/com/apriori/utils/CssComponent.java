@@ -70,7 +70,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
@@ -143,7 +143,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
