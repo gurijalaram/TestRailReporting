@@ -68,7 +68,7 @@ public class ScenariosUtil {
     public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
         do {
             try {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
 
@@ -597,7 +597,7 @@ public class ScenariosUtil {
 
         try {
             do {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
 
