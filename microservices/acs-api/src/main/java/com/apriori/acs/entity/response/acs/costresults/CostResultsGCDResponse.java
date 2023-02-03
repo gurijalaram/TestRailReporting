@@ -1,4 +1,4 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
-public class CostResultsGCD {
+public class CostResultsGCDResponse {
 }
