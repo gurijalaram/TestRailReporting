@@ -413,6 +413,21 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//button[@data-testid='icon-button']")
     private WebElement changeAssigneeCaretIcon;
 
+    @FindBy(xpath = "//button[@data-testid='share-scenario-remove-participant']")
+    private WebElement shareScenarioRemoveIcon;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-scenario-participant-remove-confirmation-modal']")
+    private WebElement removeConfirmationModal;
+
+    @FindBy(xpath = "//p[@data-testid='modal-content-scenario-participant-remove-confirmation-modal']")
+    private WebElement confirmationText;
+
+    @FindBy(xpath = "//button[@data-testid='button-primary-scenario-participant-remove-confirmation-modal']")
+    private WebElement btnParticipantRemove;
+
+    @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
+    private WebElement btnParticipantCancel;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -2420,5 +2435,81 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isAMentionUserTagDisplayed(String mentionUser) {
         return getPageUtils().waitForElementToAppear(By.xpath("//div[contains(@id,'" + mentionUser + "')]")).isDisplayed();
+    }
+
+    /**
+     * Checks if remove Icon displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveIconDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[@data-testid='loader']"),5);
+        return getPageUtils().waitForElementAppear(shareScenarioRemoveIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on user remove icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveIcon() {
+        getPageUtils().waitForElementAndClick(shareScenarioRemoveIcon);
+        return this;
+    }
+
+    /**
+     * Checks if remove modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveModalDisplayed() {
+        return getPageUtils().waitForElementAppear(removeConfirmationModal).isDisplayed();
+    }
+
+    /**
+     * Checks if remove text displayed
+     *
+     * @return true/false
+     */
+    public String getRemoveParticipantMessageText() {
+        return getPageUtils().waitForElementAppear(confirmationText).getText();
+    }
+
+    /**
+     * Checks if remove button displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnParticipantRemove).isDisplayed();
+    }
+
+    /**
+     * Checks if remove cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveCancelButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnParticipantCancel).isDisplayed();
+    }
+
+    /**
+     * clicks on user remove button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveButton() {
+        getPageUtils().waitForElementAndClick(btnParticipantRemove);
+        return this;
+    }
+
+    /**
+     * clicks on user remove cancel button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveCancelButton() {
+        getPageUtils().waitForElementAndClick(btnParticipantCancel);
+        return this;
     }
 }
