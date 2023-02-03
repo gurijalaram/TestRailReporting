@@ -250,8 +250,9 @@ public class GroupPublishTests extends TestBase {
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
-            .publish(PublishPage.class)
-            .close(ExplorePage.class);
+            .publish(PublishPage.class);
+
+        explorePage = publishPage.close(ExplorePage.class);
 
         multiComponents.forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
