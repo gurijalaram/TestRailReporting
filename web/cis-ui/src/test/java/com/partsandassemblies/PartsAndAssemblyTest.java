@@ -290,7 +290,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12465", "12467","12469","12472","12476","12468","12470","12191"})
+    @TestRail(testCaseId = {"12191", "12465", "12467", "12468", "12469", "12470", "12472", "12476"})
     @Description("Verify that user can Save the parts and assemblies page configuration")
     public void testSaveConfigurations() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
