@@ -41,4 +41,5 @@ public class CostingTemplate {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    private List<RoutingNodeOptions> routingNodeOptions;
 }

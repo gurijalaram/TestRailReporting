@@ -15,4 +15,5 @@ public class PublishResultOutputs {
     private String comments;
     private String description;
     private List<AssemblyComponent> subComponents;
+    private List<UpdatedScenarioIteration> updatedScenarioIterations;
 }

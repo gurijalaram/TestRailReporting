@@ -43,7 +43,7 @@ public class ComponentsUtil {
     private final int MAX_FILES = 20;
     private final int CHUNK_SIZE = 10;
     private final int POLL_TIME = 1;
-    private final int WAIT_TIME = 600;
+    private final int WAIT_TIME = 570;
 
     /**
      * POST cad files
@@ -146,7 +146,7 @@ public class ComponentsUtil {
         componentInfo.setComponentIdentity(componentSuccess.getComponentIdentity());
         componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());
 
-        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo, HttpStatus.SC_OK);
+        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo);
 
         componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
 
@@ -248,7 +248,7 @@ public class ComponentsUtil {
             getComponentIdentityPart(ComponentInfoBuilder.builder()
                 .componentIdentity(component.getComponentIdentity())
                 .user(componentInfo.getUser())
-                .build(), HttpStatus.SC_OK)).collect(Collectors.toList());
+                .build())).collect(Collectors.toList());
     }
 
     /**
@@ -294,32 +294,35 @@ public class ComponentsUtil {
     /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Part/Assembly
      *
-     * @param componentInfo      - the component info builder object
-     * @param expectedStatusCode - the expected status code
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
+    public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfo) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
-        try {
-            do {
+        do {
+            try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo, expectedStatusCode).getResponseEntity();
+                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo).getResponseEntity();
 
                 if (componentIdentityResponse != null && !componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
 
                     return componentIdentityResponse;
                 }
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } catch (AssertionError a) {
+                log.error(a.getMessage());
+            }
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
+                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
     }
 
     /**
@@ -328,7 +331,7 @@ public class ComponentsUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo, int expectedStatusCode) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
@@ -339,7 +342,7 @@ public class ComponentsUtil {
     }
 
     /**
-     * GET components for the current user matching an identity ewith an expected Return Code
+     * GET components for the current user matching an identity with an expected Return Code
      *
      * @param componentInfo - the component info builder object
      * @param httpStatus    - The expected return code as an int

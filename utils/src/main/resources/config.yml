@@ -78,7 +78,7 @@ default:
     api_url: https://nts.${default.aws_region}.${env}.apriori.net/
 
   sds:
-    api_url: https://sds-http.${default.aws_region}-v23-1.${env}.apriori.net/
+    api_url: https://sds.${default.aws_region}-v23-1.${env}.apriori.net/
 
   vds:
     api_url: https://vds.${default.aws_region}-v23-1.${env}.apriori.net/
@@ -427,7 +427,7 @@ qa-test:
     ui_url: ${qa-test.base_url}apriori/login
 
   bcs:
-    api_url: https://bcs-http.na-1-v23-1.qa-test.apriori.net/
+    api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
     number_of_parts: 5
 
   cas:
@@ -488,8 +488,8 @@ qa-test:
     api_url: https://qms.na-1-v23-1.qa-test.apriori.net/
 
   cis:
-    ui_url: https://cis.${default.aws_region}.${env}-v23-1.apriori.net/
-    api_url: https://cis-api.${default.aws_region}-v23-1.${env}.apriori.net/
+    ui_url: https://cis.${default.aws_region}.${env}-v22-1.apriori.net/
+    api_url: https://cis-api.${default.aws_region}-v22-1.${env}.apriori.net/
 
 ######################################################## DEV-CFIRST ########################################################
 dev-cfirst:
@@ -588,6 +588,10 @@ qa-test-v22:
 
   qms:
     api_url: https://qms.na-1-v22-1.qa-test.apriori.net/
+
+  cis:
+    ui_url: https://cis.na-1-v22-1.qa-test.apriori.net/
+    api_url: https://cis-api.na-1-v22-1.qa-test.apriori.net/
 
 ######################################################## CIS_SANDBOX ########################################################
 cis-sbx:

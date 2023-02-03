@@ -55,6 +55,9 @@
         "productionLife": {
           "type": "number"
         },
+        "routingNodeOptions": {
+          "type": "array"
+        },
         "productionLifeOverridden": {
           "type": "boolean"
         },

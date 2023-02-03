@@ -1,6 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -131,6 +130,7 @@ public class SecondaryProcessTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Carburize");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectDropdown("Fully Burdened Cost")
             .selectBarChart("Carburize")
             .selectOptionsTab()
             .inputCaseDepth("0.46")
@@ -138,6 +138,8 @@ public class SecondaryProcessTests extends TestBase {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
+            .selectDropdown("Fully Burdened Cost")
+            .selectBarChart("Melting")
             .selectBarChart("Carburize")
             .selectOptionsTab();
 
@@ -214,6 +216,7 @@ public class SecondaryProcessTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Standard Anneal");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectDropdown("Fully Burdened Cost")
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 

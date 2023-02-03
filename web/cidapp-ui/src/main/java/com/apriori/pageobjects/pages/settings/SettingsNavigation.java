@@ -15,8 +15,8 @@ public class SettingsNavigation {
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement toleranceTab;
 
-    @FindBy(xpath = "//button[.='Multi-Body']")
-    private WebElement multiBodyTab;
+    @FindBy(xpath = "//button[.='Assembly Defaults']")
+    private WebElement assemblyDefaultsTab;
 
     @FindBy(xpath = "//button[.='Production Defaults']")
     private WebElement productionsTab;
@@ -74,9 +74,9 @@ public class SettingsNavigation {
      *
      * @return new page object
      */
-    public MultiBodyPage goToMultiBodyTab() {
-        pageUtils.waitForElementAndClick(multiBodyTab);
-        return new MultiBodyPage(driver);
+    public AssemblyDefaultsPage goToAssemblyDefaultsTab() {
+        pageUtils.waitForElementAndClick(assemblyDefaultsTab);
+        return new AssemblyDefaultsPage(driver);
     }
 
     /**

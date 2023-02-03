@@ -57,4 +57,5 @@ public class Scenario {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime publishedAt;
     private String publishedBy;
+    private List<RoutingNodeOptions> routingNodeOptions;
 }

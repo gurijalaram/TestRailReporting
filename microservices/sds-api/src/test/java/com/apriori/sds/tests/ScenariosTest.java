@@ -353,7 +353,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .costingTemplate(CostingTemplate.builder()
                     .processGroupName(pg.getProcessGroup())
                     .vpeName(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                    .materialMode(mode)
+                    .materialMode(mode.toUpperCase())
                     .materialName(materialName)
                     .build())
                 .user(testingUser)

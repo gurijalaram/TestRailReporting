@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
@@ -179,6 +180,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("COST-685")
     @TestRail(testCaseId = {"6486"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {

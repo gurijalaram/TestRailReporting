@@ -34,7 +34,6 @@ public class User {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private UserProfile userProfile;
-    private boolean hasCompleteProfile;
     private String email;
     private String username;
     private Boolean active;
