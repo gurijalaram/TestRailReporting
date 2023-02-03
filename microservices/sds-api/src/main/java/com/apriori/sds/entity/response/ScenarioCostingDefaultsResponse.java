@@ -55,4 +55,5 @@ public class ScenarioCostingDefaultsResponse {
     private Integer componentsPerProduct;
     private CustomAttributesResponse customAttributesRequest;
     private List<ScenarioAvailableProcessGroupSelection> availableProcessGroupSelections;
+    private List<RoutingNodeOptions> routingNodeOptions;
 }

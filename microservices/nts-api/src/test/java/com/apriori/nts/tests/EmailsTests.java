@@ -16,6 +16,7 @@ import com.apriori.utils.email.response.EmailMessage;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class EmailsTests extends TestHelper {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         EmailService emailService = new EmailService();
-        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+        String subject = "\"" + Constants.EMAIL_SUBJECT + System.currentTimeMillis() + "\"";
 
         SoftAssertions soft = new SoftAssertions();
 
@@ -51,13 +52,14 @@ public class EmailsTests extends TestHelper {
     }
 
     @Test
+    @Issue("IDS-1025")
     @TestRail(testCaseId = {"10469", "10470", "10471"})
     @Description("Send an email using the NTS API w/Attachment")
     public void sendEmailWithAttachment() {
         EmailService emailService = new EmailService();
 
         SoftAssertions soft = new SoftAssertions();
-        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+        String subject = "\"" + Constants.EMAIL_SUBJECT + System.currentTimeMillis() + "\"";
 
         //Send Email
         SendEmail sendEmail = emailService.sendEmailWithAttachment(

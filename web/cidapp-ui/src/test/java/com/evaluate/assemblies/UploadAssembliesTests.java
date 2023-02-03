@@ -51,7 +51,7 @@ public class UploadAssembliesTests extends TestBase {
     private File subComponentB;
     private File subComponentC;
     private File assembly;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ExplorePage explorePage;
@@ -128,6 +128,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "FLANGE C";
         List<String> componentNames = Arrays.asList("BOLT", "NUT", "FLANGE");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "flange.CATPart"), scenarioName));
@@ -150,6 +151,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "piston_assembly";
         List<String> componentNames = Arrays.asList("piston_pin", "piston");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
@@ -172,6 +174,7 @@ public class UploadAssembliesTests extends TestBase {
         String assemblyName = "Hinge assembly";
         List<String> componentNames = Arrays.asList("big ring", "Pin", "small ring");
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
@@ -194,6 +197,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "oldham";
         List<String> componentNames = Arrays.asList("stand", "drive", "joint");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "stand.prt.1"), scenarioName));
@@ -226,6 +230,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "v6 piston assembly_asm1";
         List<String> componentNames = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
@@ -286,6 +291,7 @@ public class UploadAssembliesTests extends TestBase {
         String assemblyName2 = "v6 piston assembly_asm1";
         List<String> componentNames1 = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
         List<String> componentNames2 = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> firstMultiComponentBatch = new ArrayList<>();
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
@@ -614,6 +620,8 @@ public class UploadAssembliesTests extends TestBase {
     @TestRail(testCaseId = {"6546"})
     @Description("Changing unit user preferences when viewing assembly")
     public void testUnitPreferenceInAssembly() {
+        currentUser = UserUtil.getUser();
+
         final String hinge_assembly = "Hinge assembly";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
