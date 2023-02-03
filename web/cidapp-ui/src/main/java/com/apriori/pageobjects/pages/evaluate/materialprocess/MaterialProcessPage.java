@@ -96,10 +96,10 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
-    @FindBy(xpath = "//h6[starts-with(., 'Number of cavities  (Piece Part & Tooling Cost Driver)')]/..//input[@value='default']")
+    @FindBy(xpath = "//h6[starts-with(., 'Number of Cavities (Piece Part & Tooling Cost Driver)')]/..//input[@value='default']")
     private WebElement cavitiesDefaultValue;
 
-    @FindBy(xpath = "//h6[starts-with(., 'Number of cavities  (Piece Part & Tooling Cost Driver)')]/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[starts-with(., 'Number of Cavities (Piece Part & Tooling Cost Driver)')]/..//input[@value='optimize']")
     private WebElement cavitiesOptimizeMinCost;
 
     @FindBy(xpath = "//h6[starts-with(., 'Nominal Wall Thickness  (Piece Part Cost Driver)')]/..//input[@value='deriveFromPart']")
@@ -406,7 +406,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectNumberOfCavitiesPiecePartToolingDropdown(String value) {
-        pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities (Piece Part & Tooling Cost Driver)", "user"));
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Number of Cavities (Piece Part & Tooling Cost Driver)", "user"));
         pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("User defined value"), "User defined value", value);
         return this;
     }
