@@ -10,7 +10,7 @@ import com.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("867")
+@ProjectRunID("2123")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     PartsAndAssemblyTest.class,
