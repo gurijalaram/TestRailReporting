@@ -4,7 +4,7 @@
 #  - which are independent of the environment
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
-# Define the environment
+# Define main configurations
 env: qa-test
 version: 23-1
 deployment: production
@@ -16,20 +16,6 @@ production:
 
 sandbox:
   url_part: sandbox.${env}
-#==========================================================
-
-# Define the customer
-ap-int:
-  token_subject: 4127
-
-gadgets:
-  token_subject: 247f
-
-widgets:
-  token_subject: 739e
-
-sprockets:
-  token_subject: c8fc
 #==========================================================
 
 # Define the global properties not related to environment

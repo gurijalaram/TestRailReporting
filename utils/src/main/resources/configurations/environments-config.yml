@@ -5,10 +5,10 @@
 ######################################################## INT-CORE ########################################################
 int-core:
   base_url: https://cost.apriori-internal.int.apriori.net/
-#  customer_identity: H337GKD0LA0M  - can be added to customer's yml properties
-#  name: int-core - looks like we don't need it
-#  secret_key: 65J1ID2B6LDG  - can be added to deployment properties
-#  user_identity: 8GFDIG229629  - can be added to deployment properties
+  customer_identity: H337GKD0LA0M  - can be added to customer's yml properties
+  name: int-core - looks like we don't need it
+  secret_key: 65J1ID2B6LDG  - can be added to deployment properties
+  user_identity: 8GFDIG229629  - can be added to deployment properties
 
   admin:
     ui_url: ${int-core.base_url}apriori/login
@@ -302,14 +302,14 @@ qa-20-1:
 
 ######################################################## MIGRATION #####################################################
 migration:
-#  name: migration
-#  customer_identity: 3KED5H5BKN85
-#  secret_key: X0V4XXK2SF87
+  name: migration
+  customer_identity: 3KED5H5BKN85
+  secret_key: X0V4XXK2SF87
 
 ######################################################## MIGRATION-PREVIEW #####################################################
 migration-preview:
-#  name: migration-preview
-#  secret_key: X0V4XXK2SF87
+  name: migration-preview
+  secret_key: X0V4XXK2SF87
 
 
 
@@ -325,11 +325,11 @@ dev-cfirst:
 ######################################################## QA-TEST-V22 ########################################################
 qa-test-v22:
   application_name: cid
-#  customer_identity: 6C1F8C1D4D75
-#  deployment_name: production
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: production
   installation_name: core-na-1 - 22 production deployment
-#  name: qa-test
-#  secret_key: PG9E795ML3P4
+  name: qa-test
+  secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   cds:
@@ -381,22 +381,22 @@ cis-sbx:
 ######################################################## CIS_QA ########################################################
 cis-qa:
   application_name: cis
-#  aws_region: na-1
+  aws_region: na-1
   customer_identity: 6C1F8C1D4D75
-#  deployment_name: qa
-#  installation_name: cis.na-1-v22-1
-#  name: cis-qa
-#  secret_key: PG9E795ML3P4
+  deployment_name: qa
+  installation_name: cis.na-1-v22-1
+  name: cis-qa
+  secret_key: PG9E795ML3P4
   user_identity: 1F7GAI5DLI2B
 
 ######################################################## QA-TEST-SANDBOX ########################################################
 qa-test-sandbox:
   application_name: cid
-#  customer_identity: 6C1F8C1D4D75
-#  deployment_name: production
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: production
   installation_name: core-na-1 - 23 production deployment
-#  name: qa-test-sandbox
-#  secret_key: PG9E795ML3P4
+  name: qa-test-sandbox
+  secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   cds:
@@ -412,10 +412,10 @@ qa-test-sandbox:
     ######################################################## QA-TEST-V22-SANDBOX ########################################################
 qa-test-v22-sandbox:
   application_name: cid
-#  customer_identity: 6C1F8C1D4D75
-#  deployment_name: production
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: production
   installation_name: core-na-1 - 22 production deployment
-#  name: qa-test
+  name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 

@@ -21,12 +21,14 @@ public class PropertiesContext {
     private static final String[] variableMarker = {"${", "}"};
 
     static {
+
         final JsonNode globalPropertiesContext = loadProperties("configurations/global-config.yml");
-        ENVIRONMENT_NAME = globalPropertiesContext.at("/env").asText();
+        final JsonNode envPropertiesContext = loadProperties("configurations/environments-config.yml");
+        final JsonNode customersPropertiesContext = loadProperties("configurations/customers-config.yml");
 
-        final JsonNode envPropertiesContext = loadProperties("configurations/environments/" + ENVIRONMENT_NAME + "-config.yml");
+        propertiesContext = mergePropertiesIntoOneContext(globalPropertiesContext, envPropertiesContext, customersPropertiesContext);
 
-        propertiesContext = mergeCollection(globalPropertiesContext, envPropertiesContext);
+        ENVIRONMENT_NAME = propertiesContext.at("/env").asText();
     }
 
     @SneakyThrows
@@ -43,11 +45,12 @@ public class PropertiesContext {
         );
     }
 
-    public static JsonNode mergeCollection(JsonNode globalProperties, JsonNode envProperties) {
+    public static JsonNode mergePropertiesIntoOneContext(JsonNode... propertiesFiles) {
         ObjectNode objectNode = mapper.createObjectNode();
 
-        objectNode.setAll((ObjectNode) globalProperties);
-        objectNode.setAll((ObjectNode) envProperties);
+        for (int i = 0; i < propertiesFiles.length; i++) {
+            objectNode.setAll((ObjectNode) propertiesFiles[i]);
+        }
 
         return objectNode;
     }
