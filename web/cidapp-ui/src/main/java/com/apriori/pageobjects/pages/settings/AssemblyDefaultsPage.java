@@ -143,13 +143,13 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
     /**
      * Get the Assembly Association Strategy Cards
      *
-     * @return - List of all cards displayed in format [Workspace name]|[Criteria]
+     * @return - List of string arrays with all cards displayed [ "Workspace", (Workspace Name), "Criteria", (Criteria Name) ]
      */
-    public List<String> getAsmStrategyCardDetails() {
+    public List<String[]> getAsmStrategyCardDetails() {
 
         List<WebElement> cards = pageUtils.waitForElementsToAppear(By.cssSelector("div[data-testid='step-cards'] div"));
 
-        return cards.stream().map(card -> card.getText().split("\n")[1] + "|" + card.getText().split("\n")[3]).collect(Collectors.toList());
+        return cards.stream().map(card -> card.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
