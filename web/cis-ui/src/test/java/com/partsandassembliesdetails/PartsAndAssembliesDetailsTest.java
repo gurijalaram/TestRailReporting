@@ -39,7 +39,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"12396", "12458", "12460", "12461", "12254", "12459"})
+    @TestRail(testCaseId = {"12254", "12396", "12458", "12459", "12460", "12461"})
     @Description("Verify 3D viewer and column cards on parts and assemblies details page")
     public void testPartsAndAssembliesDetailPageHeaderTitle() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

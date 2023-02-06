@@ -503,7 +503,6 @@ public class UploadComponentTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
             .clickExplore()
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile1)
