@@ -4,13 +4,22 @@ package com.messages;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.messages.MessagesPage;
+import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
+import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+
+import java.io.File;
 
 
 public class MessagesTest extends TestBase {
@@ -22,6 +31,10 @@ public class MessagesTest extends TestBase {
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
     private MessagesPage messagesPage;
+    private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
+    private PartsAndAssembliesPage partsAndAssembliesPage;
+    private File resourceFile;
+    private UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"13317","13318","13319","13554","13561"})
@@ -29,11 +42,34 @@ public class MessagesTest extends TestBase {
     public void testMessagePageContent() {
         SoftAssertions softAssertions = new SoftAssertions();
 
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+
         softAssertions.assertThat(leftHandNavigationBar.isMessagesLinkDisplayed()).isEqualTo(true);
 
-        messagesPage = leftHandNavigationBar.clickMessages();
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .addComment("New Reply")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread();
 
         softAssertions.assertThat(messagesPage.getMessagesHeaderTitle()).contains("All Messages");
         softAssertions.assertThat(messagesPage.isMessagesDisplayed()).isEqualTo(true);
@@ -47,7 +83,64 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.getCommentContent()).isNotEmpty();
 
         softAssertions.assertAll();
+    }
 
+    @Test
+    @TestRail(testCaseId = {"14759","16107","16108"})
+    @Description("Open a discussion from subject/attribute/replies")
+    public void testMessagePageDiscussions() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .addComment("New Reply")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        messagesPage = leftHandNavigationBar.clickMessages();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(messagesPage.isUnreadOptionDisplayed()).isEqualTo(true);
+
+        messagesPage.clickOnUnread();
+
+        softAssertions.assertThat(messagesPage.isMessagePageDiscussionDisplayed("New Discussion")).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Subject");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread();
+
+        partsAndAssembliesDetailsPage = messagesPage.clickOnReplies();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread();
+
+        partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Attribute");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }
 

@@ -50,14 +50,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
-    @Getter
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
-    private CssComponent cssComponent = new CssComponent();
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
     private final long START_TIME = System.currentTimeMillis() / 1000;
     private final int METHOD_TIMEOUT = 30;
+    @Getter
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private CssComponent cssComponent = new CssComponent();
 
     /**
      * GET completed scenario representation of a part
@@ -68,7 +68,7 @@ public class ScenariosUtil {
     public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
         do {
             try {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
 
@@ -88,10 +88,9 @@ public class ScenariosUtil {
             }
         } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentInfo.getComponentName(), componentInfo.getScenarioName(), WAIT_TIME)
-        );
+        throw new RuntimeException(
+            String.format("Failed to get uploaded component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
+                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
     }
 
     /**
@@ -598,7 +597,7 @@ public class ScenariosUtil {
 
         try {
             do {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
 
@@ -615,7 +614,7 @@ public class ScenariosUtil {
             log.error(ie.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
+        throw new RuntimeException(
             String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
                 componentIdentity, scenarioIdentity, WAIT_TIME)
         );
@@ -654,7 +653,7 @@ public class ScenariosUtil {
             log.error(ie.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
+        throw new RuntimeException(
             String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
                 componentIdentity, scenarioIdentity, WAIT_TIME)
         );

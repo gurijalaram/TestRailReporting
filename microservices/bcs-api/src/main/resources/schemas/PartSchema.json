@@ -13,7 +13,8 @@
         "externalId",
         "requireWatchpointReport",
         "url",
-        "partName"
+        "partName",
+        "description"
       ],
       "properties": {
         "identity": {
@@ -59,6 +60,9 @@
           "type": "string"
         },
         "message": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }

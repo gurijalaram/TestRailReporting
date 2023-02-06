@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -30,6 +31,7 @@ import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -62,6 +64,13 @@ public class PublishAssembliesTests extends TestBase {
         super();
     }
 
+    @After
+    public void resetAllSettings() {
+        if (currentUser != null) {
+            new UserPreferencesUtil().resetSettings(currentUser);
+        }
+    }
+
     @Test
     @Category(SmokeTests.class)
     @Issue("SC-337")
@@ -74,6 +83,7 @@ public class PublishAssembliesTests extends TestBase {
         String subComponentAName = "titan battery release";
         String subComponentBName = "titan battery";
         String assemblyName = "titan battery ass";
+        String preferPublic = "Prefer Public Scenarios";
 
         subComponentA = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, subComponentAName + ".SLDPRT");
         subComponentB = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, subComponentBName + ".SLDPRT");
@@ -81,6 +91,10 @@ public class PublishAssembliesTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
+            .openSettings()
+            .goToAssemblyDefaultsTab()
+            .selectAssemblyStrategy(preferPublic)
+            .submit(EvaluatePage.class)
             .uploadComponent(subComponentAName, scenarioName, subComponentA, currentUser);
 
         cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
