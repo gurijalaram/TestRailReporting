@@ -88,7 +88,7 @@ public class CastingDtcReportTests extends TestBase {
     @Category({ReportsTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"1694"})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Report")
-    public void testRollupDropDown() {
+    public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
             ReportNamesEnum.CASTING_DTC.getReportName(),

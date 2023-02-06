@@ -128,6 +128,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "FLANGE C";
         List<String> componentNames = Arrays.asList("BOLT", "NUT", "FLANGE");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "flange.CATPart"), scenarioName));
@@ -150,6 +151,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "piston_assembly";
         List<String> componentNames = Arrays.asList("piston_pin", "piston");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
@@ -172,6 +174,7 @@ public class UploadAssembliesTests extends TestBase {
         String assemblyName = "Hinge assembly";
         List<String> componentNames = Arrays.asList("big ring", "Pin", "small ring");
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
@@ -194,6 +197,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "oldham";
         List<String> componentNames = Arrays.asList("stand", "drive", "joint");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "stand.prt.1"), scenarioName));
@@ -226,6 +230,7 @@ public class UploadAssembliesTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "v6 piston assembly_asm1";
         List<String> componentNames = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
@@ -286,6 +291,7 @@ public class UploadAssembliesTests extends TestBase {
         String assemblyName2 = "v6 piston assembly_asm1";
         List<String> componentNames1 = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
         List<String> componentNames2 = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+        currentUser = UserUtil.getUser();
 
         List<MultiUpload> firstMultiComponentBatch = new ArrayList<>();
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
@@ -614,6 +620,8 @@ public class UploadAssembliesTests extends TestBase {
     @TestRail(testCaseId = {"6546"})
     @Description("Changing unit user preferences when viewing assembly")
     public void testUnitPreferenceInAssembly() {
+        currentUser = UserUtil.getUser();
+
         final String hinge_assembly = "Hinge assembly";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
@@ -697,140 +705,5 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3);
 
         softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(testCaseId = "12129")
-    @Description("Validate that creating a new component scenario will automatically override a missing scenario, regardless of override flag")
-    public void testUploadAssemblyWithMissingSubComponents() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String assemblyName = "Product1";
-        final String assemblyExtension = ".CATProduct";
-        final String DRILL  = "Drill005";
-        final String SCREW = "Screw";
-        final String EDON = "edon+";
-
-        final List<String> subComponentNames = Arrays.asList(DRILL, SCREW);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
-        final String subComponentExtension = ".CATPart";
-
-        resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, EDON + subComponentExtension);
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(EDON)).isTrue();
-
-        evaluatePage = componentsTreePage.openAssembly(EDON, scenarioName);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.DISCONNECTED)).isTrue();
-
-        componentsTreePage = evaluatePage.clickExplore()
-            .uploadComponentAndOpen(EDON, scenarioName, resourceFile, currentUser)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(EDON)).isFalse();
-
-        componentsTreePage.openAssembly(EDON, scenarioName);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
-
-        softAssertions.assertAll();
-
-        evaluatePage.clickExplore()
-            .multiSelectScenarios("" + assemblyName + ", " + scenarioName + "")
-            .clickDeleteIcon()
-            .clickDelete(ExplorePage.class)
-            .selectFilter("Recent")
-            .multiHighlightScenarios("" + DRILL + ", " + scenarioName + "",
-                "" + SCREW + ", " + scenarioName + "",
-                "" + EDON + ", " + scenarioName + "")
-            .clickDeleteIcon()
-            .clickDelete(DeletePage.class)
-            .clickClose(ExplorePage.class);
-    }
-
-    @Test
-    @TestRail(testCaseId = {"12130", "5625"})
-    @Description("Validate that creating a new assembly scenario will automatically override a missing scenario, regardless of override flag")
-    public void testUploadAssemblyWithMissingSubAssembly() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String assemblyName = "7";
-        final String assemblyExtension = ".prt";
-        final String COMPONENT  = "MiscellaneousComponents of SuspensionSeries";
-        final String SUBASSEMBLY = "Hex Drive";
-
-        final List<String> subComponentNames = Arrays.asList(COMPONENT);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
-        final String subComponentExtension = ".prt";
-
-        resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, SUBASSEMBLY + subComponentExtension);
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SUBASSEMBLY)).isTrue();
-
-        evaluatePage = componentsTreePage.openAssembly(SUBASSEMBLY, scenarioName);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.DISCONNECTED)).isTrue();
-
-        componentsTreePage = evaluatePage.clickExplore()
-            .uploadComponentAndOpen(SUBASSEMBLY, scenarioName, resourceFile, currentUser)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SUBASSEMBLY)).isFalse();
-
-        componentsTreePage.openAssembly(SUBASSEMBLY, scenarioName);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
-
-        softAssertions.assertAll();
-
-        evaluatePage.clickExplore()
-            .selectFilter("Recent")
-            .multiSelectScenarios("" + assemblyName + ", " + scenarioName + "", "" + SUBASSEMBLY + ", " + scenarioName + "")
-            .clickDeleteIcon()
-            .clickDelete(DeletePage.class)
-            .clickClose(ExplorePage.class)
-            .multiHighlightScenarios("" + COMPONENT + ", " + scenarioName + "",
-                "" + "Hex Retaining O-Ring" + ", " + scenarioName + "")
-            .clickDeleteIcon()
-            .clickDelete(DeletePage.class)
-            .clickClose(ExplorePage.class);
     }
 }

@@ -39,7 +39,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"12396", "12458", "12460", "12461", "12254", "12459"})
+    @TestRail(testCaseId = {"12254", "12396", "12458", "12459", "12460", "12461"})
     @Description("Verify 3D viewer and column cards on parts and assemblies details page")
     public void testPartsAndAssembliesDetailPageHeaderTitle() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1338,6 +1338,53 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 23");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14050", "14051", "14052", "14053"})
+    @Description("Verify remove participants functionalities")
+    public void testRemoveParticipants() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickOnShare()
+                .selectAUser("qa-automation-01@apriori.com")
+                .selectAUser("qa-automation-02@apriori.com")
+                .clickOnInvite();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isTrue();
+
+        partsAndAssembliesDetailsPage.clickOnSharedUserRemoveIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveModalDisplayed()).isTrue();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getRemoveParticipantMessageText()).contains("Are you want to remove yourself from the workspace?");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveButtonDisplayed()).isTrue();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveCancelButtonDisplayed()).isTrue();
+
+        partsAndAssembliesDetailsPage.clickOnSharedUserRemoveCancelButton();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue();
+
+        partsAndAssembliesDetailsPage.clickOnSharedUserRemoveButton();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse();
 
         softAssertions.assertAll();
     }
