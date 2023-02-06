@@ -7,7 +7,6 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -416,8 +415,8 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      *
      * @return boolean
      */
-    public boolean isEditButtonEnabled() {
-        return !assembliesComponentsController.isEditButtonEnabled();
+    public boolean isEditButtonDisabled() {
+        return !assembliesComponentsController.isEditButtonDisabled();
     }
 
     /**
@@ -468,5 +467,27 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isPreviewPanelDisplayed() {
         return pageUtils.isElementDisplayed(previewDataPanel);
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return assembliesComponentsController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Checks if the scenario checkbox is selected
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return true/false
+     */
+    public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
+        return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
     }
 }

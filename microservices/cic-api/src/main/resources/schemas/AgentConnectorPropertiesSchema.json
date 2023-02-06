@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "baseType": {
+      "type": "string"
+    },
+    "ordinal": {
+      "type": "integer"
+    },
+    "aspects": {
+      "type": "object",
+      "properties": {
+        "isPrimaryKey": {
+          "type": "boolean"
+        }
+      },
+      "optional": [
+        "isPrimaryKey"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "baseType",
+    "ordinal",
+    "aspects"
+  ]
+}

@@ -324,7 +324,7 @@ public class AssembliesComponentsController {
      *
      * @return boolean
      */
-    public boolean isEditButtonEnabled() {
+    public boolean isEditButtonDisabled() {
         return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
@@ -573,6 +573,19 @@ public class AssembliesComponentsController {
     public boolean isComponentNameDisplayedInTreeView(String componentName) {
         By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
         return pageUtils.waitForElementToAppear(componentText).isDisplayed();
+    }
+
+    /**
+     * Checks if the scenario checkbox is selected
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return true/false
+     */
+    public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
+        By element = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//*[local-name() = 'svg'][@data-testid ='CheckBoxIcon']",
+            componentName.toUpperCase().trim(), scenarioName.trim()));
+        return pageUtils.isElementDisplayed(element);
     }
 }
 

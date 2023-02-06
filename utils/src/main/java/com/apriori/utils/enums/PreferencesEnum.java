@@ -1,6 +1,7 @@
 package com.apriori.utils.enums;
 
 public enum PreferencesEnum {
+    ASSEMBLY_STRATEGY("assembly.associationStrategyPreset"),
     AREA_UNITS("display.areaUnits"),
     CURRENCY("display.currency"),
     UNITS_GROUP("display.unitsGroup"),

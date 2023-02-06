@@ -6,6 +6,7 @@ import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -31,6 +32,7 @@ import java.util.List;
 public class UpdateCADFileTests extends TestBase {
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
+    private UpdateCadFilePage updateCadFilePage;
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -93,11 +95,15 @@ public class UpdateCADFileTests extends TestBase {
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
 
-        evaluatePage = new CidAppLoginPage(driver).login(currentUser)
-            .openScenario(autoBotAsm, scenarioName);
-        componentsTreePage = evaluatePage.clickActions()
-            .updateCadFile(modifiedAutoAsm)
-            .submit(EvaluatePage.class)
+        updateCadFilePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(autoBotAsm, scenarioName)
+            .clickActions()
+            .updateCadFile(modifiedAutoAsm);
+
+        soft.assertThat(updateCadFilePage.getAssociationAlert()).contains("No Assembly Association Strategy has been selected. " +
+            "The default strategy: Prefer Private Scenarios will be used until updated in User Preferences.");
+
+        componentsTreePage = updateCadFilePage.submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
@@ -122,7 +128,12 @@ public class UpdateCADFileTests extends TestBase {
         soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
             .as("Verify that CAD file update is being processed").isEqualTo("gear");
         componentsTreePage.checkSubcomponentState(assemblyInfo, autoHelm);
-        evaluatePage.clickRefresh(EvaluatePage.class);
+
+        evaluatePage = new EvaluatePage(driver);
+
+        componentsTreePage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .openComponents();
+
         soft.assertThat(componentsTreePage.getScenarioState(autoHelm, scenarioName))
             .as("Verify that CAD file update completed successfully").isEqualTo("circle-minus");
 

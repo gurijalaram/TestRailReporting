@@ -17,15 +17,19 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.WebElement;
 import testsuites.suiteinterface.ExtendedRegression;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -167,6 +171,8 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     public void testExcludeRepeatingComponent() {
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(SUB_ASSEMBLY, scenarioName)
             .openComponents()
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
@@ -217,6 +223,46 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.QUANTITY, componentIdentity, currentUser)).isEqualTo("3");
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.EXCLUDED, componentIdentity, currentUser)).isEqualTo("3");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(ExtendedRegression.class)
+    @TestRail(testCaseId = {"11873", "11863", "11950"})
+    @Description("Validate that in instances where multiple iterations of a part exist in an assembly, selection of this in table view will highlight all upon switch to tree view")
+    public void testMultipleIterationOfPartHighlightedInTreeAndTableView() {
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly3)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(SUB_SUB_ASSEMBLY, scenarioName)).isEqualTo(0);
+
+        componentsTablePage = componentsTreePage.selectTableView()
+            .setPagination()
+            .highlightScenario("3571050", scenarioName);
+
+        softAssertions.assertThat(componentsTablePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        componentsTreePage = componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        componentsTreePage.multiSelectSubcomponents(SUB_ASSEMBLY + "," + scenarioName + "")
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.isScenarioCheckboxSelected(SUB_ASSEMBLY, scenarioName)).isTrue();
+
+        softAssertions.assertThat(componentsTreePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertThat(componentsTreePage.isScenarioCheckboxSelected("0200613", scenarioName)).isFalse();
+
+        componentsTreePage.expandSubAssembly(SUB_SUB_ASSEMBLY, scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.getCellColour("3571050", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(SUB_SUB_ASSEMBLY, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }

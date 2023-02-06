@@ -401,6 +401,32 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@id='more-options-menu-popper']//li[@data-testid='menu-item-DELETE']//p[contains(text(),'Delete Comment')]")
     private WebElement deleteCommentOption;
 
+    @FindBy(id = "popover-select-control-mention-textfield")
+    private WebElement mentionUserPicker;
+
+    @FindBy(xpath = "//input[@type='checkbox']")
+    private WebElement assignToCheckBox;
+
+    @FindBy(id = "popover-select-control-user-list")
+    private WebElement assignToMentionUserList;
+
+    @FindBy(xpath = "//button[@data-testid='icon-button']")
+    private WebElement changeAssigneeCaretIcon;
+
+    @FindBy(xpath = "//button[@data-testid='share-scenario-remove-participant']")
+    private WebElement shareScenarioRemoveIcon;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-scenario-participant-remove-confirmation-modal']")
+    private WebElement removeConfirmationModal;
+
+    @FindBy(xpath = "//p[@data-testid='modal-content-scenario-participant-remove-confirmation-modal']")
+    private WebElement confirmationText;
+
+    @FindBy(xpath = "//button[@data-testid='button-primary-scenario-participant-remove-confirmation-modal']")
+    private WebElement btnParticipantRemove;
+
+    @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
+    private WebElement btnParticipantCancel;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -429,7 +455,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public void waitForCADViewerLoad() {
         getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='layout-pane layout-pane-primary']//div[@data-testid='loader']"),1);
     }
 
     /**
@@ -1969,6 +1995,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectCreatedDiscussion() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(createdDiscussion);
         return this;
     }
@@ -2034,6 +2061,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickDigitalFactoryMessageIcon() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementToAppear(proximityLbl);
         getPageUtils().mouseMove(attributeDigitalFactory);
         getPageUtils().moveAndClick(attributeMessageIcon);
@@ -2327,5 +2355,161 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isDeletedReplyDisplayed() {
         return getPageUtils().waitForElementAppear(replyMessage).isDisplayed();
+    }
+
+    /**
+     * Add a comment with a mention
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage addCommentWithMention(String comment) {
+        getPageUtils().waitForElementToAppear(commentField).sendKeys(comment);
+        return this;
+    }
+
+    /**
+     * Checks if mention user selection list displayed
+     *
+     * @return true/false
+     */
+    public boolean isMentionUserPickerDisplayed() {
+        return getPageUtils().waitForElementAppear(mentionUserPicker).isDisplayed();
+    }
+
+    /**
+     * clicks to select a user
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectMentionUser(String mentionUser) {
+        getPageUtils().waitForElementAppear(mentionUserPicker);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + mentionUser + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on change assignee icon
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickChangeAssigneeOption() {
+        getPageUtils().waitForElementAppear(changeAssigneeCaretIcon).click();
+        return this;
+    }
+
+    /**
+     * Checks if assign to-mention user list displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssignToAMentionUserListDisplayed() {
+        return getPageUtils().waitForElementAppear(assignToMentionUserList).isDisplayed();
+    }
+
+
+    /**
+     * clicks to change assign to user
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectMentionUserToAssignDiscussion(String mentionUser) {
+        getPageUtils().waitForElementAppear(assignToMentionUserList);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + mentionUser + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on assign-to checkbox
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickToAssign() {
+        getPageUtils().waitForElementAppear(assignToCheckBox).click();
+        return this;
+    }
+
+    /**
+     * Checks if mention user tag displayed
+     *
+     * @return true/false
+     */
+    public boolean isAMentionUserTagDisplayed(String mentionUser) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[contains(@id,'" + mentionUser + "')]")).isDisplayed();
+    }
+
+    /**
+     * Checks if remove Icon displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveIconDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[@data-testid='loader']"),5);
+        return getPageUtils().waitForElementAppear(shareScenarioRemoveIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on user remove icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveIcon() {
+        getPageUtils().waitForElementAndClick(shareScenarioRemoveIcon);
+        return this;
+    }
+
+    /**
+     * Checks if remove modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveModalDisplayed() {
+        return getPageUtils().waitForElementAppear(removeConfirmationModal).isDisplayed();
+    }
+
+    /**
+     * Checks if remove text displayed
+     *
+     * @return true/false
+     */
+    public String getRemoveParticipantMessageText() {
+        return getPageUtils().waitForElementAppear(confirmationText).getText();
+    }
+
+    /**
+     * Checks if remove button displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnParticipantRemove).isDisplayed();
+    }
+
+    /**
+     * Checks if remove cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveCancelButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnParticipantCancel).isDisplayed();
+    }
+
+    /**
+     * clicks on user remove button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveButton() {
+        getPageUtils().waitForElementAndClick(btnParticipantRemove);
+        return this;
+    }
+
+    /**
+     * clicks on user remove cancel button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveCancelButton() {
+        getPageUtils().waitForElementAndClick(btnParticipantCancel);
+        return this;
     }
 }

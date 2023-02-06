@@ -10,7 +10,9 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -34,9 +36,9 @@ import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SanityTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -55,6 +57,7 @@ public class UploadComponentTests extends TestBase {
     private CadFileStatusPage cadFileStatusPage;
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
+    private ComponentsTreePage componentsTreePage;
     private ComponentInfoBuilder cidComponentItem;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -136,7 +139,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "{11878},{11883}")
+    @TestRail(testCaseId = {"11878", "11883"})
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
         currentUser = UserUtil.getUser();
@@ -160,7 +163,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "{11881},{11882}")
+    @TestRail(testCaseId = {"11881, 11882"})
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
         currentUser = UserUtil.getUser();
@@ -172,10 +175,16 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile);
+            .importCadFile();
 
-        assertThat(importCadFilePage.getFileInputErrorMessage(), is(message));
+        softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("No Assembly Association Strategy has been selected. " +
+            "The default strategy: Prefer Private Scenarios will be used until updated in User Preferences.");
+
+        importCadFilePage.inputComponentDetails(scenarioName, resourceFile);
+
+        softAssertions.assertThat(importCadFilePage.getFileInputErrorMessage()).isEqualTo(message);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -494,7 +503,6 @@ public class UploadComponentTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2)
             .clickExplore()
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile1)
@@ -512,6 +520,118 @@ public class UploadComponentTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(ExtendedRegression.class)
+    @TestRail(testCaseId = {"12169", "12171", "12172", "12168"})
+    @Description("Validate race conditions - upload a full assembly with override")
+    public void uploadMultiLevelAssemblyWithOverrideAndRename() {
+        currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final File resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "21395.ipt");
+        final File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "33803.ipt");
+        final File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "33804.ipt");
+        final File resourceFile4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "78828.ipt");
+        final File resourceFile5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "78829.ipt");
+        final File resourceFile6 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "98241.ipt");
+        final File resourceFile7 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "SubAssembly1.iam");
+        final File resourceFile8 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "SubAssembly2.iam");
+        final File resourceFile9 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "MainAssembly.iam");
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(resourceFile, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile2, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile3, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile4, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile5, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile6, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile7, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile8, scenarioName2));
+        multiComponents.add(new MultiUpload(resourceFile9, scenarioName2));
+
+        loginPage = new CidAppLoginPage(driver);
+        List<ScenarioItem> componentItems = loginPage.login(currentUser)
+            .uploadMultiComponentsCSS(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9),
+                scenarioName, currentUser);
+
+        componentItems.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
+
+        explorePage = new ExplorePage(driver);
+        componentsTreePage = explorePage.refresh()
+            .setPagination()
+            .openScenario("MainAssembly", scenarioName)
+            .openComponents()
+            .expandSubAssembly("SubAssembly1", scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("98241")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("33803")).isTrue();
+
+        componentsTreePage.expandSubAssembly("SubAssembly2", scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78829")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78828")).isTrue();
+
+        componentsTreePage.closePanel()
+            .clickExplore()
+            .importCadFile()
+            .inputScenarioName(scenarioName2)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .clickClose()
+            .selectFilter("Recent");
+
+        multiComponents.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
+
+        explorePage.refresh()
+            .setPagination()
+            .openScenario("MainAssembly", scenarioName2)
+            .openComponents()
+            .expandSubAssembly("SubAssembly1", scenarioName2);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("98241")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("33803")).isTrue();
+
+        componentsTreePage.expandSubAssembly("SubAssembly2", scenarioName2);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78829")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78828")).isTrue();
+
+        componentsTreePage.closePanel()
+            .clickExplore()
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents)
+            .tick("Override existing scenario")
+            .submit()
+            .clickClose()
+            .selectFilter("Recent");
+
+        multiComponents.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
+
+        explorePage.refresh()
+            .setPagination()
+            .openScenario("MainAssembly", scenarioName)
+            .openComponents()
+            .expandSubAssembly("SubAssembly1", scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("98241")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("33803")).isTrue();
+
+        componentsTreePage.expandSubAssembly("SubAssembly2", scenarioName);
+
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78829")).isTrue();
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78828")).isTrue();
 
         softAssertions.assertAll();
     }

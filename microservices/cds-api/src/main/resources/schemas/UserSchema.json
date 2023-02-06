@@ -18,8 +18,7 @@
         "sites",
         "customAttributes",
         "customerIdentity",
-        "mfaRequired",
-        "hasCompleteProfile"
+        "mfaRequired"
       ],
       "properties": {
         "mfaRequired": {
@@ -145,9 +144,6 @@
         },
         "customerIdentity": {
           "type": "string"
-        },
-        "hasCompleteProfile": {
-          "type": "boolean"
         }
       }
     }

@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
 
-    @FindBy(css = ".alert")
+    @FindBy(xpath = "//div[@id='qa-sub-header-cost-button']/..")
     private WebElement costLabel;
 
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")

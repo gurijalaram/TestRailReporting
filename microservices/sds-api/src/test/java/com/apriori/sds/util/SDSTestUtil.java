@@ -5,16 +5,16 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertFalse;
 
-import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.objects.response.Application;
+import com.apriori.cds.objects.response.Applications;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Customers;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.entity.response.Application;
-import com.apriori.entity.response.Applications;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
@@ -211,8 +211,8 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return response object
      */
     public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
-            SCENARIO_STATE_EQ.getKey() + " not_costed");
+        return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.split("\\.", 2)[0], SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED);
     }
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
@@ -252,7 +252,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     private static String initApApplicationContext() {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
-            RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
+            RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
 
         ).get();
@@ -260,7 +260,7 @@ public abstract class SDSTestUtil extends TestUtil {
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
-            RequestEntityUtil.init(CASAPIEnum.CUSTOMER_APPLICATIONS, Applications.class)
+            RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID, Applications.class)
                 .inlineVariables(customer.getIdentity())
                 .token(testingUser.getToken())
         ).get();

@@ -1,0 +1,110 @@
+{
+  "reportUnitUri": "/aPriori/reports/DTC Metrics/casting/castingDTCDetails",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "useLatestExport",
+        "value": [
+          "Scenario"
+        ]
+      },
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2022-09-08T07:37:42"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-01-06T06:37:42"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "5"
+        ]
+      },
+      {
+        "name": "rollup",
+        "value": [
+          "129"
+        ]
+      },
+      {
+        "name": "costMetric",
+        "value": [
+          "Fully Burdened Cost"
+        ]
+      },
+      {
+        "name": "massMetric",
+        "value": [
+          "Finish Mass"
+        ]
+      },
+      {
+        "name": "sortOrder",
+        "value": [
+          "Manufacturing - Casting Issues"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "USD"
+        ]
+      },
+      {
+        "name": "annualSpendMin",
+        "value": [
+          "0"
+        ]
+      },
+      {
+        "name": "processGroup",
+        "value": [
+          "Casting - Die",
+          "Casting - Sand"
+        ]
+      },
+      {
+        "name": "exportEventId",
+        "value": [
+          "5"
+        ]
+      },
+      {
+        "name": "metricStatistic",
+        "value": [
+          "6,d1=24,d2=36,d3=145,d4=389,d5=0,d6=2,d7=5,d8=0.0250486,d9=0.0276428,da=0.0353725"
+        ]
+      },
+      {
+        "name": "dtcScore",
+        "value": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
+      {
+        "name": "partsSelect",
+        "value": [
+          "~NOTHING~"
+        ]
+      }
+    ]
+  }
+}

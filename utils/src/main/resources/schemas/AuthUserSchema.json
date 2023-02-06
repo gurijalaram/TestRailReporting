@@ -103,8 +103,11 @@
         "roles",
         "customerIdentity",
         "userType",
-        "mfaRequired",
+        "mfaRequired"
+      ],
+      "optional": [
         "hasCompleteProfile"
+
       ]
     }
   }
