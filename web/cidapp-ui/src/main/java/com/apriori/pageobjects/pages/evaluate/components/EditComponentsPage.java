@@ -18,7 +18,7 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
     @FindBy(css = "[role='dialog']")
     private WebElement conflictsForm;
 
-    @FindBy(css = "[data-testid='apriori-alert'] .alert-messaging")
+    @FindBy(css = "[data-testid='apriori-alert'] [data-testid='alert-messaging']")
     private WebElement conflictsFormMessage;
 
     @FindBy(css = "input[value='override']")

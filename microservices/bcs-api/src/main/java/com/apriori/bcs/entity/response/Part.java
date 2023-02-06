@@ -36,6 +36,7 @@ public class Part {
     private String partName;
     private String costingResult;
     private String message;
+    private String description;
 
 
     /**
