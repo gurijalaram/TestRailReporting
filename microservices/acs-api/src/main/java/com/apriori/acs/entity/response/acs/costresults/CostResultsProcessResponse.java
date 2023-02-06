@@ -5,6 +5,6 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "acs/CostResults.json")
+@Schema(location = "acs/CostResultsProcess.json")
 public class CostResultsProcessResponse {
 }

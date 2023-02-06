@@ -7,6 +7,9 @@ import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStoc
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsGCDResponse;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessResponse;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -595,6 +598,96 @@ public class AcsResources {
             );
 
         return (GenericResourceCreatedIdResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Get Cost Results - Process
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param depth - String - value to set
+     * @return GetCostResults instance
+     */
+
+    public CostResultsProcessResponse getCostResultsProcess(ScenarioIterationKey scenarioIterationKey, String depth) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.COST_RESULTS, CostResultsProcessResponse.class)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    depth, StandardCharsets.UTF_8.toString())
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return (CostResultsProcessResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get Cost Results - Root
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param depth - String - value to set
+     * @return GetCostResults instance
+     */
+
+    public CostResultsRootResponse getCostResultsRoot(ScenarioIterationKey scenarioIterationKey, String depth) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.COST_RESULTS, CostResultsRootResponse.class)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    depth, StandardCharsets.UTF_8.toString())
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return (CostResultsRootResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get Cost Results - GCD
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param depth - String - value to set
+     * @return GetCostResults instance
+     */
+
+    public CostResultsGCDResponse getCostResultsGCD(ScenarioIterationKey scenarioIterationKey, String depth) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.COST_RESULTS, CostResultsGCDResponse.class)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    depth, StandardCharsets.UTF_8.toString())
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return (CostResultsGCDResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

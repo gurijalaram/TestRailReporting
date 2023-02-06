@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import java.lang.reflect.Array;
 
 @Data
-@Schema(location = "acs/CostResults.json")
+@Schema(location = "acs/CostResultsProcess.json")
 @NoArgsConstructor
-public class CostResultsRoot {
+public class CostResultsRootResponse {
     private Object processInstanceKey;
     private Object artifactKey;
     private Array gcds;

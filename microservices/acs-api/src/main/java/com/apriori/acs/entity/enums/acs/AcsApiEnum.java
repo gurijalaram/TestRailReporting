@@ -13,6 +13,7 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     ARTIFACT_PROPERTIES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/artifact-properties/%s/artifacts"),
     ARTIFACT_TABLE_INFO("ws/workspace/process-groups/%s/artifact-tableinfos/%s"),
     CUSTOM_UNIT_VARIANT_SETTINGS("ws/workspace/users/%s/custom-unit-variant-settings"),
+    COST_RESULTS("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/cost-results?depth=%s"),
     DISPLAY_UNITS("ws/workspace/users/%s/display-units"),
     ENABLED_CURRENCY_RATE_VERSIONS("ws/workspace/global-info/enabledCurrency"),
     GCD_IMAGE_MAPPING("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-mapping"),
