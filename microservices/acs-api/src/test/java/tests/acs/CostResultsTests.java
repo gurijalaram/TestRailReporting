@@ -1,6 +1,7 @@
 package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -11,6 +12,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
@@ -20,9 +22,9 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "14814")
+    @TestRail(testCaseId = "21579")
     @Description("Get Cost Results after Costing Sheet Metal")
-    public void testGetCostResults() {
+    public void testGetCostRootResultsSheetMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -50,6 +52,16 @@ public class CostResultsTests {
             false
         );
 
+        CostResultsRootResponse response = acsResources.getCostResultsRoot(
+            costOutputs.getScenarioIterationKey(),
+            "ROOT"
+        );
 
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getProcessInstanceKey().getProcessName()).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(response.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(response.getDepth()).isEqualTo("ROOT");
+        softAssertions.assertThat(response.getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 }

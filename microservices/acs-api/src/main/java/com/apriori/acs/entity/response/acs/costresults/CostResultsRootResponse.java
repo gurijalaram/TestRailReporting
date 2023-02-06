@@ -5,15 +5,17 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Array;
+import java.util.List;
 
 @Data
 @Schema(location = "acs/CostResultsProcess.json")
 @NoArgsConstructor
 public class CostResultsRootResponse {
-    private Object processInstanceKey;
-    private Object artifactKey;
-    private Array gcds;
-    private Object resultMapBean;
-    private Object propertyInfoMap;
+    private ProcessInstanceKey processInstanceKey;
+    private ArtifactKey artifactKey;
+    private List<GCDsItem> gcds;
+    private String resultMapBean;
+    private Boolean costingFailed;
+    private Boolean secondaryProcess;
+    private String depth;
 }
