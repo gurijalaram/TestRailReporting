@@ -1,9 +1,11 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
+import java.util.List;
+
+@Data
 public class ResultMapBean {
-    @JsonProperty("@type")
-    private String propertyValueMap;
-    private String propertyInfoMap;
+    private PropertyValueMap propertyValueMap;
+    private List<PropertyInfoMap> propertyInfoMap;
 }

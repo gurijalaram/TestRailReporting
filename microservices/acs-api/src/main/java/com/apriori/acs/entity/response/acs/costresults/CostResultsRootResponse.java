@@ -8,14 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Schema(location = "acs/CostResultsProcess.json")
+@Schema(location = "acs/CostResultsRoot.json")
 @NoArgsConstructor
 public class CostResultsRootResponse {
-    private ProcessInstanceKey processInstanceKey;
-    private ArtifactKey artifactKey;
-    private List<GCDsItem> gcds;
-    private String resultMapBean;
-    private Boolean costingFailed;
-    private Boolean secondaryProcess;
-    private String depth;
+    private List<CostResultsRootItem> costResultsRootItem;
 }

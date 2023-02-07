@@ -182,6 +182,3274 @@
                 "sequenceNumber",
                 "displayName"
               ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
             }
           ]
         },
@@ -213,6 +3481,9 @@
                   "type": "number"
                 },
                 "additionalAmortizedInvestment": {
+                  "type": "number"
+                },
+                "indirectMachinePower": {
                   "type": "number"
                 },
                 "lifetimeCost": {
@@ -263,16 +3534,28 @@
                 "materialStockName": {
                   "type": "string"
                 },
+                "calculatedEnergyConsumption": {
+                  "type": "number"
+                },
                 "additionalDirectCosts": {
                   "type": "number"
                 },
+                "indirectMachineEnergyConsumption": {
+                  "type": "number"
+                },
                 "scrapMass": {
+                  "type": "number"
+                },
+                "cycleTimeEnergyConsumption": {
                   "type": "number"
                 },
                 "materialCost": {
                   "type": "number"
                 },
                 "totalProductionVolume": {
+                  "type": "number"
+                },
+                "cadSerLength": {
                   "type": "number"
                 },
                 "fullyBurdenedCost": {
@@ -293,7 +3576,7 @@
                 "amortizedInvestment": {
                   "type": "number"
                 },
-                "stockPropertyheight": {
+                "energyConsumption": {
                   "type": "number"
                 },
                 "stripNestingPitch": {
@@ -308,13 +3591,22 @@
                 "notSupportedGcdsCount": {
                   "type": "integer"
                 },
+                "otherProcessCarbon": {
+                  "type": "number"
+                },
                 "batchSetupTime": {
+                  "type": "number"
+                },
+                "cadSerWidth": {
                   "type": "number"
                 },
                 "supportsSustainability": {
                   "type": "string"
                 },
                 "width": {
+                  "type": "number"
+                },
+                "stockPropertythickness": {
                   "type": "number"
                 },
                 "elapsedTime": {
@@ -347,6 +3639,9 @@
                 "batchCarbon": {
                   "type": "number"
                 },
+                "electricityProcessCarbon": {
+                  "type": "number"
+                },
                 "utilizationWithoutAddendum": {
                   "type": "number"
                 },
@@ -362,9 +3657,6 @@
                 "lastPublished": {
                   "type": "string"
                 },
-                "virtualMaterialStockName": {
-                  "type": "string"
-                },
                 "materialName": {
                   "type": "string"
                 },
@@ -374,10 +3666,10 @@
                 "finishMass": {
                   "type": "number"
                 },
-                "stockPropertyoutsideDia": {
+                "capitalInvestment": {
                   "type": "number"
                 },
-                "capitalInvestment": {
+                "directMachineEnergyConsumption": {
                   "type": "number"
                 },
                 "roughMass": {
@@ -391,9 +3683,6 @@
                 },
                 "dfmRisk": {
                   "type": "integer"
-                },
-                "stockPropertywallThickness": {
-                  "type": "number"
                 },
                 "goodPartYield": {
                   "type": "number"
@@ -410,13 +3699,13 @@
                 "processCarbon": {
                   "type": "number"
                 },
-                "stockPropertyinsideDia": {
-                  "type": "number"
-                },
                 "materialUnitCost": {
                   "type": "number"
                 },
                 "lifetimeCarbon": {
+                  "type": "number"
+                },
+                "processStepEnergyConsumption": {
                   "type": "number"
                 },
                 "length": {
@@ -450,6 +3739,7 @@
                 "gcdWithTolerancesCount",
                 "pieceCost",
                 "additionalAmortizedInvestment",
+                "indirectMachinePower",
                 "lifetimeCost",
                 "totalCarbon",
                 "height",
@@ -466,24 +3756,31 @@
                 "periodOverhead",
                 "laborCost",
                 "materialStockName",
+                "calculatedEnergyConsumption",
                 "additionalDirectCosts",
+                "indirectMachineEnergyConsumption",
                 "scrapMass",
+                "cycleTimeEnergyConsumption",
                 "materialCost",
                 "totalProductionVolume",
+                "cadSerLength",
                 "fullyBurdenedCost",
                 "directOverheadCost",
                 "partsPerHour",
                 "numPartsPerSheet",
                 "sgaCost",
                 "amortizedInvestment",
-                "stockPropertyheight",
+                "energyConsumption",
                 "stripNestingPitch",
                 "materialOverheadCost",
                 "lastCosted",
                 "notSupportedGcdsCount",
+                "otherProcessCarbon",
                 "batchSetupTime",
+                "cadSerWidth",
                 "supportsSustainability",
                 "width",
+                "stockPropertythickness",
                 "elapsedTime",
                 "annualCost",
                 "utilizationWithAddendum",
@@ -494,30 +3791,29 @@
                 "annualCarbon",
                 "materialCarbon",
                 "batchCarbon",
+                "electricityProcessCarbon",
                 "utilizationWithoutAddendum",
                 "marginPercent",
                 "logisticsCarbon",
                 "programmingCostPerPart",
                 "lastPublished",
-                "virtualMaterialStockName",
                 "materialName",
                 "pieceAndPeriod",
                 "finishMass",
-                "stockPropertyoutsideDia",
                 "capitalInvestment",
+                "directMachineEnergyConsumption",
                 "roughMass",
                 "fixtureCost",
                 "totalCost",
                 "dfmRisk",
-                "stockPropertywallThickness",
                 "goodPartYield",
                 "numOperators",
                 "dfmRiskScore",
                 "fixtureCostPerPart",
                 "processCarbon",
-                "stockPropertyinsideDia",
                 "materialUnitCost",
                 "lifetimeCarbon",
+                "processStepEnergyConsumption",
                 "length",
                 "stockPropertywidth",
                 "numScrapParts",
@@ -1598,6 +4894,25 @@
                     "supportedSerializedType"
                   ]
                 },
+                "cadSerLength": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
                 "fullyBurdenedCost": {
                   "type": "object",
                   "properties": {
@@ -1791,25 +5106,6 @@
                     "supportedSerializedType"
                   ]
                 },
-                "stockPropertyheight": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "unitTypeName": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "unitTypeName",
-                    "supportedSerializedType"
-                  ]
-                },
                 "purchasingPowerFactor": {
                   "type": "object",
                   "properties": {
@@ -1976,21 +5272,6 @@
                     "supportedSerializedType"
                   ]
                 },
-                "primaryProcessCarbon": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "supportedSerializedType"
-                  ]
-                },
                 "otherProcessCarbon": {
                   "type": "object",
                   "properties": {
@@ -2124,6 +5405,25 @@
                     "supportedSerializedType"
                   ]
                 },
+                "cadSerWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
                 "utilitiesCost": {
                   "type": "object",
                   "properties": {
@@ -2226,6 +5526,25 @@
                     "supportedSerializedType"
                   ]
                 },
+                "stockPropertythickness": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
                 "elapsedTime": {
                   "type": "object",
                   "properties": {
@@ -2325,6 +5644,21 @@
                   "required": [
                     "name",
                     "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "appliedPowerFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
                     "supportedSerializedType"
                   ]
                 },
@@ -2506,6 +5840,25 @@
                     "supportedSerializedType"
                   ]
                 },
+                "electricityProcessCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
                 "utilizationWithoutAddendum": {
                   "type": "object",
                   "properties": {
@@ -2643,21 +5996,6 @@
                   ]
                 },
                 "indirectOverheadPercent": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "supportedSerializedType"
-                  ]
-                },
-                "virtualMaterialStockName": {
                   "type": "object",
                   "properties": {
                     "name": {
@@ -2846,25 +6184,6 @@
                     "supportedSerializedType"
                   ]
                 },
-                "stockPropertyoutsideDia": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "unitTypeName": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "unitTypeName",
-                    "supportedSerializedType"
-                  ]
-                },
                 "capitalInvestment": {
                   "type": "object",
                   "properties": {
@@ -2957,25 +6276,6 @@
                   ]
                 },
                 "totalCost": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "unitTypeName": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "unitTypeName",
-                    "supportedSerializedType"
-                  ]
-                },
-                "stockPropertywallThickness": {
                   "type": "object",
                   "properties": {
                     "name": {
@@ -3145,25 +6445,6 @@
                     "supportedSerializedType"
                   ]
                 },
-                "stockPropertyinsideDia": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "unitTypeName": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "unitTypeName",
-                    "supportedSerializedType"
-                  ]
-                },
                 "materialUnitCost": {
                   "type": "object",
                   "properties": {
@@ -3218,21 +6499,6 @@
                   "required": [
                     "name",
                     "unitTypeName",
-                    "supportedSerializedType"
-                  ]
-                },
-                "avgPowerFactor": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "supportedSerializedType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "name",
                     "supportedSerializedType"
                   ]
                 },
@@ -3733,6 +6999,7 @@
                 "cycleTimeEnergyConsumption",
                 "totalProductionVolume",
                 "materialCost",
+                "cadSerLength",
                 "fullyBurdenedCost",
                 "setupCostPerCore",
                 "maintenanceSupportAllocation",
@@ -3744,7 +7011,6 @@
                 "numPartsPerSheet",
                 "amortizedInvestment",
                 "workcenterFootprint",
-                "stockPropertyheight",
                 "purchasingPowerFactor",
                 "sgaPercent",
                 "energyConsumption",
@@ -3755,7 +7021,6 @@
                 "stripNestingPitch",
                 "depreciationCost",
                 "notSupportedGcdsCount",
-                "primaryProcessCarbon",
                 "otherProcessCarbon",
                 "supportAllocation",
                 "insuranceCost",
@@ -3763,18 +7028,21 @@
                 "batchSetupTime",
                 "roughLength",
                 "machineLength",
+                "cadSerWidth",
                 "utilitiesCost",
                 "supportsSustainability",
                 "width",
                 "purchasingDepartmentCost",
                 "fireInsuranceFactor",
                 "machineUptime",
+                "stockPropertythickness",
                 "elapsedTime",
                 "annualCost",
                 "batchCost",
                 "utilizationWithAddendum",
                 "failedGcdsCount",
                 "logisticsCost",
+                "appliedPowerFactor",
                 "productionLife",
                 "footprintAllowanceFactor",
                 "materialYield",
@@ -3785,6 +7053,7 @@
                 "facilityElectricityFactor",
                 "batchCarbon",
                 "suppliesCost",
+                "electricityProcessCarbon",
                 "utilizationWithoutAddendum",
                 "expendableToolingCostPerCore",
                 "machineWidth",
@@ -3794,7 +7063,6 @@
                 "lastPublished",
                 "programmingCostPerPart",
                 "indirectOverheadPercent",
-                "virtualMaterialStockName",
                 "annualMaintenanceFactor",
                 "qualityDepartmentCost",
                 "materialName",
@@ -3805,14 +7073,12 @@
                 "installationFactor",
                 "imputedInterestRate",
                 "finishMass",
-                "stockPropertyoutsideDia",
                 "capitalInvestment",
                 "directMachineEnergyConsumption",
                 "roughMass",
                 "fixtureCost",
                 "dfmRisk",
                 "totalCost",
-                "stockPropertywallThickness",
                 "plantLaborRateAdjustmentFactor",
                 "goodPartYield",
                 "electricityRate",
@@ -3822,11 +7088,9 @@
                 "processCarbon",
                 "fixtureCostPerPart",
                 "facilityWaterFactor",
-                "stockPropertyinsideDia",
                 "materialUnitCost",
                 "overheadRate",
                 "lifetimeCarbon",
-                "avgPowerFactor",
                 "rentRate",
                 "liabilityInsuranceFactor",
                 "toolCribDepartmentCost",

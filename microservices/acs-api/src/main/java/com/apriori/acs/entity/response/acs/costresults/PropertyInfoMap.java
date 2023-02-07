@@ -1,5 +1,8 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
+import lombok.Data;
+
+@Data
 public class PropertyInfoMap {
     private PropertyInfoMapItem failuresWarningsCount;
     private PropertyInfoMapItem finalYield;
@@ -61,6 +64,7 @@ public class PropertyInfoMap {
     private PropertyInfoMapLargerItem cycleTimeEnergyConsumption;
     private PropertyInfoMapItem totalProductionVolume;
     private PropertyInfoMapLargerItem materialCost;
+    private PropertyInfoMapLargerItem cadSerLength;
     private PropertyInfoMapLargerItem fullyBurdenedCost;
     private PropertyInfoMapItem setupCostPerCore;
     private PropertyInfoMapLargerItem maintenanceSupportAllocation;
@@ -91,18 +95,21 @@ public class PropertyInfoMap {
     private PropertyInfoMapLargerItem batchSetupTime;
     private PropertyInfoMapLargerItem roughLength;
     private PropertyInfoMapLargerItem machineLength;
+    private PropertyInfoMapLargerItem cadSerWidth;
     private PropertyInfoMapLargerItem utilitiesCost;
     private PropertyInfoMapItem supportsSustainability;
     private PropertyInfoMapLargerItem width;
     private PropertyInfoMapLargerItem purchasingDepartmentCost;
     private PropertyInfoMapItem fireInsuranceFactor;
     private PropertyInfoMapItem machineUptime;
+    private PropertyInfoMapLargerItem stockPropertythickness;
     private PropertyInfoMapItem elapsedTime;
     private PropertyInfoMapLargerItem annualCost;
     private PropertyInfoMapLargerItem batchCost;
     private PropertyInfoMapItem utilizationWithAddendum;
     private PropertyInfoMapItem failedGcdsCount;
     private PropertyInfoMapLargerItem logisticsCost;
+    private PropertyInfoMapItem appliedPowerFactor;
     private PropertyInfoMapLargerItem productionLife;
     private PropertyInfoMapItem footprintAllowanceFactor;
     private PropertyInfoMapItem materialYield;
@@ -113,6 +120,7 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem facilityElectricityFactor;
     private PropertyInfoMapLargerItem batchCarbon;
     private PropertyInfoMapLargerItem suppliesCost;
+    private PropertyInfoMapLargerItem electricityProcessCarbon;
     private PropertyInfoMapItem utilizationWithoutAddendum;
     private PropertyInfoMapItem expendableToolingCostPerCore;
     private PropertyInfoMapLargerItem machineWidth;
