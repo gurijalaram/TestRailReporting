@@ -1,6 +1,7 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
+import com.apriori.acs.entity.response.acs.GCDTypes.GCDTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
@@ -627,6 +628,29 @@ public class AcsResources {
             throw new RuntimeException(e);
         }
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get GCD Types
+     *
+     * @param processGroupName - String - Selected from ENUM
+     */
+
+    public GCDTypesResponse getGCDTypes(String processGroupName) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GCD_TYPES, GCDTypesResponse.class)
+                .headers(headers)
+                .inlineVariables(
+                    URLEncoder.encode(processGroupName, StandardCharsets.UTF_8.toString()))
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return (GCDTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
