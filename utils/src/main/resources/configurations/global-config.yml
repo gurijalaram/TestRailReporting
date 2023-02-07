@@ -78,7 +78,7 @@ default:
     ui_url: https://${default.deployment_url_template}apriori/login
 
   bcs:
-    api_url: https://bcs-http.${default.deployment_url_template}
+    api_url: https://bcs.${default.deployment_url_template}
     number_of_parts: 5
 
   cidapp:
@@ -105,10 +105,13 @@ default:
     api_url: https://fms.${default.deployment_url_template}
 
   sds:
-    api_url: https://sds-http.${default.deployment_url_template}
+    api_url: https://sds.${default.deployment_url_template}
 
   vds:
     api_url: https://vds.${default.deployment_url_template}
+
+  qms:
+    api_url: https://qms.${default.deployment_url_template}
 
   reports:
     ui_url: https://${default.deployment_url_template}jasperserver-pro/
