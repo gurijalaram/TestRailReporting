@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
@@ -15,6 +16,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
+import io.restassured.http.Header;
 import org.junit.Test;
 
 public class UserPreferencesTests extends TestUtil {
@@ -86,5 +88,17 @@ public class UserPreferencesTests extends TestUtil {
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
         assertThat(genericErrorResponse.getErrorCode(), is(equalTo(400)));
         assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "21727")
+    @Description("Verify that header -apriori-version is returned")
+    public void testCorrectHeaderIsReturned() {
+        AcsResources acsResources = new AcsResources();
+        Header header = acsResources.getUserPreferencesHeaders()
+            .get("X-aPriori-Version");
+
+        assertThat(header.getName(), equalTo("X-aPriori-Version"));
+        assertThat(header.getValue(), notNullValue());
     }
 }
