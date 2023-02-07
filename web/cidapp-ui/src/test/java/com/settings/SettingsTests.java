@@ -766,8 +766,8 @@ public class SettingsTests extends TestBase {
 
         softAssertions.assertThat(assemblyDefaultsPage.isAssemblyStrategyDropdownVisible()).as("Verify Dropdown is visible").isTrue();
 
-        softAssertions.assertThat(assemblyDefaultsPage.isUsingDefaultsMessageVisible()).as("Using default message displayed").isTrue();
-        softAssertions.assertThat(assemblyDefaultsPage.getUsingDefaultsMessage()).as("Default message presented").isEqualTo(defaultMessage);
+        softAssertions.assertThat(assemblyDefaultsPage.usingDefaultMessage.isDisplayed()).as("Using default message displayed").isTrue();
+        softAssertions.assertThat(assemblyDefaultsPage.usingDefaultMessage.getText()).as("Default message presented").isEqualTo(defaultMessage);
         softAssertions.assertThat(assemblyDefaultsPage.getAsmStrategyCardCount()).as("Verify 4 cards displayed for default").isEqualTo(4);
 
         softAssertions.assertThat(cardDetails.get(0)[1]).as("Default selection is Prefer Private").isEqualTo("Private");
