@@ -12,6 +12,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
@@ -56,11 +57,11 @@ public class CostResultsTests {
             "ROOT"
         );
 
-        /*SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getProcessInstanceKey().getProcessName()).isEqualTo("Sheet Metal");
-        softAssertions.assertThat(response.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(response.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(response.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();*/
+        SoftAssertions softAssertions = new SoftAssertions();
+//        softAssertions.assertThat(response.getCostResultsRootItem().getProcessInstanceKey().getProcessGroupName()).isEqualTo("Sheet Metal");
+//        softAssertions.assertThat(response.getCostResultsRootItem().getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(response.getCostResultsRootItem().getDepth()).isNotNull();
+//        softAssertions.assertThat(response.getCostResultsRootItem().getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertAll();
     }
 }
