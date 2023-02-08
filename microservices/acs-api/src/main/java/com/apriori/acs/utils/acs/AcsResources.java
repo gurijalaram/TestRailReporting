@@ -640,16 +640,12 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity;
-        try {
             requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GCD_TYPES, GCDTypesResponse.class)
                 .headers(headers)
                 .inlineVariables(
-                    URLEncoder.encode(processGroupName, StandardCharsets.UTF_8.toString()))
-                .urlEncodingEnabled(false);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+                    processGroupName
+                );
         return (GCDTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 

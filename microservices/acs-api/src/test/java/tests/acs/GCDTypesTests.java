@@ -17,7 +17,7 @@ import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
 
-public class GCDTypes {
+public class GCDTypesTests {
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "14814")
@@ -51,7 +51,7 @@ public class GCDTypes {
         );
 
         GCDTypesResponse response = acsResources.getGCDTypes(
-            "Sheet Metal"
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
 //        SoftAssertions softAssertions = new SoftAssertions();

@@ -2,12 +2,14 @@ package com.apriori.acs.entity.response.acs.GCDTypes;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 @Schema(location = "acs/GCDTypes.json")
+
 public class GCDTypesResponse {
     private List<GCDListItemwithUnit> straightBend;
     private List<GCDListItemwithUnit> blank;
@@ -26,7 +28,8 @@ public class GCDTypesResponse {
     private List<GCDListItemwithUnit> axiGroove;
     private List<GCDListItemwithUnit> finishedPart;
     private List<GCDListItemwithUnit> curvedWall;
-    private List<GCDListItemwithUnit> void;
+    @JsonProperty("@void")
+    private List<GCDListItemwithUnit> voids;
     private List<GCDListItemwithUnit> curvedSurface;
     private List<GCDListItemwithUnit> component;
     private List<GCDListItemwithUnit> edge;
