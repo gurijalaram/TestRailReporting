@@ -54,7 +54,7 @@ public class CostScenarioTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.VERIFIED)).isEqualTo((true));
 
         softAssertions.assertAll();
