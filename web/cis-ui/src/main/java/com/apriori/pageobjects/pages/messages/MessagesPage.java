@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.messages;
 
+import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,15 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//div[contains(@data-testid,'comment-content')]")
     private WebElement commentContent;
 
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Unread']")
+    private WebElement unreadFilterIcon;
+
+    @FindBy(xpath = "//div[@data-testid='loader']")
+    private WebElement spinner;
+
+    @FindBy(xpath = "//h4[contains(@data-testid,'replies')]")
+    private WebElement repliesLink;
+
     public MessagesPage(WebDriver driver) {
 
         this(driver, log);
@@ -38,6 +48,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     public MessagesPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
+        this.waitForMessagePageLoad();
         PageFactory.initElements(driver, this);
     }
 
@@ -115,5 +126,61 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public String getCommentContent() {
         return getPageUtils().waitForElementToAppear(commentContent).getAttribute("textContent");
+    }
+
+    /**
+     * Checks if unread option displayed on discussions
+     *
+     * @return true/false
+     */
+    public boolean isUnreadOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(unreadFilterIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on unread option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnUnread() {
+        getPageUtils().waitForElementAndClick(unreadFilterIcon);
+        return this;
+    }
+
+    /**
+     * Checks if created discussion displayed on message page
+     *
+     * @return true/false
+     */
+    public boolean isMessagePageDiscussionDisplayed(String content) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[contains(@id,'discussion')]//div[contains(text(),'" + content + "')]")).isDisplayed();
+    }
+
+    /**
+     * clicks on subject/attribute to open discussion
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSubjectOrAttribute(String value) {
+        getPageUtils().waitForElementAndClick(By.xpath("//h4[contains(text(),'" + value + "')]//..//following-sibling::div"));
+        return new PartsAndAssembliesDetailsPage(getDriver());
+    }
+
+    /**
+     * clicks on replies to open discussion
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnReplies() {
+        getPageUtils().waitForElementAndClick(repliesLink);
+        return new PartsAndAssembliesDetailsPage(getDriver());
+    }
+
+    /**
+     * Method to wait message page loads
+     */
+    public void waitForMessagePageLoad() {
+        getPageUtils().waitForElementToAppear(spinner);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
     }
 }

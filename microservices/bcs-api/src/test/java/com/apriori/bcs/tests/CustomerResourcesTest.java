@@ -3,6 +3,7 @@ package com.apriori.bcs.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.CustomerResources;
 import com.apriori.bcs.entity.response.CustomAttributes;
 import com.apriori.bcs.entity.response.CustomerVPE;
@@ -16,9 +17,19 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class CustomerResourcesTest {
+public class CustomerResourcesTest extends TestUtil {
+
+    private static SoftAssertions softAssertions;
+
+    @Before
+    public void testSetup() {
+        softAssertions = new SoftAssertions();
+    }
 
     @Test
     @TestRail(testCaseId = {"4169"})
@@ -41,7 +52,7 @@ public class CustomerResourcesTest {
                 ProcessGroups.class)
         ).get();
 
-        assertNotEquals(processGroupsResponse.getResponseEntity().getItems().size(), 0);
+        softAssertions.assertThat(processGroupsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -54,7 +65,7 @@ public class CustomerResourcesTest {
                 UserDefinedAttributes.class)
         ).get();
 
-        assertEquals(userDefinedAttributesResponse.getResponseEntity().getItems().size(), 0);
+        softAssertions.assertThat(userDefinedAttributesResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -67,7 +78,7 @@ public class CustomerResourcesTest {
                 CustomerVPE.class)
         ).get();
 
-        assertNotEquals(customerVPEResponse.getResponseEntity().getItems().size(), 0);
+        softAssertions.assertThat(customerVPEResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -87,7 +98,7 @@ public class CustomerResourcesTest {
                 DigitalFactories.class)
         ).get();
 
-        assertNotEquals(digitalFactoriesResponse.getResponseEntity().getItems().size(), 0);
+        softAssertions.assertThat(digitalFactoriesResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -100,6 +111,11 @@ public class CustomerResourcesTest {
                 CustomAttributes.class)
         ).get();
 
-        assertEquals(customAttributesResponse.getResponseEntity().getItems().length, 0);
+        softAssertions.assertThat(customAttributesResponse.getResponseEntity().getItems().length).isGreaterThan(0);
+    }
+
+    @After
+    public void cleanup() {
+        softAssertions.assertAll();
     }
 }

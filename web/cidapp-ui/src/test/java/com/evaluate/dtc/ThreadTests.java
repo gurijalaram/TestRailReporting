@@ -473,7 +473,6 @@ public class ThreadTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"8906"})
-    @Issue("CID-1455")
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
