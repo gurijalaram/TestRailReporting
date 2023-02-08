@@ -51,7 +51,6 @@
             "displayName",
             "name",
             "storageType",
-            "unitType",
             "editable"
           ]
         },
@@ -124,7 +123,6 @@
             "displayName",
             "name",
             "storageType",
-            "unitType",
             "editable"
           ]
         },
@@ -174,7 +172,6 @@
             "displayName",
             "name",
             "storageType",
-            "unitType",
             "editable"
           ]
         },
@@ -201,7 +198,6 @@
             "displayName",
             "name",
             "storageType",
-            "unitType",
             "editable"
           ]
         },
