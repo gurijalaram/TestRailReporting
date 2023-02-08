@@ -33,7 +33,7 @@ public class CssComponent {
 
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 600;
+    private final int WAIT_TIME = 570;
 
     /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
@@ -70,7 +70,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
@@ -143,7 +143,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
     }
 
     /**
