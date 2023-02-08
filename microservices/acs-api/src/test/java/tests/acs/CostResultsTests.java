@@ -56,11 +56,11 @@ public class CostResultsTests {
             "ROOT"
         );
 
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        softAssertions.assertThat(response.getProcessInstanceKey().getProcessName()).isEqualTo("Sheet Metal");
-//        softAssertions.assertThat(response.getCostingFailed()).isEqualTo(false);
-//        softAssertions.assertThat(response.getDepth()).isEqualTo("ROOT");
-//        softAssertions.assertThat(response.getSecondaryProcess()).isEqualTo(false);
-//        softAssertions.assertAll();
+        /*SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getProcessInstanceKey().getProcessName()).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(response.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(response.getDepth()).isEqualTo("ROOT");
+        softAssertions.assertThat(response.getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertAll();*/
     }
 }

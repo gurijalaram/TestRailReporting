@@ -8,7 +8,7 @@ import java.util.List;
 public class CostResultsRootItem {
     private ProcessInstanceKey processInstanceKey;
     private ArtifactKey artifactKey;
-    private List<GCDsItem> gcds;
+    private List<GcdItem> gcds;
     private ResultMapBean resultMapBean;
     private Boolean costingFailed;
     private Boolean secondaryProcess;

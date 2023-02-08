@@ -141,14 +141,12 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem installationFactor;
     private PropertyInfoMapItem imputedInterestRate;
     private PropertyInfoMapLargerItem finishMass;
-    private PropertyInfoMapLargerItem stockPropertyoutsideDia;
     private PropertyInfoMapLargerItem capitalInvestment;
     private PropertyInfoMapLargerItem directMachineEnergyConsumption;
     private PropertyInfoMapLargerItem roughMass;
     private PropertyInfoMapLargerItem fixtureCost;
     private PropertyInfoMapItem dfmRisk;
     private PropertyInfoMapLargerItem totalCost;
-    private PropertyInfoMapLargerItem stockPropertywallThickness;
     private PropertyInfoMapItem plantLaborRateAdjustmentFactor;
     private PropertyInfoMapItem goodPartYield;
     private PropertyInfoMapLargerItem electricityRate;
@@ -162,7 +160,6 @@ public class PropertyInfoMap {
     private PropertyInfoMapLargerItem materialUnitCost;
     private PropertyInfoMapLargerItem overheadRate;
     private PropertyInfoMapLargerItem lifetimeCarbon;
-    private PropertyInfoMapItem avgPowerFactor;
     private PropertyInfoMapLargerItem rentRate;
     private PropertyInfoMapItem liabilityInsuranceFactor;
     private PropertyInfoMapLargerItem toolCribDepartmentCost;

@@ -5,11 +5,12 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Schema(location = "acs/CostResultsRoot.json")
 @NoArgsConstructor
-public class CostResultsRootResponse {
-    private List<CostResultsRootItem> costResultsRootItem;
+public class CostResultsRootResponse extends ArrayList {
+    private CostResultsRootItem costResultsRootItem;
 }
