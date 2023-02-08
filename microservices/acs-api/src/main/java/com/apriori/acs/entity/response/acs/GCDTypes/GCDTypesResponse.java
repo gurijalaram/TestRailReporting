@@ -11,7 +11,7 @@ import java.util.List;
 @Schema(location = "acs/GCDTypes.json")
 
 public class GCDTypesResponse {
-    private List<GCDListItemwithUnit> straightBend;
+    private List<GCDListItem> straightBend;
     private List<GCDListItemwithUnit> blank;
     private List<GCDListItemwithUnit> perimeter;
     private List<GCDListItemwithUnit> complexHole;
