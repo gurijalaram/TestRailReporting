@@ -6,9 +6,10 @@ import lombok.Data;
 
 @Data
 @Schema(location = "acs/GCDTypes.json")
-public class GCDListItem {
+public class GcdListItemWithUnit {
     private String displayName;
     private String name;
     private String storageType;
-    private boolean editable;
+    private String unitType;
+    private Boolean editable;
 }
