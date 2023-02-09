@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "acs/GCDTypes.json")
+@Schema(location = "acs/GcdTypes.json")
 public class GcdListItemWithUnit {
     private String displayName;
     private String name;

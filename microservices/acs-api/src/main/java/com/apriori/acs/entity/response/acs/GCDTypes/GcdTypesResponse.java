@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(location = "acs/GCDTypes.json")
+@Schema(location = "acs/GcdTypes.json")
 public class GcdTypesResponse {
     @JsonProperty("StraightBend")
     private List<GcdListItemWithUnit> straightBend;
