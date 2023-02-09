@@ -7,9 +7,8 @@ import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStoc
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsGCDResponse;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsGcdResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessResponse;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
@@ -688,13 +687,13 @@ public class AcsResources {
      * @return GetCostResults instance
      */
 
-    public CostResultsGCDResponse getCostResultsGCD(ScenarioIterationKey scenarioIterationKey, String depth) {
+    public CostResultsGcdResponse getCostResultsGcd(ScenarioIterationKey scenarioIterationKey, String depth) {
         setupHeader();
 
         final RequestEntity requestEntity;
         try {
             requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.COST_RESULTS, CostResultsGCDResponse.class)
+                .init(AcsApiEnum.COST_RESULTS, CostResultsGcdResponse.class)
                 .headers(headers)
                 .inlineVariables(
                     scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -707,7 +706,7 @@ public class AcsResources {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        return (CostResultsGCDResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (CostResultsGcdResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
