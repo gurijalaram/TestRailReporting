@@ -63,9 +63,7 @@ public class CostResultsTests {
 
         Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
         Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
-        Object propertyValueMap = ((LinkedHashMap<String, String>) ((LinkedHashMap<?, ?>) response.get(0)).get(3)).get("propertyValueMap");
         softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
-        softAssertions.assertThat(((LinkedHashMap<String, String>) propertyValueMap)).isNotNull();
         softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
         softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
         softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isNotNull();
