@@ -389,61 +389,63 @@ cis-qa:
   secret_key: PG9E795ML3P4
   user_identity: 1F7GAI5DLI2B
 
-######################################################## QA-TEST-SANDBOX ########################################################
-qa-test-sandbox:
-  application_name: cid
-  customer_identity: 6C1F8C1D4D75
-  deployment_name: production
-  installation_name: core-na-1 - 23 production deployment
-  name: qa-test-sandbox
-  secret_key: PG9E795ML3P4
-  user_identity: AK8JJH37GM54
 
-  cds:
-    apriori_core_services_installation_identity: 7GFDL6LCI5N4
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity: 7FLINC95H3A3
-    cia_application_identity: 1J8M416FBJCD
-    automation_user_identity02: AKC81M50KGFE
-    automation_user_identity03: AFMMDK0IJHG4
-    identity_role: 67J517C9L763
-
-    ######################################################## QA-TEST-V22-SANDBOX ########################################################
-qa-test-v22-sandbox:
-  application_name: cid
-  customer_identity: 6C1F8C1D4D75
-  deployment_name: production
-  installation_name: core-na-1 - 22 production deployment
-  name: qa-test
-  secret_key: PG9E795ML3P4
-  user_identity: AK8JJH37GM54
-
-  cds:
-    apriori_core_services_installation_identity: 7GFDL6LCI5N4
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity: 7FLINC95H3A3
-    cia_application_identity: 1J8M416FBJCD
-    automation_user_identity02: AKC81M50KGFE
-    automation_user_identity03: AFMMDK0IJHG4
-    identity_role: 67J517C9L763
-
-  ats:
-    token_issuer: 2021 R1
-    token_subject: 4127
-    auth_application: CID
-
-  ci-connect:
-    second_page_starting_range_number: 26
-    default_connector: WC - auto
-    agent_api_authorization_key: DogCatMonkey
-    agent_api_url: http://conqsct01:8811/
-    plm_agent_id: d8a27107-5fcd-468a-a445-d2955409e83b_Agent
-    plm_wc_api_url: https://consvwc02.fbc.com/
-    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
-    ap-int:
-      customer_identity: 6C1F8C1D4D75
-      agent_api_url: http://conqscic02:8811/
-      plm_agent_id: d8a27107-5fcd-468a-a445-d2955409e83b_Agent
-      customer_name: aPrioriInternal_Customer
+# Vesrion and deployment should be configured in global-config.yml
+######################################################### QA-TEST-SANDBOX ########################################################
+#qa-test-sandbox:
+#  application_name: cid
+#  customer_identity: 6C1F8C1D4D75
+#  deployment_name: production
+#  installation_name: core-na-1 - 23 production deployment
+#  name: qa-test-sandbox
+#  secret_key: PG9E795ML3P4
+#  user_identity: AK8JJH37GM54
+#
+#  cds:
+#    apriori_core_services_installation_identity: 7GFDL6LCI5N4
+#    apriori_cloud_home_identity: 1J8M416FBJBK
+#    appro_application_identity: 1J8M416FBJ94
+#    apriori_production_deployment_identity: 7FLINC95H3A3
+#    cia_application_identity: 1J8M416FBJCD
+#    automation_user_identity02: AKC81M50KGFE
+#    automation_user_identity03: AFMMDK0IJHG4
+#    identity_role: 67J517C9L763
+#
+#    ######################################################## QA-TEST-V22-SANDBOX ########################################################
+#qa-test-v22-sandbox:
+#  application_name: cid
+#  customer_identity: 6C1F8C1D4D75
+#  deployment_name: production
+#  installation_name: core-na-1 - 22 production deployment
+#  name: qa-test
+#  secret_key: PG9E795ML3P4
+#  user_identity: AK8JJH37GM54
+#
+#  cds:
+#    apriori_core_services_installation_identity: 7GFDL6LCI5N4
+#    apriori_cloud_home_identity: 1J8M416FBJBK
+#    appro_application_identity: 1J8M416FBJ94
+#    apriori_production_deployment_identity: 7FLINC95H3A3
+#    cia_application_identity: 1J8M416FBJCD
+#    automation_user_identity02: AKC81M50KGFE
+#    automation_user_identity03: AFMMDK0IJHG4
+#    identity_role: 67J517C9L763
+#
+#  ats:
+#    token_issuer: 2021 R1
+#    token_subject: 4127
+#    auth_application: CID
+#
+#  ci-connect:
+#    second_page_starting_range_number: 26
+#    default_connector: WC - auto
+#    agent_api_authorization_key: DogCatMonkey
+#    agent_api_url: http://conqsct01:8811/
+#    plm_agent_id: d8a27107-5fcd-468a-a445-d2955409e83b_Agent
+#    plm_wc_api_url: https://consvwc02.fbc.com/
+#    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
+#    ap-int:
+#      customer_identity: 6C1F8C1D4D75
+#      agent_api_url: http://conqscic02:8811/
+#      plm_agent_id: d8a27107-5fcd-468a-a445-d2955409e83b_Agent
+#      customer_name: aPrioriInternal_Customer
