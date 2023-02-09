@@ -1,7 +1,7 @@
 package com.apriori.utils;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Schema(location = "ErrorMessageSchema.json")
@@ -23,8 +23,8 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class ErrorMessage {
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDate timestamp;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    private LocalDateTime timestamp;
     private Integer status;
     private String method;
     private String error;
