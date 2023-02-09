@@ -40,6 +40,7 @@ public class PartData {
     private String state;
     private LocalDateTime startTime;
     private Long costingDuration;
+    private String plmPartNumber;
 
     public void setDigitalFactory(String digitalFactory) {
         if (digitalFactory == null) {
