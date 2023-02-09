@@ -154,7 +154,7 @@ public class BatchPartNegativeTest {
                 BCSAPIEnum.BATCH_PARTS_BY_ID,
                 "INVALIDBATCH",
                 ErrorMessage.class)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
         ).get();
     }
 
