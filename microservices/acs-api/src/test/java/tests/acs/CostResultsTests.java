@@ -1,7 +1,11 @@
 package tests.acs;
 
+import java.util.LinkedHashMap;
+
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
+import com.apriori.acs.entity.response.acs.costresults.ProcessInstanceKey;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -58,10 +62,12 @@ public class CostResultsTests {
         );
 
         SoftAssertions softAssertions = new SoftAssertions();
-//        softAssertions.assertThat(response.getCostResultsRootItem().getProcessInstanceKey().getProcessGroupName()).isEqualTo("Sheet Metal");
-//        softAssertions.assertThat(response.getCostResultsRootItem().getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(response.getCostResultsRootItem().getDepth()).isNotNull();
-//        softAssertions.assertThat(response.getCostResultsRootItem().getSecondaryProcess()).isEqualTo(false);
+
+        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
+        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
+        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isNotNull();
+        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
         softAssertions.assertAll();
     }
 }

@@ -9,6 +9,7 @@ import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoRe
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsGCDResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessResponse;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
