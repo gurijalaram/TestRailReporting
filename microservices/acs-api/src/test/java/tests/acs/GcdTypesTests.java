@@ -14,7 +14,7 @@ import testsuites.categories.AcsTest;
 public class GcdTypesTests {
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "14814")
+    @TestRail(testCaseId = "17181")
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGCDTypesSheetMetal() {
         AcsResources acsResources = new AcsResources();
