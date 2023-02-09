@@ -35,6 +35,8 @@
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.apache.http" level="Info"/>
+    <logger name="org.apache" level="WARN" />
+    <logger name="httpclient" level="WARN" />
 
     <logger name="io.netty" level="OFF" />
     <logger name="org.asynchttpclient.netty" level="OFF" />
