@@ -12,6 +12,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
@@ -54,12 +55,10 @@ public class GcdTypesTests {
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
-        /*SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();*/
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getStraightBend().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getStraightBend().get(4).getDisplayName()).isEqualTo("Bend Angle");
+        softAssertions.assertThat(response.getComplexHole().get(1).getName()).isEqualTo("numCoiningChains");
+        softAssertions.assertAll();
     }
 }
