@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.acs.GCDTypes;
+package com.apriori.acs.entity.response.acs.GcdTypes;
 
 import com.apriori.utils.http.enums.Schema;
 

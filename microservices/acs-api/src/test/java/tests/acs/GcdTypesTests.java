@@ -1,6 +1,6 @@
 package tests.acs;
 
-import com.apriori.acs.entity.response.acs.GCDTypes.GcdTypesResponse;
+import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -16,10 +16,10 @@ public class GcdTypesTests {
     @Category(AcsTest.class)
     @TestRail(testCaseId = "17181")
     @Description("Get available GCDs for Sheet Metal")
-    public void testGetGCDTypesSheetMetal() {
+    public void testGetGcdTypesSheetMetal() {
         AcsResources acsResources = new AcsResources();
 
-        GcdTypesResponse response = acsResources.getGCDTypes(
+        GcdTypesResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
