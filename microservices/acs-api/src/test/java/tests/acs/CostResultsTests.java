@@ -164,14 +164,14 @@ public class CostResultsTests {
 //
 //        SoftAssertions softAssertions = new SoftAssertions();
 //
-//        //TODO: Assert on sustainability values once BA-2858 complete
+//        TODO: Assert on sustainability values once BA-2858 complete
 //        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
-////        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
+//        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
 //        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
-////        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
-////        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
-////        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("GCD");
-////        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("GCD");
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
 //        softAssertions.assertAll();
 //    }
 }
