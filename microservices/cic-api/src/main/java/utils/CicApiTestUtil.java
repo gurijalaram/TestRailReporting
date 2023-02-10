@@ -7,7 +7,9 @@ import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
+import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.dataservice.TestDataService;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
@@ -15,6 +17,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.InitFileData;
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -41,6 +44,8 @@ import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICAgentType;
 import enums.CICPartSelectionType;
+import enums.PlmPartsSearch;
+import enums.PlmWCType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -53,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -79,7 +85,7 @@ public class CicApiTestUtil extends TestUtil {
      * De-serialize base workflow requests test data from json file
      *
      * @param cicPartSelectionType Enum CICPartSelectionType (REST or QUERY)
-     * @param isCostingInputData boolean
+     * @param isCostingInputData   boolean
      * @return WorkFlowRequest builder object
      */
     public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType, Boolean isCostingInputData) {
@@ -488,12 +494,20 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Build workflow run parts request data builder
      *
-     * @param plmParts   PlmParts response class
+     * @param partData   PartData class
      * @param numOfParts - number of parts to build
      * @return WorkflowParts data builder class
      */
-    public static WorkflowParts getWorkflowPartDataBuilder(PlmParts plmParts, Integer numOfParts) {
-        List<PartData> partDataList = new TestDataService().getPartsFromCloud(numOfParts);
+    public static WorkflowParts getWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
+        PlmParts plmParts;
+
+        plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() +
+                (numOfParts > 5 ? String.format(PlmPartsSearch.PLM_WC_PART_NAME_ENDS_WITH.getFilterKey(), "prt") : String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber())))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build());
+
+        List<PartData> partDataList = PlmPartsUtil.getPlmPartsFromCloud(numOfParts);
         ArrayList<WorkflowPart> part = new ArrayList<>();
         for (int i = 0; i < numOfParts; i++) {
             part.add(WorkflowPart.builder()
@@ -516,11 +530,16 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * Get Duplicate parts worflow part data builder
      *
-     * @param plmParts   PlmParts
+     * @param partData   PartData
      * @param numOfParts number of times same part
      * @return WorflowParts class
      */
-    public static WorkflowParts getDuplicateWorkflowPartDataBuilder(PlmParts plmParts, Integer numOfParts) {
+    public static WorkflowParts getDuplicateWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
+        PlmParts plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber()))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build());
+
         ArrayList<WorkflowPart> part = new ArrayList<>();
         for (int i = 0; i < numOfParts; i++) {
             part.add(WorkflowPart.builder()
