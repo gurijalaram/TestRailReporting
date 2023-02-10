@@ -185,7 +185,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Issue("COST-685")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"6377"})
     @Description("Validate Tolerance counts are correct")
