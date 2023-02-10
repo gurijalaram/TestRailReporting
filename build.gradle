@@ -110,6 +110,20 @@ subprojects {
         }
     }
 
+    //clean allure results directory
+    clean.doFirst {
+        delete "${projectDir}${File.separator}target${File.separator}allure-results"
+    }
+
+    //set allure and working directory
+    allure {
+        version = '2.20.0'
+        aspectjweaver = true
+        autoconfigure = true
+        System.setProperty("allure.results.directory", "${projectDir}${File.separator}target${File.separator}allure-results")
+//        downloadLink = 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
+    }
+
     //get all system properties
     test {
         systemProperties(System.getProperties())
