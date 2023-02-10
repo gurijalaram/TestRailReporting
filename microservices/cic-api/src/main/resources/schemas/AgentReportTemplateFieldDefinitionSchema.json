@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "isDisabled": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "sectionName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "value": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    }
+  },
+  "required": [
+    "displayName",
+    "isDisabled",
+    "sectionName",
+    "value"
+  ]
+}

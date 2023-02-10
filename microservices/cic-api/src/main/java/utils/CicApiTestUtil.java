@@ -1,15 +1,14 @@
 package utils;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.enums.ReportsEnum;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
-import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
@@ -17,7 +16,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.InitFileData;
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -36,14 +34,17 @@ import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
+import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
 import entity.response.ConnectorsResponse;
 import entity.response.PlmPart;
 import entity.response.PlmParts;
+import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICAgentType;
 import enums.CICPartSelectionType;
+import enums.CICReportType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -103,18 +103,19 @@ public class CicApiTestUtil extends TestUtil {
                     });
                     defaultValues.setRows(rows);
                     workflowRequestDataBuilder.setDefaultValues(defaultValues);
+                    workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
                 } else {
                     workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
                 }
                 break;
             default:
                 workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateQueryWorkFlowData.json", WorkflowRequest.class);
+                workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
         }
         workflowRequestDataBuilder.setCustomer(getCustomerName());
         workflowRequestDataBuilder.setPlmSystem(getAgent());
         workflowRequestDataBuilder.setName("CIC_AGENT" + System.currentTimeMillis());
         workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
-
         return workflowRequestDataBuilder;
     }
 
@@ -539,7 +540,6 @@ public class CicApiTestUtil extends TestUtil {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build());
-
         ArrayList<WorkflowPart> part = new ArrayList<>();
         for (int i = 0; i < numOfParts; i++) {
             part.add(WorkflowPart.builder()
@@ -654,5 +654,54 @@ public class CicApiTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_OK);
         AgentConnectionsInfo agentConnectionInfo = (AgentConnectionsInfo) HTTPRequest.build(requestEntity).post().getResponseEntity();
         return agentConnectionInfo.getRows().get(0);
+    }
+
+    /**
+     * get Workflow Report template names
+     *
+     * @param reportName    ReportsEnum
+     * @param cicReportType EMAIL or PLM_WRITE
+     * @param session       login session
+     * @return ReportTemplatesRow
+     */
+    public static ReportTemplatesRow getAgentReportTemplate(ReportsEnum reportName, CICReportType cicReportType, String session) {
+        String getConnectorJson = String.format("{\"customer\":\"%s\",\"reportType\":\"%s\"}", getCustomerName(), cicReportType);
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "application/json");
+        header.put("Content-Type", "application/json");
+        header.put("cookie", session.replace("[", "").replace("]", ""));
+        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_WORKFLOW_REPORT_TEMPLATES, AgentWorkflowReportTemplates.class)
+            .headers(header)
+            .customBody(getConnectorJson)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        AgentWorkflowReportTemplates agentWorkflowReportTemplates = (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
+
+        return agentWorkflowReportTemplates.getRows().stream()
+            .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
+            .findFirst()
+            .get();
+    }
+
+    /**
+     * set costing put data for workflow data request builder
+     *
+     * @param workflowRequestDataBuilder
+     * @return WorkflowRequest
+     */
+    private static WorkflowRequest setCostingInputData(WorkflowRequest workflowRequestDataBuilder) {
+        DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
+        List<WorkflowRow> rows = defaultValues.getRows();
+        rows.stream().forEach(row -> {
+            if (row.getTwxAttributeName().equals("Scenario Name")) {
+                row.setValue("SN" + System.currentTimeMillis());
+            }
+        });
+        defaultValues.setRows(rows);
+        workflowRequestDataBuilder.setDefaultValues(defaultValues);
+        workflowRequestDataBuilder.setCustomer(getCustomerName());
+        workflowRequestDataBuilder.setPlmSystem(getAgent());
+        workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
+        workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
+        return workflowRequestDataBuilder;
     }
 }

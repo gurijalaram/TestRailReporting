@@ -1162,20 +1162,20 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming");
 
         explorePage.openScenario(componentName, scenarioName)
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        routingSelectionPage.selectRoutingPreferenceByName("Shuttle Station Thermoforming")
+        routingSelectionPage.selectRoutingPreferenceByName("3 Station Rotary Thermoforming")
             .submit(EvaluatePage.class)
             .costScenario();
 
         evaluatePage.clickExplore()
             .selectFilter("Private");
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming");
 
         explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
@@ -1185,7 +1185,7 @@ public class ProcessRoutingTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming");
 
         softAssertions.assertAll();
     }
