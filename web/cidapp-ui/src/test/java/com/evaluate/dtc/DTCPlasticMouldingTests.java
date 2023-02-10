@@ -43,7 +43,6 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6410", "8334"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
@@ -271,7 +270,6 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6419", "6423"})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {

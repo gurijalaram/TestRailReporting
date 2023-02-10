@@ -97,10 +97,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issues({
-        @Issue("BA-2052"),
-        @Issue("BA-2137")
-    })
     @TestRail(testCaseId = {"6211", "6734", "6040"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
