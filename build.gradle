@@ -120,8 +120,8 @@ subprojects {
         version = '2.20.0'
         aspectjweaver = true
         autoconfigure = true
-        System.setProperty("allure.results.directory", "${projectDir}${File.separator}target${File.separator}allure-results")
-//        downloadLink = 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
+        //resultsDir = file("${projectDir}${File.separator}target${File.separator}allure-results")
+        //downloadLink = 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
     }
 
     //get all system properties
