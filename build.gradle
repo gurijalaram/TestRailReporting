@@ -115,13 +115,11 @@ subprojects {
         delete "${projectDir}${File.separator}target${File.separator}allure-results"
     }
 
-    //set allure and working directory
+    //set allure
     allure {
-        version = '2.20.0'
+        version = '2.13.5'
         aspectjweaver = true
         autoconfigure = true
-        //resultsDir = file("${projectDir}${File.separator}target${File.separator}allure-results")
-        //downloadLink = 'https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.8.1/allure-commandline-2.8.1.zip'
     }
 
     //get all system properties
