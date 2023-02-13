@@ -186,7 +186,7 @@ Those marked with a * are required or the job will not run
     post {
         always {
          allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
-                        junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
+                        //junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
                         publishHTML(target: [
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
