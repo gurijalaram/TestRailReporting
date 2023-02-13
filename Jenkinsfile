@@ -179,23 +179,22 @@ Those marked with a * are required or the job will not run
                 sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
                 sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
+                allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
+                                        junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
+                                        publishHTML(target: [
+                                            allowMissing: false,
+                                            alwaysLinkToLastBuild: false,
+                                            keepAll: true,
+                                            reportDir: 'build/reports/tests/test',
+                                            reportFiles: 'index.html',
+                                            reportName: "${buildInfo.name} Test Report"
+                                        ])
             }
         }
     }
 
     post {
         always {
-         allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
-                        junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
-                        publishHTML(target: [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: true,
-                            reportDir: 'build/reports/tests/test',
-                            reportFiles: 'index.html',
-                            reportName: "${buildInfo.name} Test Report"
-                        ])
-
             archiveArtifacts artifacts: 'target/*.csv', allowEmptyArchive: true, fingerprint: true
             archiveArtifacts artifacts: 'target/*.txt', allowEmptyArchive: true, fingerprint: true
             echo "Cleaning up.."
