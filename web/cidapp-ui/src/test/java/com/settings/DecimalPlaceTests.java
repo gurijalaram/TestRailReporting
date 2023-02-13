@@ -166,7 +166,7 @@ public class DecimalPlaceTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(301.53581), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(21.91453), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));

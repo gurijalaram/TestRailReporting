@@ -180,7 +180,6 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @Issue("COST-685")
     @TestRail(testCaseId = {"6486"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {

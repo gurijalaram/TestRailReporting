@@ -306,7 +306,6 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-377")
     @TestRail(testCaseId = {"11921", "11920", "11919"})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
@@ -367,7 +366,6 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-377")
     @TestRail(testCaseId = {"11918", "11917", "11916"})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeSubcomponentsAndCost() {
@@ -422,7 +420,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issues({@Issue("AP-74028"), @Issue("BA-2658"), @Issue("SC-377")})
+    @Issues({@Issue("AP-74028")})
     @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {

@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ public class GraphEmailService {
      * @return EmailMessage
      */
     public static EmailMessage searchEmailMessageWithAttachments(String searchText) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(2);
         QueryParams queryParams = new QueryParams();
         String[] emailParamValues = {"$search, \"" + searchText + "\"", "hasAttachments[eq], true"};
         List<String[]> paramKeyValue = Arrays.stream(emailParamValues).map(o -> o.split(",")).collect(Collectors.toList());
@@ -51,6 +53,19 @@ public class GraphEmailService {
 
         EmailResponse emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
+        try {
+            while (!(emailResponse.getValue().size() > 0)) {
+                if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                    log.error("EMAIL NOT RECEIVED WITH SCENARIO NAME ---" + searchText);
+                    return null;
+                }
+                TimeUnit.SECONDS.sleep(30);
+                emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
         return emailResponse.getValue().get(0);
     }
 
@@ -62,7 +77,6 @@ public class GraphEmailService {
      *                         (Example: "$search, \"ap-int12345\"", "hasAttachments[eq], true"
      * @return EmailMessage
      */
-    @SneakyThrows
     public static EmailMessage searchEmailMessage(String... emailParamValues) {
         final long START_TIME = System.currentTimeMillis();
         QueryParams queryParams = new QueryParams();
@@ -84,9 +98,13 @@ public class GraphEmailService {
 
         ResponseWrapper<EmailResponse> emailResponse = HTTPRequest.build(requestEntity).get();
 
-        while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
-            TimeUnit.SECONDS.sleep(5);
-            emailResponse = HTTPRequest.build(requestEntity).get();
+        try {
+            while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
+                TimeUnit.SECONDS.sleep(15000);
+                emailResponse = HTTPRequest.build(requestEntity).get();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
 
         return emailResponse.getResponseEntity().getValue().get(0);

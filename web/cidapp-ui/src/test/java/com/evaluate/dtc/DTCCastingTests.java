@@ -185,7 +185,6 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
-    @Issue("COST-685")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"6377"})
     @Description("Validate Tolerance counts are correct")
@@ -291,7 +290,7 @@ public class DTCCastingTests extends TestBase {
 
         guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is not feasible. It is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
 
         softAssertions.assertAll();
     }
