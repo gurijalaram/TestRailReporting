@@ -178,12 +178,12 @@ Those marked with a * are required or the job will not run
                 echo "Extract Test Results.."
                 sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
                 sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
+                echo "Publishing Results"
             }
         }
     }
 
     post {
-    echo("Publishing Results")
         always {
          allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                         junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
