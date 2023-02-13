@@ -185,13 +185,13 @@ Those marked with a * are required or the job will not run
     post {
     stage("Publishing Results")
         always {
-         allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
+         allure includeProperties: false, jdk: "", //results: [[path: "build/allure-results"]]
                         junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
                         publishHTML(target: [
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: 'build/reports/tests/test',
+                            //reportDir: 'build/reports/tests/test',
                             reportFiles: 'index.html',
                             reportName: "${buildInfo.name} Test Report"
                         ])
