@@ -22,10 +22,13 @@ public class WorkflowRequest {
     private Boolean isEmailTemplateSelected;
     private EmailConfiguration emailConfiguration;
     private String emailRecipientType;
+    private String emailRecipientValue;
     private DefaultValues defaultValues;
     private Boolean isSchedulerEnabled;
     private Boolean isEmailReportNameSelected;
     private String selectedEmailReportName;
+    private EmailConfiguration emailReportConfiguration;
+    private EmailConfiguration plmWriteReportConfiguration;
     private Boolean isPlmWriteReportNameSelected;
     private String selectedPlmWriteReportName;
     private EmailPartFilter emailPartFilter;

@@ -110,13 +110,13 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("AISI P20");
         softAssertions.assertThat(materialProcessPage.getPartTolerance()).isEqualTo("Low Tolerance +/-0.254 (+/-0.010\")");
 
-        materialProcessPage.selectNumberOfCavitiesDropdown("1")
+        materialProcessPage.selectNumberOfCavitiesDropdown("4")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(1);
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
 
         softAssertions.assertAll();
     }

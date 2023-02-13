@@ -133,7 +133,6 @@ public class CicAgentJobResultsTest extends TestBase {
         AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());
 
         AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(awfResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        ;
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
         softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(awfResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();

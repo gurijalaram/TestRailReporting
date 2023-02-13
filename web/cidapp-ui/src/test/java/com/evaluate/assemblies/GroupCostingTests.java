@@ -112,7 +112,6 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @Issue("SC-377")
     @TestRail(testCaseId = {"11097", "11090", "11092", "11094", "11091"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {

@@ -70,7 +70,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2043")
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268", "6342"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -384,7 +383,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2148")
     @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
