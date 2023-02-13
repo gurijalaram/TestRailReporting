@@ -1,6 +1,7 @@
 package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsGcdResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -14,6 +15,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
@@ -124,54 +126,56 @@ public class CostResultsTests {
         softAssertions.assertAll();
     }
 
-//    TODO: Fix assertion
+
+
 //    @Test
-//    @Category(AcsTest.class)
-//    @TestRail(testCaseId = "21579")
-//    @Description("Get GCD Cost Results after Costing Sheet Metal")
-//    public void testGetCostGcdResultsSheetMetal() {
-//        FileUploadResources fileUploadResources = new FileUploadResources();
-//        AcsResources acsResources = new AcsResources();
-//        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-//        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
-//
-//        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-//
-//        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
-//        fileUploadResources.checkValidProcessGroup(processGroup);
-//
-//        FileResponse fileResponse = fileUploadResources.initializePartUpload(
-//            "bracket_basic.prt",
-//            processGroup
-//        );
-//
-//        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-//            fileResponse,
-//            testScenarioName
-//        );
-//
-//        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
-//            productionInfoInputs,
-//            fileUploadOutputs,
-//            processGroup,
-//            false
-//        );
-//
-//        CostResultsGcdResponse response = acsResources.getCostResultsGcd(
-//            costOutputs.getScenarioIterationKey(),
-//            "GCD"
-//        );
-//
-//        SoftAssertions softAssertions = new SoftAssertions();
-//
+    @Ignore
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21579")
+    @Description("Get GCD Cost Results after Costing Sheet Metal")
+    public void testGetCostGcdResultsSheetMetal() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "bracket_basic.prt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        CostResultsGcdResponse response = acsResources.getCostResultsGcd(
+            costOutputs.getScenarioIterationKey(),
+            "GCD"
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
 //        TODO: Assert on sustainability values once BA-2858 complete
-//        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
-//        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
-//        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
-//        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
-//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
-//        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("GCD");
-//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
-//        softAssertions.assertAll();
-//    }
+        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
+        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
+        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
+        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
+        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("GCD");
+        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
+        softAssertions.assertAll();
+    }
 }
