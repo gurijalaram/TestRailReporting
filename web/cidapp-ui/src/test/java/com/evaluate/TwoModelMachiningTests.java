@@ -155,7 +155,6 @@ public class TwoModelMachiningTests extends TestBase {
     @Category(ExtendedRegression.class)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(testCaseId = {"7865", "7869", "7872"})
-    @Issue("CID-1455")
     public void multiLevel2Model() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
         final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
@@ -266,7 +265,6 @@ public class TwoModelMachiningTests extends TestBase {
     @Category(ExtendedRegression.class)
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
-    @Issue("CID-1455")
     public void switchSourcePart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
         final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
@@ -333,7 +331,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2320")
     @Description("Validate the user cannot use two completely different CAD models")
     @TestRail(testCaseId = {"7871", "6630"})
     public void testTwoModelCorrectCADModels() {
@@ -400,7 +397,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
-            .selectMaterial("Aluminum, ANSI AL380.0")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()

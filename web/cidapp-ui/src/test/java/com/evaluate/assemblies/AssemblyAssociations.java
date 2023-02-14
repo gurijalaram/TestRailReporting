@@ -14,6 +14,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CostingIconEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -234,6 +235,7 @@ public class AssemblyAssociations extends TestBase {
             .changeName(newScenarioName)
             .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()

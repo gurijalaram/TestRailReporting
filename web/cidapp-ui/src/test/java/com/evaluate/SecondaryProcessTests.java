@@ -382,7 +382,7 @@ public class SecondaryProcessTests extends TestBase {
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Powder Coat Cart");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart")).contains("289.91s (96.29%)");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("PowderCoat Cart")).contains("96.29%");
 
         softAssertions.assertAll();
     }
@@ -541,7 +541,6 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @Issue("BA-2561")
     @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {

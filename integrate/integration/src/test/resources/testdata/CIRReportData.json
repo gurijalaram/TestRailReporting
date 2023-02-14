@@ -216,7 +216,7 @@
   },
   "isSchedulerEnabled": false,
   "isEmailReportNameSelected": true,
-  "selectedEmailReportName": "390B41920F83",
+  "selectedEmailReportName": "%s",
   "emailReportConfiguration": {
     "dataShape": {
       "fieldDefinitions": {

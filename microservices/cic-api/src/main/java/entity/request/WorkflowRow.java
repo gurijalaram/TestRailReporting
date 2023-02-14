@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkflowRow {
-    public String key;
-    public String value;
-    public String identifier;
-    public boolean isValid;
-    public String mappingRule;
-    public String twxAttributeName;
-    public boolean _isSelected;
-    public String dataType;
-    public String displayDataType;
-    public boolean isMandatoryField;
-    public boolean isSaved;
-    public boolean isStandardField;
-    public String plmAttributeName;
-    public boolean readOnly;
-    public String usageType;
-    public String errorMessage;
+    private String key;
+    private String value;
+    private String identifier;
+    private String mappingRule;
+    private String twxAttributeName;
+    private Boolean _isSelected;
+    private String dataType;
+    private String displayDataType;
+    private Boolean isMandatoryField;
+    private Boolean isSaved;
+    private Boolean isValid;
+    private Boolean isStandardField;
+    private String plmAttributeName;
+    private Boolean readOnly;
+    private String usageType;
+    private String errorMessage;
 }

@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ public class GraphEmailService {
      * @return EmailMessage
      */
     public static EmailMessage searchEmailMessageWithAttachments(String searchText) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(2);
         QueryParams queryParams = new QueryParams();
         String[] emailParamValues = {"$search, \"" + searchText + "\"", "hasAttachments[eq], true"};
         List<String[]> paramKeyValue = Arrays.stream(emailParamValues).map(o -> o.split(",")).collect(Collectors.toList());
@@ -50,6 +52,19 @@ public class GraphEmailService {
         }).expectedResponseCode(HttpStatus.SC_OK);
 
         EmailResponse emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+
+        try {
+            while (!(emailResponse.getValue().size() > 0)) {
+                if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                    log.error("EMAIL NOT RECEIVED WITH SCENARIO NAME ---" + searchText);
+                    return null;
+                }
+                TimeUnit.SECONDS.sleep(30);
+                emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
 
         return emailResponse.getValue().get(0);
     }
