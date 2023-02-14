@@ -100,7 +100,7 @@ public class GraphEmailService {
 
         try {
             while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
-                TimeUnit.SECONDS.sleep(15000);
+                TimeUnit.SECONDS.sleep(5);
                 emailResponse = HTTPRequest.build(requestEntity).get();
             }
         } catch (Exception e) {
