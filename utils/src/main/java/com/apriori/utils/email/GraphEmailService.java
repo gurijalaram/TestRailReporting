@@ -77,6 +77,7 @@ public class GraphEmailService {
      *                         (Example: "$search, \"ap-int12345\"", "hasAttachments[eq], true"
      * @return EmailMessage
      */
+    @SneakyThrows
     public static EmailMessage searchEmailMessage(String... emailParamValues) {
         final long START_TIME = System.currentTimeMillis();
         QueryParams queryParams = new QueryParams();
@@ -98,13 +99,9 @@ public class GraphEmailService {
 
         ResponseWrapper<EmailResponse> emailResponse = HTTPRequest.build(requestEntity).get();
 
-        try {
-            while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
-                TimeUnit.SECONDS.sleep(5);
-                emailResponse = HTTPRequest.build(requestEntity).get();
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        while (emailResponse.getResponseEntity().getValue().isEmpty() || (System.currentTimeMillis() - START_TIME) < 10000) {
+            TimeUnit.SECONDS.sleep(5);
+            emailResponse = HTTPRequest.build(requestEntity).get();
         }
 
         return emailResponse.getResponseEntity().getValue().get(0);
