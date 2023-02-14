@@ -49,7 +49,6 @@ public class MaterialPMITests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6283", "5917"})
-    @Issue("CID-1451")
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

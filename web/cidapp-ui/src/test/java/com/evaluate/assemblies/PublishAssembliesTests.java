@@ -73,7 +73,6 @@ public class PublishAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @Issue("SC-337")
     @TestRail(testCaseId = {"10763", "10768"})
     @Description("Publish an assembly with no missing sub-components")
     public void shallowPublishAssemblyTest() {

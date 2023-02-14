@@ -309,7 +309,6 @@ public class DTCMachiningTests extends TestBase {
     }*/
 
     @Test
-    @Issue("COST-685")
     @TestRail(testCaseId = {"6452"})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {

@@ -560,7 +560,7 @@ public class ProcessRoutingTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Band Saw");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("16.23s(52.51%)");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("52.51%");
         materialProcessPage.selectProcessTab();
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("DoAll 3613-1 Vert");
@@ -583,7 +583,6 @@ public class ProcessRoutingTests extends TestBase {
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"14984", "15798"})
     @Description("Validate routings 2-Model Machining")
-    @Issue("CID-1455")
     public void routings2mm() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 

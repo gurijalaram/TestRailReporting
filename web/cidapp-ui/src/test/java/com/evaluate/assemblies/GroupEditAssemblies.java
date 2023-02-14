@@ -43,7 +43,6 @@ public class GroupEditAssemblies extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @Issue("SC-337")
     @TestRail(testCaseId = {"10882", "10890", "10893"})
     @Description("Group edit subcomponents")
     public void editButtonAvailable() {
@@ -95,7 +94,6 @@ public class GroupEditAssemblies extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-377")
     @TestRail(testCaseId = {"10891", "11132"})
     @Description("Group edit subcomponents")
     public void overridePrivateSubComponent() {
@@ -146,7 +144,6 @@ public class GroupEditAssemblies extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-377")
     @TestRail(testCaseId = {"10889", "11953"})
     @Description("Group edit subcomponents")
     public void privateAndPublicSubComponents() {

@@ -122,7 +122,6 @@ public class PartNestingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("Cost-280")
     @TestRail(testCaseId = {"7699"})
     @Description("Select Machine Default method of Part Nesting and cost")
     public void partNestingTabMachineDefaultNesting() {
