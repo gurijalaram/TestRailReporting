@@ -165,7 +165,6 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-377")
     @TestRail(testCaseId = "12196")
     @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")
     public void testExcludeRepeatingComponent() {

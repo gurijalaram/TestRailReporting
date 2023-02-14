@@ -838,7 +838,6 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("SC-337")
     @TestRail(testCaseId = {"6533"})
     @Description("User can add assemblies to a blank new comparison")
     public void addPublicAndPrivateAssemblyToComparison() {
@@ -1027,7 +1026,6 @@ public class ComparisonTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6482", "6483"})
-    @Issue("CID-1455")
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.STOCK_MACHINING;

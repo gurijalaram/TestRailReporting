@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import com.apriori.enums.ReportsEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -12,7 +13,9 @@ import entity.request.ConnectorRequest;
 import entity.response.AgentConnectionInfo;
 import entity.response.AgentConnectionOptions;
 import entity.response.ConnectorInfo;
+import entity.response.ReportTemplatesRow;
 import enums.CICAgentType;
+import enums.CICReportType;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
@@ -48,9 +51,16 @@ public class CicConnectorTest extends TestBase {
         AgentConnectionOptions agentConnectionOptions = AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
             .appKey(agentConnectionInfo.getAppKey())
-            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(),"url=", "\n\n#"))
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
             .build();
         softAssertions.assertThat(agentConnectionOptions.getAgentName()).isNotNull();
+    }
+
+    @Test
+    @Description("Get report template names")
+    public void testGetReportTemplates() {
+        ReportTemplatesRow reportTemplatesRow = CicApiTestUtil.getAgentReportTemplate(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY, CICReportType.EMAIL, loginSession);
+        softAssertions.assertThat(reportTemplatesRow.getValue()).isNotNull();
     }
 
 
