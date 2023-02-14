@@ -180,15 +180,16 @@ Those marked with a * are required or the job will not run
                 sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
-                                        junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
-                                        publishHTML(target: [
-                                            allowMissing: false,
-                                            alwaysLinkToLastBuild: false,
-                                            keepAll: true,
-                                            reportDir: 'build/reports/tests/test',
-                                            reportFiles: 'index.html',
-                                            reportName: "${buildInfo.name} Test Report"
-                                        ])
+                junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
+
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'build/reports/tests/test',
+                    reportFiles: 'index.html',
+                    reportName: "${buildInfo.name} Test Report"
+                ])
             }
         }
     }
