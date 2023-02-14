@@ -33,12 +33,12 @@ public class UserCommonService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser() {
-        String token_email = System.getProperty("token_email");
+        String tokenEmail = System.getProperty("token_email");
 
-        if (token_email == null) {
+        if (tokenEmail == null) {
             return PropertiesContext.get("global.different_users").equals("true") ? getNewUser() : getGlobalUser();
         }
-        return UserCredentials.init(token_email, System.getProperty("password"));
+        return UserCredentials.init(tokenEmail, System.getProperty("password"));
     }
 
     static List<UserCredentials> initUsers() {
