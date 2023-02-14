@@ -256,7 +256,6 @@ public class ToleranceTests extends TestBase {
     }*/
 
     @Test
-    @Issue("COST-685")
     @Category({SmokeTests.class})
     @TestRail(testCaseId = {"6455"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
@@ -619,7 +618,6 @@ public class ToleranceTests extends TestBase {
     }*/
 
     @Test
-    @Issue("COST-685")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6975", "6967"})
     @Description("Validate 'Replace values less than' button")

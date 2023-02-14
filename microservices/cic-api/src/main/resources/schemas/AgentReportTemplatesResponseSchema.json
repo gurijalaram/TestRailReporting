@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "dataShape": {
+      "type": "object",
+      "properties": {
+        "fieldDefinitions": {
+          "$ref": "AgentReportTemplateFieldDefinitionSchema.json"
+        }
+      },
+      "required": [
+        "fieldDefinitions"
+      ]
+    },
+    "rows": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "sectionName": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "displayName",
+            "sectionName",
+            "value"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "dataShape",
+    "rows"
+  ]
+}

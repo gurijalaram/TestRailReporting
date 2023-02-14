@@ -1,5 +1,6 @@
 package com.apriori.utils.web.driver;
 
+import io.github.bonigarcia.wdm.config.OperatingSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -48,10 +49,14 @@ public class ChromeDriverOptions {
         }
 
         // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
-        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+        if (System.getProperty("os.name").toLowerCase().contains(OperatingSystem.LINUX.getName())) {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--disable-dev-shm-usage");
+
+            if (System.getProperty("mode").equalsIgnoreCase(TestMode.GRID.value())) {
+                chromeOptions.addArguments("--headless");
+            }
         }
 
         headless = !StringUtils.isEmpty(System.getProperty("headless")) && Boolean.parseBoolean(System.getProperty("headless"));
@@ -61,6 +66,7 @@ public class ChromeDriverOptions {
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--window-size=1920,1080");
             chromeOptions.addArguments("--no-sandbox");
+            chromeOptions.addArguments("--headless");
         }
 
         if (StringUtils.isNotEmpty(locale)) {
