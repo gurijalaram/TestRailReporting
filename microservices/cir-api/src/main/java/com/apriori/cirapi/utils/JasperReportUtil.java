@@ -38,8 +38,10 @@ public class JasperReportUtil {
 
     public InputControl getInputControls() {
         RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.DTC_METRICS, InputControl.class)
+            .inlineVariables("%20")
             .headers(initHeadersWithJSession())
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
 
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 
@@ -123,7 +125,7 @@ public class JasperReportUtil {
     private HashMap<String, String> initHeadersWithJSession() {
         return new HashMap<String, String>() {
             {
-                put("Cookie", jasperSessionValue);
+                put("Cookie", "userLocale=en_US; userTimezone=America/New_York; " + jasperSessionValue);
             }
         };
     }

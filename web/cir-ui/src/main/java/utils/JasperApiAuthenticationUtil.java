@@ -23,13 +23,13 @@ import javax.net.ssl.TrustManager;
 
 public class JasperApiAuthenticationUtil extends TestBase {
 
-    public static String jSessionId;
+    public static String jSessionId = "FA41D5184EC13BD19B258A6591F9A8C7";
 
-    @Before
-    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        auth.authenticateJasperApi();
-    }
+//    @Before
+//    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+//        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
+//        auth.authenticateJasperApi();
+//    }
 
     /**
      * Authenticates jasper api, opening session
