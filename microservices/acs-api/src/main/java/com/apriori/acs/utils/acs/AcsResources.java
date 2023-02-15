@@ -1,6 +1,7 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
+import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
@@ -43,6 +44,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import com.google.common.net.UrlEscapers;
+import io.restassured.http.Headers;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -434,7 +436,25 @@ public class AcsResources {
             .headers(headers)
             .inlineVariables(validUsername);
 
+        ResponseWrapper res = (ResponseWrapper)HTTPRequest.build(requestEntity).get().getResponseEntity();
+
         return (UserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Calls get user preferences endpoint
+     *
+     * @return headers of the response
+     */
+    public Headers getUserPreferencesHeaders() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.USER_PREFERENCES, UserPreferencesResponse.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
+
+        return HTTPRequest.build(requestEntity).get().getHeaders();
     }
 
     /**
@@ -627,6 +647,23 @@ public class AcsResources {
             throw new RuntimeException(e);
         }
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get GCD Types
+     *
+     * @param processGroupName - String - Selected from ENUM
+     */
+
+    public GcdTypesResponse getGcdTypes(String processGroupName) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
+                .headers(headers)
+                .inlineVariables(processGroupName);
+
+        return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

@@ -69,13 +69,13 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = ".process-setup-option-form-group [type='number']")
     private WebElement overrideInput;
 
-    @FindBy(css = ".highcharts-xaxis-labels text")
+    @FindBy(css = ".yAxis g[class='recharts-layer recharts-cartesian-axis-tick'] [orientation='left']")
     private List<WebElement> xAxisLabel;
 
     @FindBy(css = ".highcharts-series-group rect")
     private List<WebElement> chart;
 
-    @FindBy(css = "g.highcharts-label.highcharts-data-label")
+    @FindBy(css = ".yAxis g[class='recharts-layer recharts-cartesian-axis-tick'] [orientation='right']")
     private List<WebElement> chartPercentage;
 
     @FindBy(xpath = "//h6[contains(.,'Masking']/..//input[@value='defaultNoMasking']")

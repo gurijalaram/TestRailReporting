@@ -491,6 +491,34 @@ qa-test:
     ui_url: https://cis.${default.aws_region}.${env}-v22-1.apriori.net/
     api_url: https://cis-api.${default.aws_region}-v22-1.${env}.apriori.net/
 
+######################################################## DEVELOPMENT ########################################################
+development:
+  application_name: cid
+  base_url: https://cloud.na-1.development.apriori.net/
+  customer_identity: 212B5ABD2F6C
+  deployment_name: production
+  installation_name: core-na-1 - v23 Production
+  name: development
+  secret_key: O85XMATZEMBO
+  user_identity: 4N630F61FGNG
+
+  admin:
+    ui_url: ${development.base_url}apriori/login
+
+  cas:
+    ui_url: https://cas.na-1.development.apriori.net/
+    api_url: https://cas-api.na-1.development.apriori.net/
+
+  cds:
+    apriori_core_services_installation_identity: ND11N124DE4F
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: N6LFCKE8GL94
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 4N8BBMII4MM4
+    automation_user_identity03: 4N8BIL9AC4DH
+    identity_role: 67J517C9L763
+
 ######################################################## DEV-CFIRST ########################################################
 dev-cfirst:
   name: dev-cfirst
