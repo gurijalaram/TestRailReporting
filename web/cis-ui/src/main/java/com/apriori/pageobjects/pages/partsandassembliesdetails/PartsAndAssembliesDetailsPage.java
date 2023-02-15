@@ -404,7 +404,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "popover-select-control-mention-textfield")
     private WebElement mentionUserPicker;
 
-    @FindBy(xpath = "//input[@type='checkbox']")
+    @FindBy(xpath = "//span[contains(@class,'MuiCheckbox-colorPrimary PrivateSwitchBase')]//*[local-name()='svg']")
     private WebElement assignToCheckBox;
 
     @FindBy(id = "popover-select-control-user-list")
@@ -427,6 +427,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
     private WebElement btnParticipantCancel;
+
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1692,7 +1693,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage selectAUser(String user) {
         getPageUtils().waitForElementToAppear(usersDropdownOption).sendKeys(user);
-        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(.,'" + user + "')]"));
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + user + "')]"));
         return this;
     }
 
@@ -2180,6 +2181,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isUndoDeleteOptionDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[starts-with(@id,'discussion')]//div[@data-testid='loader']"),5);
         return getPageUtils().waitForElementAppear(undoDeleteButton).isDisplayed();
     }
 
