@@ -347,6 +347,7 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"6476", "5439", "6477"})
+    @Issue("APD-1663")
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
         final String file = "manifold.prt.1";

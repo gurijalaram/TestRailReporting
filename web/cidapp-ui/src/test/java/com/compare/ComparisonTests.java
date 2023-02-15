@@ -308,6 +308,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"5783", "6200"})
+    @Issue("APD-1663")
     @Description("User can add scenarios to the currently open comparison via UI within current comparison")
     public void addScenarioToComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
