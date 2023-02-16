@@ -10,8 +10,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import sun.net.www.protocol.https.HttpsURLConnectionImpl;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,11 +24,17 @@ public class JasperApiAuthenticationUtil extends TestBase {
 
     public static String jSessionId;
 
-    /*@Before
+    @Before
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        auth.authenticateJasperApi();
-    }*/
+        //auth.authenticateJasperApi();
+        if (PropertiesContext.get("env").equals("onprem")) {
+            authenticateOnPrem();
+        } else {
+            authenticateCloud();
+        }
+        assertThat(jSessionId, is(notNullValue()));
+    }
 
     /**
      * Authenticates jasper api, opening session
@@ -39,14 +43,14 @@ public class JasperApiAuthenticationUtil extends TestBase {
      * @throws IOException - potentially thrown by on prem auth
      * @throws KeyManagementException - potentially thrown by on prem auth
      */
-    public void authenticateJasperApi() throws NoSuchAlgorithmException, IOException, KeyManagementException {
+    /*public void authenticateJasperApi() throws NoSuchAlgorithmException, IOException, KeyManagementException {
         if (PropertiesContext.get("env").equals("onprem")) {
             authenticateOnPrem();
         } else {
             authenticateCloud();
         }
         assertThat(jSessionId, is(notNullValue()));
-    }
+    }*/
 
     private void authenticateOnPrem() throws NoSuchAlgorithmException, KeyManagementException, IOException {
         skipSslCheck();
