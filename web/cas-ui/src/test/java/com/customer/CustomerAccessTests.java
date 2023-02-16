@@ -104,7 +104,7 @@ public class CustomerAccessTests extends TestBase {
 
         customerAccess.clickRequestAccessButton()
             .selectServiceAccount("service-account.1")
-            .clickOkRequestRevokeAccess();
+            .clickOkRequestAccess();
 
         soft.assertThat(customerAccess.getTextErrorMessage())
             .isEqualTo((String.format("HTTP 400: Can't authorize '%s' access to '%s' as they are not on the authorized user list for the customer.", userEmail, customerName)));
@@ -136,7 +136,7 @@ public class CustomerAccessTests extends TestBase {
             .openCustomer(customerIdentity)
             .clickRequestAccessButton()
             .selectServiceAccount("service-account.1")
-            .clickOkRequestRevokeAccess();
+            .clickOkRequestAccess();
 
         soft.assertThat(customerAccess.getTextSuccessMessage())
             .isEqualTo("Email has been sent");
@@ -147,9 +147,9 @@ public class CustomerAccessTests extends TestBase {
             .isFalse();
 
         customerAccess.clickRevokeAccessButton()
-            .clickCancelRequest()
+            .clickCancelRevoke()
             .clickRevokeAccessButton()
-            .clickOkRequestRevokeAccess();
+            .clickOkRevokeAccess();
 
         soft.assertThat(customerAccess.getTextSuccessMessage())
             .isEqualTo("Access successfully revoked");
