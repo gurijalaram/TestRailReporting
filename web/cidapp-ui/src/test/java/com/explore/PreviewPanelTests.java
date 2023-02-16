@@ -23,6 +23,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
@@ -116,6 +117,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("APD-1663")
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(testCaseId = {"6202", "6203", "6204"})
     public void previewPanelMultiSelect() {
