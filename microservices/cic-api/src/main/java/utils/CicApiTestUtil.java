@@ -92,30 +92,16 @@ public class CicApiTestUtil extends TestUtil {
         WorkflowRequest workflowRequestDataBuilder;
         switch (cicPartSelectionType.getPartSelectionType()) {
             case "REST":
-                if (isCostingInputData) {
-                    workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class);
-                    DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
-                    List<WorkflowRow> rows = defaultValues.getRows();
-                    rows.stream().forEach(row -> {
-                        if (row.getTwxAttributeName().equals("Scenario Name")) {
-                            row.setValue("SN" + System.currentTimeMillis());
-                        }
-                    });
-                    defaultValues.setRows(rows);
-                    workflowRequestDataBuilder.setDefaultValues(defaultValues);
-                    workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
-                } else {
-                    workflowRequestDataBuilder = new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
-                }
+                workflowRequestDataBuilder = (isCostingInputData)
+                    ? new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class) :
+                      new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
+
+                workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
                 break;
             default:
                 workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateQueryWorkFlowData.json", WorkflowRequest.class);
                 workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
         }
-        workflowRequestDataBuilder.setCustomer(getCustomerName());
-        workflowRequestDataBuilder.setPlmSystem(getAgent());
-        workflowRequestDataBuilder.setName("CIC_AGENT" + System.currentTimeMillis());
-        workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
         return workflowRequestDataBuilder;
     }
 
@@ -501,28 +487,34 @@ public class CicApiTestUtil extends TestUtil {
      */
     public static WorkflowParts getWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
         PlmParts plmParts;
-
-        plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() +
-                (numOfParts > 5 ? String.format(PlmPartsSearch.PLM_WC_PART_NAME_ENDS_WITH.getFilterKey(), "prt") : String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber())))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build());
-
-        List<PartData> partDataList = PlmPartsUtil.getPlmPartsFromCloud(numOfParts);
-        ArrayList<WorkflowPart> part = new ArrayList<>();
-        for (int i = 0; i < numOfParts; i++) {
-            part.add(WorkflowPart.builder()
-                .id(plmParts.getItems().get(i).getId())
-                .costingInputs(CostingInputs.builder()
-                    .processGroupName(partDataList.get(i).getProcessGroup())
-                    .materialName(partDataList.get(i).getMaterial())
-                    .vpeName(partDataList.get(i).getDigitalFactory())
-                    .scenarioName("SN" + System.currentTimeMillis())
-                    .annualVolume(partDataList.get(i).getAnnualVolume())
-                    .batchSize(partDataList.get(i).getBatchSize())
-                    .build())
+        ArrayList<WorkflowPart> part = null;
+        try {
+            plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
+                .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() +
+                    (numOfParts > 5 ? String.format(PlmPartsSearch.PLM_WC_PART_NAME_ENDS_WITH.getFilterKey(), "prt") : String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber())))
+                .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
                 .build());
+
+            List<PartData> partDataList = PlmPartsUtil.getPlmPartsFromCloud(numOfParts);
+            part = new ArrayList<>();
+            for (int i = 0; i < numOfParts; i++) {
+                part.add(WorkflowPart.builder()
+                    .id(plmParts.getItems().get(i).getId())
+                    .costingInputs(CostingInputs.builder()
+                        .processGroupName(partDataList.get(i).getProcessGroup())
+                        .materialName(partDataList.get(i).getMaterial())
+                        .vpeName(partDataList.get(i).getDigitalFactory())
+                        .scenarioName("SN" + System.currentTimeMillis())
+                        .annualVolume(partDataList.get(i).getAnnualVolume())
+                        .batchSize(partDataList.get(i).getBatchSize())
+                        .build())
+                    .build());
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error("PARTS NOT FOUND IN PLM SYSTEM WITH PART NUMBER --- " + partData.getPlmPartNumber());
         }
+
         return WorkflowParts.builder()
             .parts(part)
             .build();
@@ -690,14 +682,16 @@ public class CicApiTestUtil extends TestUtil {
      */
     private static WorkflowRequest setCostingInputData(WorkflowRequest workflowRequestDataBuilder) {
         DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
-        List<WorkflowRow> rows = defaultValues.getRows();
-        rows.stream().forEach(row -> {
-            if (row.getTwxAttributeName().equals("Scenario Name")) {
-                row.setValue("SN" + System.currentTimeMillis());
-            }
-        });
-        defaultValues.setRows(rows);
-        workflowRequestDataBuilder.setDefaultValues(defaultValues);
+        if (null != defaultValues) {
+            List<WorkflowRow> rows = defaultValues.getRows();
+            rows.stream().forEach(row -> {
+                if (row.getTwxAttributeName().equals("Scenario Name")) {
+                    row.setValue("SN" + System.currentTimeMillis());
+                }
+            });
+            defaultValues.setRows(rows);
+            workflowRequestDataBuilder.setDefaultValues(defaultValues);
+        }
         workflowRequestDataBuilder.setCustomer(getCustomerName());
         workflowRequestDataBuilder.setPlmSystem(getAgent());
         workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());

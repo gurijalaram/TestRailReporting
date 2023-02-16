@@ -41,10 +41,10 @@ public class ImportPage extends UsersPage {
     @FindBy(css = ".modal-body")
     private WebElement modalError;
 
-    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmRemoveCancelButton;
 
-    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    @FindBy(xpath = "//button[.='Ok']")
     private WebElement confirmRemoveOkButton;
 
     private UsersTableController usersTableController;
