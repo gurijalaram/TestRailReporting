@@ -16,6 +16,8 @@ import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.ApplicationInstallationRequest;
 import com.apriori.cds.objects.request.CASCustomerRequest;
 import com.apriori.cds.objects.request.CustomAttributeRequest;
+import com.apriori.cds.objects.request.FeatureRequest;
+import com.apriori.cds.objects.request.Features;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.request.PostBatch;
@@ -27,6 +29,7 @@ import com.apriori.cds.objects.response.CustomAttribute;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.Deployment;
+import com.apriori.cds.objects.response.FeatureResponse;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
@@ -344,6 +347,121 @@ public class CdsTestUtil extends TestUtil {
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST call to add an installation with feature to a customer
+     *
+     * @param customerIdentity   - the customer id
+     * @param deploymentIdentity - the deployment id
+     * @param siteIdentity       - the site Identity
+     * @param realmKey           - the realm key
+     * @param cloudReference     - the cloud reference
+     * @param workOrderStatusUpdatesEnabled - boolean for feature
+     * @return new object
+     */
+    public ResponseWrapper<InstallationItems> addInstallationWithFeature(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity,boolean workOrderStatusUpdatesEnabled) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
+            .inlineVariables(customerIdentity, deploymentIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body("installation",
+                InstallationItems.builder()
+                    .name("Automation Installation")
+                    .description("Installation added by API automation")
+                    .active(true)
+                    .region("na-1")
+                    .realm(realmKey)
+                    .url("https://na-1.qa.apriori.net")
+                    .s3Bucket("apriori-qa-blue-fms")
+                    .tenant("default")
+                    .tenantGroup("default")
+                    .clientId("apriori-web-cost")
+                    .clientSecret("donotusethiskey")
+                    .createdBy("#SYSTEM00000")
+                    .cidGlobalKey("donotusethiskey")
+                    .siteIdentity(siteIdentity)
+                    .cloudReference(cloudReference)
+                    .apVersion("2020 R1")
+                    .features(Features.builder().workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled).build())
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST call to add a feature to Installation
+     *
+     * @return new object
+     */
+    public ResponseWrapper<FeatureResponse> addFeature(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(FeatureRequest.builder()
+                    .features(Features.builder()
+                        .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
+                        .build())
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST call trying to add invalid feature to Installation
+     *
+     * @return ErrorResponse
+     */
+    public ErrorResponse addFeatureWrongResponse(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
+                    .build())
+                .build());
+
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
+
+        return errorResponse.getResponseEntity();
+    }
+
+    /**
+     * PUT call to update a feature to Installation
+     *
+     * @return new object
+     */
+    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
+                    .build())
+                .build());
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * PUT call to update a feature to Installation - wrong response
+     *
+     * @return new ErrorResponse
+     */
+    public ErrorResponse updateFeatureWrongResponse(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
+                    .build())
+                .build());
+
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).put();
+
+        return errorResponse.getResponseEntity();
     }
 
     /**
