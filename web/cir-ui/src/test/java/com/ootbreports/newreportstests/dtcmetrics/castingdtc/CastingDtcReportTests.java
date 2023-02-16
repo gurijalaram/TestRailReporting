@@ -25,6 +25,9 @@ import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -40,7 +43,8 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @Test
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
-    public void testCurrencyCode() {
+    public void testCurrencyCode() throws NoSuchAlgorithmException, IOException, KeyManagementException {
+        authenticateJasperApi();
         String currencyCode = "currencyCode";
         reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
 

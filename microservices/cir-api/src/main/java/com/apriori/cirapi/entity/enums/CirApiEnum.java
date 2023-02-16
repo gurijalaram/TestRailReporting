@@ -3,10 +3,10 @@ package com.apriori.cirapi.entity.enums;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum CIRAPIEnum implements ExternalEndpointEnum {
+public enum CirApiEnum implements ExternalEndpointEnum {
 
     //Application Metadata
-    DTC_METRICS("reports/aPriori/reports/DTC Metrics/casting/castingDTC/inputControls/values"),
+    DTC_METRICS("reports/aPriori/reports/DTC%sMetrics/casting/castingDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values"),
     REPORT_EXECUTIONS("reportExecutions"),
     REPORT_EXPORT_BY_REQUEST_ID("reportExecutions/%s/exports"),
     REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/outputResource"),
@@ -15,7 +15,7 @@ public enum CIRAPIEnum implements ExternalEndpointEnum {
 
     private final String endpoint;
 
-    CIRAPIEnum(String endpoint) {
+    CirApiEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 

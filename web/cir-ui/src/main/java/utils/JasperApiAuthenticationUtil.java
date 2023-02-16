@@ -11,6 +11,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import sun.net.www.protocol.https.HttpsURLConnectionImpl;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -25,11 +26,11 @@ public class JasperApiAuthenticationUtil extends TestBase {
 
     public static String jSessionId;
 
-    @Before
+    /*@Before
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
         auth.authenticateJasperApi();
-    }
+    }*/
 
     /**
      * Authenticates jasper api, opening session
@@ -54,18 +55,17 @@ public class JasperApiAuthenticationUtil extends TestBase {
         String urlLink = PropertiesContext.get("${env}.reports.ui_url")
             .concat(
                 String.format(
-                    "j_spring_security_check?j_username=%s&j_password=%s",
+                    "rest_v2/login?j_username=%s&j_password=%s",
                     usernamePassword,
                     usernamePassword
                 )
             );
         URL url = new URL(urlLink);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        con.setRequestMethod("POST");
         con.connect();
         System.out.println("Login response code :" + con.getResponseCode());
-        String sessionId = con + "";
-        jSessionId = sessionId.split(";")[1].substring(11, 43);
+        jSessionId = con.getHeaderField(2).substring(11, 43);
     }
 
     /**
