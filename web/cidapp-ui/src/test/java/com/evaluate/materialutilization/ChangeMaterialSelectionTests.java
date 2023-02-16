@@ -112,7 +112,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"6188"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {

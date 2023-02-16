@@ -212,7 +212,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2315")
     @TestRail(testCaseId = {"6472", "6824", "6473"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
@@ -259,7 +258,6 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @Issue("BA-2315")
     @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
@@ -304,7 +302,6 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @Issue("CIG-371")
     @TestRail(testCaseId = {"6474", "6475"})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
