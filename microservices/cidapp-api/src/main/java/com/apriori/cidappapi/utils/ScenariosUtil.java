@@ -53,7 +53,6 @@ public class ScenariosUtil {
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
-    private final long START_TIME = System.currentTimeMillis() / 1000;
     private final int METHOD_TIMEOUT = 30;
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -66,6 +65,8 @@ public class ScenariosUtil {
      * @return response object
      */
     public ScenarioResponse getScenarioCompleted(ComponentInfoBuilder componentInfo) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
         do {
             try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
@@ -582,10 +583,10 @@ public class ScenariosUtil {
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
      * @param userCredentials   - the user credentials
-     * @param <T>               - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ErrorMessage> deleteScenario(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+    public ResponseWrapper<ErrorMessage> deleteScenario(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
         final RequestEntity deleteRequest =
             genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity);
@@ -626,10 +627,10 @@ public class ScenariosUtil {
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
      * @param userCredentials   - the user credentials
-     * @param <T>               - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ErrorMessage> getDelete(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+    public ResponseWrapper<ErrorMessage> getDelete(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
         RequestEntity scenarioRequest =
             genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
