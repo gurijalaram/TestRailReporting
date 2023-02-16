@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.cds.utils.RandomCustomerData;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -21,15 +22,19 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CdsFeatureTests {
 
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
+    private String installationIdentity;
+    private String deploymentIdentity;
 
     @After
     public void cleanUp() {
@@ -56,43 +61,7 @@ public class CdsFeatureTests {
     @TestRail(testCaseId = {"21921"})
     @Description("Verify Create Installation Feature Flag")
     public void verifyCreateInstallationFlag() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String customerType = Constants.CLOUD_CUSTOMER;
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        String deploymentIdentity = response.getResponseEntity().getIdentity();
-
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        String installationIdentity = installation.getResponseEntity().getIdentity();
-
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-
-        installationIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .deploymentIdentity(deploymentIdentity)
-            .installationIdentity(installationIdentity)
-            .build();
-
-        licensedAppIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .siteIdentity(siteIdentity)
-            .licenseIdentity(licensedApplicationIdentity)
-            .build();
-
+        setAllCustomerData();
 
         ResponseWrapper<FeatureResponse> addFeature = cdsTestUtil.addFeature(customerIdentity, deploymentIdentity,installationIdentity,true);
 
@@ -119,43 +88,7 @@ public class CdsFeatureTests {
     @TestRail(testCaseId = {"21926"})
     @Description("Verify invalid Installation Feature Flag with wrong deployment")
     public void verifyInvalidInstallationFlag() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String customerType = Constants.CLOUD_CUSTOMER;
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        String deploymentIdentity = response.getResponseEntity().getIdentity();
-
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        String installationIdentity = installation.getResponseEntity().getIdentity();
-
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-
-        installationIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .deploymentIdentity(deploymentIdentity)
-            .installationIdentity(installationIdentity)
-            .build();
-
-        licensedAppIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .siteIdentity(siteIdentity)
-            .licenseIdentity(licensedApplicationIdentity)
-            .build();
-
+        setAllCustomerData();
 
         ErrorResponse errorResponse = cdsTestUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment",installationIdentity,true);
 
@@ -171,26 +104,11 @@ public class CdsFeatureTests {
     @TestRail(testCaseId = {"21924"})
     @Description("Verify create installation features on installation")
     public void verifyCreateInstallationFeaturesOnInstallation() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String customerType = Constants.CLOUD_CUSTOMER;
+        RandomCustomerData rcd = new RandomCustomerData();
+        String siteIdentity = allCustomerDataForInstallationFeature(rcd);
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        String deploymentIdentity = response.getResponseEntity().getIdentity();
-
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity,true);
-        String installationIdentity = installation.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity,true);
+        installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -231,43 +149,7 @@ public class CdsFeatureTests {
     @TestRail(testCaseId = {"21927"})
     @Description("Verify Update installation feature")
     public void verifyUpdateInstallationFeature() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String customerType = Constants.CLOUD_CUSTOMER;
-
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        String deploymentIdentity = response.getResponseEntity().getIdentity();
-
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        String installationIdentity = installation.getResponseEntity().getIdentity();
-
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-
-        installationIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .deploymentIdentity(deploymentIdentity)
-            .installationIdentity(installationIdentity)
-            .build();
-
-        licensedAppIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(customerIdentity)
-            .siteIdentity(siteIdentity)
-            .licenseIdentity(licensedApplicationIdentity)
-            .build();
-
+        setAllCustomerData();
 
         cdsTestUtil.addFeature(customerIdentity, deploymentIdentity,installationIdentity,true);
         ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity,installationIdentity,false);
@@ -295,26 +177,33 @@ public class CdsFeatureTests {
     @TestRail(testCaseId = {"21928"})
     @Description("Verify Update installation feature - wrong installation url")
     public void verifyUpdateInstallationFeatureWrong() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String customerType = Constants.CLOUD_CUSTOMER;
+        setAllCustomerData();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
+        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity,installationIdentity,true);
+        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity,"wrongInstallation",false);
+
+        soft.assertThat(errorResponse.getError())
+            .isEqualTo("Bad Request");
+        soft.assertThat(errorResponse.getMessage())
+            .isEqualTo("'installationIdentity' is not a valid identity.");
+
+        soft.assertAll();
+    }
+
+    private void setAllCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
-        String deploymentIdentity = response.getResponseEntity().getIdentity();
+        deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
-        String installationIdentity = installation.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
@@ -331,16 +220,19 @@ public class CdsFeatureTests {
             .siteIdentity(siteIdentity)
             .licenseIdentity(licensedApplicationIdentity)
             .build();
+    }
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity,installationIdentity,true);
-        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity,"wrongInstallation",false);
+    private String allCustomerDataForInstallationFeature(RandomCustomerData rcd) {
 
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+        customerIdentity = customer.getResponseEntity().getIdentity();
 
-        soft.assertThat(errorResponse.getError())
-            .isEqualTo("Bad Request");
-        soft.assertThat(errorResponse.getMessage())
-            .isEqualTo("'installationIdentity' is not a valid identity.");
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        String siteIdentity = site.getResponseEntity().getIdentity();
 
-        soft.assertAll();
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
+        deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        return siteIdentity;
     }
 }

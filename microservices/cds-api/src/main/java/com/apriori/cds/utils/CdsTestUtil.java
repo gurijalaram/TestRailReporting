@@ -1,6 +1,7 @@
 package com.apriori.cds.utils;
 
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.AttributeMappings;
@@ -47,9 +48,11 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 
 import java.io.File;
 import java.util.Arrays;
@@ -361,29 +364,17 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallationWithFeature(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity,boolean workOrderStatusUpdatesEnabled) {
+        InstallationItems installationItems = JsonManager.deserializeJsonFromInputStream(
+            FileResourceUtil.getResourceFileStream("InstallationItems" + ".json"), InstallationItems.class);
+        installationItems.setRealm(realmKey);
+        installationItems.setSiteIdentity(siteIdentity);
+        installationItems.setCloudReference(cloudReference);
+        installationItems.setFeatures(Features.builder().workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled).build());
+
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("installation",
-                InstallationItems.builder()
-                    .name("Automation Installation")
-                    .description("Installation added by API automation")
-                    .active(true)
-                    .region("na-1")
-                    .realm(realmKey)
-                    .url("https://na-1.qa.apriori.net")
-                    .s3Bucket("apriori-qa-blue-fms")
-                    .tenant("default")
-                    .tenantGroup("default")
-                    .clientId("apriori-web-cost")
-                    .clientSecret("donotusethiskey")
-                    .createdBy("#SYSTEM00000")
-                    .cidGlobalKey("donotusethiskey")
-                    .siteIdentity(siteIdentity)
-                    .cloudReference(cloudReference)
-                    .apVersion("2020 R1")
-                    .features(Features.builder().workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled).build())
-                    .build());
+            .body("installation",installationItems);
 
         return HTTPRequest.build(requestEntity).post();
     }
