@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.messages;
 
+import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -35,8 +36,35 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//div[@data-testid='loader']")
     private WebElement spinner;
 
-    @FindBy(xpath = "//h4[contains(@data-testid,'replies')]")
+    @FindBy(xpath = "//h4[contains(@data-testid,'replies')]//span[contains(text(),'View 1 reply')]")
     private WebElement repliesLink;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Filter ']")
+    private WebElement filtersOption;
+
+    @FindBy(id = "popover-filter-control-messages")
+    private WebElement filterModal;
+
+    @FindBy(id = "add-condition-button-filter-control-messages")
+    private WebElement addConditionLink;
+
+    @FindBy(xpath = "//div[contains(@id,'filter-field-select')]")
+    private WebElement filterField;
+
+    @FindBy(xpath = "//div[contains(@id,'filter-condition-type')]")
+    private WebElement filterConditionType;
+
+    @FindBy(xpath = "//input[contains(@id,'filter-value')]")
+    private WebElement filterValue;
+
+    @FindBy(xpath = "//*[local-name()='svg' and @data-icon='times-circle']")
+    private WebElement removeFilterIcon;
+
+    @FindBy(xpath = "//li[@data-value='assignee.userIdentity']")
+    private WebElement assignedToFilterFiled;
+
+    @FindBy(xpath = "//li[@data-value='[IN]']")
+    private WebElement isAnyOfFilterType;
 
     public MessagesPage(WebDriver driver) {
 
@@ -182,5 +210,125 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     public void waitForMessagePageLoad() {
         getPageUtils().waitForElementToAppear(spinner);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+    }
+
+    /**
+     * Checks if filter option displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(filtersOption).isDisplayed();
+    }
+
+    /**
+     * clicks on filter option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnFilter() {
+        getPageUtils().waitForElementAndClick(filtersOption);
+        return this;
+    }
+
+    /**
+     * Checks if filter modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterModalDisplayed() {
+        return getPageUtils().waitForElementAppear(filterModal).isDisplayed();
+    }
+
+    /**
+     * Checks if add condition option displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddConditionOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(addConditionLink).isDisplayed();
+    }
+
+    /**
+     * clicks on add condition link
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnAddCondition() {
+        getPageUtils().waitForElementAndClick(addConditionLink);
+        return this;
+    }
+
+    /**
+     * Checks if filter field selector displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterFiledDisplayed() {
+        return getPageUtils().waitForElementAppear(filterField).isDisplayed();
+    }
+
+    /**
+     * Checks if filter type selector displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterConditionTypeDisplayed() {
+        return getPageUtils().waitForElementAppear(filterConditionType).isDisplayed();
+    }
+
+    /**
+     * Checks if filter value field displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterValueDisplayed() {
+        return getPageUtils().waitForElementAppear(filterValue).isDisplayed();
+    }
+
+    /**
+     * clicks on remove filter option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnRemoveFilter() {
+        getPageUtils().waitForElementAndClick(removeFilterIcon);
+        return this;
+    }
+
+    /**
+     * select assignee to filter
+     *
+     * @return current page object
+     */
+    public MessagesPage selectAssigneeToFilter(String assignee) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(assignedToFilterFiled);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(isAnyOfFilterType);
+        getPageUtils().waitForElementToAppear(filterValue).sendKeys(assignee);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + assignee + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on remove filter option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnFilteredDiscussion() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementToAppear(allMessages);
+        getPageUtils().javaScriptClick(allMessages);
+        return this;
+    }
+
+    /**
+     * get assigned state
+     *
+     * @return a String
+     */
+    public String getAssignedState() {
+        return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
     }
 }
