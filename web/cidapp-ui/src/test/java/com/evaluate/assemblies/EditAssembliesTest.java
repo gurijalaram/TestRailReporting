@@ -787,7 +787,7 @@ public class EditAssembliesTest extends TestBase {
             .openComponents()
             .multiSelectSubcomponents(FLANGE + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
+            .close(ComponentsTreePage.class)
             .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
