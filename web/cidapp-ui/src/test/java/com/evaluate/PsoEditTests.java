@@ -2,7 +2,6 @@ package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -27,7 +26,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -110,13 +108,13 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("AISI P20");
         softAssertions.assertThat(materialProcessPage.getPartTolerance()).isEqualTo("Low Tolerance +/-0.254 (+/-0.010\")");
 
-        materialProcessPage.selectNumberOfCavitiesDropdown("4")
+        materialProcessPage.selectNumberOfCavitiesDropdown("1")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(1);
 
         softAssertions.assertAll();
     }
