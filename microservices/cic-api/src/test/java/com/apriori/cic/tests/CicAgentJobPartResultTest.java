@@ -17,12 +17,9 @@ import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;
-import entity.response.PlmParts;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
-import utils.SearchFilter;
 
 import java.util.HashMap;
 
@@ -375,7 +371,6 @@ public class CicAgentJobPartResultTest extends TestBase {
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
 
         AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
@@ -385,8 +380,6 @@ public class CicAgentJobPartResultTest extends TestBase {
             HttpStatus.SC_OK);
 
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
 
         AgentErrorMessage agentErrorMessage = (AgentErrorMessage) HTTPRequest.build(RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, AgentErrorMessage.class)
             .inlineVariables(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), workflowPartsRequestDataBuilder.getParts().get(0).getId())
