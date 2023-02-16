@@ -54,6 +54,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Issue("APD-1286")
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6468", "6379", "6383", "6389", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
@@ -290,7 +291,7 @@ public class DTCCastingTests extends TestBase {
 
         guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is not feasible. It is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
 
         softAssertions.assertAll();
     }
