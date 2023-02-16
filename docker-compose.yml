@@ -1,5 +1,13 @@
 version: "3"
 services:
+  qa-test:
+    image: ciene:latest
+    environment:
+      - AWS_ACCESS_KEY_ID= ${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY= ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ./target:/target
+
   chrome:
     image: selenium/node-chrome:4.0.0-20211025
     shm_size: 2gb
@@ -7,7 +15,7 @@ services:
     depends_on:
       - selenium-hub
     deploy:
-      replicas: 3    
+      replicas: 3
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -20,7 +28,7 @@ services:
     depends_on:
       - selenium-hub
     deploy:
-      replicas: 3 
+      replicas: 3
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
