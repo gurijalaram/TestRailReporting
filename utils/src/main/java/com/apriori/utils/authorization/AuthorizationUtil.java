@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class AuthorizationUtil {
      * Gets deployments
      *
      * @param userCredentials - UserCredentials instance containing user details to use in api call
-     * @param queryParams - Map of key value pairs to add to url
+     * @param queryParams     - Map of key value pairs to add to url
      * @return List of Deployment Items
      */
     private List<DeploymentItem> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
@@ -113,14 +114,23 @@ public class AuthorizationUtil {
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         String cloudContext = PropertiesContext.get("${env}.customer_identity");
-        String installationNameFromConfig = PropertiesContext.get("${env}.installation_name");
+
+        String installationName = PropertiesContext.get("${env}.installation_name");
+
+        if (StringUtils.isEmpty(installationName)) {
+            installationName = String.format("core-na-1 - %s production deployment",
+                StringUtils.substringBefore(PropertiesContext.get("version"), "-")
+            );
+        }
+
         String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
 
         DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("${env}.deployment_name"));
 
+        String finalInstallationName = installationName;
         InstallationItem installationItem = deploymentItem.getInstallations()
             .stream()
-            .filter(element -> element.getName().equals(installationNameFromConfig))
+            .filter(element -> element.getName().equals(finalInstallationName))
             .limit(1)
             .collect(Collectors.toList()).get(0);
 

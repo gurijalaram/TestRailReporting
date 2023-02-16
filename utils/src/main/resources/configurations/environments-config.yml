@@ -5,10 +5,9 @@
 ######################################################## QA-TEST #######################################################
 qa-test:
   application_name: cid
-  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
+  base_url: https://na-1-v${version}-demo.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   deployment_name: production
-  installation_name: core-na-1 - 23 production deployment
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
