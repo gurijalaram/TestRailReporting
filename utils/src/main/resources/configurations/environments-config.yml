@@ -33,13 +33,17 @@ qa-test:
     plm_wc_api_url: https://consvwc02.fbc.com/
     plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
 
+  reports:
+    ui_url: ${qa-test.base_url}jasperserver-pro/
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+
 ########################################################################################################################
 
 
 ######################################################## INT-CORE ######################################################
 int-core:
-  base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M  - can be added to customer's yml properties
+  base_url: https://cost.apriori-internal.int.apriori.net/
   name: int-core - looks like we don't need it
   secret_key: 65J1ID2B6LDG  - can be added to deployment properties
   user_identity: 8GFDIG229629  - can be added to deployment properties
@@ -49,7 +53,7 @@ int-core:
   deployment_url_template: core.int.apriori.net/
 
   admin:
-    ui_url: ${int-core.base_url}apriori/login
+    ui_url: ${qa-test.base_url}apriori/login
 
   bcs:
     report_identity: 50A4DFJF3NC7
@@ -68,7 +72,7 @@ int-core:
     identity_role: 67J517C9L762
 
   reports:
-    ui_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
+    ui_url: ${qa-test.base_url}jasperserver-pro/
 
 
 ########################################################################################################################

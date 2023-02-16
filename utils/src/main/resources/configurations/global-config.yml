@@ -6,7 +6,7 @@
 ############################################# Global properties ########################################################
 # Define main configurations
 env: qa-test
-version: 23-1
+version: 22-1
 deployment: production
 customer: ap-int
 
