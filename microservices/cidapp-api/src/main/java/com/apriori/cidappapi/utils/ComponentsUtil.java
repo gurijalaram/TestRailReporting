@@ -298,7 +298,6 @@ public class ComponentsUtil {
      * @return response object
      */
     public ComponentIdentityResponse getComponentIdentityPart(ComponentInfoBuilder componentInfo) {
-
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         do {
