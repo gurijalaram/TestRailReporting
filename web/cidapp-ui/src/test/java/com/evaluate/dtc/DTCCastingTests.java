@@ -54,6 +54,7 @@ public class DTCCastingTests extends TestBase {
     }
 
     @Test
+    @Issue("APD-1286")
     @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"6468", "6379", "6383", "6389", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
