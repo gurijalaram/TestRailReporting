@@ -56,7 +56,7 @@ public class PropertiesContextTest {
         final String awsRegion = PropertiesContext.get("aws_region");
 
         final String expectedCasCoreServiceValue = String.format("https://cas-api.%s.%s.apriori.net/", awsRegion, env);
-        final String expectedBcsDeploymentValue = String.format("https://bcs-http.%s-v%s.%s.apriori.net/", awsRegion, version, deploymentUrlPart);
+        final String expectedBcsDeploymentValue = String.format("https://bcs.%s-v%s.%s.apriori.net/", awsRegion, version, deploymentUrlPart);
 
         final String specificEnvPropertyCoreServiceValue = PropertiesContext.get("cas.api_url");
         final String specificEnvDeploymentValue = PropertiesContext.get("bcs.api_url");

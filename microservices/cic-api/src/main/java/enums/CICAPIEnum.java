@@ -47,7 +47,7 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
         } else if (this.endpoint.contains("Windchill")) {
             cicUri = PropertiesContext.get("${env}.ci-connect.plm_wc_api_url") + String.format(getEndpointString(), variables);
         } else {
-            cicUri = PropertiesContext.get("${env}.ci-connect.${customer}.agent_api_url") + String.format(getEndpointString(), variables);
+            cicUri = PropertiesContext.get("${customer}.ci-connect.agent_api_url") + String.format(getEndpointString(), variables);
         }
         return cicUri;
     }
