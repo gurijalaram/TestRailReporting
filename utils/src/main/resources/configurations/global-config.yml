@@ -110,6 +110,9 @@ default:
   vds:
     api_url: https://vds.${deployment_url_template}
 
+  qds:
+    api_url: https://qds.${deployment_url_template}
+
   qms:
     api_url: https://qms.${deployment_url_template}
 
