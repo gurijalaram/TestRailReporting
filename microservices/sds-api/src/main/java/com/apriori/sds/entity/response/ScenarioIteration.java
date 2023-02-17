@@ -28,6 +28,7 @@ public class ScenarioIteration {
     private String identity;
     private String iteration;
     private String hasWebImage;
+    private Boolean hasWatchpointReport;
     private String hasCustomImage;
     private Object scenarioDtcIssues;
     private Boolean isCadConnected;
