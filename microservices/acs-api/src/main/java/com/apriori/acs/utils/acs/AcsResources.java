@@ -1,6 +1,9 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesInputs;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
@@ -664,6 +667,40 @@ public class AcsResources {
                 .inlineVariables(processGroupName);
 
         return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Save GCD Properties
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     */
+
+    public GcdTypesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, String propertiesToSet, List propertiesToReset) {
+        setupHeader();
+
+        List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();
+        groupItemsList.add(GcdPropertiesGroupItemsInputs.builder()
+                .artifactKey(artifactKey)
+                .propertiesToSet(propertiesToSet)
+                .propertiesToReset(propertiesToReset)
+            .build()
+        );
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GCD_PROPERTIES, GcdPropertiesResponse.class)
+            .headers(headers)
+            .body(GcdPropertiesInputs.builder()
+                .groupItems(groupItemsList)
+                .build())
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return (GcdTypesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
