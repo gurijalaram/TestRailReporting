@@ -572,8 +572,8 @@ public class UploadAssembliesTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
             .openComponent("titan charger base", scenarioName, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
-            .costScenario()
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .costScenario(3)
             .clickActions()
             .info()
             .selectStatus("New")
@@ -589,8 +589,8 @@ public class UploadAssembliesTests extends TestBase {
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
-            "New", "Plastic Molding", "Injection Molding", "ABS");
+        softAssertions.assertThat(componentsTreePage.getRowDetails("titan charger base", scenarioName)).contains("High", "Test Description", "Test Notes",
+            "New", "Casting - Die", "Melting / High Pressure Die Casting / Trim / 3 Axis Mill");
 
         componentsTablePage = componentsTreePage.selectTableView()
             .configure()
