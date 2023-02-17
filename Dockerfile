@@ -26,17 +26,20 @@ ARG MODULE
 RUN gradle clean :$FOLDER:$MODULE:fatJar -x test
 
 # Build & Test.
-#FROM build as test
+#FROM runtime as final
 FROM runtime as final
-COPY --from=build /build-workspace/web/cidapp-ui/build/libs/automation-qa*.jar ./app.jar
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
-ENV AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
-ENV AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+ARG FOLDER
+ARG MODULE
+COPY --from=build /build-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
+COPY --from=build /build-workspace/aspectjweaver-1.8.10.jar ./aspectjweaver-1.8.10.jar
+#ARG AWS_ACCESS_KEY_ID
+#ARG AWS_SECRET_ACCESS_KEY
+#ENV AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
+#ENV AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
 
 #ARG JAVAOPTS
 #ARG FOLDER
 #ARG MODULE
 #ARG TESTS
 #RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
-ENTRYPOINT ["java", "-DthreadCounts=3", "-Dmode=GRID", "-Dtoken_email=cfrith@apriori.com", "-Dpassword=TestEvent2024!", "-Dheadless=true", "-jar", "app.jar", "-test", "testsuites.SanityTestSuite"]
+ENTRYPOINT ["java", "-javaagent:aspectjweaver-1.8.10.jar", "-DthreadCounts=3", "-Dmode=GRID", "-Dtoken_email=cfrith@apriori.com", "-Dpassword=TestEvent2024!", "-Dheadless=true", "-jar", "app.jar", "-test", "testsuites.SanityTestSuite"]
