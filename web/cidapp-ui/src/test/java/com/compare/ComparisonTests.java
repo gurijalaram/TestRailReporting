@@ -913,6 +913,7 @@ public class ComparisonTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
             .multiSelectScenarios("" + assemblyName1 + ", " + assemblyScenarioName1 + "", "" + assemblyName2 + ", " + assemblyScenarioName2 + "")
             .createComparison()
             .modify()

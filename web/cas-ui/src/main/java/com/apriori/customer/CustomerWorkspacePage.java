@@ -61,8 +61,14 @@ public class CustomerWorkspacePage extends NavToolbar {
     @FindBy(css = ".mr-2.btn.btn-secondary")
     private WebElement requestCancelButton;
 
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
+    private WebElement revokeCancelButton;
+
     @FindBy(css = "[data-testid='form-action-buttons'] .btn-primary")
     private WebElement requestOkButton;
+
+    @FindBy(xpath = "//button[.='Ok']")
+    private WebElement confirmRevokeOkButton;
 
     @FindBy(css = ".Toastify__toast.Toastify__toast--error .Toastify__toast-body")
     private WebElement modalError;
@@ -292,12 +298,32 @@ public class CustomerWorkspacePage extends NavToolbar {
     }
 
     /**
+     * Clicks on Cancel button on request access popup
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickCancelRevoke() {
+        getPageUtils().waitForElementAndClick(revokeCancelButton);
+        return this;
+    }
+
+    /**
      * Clicks on Om button on request access popup
      *
      * @return this page object
      */
-    public CustomerWorkspacePage clickOkRequestRevokeAccess() {
+    public CustomerWorkspacePage clickOkRequestAccess() {
         getPageUtils().waitForElementAndClick(requestOkButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Ok button on revoke access popup
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickOkRevokeAccess() {
+        getPageUtils().waitForElementAndClick(confirmRevokeOkButton);
         return this;
     }
 
