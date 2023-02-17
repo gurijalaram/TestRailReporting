@@ -1,11 +1,15 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
+import com.apriori.utils.http.enums.Schema;
+
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CostResultsProcessItem {
+@Schema(location = "acs/CostResultsProcess.json")
+public class CostResultsProcessItem extends ArrayList<CostResultsRootItem> {
     private ProcessInstanceKey processInstanceKey;
     private ArtifactKey artifactKey;
     private List<GcdItem> gcds;

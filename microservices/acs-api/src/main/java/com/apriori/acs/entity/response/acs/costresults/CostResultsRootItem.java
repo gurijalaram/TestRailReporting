@@ -13,4 +13,6 @@ public class CostResultsRootItem {
     private Boolean costingFailed;
     private Boolean secondaryProcess;
     private String depth;
+    private String machineName;
+    private String vpeName;
 }

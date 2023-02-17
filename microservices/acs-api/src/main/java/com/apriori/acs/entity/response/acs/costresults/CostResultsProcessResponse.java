@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 @Data
 @Schema(location = "acs/CostResultsProcess.json")
-public class CostResultsProcessResponse extends ArrayList {
+public class CostResultsProcessResponse extends ArrayList<CostResultsProcessResponse> {
     private CostResultsProcessItem costResultsProcessItem;
 }
