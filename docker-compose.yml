@@ -6,7 +6,7 @@ services:
       - AWS_ACCESS_KEY_ID= ${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY= ${AWS_SECRET_ACCESS_KEY}
     volumes:
-      - ./target:/target
+      - ./automation-reports/allure-results:/app/target/allure-results
 
   chrome:
     image: selenium/node-chrome:4.0.0-20211025
