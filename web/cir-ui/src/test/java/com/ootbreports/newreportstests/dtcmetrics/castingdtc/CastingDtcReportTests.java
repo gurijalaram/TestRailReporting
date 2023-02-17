@@ -31,7 +31,7 @@ import java.util.List;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("castingdtc/CastingDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
     private static GenericMethods genericMethods;
