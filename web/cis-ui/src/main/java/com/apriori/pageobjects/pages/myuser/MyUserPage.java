@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.myuser;
 
 import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
+import com.apriori.pageobjects.pages.settings.UserPreferencePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -159,5 +160,15 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
      */
     public String getLoggedUsername() {
         return getPageUtils().waitForElementToAppear(btnUserIcon).getText();
+    }
+
+    /**
+     * Click Settings
+     *
+     * @return new page object
+     */
+    public UserPreferencePage clickSettings() {
+        getPageUtils().waitForElementAndClick(settingsButton);
+        return new UserPreferencePage(getDriver());
     }
 }
