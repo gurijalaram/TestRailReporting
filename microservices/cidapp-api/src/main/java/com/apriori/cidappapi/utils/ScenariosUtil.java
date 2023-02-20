@@ -414,6 +414,14 @@ public class ScenariosUtil {
         return response.getResponseEntity();
     }
 
+    public ScenariosUtil updateSubcomponentCostingTemplate(ComponentInfoBuilder componentInfo, CostingTemplate costingTemplate, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent))
+            .findFirst()
+            .get()
+            .setCostingTemplate(costingTemplate));
+        return this;
+    }
+
     /**
      * Calls an api with the GET verb
      *
