@@ -12,7 +12,6 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 
 import com.google.common.base.Stopwatch;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.jsoup.nodes.Element;
 import utils.Constants;

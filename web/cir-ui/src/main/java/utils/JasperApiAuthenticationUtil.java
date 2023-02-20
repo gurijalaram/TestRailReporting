@@ -26,8 +26,6 @@ public class JasperApiAuthenticationUtil extends TestBase {
 
     @Before
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        //auth.authenticateJasperApi();
         if (PropertiesContext.get("env").equals("onprem")) {
             authenticateOnPrem();
         } else {
@@ -35,22 +33,6 @@ public class JasperApiAuthenticationUtil extends TestBase {
         }
         assertThat(jSessionId, is(notNullValue()));
     }
-
-    /**
-     * Authenticates jasper api, opening session
-     *
-     * @throws NoSuchAlgorithmException - potentially thrown by on prem auth
-     * @throws IOException - potentially thrown by on prem auth
-     * @throws KeyManagementException - potentially thrown by on prem auth
-     */
-    /*public void authenticateJasperApi() throws NoSuchAlgorithmException, IOException, KeyManagementException {
-        if (PropertiesContext.get("env").equals("onprem")) {
-            authenticateOnPrem();
-        } else {
-            authenticateCloud();
-        }
-        assertThat(jSessionId, is(notNullValue()));
-    }*/
 
     private void authenticateOnPrem() throws NoSuchAlgorithmException, KeyManagementException, IOException {
         skipSslCheck();
@@ -72,10 +54,7 @@ public class JasperApiAuthenticationUtil extends TestBase {
         jSessionId = con.getHeaderField(2).substring(11, 43);
     }
 
-    /**
-     * Authenticate jasper api for cloud, opening session
-     */
-    public void authenticateCloud() {
+    private void authenticateCloud() {
         new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
