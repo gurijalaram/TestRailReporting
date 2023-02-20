@@ -34,6 +34,7 @@ public class NavigationTests extends TestBase {
         customerID = customerProfilePage.findCustomerIdentity();
     }
 
+    // System Configuration page is disabled in CAS
     @Test
     @Description("Test that pages can be accessed directly by their URL")
     @TestRail(testCaseId = {"9907"})
@@ -56,9 +57,9 @@ public class NavigationTests extends TestBase {
         soft.assertThat(InfrastructurePage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "InfrastructurePage")
             .isInstanceOf(LoadableComponent.class);
-        soft.assertThat(SystemConfigurationPage.getViaURL(driver, customerID))
+        /*soft.assertThat(SystemConfigurationPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "SystemConfigurationPage")
-            .isInstanceOf(LoadableComponent.class);
+            .isInstanceOf(LoadableComponent.class);*/
 
         soft.assertAll();
     }

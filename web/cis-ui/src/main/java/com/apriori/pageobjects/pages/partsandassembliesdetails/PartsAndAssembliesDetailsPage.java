@@ -404,7 +404,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "popover-select-control-mention-textfield")
     private WebElement mentionUserPicker;
 
-    @FindBy(xpath = "//input[@type='checkbox']")
+    @FindBy(xpath = "//span[contains(@class,'MuiCheckbox-colorPrimary PrivateSwitchBase')]//*[local-name()='svg']")
     private WebElement assignToCheckBox;
 
     @FindBy(id = "popover-select-control-user-list")
@@ -427,6 +427,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
     private WebElement btnParticipantCancel;
+
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1692,7 +1693,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage selectAUser(String user) {
         getPageUtils().waitForElementToAppear(usersDropdownOption).sendKeys(user);
-        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(.,'" + user + "')]"));
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + user + "')]"));
         return this;
     }
 
@@ -1721,7 +1722,8 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickOnInvite() {
-        getPageUtils().waitForElementAndClick(btnInvite);
+        getPageUtils().waitForElementToAppear(btnInvite);
+        getPageUtils().moveAndClick(btnInvite);
         return this;
     }
 
@@ -2180,6 +2182,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isUndoDeleteOptionDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[starts-with(@id,'discussion')]//div[@data-testid='loader']"),5);
         return getPageUtils().waitForElementAppear(undoDeleteButton).isDisplayed();
     }
 
@@ -2334,7 +2337,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickOnDeleteCommentOption() {
         getPageUtils().waitForElementToAppear(deleteCommentOption);
-        getPageUtils().moveAndClick(deleteCommentOption);
+        getPageUtils().javaScriptClick(deleteCommentOption);
         return this;
     }
 
@@ -2424,7 +2427,8 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public PartsAndAssembliesDetailsPage clickToAssign() {
-        getPageUtils().waitForElementAppear(assignToCheckBox).click();
+        getPageUtils().waitForElementAppear(assignToCheckBox);
+        getPageUtils().moveAndClick(assignToCheckBox);
         return this;
     }
 
@@ -2444,7 +2448,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isRemoveIconDisplayed() {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[@data-testid='loader']"),5);
-        return getPageUtils().waitForElementAppear(shareScenarioRemoveIcon).isDisplayed();
+        return getPageUtils().isElementDisplayed(shareScenarioRemoveIcon);
     }
 
     /**
