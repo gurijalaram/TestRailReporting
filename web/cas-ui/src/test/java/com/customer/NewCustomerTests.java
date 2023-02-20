@@ -73,9 +73,9 @@ public class NewCustomerTests extends TestBase {
         soft.assertThat(customerViewPage.getSecurityTab())
             .overridingErrorMessage("The security tab is visible on a new customer.")
             .isNull();
-        soft.assertThat(customerViewPage.getSystemConfigurationTab().isEnabled())
+        soft.assertThat(customerViewPage.getSystemConfigurationTab())
             .overridingErrorMessage("The system configuration tab is enabled on a new customer.")
-            .isFalse();
+            .isNull();
 
         List<String> labels = Arrays.asList(
                 "Customer Name:",

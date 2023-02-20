@@ -334,6 +334,8 @@ public class CustomerStaffTests extends TestBase {
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
+        sourceUsers.removeIf(user -> user.getUsername().equals(userName));
+
         long notDeletedUsers = usersTable.getRows().count();
         soft.assertThat(notDeletedUsers)
             .overridingErrorMessage("The staff users were not removed.")

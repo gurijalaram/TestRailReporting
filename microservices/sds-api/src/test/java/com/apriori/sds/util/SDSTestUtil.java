@@ -15,6 +15,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
@@ -468,11 +469,10 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
         PublishRequest shallowPublishRequest = PublishRequest.builder()
-            .assignedTo(componentInfoBuilder.getPublishRequest().getAssignedTo())
+            .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
             .locked(false)
             .override(false)
             .scenarioName(componentInfoBuilder.getScenarioName())
-            .status(componentInfoBuilder.getPublishRequest().getStatus())
             .publishSubComponents(false)
             .build();
 

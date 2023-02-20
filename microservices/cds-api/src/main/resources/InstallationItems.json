@@ -1,0 +1,15 @@
+{
+  "name": "Automation Installation",
+  "description": "Installation added by API automation",
+  "active": true,
+  "region": "na-1",
+  "url": "https://na-1.qa.apriori.net",
+  "s3Bucket": "apriori-qa-blue-fms",
+  "tenant": "default",
+  "tenantGroup": "default",
+  "clientId": "apriori-web-cost",
+  "clientSecret": "donotusethiskey",
+  "createdBy":  "#SYSTEM00000",
+  "cidGlobalKey": "donotusethiskey",
+  "apVersion": "2020 R1"
+}
