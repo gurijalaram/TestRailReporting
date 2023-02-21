@@ -3,7 +3,6 @@ package tests.acs;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsGcdResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessItem;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.costresults.ProcessInstanceKey;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -24,7 +23,6 @@ import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class CostResultsTests {
 
@@ -110,7 +108,7 @@ public class CostResultsTests {
             false
         );
 
-        CostResultsProcessItem response = acsResources.getCostResultsProcess(
+        CostResultsProcessItem response = acsResources.getCostResults(
             costOutputs.getScenarioIterationKey(),
             "PROCESS", CostResultsProcessItem.class).getResponseEntity();
 
