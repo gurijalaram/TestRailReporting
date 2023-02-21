@@ -52,6 +52,9 @@ public class DriverFactory {
             case LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
                 break;
+            case DOCKER:
+                driver = new RemoteWebDriverService(browser, ("http://").concat("host.docker.internal").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+                break;
             default:
                 throw new InvalidParameterException(String.format("Received unexpected test mode '%s' ", testMode));
         }
