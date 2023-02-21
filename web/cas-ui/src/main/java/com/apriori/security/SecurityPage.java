@@ -19,10 +19,10 @@ public final class SecurityPage extends CustomerWorkspacePage {
     @FindBy(css = ".btn.btn-light.customer-security-reset-mfa")
     private WebElement resetMfaAllUsersButton;
 
-    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmResetCancelButton;
 
-    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    @FindBy(xpath = "//button[.='Ok']")
     private WebElement confirmResetOkButton;
 
     @FindBy(xpath = "//div[@class='Toastify__toast Toastify__toast--success']/div[@role='alert']")
@@ -43,7 +43,7 @@ public final class SecurityPage extends CustomerWorkspacePage {
      * @return list of fields names
      */
     public List<String> getFieldName() {
-        List<WebElement> fieldName = getDriver().findElements(By.xpath("//label[@class='display-property-item-name form-label m-0']"));
+        List<WebElement> fieldName = getDriver().findElements(By.cssSelector(".display-property-list .display-property-item-name"));
         return fieldName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 

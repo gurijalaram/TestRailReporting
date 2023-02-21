@@ -50,10 +50,10 @@ public class UsersListPage extends UsersPage {
     @FindBy(css = ".delete-user-button")
     private WebElement deleteUserButton;
 
-    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement confirmDeleteCancelButton;
 
-    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    @FindBy(xpath = "//button[.='Ok']")
     private WebElement confirmDeleteOkButton;
 
     @FindBy(css = ".fa-file-circle-minus")

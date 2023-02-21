@@ -23,10 +23,12 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
 
+@Ignore("Feature is not available on qa test now")
 public class UsersGrantLicenseTests extends TestBase {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;

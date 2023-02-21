@@ -57,6 +57,10 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     POST_COMPONENTS("components"),
     GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s"),
 
+    // FEATURE DECISIONS
+
+    FEATURE_DECISIONS("feature-decisions"),
+
     // SECONDARY PROCESS
     GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES("components/%s/scenarios/%s/vpes/%s/process-groups/%s/secondary-processes");
 
