@@ -415,6 +415,22 @@ public class ScenariosUtil {
     }
 
     /**
+     * Updates costing template for a subcomponent
+     *
+     * @param componentInfo   - the component info
+     * @param costingTemplate - the costing template
+     * @param subcomponents   - the subcomponents
+     * @return current object
+     */
+    public ScenariosUtil setSubcomponentCostingTemplate(ComponentInfoBuilder componentInfo, CostingTemplate costingTemplate, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent))
+            .findFirst()
+            .get()
+            .setCostingTemplate(costingTemplate));
+        return this;
+    }
+
+    /**
      * Calls an api with the GET verb
      *
      * @param userCredentials - the user credentials
