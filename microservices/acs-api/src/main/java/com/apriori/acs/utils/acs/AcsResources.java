@@ -4,6 +4,7 @@ import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;
 import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesInputs;
 import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
+import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
@@ -675,7 +676,7 @@ public class AcsResources {
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
      */
 
-    public GcdTypesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, String propertiesToSet, List propertiesToReset) {
+    public GcdTypesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, PropertiesToSet propertiesToSet, List propertiesToReset) {
         setupHeader();
 
         List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();

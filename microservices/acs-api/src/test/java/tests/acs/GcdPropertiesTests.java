@@ -53,7 +53,7 @@ public class GcdPropertiesTests {
         GcdPropertiesInputs response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
-            "tolerance",
+            "tolerance"
 
         );
 
