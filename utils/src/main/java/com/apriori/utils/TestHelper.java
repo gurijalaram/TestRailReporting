@@ -56,6 +56,9 @@ public class TestHelper {
             case "GRID":
                 result = TestMode.GRID;
                 break;
+            case "DOCKER":
+                result = TestMode.DOCKER;
+                break;
             default:
                 throw new IllegalStateException("testMode could not be identified");
         }
