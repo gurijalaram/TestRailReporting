@@ -1,5 +1,6 @@
 package com.apriori.cds.objects.response;
 
+import com.apriori.cds.objects.request.Features;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -57,4 +58,5 @@ public class InstallationItems {
     private String url;
     private List<Application> applications;
     private String apVersion;
+    private Features features;
 }
