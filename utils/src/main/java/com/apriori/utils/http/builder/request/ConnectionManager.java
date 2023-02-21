@@ -21,6 +21,7 @@ import io.restassured.internal.mapping.Jackson2Mapper;
 import io.restassured.mapper.ObjectMapper;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
@@ -199,6 +200,7 @@ class ConnectionManager<T> {
      * @return JSON POJO object instance of @returnType
      */
     public <T> ResponseWrapper<T> get() {
+
         return resultOf(
             createRequestSpecification()
                 .when()

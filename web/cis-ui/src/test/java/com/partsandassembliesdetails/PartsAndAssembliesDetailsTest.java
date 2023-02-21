@@ -1361,13 +1361,19 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
-                .clickOnShare()
-                .selectAUser("qa-automation-01@apriori.com")
+                .clickOnShare();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isUsersDropDownDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isInviteButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isSharedParticipantsDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectAUser("qa-automation-01@apriori.com")
                 .selectAUser("qa-automation-02@apriori.com")
                 .clickOnInvite();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isTrue();
 
@@ -1382,7 +1388,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue();
 
-        partsAndAssembliesDetailsPage.clickOnSharedUserRemoveButton();
+        partsAndAssembliesDetailsPage.clickOnSharedUserRemoveIcon()
+                .clickOnSharedUserRemoveButton();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse();
 
