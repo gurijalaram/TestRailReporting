@@ -1,39 +1,59 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
+  "required": [
+    "response"
+  ],
   "properties": {
-    "isRestrictedByAccessControl": {
-      "type": "boolean"
-    },
-    "isLastPage": {
-      "type": "boolean"
-    },
-    "isFirstPage": {
-      "type": "boolean"
-    },
-    "pageNumber": {
-      "type": "integer"
-    },
-    "pageSize": {
-      "type": "integer"
-    },
-    "pageItemCount": {
-      "type": "integer"
-    },
-    "totalItemCount": {
-      "type": "integer"
-    },
-    "totalPageCount": {
-      "type": "integer"
-    },
-    "hasNextPage": {
-      "type": "boolean"
-    },
-    "hasPreviousPage": {
-      "type": "boolean"
-    },
-    "items": {
-      "type": "object"
+    "response": {
+      "type": "object",
+      "required": [
+        "isRestrictedByAccessControl",
+        "isLastPage",
+        "isFirstPage",
+        "pageNumber",
+        "pageSize",
+        "pageItemCount",
+        "totalPageCount",
+        "hasNextPage",
+        "hasPreviousPage",
+        "items"
+      ],
+      "properties": {
+        "isRestrictedByAccessControl": {
+          "type": "boolean"
+        },
+        "isLastPage": {
+          "type": "boolean"
+        },
+        "isFirstPage": {
+          "type": "boolean"
+        },
+        "pageNumber": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "pageItemCount": {
+          "type": "integer"
+        },
+        "totalItemCount": {
+          "type": "integer"
+        },
+        "totalPageCount": {
+          "type": "integer"
+        },
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "type": "boolean"
+        },
+        "items": {
+          "type": "array"
+        }
+      }
     }
   }
 }
