@@ -422,7 +422,7 @@ public class ScenariosUtil {
      * @param subcomponents   - the subcomponents
      * @return current object
      */
-    public ScenariosUtil updateSubcomponentCostingTemplate(ComponentInfoBuilder componentInfo, CostingTemplate costingTemplate, String... subcomponents) {
+    public ScenariosUtil setSubcomponentCostingTemplate(ComponentInfoBuilder componentInfo, CostingTemplate costingTemplate, String... subcomponents) {
         Arrays.stream(subcomponents).forEach(subcomponent -> componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent))
             .findFirst()
             .get()

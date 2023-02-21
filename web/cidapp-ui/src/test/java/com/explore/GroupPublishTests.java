@@ -127,8 +127,8 @@ public class GroupPublishTests extends TestBase {
         CostingTemplate pinTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup()).productionLife(9.0).build();
         CostingTemplate bigRingTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.POWDER_METAL.getProcessGroup()).annualVolume(700).build();
 
-        scenariosUtil.updateSubcomponentCostingTemplate(componentAssembly1, pinTemplate, "pin", "small ring");
-        scenariosUtil.updateSubcomponentCostingTemplate(componentAssembly1, bigRingTemplate, "big ring");
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly1, pinTemplate, "pin", "small ring");
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly1, bigRingTemplate, "big ring");
 
         assemblyUtils.uploadSubComponents(componentAssembly1).uploadAssembly(componentAssembly1);
         assemblyUtils.costSubComponents(componentAssembly1).costAssembly(componentAssembly1);
@@ -156,7 +156,7 @@ public class GroupPublishTests extends TestBase {
         // TODO: 20/02/2023 cn - nick pls fix these templates
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()).build();
 
-        scenariosUtil.updateSubcomponentCostingTemplate(componentAssembly2, costingTemplate, "flange", "nut", "bolt");
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly2, costingTemplate, "flange", "nut", "bolt");
 
         assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
         assemblyUtils.costSubComponents(componentAssembly2).costAssembly(componentAssembly2);
