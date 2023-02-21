@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class GenericJasperApiMethods {
+public class JasperApiUtils {
     private ReportRequest reportRequest;
     private String jSessionId;
     private String exportSetName;
     private String reportsJsonFileName;
 
-    public GenericJasperApiMethods(String jSessionId, String exportSetName, String reportsJsonFileName) {
+    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
         this.jSessionId = jSessionId;
         this.exportSetName = exportSetName;
@@ -37,21 +37,21 @@ public class GenericJasperApiMethods {
     }
 
     public void inputControlGenericTest(String inputControlToSet, String valueToSet) {
-        GenericJasperApiMethods genericJasperApiMethods = new GenericJasperApiMethods(jSessionId, exportSetName, reportsJsonFileName);
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
 
         InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         reportRequest = !valueToSet.isEmpty()
-            ? genericJasperApiMethods.setReportParameterByName(reportRequest, Constants.inputControlNames.get(inputControlToSet), valueToSet) :
+            ? jasperApiUtils.setReportParameterByName(reportRequest, Constants.inputControlNames.get(inputControlToSet), valueToSet) :
             reportRequest;
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
         valueToSet = valueToSet.equals("7820000") ? "7,820,000.00" : valueToSet;
 
-        List<Element> elements = genericJasperApiMethods.generateReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
+        List<Element> elements = jasperApiUtils.generateReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
     }

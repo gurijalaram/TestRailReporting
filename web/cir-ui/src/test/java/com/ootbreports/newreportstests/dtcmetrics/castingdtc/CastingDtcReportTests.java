@@ -18,7 +18,7 @@ import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
-import com.ootbreports.newreportstests.utils.GenericJasperApiMethods;
+import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,12 +34,12 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
-    private static GenericJasperApiMethods genericJasperApiMethods;
+    private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupGenericMethods() {
-        genericJasperApiMethods = new GenericJasperApiMethods(jSessionId, exportSetName, reportsJsonFileName);
-        reportRequest = genericJasperApiMethods.getReportRequest();
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        reportRequest = jasperApiUtils.getReportRequest();
     }
 
     @Test
@@ -54,21 +54,21 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
-        ChartDataPoint usdChartDataPoint = genericJasperApiMethods.generateReportAndGetChartDataPoint(reportRequest);
+        ChartDataPoint usdChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
-        String usdFullyBurdenedCost = genericJasperApiMethods.getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
-        double usdAnnualSpend = genericJasperApiMethods.getAnnualSpendFromChartDataPoint(usdChartDataPoint);
+        String usdFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
+        double usdAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(usdChartDataPoint);
 
-        reportRequest = genericJasperApiMethods.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
 
-        ChartDataPoint gbpChartDataPoint = genericJasperApiMethods.generateReportAndGetChartDataPoint(reportRequest);
+        ChartDataPoint gbpChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
-        String gbpFullyBurdenedCost = genericJasperApiMethods.getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
-        double gbpAnnualSpend = genericJasperApiMethods.getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
+        String gbpFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
+        double gbpAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
 
         assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
         assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
@@ -78,7 +78,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -88,7 +88,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7408"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -98,7 +98,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1696"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -108,7 +108,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7388"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -118,7 +118,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7454"})
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieCastingOnly() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
@@ -128,7 +128,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7453"})
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupInputControlSandCastingOnly() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ProcessGroupEnum.CASTING_SAND.getProcessGroup()
         );
@@ -138,7 +138,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7455"})
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieAndSandCasting() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ""
         );
@@ -148,7 +148,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7505")
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
     public void testDtcScoreNoSelection() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             ""
         );
@@ -158,7 +158,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -168,7 +168,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7511")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -178,7 +178,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7514")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
@@ -189,12 +189,12 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {
         String minimumAnnualSpendValue = "7820000";
-        genericJasperApiMethods.inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Minimum Annual Spend",
             minimumAnnualSpendValue
         );
 
-        JasperReportSummary reportSummary = genericJasperApiMethods.generateReportSummary(reportRequest);
+        JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
         ChartDataPoint chartDataPoint = reportSummary.getChartDataPointByPartName("E3-241-4-N (Initial)");
         List<ChartDataPoint> chartDataPointList = reportSummary.getChartDataPoints();
 
