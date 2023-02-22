@@ -435,9 +435,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//li[@role='menuitem']")
     private WebElement btnCid;
 
-
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
-
         this(driver, log);
     }
 
@@ -450,12 +448,10 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         PageFactory.initElements(driver, this);
         this.waitForCADViewerLoad();
         this.partsAndAssemblyDetailsController = new PartsAndAssemblyDetailsController(driver);
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -2532,7 +2528,6 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public boolean isOpenInCIDButtonDisplayed() {
         return getPageUtils().waitForElementAppear(btnOpenIn).isDisplayed();
     }
-
 
     /**
      * clicks on open component button

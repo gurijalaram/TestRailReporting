@@ -1,9 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.navtoolbars.EvaluateTabToolbar;
-import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -29,7 +26,6 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
         this.get();
-
     }
 
     @Override

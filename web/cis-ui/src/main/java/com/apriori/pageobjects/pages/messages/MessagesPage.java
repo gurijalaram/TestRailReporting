@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.messages;
 
-import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -85,9 +84,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//p[contains(@data-testid,'show-status')]//*[local-name()='svg']")
     private WebElement resolveIcon;
 
-
     public MessagesPage(WebDriver driver) {
-
         this(driver, log);
     }
 

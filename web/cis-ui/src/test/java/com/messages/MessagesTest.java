@@ -160,7 +160,6 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-
     @Test
     @TestRail(testCaseId = {"14755", "14757"})
     @Description("Verify that user can filter discussions by assigned user")
@@ -286,5 +285,3 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
     }
 }
-
-
