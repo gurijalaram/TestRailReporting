@@ -167,7 +167,6 @@ subprojects {
         implementation 'org.projectlombok:lombok:1.18.24'
         implementation 'com.opencsv:opencsv:5.7.0'
         annotationProcessor 'org.projectlombok:lombok:1.18.24'
-        runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.9.1'
 
         testImplementation 'org.projectlombok:lombok:1.18.24'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
