@@ -37,7 +37,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static JasperApiUtils jasperApiUtils;
 
     @Before
-    public void setupGenericMethods() {
+    public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
         reportRequest = jasperApiUtils.getReportRequest();
     }

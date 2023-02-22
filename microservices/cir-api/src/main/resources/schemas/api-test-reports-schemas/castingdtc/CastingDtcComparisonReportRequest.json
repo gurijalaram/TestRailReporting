@@ -1,0 +1,111 @@
+{
+  "reportUnitUri": "/aPriori/reports/DTC Metrics/casting/castingDTCComparison",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "reportContainerWidth": 950,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "useLatestExport",
+        "value": [
+          "Scenario"
+        ]
+      },
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2022-10-24T09:10:22"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-02-21T08:10:22"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "23"
+        ]
+      },
+      {
+        "name": "rollup",
+        "value": [
+          "577"
+        ]
+      },
+      {
+        "name": "costMetric",
+        "value": [
+          "Fully Burdened Cost"
+        ]
+      },
+      {
+        "name": "massMetric",
+        "value": [
+          "Finish Mass"
+        ]
+      },
+      {
+        "name": "sortOrder",
+        "value": [
+          "Manufacturing - Casting Issues"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      },
+      {
+        "name": "annualSpendMin",
+        "value": [
+          "0"
+        ]
+      },
+      {
+        "name": "processGroup",
+        "value": [
+          "Casting - Die",
+          "Casting - Sand"
+        ]
+      },
+      {
+        "name": "exportEventId",
+        "value": [
+          "38"
+        ]
+      },
+      {
+        "name": "metricStatistic",
+        "value": [
+          "8,d1=24,d2=43,d3=155,d4=427,d5=0,d6=2,d7=5,d8=0.025105140130855963,d9=0.027824349173625085,da=0.03630374956538951"
+        ]
+      },
+      {
+        "name": "dtcScore",
+        "value": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
+      {
+        "name": "partsSelect",
+        "value": [
+          "~NOTHING~"
+        ]
+      }
+    ]
+  }
+}
