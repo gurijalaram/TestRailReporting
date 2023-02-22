@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.partsandassembliesdetails;
 
 import com.apriori.pageobjects.common.PartsAndAssemblyDetailsController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -427,6 +428,12 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
     private WebElement btnParticipantCancel;
+
+    @FindBy(id = "open-in-button")
+    private WebElement btnOpenIn;
+
+    @FindBy(xpath = "//li[@role='menuitem']")
+    private WebElement btnCid;
 
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
@@ -2515,5 +2522,35 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveCancelButton() {
         getPageUtils().waitForElementAndClick(btnParticipantCancel);
         return this;
+    }
+
+    /**
+     * Checks if open in cid button displayed
+     *
+     * @return true/false
+     */
+    public boolean isOpenInCIDButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnOpenIn).isDisplayed();
+    }
+
+
+    /**
+     * clicks on open component button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnOpenComponent() {
+        getPageUtils().waitForElementAndClick(btnOpenIn);
+        return this;
+    }
+
+    /**
+     * Click on open CID
+     *
+     * @return new page object
+     */
+    public EvaluatePage clickOnCid() {
+        getPageUtils().waitForElementAndClick(btnCid);
+        return new EvaluatePage(getDriver());
     }
 }

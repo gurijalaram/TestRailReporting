@@ -6,6 +6,7 @@ import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,6 +66,25 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
     @FindBy(xpath = "//li[@data-value='[IN]']")
     private WebElement isAnyOfFilterType;
+
+    @FindBy(xpath = "//li[@data-value='mentionedUsers.userIdentity']")
+    private WebElement mentionedUserFilterField;
+
+    @FindBy(xpath = "//li[@data-value='[EQ]']")
+    private WebElement isFilterType;
+
+    @FindBy(xpath = "//div[contains(@id,'')]")
+    private WebElement mentionedUserTag;
+
+    @FindBy(xpath = "//li[@data-value='status']")
+    private WebElement statusFilterField;
+
+    @FindBy(xpath = "//button[@title='Open']//*[local-name()='svg']")
+    private WebElement statusValueDropDown;
+
+    @FindBy(xpath = "//p[contains(@data-testid,'show-status')]//*[local-name()='svg']")
+    private WebElement resolveIcon;
+
 
     public MessagesPage(WebDriver driver) {
 
@@ -227,6 +247,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return true/false
      */
     public MessagesPage clickOnFilter() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(filtersOption);
         return this;
     }
@@ -330,5 +351,53 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public String getAssignedState() {
         return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
+    }
+
+    /**
+     * select mentioned user to filter
+     *
+     * @return current page object
+     */
+    public MessagesPage selectMentionedUserToFilter(String mentionedUser) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(mentionedUserFilterField);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(isFilterType);
+        getPageUtils().waitForElementToAppear(filterValue).sendKeys(mentionedUser + Keys.ARROW_DOWN + Keys.ENTER);
+        return this;
+    }
+
+    /**
+     * Checks if mentioned user tag displayed
+     *
+     * @return true/false
+     */
+    public boolean isMentionedUserTagDisplayed(String mentionedUser) {
+        return getPageUtils().isElementDisplayed(By.xpath("//div[contains(@id,'" + mentionedUser + "')]"));
+    }
+
+    /**
+     * select status to filter
+     *
+     * @return current page object
+     */
+    public MessagesPage selectStatusToFilter(String status) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(statusFilterField);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(isAnyOfFilterType);
+        getPageUtils().waitForElementToAppear(filterValue);
+        getPageUtils().waitForElementAndClick(statusValueDropDown);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + status + "')]"));
+        return this;
+    }
+
+    /**
+     * get resolve state
+     *
+     * @return a String
+     */
+    public String getResolveStatus() {
+        return getPageUtils().waitForElementToAppear(resolveIcon).getAttribute("class");
     }
 }
