@@ -18,31 +18,35 @@ import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
-import com.google.common.base.Stopwatch;
+import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.jsoup.nodes.Element;
+import org.junit.Before;
 import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("castingdtc/CastingDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
+    private static JasperApiUtils jasperApiUtils;
+
+    @Before
+    public void setupGenericMethods() {
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        reportRequest = jasperApiUtils.getReportRequest();
+    }
 
     @Test
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
         String currencyCode = "currencyCode";
-        reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();
@@ -50,21 +54,21 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        reportRequest = setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
-        reportRequest = setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
-        ChartDataPoint usdChartDataPoint = generateReportAndGetChartDataPoint(reportRequest);
+        ChartDataPoint usdChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
-        String usdFullyBurdenedCost = getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
-        double usdAnnualSpend = getAnnualSpendFromChartDataPoint(usdChartDataPoint);
+        String usdFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
+        double usdAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(usdChartDataPoint);
 
-        reportRequest = setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
 
-        ChartDataPoint gbpChartDataPoint = generateReportAndGetChartDataPoint(reportRequest);
+        ChartDataPoint gbpChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
-        String gbpFullyBurdenedCost = getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
-        double gbpAnnualSpend = getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
+        String gbpFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
+        double gbpAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
 
         assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
         assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
@@ -74,7 +78,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -84,7 +88,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7408"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -94,7 +98,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1696"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -104,7 +108,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7388"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -114,7 +118,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7454"})
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieCastingOnly() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
@@ -124,7 +128,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7453"})
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupInputControlSandCastingOnly() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ProcessGroupEnum.CASTING_SAND.getProcessGroup()
         );
@@ -134,7 +138,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7455"})
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieAndSandCasting() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Process Group",
             ""
         );
@@ -144,7 +148,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7505")
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
     public void testDtcScoreNoSelection() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             ""
         );
@@ -154,7 +158,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -164,7 +168,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7511")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -174,7 +178,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7514")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
@@ -185,63 +189,16 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {
         String minimumAnnualSpendValue = "7820000";
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Minimum Annual Spend",
             minimumAnnualSpendValue
         );
 
-        JasperReportSummary reportSummary = generateReportSummary(reportRequest);
+        JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
         ChartDataPoint chartDataPoint = reportSummary.getChartDataPointByPartName("E3-241-4-N (Initial)");
         List<ChartDataPoint> chartDataPointList = reportSummary.getChartDataPoints();
 
         assertThat(chartDataPoint.getAnnualSpend(), is(not(equalTo(minimumAnnualSpendValue))));
         assertThat(chartDataPointList.size(), is(equalTo(1)));
-    }
-
-    private void inputControlGenericTest(String inputControlToSet, String valueToSet) {
-        reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-
-        InputControl inputControl = JasperReportUtil.init(jSessionId).getInputControls();
-        String currentExportSet = inputControl.getExportSetName().getOption(exportSetName).getValue();
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        reportRequest = !valueToSet.isEmpty()
-            ? setReportParameterByName(reportRequest, Constants.inputControlNames.get(inputControlToSet), valueToSet) :
-            reportRequest;
-        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
-
-        valueToSet = valueToSet.equals("7820000") ? "7,820,000.00" : valueToSet;
-
-        List<Element> elements = generateReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
-    }
-
-    private ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
-        reportRequest.getParameters().getReportParameterByName(valueToGet)
-            .setValue(Collections.singletonList(valueToSet));
-        return reportRequest;
-    }
-
-    private ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest) {
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
-        timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer));
-        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
-    }
-
-    private JasperReportSummary generateReportSummary(ReportRequest reportRequest) {
-        return JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest);
-    }
-
-    private Double getAnnualSpendFromChartDataPoint(ChartDataPoint dataToUse) {
-        return dataToUse.getAnnualSpend();
-    }
-
-    private String getFullyBurdenedCostFromChartDataPoint(ChartDataPoint dataToUse) {
-        return dataToUse.getFullyBurdenedCost();
     }
 }

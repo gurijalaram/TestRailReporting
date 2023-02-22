@@ -10,7 +10,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -27,18 +26,6 @@ public class JasperApiAuthenticationUtil extends TestBase {
 
     @Before
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        auth.authenticateJasperApi();
-    }
-
-    /**
-     * Authenticates jasper api, opening session
-     *
-     * @throws NoSuchAlgorithmException - potentially thrown by on prem auth
-     * @throws IOException - potentially thrown by on prem auth
-     * @throws KeyManagementException - potentially thrown by on prem auth
-     */
-    public void authenticateJasperApi() throws NoSuchAlgorithmException, IOException, KeyManagementException {
         if (PropertiesContext.get("env").equals("onprem")) {
             authenticateOnPrem();
         } else {
@@ -54,24 +41,20 @@ public class JasperApiAuthenticationUtil extends TestBase {
         String urlLink = PropertiesContext.get("${env}.reports.ui_url")
             .concat(
                 String.format(
-                    "j_spring_security_check?j_username=%s&j_password=%s",
+                    "rest_v2/login?j_username=%s&j_password=%s",
                     usernamePassword,
                     usernamePassword
                 )
             );
         URL url = new URL(urlLink);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        con.setRequestMethod("POST");
         con.connect();
         System.out.println("Login response code :" + con.getResponseCode());
-        String sessionId = con + "";
-        jSessionId = sessionId.split(";")[1].substring(11, 43);
+        jSessionId = con.getHeaderField(2).substring(11, 43);
     }
 
-    /**
-     * Authenticate jasper api for cloud, opening session
-     */
-    public void authenticateCloud() {
+    private void authenticateCloud() {
         new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();

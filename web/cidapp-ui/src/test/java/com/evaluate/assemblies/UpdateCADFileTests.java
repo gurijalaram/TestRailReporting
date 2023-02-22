@@ -64,11 +64,11 @@ public class UpdateCADFileTests extends TestBase {
     @After
     public void deleteScenarios() {
         if (currentUser != null) {
-            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo, currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
             assemblyInfo = null;
         }
         if (subAssemblyInfo != null) {
-            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo, currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo);
             subAssemblyInfo = null;
         }
     }
