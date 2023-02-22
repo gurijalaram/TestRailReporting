@@ -2,16 +2,16 @@ version: "3"
 services:
   qa-test:
     image: ciene:latest
+    depends_on:
+      - selenium-hub
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-    args:
-      - FOLDER:web
     volumes:
       - ./automation-reports/allure-results:/app/target/allure-results
 
   chrome:
-    image: selenium/node-chrome:4.0.0-20211025
+    image: selenium/node-chrome:latest
     shm_size: 2gb
     restart: always
     depends_on:
@@ -24,7 +24,7 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   edge:
-    image: selenium/node-edge:4.0.0-20211025
+    image: selenium/node-edge:latest
     shm_size: 2gb
     restart: always
     depends_on:
@@ -38,7 +38,7 @@ services:
       - SE_NODE_GRID_URL=http://localhost:4444
 
   firefox:
-    image: selenium/node-firefox:4.0.0-20211025
+    image: selenium/node-firefox:latest
     shm_size: 2gb
     restart: always
     depends_on:
@@ -52,7 +52,7 @@ services:
       - SE_NODE_GRID_URL=http://localhost:4444
 
   selenium-hub:
-    image: selenium/hub:4.0.0-20211025
+    image: selenium/hub:latest
     container_name: selenium-hub
     restart: always
     healthcheck:  
