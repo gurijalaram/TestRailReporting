@@ -88,6 +88,15 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
 
+    @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
+    private WebElement reportButton;
+
+    @FindBy(id = "qa-action-bar-generate-report")
+    private WebElement generateReportButton;
+
+    @FindBy(id = "qa-action-bar-download-report")
+    private WebElement downloadReportButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -582,5 +591,55 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isActionsDropdownEnabled() {
         return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
+    }
+
+    /**
+     * Clicks the report button
+     *
+     * @return current page object
+     */
+    public ExploreToolbar clickReportDropdown() {
+        pageUtils.waitForElementAndClick(reportButton);
+        return this;
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T generateReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(generateReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T downloadReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(downloadReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks if report button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isReportButtonEnabled() {
+        return pageUtils.waitForElementToAppear(reportButton).isEnabled();
+    }
+
+    /**
+     * Checks if download button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDownloadButtonEnabled() {
+        return pageUtils.waitForElementToAppear(downloadReportButton).isEnabled();
     }
 }
