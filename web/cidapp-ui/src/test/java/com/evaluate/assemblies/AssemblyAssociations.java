@@ -49,6 +49,9 @@ public class AssemblyAssociations extends TestBase {
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemD;
+    private ComponentInfoBuilder cidComponentItemE;
+    private ComponentInfoBuilder cidComponentItemF;
+    private ComponentInfoBuilder cidComponentItemG;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
@@ -475,6 +478,7 @@ public class AssemblyAssociations extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"21671", "21687", "21688"})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with low and medium maturity")
     public void testMaturityPresetPrivateLowAndMedium() {
@@ -488,7 +492,6 @@ public class AssemblyAssociations extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
-
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -593,6 +596,7 @@ public class AssemblyAssociations extends TestBase {
     }
 
     @Test
+    @Category(ExtendedRegression.class)
     @TestRail(testCaseId = {"21689", "21690", "21691"})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with high maturity and cost complete status")
     public void testMaturityPresetPrivateHighComplete() {
@@ -606,7 +610,6 @@ public class AssemblyAssociations extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
-
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -679,7 +682,7 @@ public class AssemblyAssociations extends TestBase {
         cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .openComponents()
-        .addColumn(ColumnsEnum.STATUS);
+            .addColumn(ColumnsEnum.STATUS);
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.VERIFIED.getStatusIcon());
@@ -711,6 +714,249 @@ public class AssemblyAssociations extends TestBase {
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.VERIFIED.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains("High");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(ExtendedRegression.class)
+    @TestRail(testCaseId = {"21692", "21693", "21694", "21695"})
+    @Description("Validate, with Prefer Maturity strategy, public sub-components with same scenario name and low then medium maturity")
+    public void testMaturityPresetPublicWithSameNameLowAndMedium() {
+        final String fuse_block_asm = "Auto_Fuse_Block_Asm";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".CATProduct";
+        final String conductor = "Auto_Conductor";
+        final String housing = "Auto_Fuse_Connector_Housing";
+        final String subComponentExtension = ".CATPart";
+        final List<String> subComponentNames = Arrays.asList(conductor, housing);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
+        final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName3 = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName4 = new GenerateStringUtil().generateScenarioName();
+
+        String asmStrategy = "PREFER_HIGH_MATURITY";
+
+        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
+        updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
+
+        userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            fuse_block_asm,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Public")
+            .multiSelectScenarios("" + conductor + ", " + scenarioName + "", "" + housing + ", " + scenarioName + "")
+            .editScenario(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Private")
+            .multiSelectScenarios(fuse_block_asm + "," + scenarioName)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
+
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, scenarioName, resourceFile, currentUser);
+        componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
+            .openComponents()
+            .addColumn(ColumnsEnum.PUBLISHED);
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
+            .clickActions()
+            .info()
+            .inputCostMaturity("Low")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
+            .openComponents()
+            .addColumn(ColumnsEnum.COST_MATURITY);
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains("Low");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        componentsTreePage.closePanel()
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
+
+        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemD)
+            .clickActions()
+            .info()
+            .inputCostMaturity("Medium")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName3)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName3)).contains("Medium");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        componentsTreePage.closePanel()
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
+
+        cidComponentItemF = new ExplorePage(driver).uploadComponent(conductor, newScenarioName4, resourceFile2, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemF)
+            .clickActions()
+            .info()
+            .inputCostMaturity("Medium")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        cidComponentItemG = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemG)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName4)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName4)).contains("Medium");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(ExtendedRegression.class)
+    @TestRail(testCaseId = {"21696", "21697", "21698"})
+    @Description("Validate, with Prefer Maturity strategy, public sub-components with high maturity and cost complete status")
+    public void testMaturityPresetPublicHighComplete() {
+        final String fuse_block_asm = "Auto_Fuse_Block_Asm";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".CATProduct";
+        final String conductor = "Auto_Conductor";
+        final String housing = "Auto_Fuse_Connector_Housing";
+        final String subComponentExtension = ".CATPart";
+        final List<String> subComponentNames = Arrays.asList(conductor, housing);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
+        final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName3 = new GenerateStringUtil().generateScenarioName();
+
+        String asmStrategy = "PREFER_HIGH_MATURITY";
+
+        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
+        updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
+
+        userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            fuse_block_asm,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Public")
+            .multiSelectScenarios(conductor + "," + scenarioName)
+            .clickActions()
+            .info()
+            .inputCostMaturity("High")
+            .submit(ExplorePage.class)
+            .selectFilter("Public")
+            .multiSelectScenarios(housing + "," + scenarioName)
+            .clickActions()
+            .info()
+            .inputCostMaturity("High")
+            .submit(ExplorePage.class)
+            .selectFilter("Private")
+            .multiSelectScenarios(fuse_block_asm + "," + scenarioName)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
+
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, scenarioName, resourceFile, currentUser);
+        componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
+            .openComponents()
+            .addColumn(ColumnsEnum.PUBLISHED);
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
+            .clickActions()
+            .info()
+            .inputCostMaturity("Medium")
+            .selectStatus("Complete")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
+            .openComponents()
+            .addColumn(ColumnsEnum.COST_MATURITY)
+            .addColumn(ColumnsEnum.STATUS);
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains("Medium");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains("Complete");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        componentsTreePage.closePanel()
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
+
+        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemD)
+            .clickActions()
+            .info()
+            .inputCostMaturity("High")
+            .selectStatus("Complete")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName3)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName3)).contains("High");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName3)).contains("Complete");
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
