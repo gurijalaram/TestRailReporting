@@ -18,6 +18,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -489,5 +490,16 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
         return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ComponentsTreePage addColumn(ColumnsEnum columnToAdd) {
+        assembliesComponentsController.addColumnTreeView(columnToAdd);
+        return this;
     }
 }
