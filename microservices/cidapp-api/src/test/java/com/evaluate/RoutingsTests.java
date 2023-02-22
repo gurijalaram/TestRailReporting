@@ -7,6 +7,7 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -14,6 +15,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterfaces.SmokeTests;
 
 import java.io.File;
 
@@ -45,5 +48,34 @@ public class RoutingsTests {
         });
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15821"})
+    @Description("Verify save routing with costing template through API")
+    public void testRecostWithAlternateRouting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
+        final String componentName = "sheet_plastic";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+
+        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity()).getResponseEntity();
+
+        softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
+
+        routings.getItems().forEach(routing -> {
+            softAssertions.assertThat(routing.getDigitalFactoryName()).isNotEmpty();
+            softAssertions.assertThat(routing.getDisplayName()).contains("[CTL]/Laser/[Bend]");
+            softAssertions.assertThat(routing.getName()).isNotEmpty();
+            softAssertions.assertThat(routing.getProcessGroupName()).isNotEmpty();
+        });
+
+        softAssertions.assertAll();
+
     }
 }
