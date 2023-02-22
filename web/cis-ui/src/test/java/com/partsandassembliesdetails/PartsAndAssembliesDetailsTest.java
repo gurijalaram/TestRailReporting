@@ -1,5 +1,6 @@
 package com.partsandassembliesdetails;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
@@ -37,6 +38,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private File resourceFile;
     private UserCredentials currentUser;
+    private EvaluatePage evaluatePage;
 
     @Test
     @TestRail(testCaseId = {"12254", "12396", "12459", "12460", "12461"})
@@ -1392,6 +1394,39 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSharedUserRemoveButton();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"16676","16678"})
+    @Description("Verify user can open the same component in CID app from details view")
+    public void testOpenComponentInCID() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isOpenInCIDButtonDisplayed()).isEqualTo(true);
+
+        evaluatePage = partsAndAssembliesDetailsPage.clickOnOpenComponent()
+                .clickOnCid()
+                .switchTab();
+
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
