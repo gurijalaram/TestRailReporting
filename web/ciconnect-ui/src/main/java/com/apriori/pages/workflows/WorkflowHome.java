@@ -33,7 +33,7 @@ public class WorkflowHome extends CICBasePage {
     @FindBy(css = "div[title='Schedule']")
     private WebElement scheduleTab;
 
-    @FindBy(css = "#root_pagemashupcontainer-1_tabsv2-10 > div.tab-content > div.tabsv2-viewport > div > div > div.tabsv2-tab.enabled.selected > div > div")
+    @FindBy(css = "#root_pagemashupcontainer-1_tabsv2-10 > div.tab-content > div.tabsv2-viewport > div > div > div.tabsv2-tab.enabled.selected[tab-value=schedule]")
     private WebElement selectedScheduleTab;
 
     @FindBy(css = "div.tw-status-msg-box")

@@ -1,7 +1,7 @@
 package com.apriori.cirapi.utils;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CIRAPIEnum;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
@@ -37,9 +37,11 @@ public class JasperReportUtil {
     }
 
     public InputControl getInputControls() {
-        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.DTC_METRICS, InputControl.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.DTC_METRICS, InputControl.class)
             .headers(initHeadersWithJSession())
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .inlineVariables("%20")
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
 
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 
@@ -61,7 +63,7 @@ public class JasperReportUtil {
     }
 
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_EXECUTIONS, ReportStatusResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_EXECUTIONS, ReportStatusResponse.class)
             .headers(initHeadersWithJSession())
             .body(reportRequest)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -72,7 +74,7 @@ public class JasperReportUtil {
     }
 
     private ReportStatusResponse doReportExport(ReportStatusResponse response) {
-        RequestEntity doExportRequest = RequestEntityUtil.init(CIRAPIEnum.REPORT_EXPORT_BY_REQUEST_ID, ReportStatusResponse.class)
+        RequestEntity doExportRequest = RequestEntityUtil.init(CirApiEnum.REPORT_EXPORT_BY_REQUEST_ID, ReportStatusResponse.class)
             .inlineVariables(response.getRequestId())
             .headers(initHeadersWithJSession())
             .body(ReportExportRequest.initFromJsonFile())
@@ -85,7 +87,7 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private Document getReportHtmlData(final String requestId, final String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs, InputStream.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs, InputStream.class)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -96,7 +98,7 @@ public class JasperReportUtil {
     }
 
     private List<ChartDataPoint> getReportChartData(final String requestId, final String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -123,7 +125,7 @@ public class JasperReportUtil {
     private HashMap<String, String> initHeadersWithJSession() {
         return new HashMap<String, String>() {
             {
-                put("Cookie", jasperSessionValue);
+                put("Cookie", "userLocale=en_US; userTimezone=America/New_York; ".concat(jasperSessionValue));
             }
         };
     }

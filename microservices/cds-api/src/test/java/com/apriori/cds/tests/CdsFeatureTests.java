@@ -22,9 +22,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CdsFeatureTests {
 
     private SoftAssertions soft = new SoftAssertions();

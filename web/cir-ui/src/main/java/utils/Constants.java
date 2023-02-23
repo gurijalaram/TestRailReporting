@@ -80,7 +80,7 @@ public class Constants {
             put("Sort Order", "sortOrder");
         }};
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas/";
+    public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";
     public static Map<String, String> currencies = new HashMap<String, String>() {{
             put("GBP", CurrencyEnum.USD.getCurrency());
             put("USD", CurrencyEnum.GBP.getCurrency());
