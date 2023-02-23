@@ -33,8 +33,6 @@ public class UserPreferenceTest extends TestBase {
     private UserPreferencePage userPreferencePage;
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
-    private MyUserPage myUserPage;
-    private LeftHandNavigationBar leftHandNavigationBar;
     private File resourceFile;
     private UserCredentials currentUser;
 
@@ -61,7 +59,7 @@ public class UserPreferenceTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16674","16679","16681","16683","16686","16687"})
+    @TestRail(testCaseId = {"16674","16677","16679","16681","16683","16686","16687","16688"})
     @Description("Verify user can change the display preferences")
     public void testDisplayPreferences() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -99,6 +97,31 @@ public class UserPreferenceTest extends TestBase {
         softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.EXCHANGE_RATE_TABLE.getFields()));
 
         userPreferencePage.clickSubmitButton();
+
+        partsAndAssembliesDetailsPage = new LeftHandNavigationBar(driver)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMaterialStockIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getLengthType().contains("m"));
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostType().contains("kg"));
+
+        partsAndAssembliesDetailsPage.clickMaterialPropertiesIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTimeType().contains("h"));
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDecimalPlaces().contains("."));
+
+        userPreferencePage = new MyUserPage(driver)
+                .selectUserPreference()
+                .selectLength("Millimeter")
+                .selectMass("Kilogram")
+                .selectTime("Millisecond")
+                .selectDecimalPlace("0")
+                .clickSubmitButton();
 
         softAssertions.assertAll();
     }

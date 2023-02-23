@@ -115,6 +115,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
 
     public MyUserPage clickUserIcon() {
+        getPageUtils().waitForElementToAppear(spinner);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(userIcon);
         return new MyUserPage(getDriver());
     }
