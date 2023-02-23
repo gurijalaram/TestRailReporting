@@ -114,7 +114,7 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
      */
     public UserPreferencePage selectLength(String length) {
         getPageUtils().waitForElementAndClick(lengthField);
-        getPageUtils().waitForElementAndClick(By.xpath("//li[@role='option']//span[text()='" + length + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//li[@role='option']//span[text()='%s']", length)));
         return this;
     }
 
@@ -125,7 +125,7 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
      */
     public UserPreferencePage selectMass(String mass) {
         getPageUtils().waitForElementAndClick(massField);
-        getPageUtils().waitForElementAndClick(By.xpath("//li[@role='option']//span[text()='" + mass + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//li[@role='option']//span[text()='%s']", mass)));
         return this;
     }
 
@@ -136,7 +136,7 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
      */
     public UserPreferencePage selectTime(String time) {
         getPageUtils().waitForElementAndClick(timeField);
-        getPageUtils().waitForElementAndClick(By.xpath("//li[@role='option']//span[text()='" + time + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//li[@role='option']//span[text()='%s']", time)));
         return this;
     }
 
@@ -147,7 +147,7 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
      */
     public UserPreferencePage selectDecimalPlace(String decimalPlace) {
         getPageUtils().waitForElementAndClick(decimalPlaceField);
-        getPageUtils().waitForElementAndClick(By.xpath("//li[@role='option']//span[text()='" + decimalPlace + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//li[@role='option']//span[text()='%s']", decimalPlace)));
         return this;
     }
 
