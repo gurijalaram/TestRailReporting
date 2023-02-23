@@ -274,7 +274,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return new page object
      */
     public EvaluatePage checkComponentDelete(ComponentInfoBuilder component) {
-        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
         return new EvaluatePage(driver);
     }
 

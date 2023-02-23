@@ -602,78 +602,12 @@ public class ScenariosUtil {
      * @return generic object
      */
     public ResponseWrapper<ErrorMessage> deleteScenario(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
         final RequestEntity deleteRequest =
             genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity, userCredentials);
 
         HTTPRequest.build(deleteRequest).delete();
 
-        RequestEntity scenarioRequest =
-            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
-
-        try {
-            do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
-
-                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
-
-                if (!scenarioResponse.getBody().contains("response")) {
-
-                    RequestEntity requestEntity =
-                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
-
-                    return HTTPRequest.build(requestEntity).get();
-                }
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException ie) {
-            log.error(ie.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        throw new RuntimeException(
-            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
-                componentIdentity, scenarioIdentity, WAIT_TIME)
-        );
-    }
-
-    /**
-     * Calls an api with the GET verb.
-     *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
-     * @param userCredentials   - the user credentials
-     * @return generic object
-     */
-    public ResponseWrapper<ErrorMessage> getDelete(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
-        RequestEntity scenarioRequest =
-            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
-
-        try {
-            do {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
-
-                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
-
-                if (!scenarioResponse.getBody().contains("response")) {
-
-                    RequestEntity requestEntity =
-                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
-
-                    return HTTPRequest.build(requestEntity).get();
-                }
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException ie) {
-            log.error(ie.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        throw new RuntimeException(
-            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
-                componentIdentity, scenarioIdentity, WAIT_TIME)
-        );
+        return checkComponentDeleted(componentIdentity, scenarioIdentity, userCredentials);
     }
 
     /**
