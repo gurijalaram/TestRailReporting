@@ -83,28 +83,31 @@ COPY web/cas-ui/src web/cas-ui/src
 
 # Build.
 FROM sdk as build
-ARG FOLDER='web'
-ARG MODULE='cidapp-ui'
+ARG FOLDER
+ARG MODULE
 RUN gradle clean :$FOLDER:$MODULE:fatJar -x test
 
 # Run/Test.
 FROM runtime as final
-ARG FOLDER='web'
-ARG MODULE='cidapp-ui'
+ARG FOLDER
+ARG MODULE
+ARG ASPECTJ_VERSION="1.9.9.1"
 COPY --from=build /build-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
-COPY --from=build /build-workspace/aspectjweaver-1.9.9.1.jar ./aspectjweaver-1.9.9.1.jar
+COPY --from=build /build-workspace/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
 
-ENV EMAIL default
-ENV MODE docker
-ENV PASSWORD default
+ENV TOKEN_EMAIL=$TOKEN_EMAIL
+ENV MODE=$MODE
+ENV PASSWORD=$PASSWORD
 ENV TEST_SUITE testsuites.SanityTestSuite
+ENV HEADLESS=$HEADLESS
+ENV THREAD_COUNTS=$THREAD_COUNTS
 
 CMD java \
   -javaagent:aspectjweaver-1.9.9.1.jar \
-  -DthreadCounts=3 \
+  -DthreadCounts=$THREAD_COUNTS \
   -Dmode=$MODE \
-  -Dtoken_email=$EMAIL \
+  -Dtoken_email=$TOKEN_EMAIL \
   -Dpassword=$PASSWORD \
-  -Dheadless=true \
+  -Dheadless=$HEADLESS \
   -jar app.jar \
   -test $TEST_SUITE

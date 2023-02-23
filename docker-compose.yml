@@ -7,6 +7,11 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - TOKEN_EMAIL=${TOKEN_EMAIL}
+      - PASSWORD=${PASSWORD}
+      - HEADLESS=${HEADLESS}
+      - MODE=${MODE}
+      - THREAD_COUNTS=${THREAD_COUNTS}
     volumes:
       - ./automation-reports/allure-results:/app/target/allure-results
 
