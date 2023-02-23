@@ -677,7 +677,7 @@ public class ScenariosUtil {
     }
 
     /**
-     * Checks a component has been deleted
+     * Call an api with the GET verb to check a scenario has been deleted
      *
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
