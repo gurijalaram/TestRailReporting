@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleData {
-
     private String enabled;
     private String schedule;
     private Integer numberOfMinutes;
