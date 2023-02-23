@@ -129,7 +129,7 @@ public class AuthorizationUtil {
 
         String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
 
-        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("${env}.deployment_name"));
+        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
         String finalInstallationName = installationName;
         InstallationItem installationItem = deploymentItem.getInstallations()

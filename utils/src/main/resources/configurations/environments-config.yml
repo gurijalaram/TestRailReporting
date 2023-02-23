@@ -7,7 +7,6 @@ qa-test:
   application_name: cid
   base_url: https://na-1-v${version}-demo.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
-  deployment_name: production
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
@@ -41,11 +40,13 @@ qa-test:
 
 ######################################################## INT-CORE ######################################################
 int-core:
-  customer_identity: H337GKD0LA0M  - can be added to customer's yml properties
+  application_name: cid
+  customer_identity: H337GKD0LA0M
   base_url: https://cost.apriori-internal.int.apriori.net/
-  name: int-core - looks like we don't need it
-  secret_key: 65J1ID2B6LDG  - can be added to deployment properties
-  user_identity: 8GFDIG229629  - can be added to deployment properties
+  installation_name: Core Services
+  name: int-core
+  secret_key: 65J1ID2B6LDG
+  user_identity: 8GFDIG229629
 
 
   core_service_url_template: core.int.apriori.net/
