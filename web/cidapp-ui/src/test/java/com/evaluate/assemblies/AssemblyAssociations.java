@@ -59,9 +59,9 @@ public class AssemblyAssociations extends TestBase {
     private ComponentInfoBuilder cidComponentItemH;
 
     @After
-    public void deleteAssemblyScenarios() {
+    public void deleteScenarios() {
         if (currentUser != null) {
-            assemblyUtils.deleteAssemblyAndComponents(componentAssembly, currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
             componentAssembly = null;
         }
         if (cidComponentItemA != null) {
