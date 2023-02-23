@@ -605,12 +605,12 @@ public class ScenariosUtil {
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         final RequestEntity deleteRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity, userCredentials);
 
         HTTPRequest.build(deleteRequest).delete();
 
         RequestEntity scenarioRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
 
         try {
             do {
@@ -621,7 +621,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -649,7 +649,7 @@ public class ScenariosUtil {
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         RequestEntity scenarioRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
 
         try {
             do {
@@ -660,7 +660,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -680,7 +680,7 @@ public class ScenariosUtil {
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         RequestEntity scenarioRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
 
         try {
             do {
@@ -691,7 +691,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -707,7 +707,7 @@ public class ScenariosUtil {
         );
     }
 
-    private <T> RequestEntity genericDeleteRequest(UserCredentials userCredentials, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+    private <T> RequestEntity genericDeleteRequest(CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId, UserCredentials userCredentials) {
         return RequestEntityUtil.init(endPoint, klass)
             .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
