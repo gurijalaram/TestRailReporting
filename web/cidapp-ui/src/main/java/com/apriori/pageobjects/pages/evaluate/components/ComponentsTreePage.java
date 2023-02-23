@@ -4,11 +4,13 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -253,6 +255,26 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public ComponentsTreePage clickScenarioCheckbox(String componentName, String scenarioName) {
         assembliesComponentsController.clickScenarioCheckbox(componentName, scenarioName);
         return this;
+    }
+
+    /**
+     * clicks the delete button
+     *
+     * @return - the current page object
+     */
+    public DeletePage deleteSubcomponent() {
+        return assembliesComponentsController.deleteSubComponent();
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param component - the component object
+     * @return new page object
+     */
+    public EvaluatePage checkComponentDelete(ComponentInfoBuilder component) {
+        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        return new EvaluatePage(driver);
     }
 
     /**
