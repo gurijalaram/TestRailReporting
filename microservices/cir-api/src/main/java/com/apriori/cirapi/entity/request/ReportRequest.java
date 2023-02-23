@@ -21,6 +21,7 @@ public class ReportRequest {
     }
 
     private String reportUnitUri;
+    private Integer reportContainerWidth;
     private Boolean async;
     private Boolean allowInlineScripts;
     private String markupType;

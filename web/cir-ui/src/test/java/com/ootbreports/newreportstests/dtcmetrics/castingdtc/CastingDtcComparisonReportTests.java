@@ -25,14 +25,23 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         reportRequest = jasperApiUtils.getReportRequest();
     }
 
-    // below is a sample, fix it (see old CastingDtcComparisonReportTests.java class)
-    /*@Test
-    @TestRail(testCaseId = "7411")
-    @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
+    @Test
+    @TestRail(testCaseId = "7409")
+    @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-    }*/
+    }
+
+    @Test
+    @TestRail(testCaseId = "7410")
+    @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Comparison Report")
+    public void testCostMetricInputControlFbc() {
+        jasperApiUtils.inputControlGenericTest(
+            "Cost Metric",
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+    }
 }

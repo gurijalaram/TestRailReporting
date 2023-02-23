@@ -1,14 +1,14 @@
 # Define the environment
-env: qa-test
+env: onprem
 
 # Define the global properties not related to environment
 global:
   console_log_level: "OFF"
   db_recording: true
   different_parts: true
-  different_users: true
+  different_users: false
   schema_base_path: schemas/
-  users_csv_file: common-users.csv
+  users_csv_file: onprem-users.csv
 
 # Define the customer
 customer: ap-int
@@ -246,7 +246,7 @@ qa-cig-perf:
 
 ######################################################## On Prem ########################################################
 onprem:
-  base_url: https://conqbaci01/
+  base_url: https://conqsbel10-04/
   name: onprem
 
   admin:
