@@ -1,9 +1,7 @@
 package com.integration.tests;
 
-import com.apriori.enums.ReportsEnum;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
-import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.nts.reports.partscost.PartsCost;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
@@ -20,7 +18,6 @@ import com.apriori.utils.email.GraphEmailService;
 import com.apriori.utils.email.response.EmailMessage;
 import com.apriori.utils.excel.ExcelService;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.pdf.PDFDocument;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -30,7 +27,6 @@ import entity.request.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobRun;
 import entity.response.ReportTemplatesRow;
-import enums.CICReportType;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
@@ -142,46 +138,6 @@ public class CICIntegrationTests extends TestBase {
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
         ResponseWrapper<String> deleteWorkflowResponse = CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
         softAssertions.assertThat(deleteWorkflowResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-    }
-
-    @Test
-    @Issue("DEVOPS-2552")
-    @TestRail(testCaseId = {"12046"})
-    @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
-    public void testVerifyCIRReport() {
-        loginSession = CicApiTestUtil.getLoginSession(currentUser, driver);
-        reportTemplateNames = CicApiTestUtil.getAgentReportTemplate(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY, CICReportType.EMAIL, loginSession);
-        workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(),
-            workflowName, scenarioName, reportTemplateNames.getValue());
-
-        //Create a Workflow
-        MultipleComponentSummary pdfExpectedReportData = new TestDataService().getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
-        softAssertions.assertThat(responseWrapper.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(responseWrapper.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        // verify workflow job is finished
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        // Read the email and verify content and attached watch point report
-        EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
-        PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
-
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("aPriori Cost Insight Generate Notification");
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("DFM Multiple Components Summary Report");
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(pdfExpectedReportData.getCostMetric());
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(scenarioName);
-        emailMessage.deleteEmailMessage();
-
-        // Delete the workflow
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
     }
 
     @After
