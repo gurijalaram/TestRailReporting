@@ -676,6 +676,14 @@ public class ScenariosUtil {
         );
     }
 
+    /**
+     * Checks a component has been deleted
+     *
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @param userCredentials   - the user credentials
+     * @return current object
+     */
     public ResponseWrapper<ErrorMessage> checkComponentDeleted(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
         final long START_TIME = System.currentTimeMillis() / 1000;
 
