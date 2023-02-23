@@ -5,6 +5,7 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
@@ -37,6 +38,10 @@ import java.util.List;
 
 public class GroupPublishTests extends TestBase {
 
+    private final SoftAssertions softAssertions = new SoftAssertions();
+    private final CssComponent cssComponent = new CssComponent();
+    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
@@ -45,10 +50,6 @@ public class GroupPublishTests extends TestBase {
     private InfoPage infoPage;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemA;
-    private final SoftAssertions softAssertions = new SoftAssertions();
-    private final CssComponent cssComponent = new CssComponent();
-    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @TestRail(testCaseId = {"14458"})
@@ -122,6 +123,13 @@ public class GroupPublishTests extends TestBase {
             assemblyScenarioName1,
             currentUser);
 
+        // TODO: 20/02/2023 cn - nick pls fix these templates
+        CostingTemplate pinTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup()).productionLife(9.0).build();
+        CostingTemplate bigRingTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.POWDER_METAL.getProcessGroup()).annualVolume(700).build();
+
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly1, pinTemplate, "pin", "small ring");
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly1, bigRingTemplate, "big ring");
+
         assemblyUtils.uploadSubComponents(componentAssembly1).uploadAssembly(componentAssembly1);
         assemblyUtils.costSubComponents(componentAssembly1).costAssembly(componentAssembly1);
         assemblyUtils.publishSubComponents(componentAssembly1);
@@ -144,6 +152,11 @@ public class GroupPublishTests extends TestBase {
             subComponentProcessGroup2,
             assemblyScenarioName2,
             currentUser);
+
+        // TODO: 20/02/2023 cn - nick pls fix these templates
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()).build();
+
+        scenariosUtil.setSubcomponentCostingTemplate(componentAssembly2, costingTemplate, "flange", "nut", "bolt");
 
         assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
         assemblyUtils.costSubComponents(componentAssembly2).costAssembly(componentAssembly2);

@@ -1,77 +1,88 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": [
-    "identity"
-  ],
   "properties": {
-    "identity": {
-      "type": "string"
-    },
-    "createdAt": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "customerIdentity": {
-      "type": "string"
-    },
-    "locked": {
-      "type": "boolean"
-    },
-    "published": {
-      "type": "boolean"
-    },
-    "annualVolume": {
-      "type": "integer"
-    },
-    "batchSize": {
-      "type": "integer"
-    },
-    "customAttributes": {
-      "type": "object"
-    },
-    "materialMode": {
-      "type": "string"
-    },
-    "materialName": {
-      "type": "string"
-    },
-    "pinnedRouting": {
-      "type": "string"
-    },
-    "processGroupName": {
-      "type": "string"
-    },
-    "processSetupOptions": {
-      "type": "object"
-    },
-    "propertiesToReset": {
-      "type": "array"
-    },
-    "routingNodeOptions": {
-      "type": "array"
-    },
-    "secondaryDigitalFactories": {
-      "type": "object"
-    },
-    "secondaryProcesses": {
-      "type": "object"
-    },
-    "secondaryVpes": {
-      "type": "object"
-    },
-    "threads": {
-      "type": "object"
-    },
-    "tolerances": {
-      "type": "object"
-    },
-    "productionLife": {
-      "type": "number"
-    },
-    "vpeName": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "locked": {
+              "type": "boolean"
+            },
+            "published": {
+              "type": "boolean"
+            },
+            "materialMode": {
+              "type": "string"
+            },
+            "materialName": {
+              "type": "string"
+            },
+            "processGroupName": {
+              "type": "string"
+            },
+            "propertiesToReset": {
+              "type": "array",
+              "items": {}
+            },
+            "routingNodeOptions": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    },
+                    "digitalFactoryName": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "processGroupName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity",
+                    "digitalFactoryName",
+                    "name",
+                    "processGroupName"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "customerIdentity",
+            "locked",
+            "published",
+            "materialMode",
+            "materialName",
+            "processGroupName",
+            "propertiesToReset",
+            "routingNodeOptions"
+          ]
+        }
+      ]
     }
   }
 }

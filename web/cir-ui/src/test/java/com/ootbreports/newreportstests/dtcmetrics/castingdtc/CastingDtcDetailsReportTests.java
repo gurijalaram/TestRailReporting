@@ -7,8 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.entity.response.InputControl;
-import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -16,29 +14,31 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.jsoup.nodes.Element;
+import org.junit.Before;
 import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
+    private static JasperApiUtils jasperApiUtils;
+
+    @Before
+    public void setupGenericMethods() {
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        reportRequest = jasperApiUtils.getReportRequest();
+    }
 
     @Test
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testCostMetricInputControlPpc() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -48,7 +48,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7412")
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -58,7 +58,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -68,7 +68,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -78,7 +78,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7507")
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report")
     public void testDtcScoreNoSelection() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             ""
         );
@@ -88,7 +88,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7510")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Details Report")
     public void testDtcScoreLow() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -98,7 +98,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7513")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -108,7 +108,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7516")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Details Report")
     public void testDtcScoreHigh() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
@@ -119,12 +119,12 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
         String minimumAnnualSpendValue = "7820000";
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Minimum Annual Spend",
             minimumAnnualSpendValue
         );
 
-        JasperReportSummary reportSummary = generateReportSummary(reportRequest);
+        JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
         String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
 
         assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
@@ -134,7 +134,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7629")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingCasting() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
@@ -144,7 +144,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7630")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingMachining() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
         );
@@ -154,7 +154,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7631")
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Details Report")
     public void testSortOrderInputControlMaterialScrap() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
         );
@@ -164,7 +164,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7632")
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
@@ -174,7 +174,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7633")
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
     public void testSortOrderInputControlSlowOperations() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
@@ -184,7 +184,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7634")
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Details Report")
     public void testSortOrderInputControlSpecialTooling() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
         );
@@ -194,7 +194,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7635")
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Details Report")
     public void testSortOrderInputControlAnnualSpend() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
@@ -204,39 +204,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7636")
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
     public void testSortOrderInputControlDtcRank() {
-        inputControlGenericTest(
+        jasperApiUtils.inputControlGenericTest(
             "Sort Order",
             SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
-    }
-
-    private void inputControlGenericTest(String inputControlToSet, String valueToSet) {
-        reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-
-        InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
-        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        reportRequest = !valueToSet.isEmpty()
-            ? setReportParameterByName(reportRequest, Constants.inputControlNames.get(inputControlToSet), valueToSet) :
-            reportRequest;
-        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
-
-        valueToSet = valueToSet.equals("7820000") ? "7,820,000.00" : valueToSet;
-
-        List<Element> elements = generateReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
-    }
-
-    private ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
-        reportRequest.getParameters().getReportParameterByName(valueToGet)
-            .setValue(Collections.singletonList(valueToSet));
-        return reportRequest;
-    }
-
-    private JasperReportSummary generateReportSummary(ReportRequest reportRequest) {
-        return JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest);
     }
 }
