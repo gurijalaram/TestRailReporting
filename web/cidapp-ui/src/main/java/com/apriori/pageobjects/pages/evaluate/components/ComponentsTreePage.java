@@ -29,6 +29,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -511,5 +512,20 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
         return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param componentInfo - the component info builder
+     * @param subcomponents - the list of subcomponents
+     * @return current object
+     */
+    public ComponentsTreePage checkComponentDeleted(ComponentInfoBuilder componentInfo, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> {
+            ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent)).findFirst().get();
+            new ScenariosUtil().checkComponentDeleted(componentDetails.getComponentIdentity(), componentDetails.getScenarioIdentity(), componentDetails.getUser());
+        });
+        return this;
     }
 }

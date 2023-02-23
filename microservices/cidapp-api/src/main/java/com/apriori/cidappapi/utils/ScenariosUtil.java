@@ -676,6 +676,37 @@ public class ScenariosUtil {
         );
     }
 
+    public ResponseWrapper<ErrorMessage> checkComponentDeleted(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        RequestEntity scenarioRequest =
+            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
+
+                if (!scenarioResponse.getBody().contains("response")) {
+
+                    RequestEntity requestEntity =
+                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+
+                    return HTTPRequest.build(requestEntity).get();
+                }
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException ie) {
+            log.error(ie.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new RuntimeException(
+            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
+                componentIdentity, scenarioIdentity, WAIT_TIME)
+        );
+    }
+
     private <T> RequestEntity genericDeleteRequest(UserCredentials userCredentials, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
         return RequestEntityUtil.init(endPoint, klass)
             .token(userCredentials.getToken())

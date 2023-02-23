@@ -93,8 +93,7 @@ public class AssemblyGroupDeleteTests extends TestBase {
 
         componentsTreePage.deleteSubcomponent()
             .clickDelete(ComponentsTreePage.class)
-            .checkSubcomponentState(componentAssembly, arc + "," + cube50 + "," + ellipse + "," + octagon + "," + cube75 + "," +
-                hexagon + "," + cube100 + "," + slot + "," + cuboid + "," + cylinder)
+            .checkComponentDeleted(componentAssembly, arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder)
             .closePanel()
             .clickRefresh(EvaluatePage.class)
             .openComponents();
