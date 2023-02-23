@@ -30,4 +30,13 @@ public class UserPreferenceController extends EagerPageComponent<UserPreferenceC
     public List<String> getUserPreferenceItems() {
         return Stream.of(getDriver().findElement(By.xpath("//div[@aria-orientation='vertical']")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
+
+    /**
+     * Gets items in display preference
+     *
+     * @return list of string
+     */
+    public List<String> getDisplayPreferenceItems() {
+        return Stream.of(getDriver().findElement(By.xpath("//div[starts-with(@id,'vertical-tabpanel')]")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
 }
