@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.partsandassembliesdetails;
 
 import com.apriori.pageobjects.common.PartsAndAssemblyDetailsController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -428,9 +429,25 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
     private WebElement btnParticipantCancel;
 
+    @FindBy(id = "open-in-button")
+    private WebElement btnOpenIn;
+
+    @FindBy(xpath = "//li[@role='menuitem']")
+    private WebElement btnCid;
+
+    @FindBy(xpath = "//div[text()='Length']//..")
+    private WebElement lengthType;
+
+    @FindBy(xpath = "//div[text()='Unit Cost']//..")
+    private WebElement costType;
+
+    @FindBy(xpath = "//div[text()='Milling Speed']//..")
+    private WebElement timeType;
+
+    @FindBy(xpath = "//p[text()='Piece Part Cost']//following-sibling::p")
+    private WebElement decimalPlace;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
-
         this(driver, log);
     }
 
@@ -443,12 +460,10 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         PageFactory.initElements(driver, this);
         this.waitForCADViewerLoad();
         this.partsAndAssemblyDetailsController = new PartsAndAssemblyDetailsController(driver);
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -2515,5 +2530,70 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveCancelButton() {
         getPageUtils().waitForElementAndClick(btnParticipantCancel);
         return this;
+    }
+
+    /**
+     * Checks if open in cid button displayed
+     *
+     * @return true/false
+     */
+    public boolean isOpenInCIDButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnOpenIn).isDisplayed();
+    }
+
+    /**
+     * clicks on open component button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnOpenComponent() {
+        getPageUtils().waitForElementAndClick(btnOpenIn);
+        return this;
+    }
+
+    /**
+     * Click on open CID
+     *
+     * @return new page object
+     */
+    public EvaluatePage clickOnCid() {
+        getPageUtils().waitForElementAndClick(btnCid);
+        return new EvaluatePage(getDriver());
+    }
+
+    /**
+     * get length type
+     *
+     * @return a String
+     */
+    public String getLengthType() {
+        return getPageUtils().waitForElementToAppear(lengthType).getAttribute("innerText");
+    }
+
+    /**
+     * get cost type
+     *
+     * @return a String
+     */
+    public String getCostType() {
+        return getPageUtils().waitForElementToAppear(costType).getAttribute("innerText");
+    }
+
+    /**
+     * get time type
+     *
+     * @return a String
+     */
+    public String getTimeType() {
+        return getPageUtils().waitForElementToAppear(timeType).getAttribute("innerText");
+    }
+
+    /**
+     * get decimal places
+     *
+     * @return a String
+     */
+    public String getDecimalPlaces() {
+        return getPageUtils().waitForElementToAppear(decimalPlace).getAttribute("innerText");
     }
 }
