@@ -21,6 +21,7 @@ import com.apriori.utils.web.driver.TestBase;
 import entity.request.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobRun;
+import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ReportTemplatesRow;
 import enums.CICReportType;
 import io.qameta.allure.Description;
@@ -45,7 +46,8 @@ public class CIRIntegrationTests extends TestBase {
     private static String scenarioName;
     private static String workflowData;
     private static SoftAssertions softAssertions;
-    private static ReportTemplatesRow reportTemplateNames;
+    private static AgentWorkflowReportTemplates reportTemplateNames;
+    private static ReportTemplatesRow reportTemplateName;
 
     public CIRIntegrationTests() {
         super();
@@ -72,13 +74,16 @@ public class CIRIntegrationTests extends TestBase {
     }
 
     @Test
+    @Issue("DEVOPS-3166")
     @TestRail(testCaseId = {"12046"})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
         loginSession = CicApiTestUtil.getLoginSession(currentUser, driver);
-        reportTemplateNames = CicApiTestUtil.getAgentReportTemplate(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY, CICReportType.EMAIL, loginSession);
+        reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
         workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(),
-            workflowName, scenarioName, reportTemplateNames.getValue());
+            workflowName, scenarioName,
+            CicApiTestUtil.getAgentReportTemplate(reportTemplateNames,ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY).getValue(),
+            CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue());
 
         //Create a Workflow
         MultipleComponentSummary pdfExpectedReportData = new TestDataService().getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
@@ -97,7 +102,7 @@ public class CIRIntegrationTests extends TestBase {
 
         // Read the email and verify content and attached watch point report
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
-        softAssertions.assertThat(emailMessage).isNotNull();
+        softAssertions.assertThat(emailMessage.getBody().getContent()).contains(scenarioName);
         PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
 
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("aPriori Cost Insight Generate Notification");
