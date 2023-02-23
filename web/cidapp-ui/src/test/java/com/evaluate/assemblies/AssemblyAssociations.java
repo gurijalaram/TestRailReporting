@@ -2,6 +2,7 @@ package com.evaluate.assemblies;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -26,6 +27,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
@@ -43,8 +45,10 @@ public class AssemblyAssociations extends TestBase {
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
+    private UserCredentials currentUser;
 
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder cidComponentItemA;
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemC;
@@ -52,6 +56,56 @@ public class AssemblyAssociations extends TestBase {
     private ComponentInfoBuilder cidComponentItemE;
     private ComponentInfoBuilder cidComponentItemF;
     private ComponentInfoBuilder cidComponentItemG;
+    private ComponentInfoBuilder cidComponentItemH;
+
+    @After
+    public void deleteAssemblyScenarios() {
+        if (currentUser != null) {
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly, currentUser);
+            componentAssembly = null;
+        }
+        if (cidComponentItemA != null) {
+            scenariosUtil.deleteScenario(cidComponentItemA.getComponentIdentity(), cidComponentItemA.getScenarioIdentity(), currentUser);
+            cidComponentItemA = null;
+        }
+        if (cidComponentItemB != null) {
+            scenariosUtil.deleteScenario(cidComponentItemB.getComponentIdentity(), cidComponentItemB.getScenarioIdentity(), currentUser);
+            cidComponentItemB = null;
+        }
+        if (cidComponentItemC != null) {
+            scenariosUtil.deleteScenario(cidComponentItemC.getComponentIdentity(), cidComponentItemC.getScenarioIdentity(), currentUser);
+            cidComponentItemC = null;
+        }
+        if (cidComponentItemD != null) {
+            scenariosUtil.deleteScenario(cidComponentItemD.getComponentIdentity(), cidComponentItemD.getScenarioIdentity(), currentUser);
+            cidComponentItemD = null;
+        }
+        if (cidComponentItemE != null) {
+            scenariosUtil.deleteScenario(cidComponentItemE.getComponentIdentity(), cidComponentItemE.getScenarioIdentity(), currentUser);
+            cidComponentItemE = null;
+        }
+        if (cidComponentItemF != null) {
+            scenariosUtil.deleteScenario(cidComponentItemF.getComponentIdentity(), cidComponentItemF.getScenarioIdentity(), currentUser);
+            cidComponentItemF = null;
+        }
+        if (cidComponentItemG != null) {
+            scenariosUtil.deleteScenario(cidComponentItemG.getComponentIdentity(), cidComponentItemG.getScenarioIdentity(), currentUser);
+            cidComponentItemG = null;
+        }
+        if (cidComponentItemH != null) {
+            scenariosUtil.deleteScenario(cidComponentItemH.getComponentIdentity(), cidComponentItemH.getScenarioIdentity(), currentUser);
+            cidComponentItemH = null;
+        }
+    }
+
+    @After
+    public void resetAllSettings() {
+        if (currentUser != null) {
+            new UserPreferencesUtil().resetSettings(currentUser);
+        }
+    }
+
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
@@ -70,11 +124,11 @@ public class AssemblyAssociations extends TestBase {
         final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hinge_assembly,
             assemblyExtension,
             assemblyProcessGroup,
@@ -203,11 +257,11 @@ public class AssemblyAssociations extends TestBase {
         final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hinge_assembly,
             assemblyExtension,
             assemblyProcessGroup,
@@ -281,11 +335,11 @@ public class AssemblyAssociations extends TestBase {
         final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hinge_assembly,
             assemblyExtension,
             assemblyProcessGroup,
@@ -351,11 +405,11 @@ public class AssemblyAssociations extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final File resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, big_ring + subComponentExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hinge_assembly,
             assemblyExtension,
             assemblyProcessGroup,
@@ -425,7 +479,7 @@ public class AssemblyAssociations extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -436,7 +490,7 @@ public class AssemblyAssociations extends TestBase {
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             fuse_block_asm,
             assemblyExtension,
             assemblyProcessGroup,
@@ -463,7 +517,6 @@ public class AssemblyAssociations extends TestBase {
         softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.VERIFIED.getStatusIcon());
-
 
         componentsTreePage.closePanel()
             .navigateToScenario(cidComponentItemA)
@@ -493,7 +546,7 @@ public class AssemblyAssociations extends TestBase {
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
@@ -506,7 +559,7 @@ public class AssemblyAssociations extends TestBase {
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             fuse_block_asm,
             assemblyExtension,
             assemblyProcessGroup,
@@ -611,7 +664,7 @@ public class AssemblyAssociations extends TestBase {
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
@@ -624,7 +677,7 @@ public class AssemblyAssociations extends TestBase {
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             fuse_block_asm,
             assemblyExtension,
             assemblyProcessGroup,
@@ -734,7 +787,7 @@ public class AssemblyAssociations extends TestBase {
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
@@ -748,7 +801,7 @@ public class AssemblyAssociations extends TestBase {
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             fuse_block_asm,
             assemblyExtension,
             assemblyProcessGroup,
@@ -762,19 +815,10 @@ public class AssemblyAssociations extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .selectFilter("Public")
-            .multiSelectScenarios("" + conductor + ", " + scenarioName + "", "" + housing + ", " + scenarioName + "")
-            .editScenario(EditComponentsPage.class)
-            .overrideScenarios()
-            .clickContinue(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .selectFilter("Private")
-            .multiSelectScenarios(fuse_block_asm + "," + scenarioName)
-            .clickDeleteIcon()
-            .clickDelete(ExplorePage.class);
+        explorePage = loginPage.login(currentUser);
 
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, scenarioName, resourceFile, currentUser);
+        cidComponentItemH = new ExplorePage(driver).uploadComponent(conductor, scenarioName, resourceFile2, currentUser);
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
         componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -861,7 +905,7 @@ public class AssemblyAssociations extends TestBase {
         final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
         final File resourceFile2 = FileResourceUtil.getCloudFile(subComponentProcessGroup, conductor + subComponentExtension);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName2 = new GenerateStringUtil().generateScenarioName();
@@ -874,7 +918,7 @@ public class AssemblyAssociations extends TestBase {
 
         userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             fuse_block_asm,
             assemblyExtension,
             assemblyProcessGroup,
