@@ -435,6 +435,18 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//li[@role='menuitem']")
     private WebElement btnCid;
 
+    @FindBy(xpath = "//div[text()='Length']//..")
+    private WebElement lengthType;
+
+    @FindBy(xpath = "//div[text()='Unit Cost']//..")
+    private WebElement costType;
+
+    @FindBy(xpath = "//div[text()='Milling Speed']//..")
+    private WebElement timeType;
+
+    @FindBy(xpath = "//p[text()='Piece Part Cost']//following-sibling::p")
+    private WebElement decimalPlace;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
         this(driver, log);
     }
@@ -2547,5 +2559,41 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public EvaluatePage clickOnCid() {
         getPageUtils().waitForElementAndClick(btnCid);
         return new EvaluatePage(getDriver());
+    }
+
+    /**
+     * get length type
+     *
+     * @return a String
+     */
+    public String getLengthType() {
+        return getPageUtils().waitForElementToAppear(lengthType).getAttribute("innerText");
+    }
+
+    /**
+     * get cost type
+     *
+     * @return a String
+     */
+    public String getCostType() {
+        return getPageUtils().waitForElementToAppear(costType).getAttribute("innerText");
+    }
+
+    /**
+     * get time type
+     *
+     * @return a String
+     */
+    public String getTimeType() {
+        return getPageUtils().waitForElementToAppear(timeType).getAttribute("innerText");
+    }
+
+    /**
+     * get decimal places
+     *
+     * @return a String
+     */
+    public String getDecimalPlaces() {
+        return getPageUtils().waitForElementToAppear(decimalPlace).getAttribute("innerText");
     }
 }

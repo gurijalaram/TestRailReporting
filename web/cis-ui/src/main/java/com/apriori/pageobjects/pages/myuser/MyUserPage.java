@@ -171,4 +171,15 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
         getPageUtils().waitForElementAndClick(settingsButton);
         return new UserPreferencePage(getDriver());
     }
+
+    /**
+     * select user preference
+     *
+     * @return new page object
+     */
+    public UserPreferencePage selectUserPreference() {
+        getPageUtils().waitForElementAndClick(btnUserIcon);
+        getPageUtils().waitForElementAndClick(settingsButton);
+        return new UserPreferencePage(getDriver());
+    }
 }
