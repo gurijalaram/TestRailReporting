@@ -46,6 +46,6 @@ public enum EDCAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.edc.api_url") + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables);
     }
 }

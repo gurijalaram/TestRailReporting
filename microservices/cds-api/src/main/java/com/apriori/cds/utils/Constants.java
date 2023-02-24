@@ -25,7 +25,7 @@ public class Constants {
      * @return string
      */
     public static String getAPrioriInternalCustomerIdentity() {
-        return PropertiesContext.get("${env}.customer_identity");
+        return PropertiesContext.get("customer_identity");
     }
 
     /**
@@ -34,7 +34,7 @@ public class Constants {
      * @return string
      */
     public static String getApProApplicationIdentity() {
-        return PropertiesContext.get("${env}.cds.appro_application_identity");
+        return PropertiesContext.get("cds.appro_application_identity");
     }
 
     /**
@@ -43,7 +43,7 @@ public class Constants {
      * @return string
      */
     public static String getCiaApplicationIdentity() {
-        return PropertiesContext.get("${env}.cds.cia_application_identity");
+        return PropertiesContext.get("cds.cia_application_identity");
     }
 
     /**
@@ -52,6 +52,6 @@ public class Constants {
      * @return string
      */
     public static String getServiceUrl() {
-        return PropertiesContext.get("${env}.cds.api_url").concat("%s?key=").concat(PropertiesContext.get("${env}.secret_key"));
+        return PropertiesContext.get("cds.api_url").concat("%s?key=").concat(PropertiesContext.get("secret_key"));
     }
 }

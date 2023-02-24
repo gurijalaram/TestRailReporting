@@ -29,7 +29,7 @@ public enum DMSApiEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
 
-        return PropertiesContext.get("${env}.dms.api_url") + "customers/" +
+        return PropertiesContext.get("dms.api_url") + "customers/" +
             String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 
@@ -40,6 +40,6 @@ public enum DMSApiEnum implements ExternalEndpointEnum {
             querySymbol = "&";
         }
 
-        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
+        return querySymbol + "key=" + PropertiesContext.get("secret_key");
     }
 }
