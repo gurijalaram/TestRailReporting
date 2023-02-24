@@ -662,6 +662,7 @@ public class ExploreToolbar extends MainNavBar {
 
         if (file.exists()) {
             file.deleteOnExit();
+
             return file.length();
         }
         return null;
