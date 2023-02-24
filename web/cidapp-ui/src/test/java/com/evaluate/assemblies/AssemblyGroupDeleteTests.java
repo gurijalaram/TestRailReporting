@@ -34,7 +34,7 @@ public class AssemblyGroupDeleteTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {})
+    @TestRail(testCaseId = {"15023", "15024", "15025", "15026"})
     @Description("Delete 10 subcomponents of an assembly")
     public void assemblyMenuGroupDelete() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
