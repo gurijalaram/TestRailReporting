@@ -447,6 +447,15 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//p[text()='Piece Part Cost']//following-sibling::p")
     private WebElement decimalPlace;
 
+    @FindBy(xpath = "//button[@aria-label='More Options...']//*[local-name()='svg']")
+    private WebElement moreOptionMenu;
+
+    @FindBy(id = "process.processName")
+    private WebElement processNameAttribute;
+
+    @FindBy(xpath = "//button[@data-testid='NEW_MESSAGE']//*[local-name()='svg']")
+    private WebElement processAttributeMessageIcon;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
         this(driver, log);
     }
@@ -1140,7 +1149,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage selectProcess(String processName) {
         getPageUtils().waitForElementToAppear(processDropdown);
         getPageUtils().moveAndClick(processDropdown);
-        getPageUtils().waitForElementAndClick(By.xpath("//ul[@role='listbox']//span[text()='" + processName + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//ul[@role='listbox']//span[text()='%s']", processName)));
         return this;
     }
 
@@ -2595,5 +2604,25 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getDecimalPlaces() {
         return getPageUtils().waitForElementToAppear(decimalPlace).getAttribute("innerText");
+    }
+
+    /**
+     * Checks if process card-more options displayed
+     *
+     * @return true/false
+     */
+    public boolean isNewMessageOptionDisplayed() {
+        getPageUtils().mouseMove(processNameAttribute);
+        return getPageUtils().waitForElementAppear(processAttributeMessageIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on new message icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickProcessNameMessageIcon() {
+        getPageUtils().moveAndClick(processAttributeMessageIcon);
+        return this;
     }
 }
