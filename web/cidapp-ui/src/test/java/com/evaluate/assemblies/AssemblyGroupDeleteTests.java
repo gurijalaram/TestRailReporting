@@ -2,6 +2,7 @@ package com.evaluate.assemblies;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -92,7 +93,8 @@ public class AssemblyGroupDeleteTests extends TestBase {
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isTrue();
 
         componentsTreePage.deleteSubcomponent()
-            .clickDelete(ComponentsTreePage.class)
+            .clickDelete(DeletePage.class)
+            .clickClose(ComponentsTreePage.class)
             .checkComponentDeleted(componentAssembly, arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder)
             .closePanel()
             .clickRefresh(EvaluatePage.class)
