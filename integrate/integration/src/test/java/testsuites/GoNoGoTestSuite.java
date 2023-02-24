@@ -6,6 +6,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.integration.tests.CIAIntegrationTests;
 import com.integration.tests.CICIntegrationTests;
 import com.integration.tests.CIDIntegrationTests;
+import com.integration.tests.CIRIntegrationTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -14,7 +15,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     CICIntegrationTests.class,
     CIDIntegrationTests.class,
-    CIAIntegrationTests.class
+    CIAIntegrationTests.class,
+    CIRIntegrationTests.class
 })
 public class GoNoGoTestSuite {
 }
