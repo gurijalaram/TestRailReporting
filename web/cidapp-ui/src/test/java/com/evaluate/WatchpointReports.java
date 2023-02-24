@@ -2,10 +2,12 @@ package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -45,11 +47,27 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .navigateToScenario("https://ci-design.na-1-v23-1.qa-test.apriori.net/components/CP5DS97AXRF1/scenarios/CQQSLSNHWZUI")
-            .downloadReport(EvaluatePage.class);
+        componentInfo = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQQSLSNHWZUI", currentUser)).isGreaterThan(0);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
+        evaluatePage.clickReportDropdown();
+
+        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
+
+        evaluatePage.clickReportDropdown()
+            .generateReport(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
+
+        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isTrue();
+
+        evaluatePage.downloadReport(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
