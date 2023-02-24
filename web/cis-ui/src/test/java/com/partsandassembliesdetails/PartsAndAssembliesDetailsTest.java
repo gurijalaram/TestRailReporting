@@ -20,6 +20,7 @@ import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -1398,6 +1399,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Disabled until 1.1.0 release")
     @Test
     @TestRail(testCaseId = {"16676","16678"})
     @Description("Verify user can open the same component in CID app from details view")
@@ -1427,6 +1429,63 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .switchTab();
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Ignore("Disabled until 1.1.0 release")
+    @Test
+    @TestRail(testCaseId = {"17093","17094","17095","17096","17098","17099"})
+    @Description("Verify discussions can create from process details card")
+    public void testCreateDiscussionsFromProcessDetailsCard() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponent(componentName, scenarioName)
+                .clickProcessRouting()
+                .selectProcess("Cycle Time")
+                .clickCycleTimeChart();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isNewMessageOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickProcessNameMessageIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentThreadModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttribute()).isEqualTo(CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCancelButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCommentButtonState()).contains("Mui-disabled");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCancelButtonState()).doesNotContain("Mui-disabled");
+
+        partsAndAssembliesDetailsPage.clickCancel();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAbandonCommentModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAbandonCommentModalContent()).isEqualTo("if you abandon, what you've written will be lost.");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAbandonButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isKeepEditingButtonDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickKeepEditing()
+                .addComment("Process Card Data Field Comment")
+                .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionAttribute()).isEqualTo(CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("Process Card Data Field Comment");
 
         softAssertions.assertAll();
     }

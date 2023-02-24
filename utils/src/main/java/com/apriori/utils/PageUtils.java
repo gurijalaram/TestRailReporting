@@ -1345,9 +1345,7 @@ public class PageUtils {
      * Waits for a WebElement to become visible.
      *
      * @param element          - WebElement for which visibility is being waited.
-     * @param timeoutInSeconds Number of seconds to wait for WebElement to become visible before assuming
-     *                         it will not become visible. Defaults to 60 seconds.
-     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visisble
+     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visible
      */
     public Boolean waitForWebElement(WebElement element) {
         try {
