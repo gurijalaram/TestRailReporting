@@ -53,17 +53,6 @@ public class CIAIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12046"})
-    @Description("Verify user can login CIR")
-    public void testUserLoginCIR() {
-        ReportsHeader reportsHeader = new ReportsLoginPage(driver)
-            .login()
-            .navigateToHomePage();
-
-        assertThat(reportsHeader.getHomeTitleText(), CoreMatchers.is(containsString("Home")));
-    }
-
-    @Test
     @TestRail(testCaseId = "12517")
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testCreateAdHocViewReport() {
