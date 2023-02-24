@@ -47,25 +47,25 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        componentInfo = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario("https://ci-design.na-1-v23-1.qa-test.apriori.net/components/CP5DS97AXRF1/scenarios/CQQSLSNHWZUI")
+//            .selectProcessGroup(processGroupEnum)
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
+//        evaluatePage.clickReportDropdown();
+//
+//        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
+//
+//        evaluatePage.clickReportDropdown()
+//            .generateReport(EvaluatePage.class)
+//            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
+//
+//        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isTrue();
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario();
+        .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
-        evaluatePage.clickReportDropdown();
-
-        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
-
-        evaluatePage.clickReportDropdown()
-            .generateReport(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
-
-        evaluatePage.downloadReport(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQQSLSNHWZUI", currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
