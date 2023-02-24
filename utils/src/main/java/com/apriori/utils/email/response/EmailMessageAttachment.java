@@ -39,7 +39,7 @@ public class EmailMessageAttachment {
      */
     public <T> T getFileAttachment() {
         File downloadedFile = FileResourceUtil.copyIntoTempFile(getContentBytes().toString(), "reports", getName());
-        final Object[] object = {null};
+        Object[] object = {null};
         switch (FileNameUtils.getExtension(String.valueOf(getName()))) {
             case "pdf":
                 object[0] = new PDFDocument(String.valueOf(downloadedFile));
@@ -50,6 +50,11 @@ public class EmailMessageAttachment {
             default:
                 log.error(String.format("No attachments found !!"));
         }
-        return (T) object[0];
+        try {
+            object = (Object[]) object[0];
+        } catch (Exception e) {
+            log.error("EMAIL ATTACHMENT NOT FOUND!!!");
+        }
+        return (T) object;
     }
 }

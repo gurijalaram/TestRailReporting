@@ -26,6 +26,7 @@ import com.apriori.utils.web.driver.TestBase;
 import entity.request.JobDefinition;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobRun;
+import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ReportTemplatesRow;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -50,7 +51,8 @@ public class CICIntegrationTests extends TestBase {
     private static String scenarioName;
     private static String workflowData;
     private static SoftAssertions softAssertions;
-    private static ReportTemplatesRow reportTemplateNames;
+    private static AgentWorkflowReportTemplates reportTemplateNames;
+    private static ReportTemplatesRow reportTemplateName;
 
     public CICIntegrationTests() {
         super();
