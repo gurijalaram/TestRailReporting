@@ -59,8 +59,9 @@ public class WatchpointReports extends TestBase {
             .generateReport(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
 
-        evaluatePage.clickReportDropdown();
-        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isTrue();
+        evaluatePage.downloadReport(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isDownloadedReportSize(currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
