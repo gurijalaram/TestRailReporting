@@ -16,6 +16,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
@@ -641,5 +642,29 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isDownloadButtonEnabled() {
         return pageUtils.waitForElementToAppear(downloadReportButton).isEnabled();
+    }
+
+    /**
+     * Gets the size of the downloaded report
+     *
+     * @param userCredentials - the user credentials
+     * @return Long
+     */
+    public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
+        pageUtils.waitFor(2000);
+
+        String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
+            .getHeaders()
+            .get("Content-Disposition")
+            .getValue().split("=")[1].replace("\"", "");
+
+        File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
+
+        if (file.exists()) {
+            file.deleteOnExit();
+
+            return file.length();
+        }
+        return null;
     }
 }

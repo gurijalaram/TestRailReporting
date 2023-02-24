@@ -1,6 +1,8 @@
 package com.evaluate;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -25,12 +27,12 @@ public class WatchpointReports extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UserCredentials currentUser;
+    private ComponentInfoBuilder componentInfo;
 
     public WatchpointReports() {
         super();
     }
-
-    private UserCredentials currentUser;
 
     @Test
     @Category(SmokeTests.class)
@@ -45,8 +47,10 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        componentInfo = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
@@ -59,8 +63,9 @@ public class WatchpointReports extends TestBase {
             .generateReport(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
 
-        evaluatePage.clickReportDropdown();
-        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isTrue();
+        evaluatePage.downloadReport(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
