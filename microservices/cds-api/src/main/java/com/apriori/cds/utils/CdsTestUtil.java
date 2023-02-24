@@ -629,12 +629,12 @@ public class CdsTestUtil extends TestUtil {
             .body("accessControl",
                 AccessControlRequest.builder()
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
-                    .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
-                    .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(PropertiesContext.get("${env}.cds.apriori_cloud_home_identity"))
+                    .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
+                    .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
+                    .applicationIdentity(PropertiesContext.get("cds.apriori_cloud_home_identity"))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
-                    .roleIdentity(PropertiesContext.get("${env}.cds.identity_role"))
+                    .roleIdentity(PropertiesContext.get("cds.identity_role"))
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
