@@ -358,8 +358,8 @@
     "name": "test123",
     "description": ""
   },
-  "isPlmWriteReportNameSelected": false,
-  "selectedPlmWriteReportName": "none",
+  "isPlmWriteReportNameSelected": true,
+  "selectedPlmWriteReportName": "%s",
   "emailPartFilter": {},
   "applyEmailFilter": false,
   "applyEmailReportsFilter": false,
