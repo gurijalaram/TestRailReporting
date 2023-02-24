@@ -644,14 +644,16 @@ public class ExploreToolbar extends MainNavBar {
         return pageUtils.waitForElementToAppear(downloadReportButton).isEnabled();
     }
 
-    public Long isDownloadedReportSize(UserCredentials userCredentials) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Gets the size of the downloaded report
+     *
+     * @param userCredentials - the user credentials
+     * @return Long
+     */
+    public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
+        pageUtils.waitFor(2000);
 
-        String reportName = new ScenariosUtil().getReports("CP5D8OT81D8R", "CQODLDEEZU04", userCredentials)
+        String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
             .getHeaders()
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
@@ -659,6 +661,7 @@ public class ExploreToolbar extends MainNavBar {
         File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
 
         if (file.exists()) {
+            file.deleteOnExit();
             return file.length();
         }
         return null;

@@ -1,6 +1,8 @@
 package com.evaluate;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -25,12 +27,11 @@ public class WatchpointReports extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UserCredentials currentUser;
 
     public WatchpointReports() {
         super();
     }
-
-    private UserCredentials currentUser;
 
     @Test
     @Category(SmokeTests.class)
@@ -45,8 +46,10 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        ComponentInfoBuilder component = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(component)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
@@ -61,7 +64,7 @@ public class WatchpointReports extends TestBase {
 
         evaluatePage.downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isDownloadedReportSize(currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(component.getComponentIdentity(), component.getScenarioIdentity(), currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
