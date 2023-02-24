@@ -12,8 +12,8 @@ import com.apriori.utils.web.driver.TestBase;
 import entity.request.ConnectorRequest;
 import entity.response.AgentConnectionInfo;
 import entity.response.AgentConnectionOptions;
+import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
-import entity.response.ReportTemplatesRow;
 import enums.CICAgentType;
 import enums.CICReportType;
 import io.qameta.allure.Description;
@@ -59,8 +59,9 @@ public class CicConnectorTest extends TestBase {
     @Test
     @Description("Get report template names")
     public void testGetReportTemplates() {
-        ReportTemplatesRow reportTemplatesRow = CicApiTestUtil.getAgentReportTemplate(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY, CICReportType.EMAIL, loginSession);
-        softAssertions.assertThat(reportTemplatesRow.getValue()).isNotNull();
+        AgentWorkflowReportTemplates reportTemplates = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
+
+        softAssertions.assertThat(CicApiTestUtil.getAgentReportTemplate(reportTemplates, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY)).isNotNull();
     }
 
 

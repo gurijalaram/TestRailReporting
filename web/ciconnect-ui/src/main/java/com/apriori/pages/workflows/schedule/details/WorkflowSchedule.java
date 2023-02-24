@@ -2,8 +2,15 @@ package com.apriori.pages.workflows.schedule.details;
 
 import com.apriori.utils.StringUtils;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WorkflowSchedule {
     public enum Schedule {
         MINUTES,
