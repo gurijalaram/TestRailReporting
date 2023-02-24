@@ -28,6 +28,7 @@ public class WatchpointReports extends TestBase {
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private UserCredentials currentUser;
+    private ComponentInfoBuilder componentInfo;
 
     public WatchpointReports() {
         super();
@@ -46,10 +47,10 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        ComponentInfoBuilder component = loginPage.login(currentUser)
+        componentInfo = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(component)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
@@ -64,7 +65,7 @@ public class WatchpointReports extends TestBase {
 
         evaluatePage.downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(component.getComponentIdentity(), component.getScenarioIdentity(), currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
