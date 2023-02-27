@@ -214,7 +214,7 @@ public class CustomerWorkspacePage extends NavToolbar {
      * and the empty string if it cannot determine the identity.
      */
     public String findCustomerIdentity() {
-        String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
+        String baseUrl = PropertiesContext.get("cas.ui_url");
         String url = getDriver().getCurrentUrl().replace(String.format("%scustomers/", baseUrl), "");
         return Arrays.stream(url.split("/")).findFirst().orElse("");
     }
@@ -239,7 +239,7 @@ public class CustomerWorkspacePage extends NavToolbar {
      * @return CustomerWorkspacePage
      */
     public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s";
         driver.navigate().to(String.format(url, customer));
         return new CustomerWorkspacePage(driver);
     }

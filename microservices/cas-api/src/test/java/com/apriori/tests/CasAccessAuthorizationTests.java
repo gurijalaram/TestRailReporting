@@ -47,7 +47,7 @@ public class CasAccessAuthorizationTests {
         url = Constants.getServiceUrl();
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         aPCustomerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
+        aPStaffIdentity = PropertiesContext.get("user_identity");
         customer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = customer.getIdentity();
         customerAssociationToAprioriInternal = casTestUtil.findCustomerAssociation(casTestUtil.getAprioriInternal(), customer);
