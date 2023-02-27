@@ -21,6 +21,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +53,9 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cellCheckbox')]")
     private List<WebElement> tableRow;
+
+    @FindBy(xpath = "//div[@data-testid='loader']")
+    private WebElement spinner;
 
     private LetNavigationBarController letNavigationBarController;
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -111,6 +115,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
 
     public MyUserPage clickUserIcon() {
+        getPageUtils().waitForElementToAppear(spinner);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(userIcon);
         return new MyUserPage(getDriver());
     }

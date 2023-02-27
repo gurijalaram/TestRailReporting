@@ -94,7 +94,7 @@ public class CicApiTestUtil extends TestUtil {
             case "REST":
                 workflowRequestDataBuilder = (isCostingInputData)
                     ? new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class) :
-                      new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
+                    new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
 
                 workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
                 break;
@@ -310,7 +310,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.plm_agent_id");
+        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
     }
 
     /**
@@ -429,7 +429,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getCustomerName() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.customer_name");
+        return PropertiesContext.get("${customer}.ci-connect.customer_name");
     }
 
     /**
@@ -651,12 +651,11 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * get Workflow Report template names
      *
-     * @param reportName    ReportsEnum
      * @param cicReportType EMAIL or PLM_WRITE
      * @param session       login session
      * @return ReportTemplatesRow
      */
-    public static ReportTemplatesRow getAgentReportTemplate(ReportsEnum reportName, CICReportType cicReportType, String session) {
+    public static AgentWorkflowReportTemplates getAgentReportTemplates(CICReportType cicReportType, String session) {
         String getConnectorJson = String.format("{\"customer\":\"%s\",\"reportType\":\"%s\"}", getCustomerName(), cicReportType);
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "application/json");
@@ -666,12 +665,28 @@ public class CicApiTestUtil extends TestUtil {
             .headers(header)
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
-        AgentWorkflowReportTemplates agentWorkflowReportTemplates = (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
 
-        return agentWorkflowReportTemplates.getRows().stream()
-            .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
-            .findFirst()
-            .get();
+    /**
+     * get the report template id
+     *
+     * @param agentWorkflowReportTemplates list of templates
+     * @param reportName                   expected report name
+     * @return ReportTemplatesRow single template object
+     */
+    public static ReportTemplatesRow getAgentReportTemplate(AgentWorkflowReportTemplates agentWorkflowReportTemplates, ReportsEnum reportName) {
+        ReportTemplatesRow reportTemplate = null;
+        try {
+            reportTemplate = agentWorkflowReportTemplates.getRows().stream()
+                .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
+                .findFirst()
+                .get();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error("REPORT TEMPLATE NOT FOUND  --- " + reportName.getReportName());
+        }
+        return reportTemplate;
     }
 
     /**
