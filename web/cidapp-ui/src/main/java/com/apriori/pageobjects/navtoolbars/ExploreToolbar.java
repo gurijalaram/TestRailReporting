@@ -659,6 +659,8 @@ public class ExploreToolbar extends MainNavBar {
             .getValue().split("=")[1].replace("\"", "");
 
         File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
+        log.info("download path is " + file.getAbsolutePath());
+        log.debug("download path is " + file.getAbsoluteFile());
 
         if (file.exists()) {
             file.deleteOnExit();
