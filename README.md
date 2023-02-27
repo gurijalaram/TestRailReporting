@@ -235,32 +235,9 @@ dbondar@apriori.com,YourAuth0IntPassword,admin
 
 
 ## Project properties
-
-### Properties location and template
-All properties (instead of system properties) are located in `utils/src/main/resources/configurations` folder.
-These properties are divided into three sections
-- environment properties `utils/src/main/resources/configurations/environments-config.yml` - properties related to a specific environment. Refer to this file as `EnvironmentProperties` <br>
-- customers properties `utils/src/main/resources/configurations/customers-config.yml` - properties related to a specific customer. Refer to this file as `CustomersProperties` <br>
-- global properties `utils/src/main/resources/configurations/global-config.yml` - common properties file. Refer to this file as `GlobalProperties`  Contains properties:
-  - which are independent of the environment
-  - properties in **default** section, that will be used if there is no corresponding variable in the environment file
-
-
 ### Get properties 
-To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is a global class to work with properties.
-<br>`PropertyContext` - the main object to work with properties and contains all properties from properties sections. (see **Properties location and template**)
-
-#### Main configurations
-`GlobalProperties` file contain four main configurations properties:
- - `env` : the section of environment properties to process.<br> 
-( e.g. if `env` has value `qa-test`, `PropertyContext` will try to find property in `EnvironmentProperties` file under `qa-test` section. 
- - `deployment`: deployment configuration. The section of deployment properties to process <br>
-  ( e.g. if `deployment` has value `sandbox`, `PropertyContext` will try to find property in `GlobalProperties` file under `sandbox` section.
-- `customer`: the section of customer properties to process.<br>
-  ( e.g. if `customer` has value `sprockets`, `PropertyContext` will try to find property in `CustomersProperties` file under `sprockets` section.
-- `version`: version used in Deployment url service. See URLs under  Deployment URL comment in `GlobalProperties` file.
-
-<br><br>`com.apriori.utils.properties.PropertiesContext` - contains get method, that allow to get the property value to mapped type
+To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is global class to work with properties.
+`com.apriori.utils.properties.PropertiesContext` - contains get methods, that allow to get the property value to mapped type
  - `get(String propertyName)` - return property by name mapped to String
 
 Property name represent String path of YML file e.g:
@@ -272,35 +249,36 @@ to get <br>
 
 ### Process of receiving property
  - 1). at first there is a search in `System properties`
- - 2). if in system properties no such variable, there is a search in **PropertyContext** for requested property path.
- - 3). if requested property path doesn't exist, then path will be updated to **environment value** and try to get it by environment path.
- - 4). if environment property path doesn't exist, then path will be updated to **default** and try to get it by default path.
- - 5). if default property not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
+ - 2). if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml` for requested property path.
+ - 3). if requested property path doesn't exist, then path will be updated to default and try to get it by default path.
+ - 4). if default property not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
 
-e.g. PropertiesContext.get("fms.api_url") | note that env = qa-cid-perf <br>
-   1). Get system environment `fms_api_url`, <br>
-   2). if step 1 return nothing | get the property from `PropertiesContext` with path `fms/api_url` <br>
-   3). if step 2 return nothing | get the property from `PropertiesContext` but with adding to the path environment part`qa-cid-perf/` as result get property `/qa-cid-perf/fms/api_url` <br>
-   4). if step 3 return nothing | get the property from `PropertiesContext` but with replacing of the first path part `qa-cid-perf/` to `default/` as result get property `/default/fms/api_url` <br>
-   5). if step 4 return nothing | thrown `java.lang.IllegalArgumentException` with a text `Property with path: fms/api_url not present.` <br>
+e.g. PropertiesContext.get("${env}.fms.api_url") | note that ${env} = qa-cid-perf <br>
+   1). Get system environment `qa-cid-perf_fms_api_url`, <br>
+   2). if step 1 return nothing | get the property from config.yml `qa-cid-perf/fms/api_url` <br>
+   3). if step 2 return nothing | get the property from config.yml default `default/fms/api_url` <br>
+   4). if step 3 return nothing | thrown `java.lang.IllegalArgumentException` with a text `Property with path: qa-cid-perf/fms/api_url not present.` <br>
 
 ### Search Templates
-Search in `system environments` and in  `PropertiesContext` require special naming template.
+Search in `system environments` and in `config.yml` file require special naming template.
  - for System property, in the request property name, will be automatically replaced all `"."` with `"_"`
    Please NOTE: if you need to specify a property name as a `System environment`, you need to replace all `"."` with `"_"` in the property name, taken from java code.
     e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search system environment with name: `global_users_csv_file`
    
-  - for `PropertiesContext`, in requested property name, will be automatically replaced all `"."` with `"/"`
+  - for `utils/src/main/resources/config.yml`, in requested property name, will be automatically replaced all `"."` with `"/"`
     e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
 
 
-#### Property references
-To get a property with a reference use template `${reference}.property_path` <br>
-e.g: `PropertiesContext.get` (`https://${default.version}/apriori.com`);<br>
-To get a property with a reference that may have another reference inside, use template `${${another.refference}.property/path}`
-    <br>e.g: `PropertiesContext.get("${${env}.bcs.api_url}");`
- - it will get a property in a couple of steps:
-   - replace reference inside `${env}` to appropriate value e.g. `qa-test` as result it will be `${qa-test.bcs.api_url}`
-   - get the value from a property `qa-test/bcs/api_url`
+#### Property based on environment
+To get property based on environment use environment reference by key `${env}` 
+   e.g: `PropertiesContext.get("${env}.prop");`
 
-<br>An example of properties usage you can find in `com.apriori.util.test.PropertiesContextTestTest`
+An example of properties usage you can find in `com.apriori.util.test.PropertiesTestPropertiesTest`
+
+### Properties location and template
+All properties are located in `utils/src/main/resources/config.yml`
+
+Properties are separated into two sections:
+- **global** - contains properties for all modules, common properties for microservices, that are not related to the environment
+- **environment** - contains properties for all modules and microservices, that are related to the environment. They always start from environment name.
+   

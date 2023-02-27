@@ -1,152 +1,69 @@
 package com.apriori.utils.properties;
 
+import com.apriori.utils.FileResourceUtil;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.InputStream;
+import java.io.FileInputStream;
+import java.util.Optional;
 
-@Slf4j
 public class PropertiesContext {
 
-    private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    private static final String DEFAULT_PROPERTIES_KEY = "/default";
+
+    private static final String[] variableMarker = {"${", "}"};
     private static final JsonNode propertiesContext;
 
-    private static final String ENVIRONMENT_NAME;
-    private static final String DEFAULT_PROPERTIES_KEY = "/default";
-    private static final String[] variableMarker = {"${", "}"};
-
     static {
-
-        final JsonNode globalPropertiesContext = loadProperties("configurations/global-config.yml");
-        final JsonNode envPropertiesContext = loadProperties("configurations/environments-config.yml");
-        final JsonNode customersPropertiesContext = loadProperties("configurations/customers-config.yml");
-
-        propertiesContext = mergePropertiesIntoOneContext(globalPropertiesContext, envPropertiesContext, customersPropertiesContext);
-
-        ENVIRONMENT_NAME = propertiesContext.at("/env").asText();
-    }
-
-    @SneakyThrows
-    private static JsonNode loadProperties(final String fileName) {
-        InputStream fileData = ClassLoader.getSystemClassLoader().getResourceAsStream(fileName);
-
-        if (fileData == null) {
-            log.error("Property file {} was not found. Please check the utils/resource folder on file presence", fileName);
-            throw new IllegalArgumentException();
-        }
-
-        return mapper.readTree(
-            fileData
-        );
-    }
-
-    public static JsonNode mergePropertiesIntoOneContext(JsonNode... propertiesFiles) {
-        ObjectNode objectNode = mapper.createObjectNode();
-
-        for (int i = 0; i < propertiesFiles.length; i++) {
-            objectNode.setAll((ObjectNode) propertiesFiles[i]);
-        }
-
-        return objectNode;
+        propertiesContext = loadProperties();
     }
 
     /**
-     * Get property from configurations files.
-     * see {@link configurations}
-     *
+     * Get property from config.yml file.
      * @param propertyName
      * @return
      */
-    public static String get(String propertyName) {
-        // try to find system property
-        String propertyValue = System.getProperty(convertToSystemPropertyTemplate(propertyName));
+    public static String get(final String propertyName) {
+        return Optional.ofNullable(
+            System.getProperty(convertToSystemPropertyTemplate(propertyName))
+        ).orElseGet(
+            () -> getFromPropertyContext(convertToPropertyPathTemplate(propertyName))
+        );
+    }
 
-        propertyName = convertToPropertyPathTemplate(propertyName);
+    @SneakyThrows
+    private static JsonNode loadProperties() {
+        return new ObjectMapper(new YAMLFactory()).readTree(
+            new FileInputStream(
+                FileResourceUtil.getResourceAsFile("config.yml")
+            )
+        );
+    }
 
-        // try to find property
-        if (StringUtils.isEmpty(propertyValue)) {
-            propertyValue = getFromPropertyContext(propertyName);
-        }
+    private static String getFromPropertyContext(String propertyName) {
+        String readyToWorkPropertyPath = parsePropertyOnReferencesPresents(propertyName);
 
-        // try to find environment property
-        if (StringUtils.isEmpty(propertyValue) && !propertyName.startsWith("/" + ENVIRONMENT_NAME)) {
-            if (!propertyName.startsWith("/${env}")) {
-                propertyName = ENVIRONMENT_NAME + propertyName;
-            }
+        String propertyValue = parsePropertyOnReferencesPresents(
+            propertiesContext.at(readyToWorkPropertyPath).asText()
+        );
 
-            propertyValue = getEnvironmentValue(propertyName);
-        }
-
-        // try to find default property
-        if (StringUtils.isEmpty(propertyValue)) {
-            propertyValue = getDefaultValueThrowExceptionIfMissed(propertyName);
+        if (StringUtils.isBlank(propertyValue)) {
+            propertyValue = getDefaultValueThrowExceptionIfMissed(readyToWorkPropertyPath);
         }
 
         return propertyValue;
-
-    }
-
-    private static String getFromPropertyContext(String propertyPath) {
-
-        propertyPath = convertToPropertyPathTemplate(propertyPath);
-
-        if (isPropertyContainPropertyReference(propertyPath)) {
-            propertyPath = findAndReplaceVariables(propertyPath);
-        }
-
-        if (propertyPath.equals("/" + ENVIRONMENT_NAME)) {
-            return ENVIRONMENT_NAME;
-        }
-
-        String propertyValue = propertiesContext.at(propertyPath).asText();
-
-        if (isPropertyContainPropertyReference(propertyValue)) {
-            propertyValue = findAndReplaceVariables(propertyValue);
-        }
-
-        return propertyValue;
-    }
-
-    private static String getEnvironmentValue(String propertyPath) {
-        log.info("PropertyContext: getting environment property by path: {}", propertyPath);
-        return getFromPropertyContext(propertyPath);
-    }
-
-    private static String findAndReplaceVariables(final String key) {
-        String result = key;
-        Integer startIndex;
-
-        do {
-            startIndex = result.lastIndexOf(variableMarker[0]);
-
-            int endIndex = result.indexOf(variableMarker[1], startIndex);
-
-            if (endIndex == -1) {
-                break;
-            }
-
-            String keyToReplace = result.substring(startIndex, endIndex + 1);
-            String varName = keyToReplace.replaceAll("[${}]", "");
-            String content = get(varName);
-            result = result.replace(keyToReplace, content);
-
-        } while (startIndex != -1);
-
-        return result;
     }
 
     private static String getDefaultValueThrowExceptionIfMissed(String propertyPath) {
-        final String propertyPathToGet = updatePropertyPathWithAStartKey(DEFAULT_PROPERTIES_KEY,
-            convertToPropertyPathTemplate(propertyPath)
+        String propertyValue = parsePropertyOnReferencesPresents(
+            propertiesContext.at(
+                updateToDefaultPropertyPath(propertyPath)
+            ).asText()
         );
-        log.info("PropertyContext: getting default property by path: {}", propertyPathToGet);
-
-        String propertyValue = getFromPropertyContext(propertyPathToGet);
 
         if (StringUtils.isBlank(propertyValue)) {
             throw new IllegalArgumentException(
@@ -157,11 +74,25 @@ public class PropertiesContext {
         return propertyValue;
     }
 
-    private static String updatePropertyPathWithAStartKey(String startKey, String readyToWorkPropertyPath) {
-        return startKey +
+    private static String updateToDefaultPropertyPath(String readyToWorkPropertyPath) {
+        return DEFAULT_PROPERTIES_KEY +
             readyToWorkPropertyPath.substring(
                 StringUtils.ordinalIndexOf(readyToWorkPropertyPath, "/", 2)
             );
+    }
+
+    private static String parsePropertyOnReferencesPresents(String propertyPath) {
+        if (isPropertyContainPropertyReference(propertyPath)) {
+            for (String reference : StringUtils.substringsBetween(propertyPath, variableMarker[0], variableMarker[1])) {
+                propertyPath = replacePropertyReferenceWithAppropriateValue(propertyPath, reference);
+            }
+        }
+
+        return propertyPath;
+    }
+
+    private static String replacePropertyReferenceWithAppropriateValue(final String propertyValue, final String reference) {
+        return propertyValue.replace(variableMarker[0] + reference + variableMarker[1], get(reference));
     }
 
     private static boolean isPropertyContainPropertyReference(String propertyValue) {
@@ -173,8 +104,6 @@ public class PropertiesContext {
     }
 
     private static String convertToPropertyPathTemplate(String propertyName) {
-        propertyName = propertyName.replace(".", "/");
-
-        return StringUtils.startsWith(propertyName, "/") ? propertyName : "/" + propertyName;
+        return "/" + propertyName.replace(".", "/");
     }
 }

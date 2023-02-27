@@ -1,6 +1,5 @@
 package com.evaluate;
 
-import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.DataCreationUtil;
@@ -8,7 +7,6 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -32,8 +30,7 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
 
         Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();

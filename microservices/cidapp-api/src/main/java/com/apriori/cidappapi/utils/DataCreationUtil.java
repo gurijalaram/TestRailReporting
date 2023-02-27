@@ -4,7 +4,6 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
@@ -25,14 +24,12 @@ public class DataCreationUtil {
     private File resourceFile;
     private UserCredentials userCredentials;
     private ComponentInfoBuilder componentBuilder;
-    private CostingTemplate costingTemplate;
 
-    public DataCreationUtil(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, CostingTemplate costingTemplate, UserCredentials userCredentials) {
+    public DataCreationUtil(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, UserCredentials userCredentials) {
         this.componentName = componentName;
         this.scenarioName = scenarioName;
         this.processGroup = processGroup;
         this.resourceFile = resourceFile;
-        this.costingTemplate = costingTemplate;
         this.userCredentials = userCredentials;
 
         this.componentBuilder = ComponentInfoBuilder.builder()
@@ -40,7 +37,6 @@ public class DataCreationUtil {
             .scenarioName(this.scenarioName)
             .processGroup(this.processGroup)
             .resourceFile(this.resourceFile)
-            .costingTemplate(this.costingTemplate)
             .user(this.userCredentials)
             .build();
     }

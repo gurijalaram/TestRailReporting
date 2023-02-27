@@ -310,7 +310,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
+        return PropertiesContext.get("${env}.ci-connect.${customer}.plm_agent_id");
     }
 
     /**
@@ -429,7 +429,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getCustomerName() {
-        return PropertiesContext.get("${customer}.ci-connect.customer_name");
+        return PropertiesContext.get("${env}.ci-connect.${customer}.customer_name");
     }
 
     /**
