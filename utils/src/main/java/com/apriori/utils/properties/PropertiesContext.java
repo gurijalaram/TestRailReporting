@@ -28,7 +28,7 @@ public class PropertiesContext {
 
         propertiesContext = mergePropertiesIntoOneContext(globalPropertiesContext, envPropertiesContext, customersPropertiesContext);
 
-        ENVIRONMENT_NAME = propertiesContext.at("/env").asText();
+        ENVIRONMENT_NAME = get("env");
     }
 
     @SneakyThrows
