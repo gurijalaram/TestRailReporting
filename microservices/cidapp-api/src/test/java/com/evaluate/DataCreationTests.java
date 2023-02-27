@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.DataCreationUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -27,7 +28,8 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).searchCreateComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
+        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).searchCreateComponent();
 
         softAssertions = new SoftAssertions();
 
@@ -45,7 +47,8 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
+        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createCostComponent();
 
         softAssertions = new SoftAssertions();
 
@@ -62,7 +65,8 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup,resourceFile, currentUser).createPublishComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
+        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createPublishComponent();
 
         softAssertions = new SoftAssertions();
 
@@ -79,7 +83,8 @@ public class DataCreationTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup,resourceFile, currentUser).createCostPublishComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
+        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createCostPublishComponent();
 
         softAssertions = new SoftAssertions();
 
