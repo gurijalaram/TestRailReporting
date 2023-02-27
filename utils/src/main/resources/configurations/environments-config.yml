@@ -49,8 +49,8 @@ cis-qa:
   secret_key: PG9E795ML3P4
   user_identity: 1F7GAI5DLI2B
 
-  core_service_url_template: ${default.aws_region}.qa-test.apriori.net/
-  deployment_url_template: ${default.aws_region}-v${version}.qa-test.apriori.net/
+  core_service_url_template: ${aws_region}.qa-test.apriori.net/
+  deployment_url_template: ${aws_region}-v${version}.qa-test.apriori.net/
 
 ########################################################################################################################
 
