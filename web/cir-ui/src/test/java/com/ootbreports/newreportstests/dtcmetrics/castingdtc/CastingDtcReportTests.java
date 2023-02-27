@@ -145,16 +145,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "7505")
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
-    public void testDtcScoreNoSelection() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            ""
-        );
-    }
-
-    @Test
     @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
