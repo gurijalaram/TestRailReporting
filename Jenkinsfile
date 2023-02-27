@@ -202,7 +202,6 @@ Those marked with a * are required or the job will not run
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
             sh "docker system prune --force"
-            cleanWs()
         }
     }
 }
