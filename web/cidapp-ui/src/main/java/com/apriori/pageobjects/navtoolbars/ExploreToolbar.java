@@ -658,7 +658,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
+        File file = new File(new TestBase().getDownloadPath() + File.separator + reportName);
         log.info("download path is " + file.getAbsolutePath());
         log.debug("download path is " + file.getAbsoluteFile());
 
