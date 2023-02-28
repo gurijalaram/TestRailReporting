@@ -24,6 +24,6 @@ public enum CirApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.reports.ui_url") + "rest_v2/" + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("reports.ui_url") + "rest_v2/" + String.format(getEndpointString(), variables);
     }
 }
