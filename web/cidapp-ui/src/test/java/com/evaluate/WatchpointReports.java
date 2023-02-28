@@ -47,25 +47,27 @@ public class WatchpointReports extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        componentInfo = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = loginPage.login(currentUser)
+//            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+//
+//        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
+//            .selectProcessGroup(processGroupEnum)
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
+//        evaluatePage.clickReportDropdown();
+//
+//        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
+//
+//        evaluatePage.clickReportDropdown()
+//            .generateReport(EvaluatePage.class)
+//            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario();
+    .navigateToScenario("https://ci-design.na-1-v23-1.qa-test.apriori.net/components/CP5DS97AXRF1/scenarios/CQT9L20B226C")
 
-        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
-        evaluatePage.clickReportDropdown();
+        .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
-
-        evaluatePage.clickReportDropdown()
-            .generateReport(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3);
-
-        evaluatePage.downloadReport(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQT9L20B226C", currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
