@@ -1,8 +1,10 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PropertyValueMap {
     private int failuresWarningsCount;
     private double finalYield;
