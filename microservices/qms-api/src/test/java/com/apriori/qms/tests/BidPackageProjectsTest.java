@@ -9,10 +9,8 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
@@ -20,6 +18,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 
 public class BidPackageProjectsTest extends TestUtil {
 
@@ -44,10 +43,10 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
-            bidPackageResponse.getIdentity(),
-            BidPackageProjectResponse.class,
-            HttpStatus.SC_CREATED,
-            currentUser);
+                bidPackageResponse.getIdentity(),
+                BidPackageProjectResponse.class,
+                HttpStatus.SC_CREATED,
+                currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
@@ -66,7 +65,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
-            bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
+                bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
@@ -76,7 +75,7 @@ public class BidPackageProjectsTest extends TestUtil {
     public void updateBidPackageProject() {
         BidPackageProjectRequest projectRequest = QmsBidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers(), new GenerateStringUtil().getRandomNumbers());
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+                bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
@@ -127,10 +126,10 @@ public class BidPackageProjectsTest extends TestUtil {
         String projectDesc254 = RandomStringUtils.randomAlphabetic(254);
         BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(projectName254, projectDesc254);
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder,
-            bidPackageResponse.getIdentity(),
-            BidPackageProjectResponse.class,
-            HttpStatus.SC_CREATED,
-            currentUser);
+                bidPackageResponse.getIdentity(),
+                BidPackageProjectResponse.class,
+                HttpStatus.SC_CREATED,
+                currentUser);
 
         softAssertions.assertThat(bppResponse.getName()).isEqualTo(projectName254);
 
@@ -189,16 +188,13 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
-    @Test
+    @Disabled("TODO: Not automatable - Unable to get the non participating user (with limited automation users)")
     @TestRail(testCaseId = {"14627"})
-    @Description("Verify that the user can find a project by identity in which he participates")
+    @Description("Verify that the user gets an empty list if he is not participated in any project")
     public void getEmptyProjectsForParticipant() {
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
-
+        UserCredentials otherUser = UserUtil.getUser();
+        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, otherUser);
         softAssertions.assertThat(bProjectsResponse.getItems().size()).isEqualTo(0);
-
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
     @Test
@@ -216,7 +212,7 @@ public class BidPackageProjectsTest extends TestUtil {
         QmsBidPackageResources.deleteBidPackage(bidPackResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
         QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
-            bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+                bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackResponse.getIdentity(), bidPackResponse.getCustomerIdentity()));
 

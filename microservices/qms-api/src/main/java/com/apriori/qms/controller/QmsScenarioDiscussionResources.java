@@ -1,10 +1,6 @@
 package com.apriori.qms.controller;
 
-import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.qms.entity.request.scenariodiscussion.*;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
@@ -19,15 +15,10 @@ import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
-
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class QmsScenarioDiscussionResources {
