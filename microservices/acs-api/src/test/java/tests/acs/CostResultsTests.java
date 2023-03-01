@@ -78,6 +78,106 @@ public class CostResultsTests {
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
+    @Description("Get Root Cost Results after Costing Stock Machining")
+    public void testGetCostRootResultsStockMachining() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "bracket_basic.prt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        CostResultsRootItem response = acsResources.getCostResults(
+            costOutputs.getScenarioIterationKey(),
+            "ROOT", CostResultsRootItem.class).getResponseEntity();
+
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        //TODO: Assert on sustainability values once BA-2858 complete
+//        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
+//        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("ROOT");
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
+//        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21579")
+    @Description("Get Root Cost Results after Costing Plastic Molding")
+    public void testGetCostRootResultsPlasticMolding() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "M3CapScrew.CATPart",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        CostResultsRootItem response = acsResources.getCostResults(
+            costOutputs.getScenarioIterationKey(),
+            "ROOT", CostResultsRootItem.class).getResponseEntity();
+
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        //TODO: Assert on sustainability values once BA-2858 complete
+//        Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
+//        Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
+//        softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("ROOT");
+//        softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
+//        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21579")
     @Description("Get Process Cost Results after Costing Sheet Metal")
     public void testGetCostProcessResultsSheetMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();

@@ -1,10 +1,10 @@
 package com.apriori.acs.entity.response.acs.costresults;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 public class PropertyInfoMap {
+    private PropertyInfoMapItem numConcurrentParts;
     private PropertyInfoMapItem failuresWarningsCount;
     private PropertyInfoMapItem finalYield;
     private PropertyInfoMapLargerItem maintenanceDepartmentCost;
