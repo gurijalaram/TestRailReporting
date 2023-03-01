@@ -45,6 +45,6 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.base_url") + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("base_url") + String.format(getEndpointString(), variables);
     }
 }

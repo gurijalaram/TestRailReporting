@@ -43,6 +43,7 @@ public class WorkflowTests extends TestBase {
     public void testCreateEditAndDeleteWorkflow() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         // CREATE WORK FLOW
         WorkFlowFeatures workFlowFeatures = new CicLoginPage(driver)
             .login(currentUser)

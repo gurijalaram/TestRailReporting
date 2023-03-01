@@ -430,7 +430,7 @@ public class CustomerProfilePage extends CustomerWorkspacePage {
      * @return CustomerWorkspacePage
      */
     public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/profile";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/profile";
         driver.navigate().to(String.format(url, customer));
         return new CustomerWorkspacePage(driver);
     }
