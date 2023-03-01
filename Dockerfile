@@ -11,7 +11,7 @@ RUN keytool -import -trustcacerts -noprompt \
 
 # Copy source code
 COPY . .
-VOLUME . /data/docker/volumes
+VOLUME . /root
 
 # Build.
 FROM sdk as build
