@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("checkstyle:CommentsIndentation")
 @Slf4j
 public class AcsResources {
 
@@ -77,16 +78,16 @@ public class AcsResources {
             .init(AcsApiEnum.CREATE_MISSING_SCENARIO, MissingScenarioResponse.class)
             .headers(headers)
             .body(MissingScenarioInputs.builder()
-                    .baseName(Constants.PART_FILE_NAME)
-                    .configurationName(Constants.PART_CONFIG_NAME)
-                    .modelName(Constants.PART_MODEL_NAME)
-                    .scenarioName(new GenerateStringUtil().generateScenarioName())
-                    .scenarioType(Constants.PART_COMPONENT_TYPE)
-                    .missing(true)
-                    .publicItem(true)
-                    .createdBy(validUsername)
-                    .userId(validUsername)
-                    .build()
+                .baseName(Constants.PART_FILE_NAME)
+                .configurationName(Constants.PART_CONFIG_NAME)
+                .modelName(Constants.PART_MODEL_NAME)
+                .scenarioName(new GenerateStringUtil().generateScenarioName())
+                .scenarioType(Constants.PART_COMPONENT_TYPE)
+                .missing(true)
+                .publicItem(true)
+                .createdBy(validUsername)
+                .userId(validUsername)
+                .build()
             );
 
         return (MissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -135,7 +136,7 @@ public class AcsResources {
             );
 
         return (ScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
-                .build(requestEntity).get().getResponseEntity();
+            .build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -170,8 +171,8 @@ public class AcsResources {
      * @return instance of GetScenariosInfoResponse
      */
     public ResponseWrapper<ScenariosInfoResponse> getScenariosInformation(
-            ScenarioIterationKey scenarioIterationKeyOne,
-            ScenarioIterationKey scenarioIterationKeyTwo) {
+        ScenarioIterationKey scenarioIterationKeyOne,
+        ScenarioIterationKey scenarioIterationKeyTwo) {
         setupHeader();
 
         List<ScenarioIterationKey> listOfKeys = new ArrayList<>();
@@ -324,10 +325,9 @@ public class AcsResources {
     /**
      * Sets Tolerance Policy Defaults Values
      *
-     * @param totalRunoutOverride - double
-     * @param toleranceMode - String
+     * @param totalRunoutOverride       - double
+     * @param toleranceMode             - String
      * @param useCadToleranceThreshhold - boolean
-     *
      * @return GenericResourceCreatedResponse instance
      */
     public GenericResourceCreatedResponse setTolerancePolicyDefaults(double totalRunoutOverride,
@@ -339,10 +339,10 @@ public class AcsResources {
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(TolerancePolicyDefaultsInputs.builder()
-                    .totalRunoutOverride(totalRunoutOverride)
-                    .toleranceMode(toleranceMode)
-                    .useCadToleranceThreshhold(useCadToleranceThreshhold)
-                    .build()
+                .totalRunoutOverride(totalRunoutOverride)
+                .toleranceMode(toleranceMode)
+                .useCadToleranceThreshhold(useCadToleranceThreshhold)
+                .build()
             )
             .inlineVariables(validUsername);
 
@@ -394,13 +394,13 @@ public class AcsResources {
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(ProductionDefaultsInputs.builder()
-                    .material("Accura 10")
-                    .annualVolume("5500")
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .useVpeForAllProcesses(false)
-                    .batchSizeMode(false)
-                    .build()
+                .material("Accura 10")
+                .annualVolume("5500")
+                .productionLife(5.0)
+                .batchSize(458)
+                .useVpeForAllProcesses(false)
+                .batchSizeMode(false)
+                .build()
             ).inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -436,9 +436,9 @@ public class AcsResources {
             .headers(headers)
             .inlineVariables(validUsername);
 
-        ResponseWrapper<UserPreferencesResponse> response = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper res = (ResponseWrapper) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
-        return response.getResponseEntity();
+        return (UserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -618,6 +618,97 @@ public class AcsResources {
     }
 
     /**
+     * Get Cost Results
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param depth                - String - value to set
+     * @return GetCostResults instance
+     */
+
+    public <T> ResponseWrapper<T> getCostResults(ScenarioIterationKey scenarioIterationKey, String depth, Class<T> klass) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.COST_RESULTS, klass)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    depth, StandardCharsets.UTF_8.toString())
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+//    /**
+//     * Get Cost Results - Root
+//     *
+//     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+//     * @param depth                - String - value to set
+//     * @return GetCostResults instance
+//     */
+//
+//    public CostResultsRootResponse getCostResultsRoot(ScenarioIterationKey scenarioIterationKey, String depth) {
+//        setupHeader();
+//
+//        final RequestEntity requestEntity;
+//        try {
+//            requestEntity = RequestEntityUtil
+//                .init(AcsApiEnum.COST_RESULTS, CostResultsRootResponse.class)
+//                .headers(headers)
+//                .inlineVariables(
+//                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+//                    scenarioIterationKey.getScenarioKey().getTypeName(),
+//                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+//                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+//                    scenarioIterationKey.getIteration().toString(),
+//                    depth, StandardCharsets.UTF_8.toString())
+//                .urlEncodingEnabled(false);
+//        } catch (UnsupportedEncodingException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return (CostResultsRootResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+//    }
+//
+//    /**
+//     * Get Cost Results - GCD
+//     *
+//     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+//     * @param depth                - String - value to set
+//     * @return GetCostResults instance
+//     */
+//
+//    public CostResultsGcdResponse getCostResultsGcd(ScenarioIterationKey scenarioIterationKey, String depth) {
+//        setupHeader();
+//
+//        final RequestEntity requestEntity;
+//        try {
+//            requestEntity = RequestEntityUtil
+//                .init(AcsApiEnum.COST_RESULTS, CostResultsGcdResponse.class)
+//                .headers(headers)
+//                .inlineVariables(
+//                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+//                    scenarioIterationKey.getScenarioKey().getTypeName(),
+//                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+//                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+//                    scenarioIterationKey.getIteration().toString(),
+//                    depth, StandardCharsets.UTF_8.toString())
+//                .urlEncodingEnabled(false);
+//        } catch (UnsupportedEncodingException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return (CostResultsGcdResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+//     }
+
+    /**
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
@@ -659,9 +750,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
-                .headers(headers)
-                .inlineVariables(processGroupName);
+            .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
+            .headers(headers)
+            .inlineVariables(processGroupName);
 
         return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
