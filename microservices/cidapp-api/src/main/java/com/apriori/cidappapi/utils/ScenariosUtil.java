@@ -18,7 +18,6 @@ import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -415,6 +414,22 @@ public class ScenariosUtil {
     }
 
     /**
+     * Updates costing template for a subcomponent
+     *
+     * @param componentInfo   - the component info
+     * @param costingTemplate - the costing template
+     * @param subcomponents   - the subcomponents
+     * @return current object
+     */
+    public ScenariosUtil setSubcomponentCostingTemplate(ComponentInfoBuilder componentInfo, CostingTemplate costingTemplate, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent))
+            .findFirst()
+            .get()
+            .setCostingTemplate(costingTemplate));
+        return this;
+    }
+
+    /**
      * Calls an api with the GET verb
      *
      * @param userCredentials - the user credentials
@@ -787,9 +802,9 @@ public class ScenariosUtil {
      * @param inlineVariables - usually component/scenario identity
      * @return response object
      */
-    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+    public <T> ResponseWrapper<T> getRoutings(UserCredentials currentUser, Class<T> klass, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, klass)
                 .inlineVariables(inlineVariables)
                 .token(currentUser.getToken());
 

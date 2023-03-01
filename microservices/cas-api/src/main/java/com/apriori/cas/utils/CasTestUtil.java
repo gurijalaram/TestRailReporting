@@ -595,10 +595,10 @@ public class CasTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessControl",
                 AccessControl.builder()
-                    .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
-                    .applicationIdentity(PropertiesContext.get("${env}.cds.apriori_cloud_home_identity"))
-                    .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
-                    .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
+                    .customerIdentity(PropertiesContext.get("customer_identity"))
+                    .applicationIdentity(PropertiesContext.get("cds.apriori_cloud_home_identity"))
+                    .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
+                    .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .build());
 
         return HTTPRequest.build(requestEntity).post();

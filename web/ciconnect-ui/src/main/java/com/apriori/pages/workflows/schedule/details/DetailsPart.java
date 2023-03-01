@@ -50,7 +50,7 @@ public class DetailsPart extends CICBasePage {
     @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-399']")
     private WebElement connectorComponentDropDown;
 
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_checkbox-149']")
+    @FindBy(css = "input[id^=root_pagemashupcontainer-1_navigation-][id$=-popup_checkbox-149-input]")
     private WebElement checkboxEnabled;
 
     @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_button-92'] > button")
@@ -201,11 +201,17 @@ public class DetailsPart extends CICBasePage {
      *
      */
     public DetailsPart selectEnabledCheckbox(String checkboxState) {
-        if ((checkboxEnabled.isSelected() && checkboxState.toString().equals("on")) ||
-            (!checkboxEnabled.isSelected() && checkboxState.toString().equals("off"))) {
-            pageUtils.waitForElementAndClick(checkboxEnabled);
+        if (checkboxState.toString().equals("on")) {
+            if (!checkboxEnabled.isSelected()) {
+                pageUtils.waitForElementAndClick(checkboxEnabled);
+            }
         }
 
+        if (checkboxState.toString().equals("off")) {
+            if (checkboxEnabled.isSelected()) {
+                pageUtils.waitForElementAndClick(checkboxEnabled);
+            }
+        }
         return this;
     }
 
@@ -436,7 +442,7 @@ public class DetailsPart extends CICBasePage {
     private void scheduleWeekly(WorkflowSchedule schedule) {
         pageUtils.waitForElementAndClick(weeklyTab);
         WebElement dayOfWeek =
-            driver.findElement(By.cssSelector(getDayOfWeekCss(schedule.getWeekDays().toString())));
+            driver.findElement(By.cssSelector(getDayOfWeekCss(schedule.getWeekDay().toString())));
         pageUtils.waitForElementAndClick(dayOfWeek);
         pageUtils.selectDropdownOption(weeklyMinutes, schedule.getStartMinutes());
         pageUtils.selectDropdownOption(weeklyHours, schedule.getStartHour());
@@ -484,10 +490,7 @@ public class DetailsPart extends CICBasePage {
             yearInput.clear();
             yearInput.sendKeys(schedule.getDayOfMonth().toString());
         } else {
-            // The function fails here for some reason, even with using wait for and click
-            pageUtils.waitFor(2000);
             pageUtils.waitForElementAndClick(everyYear);
-            pageUtils.waitForElementAndClick(yearInput);
             pageUtils.selectDropdownOption(dayOrderInYear, schedule.getMonthlyOccurance());
             pageUtils.selectDropdownOption(dayWeekForYear, schedule.getWeekDay());
             pageUtils.selectDropdownOption(monthsOfYear2, schedule.getMonth());

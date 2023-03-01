@@ -21,8 +21,8 @@ public enum FMSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.fms.api_url")
+        return PropertiesContext.get("fms.api_url")
             .concat(String.format(getEndpointString(), variables))
-            .concat("?key=" + PropertiesContext.get("${env}.secret_key"));
+            .concat("?key=" + PropertiesContext.get("secret_key"));
     }
 }

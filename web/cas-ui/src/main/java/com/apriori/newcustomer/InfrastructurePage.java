@@ -100,7 +100,7 @@ public class InfrastructurePage extends CustomerWorkspacePage {
      * @return InfrastructurePage
      */
     public static InfrastructurePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/infrastructure";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/infrastructure";
         driver.navigate().to(String.format(url, customer));
         return new InfrastructurePage(driver);
     }
