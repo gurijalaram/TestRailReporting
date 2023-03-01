@@ -79,7 +79,7 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("sds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
     }
 
 }

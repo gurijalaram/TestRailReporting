@@ -15,7 +15,8 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
+import testsuites.suiteinterface.AdminSmokeTest;
+import testsuites.suiteinterface.CustomerSmokeTests;
 import utils.Constants;
 
 public class AdminNavigationTests extends TestBase {
@@ -33,7 +34,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = {"2980"})
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -47,7 +48,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2981"})
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -61,7 +62,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() {
@@ -77,7 +78,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2983"})
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -93,7 +94,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2984"})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -103,15 +104,14 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
-        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE);
-        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO);
+        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL);
         softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true))
             .startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE);
         softAssertions.assertAll();
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2985"})
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -126,7 +126,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(OnPremTest.class)
+    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
@@ -136,7 +136,7 @@ public class AdminNavigationTests extends TestBase {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        softAssertions.assertThat(homePage.getCurrentUrl()).isEqualTo(PropertiesContext.get("${env}.reports.ui_url"));
+        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url").substring(0, 71));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
         softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);

@@ -38,7 +38,7 @@ public class JasperApiAuthenticationUtil extends TestBase {
         skipSslCheck();
 
         String usernamePassword = UserUtil.getUserOnPrem().getUsername();
-        String urlLink = PropertiesContext.get("${env}.reports.ui_url")
+        String urlLink = PropertiesContext.get("reports.ui_url")
             .concat(
                 String.format(
                     "rest_v2/login?j_username=%s&j_password=%s",

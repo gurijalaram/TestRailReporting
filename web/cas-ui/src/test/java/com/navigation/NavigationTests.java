@@ -86,7 +86,7 @@ public class NavigationTests extends TestBase {
     }
 
     private void validateOnPageURL(SoftAssertions soft, String pageURL) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s";
         String expected = String.format("%s%s", String.format(url, customerID), pageURL);
         soft.assertThat(driver.getCurrentUrl())
             .overridingErrorMessage("Current clicked through page %s not expected page %s",

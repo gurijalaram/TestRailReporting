@@ -41,7 +41,7 @@ public class TableUtils {
      */
     public WebElement findTableItemByConnector(WebElement table) {
         pageUtils.waitForElementToBeClickable(table);
-        String connector = PropertiesContext.get("${env}.ci-connect.default_connector");
+        String connector = PropertiesContext.get("ci-connect.default_connector");
         List<WebElement> rows =
             table.findElements(By.tagName("tr"))
                 .stream()

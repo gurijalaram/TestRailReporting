@@ -77,7 +77,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
 
-        url = application == null || application.isEmpty() ? PropertiesContext.get("${env}.cloud.ui_url") : PropertiesContext.get("${env}." + application + ".ui_url");
+        url = application == null || application.isEmpty() ? PropertiesContext.get("cloud.ui_url") : PropertiesContext.get("" + application + ".ui_url");
 
         driver.get(url);
 
