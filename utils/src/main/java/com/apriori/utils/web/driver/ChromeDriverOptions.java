@@ -51,9 +51,6 @@ public class ChromeDriverOptions {
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--disable-dev-shm-usage");
 
-            if (System.getProperty("mode").equalsIgnoreCase(TestMode.GRID.value())) {
-                chromeOptions.addArguments("--headless");
-            }
         }
 
         headless = !StringUtils.isEmpty(System.getProperty("headless")) && Boolean.parseBoolean(System.getProperty("headless"));
