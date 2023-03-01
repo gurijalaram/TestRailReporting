@@ -33,7 +33,7 @@ public class CustomerResources {
         request.setMinCadToleranceThreshold(new Random().nextDouble());
         RequestEntity requestEntity = RequestEntityUtil
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(request)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).patch();
@@ -48,7 +48,7 @@ public class CustomerResources {
     public static ResponseWrapper<UserPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
         RequestEntity requestEntity = RequestEntityUtil
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(patchCostingPreferenceRequest);
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -62,7 +62,7 @@ public class CustomerResources {
      */
     public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
         return RequestEntityUtil.init(endPoint, klass)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .inlineVariables(PropertiesContext.get("customer_identity"))
             .expectedResponseCode(HttpStatus.SC_OK);
     }
 }

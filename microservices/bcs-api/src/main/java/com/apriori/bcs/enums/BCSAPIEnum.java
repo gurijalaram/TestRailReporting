@@ -52,7 +52,7 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
 
-        return PropertiesContext.get("${env}.bcs.api_url") + "customers/" +
+        return PropertiesContext.get("bcs.api_url") + "customers/" +
             String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 
@@ -63,6 +63,6 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
             querySymbol = "&";
         }
 
-        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
+        return querySymbol + "key=" + PropertiesContext.get("secret_key");
     }
 }
