@@ -2,9 +2,11 @@ package com.apriori.cirapi.utils;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.enums.CirApiEnum;
+import com.apriori.cirapi.entity.enums.ReportChartType;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
+import com.apriori.cirapi.entity.response.ChartDataPointProperty;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.entity.response.ReportStatusResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -16,17 +18,23 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 public class JasperReportUtil {
 
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     private String jasperSessionValue = "JSESSIONID=%s";
+
 
     public static JasperReportUtil init(final String jasperSessionId) {
         return new JasperReportUtil(jasperSessionId);
@@ -110,16 +118,59 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private List<ChartDataPoint> parseJsonResponse(String jsonResponse) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final JsonNode dataNode = OBJECT_MAPPER.readTree(jsonResponse);
+        final String chartTypeToParse = dataNode.findValue("charttype").asText();
 
-        JsonNode dataNode = objectMapper.readTree(jsonResponse)
-            .findValue("series");
+        switch (ReportChartType.get(chartTypeToParse)) {
+            case BUBBLE_SCATTER:
+                return parseBubbleChart(dataNode);
+            case STACKED_BAR:
+                return parseStackedBar(dataNode);
+            default:
+                throw new IllegalArgumentException("Report Chart type is not supported by JSON parser. Chart type " + chartTypeToParse);
+        }
+    }
+
+    @SneakyThrows
+    private List<ChartDataPoint> parseBubbleChart(JsonNode dataNode) {
+
+        dataNode = dataNode.findValue("series");
 
         if (dataNode != null) {
             dataNode = dataNode.findValue("data");
         }
 
-        return dataNode != null ? objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {}).readValue(dataNode) : null;
+        return dataNode != null ? OBJECT_MAPPER.readerFor(new TypeReference<List<ChartDataPoint>>() {
+        }).readValue(dataNode) : null;
+    }
+
+    @SneakyThrows
+    private List<ChartDataPoint> parseStackedBar(JsonNode dataNode) {
+
+        List<ChartDataPoint> mappedChartDataPoints = new ArrayList<>();
+
+        List<JsonNode> partNames = dataNode.findValues("xCategories");
+        List<JsonNode> chartValues = dataNode.findValues("series");
+
+        for (int i = 0; i < partNames.size(); i++) {
+            ChartDataPoint chartDataPoint = new ChartDataPoint();
+            List<ChartDataPointProperty> chartDataPointProperties = new ArrayList<>();
+
+            for (JsonNode chart : chartValues) {
+                ChartDataPointProperty chartDataPointProperty = new ChartDataPointProperty();
+
+                chartDataPointProperty.setProperty(chart.findValue("name").asText());
+                chartDataPointProperty.setValue(chart.findValues("data").get(i).findValue("y").asText());
+
+                chartDataPointProperties.add(chartDataPointProperty);
+            }
+
+            chartDataPoint.setPartName(partNames.get(i).asText());
+            chartDataPoint.setProperties(chartDataPointProperties);
+            mappedChartDataPoints.add(chartDataPoint);
+        }
+
+        return mappedChartDataPoints;
     }
 
     private HashMap<String, String> initHeadersWithJSession() {
