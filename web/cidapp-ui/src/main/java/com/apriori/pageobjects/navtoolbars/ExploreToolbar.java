@@ -652,7 +652,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return Long
      */
     public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
-        pageUtils.waitFor(20000);
+        pageUtils.waitFor(2000);
 
         String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
             .getHeaders()
