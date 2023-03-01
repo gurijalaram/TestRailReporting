@@ -60,4 +60,5 @@ public class ComponentIteration {
     private List<ScenarioDesignIssues> scenarioDesignIssues;
     private List<ScenarioDesignNotices> scenarioDesignNotices;
     private Boolean hasCustomImage;
+    private Boolean hasWatchpointReport;
 }

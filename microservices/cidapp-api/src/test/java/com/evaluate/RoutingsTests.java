@@ -2,16 +2,23 @@ package com.evaluate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.DataCreationUtil;
+import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.entity.request.ErrorRequestResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -24,6 +31,8 @@ import java.io.File;
 public class RoutingsTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @Test
     @Description("Test routings")
@@ -37,7 +46,7 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -53,32 +62,130 @@ public class RoutingsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"15821"})
-    @Description("Verify save routing with costing template through API")
-    public void testRecostWithAlternateRouting() {
+    @TestRail(testCaseId = {"14983"})
+    @Description("Verify Get available routings API does not return routings when scenario is in NOT_COSTED status")
+    public void testAvailableRoutingForUncostedPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
         final String componentName = "sheet_plastic";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        ErrorRequestResponse errorRequestResponse = scenariosUtil.getRoutings(currentUser, ErrorRequestResponse.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioItem.getScenarioIdentity()).getResponseEntity();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        String expectedMessage = String.format("Scenario '%s' was not costed, or was costed with invalid cost inputs, available routings not found", scenarioName);
 
-        softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
-
-        routings.getItems().forEach(routing -> {
-            softAssertions.assertThat(routing.getDigitalFactoryName()).isNotEmpty();
-            softAssertions.assertThat(routing.getDisplayName()).contains("[CTL]/Laser/[Bend]");
-            softAssertions.assertThat(routing.getName()).isNotEmpty();
-            softAssertions.assertThat(routing.getProcessGroupName()).isNotEmpty();
-        });
+        softAssertions.assertThat(errorRequestResponse.getMessage()).isEqualTo(expectedMessage);
+        softAssertions.assertThat(errorRequestResponse.getStatus()).isEqualTo("409");
 
         softAssertions.assertAll();
+    }
 
+    @Test
+    @TestRail(testCaseId = {"14982"})
+    @Description("Verify Get latest iteration API does not return scenarioRoutings upon costing to COSTING_FAILED")
+    public void testLatestIterationDoesNotReturnScenarioRoutingsForCostingFailedState() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_ROLLFORMING;
+        final String componentName = "Casting";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .costingTemplate(costingTemplate)
+            .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
+
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COSTING_FAILED.name());
+
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
+
+        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14981"})
+    @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_INCOMPLETE")
+    public void testLatestIterationReturnsScenarioRoutingsForCostIncompleteState() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+        final String componentName = "DTCCastingIssues";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .costingTemplate(costingTemplate)
+            .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
+
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_INCOMPLETE.name());
+
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
+
+        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14961"})
+    @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_COMPLETE")
+    public void testLatestIterationReturnsScenarioRoutingsForCostCompleteState() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
+        final String componentName = "5d51749fig01";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .costingTemplate(costingTemplate)
+            .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
+
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
+
+        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -91,9 +198,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -105,7 +213,7 @@ public class RoutingsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"14980"})
+    @TestRail(testCaseId = {"14979"})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Plastic")
     public void testAvailableRoutingForSheetPlastic() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
@@ -114,9 +222,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -136,9 +245,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
@@ -154,9 +264,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -175,9 +286,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
@@ -193,9 +305,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -215,9 +328,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -239,9 +353,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -260,9 +375,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -281,9 +397,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
@@ -299,9 +416,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -320,9 +438,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -341,9 +460,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -362,9 +482,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -383,9 +504,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -404,9 +526,10 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
@@ -420,14 +543,15 @@ public class RoutingsTests {
     @Description("Verify Get available routings API returns appropriate routings for Bar & Tube Fab")
     public void testAvailableRoutingForBarAndTubeFab() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
-        final String componentName = "CurvedWall";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        final String componentName = "B&T-LOW-001";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
@@ -443,13 +567,12 @@ public class RoutingsTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, currentUser).createCostComponent();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
-
-
 }
