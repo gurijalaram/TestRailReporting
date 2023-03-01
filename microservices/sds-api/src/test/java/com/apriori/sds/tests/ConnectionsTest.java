@@ -117,7 +117,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static ConnectionRequest initDefaultConnectionRequest() {
         return ConnectionRequest.builder()
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("customer_identity"))
             .deploymentIdentity("H337GKD0LA0N")
             .installationIdentity("5DF1B4HI67C6")
             .build();
