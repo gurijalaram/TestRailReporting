@@ -50,7 +50,7 @@ public class CdsAccessAuthorizationsTests {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         emailPattern = "\\S+@".concat(customerName);
-        aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
+        aPStaffIdentity = PropertiesContext.get("user_identity");
 
         customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();

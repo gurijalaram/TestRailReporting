@@ -18,7 +18,6 @@ import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -776,9 +775,9 @@ public class ScenariosUtil {
      * @param inlineVariables - usually component/scenario identity
      * @return response object
      */
-    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+    public <T> ResponseWrapper<T> getRoutings(UserCredentials currentUser, Class<T> klass, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, klass)
                 .inlineVariables(inlineVariables)
                 .token(currentUser.getToken());
 

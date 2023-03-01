@@ -75,7 +75,7 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5959"})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        String aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
+        String aPStaffIdentity = PropertiesContext.get("user_identity");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
@@ -86,7 +86,7 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5965"})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
-        String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity02");
+        String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity02");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
@@ -115,7 +115,7 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5964"})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity03");
+        String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity03");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
