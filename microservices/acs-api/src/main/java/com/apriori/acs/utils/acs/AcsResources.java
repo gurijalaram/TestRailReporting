@@ -436,9 +436,9 @@ public class AcsResources {
             .headers(headers)
             .inlineVariables(validUsername);
 
-        ResponseWrapper res = (ResponseWrapper)HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<UserPreferencesResponse> response = HTTPRequest.build(requestEntity).get();
 
-        return (UserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return response.getResponseEntity();
     }
 
     /**
