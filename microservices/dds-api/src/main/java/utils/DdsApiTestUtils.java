@@ -48,7 +48,7 @@ public class DdsApiTestUtils {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionResponse.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
+            .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(setUpHeader())
             .body(discussionsRequest)
             .apUserContext(userContext)
@@ -66,7 +66,7 @@ public class DdsApiTestUtils {
      */
     public static ResponseWrapper<String> deleteDiscussion(String discussionIdentity, String userContext) {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION, null)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
+            .inlineVariables(PropertiesContext.get("customer_identity"), discussionIdentity)
             .headers(setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
@@ -87,7 +87,7 @@ public class DdsApiTestUtils {
     public static <T> ResponseWrapper<T> createComment(CommentsRequest commentsRequestBuilder, String discussionIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, responseClass)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
+            .inlineVariables(PropertiesContext.get("customer_identity"), discussionIdentity)
             .body(commentsRequestBuilder)
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -105,7 +105,7 @@ public class DdsApiTestUtils {
      */
     public static ResponseWrapper<String> deleteComment(String discussionIdentity, String commentIdentity, String userContext) {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, null)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
+            .inlineVariables(PropertiesContext.get("customer_identity"), discussionIdentity, commentIdentity)
             .headers(setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);

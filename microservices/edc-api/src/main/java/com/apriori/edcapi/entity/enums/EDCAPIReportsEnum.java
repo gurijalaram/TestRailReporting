@@ -1,16 +1,16 @@
-package com.apriori.utils.enums;
+package com.apriori.edcapi.entity.enums;
 
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum TokenEnum implements ExternalEndpointEnum {
+public enum EDCAPIReportsEnum implements ExternalEndpointEnum {
 
-    POST_TOKEN("tokens"),
-    PATCH_USER_PASSWORD_BY_USERNAME("users/%s/password");
+    //Reports
+    REPORTS("reports");
 
     private final String endpoint;
 
-    TokenEnum(String endpoint) {
+    EDCAPIReportsEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 
@@ -21,6 +21,6 @@ public enum TokenEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("ats.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
     }
 }

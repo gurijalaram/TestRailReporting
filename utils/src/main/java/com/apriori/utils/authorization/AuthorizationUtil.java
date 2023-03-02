@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationUtil {
-    private String username = PropertiesContext.get("${env}.ats.token_username");
-    private String email = PropertiesContext.get("${env}.ats.token_email");
-    private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
+    private String username = PropertiesContext.get("ats.token_username");
+    private String email = PropertiesContext.get("ats.token_email");
+    private String issuer = PropertiesContext.get("ats.token_issuer");
     private String subject = PropertiesContext.get("${customer}.token_subject");
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -84,8 +84,8 @@ public class AuthorizationUtil {
             .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("${env}.customer_identity"),
-                PropertiesContext.get("${env}.secret_key")
+                PropertiesContext.get("customer_identity"),
+                PropertiesContext.get("secret_key")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -113,13 +113,13 @@ public class AuthorizationUtil {
      * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        String cloudContext = PropertiesContext.get("${env}.customer_identity");
+        String cloudContext = PropertiesContext.get("customer_identity");
         String installationName;
 
         try {
-            installationName = PropertiesContext.get("${env}.installation_name");
+            installationName = PropertiesContext.get("installation_name");
         } catch (IllegalArgumentException e) {
-            log.info("${env}.installation_name property not present, generate it by code value");
+            log.info("installation_name property not present, generate it by code value");
 
             installationName = String.format("core-na-1 - %s production deployment",
                 StringUtils.substringBefore(PropertiesContext.get("version"), "-")
@@ -127,7 +127,7 @@ public class AuthorizationUtil {
         }
 
 
-        String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
+        String applicationNameFromConfig = PropertiesContext.get("application_name");
 
         DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 

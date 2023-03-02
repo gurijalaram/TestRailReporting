@@ -22,8 +22,8 @@ import org.junit.BeforeClass;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId =  PropertiesContext.get("${env}.customer_identity");
-    protected static final String userId = PropertiesContext.get("${env}.user_identity");
+    protected static final String customerId =  PropertiesContext.get("customer_identity");
+    protected static final String userId = PropertiesContext.get("user_identity");
     protected static UserCredentials testingUser;
 
 
