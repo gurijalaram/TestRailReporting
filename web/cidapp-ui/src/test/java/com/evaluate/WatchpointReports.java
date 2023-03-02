@@ -46,7 +46,7 @@ public class WatchpointReports extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .navigateToScenario("https://ci-design.na-1-v23-1.qa-test.apriori.net/components/CP5DS97AXRF1/scenarios/CQT9L20B226C")
+            .navigateToScenario("https://ci-design.na-1-v23-1.qa-test.apriori.net/components/CP5DS97AXRF1/scenarios/CQU89CXFKDGC")
             /*.uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(componentInfo)
@@ -64,7 +64,7 @@ public class WatchpointReports extends TestBase {
 
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQT9L20B226C", currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQU89CXFKDGC", currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
