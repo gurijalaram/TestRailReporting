@@ -657,7 +657,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.home") + File.separator + "testDownloads" + File.separator + reportName);
+        File file = new File("\\docker" + File.separator + "testDownloads" + File.separator + reportName);
 
         if (file.exists()) {
             file.deleteOnExit();
