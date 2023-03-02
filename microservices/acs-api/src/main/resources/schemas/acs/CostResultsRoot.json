@@ -930,6 +930,9 @@
                 "height": {
                   "type": "number"
                 },
+                "numCurvedWall": {
+                  "type": "integer"
+                },
                 "margin": {
                   "type": "number"
                 },
@@ -938,6 +941,9 @@
                 },
                 "materialStockFormName": {
                   "type": "string"
+                },
+                "partWidth": {
+                  "type": "number"
                 },
                 "utilization": {
                   "type": "number"
@@ -969,6 +975,9 @@
                 "materialStockName": {
                   "type": "string"
                 },
+                "numSharpEdge": {
+                  "type": "integer"
+                },
                 "calculatedEnergyConsumption": {
                   "type": "number"
                 },
@@ -990,6 +999,9 @@
                 "totalProductionVolume": {
                   "type": "number"
                 },
+                "numKeyway": {
+                  "type": "integer"
+                },
                 "cadSerLength": {
                   "type": "number"
                 },
@@ -1008,6 +1020,9 @@
                 "sgaCost": {
                   "type": "number"
                 },
+                "numPlanarFace": {
+                  "type": "integer"
+                },
                 "amortizedInvestment": {
                   "type": "number"
                 },
@@ -1024,6 +1039,9 @@
                   "type": "string"
                 },
                 "notSupportedGcdsCount": {
+                  "type": "integer"
+                },
+                "numRing": {
                   "type": "integer"
                 },
                 "otherProcessCarbon": {
@@ -1044,10 +1062,19 @@
                 "stockPropertythickness": {
                   "type": "number"
                 },
+                "partMinThickness": {
+                  "type": "number"
+                },
                 "elapsedTime": {
                   "type": "number"
                 },
+                "numRingedHole": {
+                  "type": "integer"
+                },
                 "annualCost": {
+                  "type": "number"
+                },
+                "surfaceArea": {
                   "type": "number"
                 },
                 "utilizationWithAddendum": {
@@ -1056,10 +1083,16 @@
                 "batchCost": {
                   "type": "number"
                 },
+                "numVoid": {
+                  "type": "integer"
+                },
                 "failedGcdsCount": {
                   "type": "integer"
                 },
                 "logisticsCost": {
+                  "type": "number"
+                },
+                "isDrawDirectionY": {
                   "type": "number"
                 },
                 "productionLife": {
@@ -1072,6 +1105,9 @@
                   "type": "number"
                 },
                 "batchCarbon": {
+                  "type": "number"
+                },
+                "partLength": {
                   "type": "number"
                 },
                 "electricityProcessCarbon": {
@@ -1140,17 +1176,56 @@
                 "fixtureCostPerPart": {
                   "type": "number"
                 },
+                "materialUnitCost": {
+                  "type": "number"
+                },
+                "numEdge": {
+                  "type": "integer"
+                },
+                "partAvgThickness": {
+                  "type": "number"
+                },
+                "numSimpleHole": {
+                  "type": "integer"
+                },
+                "numCurvedSurface": {
+                  "type": "integer"
+                },
+                "partMaxThickness": {
+                  "type": "number"
+                },
                 "processCarbon": {
                   "type": "number"
+                },
+                "numSlideBundle": {
+                  "type": "integer"
+                },
+                "partMass": {
+                  "type": "number"
+                },
+                "materialDensity": {
+                  "type": "number"
+                },
+                "partVolume": {
+                  "type": "number"
+                },
+                "numComboVoid": {
+                  "type": "integer"
                 },
                 "stockPropertyinsideDia": {
                   "type": "number"
                 },
-                "materialUnitCost": {
+                "partHeight": {
                   "type": "number"
+                },
+                "numMultiStepHole": {
+                  "type": "integer"
                 },
                 "lifetimeCarbon": {
                   "type": "number"
+                },
+                "numAxiGroove": {
+                  "type": "integer"
                 },
                 "processStepEnergyConsumption": {
                   "type": "number"
@@ -1251,8 +1326,8 @@
                 "numOperators",
                 "dfmRiskScore",
                 "fixtureCostPerPart",
-                "processCarbon",
                 "materialUnitCost",
+                "processCarbon",
                 "lifetimeCarbon",
                 "processStepEnergyConsumption",
                 "length",
