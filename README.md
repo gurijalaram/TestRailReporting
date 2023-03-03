@@ -34,51 +34,51 @@
 - to build without tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
 
  - ### You will need this for the very first time:
-    - Open Terminal to root `build` directory
+    - Open Terminal to project root directory
     - Right click `build.gradle` and `Import Gradle project`
 
  - ### Building all modules (include special modules):
-    - Open Terminal to root `build` directory
+    - Open Terminal to project root directory
     - Run `gradle clean build -Dall`
 
 - ### Building specific module:
-    - Open Terminal to root `build` directory
+    - Open Terminal to project root directory
     - Run `gradle :<module name>:<build command>` e.g. `gradle :web:cia:build`
  
 - ### Building specific configuration (set of modules)
-    - Open Terminal to root `build` directory
+    - Open Terminal to project root directory
     - Run `gradle -Dconf=<configuration name> clean build`
     
     ### Possible configurations
     - #### All web modules
-         - Open Terminal to root `build` directory
+         - Open Terminal to project root directory
          - Run `gradle -Dconf=web clean build`
             
     - #### All microservices (new approach)
-        - Open Terminal to root `build` directory
+        - Open Terminal to project root directory
         - Run `gradle -Dconf=microservices clean build`
     
     - #### All microservices (old approach) 
-        - Open Terminal to root `build` directory
+        - Open Terminal to project root directory
         - Run `gradle --continue :microservices:ats:build :microservices:cds:build :microservices:bcs:build :microservices:edc:build :microservices:fms:build`
      
 
 ## Run Gradle tests with JVM args
-1. Open Terminal to root `build` directory
+1. Open Terminal to project root directory
 2. Run `gradle clean :cid:test --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite"`
 3. To pass in JVM args `gradle clean :cid:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite" -DthreadCounts=3 -Denv=cid-te -Dcsv=nameOfCsv.csv`
 
 ## How to run single suite
-1. Open Terminal to root `build` directory
+1. Open Terminal to project root directory
 2. Run `gradle clean :cid:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :cid:test --tests "evaluate.designguidance.failures.failedCostingCount"`
 
 ## How to run multiple suites
-1. Open Terminal to root `build` directory
+1. Open Terminal to project root directory
 Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite" --tests "testsuites.CIDSmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
-2. Open Terminal to root `build` directory
+2. Open Terminal to project root directory
 3. Run `gradle clean fatjar`
     - if Gradle is not installed use `gradlew`
     - `clean` deletes existing `build` folder in each module
