@@ -657,7 +657,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.dir") + File.separator + "testDownloads" + File.separator + reportName);
+        File file = new File(System.getProperty("user.home") + File.separator + "Downloads" + File.separator + reportName);
 
         System.out.println("user dir is -> " + System.getProperty("user.dir"));
         System.out.println("user home is -> " + System.getProperty("user.home"));
