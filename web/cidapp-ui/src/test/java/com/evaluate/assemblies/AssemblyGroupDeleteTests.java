@@ -103,7 +103,7 @@ public class AssemblyGroupDeleteTests extends TestBase {
             .clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        subComponentNames.forEach(comp ->
+        subComponentNamesToDelete.forEach(comp ->
             softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(comp)).isEqualTo(true));
 
         softAssertions.assertAll();
