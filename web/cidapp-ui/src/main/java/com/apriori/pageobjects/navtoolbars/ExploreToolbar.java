@@ -662,6 +662,8 @@ public class ExploreToolbar extends MainNavBar {
 
 //        System.out.println("file exist? " + file.exists());
 //        System.out.println("file exist? " + files.exists());
+        System.out.println("file is located at -> " + file.getAbsolutePath());
+        System.out.println("file is located at -> " + file.getPath());
 
         System.out.println("user dir is -> " + System.getProperty("user.dir"));
         System.out.println("user home is -> " + System.getProperty("user.home"));
