@@ -658,6 +658,10 @@ public class ExploreToolbar extends MainNavBar {
             .getValue().split("=")[1].replace("\"", "");
 
         File file = new File(System.getProperty("user.home") + File.separator + "Downloads" + File.separator + reportName);
+        File files = new File(System.getProperty("user.dir") + File.separator + "Downloads" + File.separator + reportName);
+
+        System.out.println("file exist? " + file.exists());
+        System.out.println("file exist? " + files.exists());
 
         System.out.println("user dir is -> " + System.getProperty("user.dir"));
         System.out.println("user home is -> " + System.getProperty("user.home"));
