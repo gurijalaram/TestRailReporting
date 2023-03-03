@@ -59,6 +59,9 @@ public class AssemblyGroupDeleteTests extends TestBase {
         final List<String> subComponentNames = Arrays.asList(
             arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder, blob);
 
+        final List<String> subComponentNamesToDelete = Arrays.asList(
+            arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder);
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             processGroupEnum,
@@ -100,16 +103,8 @@ public class AssemblyGroupDeleteTests extends TestBase {
             .clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(arc)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(cube50)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(ellipse)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(octagon)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(cube75)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(hexagon)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(cube100)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(slot)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(cuboid)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(cylinder)).isEqualTo(true);
+        subComponentNamesToDelete.forEach( component ->
+            softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(component)).isEqualTo(true));
 
         softAssertions.assertAll();
     }

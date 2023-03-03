@@ -521,6 +521,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @param subcomponents - the list of subcomponents
      * @return current object
      */
+    // TODO: change this method so that it takes in an array of Strings
     public ComponentsTreePage checkComponentDeleted(ComponentInfoBuilder componentInfo, String... subcomponents) {
         Arrays.stream(subcomponents).forEach(subcomponent -> {
             ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent)).findFirst().get();
