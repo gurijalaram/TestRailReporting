@@ -657,8 +657,8 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.home") + File.separator + "Downloads" + File.separator + reportName);
-        File files = new File(System.getProperty("user.dir") + File.separator + "Downloads" + File.separator + reportName);
+        File file = new File(System.getProperty("user.home") + File.separator + "testDownloads" + File.separator + reportName);
+        File files = new File(System.getProperty("user.dir") + File.separator + "testDownloads" + File.separator + reportName);
 
         System.out.println("file exist? " + file.exists());
         System.out.println("file exist? " + files.exists());
