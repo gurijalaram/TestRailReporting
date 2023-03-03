@@ -62,13 +62,13 @@ public class JasperApiUtils {
         return reportRequest;
     }
 
-    public ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest) {
+    public ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest, String partToGet) {
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
         timer.stop();
         logger.debug(String.format("Report generation took: %s", timer));
-        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        return jasperReportSummary.getChartDataPointByPartName(partToGet);
     }
 
     public JasperReportSummary generateReportSummary(ReportRequest reportRequest) {
