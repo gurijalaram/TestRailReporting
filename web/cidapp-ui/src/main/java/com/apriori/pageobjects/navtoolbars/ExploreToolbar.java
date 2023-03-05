@@ -25,7 +25,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -684,7 +683,7 @@ public class ExploreToolbar extends MainNavBar {
         System.out.println("user home is -> " + System.getProperty("user.home"));
 
         if (file.exists()) {
-//            file.deleteOnExit();
+            //file.deleteOnExit();
 
             return file.length();
         }
