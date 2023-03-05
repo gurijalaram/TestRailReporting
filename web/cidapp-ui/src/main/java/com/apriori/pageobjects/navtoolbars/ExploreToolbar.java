@@ -679,6 +679,12 @@ public class ExploreToolbar extends MainNavBar {
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current absolute path is -> " + s);
 
+        Set<String> userFiles = Stream.of(new File(System.getProperty("user.home")).listFiles())
+            .filter(filer -> !file.isDirectory())
+            .map(File::getName)
+            .collect(Collectors.toSet());
+
+        System.out.println("All files in user home dir ->" + userFiles);
         System.out.println("user dir is -> " + System.getProperty("user.dir"));
         System.out.println("user home is -> " + System.getProperty("user.home"));
 
