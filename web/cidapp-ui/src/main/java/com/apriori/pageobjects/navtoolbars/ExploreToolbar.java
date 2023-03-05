@@ -25,9 +25,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -661,12 +665,20 @@ public class ExploreToolbar extends MainNavBar {
 
         File file = new File(System.getProperty("user.dir") + File.separator + "Downloads" + File.separator + reportName);
 
+        System.out.println("Directory i'm currently in is -> " + new File(".").getAbsolutePath());
         System.out.println("file is located at -> " + file.getAbsolutePath());
         System.out.println("file is located at -> " + file.getPath());
 
+        Set<String> allFiles = Stream.of(new File(System.getProperty("user.dir")).listFiles())
+            .filter(filer -> !file.isDirectory())
+            .map(File::getName)
+            .collect(Collectors.toSet());
+
+        System.out.println("All files in dir ->" + allFiles);
+
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current absolute path is: " + s);
+        System.out.println("Current absolute path is -> " + s);
 
         System.out.println("user dir is -> " + System.getProperty("user.dir"));
         System.out.println("user home is -> " + System.getProperty("user.home"));
