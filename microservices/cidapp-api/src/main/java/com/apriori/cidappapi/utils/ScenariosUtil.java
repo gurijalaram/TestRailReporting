@@ -797,4 +797,14 @@ public class ScenariosUtil {
             .filter(x -> x.getComponentName().equalsIgnoreCase(componentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
             .map(ScenarioManifestSubcomponents::getExcluded).findFirst().get();
     }
+
+    public <T> ResponseWrapper<T> getReports(String componentId, String scenarioId, UserCredentials currentUser) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.REPORTS, null)
+                .inlineVariables(componentId, scenarioId)
+                .token(currentUser.getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 }
