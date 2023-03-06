@@ -11,7 +11,7 @@ RUN keytool -import -trustcacerts -noprompt \
 
 # Copy source code
 COPY . .
-VOLUME /Downloads
+VOLUME .:./Downloads
 
 # Build.
 FROM sdk as build
