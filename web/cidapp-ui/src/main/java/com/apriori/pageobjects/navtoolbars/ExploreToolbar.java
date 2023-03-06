@@ -662,7 +662,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.dir") + File.separator + "settings.gradle");
+        File file = new File(System.getProperty("user.dir") + File.separator + reportName);
 
         System.out.println("Directory i'm currently in is -> " + new File(".").getAbsolutePath());
         System.out.println("file is located at -> " + file.getAbsolutePath());
@@ -673,7 +673,7 @@ public class ExploreToolbar extends MainNavBar {
             .map(File::getName)
             .collect(Collectors.toSet());
 
-        System.out.println("All files in dir ->" + allFiles);
+        System.out.println("All files in user dir ->" + allFiles);
 
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
