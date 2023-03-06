@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "createdByName",
+        "name",
+        "type",
+        "value"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy",
+        "updatedByName"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "updatedByName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

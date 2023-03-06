@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "successes",
+        "failures"
+      ],
+      "properties": {
+        "successes": {
+          "type": "array",
+          "items": {}
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "userPreference",
+              "errorMessage"
+            ],
+            "properties": {
+              "userPreference": {
+                "type": "object",
+                "required": [
+                  "createdBy",
+                  "name",
+                  "type",
+                  "value"
+                ],
+                "properties": {
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "errorMessage": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

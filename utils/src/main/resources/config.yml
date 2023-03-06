@@ -430,6 +430,9 @@ qa-test:
     api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
     number_of_parts: 5
 
+  ach:
+    api_url: https://ach-api.na-1.qa-test.apriori.net/
+
   cas:
     ui_url: https://cas.na-1.qa-test.apriori.net/
     api_url: https://cas-api.na-1.qa-test.apriori.net/
@@ -504,6 +507,9 @@ development:
 
   admin:
     ui_url: ${development.base_url}apriori/login
+
+  ach:
+    api_url: https://ach-api.na-1.development.apriori.net/
 
   cas:
     ui_url: https://cas.na-1.development.apriori.net/
