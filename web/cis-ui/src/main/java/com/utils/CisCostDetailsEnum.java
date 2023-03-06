@@ -12,7 +12,9 @@ public enum CisCostDetailsEnum {
     ASSEMBLY_PROCESS_COST("Assembly Process Cost"),
     COMPONENT_COST_FULLY_BURDENED("Components Cost (Fully Burdened)"),
     COMPONENT_COST_PIECE_PART("Components Cost (Piece Part)"),
-    TOTAL_COST("Total Cost");
+    TOTAL_COST("Total Cost"),
+    TOTAL_MACHINE_COST("Total Machine Cost"),
+    LABOR_TIME("Labor Time");
 
     private final String costDetail;
 

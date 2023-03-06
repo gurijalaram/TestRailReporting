@@ -91,7 +91,7 @@ public class UsersListPage extends UsersPage {
      * @return UsersListPage
      */
     public static UsersListPage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/customer-staff";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/users/customer-staff";
         driver.navigate().to(String.format(url, customer));
         return new UsersListPage(driver);
     }
