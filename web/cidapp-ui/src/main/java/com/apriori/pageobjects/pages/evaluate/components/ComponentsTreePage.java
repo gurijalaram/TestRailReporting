@@ -4,11 +4,13 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -27,6 +29,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -253,6 +256,26 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     public ComponentsTreePage clickScenarioCheckbox(String componentName, String scenarioName) {
         assembliesComponentsController.clickScenarioCheckbox(componentName, scenarioName);
         return this;
+    }
+
+    /**
+     * clicks the delete button
+     *
+     * @return - the current page object
+     */
+    public DeletePage deleteSubcomponent() {
+        return assembliesComponentsController.deleteSubComponent();
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param component - the component object
+     * @return new page object
+     */
+    public EvaluatePage checkComponentDelete(ComponentInfoBuilder component) {
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -489,5 +512,21 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
         return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param componentInfo - the component info builder
+     * @param subcomponents - the list of subcomponents
+     * @return current object
+     */
+    // TODO: change this method so that it takes in an array of Strings
+    public ComponentsTreePage checkComponentDeleted(ComponentInfoBuilder componentInfo, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> {
+            ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent)).findFirst().get();
+            new ScenariosUtil().checkComponentDeleted(componentDetails.getComponentIdentity(), componentDetails.getScenarioIdentity(), componentDetails.getUser());
+        });
+        return this;
     }
 }
