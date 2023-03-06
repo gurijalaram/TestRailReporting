@@ -675,13 +675,6 @@ public class ExploreToolbar extends MainNavBar {
 
         System.out.println("All files in user dir ->" + allFiles);
 
-        Set<String> gradleFiles = Stream.of(new File(System.getProperty("user.dir" + File.separator + "gradle")).listFiles())
-            .filter(filer -> !file.isDirectory())
-            .map(File::getName)
-            .collect(Collectors.toSet());
-
-        System.out.println("All files in gradle dir ->" + gradleFiles);
-
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current absolute path is -> " + s);
