@@ -147,7 +147,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
-        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
         return new ExplorePage(driver);
     }
 
