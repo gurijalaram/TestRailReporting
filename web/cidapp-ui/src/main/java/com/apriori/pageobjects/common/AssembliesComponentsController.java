@@ -79,7 +79,7 @@ public class AssembliesComponentsController {
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
 
-    @FindBy(css = ".sub-components-action-bar [id='qa-sub-header-delete-button']")
+    @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
     @FindBy(css = ".sub-component-tree .component-name")
@@ -131,6 +131,15 @@ public class AssembliesComponentsController {
      */
     public boolean isSetInputsEnabled() {
         return pageUtils.waitForElementToAppear(setInputsButton).isEnabled();
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteButton).isEnabled();
     }
 
     /**
@@ -294,6 +303,10 @@ public class AssembliesComponentsController {
                 return pageUtils.isElementEnabled(publishButton);
             case EDIT:
                 return pageUtils.isElementEnabled(editButton);
+            case DELETE:
+                return pageUtils.isElementEnabled(deleteButton);
+            case SET_INPUTS:
+                return pageUtils.isElementEnabled(setInputsButton);
             default:
                 return false;
         }
