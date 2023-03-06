@@ -662,7 +662,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.dir") + File.separator + "gradle" + reportName);
+        File file = new File(System.getProperty("user.dir") + File.separator + "gradle" + File.separator + reportName);
 
         System.out.println("Directory i'm currently in is -> " + new File(".").getAbsolutePath());
         System.out.println("file is located at -> " + file.getAbsolutePath());
