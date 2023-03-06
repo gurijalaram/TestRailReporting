@@ -11,7 +11,6 @@ RUN keytool -import -trustcacerts -noprompt \
 
 # Copy source code
 COPY . .
-VOLUME .
 
 # Build.
 FROM sdk as build
@@ -30,4 +29,7 @@ ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
 ARG TESTS
+
+VOLUME ./:/home/gradle
+
 RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
