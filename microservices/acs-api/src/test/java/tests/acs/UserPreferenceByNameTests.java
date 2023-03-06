@@ -1,7 +1,7 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +26,7 @@ public class UserPreferenceByNameTests extends TestUtil {
         String toleranceModeResponse = acsResources.getUserPreferenceByName("TolerancePolicyDefaults.toleranceMode");
 
         assertThat(annualVolumeResponse, is(equalTo("5500")));
-        assertThat(toleranceModeResponse, anyOf(containsString("CAD"), containsString("PARTOVERRIDE"), containsString("SYSTEMDEFAULT")));
+        assertThat(toleranceModeResponse, either(is(containsString("CAD"))).or(is(containsString("PARTOVERRIDE"))).or(is(containsString("SYSTEMDEFAULT"))));
     }
 
     @Test

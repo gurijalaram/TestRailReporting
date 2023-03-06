@@ -18,7 +18,7 @@ Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
-        put("integrate", intModules)
+        put("integration", intModules)
     }
 }
 final String configuration = System.getProperty("conf")
@@ -69,7 +69,7 @@ if (configuration != null) {
     include ':web:cis-ui'
 
     //integration
-    include ':integrate:integration'
+    include ':integration'
 }
 
 void includeProject(final String includePath, final String filePath) {
