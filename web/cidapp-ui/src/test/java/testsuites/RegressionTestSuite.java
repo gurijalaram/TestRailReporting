@@ -18,6 +18,7 @@ import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.AssemblyAssociations;
+import com.evaluate.assemblies.AssemblyGroupDeleteTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.FiltersTests;
 import com.evaluate.assemblies.GroupCostingTests;
@@ -112,7 +113,8 @@ import testsuites.suiteinterface.SmokeTests;
     MachiningStrategyTests.class,
     GroupMachineStrategyApplyTests.class,
     AssemblyAssociations.class,
-    UpdateCADFileTests.class
+    UpdateCADFileTests.class,
+    AssemblyGroupDeleteTests.class
 })
 public class RegressionTestSuite {
 }
