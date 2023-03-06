@@ -11,7 +11,7 @@ RUN keytool -import -trustcacerts -noprompt \
 
 # Copy source code
 COPY . .
-VOLUME /home/gradle:./Downloads
+VOLUME .
 
 # Build.
 FROM sdk as build
