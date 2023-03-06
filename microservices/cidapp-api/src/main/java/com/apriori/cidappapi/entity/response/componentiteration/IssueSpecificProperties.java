@@ -40,4 +40,7 @@ public class IssueSpecificProperties  {
     private String thickerStock;
     private String allStockThicknesses;
     private OdSuggest odSuggest;
+    private String holeDiameter;
+    private String holeLength;
+    private String msgTolType;
 }

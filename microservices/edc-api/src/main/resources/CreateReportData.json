@@ -1,0 +1,7 @@
+{
+  "report": {
+    "reportType": "PM_EDC",
+    "emailAddress": "jvautour@apriori.com",
+    "numberOfDaysToReport": "2"
+  }
+}
