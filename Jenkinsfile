@@ -20,7 +20,7 @@ Configure the following parameters on your Jenkins jobs directly.  You only need
 This should reduce the need for multiple jenkinsfiles
 Those marked with a * are required or the job will not run
     parameters {
-        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices', 'integrate'], description: 'What module type to run?')
+        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices', 'integration'], description: 'What module type to run?')
         * choice(name: 'MODULE', choices: ['edc-ui', 'cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui', 'integration'], description: 'What target module to run?')
         * choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
         * choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
@@ -70,7 +70,7 @@ Those marked with a * are required or the job will not run
                         folder = "microservices"
                     }
                     else {
-                          folder = "integrate"
+                          folder = "integration"
                     }
 
                     url = params.TARGET_URL

@@ -1489,4 +1489,73 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Ignore("Disabled until 1.1.0 release")
+    @Test
+    @TestRail(testCaseId = {"16672","16673","16838","16839","16840"})
+    @Description("Verify user can add/remove process details fields")
+    public void testEnableConfigurationsOfProcessDetailsCard() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName, scenarioName)
+                .clickProcessRouting()
+                .selectProcess("Cycle Time")
+                .clickCycleTimeChart();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMoreOptionsMenuDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isNewMessageOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickOnMoreOptionMenu()
+                .clickEditProcessCardOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessCardModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getModalTitle()).isEqualTo("Card Settings");
+
+        partsAndAssembliesDetailsPage.openAndCloseProcessDropDown()
+                .selectAnOption("Fixture Cost")
+                .selectAnOption("Total Machine Cost")
+                .selectAnOption("Labor Time");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedProcessFieldName()).contains("Fixture Cost");
+
+        partsAndAssembliesDetailsPage.clickToRemoveProcessField()
+                .openAndCloseProcessDropDown()
+                .clickProcessModalSaveButton()
+                .clickProcessRouting()
+                .clickCycleTimeChart();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName(),  CisCostDetailsEnum.TOTAL_MACHINE_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.LABOR_TIME.getProcessRoutingName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Machine Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Labor Time")).isNotEmpty();
+
+        partsAndAssembliesDetailsPage.resetToDefaultConfiguration();
+
+        softAssertions.assertAll();
+    }
 }
