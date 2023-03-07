@@ -25,7 +25,6 @@ public class QueryDefinitionTests extends TestBase {
 
     private CicLoginPage cicLoginPage;
 
-
     public QueryDefinitionTests() {
         super();
     }
@@ -34,7 +33,6 @@ public class QueryDefinitionTests extends TestBase {
     public void setup() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
     }
-
 
     @Test
     @TestRail(testCaseId = {"4303"})
@@ -107,5 +105,7 @@ public class QueryDefinitionTests extends TestBase {
         Assert.assertFalse("Add Group button is not displayed for teamcenter", queryDefinitions.isGroupButtonDisplayed());
 
     }
+
+
 
 }

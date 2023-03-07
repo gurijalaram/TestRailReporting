@@ -29,6 +29,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicLoginUtil;
 import utils.PlmPartsUtil;
 import utils.SearchFilter;
 
@@ -48,7 +49,7 @@ public class CicAgentJobResultsTest extends TestBase {
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = CicApiTestUtil.getLoginSession(UserUtil.getUser(), driver);
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();;
         plmPartData = PlmPartsUtil.getPlmPartData();
         workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
         createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, loginSession);
