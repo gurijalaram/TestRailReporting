@@ -80,7 +80,7 @@ public class PropertyValueMap {
     private double roughMass;
     private double fixtureCost;
     private double totalCost;
-    private int dfmRisk;
+    private Object dfmRisk;
     private double goodPartYield;
     private double numOperators;
     private int dfmRiskScore;

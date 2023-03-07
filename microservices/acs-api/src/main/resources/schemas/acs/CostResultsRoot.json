@@ -903,6 +903,9 @@
                 "setupCostPerPart": {
                   "type": "number"
                 },
+                "numCoreBundle": {
+                  "type": "integer"
+                },
                 "otherDirectCosts": {
                   "type": "number"
                 },
@@ -920,6 +923,9 @@
                 },
                 "indirectMachinePower": {
                   "type": "number"
+                },
+                "mainProcessName": {
+                  "type": "string"
                 },
                 "lifetimeCost": {
                   "type": "number"
@@ -1107,6 +1113,9 @@
                 "batchCarbon": {
                   "type": "number"
                 },
+                "isDrawDirectionX": {
+                  "type": "number"
+                },
                 "partLength": {
                   "type": "number"
                 },
@@ -1159,7 +1168,7 @@
                   "type": "number"
                 },
                 "dfmRisk": {
-                  "type": "integer"
+                  "type": ["integer","string"]
                 },
                 "stockPropertywallThickness": {
                   "type": "number"
@@ -1324,7 +1333,6 @@
                 "dfmRisk",
                 "goodPartYield",
                 "numOperators",
-                "dfmRiskScore",
                 "fixtureCostPerPart",
                 "materialUnitCost",
                 "processCarbon",
@@ -4684,7 +4692,6 @@
                 "electricityRate",
                 "numOperators",
                 "facilityWaterCost",
-                "dfmRiskScore",
                 "processCarbon",
                 "fixtureCostPerPart",
                 "facilityWaterFactor",
