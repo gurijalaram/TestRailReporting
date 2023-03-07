@@ -161,7 +161,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
-        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
         return new ExplorePage(driver);
     }
 
@@ -333,7 +333,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return a new page object
      */
     public EvaluatePage navigateToScenario(ScenarioItem cssComponent) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -344,7 +344,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return - A new page object
      */
     public EvaluatePage navigateToScenario(ComponentInfoBuilder component) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 

@@ -84,7 +84,7 @@ public class PropertiesContextTest {
 
     @Test
     public void testGetDefaultProperty() {
-        final String PROPERTY_KEY = "${env}.fms.api_url";
+        final String PROPERTY_KEY = "fms.api_url";
         final String value = PropertiesContext.get(PROPERTY_KEY);
 
         SoftAssertions softAssertions = new SoftAssertions();

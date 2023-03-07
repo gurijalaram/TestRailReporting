@@ -36,7 +36,7 @@ public class WatchpointReports extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"21933", "21940"})
+    @TestRail(testCaseId = {"21933", "21934", "21940"})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

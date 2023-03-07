@@ -81,7 +81,7 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      * @return SystemConfigurationPage
      */
     public static SystemConfigurationPage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/system-configuration/";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/system-configuration/";
         driver.navigate().to(String.format(url, customer));
         return new SystemConfigurationPage(driver);
     }

@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(location = "ErrorRequestResponse.json")
+@Schema(location = "ErrorMessageSchema.json")
 @Getter
 @Setter
 public class ErrorRequestResponse {

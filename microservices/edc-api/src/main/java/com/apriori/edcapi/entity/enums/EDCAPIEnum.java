@@ -27,9 +27,6 @@ public enum EDCAPIEnum implements ExternalEndpointEnum {
     BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT("bill-of-materials/%s/line-items/%s/parts/%s/select"),
     BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST("bill-of-materials/%s/line-items/%s/parts/cost"),
 
-    //Reports
-    REPORTS("reports"),
-
     //Users
     CURRENT_USER("users/current");
 
@@ -46,6 +43,6 @@ public enum EDCAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.edc.api_url") + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables);
     }
 }
