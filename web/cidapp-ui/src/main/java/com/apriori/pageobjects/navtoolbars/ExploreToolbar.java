@@ -662,7 +662,7 @@ public class ExploreToolbar extends MainNavBar {
             .get("Content-Disposition")
             .getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(System.getProperty("user.dir") + File.separator + "gradle" + File.separator + reportName);
+        File file = new File(System.getProperty("user.dir") + File.separator + "Downloads" + File.separator + reportName);
 
         if (file.exists()) {
             file.deleteOnExit();
