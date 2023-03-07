@@ -64,7 +64,7 @@ public class WatchpointReports extends TestBase {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getDownloadedReportSize("CP5DS97AXRF1", "CQU89CXFKDGC", currentUser)).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReportSize(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), currentUser)).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
