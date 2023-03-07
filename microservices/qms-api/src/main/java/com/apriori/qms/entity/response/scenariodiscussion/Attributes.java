@@ -18,4 +18,6 @@ public class Attributes {
     private String pinDetails;
     private String gcds;
     private String subject;
+    private String attributeCategory;
+    private String processIdentity;
 }

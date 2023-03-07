@@ -79,6 +79,9 @@
                 },
                 "timezone": {
                   "type": "string"
+                },
+                "supervisor": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -94,7 +97,8 @@
                 "department",
                 "townCity",
                 "county",
-                "timezone"
+                "timezone",
+                "supervisor"
               ]
             },
             "email": {
@@ -128,6 +132,9 @@
             },
             "userType": {
               "type": "string"
+            },
+            "avatarColor": {
+              "type": "string"
             }
           },
           "required": [
@@ -143,13 +150,17 @@
             "active",
             "mfaRequired",
             "customAttributes",
-            "userType"
+            "userType",
+            "avatarColor"
           ]
         },
         "attributes": {
           "type": "object",
           "properties": {
             "attribute": {
+              "type": "string"
+            },
+            "cadModelSnapshot": {
               "type": "string"
             },
             "attributeDisplayValue": {
@@ -164,7 +175,16 @@
             "pinDetails": {
               "type": "string"
             },
+            "gcds": {
+              "type": "string"
+            },
             "subject": {
+              "type": "string"
+            },
+            "attributeCategory": {
+              "type": "string"
+            },
+            "processIdentity": {
               "type": "string"
             }
           },
@@ -173,10 +193,14 @@
           ],
           "optional": [
             "attribute",
+            "cadModelSnapshot",
             "attributeDisplayValue",
             "componentType",
             "models",
-            "pinDetails"
+            "pinDetails",
+            "gcds",
+            "attributeCategory",
+            "processIdentity"
           ]
         },
         "customerIdentity": {
@@ -200,7 +224,13 @@
                 "createdAt": {
                   "type": "string"
                 },
+                "updatedAt": {
+                  "type": "string"
+                },
                 "createdBy": {
+                  "type": "string"
+                },
+                "updatedBy": {
                   "type": "string"
                 },
                 "content": {
@@ -248,7 +278,9 @@
                       ],
                       "optional": [
                         "createdAt",
-                        "createdBy"
+                        "createdBy",
+                        "updatedAt",
+                        "updatedBy"
                       ]
                     }
                   ]

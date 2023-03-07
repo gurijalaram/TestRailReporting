@@ -18,16 +18,15 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Disabled;
 
 public class BidPackageProjectsTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
-    UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String projectName;
+    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -188,13 +187,15 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
-    @Disabled("TODO: Not automatable - Unable to get the non participating user (with limited automation users)")
+    @Test
     @TestRail(testCaseId = {"14627"})
-    @Description("Verify that the user gets an empty list if he is not participated in any project")
+    @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
-        UserCredentials otherUser = UserUtil.getUser();
-        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, otherUser);
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(bProjectsResponse.getItems().size()).isEqualTo(0);
+
+        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
     @Test

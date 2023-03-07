@@ -30,4 +30,7 @@ public class Comment {
     public LocalDateTime updatedAt;
     public ArrayList<CommentView> commentView;
     public ArrayList<Object> mentionedUsers;
+    public String creatorAvatarColor;
+    public String customerIdentity;
+
 }

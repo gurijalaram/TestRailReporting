@@ -30,4 +30,5 @@ public class UserProfile {
     private String timezone;
     private String stateProvince;
     private String countryCode;
+    private String supervisor;
 }

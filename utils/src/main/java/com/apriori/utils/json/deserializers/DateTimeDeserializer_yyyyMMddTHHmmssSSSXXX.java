@@ -16,14 +16,11 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX extends JsonDeserializer<LocalDateTime> {
     private static DateTimeFormatter formatter =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-        throws IOException {
-
-
-
+            throws IOException {
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
             // making sure that date has max 3 trailing numbers after seconds
             // example: 2018-06-28T05:50:59.533242Z --> 2018-06-28T05:50:59.000Z

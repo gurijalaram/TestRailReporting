@@ -17,6 +17,12 @@
     "description": {
       "type": "string"
     },
+    "organizationName": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     },
@@ -190,7 +196,6 @@
                 "identity",
                 "createdAt",
                 "createdBy",
-                "updatedAt",
                 "customerIdentity",
                 "userProfile",
                 "email",
@@ -199,6 +204,9 @@
                 "mfaRequired",
                 "customAttributes",
                 "userType"
+              ],
+              "optional": [
+                "updatedAt"
               ]
             }
           },
@@ -222,7 +230,6 @@
     "status",
     "type",
     "description",
-    "name",
     "projectProfile",
     "items",
     "users"

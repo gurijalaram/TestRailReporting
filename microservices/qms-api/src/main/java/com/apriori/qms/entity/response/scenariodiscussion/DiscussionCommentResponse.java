@@ -28,4 +28,6 @@ public class DiscussionCommentResponse {
     private LocalDateTime publishedAt;
     private ArrayList<CommentView> commentView;
     private ArrayList<Object> mentionedUsers;
+    private String creatorAvatarColor;
+    private String customerIdentity;
 }

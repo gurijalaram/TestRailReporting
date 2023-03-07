@@ -73,6 +73,12 @@
         "mentionedUsers": {
           "type": "array",
           "items": {}
+        },
+        "creatorAvatarColor": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
         }
       },
       "required": [
@@ -84,7 +90,9 @@
         "status",
         "publishedAt",
         "commentView",
-        "mentionedUsers"
+        "mentionedUsers",
+        "creatorAvatarColor",
+        "customerIdentity"
       ],
       "optional": [
         "updatedAt",
