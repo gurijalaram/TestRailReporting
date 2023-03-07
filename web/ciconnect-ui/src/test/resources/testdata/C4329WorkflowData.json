@@ -1,0 +1,247 @@
+{
+  "customer": "%s",
+  "query": {
+    "filters": {
+      "type": "AND",
+      "filters": [{
+        "fieldName": "partNumber",
+        "type": "EQ",
+        "value": "0000003925"
+      }]
+    }
+  },
+  "plmSystem": "%s",
+  "name": "%s",
+  "description": "",
+  "schedule": "0 0 0 1/1 * ? *",
+  "selectedEmailTemplate": "none",
+  "isEmailTemplateSelected": false,
+  "emailConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [{
+      "key": "CostRounding",
+      "value": "true"
+    }, {
+      "key": "aPrioriCost",
+      "value": "fullyBurdenedCost"
+    }]
+  },
+  "emailRecipientType": "field",
+  "defaultValues": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "dataType": {
+          "name": "dataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 12,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "displayDataType": {
+          "name": "displayDataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 18,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 13,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isMandatoryField": {
+          "name": "isMandatoryField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 10,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isSaved": {
+          "name": "isSaved",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 14,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isStandardField": {
+          "name": "isStandardField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 9,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 17,
+          "aspects": {
+            "defaultValue": true,
+            "isPrimaryKey": false
+          }
+        },
+        "mappingRule": {
+          "name": "mappingRule",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 15,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "plmAttributeName": {
+          "name": "plmAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 5,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "readOnly": {
+          "name": "readOnly",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 19,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "twxAttributeName": {
+          "name": "twxAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 6,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "usageType": {
+          "name": "usageType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 11,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 16,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [{
+      "identifier": "b5c22ef9-e936-4c7a-8498-2ed2ffed2d63",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Description",
+      "value": "3925 description",
+      "_isSelected": false
+    }, {
+      "identifier": "2352d11b-995b-46d6-8d0a-5e4b806b787e",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Process Group",
+      "value": "Stock Machining",
+      "_isSelected": false
+    }, {
+      "identifier": "abab112b-cc16-427a-aa0c-107ddcc33baa",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Digital Factory",
+      "value": "aPriori Mexico",
+      "_isSelected": false
+    }, {
+      "identifier": "4d25b767-8099-4887-bfc8-1a4b36c7ae02",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Material",
+      "value": "Aluminum, ANSI 3003",
+      "_isSelected": false
+    }, {
+      "identifier": "2b98969a-10a2-40ee-8a7a-b414d2399e60",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Batch Size",
+      "value": "1000",
+      "_isSelected": false
+    }, {
+      "identifier": "7d1cffd2-1c0b-402b-9cfc-f3308bf22b7b",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Production Life",
+      "value": "1",
+      "_isSelected": false
+    }, {
+      "identifier": "6b15cb93-c46e-45b4-a272-7449e4441dc0",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Scenario Name",
+      "value": "3925 scenario",
+      "_isSelected": false
+    }, {
+      "identifier": "7d64af3f-697e-416b-b8b5-3bd9d06409ab",
+      "isValid": true,
+      "mappingRule": "Default If No PLM Value",
+      "twxAttributeName": "Annual Volume",
+      "value": "5000",
+      "_isSelected": false
+    }],
+    "name": "",
+    "description": ""
+  },
+  "isSchedulerEnabled": false,
+  "isEmailReportNameSelected": false,
+  "selectedEmailReportName": "none",
+  "isPlmWriteReportNameSelected": false,
+  "selectedPlmWriteReportName": "none",
+  "emailPartFilter": {},
+  "applyEmailFilter": false,
+  "applyEmailReportsFilter": false,
+  "applyPlmWriteReportsFilter": false,
+  "applyPlmWritePartFilter": false,
+  "useLatestRevision": false,
+  "jobMonitoringRecipients": "",
+  "partSelectionType": "QUERY"
+}

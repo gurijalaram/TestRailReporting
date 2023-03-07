@@ -1,4 +1,4 @@
-package com.apriori.enums;
+package enums;
 
 public enum ReportsEnum {
     DTC_PART_SUMMARY("DTC Part Summary [CIR]"),
