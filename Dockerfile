@@ -30,6 +30,4 @@ ARG FOLDER
 ARG MODULE
 ARG TESTS
 
-VOLUME ./cieneTest:/home/gradle
-
 RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
