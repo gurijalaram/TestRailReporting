@@ -4,11 +4,13 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.home.CIConnectHome;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import utils.TableUtils;
 
 public class CicLoginPage extends CICBasePage {
 
