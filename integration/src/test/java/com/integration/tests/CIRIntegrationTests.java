@@ -3,7 +3,6 @@ package com.integration.tests;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.enums.ReportsEnum;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -24,6 +23,7 @@ import entity.response.AgentWorkflowJobRun;
 import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ReportTemplatesRow;
 import enums.CICReportType;
+import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,6 +34,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicLoginUtil;
 
 public class CIRIntegrationTests extends TestBase {
 
@@ -78,11 +79,11 @@ public class CIRIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"12046"})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
-        loginSession = CicApiTestUtil.getLoginSession(currentUser, driver);
+        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
         workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(),
             workflowName, scenarioName,
-            CicApiTestUtil.getAgentReportTemplate(reportTemplateNames,ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY).getValue(),
+            CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY).getValue(),
             CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue());
 
         //Create a Workflow

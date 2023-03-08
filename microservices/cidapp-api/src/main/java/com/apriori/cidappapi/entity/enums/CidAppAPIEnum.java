@@ -36,6 +36,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/manifest"),
     EDIT_SCENARIOS("scenarios/fork"),
     DELETE_SCENARIO("components/%s/scenarios/%s"),
+    REPORTS("components/%s/scenarios/%s/watchpoint-report"),
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
