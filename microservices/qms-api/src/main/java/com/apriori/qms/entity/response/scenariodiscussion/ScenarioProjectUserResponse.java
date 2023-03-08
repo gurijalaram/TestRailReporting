@@ -1,7 +1,10 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
 import com.apriori.utils.http.enums.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,5 +15,5 @@ import java.util.List;
 @NoArgsConstructor
 @Schema(location = "ScenarioProjectUsersResponseSchema.json")
 public class ScenarioProjectUserResponse extends ArrayList<ScenarioProjectUserInformation> {
-     private List<ScenarioProjectUserInformation> items = new ArrayList<>();
-  }
+    private List<ScenarioProjectUserInformation> items;
+}
