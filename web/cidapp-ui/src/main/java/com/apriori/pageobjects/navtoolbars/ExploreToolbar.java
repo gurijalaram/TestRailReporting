@@ -651,7 +651,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return Long
      */
     public Headers getReportHeaders(String componentId, String scenarioId, UserCredentials userCredentials) {
-
         return new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
             .getHeaders();
     }
