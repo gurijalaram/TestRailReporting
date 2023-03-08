@@ -18,6 +18,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.MultiUpload;
+import io.restassured.http.Headers;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,12 +26,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -654,21 +650,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param userCredentials - the user credentials
      * @return Long
      */
-    public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
-        pageUtils.waitFor(3000);
+    public Headers getReportHeaders(String componentId, String scenarioId, UserCredentials userCredentials) {
 
-        String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
-            .getHeaders()
-            .get("Content-Disposition")
-            .getValue().split("=")[1].replace("\"", "");
-
-        File file = new File(System.getProperty("user.home") + File.separator + "Downloads" + File.separator + reportName);
-
-        if (file.exists()) {
-            file.deleteOnExit();
-
-            return file.length();
-        }
-        return null;
+        return new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
+            .getHeaders();
     }
 }
