@@ -29,6 +29,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicLoginUtil;
 
 public class CicAgentTest extends TestBase {
 
@@ -52,7 +53,7 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5579"})
     @Description("Get CIC Agent Workflows")
     public void testAgentWorkflows() {
-        loginSession = CicApiTestUtil.getLoginSession(currentUser, driver);
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
         ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
         assertThat(responseWrapper.getBody(), is(containsString("CreateJobDefinition")));
         assertThat(responseWrapper.getBody(), is(containsString(">true<")));
