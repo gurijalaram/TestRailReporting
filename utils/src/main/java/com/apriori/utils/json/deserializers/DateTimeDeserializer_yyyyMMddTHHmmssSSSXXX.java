@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -27,7 +26,8 @@ public class DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX extends JsonDeserializer
             String formattedTime = jsonParser.getText().substring(0, 20) + "000Z";
             return LocalDateTime.parse(formattedTime, formatter);
         } else if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_NUMBER_INT)) {
-            return Instant.ofEpochMilli(jsonParser.getLongValue()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+            String formattedTime = Instant.ofEpochMilli(jsonParser.getLongValue()).toString().substring(0, 19) + ".000Z";
+            return LocalDateTime.parse(formattedTime, formatter);
         }
         return null;
     }
