@@ -12,6 +12,7 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -38,7 +39,7 @@ public class MaterialSelectionTests {
 
     private Object[] testParameters() {
         return new Object[] {
-            new Object[] {ProcessGroupEnum.ADDITIVE_MANUFACTURING, "Aluminum AlSi10Mg", "ADD-LOW-001", ".SLDPRT"},
+            new Object[] {ProcessGroupEnum.ADDITIVE_MANUFACTURING, MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName(), "ADD-LOW-001", ".SLDPRT"},
             new Object[] {ProcessGroupEnum.BAR_TUBE_FAB, "Steel, Hot Worked, AISI 1010", "AP-000-006", ".step"},
             new Object[] {ProcessGroupEnum.CASTING, "Aluminum, Cast, ANSI AL380.0", "CastedPart", ".CATPart"},
             new Object[] {ProcessGroupEnum.CASTING_DIE, "Aluminum, Cast, ANSI AL380.0", "CurvedWall", ".CATPart"},
