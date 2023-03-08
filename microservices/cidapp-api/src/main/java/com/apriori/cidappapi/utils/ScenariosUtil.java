@@ -18,7 +18,6 @@ import com.apriori.cidappapi.entity.response.CostingTemplates;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -608,15 +607,27 @@ public class ScenariosUtil {
      * @return generic object
      */
     public ResponseWrapper<ErrorMessage> deleteScenario(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
         final RequestEntity deleteRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity, userCredentials);
 
         HTTPRequest.build(deleteRequest).delete();
 
+        return checkComponentDeleted(componentIdentity, scenarioIdentity, userCredentials);
+    }
+
+    /**
+     * Call an api with the GET verb to check a scenario has been deleted
+     *
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @param userCredentials   - the user credentials
+     * @return current object
+     */
+    public ResponseWrapper<ErrorMessage> checkComponentDeleted(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
         RequestEntity scenarioRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+            genericDeleteRequest(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity, userCredentials);
 
         try {
             do {
@@ -627,7 +638,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+                        genericDeleteRequest(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity, userCredentials);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -643,46 +654,7 @@ public class ScenariosUtil {
         );
     }
 
-    /**
-     * Calls an api with the GET verb.
-     *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
-     * @param userCredentials   - the user credentials
-     * @return generic object
-     */
-    public ResponseWrapper<ErrorMessage> getDelete(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
-        RequestEntity scenarioRequest =
-            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
-
-        try {
-            do {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
-
-                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
-
-                if (!scenarioResponse.getBody().contains("response")) {
-
-                    RequestEntity requestEntity =
-                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
-
-                    return HTTPRequest.build(requestEntity).get();
-                }
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException ie) {
-            log.error(ie.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        throw new RuntimeException(
-            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
-                componentIdentity, scenarioIdentity, WAIT_TIME)
-        );
-    }
-
-    private <T> RequestEntity genericDeleteRequest(UserCredentials userCredentials, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+    private <T> RequestEntity genericDeleteRequest(CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId, UserCredentials userCredentials) {
         return RequestEntityUtil.init(endPoint, klass)
             .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
@@ -809,9 +781,9 @@ public class ScenariosUtil {
      * @param inlineVariables - usually component/scenario identity
      * @return response object
      */
-    public ResponseWrapper<Routings> getRoutings(UserCredentials currentUser, String... inlineVariables) {
+    public <T> ResponseWrapper<T> getRoutings(UserCredentials currentUser, Class<T> klass, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, Routings.class)
+            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, klass)
                 .inlineVariables(inlineVariables)
                 .token(currentUser.getToken());
 
@@ -830,5 +802,15 @@ public class ScenariosUtil {
         return getScenarioManifest(componentInfo).getResponseEntity().getSubcomponents().stream()
             .filter(x -> x.getComponentName().equalsIgnoreCase(componentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
             .map(ScenarioManifestSubcomponents::getExcluded).findFirst().get();
+    }
+
+    public <T> ResponseWrapper<T> getReports(String componentId, String scenarioId, UserCredentials currentUser) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.REPORTS, null)
+                .inlineVariables(componentId, scenarioId)
+                .token(currentUser.getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 }

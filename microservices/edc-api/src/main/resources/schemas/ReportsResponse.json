@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "emailIdentity": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "emailIdentity"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}
