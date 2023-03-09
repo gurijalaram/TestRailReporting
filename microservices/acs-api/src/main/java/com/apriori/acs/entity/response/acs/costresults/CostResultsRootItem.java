@@ -5,14 +5,13 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Schema(location = "acs/CostResultsRoot.json")
 public class CostResultsRootItem extends ArrayList<CostResultsRootItem> {
     private ProcessInstanceKey processInstanceKey;
     private ArtifactKey artifactKey;
-    private List<GcdItem> gcds;
+    private ArrayList<GcdItem> gcds;
     private ResultMapBean resultMapBean;
     private Boolean costingFailed;
     private Boolean secondaryProcess;

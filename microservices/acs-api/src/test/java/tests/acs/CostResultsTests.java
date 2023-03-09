@@ -5,6 +5,7 @@ import com.apriori.acs.entity.response.acs.costresults.CostResultsGcdItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsGcdResponse;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsProcessItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
+import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.costresults.ProcessInstanceKey;
 import com.apriori.acs.entity.response.acs.costresults.PropertyValueMap;
 import com.apriori.acs.entity.response.acs.costresults.ResultMapBean;
@@ -59,14 +60,35 @@ public class CostResultsTests {
             false
         );
 
-        CostResultsRootItem response = acsResources.getCostResults(
+        CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(
             costOutputs.getScenarioIterationKey(),
-            "ROOT", CostResultsRootItem.class).getResponseEntity();
+            "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         //TODO: Assert on sustainability values once BA-2858 complete
+//        PropertyValueMap costResultsRootResponse = costResultsRootresponse.get(0).getResultMapBean().getPropertyValueMap();
+//        ResultMapBean resultMapBean = costResultsRootResponse.getResultMapBean();
+//        ProcessInstanceKey processInstanceKey = costResultsRootResponse.getProcessInstanceKey();
+
+        ProcessInstanceKey processInstanceKey = costResultsRootResponse.getCostResultsRootItem().getProcessInstanceKey();
+        ResultMapBean resultMapBean = costResultsRootResponse.getCostResultsRootItem().getResultMapBean();
+        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
+
+        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
+        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(resultMapBean).isNotNull();
+        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getDepth()).isEqualTo("ROOT");
+        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertAll();
+
+        /*        CostResultsGcdItem costResultsGcdItem = costResultsGcdResponse.get(0).getCostResultsGcdItem();
+        ResultMapBean resultMapBean = costResultsGcdItem.getResultMapBean();
+        ProcessInstanceKey processInstanceKey = costResultsGcdItem.getProcessInstanceKey(); */
+
+
         // Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
         // Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
         // softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
@@ -414,22 +436,22 @@ public class CostResultsTests {
             false
         );
 
-        CostResultsGcdResponse response = acsResources.getCostResults(
+        CostResultsGcdResponse costResultsGcdResponse = acsResources.getCostResults(
             costOutputs.getScenarioIterationKey(),
             "PROCESS", CostResultsGcdResponse.class).getResponseEntity();
 
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        CostResultsGcdItem costResultsGcdResponse = response.get(0).getCostResultsGcdItem();
-        ResultMapBean resultMapBean = costResultsGcdResponse.getResultMapBean();
-        ProcessInstanceKey processInstanceKey = costResultsGcdResponse.getProcessInstanceKey();
+        CostResultsGcdItem costResultsGcdItem = costResultsGcdResponse.get(0).getCostResultsGcdItem();
+        ResultMapBean resultMapBean = costResultsGcdItem.getResultMapBean();
+        ProcessInstanceKey processInstanceKey = costResultsGcdItem.getProcessInstanceKey();
 
         softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Sheet Metal");
         softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(response.getCostResultsGcdItem().getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(response.getCostResultsGcdItem().getDepth()).isEqualTo("GCD");
-        softAssertions.assertThat(response.getCostResultsGcdItem().getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertThat(costResultsGcdItem.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(costResultsGcdItem.getDepth()).isEqualTo("GCD");
+        softAssertions.assertThat(costResultsGcdItem.getSecondaryProcess()).isEqualTo(false);
         softAssertions.assertAll();
     }
 }
