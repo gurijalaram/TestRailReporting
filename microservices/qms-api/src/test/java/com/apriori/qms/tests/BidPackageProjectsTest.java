@@ -53,7 +53,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"13898", "13899", "14671"})
-    @Description("Get list of all Bid Package Projects and verify pagination")
+    @Description("Get list of all Bid Package Projects and verify pagination ")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = QmsBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(projectsResponse.getItems().size()).isGreaterThan(0);
