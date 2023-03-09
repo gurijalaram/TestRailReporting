@@ -50,6 +50,7 @@ public class PublicPrivateComparisonTests extends TestBase {
 
         assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
 
+        // TODO: 09/03/2023 refactor to dto
         ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName1,
             assemblyExtension1,
