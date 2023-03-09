@@ -1,20 +1,10 @@
 package com.apriori.util.test;
 
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.pdf.PDFDocument;
 import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.ssm.SsmClient;
-import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
-import software.amazon.awssdk.services.ssm.model.GetParameterResponse;
-import software.amazon.awssdk.services.ssm.model.SsmException;
 
 
 /**
