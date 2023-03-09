@@ -10,4 +10,7 @@ dependencies {
     implementation 'org.apache.pdfbox:pdfbox:2.0.1'
     implementation 'org.apache.poi:poi:5.2.2'
     implementation 'org.apache.poi:poi-ooxml:5.2.2'
+    implementation 'software.amazon.awssdk:ssm:2.20.16'
+
+
 }

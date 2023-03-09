@@ -17,7 +17,7 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
     @FindBy(css = ".scenario-group-operations-success-message")
     private WebElement editScenarioMessage;
 
-    @FindBy(css = ".alert-messaging")
+    @FindBy(css = "[data-testid='alert-messaging'] div")
     private WebElement editScenarioErrorMessage;
 
     @FindBy(xpath = "//button[.='Close']")
