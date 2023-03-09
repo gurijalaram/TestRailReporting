@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "name",
+        "deployments"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "type",
+                  "name",
+                  "description",
+                  "apVersion",
+                  "applications"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "apVersion": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "isSingleTenant",
+                            "identity",
+                            "name",
+                            "description",
+                            "installationName",
+                            "installationVersion",
+                            "iconUrl",
+                            "url"
+                          ],
+                          "properties": {
+                            "isSingleTenant": {
+                              "type": "boolean"
+                            },
+                            "identity": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "installationName": {
+                              "type": "string"
+                            },
+                            "installationVersion": {
+                              "type": "string"
+                            },
+                            "iconUrl": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
