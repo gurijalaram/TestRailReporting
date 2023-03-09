@@ -232,6 +232,11 @@
     "description",
     "projectProfile",
     "items",
-    "users"
+    "users",
+    "name"
+  ],
+  "optional": [
+    "organizationName",
+    "owner"
   ]
 }

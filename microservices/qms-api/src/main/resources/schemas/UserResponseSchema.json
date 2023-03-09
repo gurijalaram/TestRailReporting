@@ -57,6 +57,13 @@
         "createdBy",
         "givenName",
         "familyName"
+      ],
+      "optional": [
+        "jobTitle",
+        "townCity",
+        "stateProvince",
+        "countryCode",
+        "timeZone"
       ]
     },
     "email": {

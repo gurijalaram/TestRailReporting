@@ -4,7 +4,11 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.request.scenariodiscussion.*;
+import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
+import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
+import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
+import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
+import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
@@ -34,7 +38,7 @@ public class ScenarioDiscussionTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static ScenarioDiscussionResponse scenarioDiscussionResponse;
     private static DiscussionCommentResponse discussionCommentResponse;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
