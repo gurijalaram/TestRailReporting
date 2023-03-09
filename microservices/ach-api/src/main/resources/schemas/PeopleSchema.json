@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "customerIdentity",
+        "email",
+        "username",
+        "givenName",
+        "familyName"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "givenName": {
+          "type": "string"
+        },
+        "familyName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

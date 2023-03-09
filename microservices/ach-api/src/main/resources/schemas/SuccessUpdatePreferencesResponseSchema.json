@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "successes",
+        "failures"
+      ],
+      "properties": {
+        "successes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "createdByName",
+              "name",
+              "type",
+              "value"
+            ],
+            "optional": [
+              "updatedBy",
+              "updatedAt",
+              "updatedByName"
+            ],
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "createdByName": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "integer"
+              },
+              "updatedBy": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "updatedByName": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "failures": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    }
+  }
+}

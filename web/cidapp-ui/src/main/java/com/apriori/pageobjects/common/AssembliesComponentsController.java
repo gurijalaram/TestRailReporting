@@ -356,8 +356,8 @@ public class AssembliesComponentsController {
      *
      * @return - the current page object
      */
-    public DeletePage deleteSubComponent() {
-        pageUtils.waitForElementAndClick(deleteButton);
+    public DeletePage deleteSubComponent(WebElement button) {
+        pageUtils.waitForElementAndClick(button);
         return new DeletePage(driver);
     }
 

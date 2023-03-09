@@ -59,6 +59,9 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     @FindBy(css = ".scenario-preview")
     private WebElement previewDataPanel;
 
+    @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
+    private WebElement deleteButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -264,7 +267,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return - the current page object
      */
     public DeletePage deleteSubcomponent() {
-        return assembliesComponentsController.deleteSubComponent();
+        return assembliesComponentsController.deleteSubComponent(deleteButton);
     }
 
     /**
