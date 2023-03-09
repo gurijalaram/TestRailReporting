@@ -185,8 +185,8 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         );
 
         JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
-        ChartDataPoint chartDataPoint = reportSummary.getChartDataPointByPartName("E3-241-4-N (Initial)");
-        List<ChartDataPoint> chartDataPointList = reportSummary.getChartDataPoints();
+        ChartDataPoint chartDataPoint = reportSummary.getFirstChartData().getChartDataPointByPartName("E3-241-4-N (Initial)");
+        List<ChartDataPoint> chartDataPointList = reportSummary.getFirstChartData().getChartDataPoints();
 
         assertThat(chartDataPoint.getAnnualSpend(), is(not(equalTo(minimumAnnualSpendValue))));
         assertThat(chartDataPointList.size(), is(equalTo(1)));

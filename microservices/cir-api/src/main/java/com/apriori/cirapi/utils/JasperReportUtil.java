@@ -5,6 +5,7 @@ import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.enums.ReportChartType;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
+import com.apriori.cirapi.entity.response.ChartData;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.ChartDataPointProperty;
 import com.apriori.cirapi.entity.response.InputControl;
@@ -27,11 +28,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class JasperReportUtil {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final long WAIT_TIME = 30;
 
     private String jasperSessionValue = "JSESSIONID=%s";
 
@@ -60,14 +63,33 @@ public class JasperReportUtil {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
 
+        this.waitUntilReportReady(response.getRequestId(),
+            exportedReport.getId());
+
         return JasperReportSummary.builder()
             .reportHtmlPart(this.getReportHtmlData(response.getRequestId(),
                 exportedReport.getId())
             )
-            .chartDataPoints(this.getReportChartData(response.getRequestId(),
+            .chartData(this.getReportChartData(response.getRequestId(),
                 exportedReport.getId())
             )
             .build();
+    }
+
+    @SneakyThrows
+    private void waitUntilReportReady(String requestId, String exportId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_STATUS_BY_REQUEST_EXPORT_IDs, null)
+            .inlineVariables(requestId, exportId)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        long initialTime = System.currentTimeMillis() / 1000;
+
+        do {
+            TimeUnit.SECONDS.sleep(5);
+
+        } while (HTTPRequest.build(requestEntity).get().getBody().contains("ready")
+            || ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
     }
 
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
@@ -105,7 +127,7 @@ public class JasperReportUtil {
         return Jsoup.parse(htmlData, "UTF-8", "/aPriori/reports/");
     }
 
-    private List<ChartDataPoint> getReportChartData(final String requestId, final String exportId) {
+    private List<ChartData> getReportChartData(final String requestId, final String exportId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
@@ -117,17 +139,45 @@ public class JasperReportUtil {
     }
 
     @SneakyThrows
-    private List<ChartDataPoint> parseJsonResponse(String jsonResponse) {
+    private List<ChartData> parseJsonResponse(final String jsonResponse) {
         final JsonNode dataNode = OBJECT_MAPPER.readTree(jsonResponse);
-        final String chartTypeToParse = dataNode.findValue("charttype").asText();
+        List<ChartData> parsedChartData = new ArrayList<>();
 
-        switch (ReportChartType.get(chartTypeToParse)) {
+        for (JsonNode node : dataNode) {
+            ChartData chartData = new ChartData();
+            JsonNode chartTypeNode = node.findValue("charttype");
+
+            if (chartTypeNode == null) {
+                log.warn("Chart type is not present in JSON response.");
+                continue;
+            }
+
+            ReportChartType reportChartType = ReportChartType.get(chartTypeNode.asText());
+
+            if(reportChartType == null) {
+                log.warn("Chart type {} is not supported.", chartTypeNode.asText());
+                continue;
+            }
+
+            chartData.setChartType(reportChartType);
+            chartData.setChartDataPoints(
+                this.parseChart(reportChartType, node)
+            );
+
+            parsedChartData.add(chartData);
+        }
+
+        return parsedChartData;
+    }
+
+    private List<ChartDataPoint> parseChart(final ReportChartType chartType, final JsonNode dataNode) {
+        switch (chartType) {
             case BUBBLE_SCATTER:
                 return parseBubbleChart(dataNode);
             case STACKED_BAR:
                 return parseStackedBar(dataNode);
             default:
-                throw new IllegalArgumentException("Report Chart type is not supported by JSON parser. Chart type " + chartTypeToParse);
+                throw new IllegalArgumentException("Report Chart type is not supported by JSON parser. Chart type " + chartType);
         }
     }
 
@@ -149,8 +199,8 @@ public class JasperReportUtil {
 
         List<ChartDataPoint> mappedChartDataPoints = new ArrayList<>();
 
-        List<JsonNode> partNames = dataNode.findValues("xCategories");
-        List<JsonNode> chartValues = dataNode.findValues("series");
+        JsonNode partNames = dataNode.findValue("xCategories");
+        JsonNode chartValues = dataNode.findValue("series");
 
         for (int i = 0; i < partNames.size(); i++) {
             ChartDataPoint chartDataPoint = new ChartDataPoint();
@@ -159,8 +209,16 @@ public class JasperReportUtil {
             for (JsonNode chart : chartValues) {
                 ChartDataPointProperty chartDataPointProperty = new ChartDataPointProperty();
 
-                chartDataPointProperty.setProperty(chart.findValue("name").asText());
-                chartDataPointProperty.setValue(chart.findValues("data").get(i).findValue("y").asText());
+                JsonNode property = chart.findValue("name");
+                JsonNode value = chart.findValue("data").get(i).findValue("y");
+
+                if (property == null || value == null) {
+                    continue;
+                }
+
+                chartDataPointProperty.setProperty(property.asText());
+                chartDataPointProperty.setValue(value.asText());
+
 
                 chartDataPointProperties.add(chartDataPointProperty);
             }

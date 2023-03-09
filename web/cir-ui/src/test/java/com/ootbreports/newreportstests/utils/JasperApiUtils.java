@@ -51,7 +51,8 @@ public class JasperApiUtils {
 
         valueToSet = valueToSet.equals("7820000") ? "7,820,000.00" : valueToSet;
 
-        List<Element> elements = jasperApiUtils.generateReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText(valueToSet);
+         JasperReportSummary js= jasperApiUtils.generateReportSummary(reportRequest);
+        List<Element> elements = js.getReportHtmlPart().getElementsContainingText(valueToSet);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
     }
@@ -68,7 +69,7 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
         timer.stop();
         logger.debug(String.format("Report generation took: %s", timer));
-        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        return jasperReportSummary.getFirstChartData().getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 
     public JasperReportSummary generateReportSummary(ReportRequest reportRequest) {

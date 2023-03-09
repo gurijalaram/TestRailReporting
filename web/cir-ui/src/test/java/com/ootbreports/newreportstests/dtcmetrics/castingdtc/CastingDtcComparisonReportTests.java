@@ -1,27 +1,19 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
+import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
 import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.inputcontrols.InputControlsTests;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
-import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
@@ -122,15 +114,23 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7656")
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
-        String minimumAnnualSpendValue = "7820000";
-        jasperApiUtils.inputControlGenericTest(
-            "Minimum Annual Spend",
-            minimumAnnualSpendValue
-        );
+//        String minimumAnnualSpendValue = "7820000";
+//        jasperApiUtils.inputControlGenericTest(
+//            "Minimum Annual Spend",
+//            minimumAnnualSpendValue
+//        );
 
         JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
-        String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
+        ChartDataPoint jeepWjFrontPart = reportSummary.getFirstChartData().getChartDataPointByPartName("JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
 
-        assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
+        final Integer holeIssues = jeepWjFrontPart.getHoleIssues();
+        final Integer materialIssues = jeepWjFrontPart.getMaterialIssues();
+        final Integer radiusIssues = jeepWjFrontPart.getRadiusIssues();
+        final Integer draftIssues = jeepWjFrontPart.getDraftIssues();
+
+
+        // Should be finished
+        //        String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
+        //        assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
     }
 }

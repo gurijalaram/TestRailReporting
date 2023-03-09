@@ -1,8 +1,11 @@
 package com.apriori.cirapi.entity.enums;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public enum ReportChartType {
     BUBBLE_SCATTER("Scatter"),
     STACKED_BAR("StackedBar");
@@ -24,7 +27,14 @@ public enum ReportChartType {
         return chartType;
     }
 
-    public static ReportChartType get(String abbreviation) {
-        return lookup.get(abbreviation);
+    public static ReportChartType get(String type) {
+        final ReportChartType chartType = lookup.get(type);
+
+        if (chartType == null) {
+            log.warn("Chart type {} is not supported", type);
+            return null;
+        }
+
+        return chartType;
     }
 }
