@@ -328,8 +328,8 @@ public class CostResultsTests {
     }
 
 
-    @Test
     @Ignore
+    @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get Process Cost Results after Costing Sheet Metal")
@@ -381,8 +381,8 @@ public class CostResultsTests {
         softAssertions.assertAll();
     }
 
-    @Test
     @Ignore
+    @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get GCD Cost Results after Costing Sheet Metal")

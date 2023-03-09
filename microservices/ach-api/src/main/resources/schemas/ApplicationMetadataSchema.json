@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "deploymentName",
+        "deploymentType",
+        "installationName",
+        "applicationIdentity",
+        "applicationName",
+        "customerMetadata"
+      ],
+      "properties": {
+        "deploymentName": {
+          "type": "string"
+        },
+        "deploymentType": {
+          "type": "string"
+        },
+        "installationName": {
+          "type": "string"
+        },
+        "applicationIdentity": {
+          "type": "string"
+        },
+        "applicationName": {
+          "type": "string"
+        },
+        "customerMetadata": {
+          "type": "object",
+          "required": [
+            "customerName",
+            "maxCadFileSize",
+            "salesforceId"
+          ],
+          "properties": {
+            "customerName": {
+              "type": "string"
+            },
+            "maxCadFileSize": {
+              "type": "integer"
+            },
+            "salesforceId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
