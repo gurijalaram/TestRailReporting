@@ -14,5 +14,5 @@ import java.util.List;
 @Schema(location = "SuccessUpdatePreferencesResponseSchema.json")
 public class SuccessUpdatePreferencesResponse {
     private List<Success> successes;
-    private List<Object> failures = null;
+    private List<Failure> failures = null;
 }

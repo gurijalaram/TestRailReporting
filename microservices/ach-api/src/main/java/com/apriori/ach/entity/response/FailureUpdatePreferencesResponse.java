@@ -13,6 +13,6 @@ import java.util.List;
 @JsonRootName("response")
 @Schema(location = "FailureUpdatePreferencesResponseSchema.json")
 public class FailureUpdatePreferencesResponse {
-    private List<Object> successes = null;
+    private List<Success> successes = null;
     private List<Failure> failures;
 }
