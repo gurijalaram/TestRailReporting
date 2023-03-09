@@ -192,8 +192,8 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
-        softAssertions.assertThat(bProjectsResponse.getItems().size()).isGreaterThan(0);
+        BidPackageProjectsResponse bidProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
 
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
