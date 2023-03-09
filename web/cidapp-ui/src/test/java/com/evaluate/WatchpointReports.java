@@ -59,7 +59,7 @@ public class WatchpointReports extends TestBase {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(Integer.parseInt(evaluatePage.getReportJQueryData().get("total"))).isGreaterThan(0);
+        softAssertions.assertThat((Long) evaluatePage.getReportJQueryData().get("total")).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
