@@ -7,7 +7,6 @@ dependencies {
     implementation project(':utils')
     implementation project(':apibase')
     implementation project(':db')
-    implementation project(':web:ciconnect-ui')
     implementation 'com.massisframework:j-text-utils:0.3.4'
     implementation project(':microservices:nts-api')
     implementation 'org.jetbrains:annotations:20.1.0'

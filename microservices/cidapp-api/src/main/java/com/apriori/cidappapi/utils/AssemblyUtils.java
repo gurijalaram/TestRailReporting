@@ -10,6 +10,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -259,9 +260,10 @@ public class AssemblyUtils {
     }
 
     /**
-     * Delete an assembly and all it's sub-components
+     * Deletes an assembly and all it's subcomponents
      *
-     * @param componentAssembly - The Assembly ComponentIfo
+     * @param componentAssembly - the component assembly
+     * @param currentUser       - the current user
      * @return - Current Object
      */
     public AssemblyUtils deleteAssemblyAndComponents(ComponentInfoBuilder componentAssembly) {
@@ -269,6 +271,18 @@ public class AssemblyUtils {
         componentAssembly.getSubComponents().forEach(
             subComponent -> scenariosUtil.deleteScenario(subComponent.getComponentIdentity(), subComponent.getScenarioIdentity(), componentAssembly.getUser()));
 
+        return this;
+    }
+
+    /**
+     * Disassociates a subcomponent from an assembly
+     *
+     * @param componentAssembly - the component assembly
+     * @param subcomponents     - the list of subcomponents
+     * @return current object
+     */
+    public AssemblyUtils disassociateSubcomponents(ComponentInfoBuilder componentAssembly, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> componentAssembly.getSubComponents().removeIf(o -> o.getComponentName().equalsIgnoreCase(subcomponent)));
         return this;
     }
 }

@@ -1,6 +1,5 @@
 package com.cic.tests;
 
-import com.apriori.enums.ReportsEnum;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
@@ -18,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;

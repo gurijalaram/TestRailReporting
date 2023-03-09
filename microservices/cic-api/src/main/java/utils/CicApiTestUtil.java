@@ -1,8 +1,5 @@
 package utils;
 
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.enums.ReportsEnum;
-import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -17,7 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.ConnectorRequest;
 import entity.request.CostingInputs;
@@ -47,6 +44,7 @@ import enums.CICPartSelectionType;
 import enums.CICReportType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
+import enums.ReportsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -63,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CicApiTestUtil extends TestUtil {
+public class CicApiTestUtil extends TestBase {
 
     /**
      * Deserialize workflow data from json file to string.
@@ -201,7 +199,7 @@ public class CicApiTestUtil extends TestUtil {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
+        header.put("cookie", String.format("JSESSIONID=%s",session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(header)
             .customBody(workflowData)
@@ -220,7 +218,7 @@ public class CicApiTestUtil extends TestUtil {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
+        header.put("cookie", String.format("JSESSIONID=%s",session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(header)
             .body(workflowRequestDataBuilder)
@@ -239,7 +237,7 @@ public class CicApiTestUtil extends TestUtil {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
+        header.put("cookie", String.format("JSESSIONID=%s",session));
 
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
             .headers(header)
@@ -259,20 +257,6 @@ public class CicApiTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Login to CI-connect GUI to get JSessionID
-     *
-     * @param currentUser - user credentials to login to ci-connect gui
-     * @param webDriver   - WebDriver
-     * @return JSessionID
-     */
-    public static String getLoginSession(UserCredentials currentUser, WebDriver webDriver) {
-        new CicLoginPage(webDriver)
-            .login(currentUser)
-            .clickUsersMenu();
-        return String.valueOf(webDriver.manage().getCookies()).replace("[", "").replace("]", "");
     }
 
     /**
@@ -310,7 +294,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.plm_agent_id");
+        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
     }
 
     /**
@@ -429,7 +413,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getCustomerName() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.customer_name");
+        return PropertiesContext.get("${customer}.ci-connect.customer_name");
     }
 
     /**

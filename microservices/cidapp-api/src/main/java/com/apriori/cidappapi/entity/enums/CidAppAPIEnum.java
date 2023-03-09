@@ -36,6 +36,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/manifest"),
     EDIT_SCENARIOS("scenarios/fork"),
     DELETE_SCENARIO("components/%s/scenarios/%s"),
+    REPORTS("components/%s/scenarios/%s/watchpoint-report"),
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
@@ -73,7 +74,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format((PropertiesContext.get("${env}.cidapp.api_url")).concat("%s"), String.format(getEndpointString(), variables));
+        return String.format((PropertiesContext.get("cidapp.api_url")).concat("%s"), String.format(getEndpointString(), variables));
     }
 }
 

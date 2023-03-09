@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 
 import java.util.List;
@@ -24,9 +25,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationUtil {
-    private String username = PropertiesContext.get("${env}.ats.token_username");
-    private String email = PropertiesContext.get("${env}.ats.token_email");
-    private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
+    private String username = PropertiesContext.get("ats.token_username");
+    private String email = PropertiesContext.get("ats.token_email");
+    private String issuer = PropertiesContext.get("ats.token_issuer");
     private String subject = PropertiesContext.get("${customer}.token_subject");
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -75,7 +76,7 @@ public class AuthorizationUtil {
      * Gets deployments
      *
      * @param userCredentials - UserCredentials instance containing user details to use in api call
-     * @param queryParams - Map of key value pairs to add to url
+     * @param queryParams     - Map of key value pairs to add to url
      * @return List of Deployment Items
      */
     private List<DeploymentItem> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
@@ -83,8 +84,8 @@ public class AuthorizationUtil {
             .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("${env}.customer_identity"),
-                PropertiesContext.get("${env}.secret_key")
+                PropertiesContext.get("customer_identity"),
+                PropertiesContext.get("secret_key")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -112,15 +113,28 @@ public class AuthorizationUtil {
      * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        String cloudContext = PropertiesContext.get("${env}.customer_identity");
-        String installationNameFromConfig = PropertiesContext.get("${env}.installation_name");
-        String applicationNameFromConfig = PropertiesContext.get("${env}.application_name");
+        String cloudContext = PropertiesContext.get("customer_identity");
+        String installationName;
 
-        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("${env}.deployment_name"));
+        try {
+            installationName = PropertiesContext.get("installation_name");
+        } catch (IllegalArgumentException e) {
+            log.info("installation_name property not present, generate it by code value");
 
+            installationName = String.format("core-na-1 - %s production deployment",
+                StringUtils.substringBefore(PropertiesContext.get("version"), "-")
+            );
+        }
+
+
+        String applicationNameFromConfig = PropertiesContext.get("application_name");
+
+        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
+
+        String finalInstallationName = installationName;
         InstallationItem installationItem = deploymentItem.getInstallations()
             .stream()
-            .filter(element -> element.getName().equals(installationNameFromConfig))
+            .filter(element -> element.getName().equals(finalInstallationName))
             .limit(1)
             .collect(Collectors.toList()).get(0);
 

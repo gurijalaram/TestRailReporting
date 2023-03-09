@@ -31,12 +31,9 @@ public class DeleteTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private DeletePage deletePage;
     private File resourceFile;
-    private File resourceFile2;
     private UserCredentials currentUser;
     private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItem2;
 
     public DeleteTests() {
         super();
