@@ -11,6 +11,6 @@ import java.util.List;
 @Data
 @Schema(location = "acs/CostResultsRoot.json")
 @NoArgsConstructor
-public class CostResultsRootResponse extends ArrayList {
+public class CostResultsRootResponse extends ArrayList<CostResultsRootItem> {
     private CostResultsRootItem costResultsRootItem;
 }

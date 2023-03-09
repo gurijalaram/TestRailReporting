@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Schema(location = "acs/CostResultsRoot.json")
-public class CostResultsRootItem extends ArrayList {
+public class CostResultsRootItem extends ArrayList<CostResultsRootItem> {
     private ProcessInstanceKey processInstanceKey;
     private ArtifactKey artifactKey;
     private List<GcdItem> gcds;

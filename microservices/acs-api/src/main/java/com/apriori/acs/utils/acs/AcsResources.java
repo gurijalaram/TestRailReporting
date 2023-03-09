@@ -648,65 +648,65 @@ public class AcsResources {
         return HTTPRequest.build(requestEntity).get();
     }
 
-//    /**
-//     * Get Cost Results - Root
-//     *
-//     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
-//     * @param depth                - String - value to set
-//     * @return GetCostResults instance
-//     */
-//
-//    public CostResultsRootResponse getCostResultsRoot(ScenarioIterationKey scenarioIterationKey, String depth) {
-//        setupHeader();
-//
-//        final RequestEntity requestEntity;
-//        try {
-//            requestEntity = RequestEntityUtil
-//                .init(AcsApiEnum.COST_RESULTS, CostResultsRootResponse.class)
-//                .headers(headers)
-//                .inlineVariables(
-//                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
-//                    scenarioIterationKey.getScenarioKey().getTypeName(),
-//                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
-//                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
-//                    scenarioIterationKey.getIteration().toString(),
-//                    depth, StandardCharsets.UTF_8.toString())
-//                .urlEncodingEnabled(false);
-//        } catch (UnsupportedEncodingException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return (CostResultsRootResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-//    }
-//
-//    /**
-//     * Get Cost Results - GCD
-//     *
-//     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
-//     * @param depth                - String - value to set
-//     * @return GetCostResults instance
-//     */
-//
-//    public CostResultsGcdResponse getCostResultsGcd(ScenarioIterationKey scenarioIterationKey, String depth) {
-//        setupHeader();
-//
-//        final RequestEntity requestEntity;
-//        try {
-//            requestEntity = RequestEntityUtil
-//                .init(AcsApiEnum.COST_RESULTS, CostResultsGcdResponse.class)
-//                .headers(headers)
-//                .inlineVariables(
-//                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
-//                    scenarioIterationKey.getScenarioKey().getTypeName(),
-//                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
-//                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
-//                    scenarioIterationKey.getIteration().toString(),
-//                    depth, StandardCharsets.UTF_8.toString())
-//                .urlEncodingEnabled(false);
-//        } catch (UnsupportedEncodingException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return (CostResultsGcdResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-//     }
+    //    /**
+    //     * Get Cost Results - Root
+    //     *
+    //     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+    //     * @param depth                - String - value to set
+    //     * @return GetCostResults instance
+    //     */
+    //
+    //    public CostResultsRootResponse getCostResultsRoot(ScenarioIterationKey scenarioIterationKey, String depth) {
+    //        setupHeader();
+    //
+    //        final RequestEntity requestEntity;
+    //        try {
+    //            requestEntity = RequestEntityUtil
+    //                .init(AcsApiEnum.COST_RESULTS, CostResultsRootResponse.class)
+    //                .headers(headers)
+    //                .inlineVariables(
+    //                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+    //                    scenarioIterationKey.getScenarioKey().getTypeName(),
+    //                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+    //                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+    //                    scenarioIterationKey.getIteration().toString(),
+    //                    depth, StandardCharsets.UTF_8.toString())
+    //                .urlEncodingEnabled(false);
+    //        } catch (UnsupportedEncodingException e) {
+    //            throw new RuntimeException(e);
+    //        }
+    //        return (CostResultsRootResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    //    }
+    //
+    //    /**
+    //     * Get Cost Results - GCD
+    //     *
+    //     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+    //     * @param depth                - String - value to set
+    //     * @return GetCostResults instance
+    //     */
+    //
+    //    public CostResultsGcdResponse getCostResultsGcd(ScenarioIterationKey scenarioIterationKey, String depth) {
+    //        setupHeader();
+    //
+    //        final RequestEntity requestEntity;
+    //        try {
+    //            requestEntity = RequestEntityUtil
+    //                .init(AcsApiEnum.COST_RESULTS, CostResultsGcdResponse.class)
+    //                .headers(headers)
+    //                .inlineVariables(
+    //                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+    //                    scenarioIterationKey.getScenarioKey().getTypeName(),
+    //                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+    //                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+    //                    scenarioIterationKey.getIteration().toString(),
+    //                    depth, StandardCharsets.UTF_8.toString())
+    //                .urlEncodingEnabled(false);
+    //        } catch (UnsupportedEncodingException e) {
+    //            throw new RuntimeException(e);
+    //        }
+    //        return (CostResultsGcdResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    //     }
 
     /**
      * Get Available Routings

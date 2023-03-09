@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 @Data
 @Schema(location = "acs/CostResultsGcd.json")
-public class CostResultsGcdResponse extends ArrayList {
+public class CostResultsGcdResponse extends ArrayList<CostResultsGcdResponse> {
     private CostResultsGcdItem costResultsGcdItem;
 }
