@@ -51,7 +51,7 @@ public class JasperApiUtils {
 
         valueToSet = valueToSet.equals("7820000") ? "7,820,000.00" : valueToSet;
 
-         JasperReportSummary js= jasperApiUtils.generateReportSummary(reportRequest);
+        JasperReportSummary js = jasperApiUtils.generateReportSummary(reportRequest);
         List<Element> elements = js.getReportHtmlPart().getElementsContainingText(valueToSet);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));

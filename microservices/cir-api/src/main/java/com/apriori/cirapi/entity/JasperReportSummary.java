@@ -22,7 +22,7 @@ public class JasperReportSummary {
     private List<ChartData> chartData;
 
     public ChartData getFirstChartData() {
-        if(chartData.isEmpty()) {
+        if (chartData.isEmpty()) {
             log.warn("Chart data is not present");
             return null;
         }

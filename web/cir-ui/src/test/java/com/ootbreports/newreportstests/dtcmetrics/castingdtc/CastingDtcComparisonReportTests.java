@@ -8,8 +8,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
-
 import com.apriori.utils.enums.reports.MassMetricEnum;
+
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -114,11 +114,11 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7656")
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
-//        String minimumAnnualSpendValue = "7820000";
-//        jasperApiUtils.inputControlGenericTest(
-//            "Minimum Annual Spend",
-//            minimumAnnualSpendValue
-//        );
+        //        String minimumAnnualSpendValue = "7820000";
+        //        jasperApiUtils.inputControlGenericTest(
+        //            "Minimum Annual Spend",
+        //            minimumAnnualSpendValue
+        //        );
 
         JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
         ChartDataPoint jeepWjFrontPart = reportSummary.getFirstChartData().getChartDataPointByPartName("JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");

@@ -1,6 +1,7 @@
 package com.apriori.cirapi.entity.response;
 
 import com.apriori.cirapi.entity.enums.ReportChartType;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 

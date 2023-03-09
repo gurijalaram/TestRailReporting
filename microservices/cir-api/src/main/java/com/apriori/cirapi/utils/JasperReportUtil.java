@@ -154,7 +154,7 @@ public class JasperReportUtil {
 
             ReportChartType reportChartType = ReportChartType.get(chartTypeNode.asText());
 
-            if(reportChartType == null) {
+            if (reportChartType == null) {
                 log.warn("Chart type {} is not supported.", chartTypeNode.asText());
                 continue;
             }
