@@ -1,12 +1,10 @@
 package com.evaluate;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -27,7 +25,6 @@ public class WatchpointReports extends TestBase {
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private UserCredentials currentUser;
-    private ComponentInfoBuilder componentInfo;
 
     public WatchpointReports() {
         super();
