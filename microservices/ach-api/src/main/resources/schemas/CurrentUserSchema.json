@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "isSystemUser",
+        "identity",
+        "createdAt",
+        "createdBy",
+        "updatedAt",
+        "customerIdentity",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "mfaRequired",
+        "customAttributes",
+        "resourcesAllowedToCreate",
+        "userType"
+      ],
+      "properties": {
+        "isSystemUser": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "userProfile": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "givenName",
+            "familyName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            }
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "mfaRequired": {
+          "type": "boolean"
+        },
+        "customAttributes": {
+          "type": "object",
+          "required": [
+            "workspaceId"
+          ],
+          "properties": {
+            "workspaceId": {
+              "type": "integer"
+            }
+          }
+        },
+        "resourcesAllowedToCreate": {
+          "type": "array",
+          "items": {}
+        },
+        "userType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
