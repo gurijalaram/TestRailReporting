@@ -18,14 +18,16 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.MultiUpload;
-import io.restassured.http.Headers;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -645,13 +647,18 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Gets the size of the downloaded report
+     * Gets the jquery data for the report
+     * Some available fields are : fileName, byExtName, fileExternallyRemoved, total (or size), fileUrl, progressStatusText, state, filePath, dateString, hideDate, url
      *
-     * @param userCredentials - the user credentials
-     * @return Long
+     * @return HashMap
      */
-    public Headers getReportHeaders(String componentId, String scenarioId, UserCredentials userCredentials) {
-        return new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
-            .getHeaders();
+    public HashMap<String, String> getReportJQueryData() {
+        pageUtils.waitFor(5000);
+
+        driver.get("chrome://downloads/");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        ArrayList<HashMap<String, String>> element = (ArrayList<HashMap<String, String>>)
+            js.executeScript("return document.querySelector('downloads-manager').shadowRoot.getElementById('downloadsList').items;");
+        return element.get(0);
     }
 }
