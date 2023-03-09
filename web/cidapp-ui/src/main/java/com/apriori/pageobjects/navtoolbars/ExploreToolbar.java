@@ -647,12 +647,24 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Gets the jquery data for the report
-     * Some available fields are : fileName, byExtName, fileExternallyRemoved, total (or size), fileUrl, progressStatusText, state, filePath, dateString, hideDate, url
+     * Gets the jquery data for a report
+     * Some available fields are ->
+     * String fileName
+     * String byExtName
+     * Boolean fileExternallyRemoved
+     * Long total (or size)
+     * String fileUrl
+     * String id
+     * String progressStatusText
+     * String state
+     * String filePath
+     * String dateString
+     * Boolean hideDate
+     * String url
      *
      * @return HashMap
      */
-    public HashMap<String, String> getReportJQueryData() {
+    public HashMap<String, ?> getReportJQueryData() {
         pageUtils.waitFor(5000);
 
         driver.get("chrome://downloads/");
