@@ -38,6 +38,23 @@ qa-test:
 ########################################################################################################################
 
 
+######################################################## CIS_QA ########################################################
+cis-qa:
+  application_name: cis
+  aws_region: na-1
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: qa
+  installation_name: cis.na-1-v22-1
+  name: cis-qa
+  secret_key: PG9E795ML3P4
+  user_identity: 1F7GAI5DLI2B
+
+  core_service_url_template: ${aws_region}.qa-test.apriori.net/
+  deployment_url_template: ${aws_region}-v${version}.qa-test.apriori.net/
+
+########################################################################################################################
+
+
 ######################################################## INT-CORE ######################################################
 int-core:
   application_name: cid
@@ -106,7 +123,6 @@ staging:
 onprem:
   base_url: conqsbel10-06/
   name: onprem
-
   deployment_url_template: ${base_url}
 
 ########################################################################################################################

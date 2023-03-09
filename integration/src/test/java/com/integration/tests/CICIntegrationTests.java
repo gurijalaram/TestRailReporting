@@ -38,6 +38,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicLoginUtil;
 
 @Slf4j
 public class CICIntegrationTests extends TestBase {
@@ -112,7 +113,7 @@ public class CICIntegrationTests extends TestBase {
             CicApiTestUtil.getAgent(), workflowName, scenarioName);
         // Create WorkFlow
         PartsCost xlsWatchPointReportExpectedData = new TestDataService().getReportData("PartCostReport.json", PartsCost.class);
-        loginSession = CicApiTestUtil.getLoginSession(currentUser, driver);
+        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
         softAssertions.assertThat(responseWrapper.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(responseWrapper.getBody()).contains(">true<");

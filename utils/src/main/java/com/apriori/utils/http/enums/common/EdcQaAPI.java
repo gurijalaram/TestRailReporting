@@ -7,7 +7,7 @@ public interface EdcQaAPI extends ExternalEndpointEnum {
     @Override
     default String getEndpoint(Object... variables) {
 
-        return PropertiesContext.get("${env}.edc.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
     }
 
     default String getSchemaLocation() {

@@ -16,6 +16,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +89,15 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
 
+    @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
+    private WebElement reportButton;
+
+    @FindBy(id = "qa-action-bar-generate-report")
+    private WebElement generateReportButton;
+
+    @FindBy(id = "qa-action-bar-download-report")
+    private WebElement downloadReportButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -147,7 +157,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
-        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
         return new ExplorePage(driver);
     }
 
@@ -319,7 +329,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return a new page object
      */
     public EvaluatePage navigateToScenario(ScenarioItem cssComponent) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -330,7 +340,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return - A new page object
      */
     public EvaluatePage navigateToScenario(ComponentInfoBuilder component) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -582,5 +592,79 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isActionsDropdownEnabled() {
         return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
+    }
+
+    /**
+     * Clicks the report button
+     *
+     * @return current page object
+     */
+    public ExploreToolbar clickReportDropdown() {
+        pageUtils.waitForElementAndClick(reportButton);
+        return this;
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T generateReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(generateReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T downloadReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(downloadReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks if report button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isReportButtonEnabled() {
+        return pageUtils.waitForElementToAppear(reportButton).isEnabled();
+    }
+
+    /**
+     * Checks if download button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDownloadButtonEnabled() {
+        return pageUtils.waitForElementToAppear(downloadReportButton).isEnabled();
+    }
+
+    /**
+     * Gets the size of the downloaded report
+     *
+     * @param userCredentials - the user credentials
+     * @return Long
+     */
+    public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
+        pageUtils.waitFor(2000);
+
+        String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
+            .getHeaders()
+            .get("Content-Disposition")
+            .getValue().split("=")[1].replace("\"", "");
+
+        File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
+
+        if (file.exists()) {
+            file.deleteOnExit();
+
+            return file.length();
+        }
+        return null;
     }
 }

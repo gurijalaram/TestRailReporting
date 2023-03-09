@@ -1,7 +1,7 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -28,11 +28,11 @@ public class UserPreferencesTests extends TestUtil {
         AcsResources acsResources = new AcsResources();
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
 
-        assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), anyOf(equalTo("3"), equalTo("2")));
+        assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), either(is("3")).or(is("2")));
         assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
         assertThat(getUserPreferencesResponse.getProdInfoDefaultAnnualVolume(), is(equalTo("5500")));
-        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), anyOf(containsString("CAD"),
-            containsString("PARTOVERRIDE"), containsString("SYSTEMDEFAULT")));
+        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(),
+            either(containsString("CAD")).or(is(containsString("PARTOVERRIDE"))).or(is("SYSTEMDEFAULT")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold(), is(equalTo("false")));
     }
 
