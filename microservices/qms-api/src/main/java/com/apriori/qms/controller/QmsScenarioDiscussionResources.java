@@ -19,6 +19,7 @@ import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
+
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
@@ -40,37 +41,18 @@ public class QmsScenarioDiscussionResources {
      */
     public static ScenarioDiscussionRequest getScenarioDiscussionRequestBuilder(String componentIdentity, String scenarioIdentity) {
         return ScenarioDiscussionRequest.builder()
-                .scenarioDiscussion(ScenarioDiscussionParameters.builder()
-                        .status("ACTIVE")
-                        .type("SCENARIO")
-                        .description(new GenerateStringUtil().generateScenarioName())
-                        .componentIdentity(componentIdentity)
-                        .scenarioIdentity(scenarioIdentity)
-                        .attributes(Attributes.builder()
-                                .attribute("materialName")
-                                .subject("4056-23423-003")
-                                .build())
-                        .build())
-                .build();
-    }
-
-    /**
-     * Create Scenario Discussion
-     *
-     * @param componentIdentity
-     * @param scenarioIdentity
-     * @param currentUser
-     * @return ScenarioDiscussionResponse
-     */
-    public static ScenarioDiscussionResponse createScenarioDiscussion(String componentIdentity, String scenarioIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionResponse.class)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(QmsScenarioDiscussionResources.getScenarioDiscussionRequestBuilder(componentIdentity, scenarioIdentity))
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        ResponseWrapper<ScenarioDiscussionResponse> scenarioDiscussionResponse = HTTPRequest.build(requestEntity).post();
-        return scenarioDiscussionResponse.getResponseEntity();
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
+                .status("ACTIVE")
+                .type("SCENARIO")
+                .description(new GenerateStringUtil().generateScenarioName())
+                .componentIdentity(componentIdentity)
+                .scenarioIdentity(scenarioIdentity)
+                .attributes(Attributes.builder()
+                    .attribute("materialName")
+                    .subject("4056-23423-003")
+                    .build())
+                .build())
+            .build();
     }
 
     /**
@@ -86,11 +68,11 @@ public class QmsScenarioDiscussionResources {
      */
     public static <T> T updateScenarioDiscussion(String scenarioDiscussionIdentity, ScenarioDiscussionRequest scenarioDiscussionRequestBuilder, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, responseClass)
-                .inlineVariables(scenarioDiscussionIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(scenarioDiscussionRequestBuilder)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(httpStatus);
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(scenarioDiscussionRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
         return responseWrapper.getResponseEntity();
@@ -107,19 +89,19 @@ public class QmsScenarioDiscussionResources {
      */
     public static DiscussionCommentResponse addCommentToDiscussion(String scenarioDiscussionIdentity, String commentContent, String commentStatus, UserCredentials currentUser) {
         DiscussionCommentRequest discussionCommentRequestBuilder = DiscussionCommentRequest.builder()
-                .comment(DiscussionCommentParameters.builder()
-                        .content(commentContent)
-                        .status(commentStatus)
-                        .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
-                        .build())
-                .build();
+            .comment(DiscussionCommentParameters.builder()
+                .content(commentContent)
+                .status(commentStatus)
+                .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
+                .build())
+            .build();
 
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentResponse.class)
-                .inlineVariables(scenarioDiscussionIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(discussionCommentRequestBuilder)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<DiscussionCommentResponse> discussionCommentResponse = HTTPRequest.build(requestEntity).post();
         return discussionCommentResponse.getResponseEntity();
@@ -135,11 +117,11 @@ public class QmsScenarioDiscussionResources {
      */
     public static DiscussionCommentResponse addCommentToDiscussion(String scenarioDiscussionIdentity, DiscussionCommentRequest discussionCommentRequestBuilder, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentResponse.class)
-                .inlineVariables(scenarioDiscussionIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(discussionCommentRequestBuilder)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<DiscussionCommentResponse> discussionCommentResponse = HTTPRequest.build(requestEntity).post();
         return discussionCommentResponse.getResponseEntity();
@@ -159,11 +141,11 @@ public class QmsScenarioDiscussionResources {
      */
     public static <T> T updateCommentToDiscussion(String scenarioDiscussionIdentity, String commentIdentity, DiscussionCommentRequest discussionCommentRequestBuilder, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, responseClass)
-                .inlineVariables(scenarioDiscussionIdentity, commentIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(discussionCommentRequestBuilder)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(httpStatus);
+            .inlineVariables(scenarioDiscussionIdentity, commentIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
         return responseWrapper.getResponseEntity();
@@ -174,16 +156,35 @@ public class QmsScenarioDiscussionResources {
      *
      * @param scenarioDiscussionIdentity
      * @param currentUser
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static ResponseWrapper<String> deleteScenarioDiscussion(String scenarioDiscussionIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, null)
-                .inlineVariables(scenarioDiscussionIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         return HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Create Scenario Discussion
+     *
+     * @param componentIdentity
+     * @param scenarioIdentity
+     * @param currentUser
+     * @return ScenarioDiscussionResponse
+     */
+    public static ScenarioDiscussionResponse createScenarioDiscussion(String componentIdentity, String scenarioIdentity, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionResponse.class)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(QmsScenarioDiscussionResources.getScenarioDiscussionRequestBuilder(componentIdentity, scenarioIdentity))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<ScenarioDiscussionResponse> scenarioDiscussionResponse = HTTPRequest.build(requestEntity).post();
+        return scenarioDiscussionResponse.getResponseEntity();
     }
 
     /**
@@ -195,10 +196,10 @@ public class QmsScenarioDiscussionResources {
      */
     public static ScenarioDiscussionResponse createScenarioDiscussion(ScenarioDiscussionRequest scenarioDiscussionRequestBuilder, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionResponse.class)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .body(scenarioDiscussionRequestBuilder)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(scenarioDiscussionRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
 
         ResponseWrapper<ScenarioDiscussionResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
@@ -224,10 +225,10 @@ public class QmsScenarioDiscussionResources {
         }
 
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS_FILTER, ScenarioDiscussionsResponse.class)
-                .queryParams(queryParams.use(paramMap))
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_OK);
+            .queryParams(queryParams.use(paramMap))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ScenarioDiscussionsResponse> scenarioDiscussionsResponse = HTTPRequest.build(requestEntity).get();
         return scenarioDiscussionsResponse.getResponseEntity();
@@ -243,10 +244,10 @@ public class QmsScenarioDiscussionResources {
      */
     public static ScenarioProjectUserResponse getScenarioProjectUsers(String componentIdentity, String scenarioIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
-                .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(HttpStatus.SC_OK);
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ScenarioProjectUserResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
         return responseWrapper.getResponseEntity();

@@ -75,7 +75,7 @@ public class QmsComponentResources {
      * @param userContext
      * @param componentIdentity
      * @param scenarioIdentity
-     * @return ResponseWrapper<ScenarioResponse>
+     * @return ResponseWrapper[ScenarioResponse]
      */
     public static ResponseWrapper<ScenarioResponse> getComponentScenario(String userContext, String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
@@ -107,7 +107,7 @@ public class QmsComponentResources {
      * @param componentIdentity
      * @param scenarioIdentity
      * @param iterationIdentity
-     * @return ResponseWrapper<ComponentIteration>
+     * @return ResponseWrapper[ComponentIteration]
      */
     public static ResponseWrapper<ComponentIteration> getLatestIteration(String userContext, String componentIdentity, String scenarioIdentity, String iterationIdentity) {
         RequestEntity requestEntity =
