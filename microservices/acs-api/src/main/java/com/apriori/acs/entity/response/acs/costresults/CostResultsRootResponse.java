@@ -9,7 +9,5 @@ import java.util.ArrayList;
 
 @Data
 @Schema(location = "acs/CostResultsRoot.json")
-@NoArgsConstructor
 public class CostResultsRootResponse extends ArrayList<CostResultsRootItem> {
-    private CostResultsRootItem costResultsRootItem;
 }
