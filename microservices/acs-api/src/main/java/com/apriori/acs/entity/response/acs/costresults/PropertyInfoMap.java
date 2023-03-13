@@ -163,7 +163,10 @@ public class PropertyInfoMap {
     private PropertyInfoMapLargerItem processCarbon;
     private PropertyInfoMapLargerItem fixtureCostPerPart;
     private PropertyInfoMapItem facilityWaterFactor;
+    private PropertyInfoMapItem numCurvedWall;
     private PropertyInfoMapLargerItem stockPropertyinsideDia;
+    private PropertyInfoMapLargerItem stockPropertyoutsideDia;
+    private PropertyInfoMapLargerItem stockPropertywallThickness;
     private PropertyInfoMapLargerItem materialUnitCost;
     private PropertyInfoMapLargerItem overheadRate;
     private PropertyInfoMapLargerItem lifetimeCarbon;

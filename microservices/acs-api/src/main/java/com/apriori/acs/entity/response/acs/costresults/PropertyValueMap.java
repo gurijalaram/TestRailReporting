@@ -26,6 +26,10 @@ public class PropertyValueMap {
     private Double numberOfParts;
     private Double expendableToolingCostPerPart;
     private Double stockPropertylength;
+    private Double stockPropertyoutsideDia;
+    private Double stockPropertyinsideDia;
+    private Double stockPropertywallThickness;
+    private Integer numCurvedWall;
     private Integer annualVolume;
     private Double laborTime;
     private Double periodOverhead;
