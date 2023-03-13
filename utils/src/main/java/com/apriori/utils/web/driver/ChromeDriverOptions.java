@@ -29,6 +29,7 @@ public class ChromeDriverOptions {
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--allow-outdated-plugins");
+        chromeOptions.addArguments("--remote-allow-origins=*");
         // TODO: 20/10/2021 commented because this doesn't work on vnc
         //chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
