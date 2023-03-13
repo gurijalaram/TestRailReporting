@@ -114,6 +114,12 @@ public class PropertyInfoMap {
     private PropertyInfoMapLargerItem productionLife;
     private PropertyInfoMapItem footprintAllowanceFactor;
     private PropertyInfoMapItem materialYield;
+    private PropertyInfoMapItem machineName;
+    private PropertyInfoMapItem utilizationEdgeScrap;
+    private PropertyInfoMapItem scrapCostPerKg;
+    private PropertyInfoMapItem sheetLength;
+    private PropertyInfoMapItem inputVolume;
+    private PropertyInfoMapItem laborTimeStandard;
     private PropertyInfoMapLargerItem annualCarbon;
     private PropertyInfoMapLargerItem materialCarbon;
     private PropertyInfoMapLargerItem primaryMaterialCarbonFactor;

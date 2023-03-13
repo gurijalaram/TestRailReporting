@@ -1104,6 +1104,9 @@
                 "productionLife": {
                   "type": "number"
                 },
+                "machineName": {
+                  "type": "string"
+                },
                 "annualCarbon": {
                   "type": "number"
                 },
@@ -1313,6 +1316,7 @@
                 "failedGcdsCount",
                 "logisticsCost",
                 "productionLife",
+                "machineName",
                 "annualCarbon",
                 "materialCarbon",
                 "batchCarbon",

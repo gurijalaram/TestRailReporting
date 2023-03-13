@@ -62,41 +62,30 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(
             costOutputs.getScenarioIterationKey(),
-            "ROOT", CostResultsRootResponse.class).getResponseEntity();
+            "ROOT",
+            CostResultsRootResponse.class
+        ).getResponseEntity();
 
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         //TODO: Assert on sustainability values once BA-2858 complete
-//        PropertyValueMap costResultsRootResponse = costResultsRootresponse.get(0).getResultMapBean().getPropertyValueMap();
-//        ResultMapBean resultMapBean = costResultsRootResponse.getResultMapBean();
-//        ProcessInstanceKey processInstanceKey = costResultsRootResponse.getProcessInstanceKey();
+        // PropertyValueMap costResultsRootResponse = costResultsRootresponse.get(0).getResultMapBean().getPropertyValueMap();
+        // ResultMapBean resultMapBean = costResultsRootResponse.getResultMapBean();
+        // ProcessInstanceKey processInstanceKey = costResultsRootResponse.getProcessInstanceKey();
 
-        ProcessInstanceKey processInstanceKey = costResultsRootResponse.getCostResultsRootItem().getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootResponse.getCostResultsRootItem().getResultMapBean();
+        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
+        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
+        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
         PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
 
         softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
         softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Sheet Metal");
         softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootResponse.getCostResultsRootItem().getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
+        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
         softAssertions.assertAll();
-
-        /*        CostResultsGcdItem costResultsGcdItem = costResultsGcdResponse.get(0).getCostResultsGcdItem();
-        ResultMapBean resultMapBean = costResultsGcdItem.getResultMapBean();
-        ProcessInstanceKey processInstanceKey = costResultsGcdItem.getProcessInstanceKey(); */
-
-
-        // Object processInstanceKey = ((LinkedHashMap<String, String>) response.get(0)).get("processInstanceKey");
-        // Object resultMapBean = ((LinkedHashMap<String, String>) response.get(0)).get("resultMapBean");
-        // softAssertions.assertThat(((LinkedHashMap<String, String>) processInstanceKey).get("processGroupName")).isEqualTo("Sheet Metal");
-        // softAssertions.assertThat(((LinkedHashMap<String, String>) resultMapBean)).isNotNull();
-        // softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("costingFailed")).isEqualTo(false);
-        // softAssertions.assertThat(((LinkedHashMap<String, String>) response.get(0)).get("depth")).isEqualTo("ROOT");
-        // softAssertions.assertThat(((LinkedHashMap<String, Boolean>) response.get(0)).get("secondaryProcess")).isEqualTo(false);
-        // softAssertions.assertAll();
     }
 
     @Test
@@ -438,12 +427,14 @@ public class CostResultsTests {
 
         CostResultsGcdResponse costResultsGcdResponse = acsResources.getCostResults(
             costOutputs.getScenarioIterationKey(),
-            "PROCESS", CostResultsGcdResponse.class).getResponseEntity();
+            "PROCESS",
+            CostResultsGcdResponse.class
+        ).getResponseEntity();
 
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        CostResultsGcdItem costResultsGcdItem = costResultsGcdResponse.get(0).getCostResultsGcdItem();
+        CostResultsGcdItem costResultsGcdItem = costResultsGcdResponse.get(0);
         ResultMapBean resultMapBean = costResultsGcdItem.getResultMapBean();
         ProcessInstanceKey processInstanceKey = costResultsGcdItem.getProcessInstanceKey();
 
