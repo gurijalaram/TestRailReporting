@@ -69,6 +69,9 @@ Those marked with a * are required or the job will not run
                     else if (!folder && "${MODULE}".contains("-api")) {
                         folder = "microservices"
                     }
+                    else if (!folder && "${MODULE}".contains("-agent")) {
+                        folder = "agent"
+                    }
                     else {
                           folder = "integrate"
                     }

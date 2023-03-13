@@ -1,0 +1,129 @@
+########################################################################################################################
+# Common variables file
+# Contains variables
+#  - which are independent of the environment
+#  - variables in the default section, that will be used if there is no corresponding variable in the environment file
+############################################# Global properties ########################################################
+# Define main configurations
+env: qa-test
+version: 23-1
+deployment: production
+customer: ap-int
+
+# Deployment
+production:
+  url_part: ${env}
+
+sandbox:
+  url_part: sandbox.${env}
+#==========================================================
+
+# Define the global properties not related to environment
+global:
+  console_log_level: "OFF"
+  db_recording: true
+  different_parts: true
+  different_users: true
+  schema_base_path: schemas/
+  users_csv_file: common-users.csv
+
+
+################################################################################################################################
+#  Variables in the default section that will be used if there is no equivalent variable in the environment file
+######################################################## DEFAULT VALUES ########################################################
+default:
+  aws_region: na-1
+
+###########################
+#  Core services
+  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+
+  cloud:
+    ui_url: https://cloud.${core_service_url_template}
+
+  ach:
+    api_url: https://ach-api.${core_service_url_template}
+
+  ats:
+    api_url: https://ats.${core_service_url_template}
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
+    token_issuer: 2021 R1
+    token_subject: ${${customer}.token_subject}
+    auth_application: CID
+    automation_username: qa-automation-%s@apriori.com
+    automation_password: TrumpetSnakeFridgeToasty18!%
+
+  cas:
+    ui_url: https://cas.${core_service_url_template}
+    api_url: https://cas-api.${core_service_url_template}
+
+  cus:
+    api_url: https://cus.${core_service_url_template}
+
+  cds:
+    api_url: https://cds.${core_service_url_template}
+
+  edc:
+    ui_url: https://edc.${core_service_url_template}
+    api_url: https://edc-api.${core_service_url_template}
+
+  nts:
+    api_url: https://nts.${core_service_url_template}
+###########################
+
+###########################
+#  Deployment URL
+  deployment_url_template: ${default.aws_region}-v${version}.${${deployment}.url_part}.apriori.net/
+
+  admin:
+    ui_url: https://${deployment_url_template}apriori/login
+
+  bcs:
+    api_url: https://bcs.${deployment_url_template}
+    number_of_parts: 5
+
+  cidapp:
+    api_url: https://cid-api.${deployment_url_template}
+    ui_url: https://ci-design.${deployment_url_template}
+
+  cis:
+    ui_url: https://cis.${deployment_url_template}
+    api_url: https://cis-api.${deployment_url_template}
+
+  ci-connect:
+    ui_url: https://ci-connect.${deployment_url_template}
+
+  css:
+    api_url: https://css.${deployment_url_template}
+
+  dds:
+    api_url: https://dds.${deployment_url_template}
+
+  dms:
+    api_url: https://dms.${deployment_url_template}
+
+  fms:
+    api_url: https://fms.${deployment_url_template}
+
+  sds:
+    api_url: https://sds.${deployment_url_template}
+
+  vds:
+    api_url: https://vds.${deployment_url_template}
+
+  qds:
+    api_url: https://qds.${deployment_url_template}
+
+  qms:
+    api_url: https://qms.${deployment_url_template}
+
+  reports:
+    ui_url: https://${deployment_url_template}jasperserver-pro/
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+###########################
+
+###########################
+# Other URL
+  cnh:
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
