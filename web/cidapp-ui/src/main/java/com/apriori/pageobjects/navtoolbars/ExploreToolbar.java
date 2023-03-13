@@ -665,12 +665,30 @@ public class ExploreToolbar extends MainNavBar {
      * @return HashMap
      */
     public HashMap<String, ?> getReportJQueryData() {
-        pageUtils.waitFor(5000);
+        ArrayList<HashMap<String, String>> element;
+
+        pageUtils.waitFor(3000);
+
+        element = getReportHashMap();
+
+        while (element.isEmpty()) {
+            driver.navigate().back();
+            downloadReport(EvaluatePage.class);
+
+            element = getReportHashMap();
+        }
+        return element.get(0);
+    }
+
+    private ArrayList<HashMap<String, String>> getReportHashMap() {
+        JavascriptExecutor js;
+        ArrayList<HashMap<String, String>> element;
 
         driver.get("chrome://downloads/");
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        ArrayList<HashMap<String, String>> element = (ArrayList<HashMap<String, String>>)
+        js = (JavascriptExecutor) driver;
+        element = (ArrayList<HashMap<String, String>>)
             js.executeScript("return document.querySelector('downloads-manager').shadowRoot.getElementById('downloadsList').items;");
-        return element.get(0);
+
+        return element;
     }
 }
