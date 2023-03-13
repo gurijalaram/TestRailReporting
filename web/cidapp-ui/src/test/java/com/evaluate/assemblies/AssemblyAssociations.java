@@ -40,13 +40,15 @@ import java.util.Map;
 
 public class AssemblyAssociations extends TestBase {
 
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
     private UserCredentials currentUser;
-
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder cidComponentItemA;
@@ -57,57 +59,22 @@ public class AssemblyAssociations extends TestBase {
     private ComponentInfoBuilder cidComponentItemF;
     private ComponentInfoBuilder cidComponentItemG;
     private ComponentInfoBuilder cidComponentItemH;
+    private List<ComponentInfoBuilder> listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
+        cidComponentItemG, cidComponentItemH);
 
     @After
     public void deleteScenarios() {
         if (currentUser != null) {
-            assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
-            componentAssembly = null;
-        }
-        if (cidComponentItemA != null) {
-            scenariosUtil.deleteScenario(cidComponentItemA.getComponentIdentity(), cidComponentItemA.getScenarioIdentity(), currentUser);
-            cidComponentItemA = null;
-        }
-        if (cidComponentItemB != null) {
-            scenariosUtil.deleteScenario(cidComponentItemB.getComponentIdentity(), cidComponentItemB.getScenarioIdentity(), currentUser);
-            cidComponentItemB = null;
-        }
-        if (cidComponentItemC != null) {
-            scenariosUtil.deleteScenario(cidComponentItemC.getComponentIdentity(), cidComponentItemC.getScenarioIdentity(), currentUser);
-            cidComponentItemC = null;
-        }
-        if (cidComponentItemD != null) {
-            scenariosUtil.deleteScenario(cidComponentItemD.getComponentIdentity(), cidComponentItemD.getScenarioIdentity(), currentUser);
-            cidComponentItemD = null;
-        }
-        if (cidComponentItemE != null) {
-            scenariosUtil.deleteScenario(cidComponentItemE.getComponentIdentity(), cidComponentItemE.getScenarioIdentity(), currentUser);
-            cidComponentItemE = null;
-        }
-        if (cidComponentItemF != null) {
-            scenariosUtil.deleteScenario(cidComponentItemF.getComponentIdentity(), cidComponentItemF.getScenarioIdentity(), currentUser);
-            cidComponentItemF = null;
-        }
-        if (cidComponentItemG != null) {
-            scenariosUtil.deleteScenario(cidComponentItemG.getComponentIdentity(), cidComponentItemG.getScenarioIdentity(), currentUser);
-            cidComponentItemG = null;
-        }
-        if (cidComponentItemH != null) {
-            scenariosUtil.deleteScenario(cidComponentItemH.getComponentIdentity(), cidComponentItemH.getScenarioIdentity(), currentUser);
-            cidComponentItemH = null;
-        }
-    }
+            userPreferencesUtil.resetSettings(currentUser);
 
-    @After
-    public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+            scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
         }
+        listOfSubcomponents.forEach(subcomponent -> {
+            if (subcomponent != null) {
+                scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);
+            }
+        });
     }
-
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private static UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
     @Test
     @Category(ExtendedRegression.class)
