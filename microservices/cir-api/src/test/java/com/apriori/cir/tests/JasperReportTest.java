@@ -44,7 +44,7 @@ public class JasperReportTest {
 
 
         // Get chart data point element
-        ChartDataPoint chartDataPointToTest = jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        ChartDataPoint chartDataPointToTest = jasperReportSummary.getFirstChartData().getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
 
         System.out.println(chartDataPointToTest.getAnnualSpend());
         System.out.println(chartDataPointToTest.getMassMetric());
