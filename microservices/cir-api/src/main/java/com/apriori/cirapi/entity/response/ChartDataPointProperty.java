@@ -6,7 +6,9 @@ import lombok.Data;
 @Data
 public class ChartDataPointProperty {
 
-    public ChartDataPointProperty() {}
+    public ChartDataPointProperty() {
+        // Default constructor
+    }
 
     public ChartDataPointProperty(String property, Object value) {
         this.property = property;
