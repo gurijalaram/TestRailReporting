@@ -207,20 +207,12 @@ public class JasperReportUtil {
             List<ChartDataPointProperty> chartDataPointProperties = new ArrayList<>();
 
             for (JsonNode chart : chartValues) {
-                ChartDataPointProperty chartDataPointProperty = new ChartDataPointProperty();
-
                 JsonNode property = chart.findValue("name");
                 JsonNode value = chart.findValue("data").get(i).findValue("y");
 
-                if (property == null || value == null) {
-                    continue;
+                if (property != null && value != null) {
+                    chartDataPointProperties.add(new ChartDataPointProperty(property.asText(), value.asText()));
                 }
-
-                chartDataPointProperty.setProperty(property.asText());
-                chartDataPointProperty.setValue(value.asText());
-
-
-                chartDataPointProperties.add(chartDataPointProperty);
             }
 
             chartDataPoint.setPartName(partNames.get(i).asText());

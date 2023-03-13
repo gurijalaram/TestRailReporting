@@ -6,6 +6,13 @@ import lombok.Data;
 @Data
 public class ChartDataPointProperty {
 
+    public ChartDataPointProperty() {}
+
+    public ChartDataPointProperty(String property, Object value) {
+        this.property = property;
+        this.value = value;
+    }
+
     @JsonProperty("prop")
     private String property;
 
