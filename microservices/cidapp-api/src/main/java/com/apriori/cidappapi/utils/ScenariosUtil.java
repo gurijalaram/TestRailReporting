@@ -539,7 +539,7 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .options(Options.builder()
-                        .scenarioName(groupPublishRequest.getComponentInfo().getScenarioName())
+                        .scenarioName(groupPublishRequest.getPublishRequest().getScenarioName())
                         .override(groupPublishRequest.getPublishRequest().getOverride())
                         .costMaturity(groupPublishRequest.getPublishRequest().getCostMaturity().toUpperCase())
                         .status(groupPublishRequest.getPublishRequest().getStatus().toUpperCase())
