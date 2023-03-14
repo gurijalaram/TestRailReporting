@@ -665,13 +665,21 @@ public class ExploreToolbar extends MainNavBar {
      * @return HashMap
      */
     public HashMap<String, ?> getReportJQueryData() {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+        final int WAIT_TIME = 15;
         ArrayList<HashMap<String, String>> element;
 
         element = getReportMapData();
 
-        while (element.isEmpty()) {
+        while (element.isEmpty() && ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
             driver.navigate().back();
+            element = getReportMapData();
+        }
 
+        while (!element.get(0).get("state").equalsIgnoreCase("Complete") &&
+            ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
+
+            driver.navigate().back();
             element = getReportMapData();
         }
         return element.get(0);
