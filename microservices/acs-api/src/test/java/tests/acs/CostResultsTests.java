@@ -92,7 +92,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(testCaseId = "21584")
     @Description("Get Root Cost Results after Costing Stock Machining")
     public void testGetCostRootResultsStockMachining() {
         CostResultsTests costResultsTests = new CostResultsTests();
@@ -122,7 +122,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(testCaseId = "21575")
     @Description("Get Root Cost Results after Costing Plastic Molding")
     public void testGetCostRootResultsPlasticMolding() {
         CostResultsTests costResultsTests = new CostResultsTests();
@@ -152,7 +152,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(testCaseId = "21571")
     @Description("Get Root Cost Results after Costing Casting - Die")
     public void testGetCostRootResultsCastingDie() {
         CostResultsTests costResultsTests = new CostResultsTests();
@@ -182,7 +182,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(testCaseId = "21572")
     @Description("Get Root Cost Results after Costing Casting - Sand")
     public void testGetCostRootResultsCastingSand() {
         CostResultsTests costResultsTests = new CostResultsTests();
@@ -212,7 +212,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(testCaseId = "21573")
     @Description("Get Root Cost Results after Costing Casting - Investment")
     public void testGetCostRootResultsCastingInvestment() {
         CostResultsTests costResultsTests = new CostResultsTests();
