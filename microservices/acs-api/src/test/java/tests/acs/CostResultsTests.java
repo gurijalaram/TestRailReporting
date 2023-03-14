@@ -24,7 +24,7 @@ import testsuites.categories.AcsTest;
 
 public class CostResultsTests {
 
-    private CostResultsRootResponse uploadAndCost(String processGroup, String fileName, String depth){
+    private CostResultsRootResponse uploadAndCost(String processGroup, String fileName, String depth) {
         AcsResources acsResources = new AcsResources();
         FileUploadResources fileUploadResources = new FileUploadResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
