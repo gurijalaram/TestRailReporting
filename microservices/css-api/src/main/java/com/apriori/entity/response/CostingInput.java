@@ -37,6 +37,7 @@ public class CostingInput {
     private Thumbnail thumbnail;
     private String materialUtilizationMode;
     private List<RoutingNodeOptions> routingNodeOptions;
+    private String twoModelSourceScenarioIdentity;
 
     public static class ProcessSetupOptions {
     }

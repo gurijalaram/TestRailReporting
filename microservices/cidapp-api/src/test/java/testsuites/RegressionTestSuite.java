@@ -14,6 +14,7 @@ import com.evaluate.IncludeAndExcludeTests;
 import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.ReCostScenarioTests;
+import com.evaluate.RoutingsTests;
 import com.evaluate.ScenariosTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -38,7 +39,8 @@ import testsuites.suiteinterfaces.SmokeTests;
     GroupPublishTests.class,
     ComponentRedirectTests.class,
     MaterialSelectionTests.class,
-    SettingsTests.class
+    SettingsTests.class,
+    RoutingsTests.class
 })
 public class RegressionTestSuite {
 }
