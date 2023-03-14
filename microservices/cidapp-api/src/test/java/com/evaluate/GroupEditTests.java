@@ -39,14 +39,14 @@ public class GroupEditTests {
     private CssComponent cssComponent = new CssComponent();
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    final String charger_base = "titan charger base";
-    final String charger_lead = "titan charger lead";
-    final String charger_upper = "titan charger upper";
+    final String chargerBase = "titan charger base";
+    final String chargerLead = "titan charger lead";
+    final String chargerUpper = "titan charger upper";
     final String componentExtension = ".SLDPRT";
     final String assemblyName = "titan charger ass";
     final String assemblyExtension = ".SLDASM";
 
-    final List<String> subComponentNames = Arrays.asList(charger_base, charger_lead, charger_upper);
+    final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead, chargerUpper);
     final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
     /**
@@ -78,7 +78,7 @@ public class GroupEditTests {
     public void testEditPublicSubcomponentWithNoPrivateCounterpart() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final List<String> subComponentNames = Collections.singletonList(charger_base);
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -98,7 +98,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -125,12 +125,12 @@ public class GroupEditTests {
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
-//            .scenarioName(scenarioName)
+            .scenarioName(scenarioName)
             .build();
 
         componentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         componentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
 
@@ -169,7 +169,7 @@ public class GroupEditTests {
         editedComponentAssembly.setScenarioName(newScenarioName);
         editedComponentAssembly.getSubComponents().forEach(component -> component.setScenarioName(newScenarioName));
 
-        scenariosUtil.postEditGroupScenarios(editedComponentAssembly, forkRequest, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(editedComponentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         editedComponentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
 
@@ -182,7 +182,7 @@ public class GroupEditTests {
     public void testEditPublicSubcomponentOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final List<String> subComponentNames = Arrays.asList(charger_base);
+        final List<String> subComponentNames = Arrays.asList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -204,14 +204,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, charger_base);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -223,7 +223,7 @@ public class GroupEditTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final List<String> subComponentNames = Arrays.asList(charger_base);
+        final List<String> subComponentNames = Arrays.asList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -245,14 +245,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, charger_base);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -283,14 +283,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase, chargerLead, chargerUpper);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -322,14 +322,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, charger_base, charger_lead, charger_upper);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase, chargerLead, chargerUpper);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -339,7 +339,7 @@ public class GroupEditTests {
     @Description("Attempt to edit a sub-component that does not exist")
     public void testEditSubcomponentThatDoesNotExist() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final List<String> subComponentNames = Arrays.asList(charger_base, charger_lead);
+        final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         final String UNKNOWN_SCENARIO_ID = "41EBF4GGGGGG";

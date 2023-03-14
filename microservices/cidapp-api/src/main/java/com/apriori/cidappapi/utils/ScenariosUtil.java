@@ -380,8 +380,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
         List<GroupItems> groupItems = new ArrayList<>();
-        if (componentInfo.getSubComponents() != null)
-        {
+        if (componentInfo.getSubComponents() != null) {
             groupItems = componentInfo.getSubComponents()
                 .stream()
                 .map(component -> GroupItems.builder()
