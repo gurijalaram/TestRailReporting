@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -24,9 +23,6 @@ public class DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX extends JsonDeserializer
             // making sure that date has max 3 trailing numbers after seconds
             // example: 2018-06-28T05:50:59.533242Z --> 2018-06-28T05:50:59.000Z
             String formattedTime = jsonParser.getText().substring(0, 20) + "000Z";
-            return LocalDateTime.parse(formattedTime, formatter);
-        } else if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_NUMBER_INT)) {
-            String formattedTime = Instant.ofEpochMilli(jsonParser.getLongValue()).toString().substring(0, 19) + ".000Z";
             return LocalDateTime.parse(formattedTime, formatter);
         }
         return null;
