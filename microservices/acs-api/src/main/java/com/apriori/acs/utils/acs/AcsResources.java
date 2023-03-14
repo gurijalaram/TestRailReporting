@@ -1,6 +1,7 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
@@ -32,8 +33,12 @@ import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettin
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesInputs;
 import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesResponse;
+import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.Constants;
+import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authorization.OldAuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -96,7 +101,7 @@ public class AcsResources {
     /**
      * Gets All Material Stocks Info
      *
-     * @param vpeName - String
+     * @param vpeName      - String
      * @param processGroup - String
      * @param materialName - String
      * @return instance of AllMaterialSocksInfoResponse
@@ -535,8 +540,8 @@ public class AcsResources {
      * Set user preferences
      *
      * @param costTableDecimalPlaces - String - value to set
-     * @param useVpe - String - value to set
-     * @param toleranceMode - String - value to set
+     * @param useVpe                 - String - value to set
+     * @param toleranceMode          - String - value to set
      * @return GenericResourceCreatedResponse instance
      */
     public GenericResourceCreatedResponse setUserPreferences(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
@@ -575,7 +580,7 @@ public class AcsResources {
     /**
      * Sets user preference by name
      *
-     * @param prefToSetKey - String - key of preference to set
+     * @param prefToSetKey   - String - key of preference to set
      * @param prefToSetValue - String - value of preference to set
      * @return GenericResourceCreatedResponse instance
      */
@@ -595,7 +600,7 @@ public class AcsResources {
      * Set production info
      *
      * @param getProductionInfoResponse - for use in body of request
-     * @param scenarioIterationKey - scenario to set production info for
+     * @param scenarioIterationKey      - scenario to set production info for
      * @return GenericResourceCreatedIdResponse
      */
     public GenericResourceCreatedIdResponse setProductionInfo(ProductionInfoResponse getProductionInfoResponse,
@@ -652,8 +657,8 @@ public class AcsResources {
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
-     * @param vpeName - String - value to set
-     * @param processGroupName - String - Selected from ENUM
+     * @param vpeName              - String - value to set
+     * @param processGroupName     - String - Selected from ENUM
      * @return GetAvailableRoutingsResponse instance
      */
 
@@ -778,7 +783,7 @@ public class AcsResources {
      * Gets image by scenario iteration key
      *
      * @param scenarioIterationKey - values to input into url
-     * @param getWebImage - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
+     * @param getWebImage          - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
      * @return String - Base64 image
      */
     public String getImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey, boolean getWebImage) {
@@ -911,7 +916,7 @@ public class AcsResources {
     /**
      * Gets Artifact Properties
      *
-     * @param scenarioIterationKey - ScenarioIterationKey to use in url
+     * @param scenarioIterationKey  - ScenarioIterationKey to use in url
      * @param getGcdMappingResponse - GetGcdMappingResponse to use in body
      * @return GetArtifactPropertiesResponse instance
      */
@@ -940,6 +945,47 @@ public class AcsResources {
             );
 
         return (ArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Upload and cost part
+     *
+     * @param processGroup         - the process group
+     * @param fileName             - the filename
+     * @param depth                - the depth
+     * @param productionInfoInputs - the production information
+     * @return CostResultsResponse object
+     */
+    public CostResultsRootResponse uploadAndCost(String processGroup, String fileName, String depth, NewPartRequest productionInfoInputs) {
+        AcsResources acsResources = new AcsResources();
+        FileUploadResources fileUploadResources = new FileUploadResources();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            fileName,
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        return acsResources.getCostResults(
+            costOutputs.getScenarioIterationKey(),
+            depth,
+            CostResultsRootResponse.class
+        ).getResponseEntity();
     }
 
     /**
