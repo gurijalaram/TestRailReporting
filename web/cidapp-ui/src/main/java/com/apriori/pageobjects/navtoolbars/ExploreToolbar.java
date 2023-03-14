@@ -667,20 +667,17 @@ public class ExploreToolbar extends MainNavBar {
     public HashMap<String, ?> getReportJQueryData() {
         ArrayList<HashMap<String, String>> element;
 
-        pageUtils.waitFor(3000);
-
-        element = getReportHashMap();
+        element = getReportMapData();
 
         while (element.isEmpty()) {
             driver.navigate().back();
-            downloadReport(EvaluatePage.class);
 
-            element = getReportHashMap();
+            element = getReportMapData();
         }
         return element.get(0);
     }
 
-    private ArrayList<HashMap<String, String>> getReportHashMap() {
+    private ArrayList<HashMap<String, String>> getReportMapData() {
         JavascriptExecutor js;
         ArrayList<HashMap<String, String>> element;
 
