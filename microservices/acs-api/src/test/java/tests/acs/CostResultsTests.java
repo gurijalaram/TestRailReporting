@@ -18,6 +18,7 @@ import testsuites.categories.AcsTest;
 
 public class CostResultsTests {
     private AcsResources acsResources = new AcsResources();
+    private WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
     @Test
     @Category(AcsTest.class)
@@ -26,7 +27,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
 
-        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", new WorkorderAPITests().setupProductionInfoInputs());
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -51,7 +52,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsStockMachining() {
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
 
-        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", new WorkorderAPITests().setupProductionInfoInputs());
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -76,7 +77,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsPlasticMolding() {
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
 
-        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", "ROOT", new WorkorderAPITests().setupProductionInfoInputs());
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -101,7 +102,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
 
-        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "CastedPart.CATPart", "ROOT", new WorkorderAPITests().setupProductionInfoInputs());
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "CastedPart.CATPart", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -129,7 +130,7 @@ public class CostResultsTests {
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(
             processGroup,
             "SandCastIssues.SLDPRT",
-            "ROOT", new WorkorderAPITests().setupProductionInfoInputs()
+            "ROOT", workorderAPITests.setupProductionInfoInputs()
         );
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -155,7 +156,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
 
-        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", "ROOT", new WorkorderAPITests().setupProductionInfoInputs());
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
