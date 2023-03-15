@@ -31,7 +31,7 @@ import testsuites.suiteinterface.IgnoreTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(ExtendedRegression.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
-@Suite.SuiteClasses( {
+@Suite.SuiteClasses({
     ComparisonTests.class,
     ProcessRoutingTests.class,
     PsoEditTests.class,
