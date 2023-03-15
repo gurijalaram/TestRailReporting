@@ -63,8 +63,8 @@ import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("768")
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory( {SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
-@Suite.SuiteClasses( {
+@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
+@Suite.SuiteClasses({
     EditAssembliesTest.class,
     GroupCostingTests.class,
     CostAllCadTests.class,

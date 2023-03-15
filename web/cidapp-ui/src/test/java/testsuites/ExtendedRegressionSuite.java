@@ -7,9 +7,9 @@ import com.compare.PublicPrivateComparisonTests;
 import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.HingeAssemblyAssociationsTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
+import com.evaluate.assemblies.HingeAssemblyAssociationsTests;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
@@ -31,7 +31,7 @@ import testsuites.suiteinterface.IgnoreTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(ExtendedRegression.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
-@Suite.SuiteClasses({
+@Suite.SuiteClasses( {
     ComparisonTests.class,
     ProcessRoutingTests.class,
     PsoEditTests.class,
