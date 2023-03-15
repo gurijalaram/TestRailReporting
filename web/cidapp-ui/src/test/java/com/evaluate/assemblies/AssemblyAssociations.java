@@ -59,8 +59,6 @@ public class AssemblyAssociations extends TestBase {
     private ComponentInfoBuilder cidComponentItemF;
     private ComponentInfoBuilder cidComponentItemG;
     private ComponentInfoBuilder cidComponentItemH;
-    private List<ComponentInfoBuilder> listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
-        cidComponentItemG, cidComponentItemH);
 
     @After
     public void deleteScenarios() {
@@ -69,6 +67,10 @@ public class AssemblyAssociations extends TestBase {
 
             scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
         }
+
+        List<ComponentInfoBuilder> listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
+            cidComponentItemG, cidComponentItemH);
+
         listOfSubcomponents.forEach(subcomponent -> {
             if (subcomponent != null) {
                 scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);
