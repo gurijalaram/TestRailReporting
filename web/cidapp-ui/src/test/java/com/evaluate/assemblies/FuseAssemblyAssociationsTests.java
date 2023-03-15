@@ -6,7 +6,6 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
