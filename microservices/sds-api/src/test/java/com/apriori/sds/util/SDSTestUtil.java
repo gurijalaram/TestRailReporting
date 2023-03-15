@@ -216,6 +216,19 @@ public abstract class SDSTestUtil extends TestUtil {
             SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED);
     }
 
+    /**
+     * Gets the costed component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public static List<ScenarioItem> getCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return new CssComponent().getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName.split("\\.", 2)[0], SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE);
+    }
+
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
@@ -348,7 +361,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return getUnCostedComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
+        return getCostedComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
     }
 
     /**
