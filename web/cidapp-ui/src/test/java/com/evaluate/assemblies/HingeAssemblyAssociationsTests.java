@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HingeAssemblyAssociations extends TestBase {
+public class HingeAssemblyAssociationsTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
@@ -70,8 +70,6 @@ public class HingeAssemblyAssociations extends TestBase {
 
     @Before
     public void testSetup() {
-        listOfSubcomponents = Collections.singletonList(cidComponentItemA);
-
         hingeAssembly = "Hinge assembly";
         assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         assemblyExtension = ".SLDASM";
@@ -106,6 +104,9 @@ public class HingeAssemblyAssociations extends TestBase {
 
             scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
         }
+
+        listOfSubcomponents = Collections.singletonList(cidComponentItemA);
+
         listOfSubcomponents.forEach(subcomponent -> {
             if (subcomponent != null) {
                 scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);

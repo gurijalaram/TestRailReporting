@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FuseAssemblyAssociations extends TestBase {
+public class FuseAssemblyAssociationsTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
@@ -76,9 +76,6 @@ public class FuseAssemblyAssociations extends TestBase {
 
     @Before
     public void testSetup() {
-        listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
-            cidComponentItemG, cidComponentItemH);
-
         fuse_block_asm = "Auto_Fuse_Block_Asm";
         assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         assemblyExtension = ".CATProduct";
@@ -124,6 +121,10 @@ public class FuseAssemblyAssociations extends TestBase {
 
             scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
         }
+
+        listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
+            cidComponentItemG, cidComponentItemH);
+
         listOfSubcomponents.forEach(subcomponent -> {
             if (subcomponent != null) {
                 scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);

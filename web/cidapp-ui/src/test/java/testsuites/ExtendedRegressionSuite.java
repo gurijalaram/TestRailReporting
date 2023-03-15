@@ -7,7 +7,7 @@ import com.compare.PublicPrivateComparisonTests;
 import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.AssemblyAssociations;
+import com.evaluate.assemblies.HingeAssemblyAssociationsTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
@@ -36,7 +36,7 @@ import testsuites.suiteinterface.IgnoreTests;
     ProcessRoutingTests.class,
     PsoEditTests.class,
     TwoModelMachiningTests.class,
-    AssemblyAssociations.class,
+    HingeAssemblyAssociationsTests.class,
     EditAssembliesTest.class,
     GroupEditAssemblies.class,
     IncludeAndExcludeNestedAssemblyTests.class,

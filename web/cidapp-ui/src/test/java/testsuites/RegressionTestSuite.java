@@ -17,10 +17,10 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.AssemblyAssociations;
 import com.evaluate.assemblies.AssemblyGroupDeleteTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.FiltersTests;
+import com.evaluate.assemblies.FuseAssemblyAssociationsTests;
 import com.evaluate.assemblies.GroupCostingTests;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
@@ -63,8 +63,8 @@ import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("768")
 @RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
-@Suite.SuiteClasses({
+@Categories.ExcludeCategory( {SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
+@Suite.SuiteClasses( {
     EditAssembliesTest.class,
     GroupCostingTests.class,
     CostAllCadTests.class,
@@ -112,9 +112,9 @@ import testsuites.suiteinterface.SmokeTests;
     GroupPublishTests.class,
     MachiningStrategyTests.class,
     GroupMachineStrategyApplyTests.class,
-    AssemblyAssociations.class,
     UpdateCADFileTests.class,
-    AssemblyGroupDeleteTests.class
+    AssemblyGroupDeleteTests.class,
+    FuseAssemblyAssociationsTests.class
 })
 public class RegressionTestSuite {
 }
