@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.entity.response.RoutingNodeOptions;
+import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.Routings;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -27,39 +29,14 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoutingsTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private SoftAssertions softAssertions = new SoftAssertions();
+    private final SoftAssertions softAssertions = new SoftAssertions();
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final IterationsUtil iterationsUtil = new IterationsUtil();
-
-    @Test
-    @Description("Test routings")
-    public void cadFormatSLDPRT() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
-
-        softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
-
-        routings.getItems().forEach(routing -> {
-            softAssertions.assertThat(routing.getDigitalFactoryName()).isNotEmpty();
-            softAssertions.assertThat(routing.getDisplayName()).isNotEmpty();
-            softAssertions.assertThat(routing.getName()).isNotEmpty();
-            softAssertions.assertThat(routing.getProcessGroupName()).isNotEmpty();
-        });
-
-        softAssertions.assertAll();
-    }
 
     @Test
     @TestRail(testCaseId = {"14983"})
@@ -574,5 +551,80 @@ public class RoutingsTests {
             scenarioResponse.getIdentity()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14962"})
+    @Description("Verify Get available routings API returns appropriate routings for 2-Model Machining")
+    public void testAvailableRoutingForTwoModelMachining() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        final String componentName = "casting_BEFORE_machining";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.TWO_MODEL_MACHINING;
+        final String componentName2 = "casting_AFTER_machining";
+        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".stp");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        CostingTemplate costingTemplate1 = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        ScenarioResponse scenarioResponse1 = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate1, currentUser).createCostComponent();
+
+        CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(processGroupEnum2.getProcessGroup()).twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
+        ScenarioResponse scenarioResponse2 = new DataCreationUtil(componentName2, scenarioName, processGroupEnum2, resourceFile2, costingTemplate2, currentUser).createCostComponent();
+
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName2, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse2.getIdentity()).getResponseEntity();
+
+        softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "2AL+3AM Routing",
+            "2AL+4AM Routing", "2AL+5AM Routing", "3 Axis Lathe Routing", "MillTurn Routing", "Drill Press Routing");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15821"})
+    @Description("Verify save routing with costing template through API")
+    public void testSaveRouting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "bracket_basic";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .costingTemplate(costingTemplate)
+            .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
+
+        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
+
+        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).isEqualTo("Material Stock / Turret Press / Bend Brake");
+
+        RoutingNodeOptions option = new RoutingNodeOptions(componentResponse.getScenarioIdentity(), "aPriori USA", "[CTL]/Laser Punch/[Bend]", "Sheet Metal");
+        List<RoutingNodeOptions> routingNodeOptions = new ArrayList<>();
+        routingNodeOptions.add(option);
+
+        CostingTemplate costingTemplateWithRouting = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).routingNodeOptions(routingNodeOptions).build();
+
+        componentResponse.setCostingTemplate(costingTemplateWithRouting);
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ResponseWrapper<ComponentIteration> componentIterationResponseWithRouting = iterationsUtil.getComponentIterationLatest(componentResponse);
+
+        AnalysisOfScenario analysisOfScenarioWithRouting = componentIterationResponseWithRouting.getResponseEntity().getAnalysisOfScenario();
+
+        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake");
+
+        softAssertions.assertAll();
     }
 }

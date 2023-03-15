@@ -3,12 +3,13 @@ package testsuites;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.compare.ComparisonTests;
+import com.compare.PublicPrivateComparisonTests;
 import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.AssemblyAssociations;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
+import com.evaluate.assemblies.HingeAssemblyAssociationsTests;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
@@ -35,7 +36,7 @@ import testsuites.suiteinterface.IgnoreTests;
     ProcessRoutingTests.class,
     PsoEditTests.class,
     TwoModelMachiningTests.class,
-    AssemblyAssociations.class,
+    HingeAssemblyAssociationsTests.class,
     EditAssembliesTest.class,
     GroupEditAssemblies.class,
     IncludeAndExcludeNestedAssemblyTests.class,
@@ -49,7 +50,8 @@ import testsuites.suiteinterface.IgnoreTests;
     MaterialPMITests.class,
     PartNestingTests.class,
     GroupPublishTests.class,
-    SettingsTests.class
+    SettingsTests.class,
+    PublicPrivateComparisonTests.class
 })
 public class ExtendedRegressionSuite {
 }

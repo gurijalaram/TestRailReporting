@@ -52,6 +52,7 @@ public class ComponentIteration {
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
     private PartNestingDiagram partNestingDiagram;
     private Boolean hasThumbnail;
+    private Boolean hasWatchpointReport;
     private Boolean hasWebImage;
     private Thumbnail thumbnail;
     private Material material;
@@ -60,5 +61,4 @@ public class ComponentIteration {
     private List<ScenarioDesignIssues> scenarioDesignIssues;
     private List<ScenarioDesignNotices> scenarioDesignNotices;
     private Boolean hasCustomImage;
-    private Boolean hasWatchpointReport;
 }
