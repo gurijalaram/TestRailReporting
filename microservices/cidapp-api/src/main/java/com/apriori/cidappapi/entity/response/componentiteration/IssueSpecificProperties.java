@@ -43,4 +43,5 @@ public class IssueSpecificProperties  {
     private String holeDiameter;
     private String holeLength;
     private String msgTolType;
+    private String cheaperFinishOptions;
 }
