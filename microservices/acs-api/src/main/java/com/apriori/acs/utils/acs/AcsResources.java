@@ -114,9 +114,9 @@ public class AcsResources {
             .headers(headers)
             .inlineVariables(
                 vpeName,
-                processGroup,
-                materialName
-            ).expectedResponseCode(HttpStatus.SC_OK);
+                processGroup)
+            .queryParams(new QueryParams().use("materialName", materialName))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return (AllMaterialStocksInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -643,10 +643,11 @@ public class AcsResources {
                     scenarioIterationKey.getScenarioKey().getTypeName(),
                     URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
                     UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
-                    scenarioIterationKey.getIteration().toString(),
-                    depth, StandardCharsets.UTF_8.toString())
+                    scenarioIterationKey.getIteration().toString())
+                .queryParams(new QueryParams().use("depth", depth))
                 .urlEncodingEnabled(false);
         } catch (UnsupportedEncodingException e) {
+            log.error("just to log an error with logger too");
             throw new RuntimeException(e);
         }
 
