@@ -118,7 +118,7 @@ public class FuseAssemblyAssociationsTests extends TestBase {
         if (currentUser != null) {
             userPreferencesUtil.resetSettings(currentUser);
 
-            scenariosUtil.deleteScenario(componentAssembly.getComponentIdentity(), componentAssembly.getScenarioIdentity(), currentUser);
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
         }
 
         listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemB, cidComponentItemC, cidComponentItemD, cidComponentItemE, cidComponentItemF,
