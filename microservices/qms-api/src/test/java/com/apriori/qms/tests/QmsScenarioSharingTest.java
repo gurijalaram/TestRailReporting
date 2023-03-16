@@ -51,7 +51,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     public void getScenarioProjectUsers() {
         ScenarioProjectUserResponse responseWrapper = QmsScenarioDiscussionResources.getScenarioProjectUsers(
             scenarioItem.getComponentIdentity(),scenarioItem.getScenarioIdentity(),currentUser);
-        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(responseWrapper.size()).isGreaterThan(0);
     }
 
     @After
