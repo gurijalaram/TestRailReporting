@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FuseAssemblyAssociationsTests extends TestBase {
+public class MaturityAssemblyAssociationsTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
@@ -129,39 +129,6 @@ public class FuseAssemblyAssociationsTests extends TestBase {
                 scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);
             }
         });
-    }
-
-    @Test
-    @TestRail(testCaseId = {"21669", "21670"})
-    @Description("Validate, with Prefer Maturity strategy, private sub-components with same scenario name are associated to assembly")
-    public void testMaturityPresetPrivateWithSameNameAndMissing() {
-
-        loginPage = new CidAppLoginPage(driver);
-
-        cidComponentItemA = loginPage.login(currentUser)
-            .uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
-
-        componentsTreePage = new EvaluatePage(driver).refresh()
-            .navigateToScenario(componentAssembly)
-            .openComponents()
-            .addColumn(ColumnsEnum.SCENARIO_TYPE)
-            .addColumn(ColumnsEnum.PUBLISHED);
-
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.VERIFIED.getStatusIcon());
-
-        componentsTreePage.closePanel()
-            .navigateToScenario(cidComponentItemA)
-            .openComponents();
-
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, newScenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
-
-        softAssertions.assertAll();
     }
 
     @Test

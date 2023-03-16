@@ -9,10 +9,10 @@ import com.evaluate.PsoEditTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
-import com.evaluate.assemblies.HingeAssemblyAssociationsTests;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
+import com.evaluate.assemblies.PrivatePublicAssemblyAssociationsTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -36,7 +36,7 @@ import testsuites.suiteinterface.IgnoreTests;
     ProcessRoutingTests.class,
     PsoEditTests.class,
     TwoModelMachiningTests.class,
-    HingeAssemblyAssociationsTests.class,
+    PrivatePublicAssemblyAssociationsTests.class,
     EditAssembliesTest.class,
     GroupEditAssemblies.class,
     IncludeAndExcludeNestedAssemblyTests.class,

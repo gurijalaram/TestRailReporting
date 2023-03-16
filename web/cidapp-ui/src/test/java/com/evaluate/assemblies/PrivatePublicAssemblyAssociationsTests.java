@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HingeAssemblyAssociationsTests extends TestBase {
+public class PrivatePublicAssemblyAssociationsTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();

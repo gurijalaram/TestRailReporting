@@ -20,12 +20,13 @@ import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.AssemblyGroupDeleteTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.FiltersTests;
-import com.evaluate.assemblies.FuseAssemblyAssociationsTests;
 import com.evaluate.assemblies.GroupCostingTests;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
+import com.evaluate.assemblies.MaturityAssemblyAssociationsTests;
+import com.evaluate.assemblies.MissingAssemblyAssociationsTests;
 import com.evaluate.assemblies.UpdateCADFileTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
@@ -114,7 +115,8 @@ import testsuites.suiteinterface.SmokeTests;
     GroupMachineStrategyApplyTests.class,
     UpdateCADFileTests.class,
     AssemblyGroupDeleteTests.class,
-    FuseAssemblyAssociationsTests.class
+    MaturityAssemblyAssociationsTests.class,
+    MissingAssemblyAssociationsTests.class
 })
 public class RegressionTestSuite {
 }
