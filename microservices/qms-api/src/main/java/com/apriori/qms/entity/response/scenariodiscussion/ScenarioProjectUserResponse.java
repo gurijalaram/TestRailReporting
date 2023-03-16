@@ -1,6 +1,7 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
 import com.apriori.utils.http.enums.Schema;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
