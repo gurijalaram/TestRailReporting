@@ -20,6 +20,24 @@ public class CostResultsTests {
     private AcsResources acsResources = new AcsResources();
     private WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
+    private void costResultsAssertion(CostResultsRootResponse costResultsRootItems, String processGroupName) {
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        CostResultsRootItem costResultsRootItem = costResultsRootItems.get(0);
+        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
+        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
+        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
+
+        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo(processGroupName);
+        softAssertions.assertThat(resultMapBean).isNotNull();
+        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
+        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
+        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
+        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
+        softAssertions.assertAll();
+    }
+
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
@@ -29,20 +47,7 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Sheet Metal");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal");
     }
 
     @Test
@@ -54,20 +59,7 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Stock Machining");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Stock Machining");
     }
 
     @Test
@@ -79,20 +71,7 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Plastic Molding");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Plastic Molding");
     }
 
     @Test
@@ -104,20 +83,7 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "CastedPart.CATPart", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Casting - Die");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Casting - Die");
     }
 
     @Test
@@ -133,20 +99,7 @@ public class CostResultsTests {
             "ROOT", workorderAPITests.setupProductionInfoInputs()
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Casting - Sand");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Casting - Sand");
     }
 
     @Test
@@ -158,19 +111,6 @@ public class CostResultsTests {
 
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        CostResultsRootItem costResultsRootItem = costResultsRootResponse.get(0);
-        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo("Casting - Investment");
-        softAssertions.assertThat(resultMapBean).isNotNull();
-        softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
-        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
-        softAssertions.assertAll();
+        costResultsAssertion(costResultsRootResponse, "Casting - Investment");
     }
 }
