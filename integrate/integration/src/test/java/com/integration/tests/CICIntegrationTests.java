@@ -11,7 +11,8 @@ import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.email.GraphEmailService;
@@ -32,6 +33,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -73,7 +75,7 @@ public class CICIntegrationTests extends TestBase {
     @Description("Test creating, invoking, tracking and deletion of a workflow")
     public void testCreateAndDeleteWorkflow() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         log.info(String.format("Start Creating Workflow >> %s <<", workFlowData.getWorkflowName()));
         SchedulePage schedulePage = new CicLoginPage(driver)
             .login(currentUser)
@@ -106,7 +108,7 @@ public class CICIntegrationTests extends TestBase {
 
     @Test
     @Issue("DEVOPS-3035")
-    @TestRail(testCaseId = {"12046"})
+    @TestRail(testCaseId = {"12046", "17113"})
     @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
     public void testVerifyWatchPointReport() {
         workflowData = String.format(CicApiTestUtil.getWorkflowData("WatchPointReportData.json"), CicApiTestUtil.getCustomerName(),
@@ -130,6 +132,8 @@ public class CICIntegrationTests extends TestBase {
         //Verify Email Notification
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage).isNotNull();
+        softAssertions.assertThat(new PageUtils(driver).stopPageLoadAndGetCurrentUrl(StringUtils.substringBetween(emailMessage.getBody().getContent(), "a href=\"", "\"")))
+            .contains("source=apg&medium=email&content=dfmsummary");
         ExcelService excelReport = emailMessage.emailMessageAttachment().getFileAttachment();
         softAssertions.assertThat(excelReport).isNotNull();
         softAssertions.assertThat(excelReport.getSheetCount()).isEqualTo(7);
