@@ -7,7 +7,6 @@ import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -41,7 +40,7 @@ public class CostingInputTabTests extends TestBase {
     @Description("Test Cost Inputs Tab Scenario Name field validation,  ability add and delete row")
     public void testValidateScenarioField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
@@ -58,7 +57,7 @@ public class CostingInputTabTests extends TestBase {
             .clickWFQueryDefNextBtn();
 
         log.info("###### Validate Scenario name with more than 255 characters ####");
-        workFlowData.getCostingInputsData().get(0).setFieldValue(StringUtils.generateString(266));
+        workFlowData.getCostingInputsData().get(0).setFieldValue(GenerateStringUtil.generateString(266));
         costingInputsPart = costingInputsPart.addCostingInputFields(workFlowData.getCostingInputsData().size());
         softAssertions.assertThat(costingInputsPart.getCiNextButton().isEnabled()).isEqualTo(false);
 
@@ -78,7 +77,7 @@ public class CostingInputTabTests extends TestBase {
     @Description("Test Cost Inputs Tab Description validation")
     public void testValidateDescriptionField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputNegativeTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
@@ -106,7 +105,7 @@ public class CostingInputTabTests extends TestBase {
     @Description("Verify correct fields are present on Costing Inputs tab")
     public void testVerifyCorrectFields() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputTestData.json",WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         String[] expectedConnecFields = new String[] {"Scenario Name", "Process Group", "Annual Volume"};
         String[] mappingRuleFields = new String[] {"Mapped from PLM", "Default If No PLM Value", "Constant"};
         softAssertions = new SoftAssertions();
@@ -135,7 +134,7 @@ public class CostingInputTabTests extends TestBase {
     @Description("Verify Date picker field is displayed for Costing Inputs Custom Date field value")
     public void testVerifyConnectFieldCustomDateField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputCustomDateTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
