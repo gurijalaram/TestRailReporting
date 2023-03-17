@@ -13,7 +13,7 @@ ap-int:
   token_subject: 4127
   ci-connect:
     customer_identity: 6C1F8C1D4D75
-    agent_api_url: http://conqsct01:8811/
+    agent_api_url: http://conqscic02.fbc.com:8811/
     plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
     customer_name: aPrioriInternal_Customer
 
