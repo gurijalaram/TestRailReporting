@@ -1,33 +1,23 @@
 package com.integration.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.AdminLoginPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -35,9 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,8 +53,8 @@ public class CIDIntegrationTests extends TestBase {
     public static void setup() {
         testDataService = new TestDataService();
         testDataService.setInputData(testDataService.deserializeDataToMap("CIDIntegrationTestData.json"));
-        testDataService.getInputData().replace("scenarioName", StringUtils.saltString((String) testDataService.getInputData().get("scenarioName")));
-        testDataService.getInputData().replace("exportSetName", StringUtils.saltString((String) testDataService.getInputData().get("exportSetName")));
+        testDataService.getInputData().replace("scenarioName", GenerateStringUtil.saltString((String) testDataService.getInputData().get("scenarioName")));
+        testDataService.getInputData().replace("exportSetName", GenerateStringUtil.saltString((String) testDataService.getInputData().get("exportSetName")));
     }
 
     @Test
