@@ -9,7 +9,7 @@ import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -43,7 +43,7 @@ public class WorkflowTests extends TestBase {
     public void testCreateEditAndDeleteWorkflow() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         // CREATE WORK FLOW
         WorkFlowFeatures workFlowFeatures = new CicLoginPage(driver)
             .login(currentUser)
@@ -59,7 +59,7 @@ public class WorkflowTests extends TestBase {
         workflowHome.selectScheduleTab()
             .selectWorkflow(workFlowData.getWorkflowName())
             .clickEditButton();
-        workFlowData.setWorkflowName(StringUtils.saltString("- - - 0 0 Auto_Upd"));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("- - - 0 0 Auto_Upd"));
         workflowHome = workFlowFeatures.editWorkflow();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();

@@ -163,6 +163,47 @@ public class PlmIntegrationTests extends TestBase {
         softAssertions.assertThat(agentWorkflowJobPartsResult.getScenarioName()).isEqualTo("3924 scenario name");
     }
 
+    @Test
+    @TestRail(testCaseId = {"4330"})
+    @Description("Test 'Constant' mapping rule")
+    public void testWorkflowMapWithConstantPlm() {
+        workflowRequestDataBuilder = new TestDataService().getTestData("C4330WorkflowData.json", WorkflowRequest.class);
+        workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
+        workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent());
+        workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
+        SearchFilter searchFilter = new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
+                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build();
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, loginSession);
+        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
+        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
+        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
+
+        //Run the workflow
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+
+        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
+
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
+            agentWorkflowJobRunResponse.getJobId(),
+            plmPart.getId(),
+            AgentWorkflowJobPartsResult.class,
+            HttpStatus.SC_OK);
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isEqualTo("1234 description");
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo("Sheet Metal");
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo("Steel, Cold Worked, AISI 1020");
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getVpeName()).isEqualTo("aPriori Italy");
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getAnnualVolume()).isEqualTo(5000);
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getBatchSize()).isEqualTo(100);
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProductionLife()).isEqualTo(1.0);
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getScenarioName()).isEqualTo("1234 scenario");
+    }
+
     @After
     public void cleanup() {
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");

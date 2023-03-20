@@ -39,6 +39,16 @@ public class GroupEditTests {
     private CssComponent cssComponent = new CssComponent();
     private SoftAssertions softAssertions = new SoftAssertions();
 
+    final String chargerBase = "titan charger base";
+    final String chargerLead = "titan charger lead";
+    final String chargerUpper = "titan charger upper";
+    final String componentExtension = ".SLDPRT";
+    final String assemblyName = "titan charger ass";
+    final String assemblyExtension = ".SLDASM";
+
+    final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead, chargerUpper);
+    final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
     /**
      * Asserts that after editing scenario one iteration of that scenario exists in public workspace and one iteration in the private one
      *
@@ -68,13 +78,7 @@ public class GroupEditTests {
     public void testEditPublicSubcomponentWithNoPrivateCounterpart() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Collections.singletonList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -94,7 +98,7 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -104,16 +108,6 @@ public class GroupEditTests {
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponentsOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -134,7 +128,11 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        componentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
+
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
+
+        componentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -146,16 +144,6 @@ public class GroupEditTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
-
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
@@ -175,7 +163,15 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        componentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
+
+        ComponentInfoBuilder editedComponentAssembly = componentAssembly;
+        editedComponentAssembly.setScenarioName(newScenarioName);
+        editedComponentAssembly.getSubComponents().forEach(component -> component.setScenarioName(newScenarioName));
+
+        scenariosUtil.postEditGroupScenarios(editedComponentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
+
+        editedComponentAssembly.getSubComponents().forEach(component -> scenariosUtil.getScenarioCompleted(component));
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -186,13 +182,7 @@ public class GroupEditTests {
     public void testEditPublicSubcomponentOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Arrays.asList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -214,14 +204,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, STAND);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -233,13 +223,7 @@ public class GroupEditTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Arrays.asList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -261,14 +245,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, STAND);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -279,16 +263,6 @@ public class GroupEditTests {
     public void testGroupEditPublicSubcomponentsWithPrivateCounterpartOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
-
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
@@ -309,14 +283,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(true)
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase, chargerLead, chargerUpper);
 
         verifyEditAction(scenarioName, scenarioName, subComponentNames);
     }
@@ -328,16 +302,6 @@ public class GroupEditTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
-
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
@@ -358,14 +322,14 @@ public class GroupEditTests {
             .scenarioName(scenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest2 = ForkRequest.builder()
             .override(false)
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(clonedComponentAssembly, forkRequest2, chargerBase, chargerLead, chargerUpper);
 
         verifyEditAction(scenarioName, newScenarioName, subComponentNames);
     }
@@ -375,13 +339,9 @@ public class GroupEditTests {
     @Description("Attempt to edit a sub-component that does not exist")
     public void testEditSubcomponentThatDoesNotExist() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String STAND = "stand";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-        final List<String> subComponentNames = Arrays.asList(STAND, JOINT);
+        final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+
         final String UNKNOWN_SCENARIO_ID = "41EBF4GGGGGG";
         final String UNKNOWN_COMPONENT_ID = "A5C6KLGMOYA";
         final String UNKNOWN_SCENARIO_ID2 = "41EBF4HJEKTU";
