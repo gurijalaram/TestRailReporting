@@ -33,14 +33,16 @@ global:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
-  env_url_specification: update_this_value_in_environment_file
 
-  ###########################
-  #  Core services
-  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
+###########################
+#  Core services
+  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}
+
+  ach:
+    api_url: https://ach-api.${core_service_url_template}
 
   ats:
     api_url: https://ats.${core_service_url_template}
