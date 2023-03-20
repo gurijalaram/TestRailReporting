@@ -130,7 +130,10 @@ subprojects {
         testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
         implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0'
         implementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
-        implementation 'software.amazon.awssdk:s3:2.17.85'
+        implementation 'software.amazon.awssdk:ssm:2.20.19'
+        implementation 'software.amazon.awssdk:sso:2.20.19'
+        implementation 'software.amazon.awssdk:auth:2.20.19'
+        implementation 'software.amazon.awssdk:s3:2.20.19'
         implementation 'org.apache.httpcomponents:httpclient:4.5.13'
         implementation 'junit:junit:4.13.2'
         implementation 'ch.qos.logback:logback-classic:1.2.6'
@@ -167,7 +170,6 @@ subprojects {
         implementation 'org.projectlombok:lombok:1.18.24'
         implementation 'com.opencsv:opencsv:5.7.0'
         annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
         testImplementation 'org.projectlombok:lombok:1.18.24'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     }

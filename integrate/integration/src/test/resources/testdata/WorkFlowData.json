@@ -1,0 +1,54 @@
+{
+  "workflowName": "- - - 0 0 AWF",
+  "workflowDescription": "Auto wf description",
+  "connectorName": "WC-consvwc02",
+  "componentName": "Query Definition",
+  "scheduleData": {
+    "enabled": "off",
+    "schedule": "MINUTES",
+    "numberOfMinutes": 30
+  },
+  "notificationsData": {
+    "emailTemplate": "DFM Part Summary",
+    "recipientEmailType": "Constant",
+    "recipientEmailAddress": "rgurijala@apriori.com",
+    "reportName": "DTC Component Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
+  },
+  "queryDefinitionsData": [
+    {
+      "fieldName": "partNumber",
+      "fieldOperator" : "",
+      "fieldValue": "0000001040"
+    }
+  ],
+  "costingInputsData": [
+    {
+      "fieldName": "Process Group",
+      "operatorName": "Constant",
+      "fieldValue": "Sheet Metal"
+    },
+    {
+      "fieldName": "Material",
+      "operatorName": "Constant",
+      "fieldValue": "Steel, Cold Worked, AISI 1020"
+    },
+    {
+      "fieldName": "Digital Factory",
+      "operatorName": "Constant",
+      "fieldValue": "aPriori Brazil"
+    },
+    {
+      "fieldName": "Scenario Name",
+      "operatorName": "Constant",
+      "fieldValue": "Auto_SN "
+    }
+  ],
+  "publishResultsData":{
+    "writeFieldsData": [{"fieldName1": "fieldValue1"},{"fieldName2": "fieldValue2"}],
+    "reportName": "DTC Component Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
+  }
+}

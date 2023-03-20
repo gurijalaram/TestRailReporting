@@ -1,13 +1,9 @@
 package com.apriori.util.test;
 
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.pdf.PDFDocument;
 import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -16,19 +12,6 @@ import org.junit.Test;
  */
 @Slf4j
 public class PropertiesContextTest {
-
-    // TODO gurijalaram16
-    // this test should be moved from this place
-    @Ignore
-    @Test
-    public void testEncrypt() {
-        SoftAssertions softAssertions = new SoftAssertions();
-        EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments("ap-int123456");
-        PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
-        log.info(pdfDocument.getDocumentContents());
-        softAssertions.assertThat(pdfDocument).isNotNull();
-        softAssertions.assertAll();
-    }
 
     @Test
     public void testGetGlobalProperty() {

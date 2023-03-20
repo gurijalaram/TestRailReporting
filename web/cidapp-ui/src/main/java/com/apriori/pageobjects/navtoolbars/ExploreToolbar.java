@@ -16,16 +16,18 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -645,26 +647,45 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Gets the size of the downloaded report
+     * Gets the jquery data for a report
+     * Some available fields are ->
+     * String fileName
+     * String byExtName
+     * Boolean fileExternallyRemoved
+     * Long total (or size)
+     * String fileUrl
+     * String id
+     * String progressStatusText
+     * String state
+     * String filePath
+     * String dateString
+     * Boolean hideDate
+     * String url
      *
-     * @param userCredentials - the user credentials
-     * @return Long
+     * @return HashMap
      */
-    public Long getDownloadedReportSize(String componentId, String scenarioId, UserCredentials userCredentials) {
-        pageUtils.waitFor(2000);
+    public HashMap<String, ?> getReportJQueryData() {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+        final int WAIT_TIME = 15;
 
-        String reportName = new ScenariosUtil().getReports(componentId, scenarioId, userCredentials)
-            .getHeaders()
-            .get("Content-Disposition")
-            .getValue().split("=")[1].replace("\"", "");
+        ArrayList<HashMap<String, String>> element = getReportMapData();
 
-        File file = new File(new TestBase().getDownloadPath() + "\\" + reportName);
-
-        if (file.exists()) {
-            file.deleteOnExit();
-
-            return file.length();
+        while (element.isEmpty() || !element.get(0).get("state").equalsIgnoreCase("Complete") && ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
+            driver.navigate().back();
+            element = getReportMapData();
         }
-        return null;
+        return element.get(0);
+    }
+
+    private ArrayList<HashMap<String, String>> getReportMapData() {
+        JavascriptExecutor js;
+        ArrayList<HashMap<String, String>> element;
+
+        driver.get("chrome://downloads/");
+        js = (JavascriptExecutor) driver;
+        element = (ArrayList<HashMap<String, String>>)
+            js.executeScript("return document.querySelector('downloads-manager').shadowRoot.getElementById('downloadsList').items;");
+
+        return element;
     }
 }
