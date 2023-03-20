@@ -647,7 +647,7 @@ public class AcsResources {
                 .queryParams(new QueryParams().use("depth", depth))
                 .urlEncodingEnabled(false);
         } catch (UnsupportedEncodingException e) {
-            log.error("just to log an error with logger too");
+            log.error("Failed to encode url parameters. " + e);
             throw new RuntimeException(e);
         }
 
