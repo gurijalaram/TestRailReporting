@@ -26,4 +26,5 @@ public class PartNestingDiagram {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String updatedAt;
 }

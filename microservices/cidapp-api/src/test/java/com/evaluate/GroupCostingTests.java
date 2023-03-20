@@ -92,9 +92,7 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentAssembly.setComponentIdentity("");
-        componentAssembly.setScenarioIdentity("");
-
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         softAssertions = new SoftAssertions();
@@ -107,7 +105,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11850", "11849", "11848", "11847"})
+    @TestRail(testCaseId = {"11849", "11848", "11847"})
     @Description("Verify 400 Error")
     public void testVerify400Error() {
         final String FLANGE = "flange";
@@ -148,7 +146,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11848", "11847"})
+    @TestRail(testCaseId = "11848")
     @Description("Verify Error Response for Empty Scenario Identity")
     public void testEmptyScenarioIdentity() {
 
@@ -161,7 +159,7 @@ public class GroupCostingTests {
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             asmProcessGroupEnum,
-            subComponentNames,
+            subComponentNames.subList(0, 3),
             subComponentExtension,
             prtProcessGroupEnum,
             scenarioName,
@@ -170,12 +168,49 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setScenarioIdentity(""));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
+
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'scenarioIdentity' should not be null.");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11847")
+    @Description("Verify Error Response for Empty Scenario Identity")
+    public void testEmptyComponentIdentity() {
+
+        final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            asmProcessGroupEnum,
+            subComponentNames.subList(0, 3),
+            subComponentExtension,
+            prtProcessGroupEnum,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setComponentIdentity(""));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'componentIdentity' should not be null.");
-        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'scenarioIdentity' should not be null.");
 
         softAssertions.assertAll();
     }
@@ -194,7 +229,7 @@ public class GroupCostingTests {
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             asmProcessGroupEnum,
-            subComponentNames,
+            subComponentNames.subList(0, 3),
             subComponentExtension,
             prtProcessGroupEnum,
             scenarioName,
@@ -203,13 +238,44 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentAssembly.setCostingTemplate(CostingTemplate.builder().costingTemplateIdentity("").build());
+        componentAssembly.setCostingTemplate(CostingTemplate.builder().identity("").build());
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'costingTemplateIdentity' should not be null.");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11850")
+    @Description("Verify Error Response for Empty Group Item List")
+    public void testEmptyGroupItemList() {
+
+        final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(asmProcessGroupEnum)
+            .user(currentUser)
+            .build();
+
+        assemblyUtils.uploadAssembly(componentAssembly);
+
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
+
+        softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'groupItems' should not be empty.");
 
         softAssertions.assertAll();
     }

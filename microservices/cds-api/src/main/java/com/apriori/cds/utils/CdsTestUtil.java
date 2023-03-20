@@ -52,9 +52,10 @@ import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -815,18 +816,45 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Uploads batch users file via CAS API
      *
+     * @param users - string of users file
+     * @param email - email
      * @param customerIdentity - customerIdentity
-     * @param fileName         - name of file
      * @return new object
      */
-    public ResponseWrapper<PostBatch> addCASBatchFile(String customerIdentity, String fileName) {
+    public ResponseWrapper<PostBatch> addCASBatchFile(String users, String email, String customerIdentity) {
         String token = new AuthorizationUtil().getTokenAsString();
-        final File batchFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        StringBuilder sb = new StringBuilder(users);
+        String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,\n";
+        for (int i = 0; i < 23; i++) {
+            sb.append(String.format(userRecord, i, i, email, i, i));
+        }
+
+        InputStream usersBatch = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
             .token(token)
             .expectedResponseCode(HttpStatus.SC_CREATED)
-            .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
+            .multiPartFiles(new MultiPartFiles().use("multiPartFile", FileResourceUtil.copyIntoTempFile(usersBatch, null, "testUsersBatch.csv")))
+            .inlineVariables(customerIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Uploads batch users file via CAS API
+     *
+     * @param customerIdentity - customerIdentity
+    //  * @param fileName         - name of file
+     * @return new object
+     */
+    public ResponseWrapper<PostBatch> addInvalidBatchFile(String customerIdentity, String fileName) {
+        String token = new AuthorizationUtil().getTokenAsString();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
+            .token(token)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .multiPartFiles(new MultiPartFiles().use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
             .inlineVariables(customerIdentity);
 
         return HTTPRequest.build(requestEntity).post();
