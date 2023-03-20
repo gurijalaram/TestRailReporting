@@ -67,7 +67,7 @@ public class UploadTests extends TestBase {
 
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isEqualTo(false);
 
-        matchedPartPage = editBomPage.selectOtherMountType(testMountTypeData)
+        matchedPartPage = editBomPage.enterMountTypeOldVer(testMountTypeData)
             .enterPinCount(testPinCountData)
             .clickSave();
 
