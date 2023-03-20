@@ -7,7 +7,7 @@ import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.details.WorkflowSchedule;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -70,7 +70,7 @@ public class WorkflowScheduleTests extends TestBase {
             .numberOfMinutes(1)
             .build();
 
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         QueryDefinitions queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .selectEnabledCheckbox("off")
