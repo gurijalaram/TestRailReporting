@@ -10,6 +10,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import org.apache.http.HttpStatus;
 
 public class UserPreferencesController extends TestUtil {

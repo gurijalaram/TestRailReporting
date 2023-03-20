@@ -1,20 +1,22 @@
 package com.apriori.cis.tests;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
+
 import com.apriori.cisapi.entity.response.user.preferences.CurrentExtendedUserPreferencesResponse;
 import com.apriori.cisapi.entity.response.user.preferences.ExtendedUserPreferencesResponse;
 import com.apriori.cisapi.utils.UserPreferencesController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.notNullValue;
 
 public class UserPreferencesTest extends UserPreferencesController {
 
@@ -35,8 +37,8 @@ public class UserPreferencesTest extends UserPreferencesController {
     @TestRail(testCaseId = "22096")
     @Description("Get Logged in user's Extended User Preferences")
     public void testGetLoggedExtendedUserPreferences() {
-        ExtendedUserPreferencesResponse LoggedExtendedUserPreferenceResponse = getLoggedExtendedUserPreferences();
-        assertThat(LoggedExtendedUserPreferenceResponse.getItems().size(), is(greaterThan(0)));
+        ExtendedUserPreferencesResponse loggedExtendedUserPreferenceResponse = getLoggedExtendedUserPreferences();
+        assertThat(loggedExtendedUserPreferenceResponse.getItems().size(), is(greaterThan(0)));
     }
 
     @Test
@@ -44,7 +46,7 @@ public class UserPreferencesTest extends UserPreferencesController {
     @Description("Update Extended User Preferences")
     public void testUpdateCurrentExtendedUserPreferences() {
         String avatarColor = "#009999";
-        CurrentExtendedUserPreferencesResponse LoggedExtendedUserPreferenceResponse = updateCurrentExtendedUserPreferences(avatarColor);
-        assertThat(LoggedExtendedUserPreferenceResponse.getAvatarColor(), is(equalTo(avatarColor)));
+        CurrentExtendedUserPreferencesResponse loggedExtendedUserPreferenceResponse = updateCurrentExtendedUserPreferences(avatarColor);
+        assertThat(loggedExtendedUserPreferenceResponse.getAvatarColor(), is(equalTo(avatarColor)));
     }
 }
