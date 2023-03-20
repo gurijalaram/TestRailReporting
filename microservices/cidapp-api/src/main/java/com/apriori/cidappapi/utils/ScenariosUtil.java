@@ -379,17 +379,22 @@ public class ScenariosUtil {
      * @return response object
      */
     public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
+        List<GroupItems> groupItems = new ArrayList<>();
+        if (componentInfo.getSubComponents() != null) {
+            groupItems = componentInfo.getSubComponents()
+                .stream()
+                .map(component -> GroupItems.builder()
+                    .componentIdentity(component.getComponentIdentity())
+                    .scenarioIdentity(component.getScenarioIdentity())
+                    .build())
+                .collect(Collectors.toList());
+        }
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getCostingTemplateIdentity())
-                    .groupItems(componentInfo.getSubComponents()
-                        .stream()
-                        .map(component -> GroupItems.builder()
-                            .componentIdentity(component.getComponentIdentity())
-                            .scenarioIdentity(component.getScenarioIdentity())
-                            .build())
-                        .collect(Collectors.toList()))
+                    .costingTemplateIdentity(componentInfo.getCostingTemplate().getIdentity())
+                    .groupItems(groupItems)
                     .build())
                 .token(componentInfo.getUser().getToken());
 
@@ -533,7 +538,7 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .options(Options.builder()
-                        .scenarioName(groupPublishRequest.getComponentInfo().getScenarioName())
+                        .scenarioName(groupPublishRequest.getPublishRequest().getScenarioName())
                         .override(groupPublishRequest.getPublishRequest().getOverride())
                         .costMaturity(groupPublishRequest.getPublishRequest().getCostMaturity().toUpperCase())
                         .status(groupPublishRequest.getPublishRequest().getStatus().toUpperCase())

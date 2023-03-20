@@ -29,4 +29,5 @@ ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
 ARG TESTS
+
 RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS

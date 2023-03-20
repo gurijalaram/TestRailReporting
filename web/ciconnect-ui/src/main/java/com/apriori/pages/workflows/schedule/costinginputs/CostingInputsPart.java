@@ -4,7 +4,7 @@ import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -297,7 +297,7 @@ public class CostingInputsPart extends CICBasePage {
                 break;
             case "Textbox":
                 WebElement ciConnectFieldValueTxtElement = driver.findElement(By.cssSelector(valueTxtCss.replace("[ID]", cssRowNum.toString())));
-                workFlowData.getCostingInputsData().get(dataRowNum).setFieldValue(StringUtils.saltString(workFlowData.getCostingInputsData().get(dataRowNum).getFieldValue()));
+                workFlowData.getCostingInputsData().get(dataRowNum).setFieldValue(GenerateStringUtil.saltString(workFlowData.getCostingInputsData().get(dataRowNum).getFieldValue()));
                 pageUtils.waitForElementAndClick(ciConnectFieldValueTxtElement);
                 pageUtils.waitFor(Constants.DEFAULT_WAIT);
                 ciConnectFieldValueTxtElement.sendKeys(workFlowData.getCostingInputsData().get(dataRowNum).getFieldValue() + Keys.TAB);
@@ -305,7 +305,7 @@ public class CostingInputsPart extends CICBasePage {
             case "DatePicker":
                 WebElement ciConnectFieldValueDtElement = driver.findElement(By.cssSelector(customDateValuePickerCss.replace("[ID]", cssRowNum.toString())));
                 this.customDateFieldValueElement = ciConnectFieldValueDtElement;
-                workFlowData.getCostingInputsData().get(dataRowNum).setFieldValue(StringUtils.saltString(workFlowData.getCostingInputsData().get(dataRowNum).getFieldValue()));
+                workFlowData.getCostingInputsData().get(dataRowNum).setFieldValue(GenerateStringUtil.saltString(workFlowData.getCostingInputsData().get(dataRowNum).getFieldValue()));
                 pageUtils.waitForElementAndClick(ciConnectFieldValueDtElement);
                 pageUtils.waitForElementToAppear(customDateCalenderTodayButton);
                 pageUtils.waitForElementAndClick(customDateCalenderDoneButton);
