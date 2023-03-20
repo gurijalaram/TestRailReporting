@@ -142,7 +142,6 @@
             "identity",
             "createdAt",
             "createdBy",
-            "updatedAt",
             "customerIdentity",
             "userProfile",
             "email",
@@ -152,6 +151,9 @@
             "customAttributes",
             "userType",
             "avatarColor"
+          ],
+          "optional": [
+            "updatedAt"
           ]
         },
         "attributes": {

@@ -1,4 +1,4 @@
-package com.apriori.qms.entity.response.scenariodiscussion;
+package com.apriori.qms.entity.response.userpreference;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
@@ -8,26 +8,21 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DiscussionCommentResponseSchema.json")
-public class DiscussionCommentResponse {
-    private String identity;
+@Schema(location = "UserPreferenceResponseSchema.json")
+public class UserPreferenceResponse {
+
+    private String avatarColor;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String createdBy;
     private String updatedBy;
-    private String content;
-    private String discussionIdentity;
-    private String status;
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime publishedAt;
-    private ArrayList<CommentView> commentView;
-    private ArrayList<MentionedUser> mentionedUsers;
-    private String creatorAvatarColor;
     private String customerIdentity;
+    private String identity;
+    private String userIdentity;
+
 }
