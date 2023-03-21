@@ -84,6 +84,18 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//p[contains(@data-testid,'show-status')]//*[local-name()='svg']")
     private WebElement resolveIcon;
 
+    @FindBy(xpath = "//button[contains(@id,'more-options-menu-icon-button')]//*[local-name()='svg' and @data-icon='ellipsis-vertical']")
+    private WebElement moreOptionMenu;
+
+    @FindBy(xpath = "//li[@data-testid='menu-item-ASSIGN']")
+    private WebElement assignToOption;
+
+    @FindBy(xpath = "//div[contains(@id,'popover-select-control')]")
+    private WebElement assignToUsersList;
+
+    @FindBy(xpath = "//li[@data-testid='menu-item-UNASSIGN']")
+    private WebElement unAssignToOption;
+
     public MessagesPage(WebDriver driver) {
         this(driver, log);
     }
@@ -396,5 +408,74 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public String getResolveStatus() {
         return getPageUtils().waitForElementToAppear(resolveIcon).getAttribute("class");
+    }
+
+    /**
+     * Checks if discussion-more options displayed
+     *
+     * @return true/false
+     */
+    public boolean isMoreOptionMenuDisplayed() {
+        return getPageUtils().isElementDisplayed(moreOptionMenu);
+    }
+
+    /**
+     * clicks on more option
+     *
+     * @return current page object
+     */
+    public MessagesPage clickOnMoreOptionMenu() {
+        getPageUtils().waitForElementAndClick(moreOptionMenu);
+        return this;
+    }
+
+    /**
+     * clicks on assignTo option
+     *
+     * @return current page object
+     */
+    public MessagesPage clickOnAssignToOption() {
+        getPageUtils().waitForElementAndClick(assignToOption);
+        return this;
+    }
+
+    /**
+     * Checks if assign to users-list displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssignToUserListDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),2);
+        return getPageUtils().isElementDisplayed(assignToUsersList);
+    }
+
+    /**
+     * clicks on a participant
+     *
+     * @return current page object
+     */
+    public MessagesPage selectAUserToAssign(String participantName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@role='button']//span[contains(text(),'" + participantName + "')]"));
+        return this;
+    }
+
+    /**
+     * clicks on Un-assignTo option
+     *
+     * @return current page object
+     */
+    public MessagesPage clickOnUnAssignToOption() {
+        getPageUtils().waitForElementAndClick(unAssignToOption);
+        return this;
+    }
+
+    /**
+     * get discussion assigned state
+     *
+     * @return a String
+     */
+    public String getDiscussionAssignedState() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
     }
 }
