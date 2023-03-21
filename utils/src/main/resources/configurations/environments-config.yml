@@ -25,6 +25,7 @@ qa-test:
     identity_role: 67J517C9L763
 
   ci-connect:
+    agent_type: windchill
     agent_api_authorization_key: DogCatMonkey
     agent_api_url: http://conqscic02.fbc.com:8811/
     plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
