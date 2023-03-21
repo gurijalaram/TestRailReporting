@@ -17,6 +17,7 @@ import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetMetalTransferDi
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetPlasticResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesStockMachiningResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesTwoModelMachiningResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -335,6 +336,18 @@ public class GcdTypesTests {
         softAssertions.assertThat(response.getResponseEntity().getRing().get(1).getStorageType()).isEqualTo("DOUBLE");
         softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
         softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "17188")
+    @Description("Run API for a Process group that does not exist")
+    public void testGetGcdTypesForProcessGroupThatDoesNotExist() {
+        GenericErrorResponse errorResponse = acsResources.getGcdTypes(
+            ProcessGroupEnum.INVALID_PG.getProcessGroup(), GenericErrorResponse.class).getResponseEntity();
+
+        softAssertions.assertThat(errorResponse.getErrorCode()).isEqualTo(404);
+        softAssertions.assertThat(errorResponse.getErrorMessage()).isEqualTo("Unknown process group: " + ProcessGroupEnum.INVALID_PG.getProcessGroup());
         softAssertions.assertAll();
     }
 }
