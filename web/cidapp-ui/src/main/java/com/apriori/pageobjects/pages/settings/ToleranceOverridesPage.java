@@ -56,7 +56,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement override = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
+        WebElement override = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides())));
         pageUtils.clearValueOfElement(override);
         override.sendKeys(value);
         return this;
@@ -70,7 +70,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return double
      */
     public double getToleranceOverride(OverridesEnum label) {
-        By byOverride = By.cssSelector(String.format("[name='%s']", label.getOverrides()));
+        By byOverride = By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides()));
         return Double.parseDouble(pageUtils.waitForElementToAppear(byOverride).getAttribute("value"));
     }
 
