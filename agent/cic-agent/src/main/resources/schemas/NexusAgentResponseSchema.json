@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "repository": {
+              "type": "string"
+            },
+            "format": {
+              "type": "string"
+            },
+            "group": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            },
+            "assets": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "downloadUrl": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "repository": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "checksum": {
+                      "type": "object",
+                      "properties": {
+                        "sha1": {
+                          "type": "string"
+                        },
+                        "md5": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "sha1",
+                        "md5"
+                      ]
+                    },
+                    "contentType": {
+                      "type": "string"
+                    },
+                    "lastModified": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "downloadUrl",
+                    "path",
+                    "id",
+                    "repository",
+                    "format",
+                    "checksum",
+                    "contentType",
+                    "lastModified"
+                  ]
+                }
+              ]
+            },
+            "tags": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "id",
+            "repository",
+            "format",
+            "group",
+            "name",
+            "version",
+            "assets",
+            "tags"
+          ]
+        }
+      ]
+    },
+    "continuationToken": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ]
+    }
+  },
+  "required": [
+    "items",
+    "continuationToken"
+  ]
+}
