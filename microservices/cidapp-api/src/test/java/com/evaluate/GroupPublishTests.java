@@ -43,6 +43,16 @@ public class GroupPublishTests {
 
     private int PUBLIC_WORKSPACE = 0;
 
+    final String chargerBase = "titan charger base";
+    final String chargerLead = "titan charger lead";
+    final String chargerUpper = "titan charger upper";
+    final String componentExtension = ".SLDPRT";
+    final String assemblyName = "titan charger ass";
+    final String assemblyExtension = ".SLDASM";
+
+    final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead, chargerUpper);
+    final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
     @Before
     public void setupUser() {
         currentUser = UserUtil.getUser();
@@ -55,14 +65,7 @@ public class GroupPublishTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -90,11 +93,11 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
         PublishRequest publishRequest2 = PublishRequest.builder()
@@ -110,9 +113,9 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, DRIVE);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerLead);
 
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + DRIVE, SCENARIO_NAME_EQ.getKey() + newScenarioName, LAST_ACTION_EQ.getKey() + " publish")
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerLead, SCENARIO_NAME_EQ.getKey() + newScenarioName, LAST_ACTION_EQ.getKey() + "PUBLISH")
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
         softAssertions.assertAll();
@@ -123,16 +126,6 @@ public class GroupPublishTests {
     @Description("Publish a multiple private sub-components with no public counterpart")
     public void testGroupPublishPrivateSubcomponents() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -160,7 +153,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -177,16 +170,6 @@ public class GroupPublishTests {
     public void testGroupPublishPrivateSubcomponentsFalseOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -215,13 +198,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         subComponentNames.forEach(componentName ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() +
-                    scenarioName, LAST_ACTION_EQ.getKey() + " publish")
+                    newScenarioName, LAST_ACTION_EQ.getKey() + " publish")
                 .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         subComponentNames.forEach(componentName -> cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName,
@@ -237,13 +220,7 @@ public class GroupPublishTests {
     public void testGroupPublishPrivateSubcomponentTrueOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Collections.singletonList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -271,27 +248,27 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
                 ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "false")
             .size()).isGreaterThanOrEqualTo(1);
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
                 ITERATION_EQ.getKey() + " 2", LATEST_EQ.getKey() + "true")
             .size()).isGreaterThanOrEqualTo(1);
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName)
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName)
                 .stream()
                 .noneMatch(o -> o.getScenarioIterationKey().getWorkspaceId().equals(user.getCustomAttributes().getWorkspaceId())))
             .isTrue();
@@ -306,13 +283,7 @@ public class GroupPublishTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Arrays.asList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -340,13 +311,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(false)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -361,16 +332,16 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
 
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName,
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
                 ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + newScenarioName,
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + newScenarioName,
                 ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
@@ -382,16 +353,6 @@ public class GroupPublishTests {
     @Description("Publish multiple private sub-components with public counterparts Setting Override to true")
     public void testGroupPublishPrivateSubcomponentsTrueOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -419,13 +380,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -439,7 +400,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -463,16 +424,6 @@ public class GroupPublishTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String DRIVE = "drive";
-        final String JOINT = "joint";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
-
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
@@ -499,13 +450,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND, DRIVE, JOINT);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase, chargerLead, chargerUpper);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -520,12 +471,12 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND, DRIVE, JOINT);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         subComponentNames.forEach(subComponent ->
-            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 1",
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName2, ITERATION_EQ.getKey() + " 1",
                     LATEST_EQ.getKey() + " true")
                 .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
@@ -544,13 +495,7 @@ public class GroupPublishTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Collections.singletonList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -578,13 +523,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -599,14 +544,14 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase);
 
         PublishRequest publishRequest3 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
             .costMaturity("Initial")
             .override(false)
             .status("New")
-            .scenarioName(scenarioName)
+            .scenarioName(scenarioName2)
             .build();
 
         GroupPublishRequest groupPublishRequest3 = GroupPublishRequest.builder()
@@ -615,12 +560,12 @@ public class GroupPublishTests {
             .scenarioPublished(true)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, componentAssembly, STAND);
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, componentAssembly, chargerBase);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         publishSuccessFailure.getResponseEntity()
-            .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Scenario '" + scenarioName + "' has been published, scenario can not be published"));
+            .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Scenario '" + scenarioName2 + "' has been published, scenario can not be published"));
 
         softAssertions.assertAll();
     }
@@ -631,13 +576,7 @@ public class GroupPublishTests {
     public void testAttemptPublishPublic() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Collections.singletonList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -665,13 +604,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -685,7 +624,7 @@ public class GroupPublishTests {
             .publishRequest(publishRequest2)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, STAND);
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -701,13 +640,7 @@ public class GroupPublishTests {
     public void testAttemptPublicScenarioNotExist() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String STAND = "stand";
-        final String assemblyName = "oldham";
-        final String assemblyExtension = ".asm.1";
-
-        final List<String> subComponentNames = Collections.singletonList(STAND);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".prt.1";
+        final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
         final String UNKNOWN_COMPONENT_ID = "41EBF4GGGGGG";
         final String UNKNOWN_SCENARIO_ID = "41EBF4FFFFFF";
@@ -738,13 +671,13 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, STAND);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
             .build();
 
-        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, STAND);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())

@@ -8,6 +8,8 @@ public enum MaterialNameEnum {
     ALUMINIUM_ANSI_AL380("Aluminum, ANSI AL380.0"),
     ALUMINIUM_ANSI_7075("Aluminum, ANSI 7075"),
     ALUMINIUM_ANSI_1050A("Aluminum, ANSI 1050A"),
+    ALUMINIUM_ANSI_2017("Aluminum, ANSI 2017"),
+    ALUMINIUM_ANSI_2024("Aluminum, ANSI 2024"),
     ALUMINIUM_ANSI_6061("Aluminum, ANSI 6061"),
     ALUMINIUM_ALSI10MG("Aluminum AlSi10Mg"),
 
@@ -25,6 +27,7 @@ public enum MaterialNameEnum {
     PET_30_GLASS("PET 30% Glass"),
 
     POLYETHYLENE_HDPE("Polyethylene, High Density, HDPE"),
+    POLYETHYLENE_HDPE_EXTRUSION_SHEET("Polyethylene, HDPE Extrusion Sheet"),
 
     POLYETHERETHERKETONE_PEEK("Polyetheretherketone, PEEK"),
     POLYURETHANE_POLYMERIC_MDI("Polyurethane, Polymeric MDI"),

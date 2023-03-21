@@ -6,6 +6,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -408,6 +409,9 @@ public class FileResourceUtil {
     public static String getAwsSystemParameter(String parameterName) {
         String parameterValue = "";
         SsmClient ssmClient = SsmClient.builder()
+            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+            ? EnvironmentVariableCredentialsProvider.create()
+            : ProfileCredentialsProvider.create())
             .region(S3_REGION_NAME)
             .build();
 

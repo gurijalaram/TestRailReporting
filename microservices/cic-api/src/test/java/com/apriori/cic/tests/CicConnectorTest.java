@@ -49,7 +49,7 @@ public class CicConnectorTest extends TestBase {
         assertThat(responseWrapper.getBody(), is(containsString(">true<")));
         connectorInfo = CicApiTestUtil.getMatchedConnector(connectorRequestDataBuilder.getDisplayName(), loginSession);
 
-        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectionOptions(connectorInfo.getName(), loginSession);
+        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), loginSession);
 
         AgentConnectionOptions agentConnectionOptions = AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
