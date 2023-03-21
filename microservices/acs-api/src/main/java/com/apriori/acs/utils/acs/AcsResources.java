@@ -654,7 +654,7 @@ public class AcsResources {
      * @param processGroupName - String - Selected from ENUM
      */
 
-    public <T>ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
+    public <T> ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil

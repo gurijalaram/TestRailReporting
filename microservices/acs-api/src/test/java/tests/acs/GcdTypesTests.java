@@ -20,8 +20,8 @@ import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesTwoModelMachiningRes
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
@@ -172,7 +172,7 @@ public class GcdTypesTests {
 
         softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(0).getName()).isEqualTo("name");
         softAssertions.assertThat(response.getResponseEntity().getRingedHole().get(1).getDisplayName()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getVoid().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getResponseEntity().getVoids().get(0).getStorageType()).isEqualTo("STRING");
         softAssertions.assertThat(response.getResponseEntity().getComponent().get(6).getUnitType()).isEqualTo("Area");
         softAssertions.assertThat(response.getResponseEntity().getComponent().get(6).getEditable()).isEqualTo(false);
         softAssertions.assertAll();

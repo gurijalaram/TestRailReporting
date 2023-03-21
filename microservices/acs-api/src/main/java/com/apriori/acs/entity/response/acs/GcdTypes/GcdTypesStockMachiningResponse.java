@@ -16,7 +16,7 @@ public class GcdTypesStockMachiningResponse {
     private List<GcdListItemWithUnit> axiGroove;
     @JsonProperty("Ring")
     private List<GcdListItemWithUnit> ring;
-        @JsonProperty("CurvedWall")
+    @JsonProperty("CurvedWall")
     private List<GcdListItemWithUnit> curvedWall;
     @JsonProperty("PlanarFace")
     private List<GcdListItemWithUnit> planarFace;

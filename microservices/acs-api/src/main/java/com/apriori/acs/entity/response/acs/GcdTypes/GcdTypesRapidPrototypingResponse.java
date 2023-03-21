@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.acs.GcdTypes;
 
 import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -26,7 +27,7 @@ public class GcdTypesRapidPrototypingResponse {
     @JsonProperty("SimpleHole")
     private List<GcdListItemWithUnit> simpleHole;
     @JsonProperty("Void")
-    private List<GcdListItemWithUnit> Void;
+    private List<GcdListItemWithUnit> voids;
     @JsonProperty("CurvedSurface")
     private List<GcdListItemWithUnit> curvedSurface;
     @JsonProperty("Component")
