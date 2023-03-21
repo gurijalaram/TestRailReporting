@@ -1,0 +1,4772 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "processInstanceKey": {
+          "type": "object",
+          "properties": {
+            "processGroupName": {
+              "type": "string"
+            },
+            "processName": {
+              "type": "string"
+            },
+            "index": {
+              "type": "integer"
+            },
+            "displayName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "processGroupName",
+            "processName",
+            "index",
+            "displayName"
+          ]
+        },
+        "artifactKey": {
+          "type": "object",
+          "properties": {
+            "artifactTypeName": {
+              "type": "string"
+            },
+            "sequenceNumber": {
+              "type": "integer"
+            },
+            "displayName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "artifactTypeName",
+            "sequenceNumber",
+            "displayName"
+          ]
+        },
+        "gcds": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            }
+          ]
+        },
+        "resultMapBean": {
+          "type": "object",
+          "properties": {
+            "propertyValueMap": {
+              "type": "object",
+              "properties": {
+                "failuresWarningsCount": {
+                  "type": "integer"
+                },
+                "finalYield": {
+                  "type": "number"
+                },
+                "setupCostPerPart": {
+                  "type": "number"
+                },
+                "numCoreBundle": {
+                  "type": "integer"
+                },
+                "otherDirectCosts": {
+                  "type": "number"
+                },
+                "extraCosts": {
+                  "type": "number"
+                },
+                "gcdWithTolerancesCount": {
+                  "type": "integer"
+                },
+                "pieceCost": {
+                  "type": "number"
+                },
+                "additionalAmortizedInvestment": {
+                  "type": "number"
+                },
+                "indirectMachinePower": {
+                  "type": "number"
+                },
+                "mainProcessName": {
+                  "type": "string"
+                },
+                "lifetimeCost": {
+                  "type": "number"
+                },
+                "totalCarbon": {
+                  "type": "number"
+                },
+                "height": {
+                  "type": "number"
+                },
+                "numCurvedWall": {
+                  "type": "integer"
+                },
+                "margin": {
+                  "type": "number"
+                },
+                "cycleTime": {
+                  "type": "number"
+                },
+                "materialStockFormName": {
+                  "type": "string"
+                },
+                "partWidth": {
+                  "type": "number"
+                },
+                "utilization": {
+                  "type": "number"
+                },
+                "hardToolingCost": {
+                  "type": "number"
+                },
+                "numberOfParts": {
+                  "type": "number"
+                },
+                "expendableToolingCostPerPart": {
+                  "type": "number"
+                },
+                "stockPropertylength": {
+                  "type": "number"
+                },
+                "annualVolume": {
+                  "type": "integer"
+                },
+                "laborTime": {
+                  "type": "number"
+                },
+                "periodOverhead": {
+                  "type": "number"
+                },
+                "laborCost": {
+                  "type": "number"
+                },
+                "materialStockName": {
+                  "type": "string"
+                },
+                "numSharpEdge": {
+                  "type": "integer"
+                },
+                "calculatedEnergyConsumption": {
+                  "type": "number"
+                },
+                "additionalDirectCosts": {
+                  "type": "number"
+                },
+                "indirectMachineEnergyConsumption": {
+                  "type": "number"
+                },
+                "scrapMass": {
+                  "type": "number"
+                },
+                "cycleTimeEnergyConsumption": {
+                  "type": "number"
+                },
+                "materialCost": {
+                  "type": "number"
+                },
+                "totalProductionVolume": {
+                  "type": "number"
+                },
+                "numKeyway": {
+                  "type": "integer"
+                },
+                "cadSerLength": {
+                  "type": "number"
+                },
+                "fullyBurdenedCost": {
+                  "type": "number"
+                },
+                "directOverheadCost": {
+                  "type": "number"
+                },
+                "partsPerHour": {
+                  "type": "number"
+                },
+                "numPartsPerSheet": {
+                  "type": "number"
+                },
+                "sgaCost": {
+                  "type": "number"
+                },
+                "numPlanarFace": {
+                  "type": "integer"
+                },
+                "amortizedInvestment": {
+                  "type": "number"
+                },
+                "energyConsumption": {
+                  "type": "number"
+                },
+                "stripNestingPitch": {
+                  "type": "number"
+                },
+                "materialOverheadCost": {
+                  "type": "number"
+                },
+                "lastCosted": {
+                  "type": "string"
+                },
+                "notSupportedGcdsCount": {
+                  "type": "integer"
+                },
+                "numRing": {
+                  "type": "integer"
+                },
+                "otherProcessCarbon": {
+                  "type": "number"
+                },
+                "batchSetupTime": {
+                  "type": "number"
+                },
+                "cadSerWidth": {
+                  "type": "number"
+                },
+                "supportsSustainability": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "number"
+                },
+                "stockPropertythickness": {
+                  "type": "number"
+                },
+                "partMinThickness": {
+                  "type": "number"
+                },
+                "elapsedTime": {
+                  "type": "number"
+                },
+                "numRingedHole": {
+                  "type": "integer"
+                },
+                "annualCost": {
+                  "type": "number"
+                },
+                "surfaceArea": {
+                  "type": "number"
+                },
+                "utilizationWithAddendum": {
+                  "type": "number"
+                },
+                "batchCost": {
+                  "type": "number"
+                },
+                "numVoid": {
+                  "type": "integer"
+                },
+                "failedGcdsCount": {
+                  "type": "integer"
+                },
+                "logisticsCost": {
+                  "type": "number"
+                },
+                "isDrawDirectionY": {
+                  "type": "number"
+                },
+                "productionLife": {
+                  "type": "number"
+                },
+                "machineName": {
+                  "type": "string"
+                },
+                "annualCarbon": {
+                  "type": "number"
+                },
+                "materialCarbon": {
+                  "type": "number"
+                },
+                "batchCarbon": {
+                  "type": "number"
+                },
+                "isDrawDirectionX": {
+                  "type": "number"
+                },
+                "partLength": {
+                  "type": "number"
+                },
+                "electricityProcessCarbon": {
+                  "type": "number"
+                },
+                "utilizationWithoutAddendum": {
+                  "type": "number"
+                },
+                "marginPercent": {
+                  "type": "number"
+                },
+                "logisticsCarbon": {
+                  "type": "number"
+                },
+                "programmingCostPerPart": {
+                  "type": "number"
+                },
+                "lastPublished": {
+                  "type": "string"
+                },
+                "virtualMaterialStockName": {
+                  "type": "string"
+                },
+                "materialName": {
+                  "type": "string"
+                },
+                "pieceAndPeriod": {
+                  "type": "number"
+                },
+                "finishMass": {
+                  "type": "number"
+                },
+                "stockPropertyoutsideDia": {
+                  "type": "number"
+                },
+                "capitalInvestment": {
+                  "type": "number"
+                },
+                "directMachineEnergyConsumption": {
+                  "type": "number"
+                },
+                "roughMass": {
+                  "type": "number"
+                },
+                "fixtureCost": {
+                  "type": "number"
+                },
+                "totalCost": {
+                  "type": "number"
+                },
+                "dfmRisk": {
+                  "type": ["integer","string"]
+                },
+                "stockPropertywallThickness": {
+                  "type": "number"
+                },
+                "goodPartYield": {
+                  "type": "number"
+                },
+                "numOperators": {
+                  "type": "number"
+                },
+                "dfmRiskScore": {
+                  "type": "integer"
+                },
+                "fixtureCostPerPart": {
+                  "type": "number"
+                },
+                "materialUnitCost": {
+                  "type": "number"
+                },
+                "numEdge": {
+                  "type": "integer"
+                },
+                "partAvgThickness": {
+                  "type": "number"
+                },
+                "numSimpleHole": {
+                  "type": "integer"
+                },
+                "numCurvedSurface": {
+                  "type": "integer"
+                },
+                "partMaxThickness": {
+                  "type": "number"
+                },
+                "processCarbon": {
+                  "type": "number"
+                },
+                "numSlideBundle": {
+                  "type": "integer"
+                },
+                "partMass": {
+                  "type": "number"
+                },
+                "materialDensity": {
+                  "type": "number"
+                },
+                "partVolume": {
+                  "type": "number"
+                },
+                "numComboVoid": {
+                  "type": "integer"
+                },
+                "stockPropertyinsideDia": {
+                  "type": "number"
+                },
+                "partHeight": {
+                  "type": "number"
+                },
+                "numMultiStepHole": {
+                  "type": "integer"
+                },
+                "lifetimeCarbon": {
+                  "type": "number"
+                },
+                "numAxiGroove": {
+                  "type": "integer"
+                },
+                "processStepEnergyConsumption": {
+                  "type": "number"
+                },
+                "length": {
+                  "type": "number"
+                },
+                "stockPropertywidth": {
+                  "type": "number"
+                },
+                "numScrapParts": {
+                  "type": "number"
+                },
+                "programmingCost": {
+                  "type": "number"
+                },
+                "dtcMessagesCount": {
+                  "type": "integer"
+                },
+                "toolingCostPerPart": {
+                  "type": "number"
+                },
+                "batchSize": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "failuresWarningsCount",
+                "finalYield",
+                "setupCostPerPart",
+                "otherDirectCosts",
+                "extraCosts",
+                "gcdWithTolerancesCount",
+                "pieceCost",
+                "additionalAmortizedInvestment",
+                "indirectMachinePower",
+                "lifetimeCost",
+                "totalCarbon",
+                "height",
+                "margin",
+                "cycleTime",
+                "utilization",
+                "hardToolingCost",
+                "numberOfParts",
+                "expendableToolingCostPerPart",
+                "annualVolume",
+                "laborTime",
+                "periodOverhead",
+                "laborCost",
+                "calculatedEnergyConsumption",
+                "additionalDirectCosts",
+                "indirectMachineEnergyConsumption",
+                "scrapMass",
+                "cycleTimeEnergyConsumption",
+                "materialCost",
+                "totalProductionVolume",
+                "fullyBurdenedCost",
+                "directOverheadCost",
+                "partsPerHour",
+                "numPartsPerSheet",
+                "sgaCost",
+                "amortizedInvestment",
+                "energyConsumption",
+                "stripNestingPitch",
+                "materialOverheadCost",
+                "lastCosted",
+                "notSupportedGcdsCount",
+                "otherProcessCarbon",
+                "batchSetupTime",
+                "supportsSustainability",
+                "width",
+                "elapsedTime",
+                "annualCost",
+                "utilizationWithAddendum",
+                "batchCost",
+                "failedGcdsCount",
+                "logisticsCost",
+                "productionLife",
+                "annualCarbon",
+                "materialCarbon",
+                "batchCarbon",
+                "electricityProcessCarbon",
+                "utilizationWithoutAddendum",
+                "marginPercent",
+                "logisticsCarbon",
+                "programmingCostPerPart",
+                "lastPublished",
+                "materialName",
+                "pieceAndPeriod",
+                "finishMass",
+                "capitalInvestment",
+                "directMachineEnergyConsumption",
+                "roughMass",
+                "fixtureCost",
+                "totalCost",
+                "dfmRisk",
+                "goodPartYield",
+                "numOperators",
+                "fixtureCostPerPart",
+                "materialUnitCost",
+                "processCarbon",
+                "lifetimeCarbon",
+                "processStepEnergyConsumption",
+                "length",
+                "numScrapParts",
+                "programmingCost",
+                "dtcMessagesCount",
+                "toolingCostPerPart",
+                "batchSize"
+              ]
+            },
+            "propertyInfoMap": {
+              "type": "object",
+              "properties": {
+                "failuresWarningsCount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "finalYield": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "maintenanceDepartmentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "engineeringSupportRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "setupCostPerPart": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "shiftsPerDay": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "toolCribSupportRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "otherDirectCosts": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "skillLevel": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "extraCosts": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "gcdWithTolerancesCount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "productionDaysPerYear": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lossInsuranceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numScrapPartsDownStream": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machineLife": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialOverheadPercent": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "laborRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "toolCribSupportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "pieceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "indirectMachinePower": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "additionalAmortizedInvestment": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "totalCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lifetimeCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "height": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "addFacilityCostToDirOverhead": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "margin": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "purchasingSupportRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "hoursPerShift": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "cycleTime": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialStockFormName": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "liabilityInsuranceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "hardToolingCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "utilization": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "engineeringSupportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "scrapPartCredit": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numberOfParts": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "expendableToolingCostPerPart": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityCostDOH": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertylength": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "indirectOverheadRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "annualVolume": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "expendableToolingCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "periodOverhead": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "laborTime": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "salvageValue": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "laborCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialStockName": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "useComputedOverheadRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "fireInsuranceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "energyCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machinePower": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "directOverheadRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "calculatedEnergyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "additionalDirectCosts": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "indirectMachineEnergyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "scrapMass": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "energyCarbonFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "cycleTimeEnergyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "totalProductionVolume": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "cadSerLength": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "fullyBurdenedCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "setupCostPerCore": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "maintenanceSupportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "salvageValueFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "directOverheadCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "partsPerHour": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "supportServicesCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "sgaCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numPartsPerSheet": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "amortizedInvestment": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "workcenterFootprint": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertyheight": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "purchasingPowerFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "sgaPercent": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "energyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "totalMachineCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lastCosted": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityHeatAndGasFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialOverheadCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stripNestingPitch": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "depreciationCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "notSupportedGcdsCount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "otherProcessCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "supportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "insuranceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "annualEarnedMachineHours": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "batchSetupTime": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "roughLength": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machineLength": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "cadSerWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "utilitiesCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "supportsSustainability": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "width": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "purchasingDepartmentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "fireInsuranceFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machineUptime": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertythickness": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "elapsedTime": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "annualCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "batchCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "utilizationWithAddendum": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "failedGcdsCount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "logisticsCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "appliedPowerFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "productionLife": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "footprintAllowanceFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialYield": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "annualCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "primaryMaterialCarbonFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityHeatAndGasCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityElectricityFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "batchCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "suppliesCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "electricityProcessCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "utilizationWithoutAddendum": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "expendableToolingCostPerCore": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machineWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "imputedInterestCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "logisticsCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "marginPercent": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lastPublished": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "programmingCostPerPart": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "indirectOverheadPercent": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "virtualMaterialStockName": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "annualMaintenanceFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "qualityDepartmentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialName": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "pieceAndPeriod": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "maintenanceSupportRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "workCenterCapacity": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "engineeringDepartmentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "installationFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "imputedInterestRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "finishMass": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertyoutsideDia": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "capitalInvestment": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "directMachineEnergyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "roughMass": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "fixtureCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "dfmRisk": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "totalCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertywallThickness": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "plantLaborRateAdjustmentFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "goodPartYield": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "electricityRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numOperators": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityWaterCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "dfmRiskScore": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "processCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "fixtureCostPerPart": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityWaterFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertyinsideDia": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "materialUnitCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "overheadRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lifetimeCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "rentRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "liabilityInsuranceFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "toolCribDepartmentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "processStepEnergyConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "useIndirectOverheadPercentage": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "length": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "maintenanceCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "qualitySupportRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "qualitySupportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "stockPropertywidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityElectricityCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "purchasingSupportAllocation": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "facilityCostIOH": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machineLaborRateAdjustmentFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "programmingCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numScrapParts": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "lossInsuranceFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "numCurvedWall": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "dtcMessagesCount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "rentCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "toolingCostPerPart": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "installationCost": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "gasRate": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "batchSize": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "machinePrice": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
+                "nonProductionFootprintFactor": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                }
+              },
+              "required": [
+                "failuresWarningsCount",
+                "finalYield",
+                "maintenanceDepartmentCost",
+                "engineeringSupportRate",
+                "setupCostPerPart",
+                "shiftsPerDay",
+                "toolCribSupportRate",
+                "otherDirectCosts",
+                "skillLevel",
+                "extraCosts",
+                "gcdWithTolerancesCount",
+                "productionDaysPerYear",
+                "lossInsuranceCost",
+                "numScrapPartsDownStream",
+                "machineLife",
+                "materialOverheadPercent",
+                "laborRate",
+                "toolCribSupportAllocation",
+                "pieceCost",
+                "indirectMachinePower",
+                "additionalAmortizedInvestment",
+                "totalCarbon",
+                "lifetimeCost",
+                "height",
+                "addFacilityCostToDirOverhead",
+                "margin",
+                "purchasingSupportRate",
+                "hoursPerShift",
+                "cycleTime",
+                "liabilityInsuranceCost",
+                "hardToolingCost",
+                "utilization",
+                "engineeringSupportAllocation",
+                "scrapPartCredit",
+                "numberOfParts",
+                "expendableToolingCostPerPart",
+                "facilityCostDOH",
+                "indirectOverheadRate",
+                "annualVolume",
+                "expendableToolingCost",
+                "periodOverhead",
+                "laborTime",
+                "salvageValue",
+                "laborCost",
+                "useComputedOverheadRate",
+                "fireInsuranceCost",
+                "energyCost",
+                "machinePower",
+                "directOverheadRate",
+                "calculatedEnergyConsumption",
+                "additionalDirectCosts",
+                "indirectMachineEnergyConsumption",
+                "scrapMass",
+                "energyCarbonFactor",
+                "cycleTimeEnergyConsumption",
+                "totalProductionVolume",
+                "materialCost",
+                "fullyBurdenedCost",
+                "setupCostPerCore",
+                "maintenanceSupportAllocation",
+                "salvageValueFactor",
+                "directOverheadCost",
+                "partsPerHour",
+                "supportServicesCost",
+                "sgaCost",
+                "numPartsPerSheet",
+                "amortizedInvestment",
+                "workcenterFootprint",
+                "purchasingPowerFactor",
+                "sgaPercent",
+                "energyConsumption",
+                "totalMachineCost",
+                "lastCosted",
+                "facilityHeatAndGasFactor",
+                "materialOverheadCost",
+                "stripNestingPitch",
+                "depreciationCost",
+                "notSupportedGcdsCount",
+                "otherProcessCarbon",
+                "supportAllocation",
+                "insuranceCost",
+                "annualEarnedMachineHours",
+                "batchSetupTime",
+                "roughLength",
+                "machineLength",
+                "utilitiesCost",
+                "supportsSustainability",
+                "width",
+                "purchasingDepartmentCost",
+                "fireInsuranceFactor",
+                "machineUptime",
+                "elapsedTime",
+                "annualCost",
+                "batchCost",
+                "utilizationWithAddendum",
+                "failedGcdsCount",
+                "logisticsCost",
+                "appliedPowerFactor",
+                "productionLife",
+                "footprintAllowanceFactor",
+                "materialYield",
+                "annualCarbon",
+                "materialCarbon",
+                "primaryMaterialCarbonFactor",
+                "facilityHeatAndGasCost",
+                "facilityElectricityFactor",
+                "batchCarbon",
+                "suppliesCost",
+                "electricityProcessCarbon",
+                "utilizationWithoutAddendum",
+                "expendableToolingCostPerCore",
+                "machineWidth",
+                "imputedInterestCost",
+                "logisticsCarbon",
+                "marginPercent",
+                "lastPublished",
+                "programmingCostPerPart",
+                "indirectOverheadPercent",
+                "annualMaintenanceFactor",
+                "qualityDepartmentCost",
+                "materialName",
+                "pieceAndPeriod",
+                "maintenanceSupportRate",
+                "workCenterCapacity",
+                "engineeringDepartmentCost",
+                "installationFactor",
+                "imputedInterestRate",
+                "finishMass",
+                "capitalInvestment",
+                "directMachineEnergyConsumption",
+                "roughMass",
+                "fixtureCost",
+                "dfmRisk",
+                "totalCost",
+                "plantLaborRateAdjustmentFactor",
+                "goodPartYield",
+                "electricityRate",
+                "numOperators",
+                "facilityWaterCost",
+                "processCarbon",
+                "fixtureCostPerPart",
+                "facilityWaterFactor",
+                "materialUnitCost",
+                "overheadRate",
+                "lifetimeCarbon",
+                "rentRate",
+                "liabilityInsuranceFactor",
+                "toolCribDepartmentCost",
+                "processStepEnergyConsumption",
+                "useIndirectOverheadPercentage",
+                "length",
+                "maintenanceCost",
+                "qualitySupportRate",
+                "qualitySupportAllocation",
+                "facilityElectricityCost",
+                "purchasingSupportAllocation",
+                "facilityCostIOH",
+                "machineLaborRateAdjustmentFactor",
+                "programmingCost",
+                "numScrapParts",
+                "lossInsuranceFactor",
+                "dtcMessagesCount",
+                "rentCost",
+                "toolingCostPerPart",
+                "installationCost",
+                "gasRate",
+                "batchSize",
+                "machinePrice",
+                "nonProductionFootprintFactor"
+              ]
+            }
+          },
+          "required": [
+            "propertyValueMap",
+            "propertyInfoMap"
+          ]
+        },
+        "costingFailed": {
+          "type": "boolean"
+        },
+        "secondaryProcess": {
+          "type": "boolean"
+        },
+        "depth": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "processInstanceKey",
+        "artifactKey",
+        "gcds",
+        "resultMapBean",
+        "costingFailed",
+        "secondaryProcess",
+        "depth"
+      ]
+    }
+  ]
+}
