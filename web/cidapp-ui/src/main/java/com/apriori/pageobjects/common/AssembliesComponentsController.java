@@ -12,6 +12,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -564,7 +565,26 @@ public class AssembliesComponentsController {
      * @param columnToAdd - Name of column to be added
      * @return - The current page object
      */
-    public AssembliesComponentsController addColumn(ColumnsEnum columnToAdd) {
+    public AssembliesComponentsController addColumnTreeView(ColumnsEnum columnToAdd) {
+        if (!getTableHeaders().contains(columnToAdd.toString())) {
+            componentTableActions.configure(configureButton)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.RIGHT)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .submit(ComponentsTreePage.class);
+        }
+        return this;
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public AssembliesComponentsController addColumnTableView(ColumnsEnum columnToAdd) {
         if (!getTableHeaders().contains(columnToAdd.toString())) {
             componentTableActions.configure(configureButton)
                 .selectColumn(columnToAdd)

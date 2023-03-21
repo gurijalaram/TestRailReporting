@@ -14,6 +14,7 @@ import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public class MountTypePinCountTests extends TestBase {
     }
 
     @Test
+    @Ignore("this feature is not on qa-test yet")
     @TestRail(testCaseId = "15407")
     @Description("Verify that three variants radio buttons for Mount Type field exists")
     public void mountTypeRadioBtnTest() {
@@ -79,12 +81,12 @@ public class MountTypePinCountTests extends TestBase {
             .selectMatchedPart("460819 BK005")
             .highlightItem()
             .editSelectedBom()
-            .selectOtherMountType("Hole");
+            .enterMountTypeOldVer("Hole");
 
         softAssertions.assertThat(editBomPage.isMountTypeWarnMsgDisplayed()).isTrue();
         softAssertions.assertThat(editBomPage.isSaveButtonDisabledDisplayed()).isTrue();
 
-        editBomPage.selectOtherMountType(testMountTypeData)
+        editBomPage.enterMountTypeOldVer(testMountTypeData)
             .enterPinCount(testPinCountData);
 
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isTrue();
@@ -109,7 +111,7 @@ public class MountTypePinCountTests extends TestBase {
             .selectMatchedPart("460819 BK005")
             .highlightItem()
             .editSelectedBom()
-            .selectOtherMountType(testMountTypeData)
+            .enterMountTypeOldVer(testMountTypeData)
             .enterPinCount("123a");
 
         softAssertions.assertThat(editBomPage

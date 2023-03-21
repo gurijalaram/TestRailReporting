@@ -25,7 +25,6 @@ import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
 import entity.request.WorkflowRow;
 import entity.response.AgentConnectionInfo;
-import entity.response.AgentConnectionOptions;
 import entity.response.AgentConnectionsInfo;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
@@ -45,10 +44,10 @@ import enums.CICReportType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import enums.ReportsEnum;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.openqa.selenium.WebDriver;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -56,6 +55,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -196,12 +196,8 @@ public class CicApiTestUtil extends TestBase {
      * @return response of created work flow string
      */
     public static ResponseWrapper<String> CreateWorkflow(String session, String workflowData) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", String.format("JSESSIONID=%s",session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -215,12 +211,8 @@ public class CicApiTestUtil extends TestBase {
      * @return ResponseWrapper<String>
      */
     public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", String.format("JSESSIONID=%s",session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -234,13 +226,8 @@ public class CicApiTestUtil extends TestBase {
      * @return response
      */
     public static ResponseWrapper<String> deleteWorkFlow(String session, JobDefinition jobDefinition) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", String.format("JSESSIONID=%s",session));
-
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .body(jobDefinition)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -577,7 +564,7 @@ public class CicApiTestUtil extends TestBase {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
+        header.put("cookie", String.format("JSESSIONID=%s", session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_CONNECTOR, null)
             .headers(header)
             .body(connectorRequestDataBuilder)
@@ -592,23 +579,26 @@ public class CicApiTestUtil extends TestBase {
      * @param session       Login session
      * @return ConnectorInfo response class object
      */
+    @SneakyThrows
     public static ConnectorInfo getMatchedConnector(String connectorName, String session) {
+        ConnectorInfo connectorInfo = null;
         String getConnectorJson = String.format("{\"customerThingName\": \"%s\"}", getCustomerName());
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_CONNECTORS, ConnectorsResponse.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
         ConnectorsResponse connectorResponse = (ConnectorsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
-
-        return connectorResponse.getRows().stream()
-            .filter(conn -> conn.getDisplayName().equals(connectorName))
-            .findFirst()
-            .get();
+        try {
+            connectorInfo = connectorResponse.getRows().stream()
+                .filter(conn -> conn.getDisplayName().equals(connectorName))
+                .findFirst()
+                .get();
+        } catch (NoSuchElementException noSuchElementException) {
+            log.error(String.format("MATCHING CONNECTOR (%s) NOT FOUND!! ", connectorName));
+        }
+        return connectorInfo;
     }
+
 
     /**
      * Get connector connection info contains appKey and wss URL options
@@ -617,15 +607,10 @@ public class CicApiTestUtil extends TestBase {
      * @param session           login session
      * @return AgentConnectionInfo
      */
-    public static AgentConnectionInfo getAgentConnectionOptions(String connectorIdentity, String session) {
-        AgentConnectionOptions agentConnectionOptions = new AgentConnectionOptions();
+    public static AgentConnectionInfo getAgentConnectorOptions(String connectorIdentity, String session) {
         String getConnectorJson = String.format("{\"connectorName\": \"%s\"}", connectorIdentity);
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_AGENT_CONNECTION_INFO, AgentConnectionsInfo.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
         AgentConnectionsInfo agentConnectionInfo = (AgentConnectionsInfo) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -641,12 +626,8 @@ public class CicApiTestUtil extends TestBase {
      */
     public static AgentWorkflowReportTemplates getAgentReportTemplates(CICReportType cicReportType, String session) {
         String getConnectorJson = String.format("{\"customer\":\"%s\",\"reportType\":\"%s\"}", getCustomerName(), cicReportType);
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_WORKFLOW_REPORT_TEMPLATES, AgentWorkflowReportTemplates.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
         return (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -696,5 +677,21 @@ public class CicApiTestUtil extends TestBase {
         workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
         workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
         return workflowRequestDataBuilder;
+    }
+
+    /**
+     * setup header information for CIC Agent API Cookie
+     *
+     * @param session
+     * @return Map
+     */
+    private static Map<String, String> initHeadersWithJSession(String session) {
+        return new HashMap<String, String>() {
+            {
+                put("Accept", "*/*");
+                put("Accept", "application/json");
+                put("cookie", String.format("JSESSIONID=%s", session));
+            }
+        };
     }
 }
