@@ -56,7 +56,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement override = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides())));
+        WebElement override = driver.findElement(By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides())));
+        pageUtils.scrollWithJavaScript(override, true);
         pageUtils.clearValueOfElement(override);
         override.sendKeys(value);
         return this;
