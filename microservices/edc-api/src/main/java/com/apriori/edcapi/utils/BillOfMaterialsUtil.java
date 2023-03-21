@@ -95,7 +95,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @param identity - the identity
      * @return response object
      */
-    public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity, Class klass, Integer expectedResponseCode) {
+        public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity, Class klass, Integer expectedResponseCode) {
         RequestEntity requestEntity = genericRequest(identity, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, klass)
             .expectedResponseCode(expectedResponseCode);
 
