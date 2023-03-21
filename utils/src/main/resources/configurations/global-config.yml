@@ -25,8 +25,11 @@ global:
   different_parts: true
   different_users: false
   schema_base_path: schemas/
-  users_csv_file: onprem-users.csv
-
+  users_csv_file: common-users.csv
+  nexus:
+    api_url: https://nexus.apriori.com/
+    username: 1W_7fYw7
+    password: zw4zW3rVXcJ5-FEkvgchVXABnKIsgSvvL8kf2k3cpDSJ
 
 ################################################################################################################################
 #  Variables in the default section that will be used if there is no equivalent variable in the environment file
@@ -93,6 +96,16 @@ default:
 
   ci-connect:
     ui_url: https://ci-connect.${deployment_url_template}
+    nexus_repository: apriori-zip-dev
+    nexus_group: apriori-cic-agt
+    nexus_version: 3.1*-snapshot
+    nexus_extension: zip
+    custom_install: false
+    windchill:
+      connector: WC-consvwc02
+      port: 8811
+    teamcenter:
+      connector: RC TC
 
   css:
     api_url: https://css.${deployment_url_template}

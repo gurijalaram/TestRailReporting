@@ -613,7 +613,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return - The current page object
      */
     public ComponentsTablePage addColumn(ColumnsEnum columnToAdd) {
-        assembliesComponentsController.addColumn(columnToAdd);
+        assembliesComponentsController.addColumnTableView(columnToAdd);
         return this;
     }
 }
