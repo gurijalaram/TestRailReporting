@@ -263,7 +263,6 @@ public class AssemblyUtils {
      * Deletes an assembly and all it's subcomponents
      *
      * @param componentAssembly - the component assembly
-     * @param currentUser       - the current user
      * @return - Current Object
      */
     public AssemblyUtils deleteAssemblyAndComponents(ComponentInfoBuilder componentAssembly) {
