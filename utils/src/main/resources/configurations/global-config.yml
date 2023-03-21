@@ -25,7 +25,7 @@ global:
   different_parts: true
   different_users: false
   schema_base_path: schemas/
-  users_csv_file: common-users.csv
+  users_csv_file: onprem-users.csv
   nexus:
     api_url: https://nexus.apriori.com/
     username: 1W_7fYw7

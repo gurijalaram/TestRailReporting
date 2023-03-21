@@ -50,6 +50,7 @@ public class WebDriverService extends BrowserManager {
                     chromeOptions.setCapability("intl.accept.languages", locale);
                     chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                     chromeOptions.setAcceptInsecureCerts(true);
+                    chromeOptions.addArguments("--remote-allow-origins=*");
 
                     result = new ChromeDriver(chromeOptions);
                     log.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
