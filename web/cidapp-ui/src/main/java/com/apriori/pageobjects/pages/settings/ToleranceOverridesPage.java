@@ -20,7 +20,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
     @FindBy(xpath = "//h2[.='Geometric Tolerances']")
     private WebElement sectionHeader;
 
-    @FindBy(css = ".tolerance-overrides-form [type='Submit']")
+    @FindBy(css = "[data-testid='tolerance-overrides-form'] [type='Submit']")
     private WebElement submitButton;
 
     @FindBy(css = ".tolerance-overrides-form [type='button']")
