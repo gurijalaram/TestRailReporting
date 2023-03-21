@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverridesPage> {
 
-    @FindBy(css = ".tolerance-overrides-form .section-header .left")
+    @FindBy(xpath = "//h2[.='Geometric Tolerances']")
     private WebElement sectionHeader;
 
     @FindBy(css = ".tolerance-overrides-form [type='Submit']")
@@ -45,7 +45,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContent").contains("Geometric Tolerance"));
+        assertTrue("Geometric Tolerances header is not displayed", pageUtils.isElementDisplayed(sectionHeader));
     }
 
     /**
