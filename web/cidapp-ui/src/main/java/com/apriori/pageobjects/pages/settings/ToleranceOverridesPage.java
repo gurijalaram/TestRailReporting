@@ -17,10 +17,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverridesPage> {
 
-    @FindBy(css = ".tolerance-overrides-form .section-header .left")
+    @FindBy(xpath = "//h2[.='Geometric Tolerances']")
     private WebElement sectionHeader;
 
-    @FindBy(css = ".tolerance-overrides-form [type='Submit']")
+    @FindBy(css = "[data-testid='tolerance-overrides-form'] [type='Submit']")
     private WebElement submitButton;
 
     @FindBy(css = ".tolerance-overrides-form [type='button']")
@@ -45,7 +45,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Geometric Tolerance header is not displayed", sectionHeader.getAttribute("textContent").contains("Geometric Tolerance"));
+        assertTrue("Geometric Tolerances header is not displayed", pageUtils.isElementDisplayed(sectionHeader));
     }
 
     /**
@@ -56,7 +56,8 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement override = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
+        WebElement override = driver.findElement(By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides())));
+        pageUtils.scrollWithJavaScript(override, true);
         pageUtils.clearValueOfElement(override);
         override.sendKeys(value);
         return this;
@@ -70,7 +71,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return double
      */
     public double getToleranceOverride(OverridesEnum label) {
-        By byOverride = By.cssSelector(String.format("[name='%s']", label.getOverrides()));
+        By byOverride = By.cssSelector(String.format("[name='tolerance.%s']", label.getOverrides()));
         return Double.parseDouble(pageUtils.waitForElementToAppear(byOverride).getAttribute("value"));
     }
 

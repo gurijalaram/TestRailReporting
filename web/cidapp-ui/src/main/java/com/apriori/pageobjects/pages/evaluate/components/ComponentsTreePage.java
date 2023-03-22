@@ -63,6 +63,9 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
+    @FindBy(css = ".sub-component-tree .component-name")
+    private List<WebElement> subcomponentNames;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -392,7 +395,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return string
      */
     public List<String> getListOfSubcomponents() {
-        return assembliesComponentsController.getListOfSubcomponents();
+        return assembliesComponentsController.getListOfSubcomponents(subcomponentNames);
     }
 
     /**
