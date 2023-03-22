@@ -36,11 +36,11 @@ public class ResetAutomationUsers {
 
             this.automationUser = String.format(automationUser, userIndex);
 
-            RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.PATCH_USER_PASSWORD_BY_USERNAME, null)
+            RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.PATCH_USER_PASSWORD_BY_EMAIL, null)
                 .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
-                .body(new ResetAutoUsers()
-                    .setPassword(automationPassword))
+                .body(ResetAutoUsers.builder()
+                    .password(automationPassword))
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
             HTTPRequest.build(requestEntity).patch();
