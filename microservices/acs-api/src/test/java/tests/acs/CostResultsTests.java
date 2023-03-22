@@ -64,6 +64,18 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
+    @TestRail(testCaseId = "21574")
+    @Description("Get Root Cost Results after Costing Forging")
+    public void testGetCostRootResultsForging() {
+        String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "Pin.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Forging");
+    }
+
+    @Test
+    @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
