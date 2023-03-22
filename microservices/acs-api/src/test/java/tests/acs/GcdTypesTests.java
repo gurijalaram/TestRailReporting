@@ -40,14 +40,14 @@ public class GcdTypesTests {
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGcdTypesSheetMetal() {
 
-        ResponseWrapper<GcdTypesResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL.getProcessGroup(), GcdTypesResponse.class);
+        GcdTypesResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup(), GcdTypesResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(4).getDisplayName()).isEqualTo("Bend Angle");
-        softAssertions.assertThat(response.getResponseEntity().getEdge().get(0).getStorageType()).isEqualTo("DOUBLE");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(3).getUnitType()).isEqualTo("Length");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedSurface().get(2).getEditable()).isEqualTo(true);
+        softAssertions.assertThat(response.getStraightBend().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getStraightBend().get(4).getDisplayName()).isEqualTo("Bend Angle");
+        softAssertions.assertThat(response.getEdge().get(0).getStorageType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(response.getCurvedWall().get(3).getUnitType()).isEqualTo("Length");
+        softAssertions.assertThat(response.getCurvedSurface().get(2).getEditable()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -56,14 +56,14 @@ public class GcdTypesTests {
     @Description("Run API for Assembly Process Group")
     public void testGetGcdTypesAssembly() {
 
-        ResponseWrapper<GcdTypesAssemblyResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.ASSEMBLY.getProcessGroup(), GcdTypesAssemblyResponse.class);
+        GcdTypesAssemblyResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup(), GcdTypesAssemblyResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getWeld().get(3).getName()).isEqualTo("isRobotic");
-        softAssertions.assertThat(response.getResponseEntity().getWeld().get(3).getDisplayName()).isEqualTo("Method");
-        softAssertions.assertThat(response.getResponseEntity().getAssemblyComponentGcd().get(0).getStorageType()).isEqualTo("OBJECT");
-        softAssertions.assertThat(response.getResponseEntity().getAssemblyComponentGcd().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getContactGroup().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getWeld().get(3).getName()).isEqualTo("isRobotic");
+        softAssertions.assertThat(response.getWeld().get(3).getDisplayName()).isEqualTo("Method");
+        softAssertions.assertThat(response.getAssemblyComponentGcd().get(0).getStorageType()).isEqualTo("OBJECT");
+        softAssertions.assertThat(response.getAssemblyComponentGcd().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getContactGroup().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -72,14 +72,14 @@ public class GcdTypesTests {
     @Description("Run API for 2-Model Machining Process Group")
     public void testGetGcdTypesTwoModelMachining() {
 
-        ResponseWrapper<GcdTypesTwoModelMachiningResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup(), GcdTypesTwoModelMachiningResponse.class);
+        GcdTypesTwoModelMachiningResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup(), GcdTypesTwoModelMachiningResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(1).getName()).isEqualTo("time");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(1).getDisplayName()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(1).getStorageType()).isEqualTo("DOUBLE");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(1).getUnitType()).isEqualTo("Angle");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(2).getEditable()).isEqualTo(true);
+        softAssertions.assertThat(response.getCurvedWall().get(1).getName()).isEqualTo("time");
+        softAssertions.assertThat(response.getCurvedWall().get(1).getDisplayName()).isEqualTo("Time");
+        softAssertions.assertThat(response.getAxiGroove().get(1).getStorageType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(response.getAxiGroove().get(1).getUnitType()).isEqualTo("Angle");
+        softAssertions.assertThat(response.getAxiGroove().get(2).getEditable()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -88,14 +88,14 @@ public class GcdTypesTests {
     @Description("Run API for Additive Manufacturing Process Group")
     public void testGetGcdTypesAdditiveManufacturing() {
 
-        ResponseWrapper<GcdTypesAdditiveManufacturingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup(), GcdTypesAdditiveManufacturingResponse.class);
+        GcdTypesAdditiveManufacturingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup(), GcdTypesAdditiveManufacturingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getSupportStructure().get(1).getName()).isEqualTo("status");
-        softAssertions.assertThat(response.getResponseEntity().getSupportStructure().get(2).getDisplayName()).isEqualTo("Max Overhang Angle");
-        softAssertions.assertThat(response.getResponseEntity().getSupportStructure().get(1).getStorageType()).isEqualTo("OBJECT");
-        softAssertions.assertThat(response.getResponseEntity().getMultiStepHole().get(3).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getMultiStepHole().get(3).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getSupportStructure().get(1).getName()).isEqualTo("status");
+        softAssertions.assertThat(response.getSupportStructure().get(2).getDisplayName()).isEqualTo("Max Overhang Angle");
+        softAssertions.assertThat(response.getSupportStructure().get(1).getStorageType()).isEqualTo("OBJECT");
+        softAssertions.assertThat(response.getMultiStepHole().get(3).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getMultiStepHole().get(3).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -104,14 +104,14 @@ public class GcdTypesTests {
     @Description("Run API for Bar & Tube Fab Process Group")
     public void testGetGcdTypesBarAndTubeFab() {
 
-        ResponseWrapper<GcdTypesBarAndTubeFabResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup(), GcdTypesBarAndTubeFabResponse.class);
+        GcdTypesBarAndTubeFabResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup(), GcdTypesBarAndTubeFabResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(1).getName()).isEqualTo("numCurvedEdges");
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(2).getDisplayName()).isEqualTo("Num Sharp Corners");
-        softAssertions.assertThat(response.getResponseEntity().getForm().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getBend().get(2).getUnitType()).isEqualTo("Angle");
-        softAssertions.assertThat(response.getResponseEntity().getBend().get(3).getEditable()).isEqualTo(true);
+        softAssertions.assertThat(response.getComplexHole().get(1).getName()).isEqualTo("numCurvedEdges");
+        softAssertions.assertThat(response.getComplexHole().get(2).getDisplayName()).isEqualTo("Num Sharp Corners");
+        softAssertions.assertThat(response.getForm().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getBend().get(2).getUnitType()).isEqualTo("Angle");
+        softAssertions.assertThat(response.getBend().get(3).getEditable()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -120,14 +120,14 @@ public class GcdTypesTests {
     @Description("Run API for Casting - Die Process Group")
     public void testGetGcdTypesCastingDie() {
 
-        ResponseWrapper<GcdTypesCastingDieResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.CASTING_DIE.getProcessGroup(), GcdTypesCastingDieResponse.class);
+        GcdTypesCastingDieResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup(), GcdTypesCastingDieResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(1).getName()).isEqualTo("time");
-        softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(2).getDisplayName()).isEqualTo("Hole Type");
-        softAssertions.assertThat(response.getResponseEntity().getComboVoid().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getSlideBundle().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getSlideBundle().get(1).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getSimpleHole().get(1).getName()).isEqualTo("time");
+        softAssertions.assertThat(response.getSimpleHole().get(2).getDisplayName()).isEqualTo("Hole Type");
+        softAssertions.assertThat(response.getComboVoid().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getSlideBundle().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getSlideBundle().get(1).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -136,14 +136,14 @@ public class GcdTypesTests {
     @Description("Run API for Casting - Sand Process Group")
     public void testGetGcdTypesCastingSand() {
 
-        ResponseWrapper<GcdTypesCastingSandResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.CASTING_SAND.getProcessGroup(), GcdTypesCastingSandResponse.class);
+        GcdTypesCastingSandResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup(), GcdTypesCastingSandResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(1).getName()).isEqualTo("time");
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(2).getDisplayName()).isEqualTo("Flatness");
-        softAssertions.assertThat(response.getResponseEntity().getMultiStepHole().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getComboVoid().get(3).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(1).getEditable()).isEqualTo(true);
+        softAssertions.assertThat(response.getPlanarFace().get(1).getName()).isEqualTo("time");
+        softAssertions.assertThat(response.getPlanarFace().get(2).getDisplayName()).isEqualTo("Flatness");
+        softAssertions.assertThat(response.getMultiStepHole().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getComboVoid().get(3).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getAxiGroove().get(1).getEditable()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -152,14 +152,14 @@ public class GcdTypesTests {
     @Description("Run API for Casting - Investment Process Group")
     public void testGetGcdTypesCastingInvestment() {
 
-        ResponseWrapper<GcdTypesCastingInvestmentResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup(), GcdTypesCastingInvestmentResponse.class);
+        GcdTypesCastingInvestmentResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup(), GcdTypesCastingInvestmentResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getCoreBundle().get(1).getName()).isEqualTo("time");
-        softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(1).getDisplayName()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getComboVoid().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getSlideBundle().get(3).getUnitType()).isEqualTo("Length");
-        softAssertions.assertThat(response.getResponseEntity().getSlideBundle().get(1).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getCoreBundle().get(1).getName()).isEqualTo("time");
+        softAssertions.assertThat(response.getSimpleHole().get(1).getDisplayName()).isEqualTo("Time");
+        softAssertions.assertThat(response.getComboVoid().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getSlideBundle().get(3).getUnitType()).isEqualTo("Length");
+        softAssertions.assertThat(response.getSlideBundle().get(1).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -168,14 +168,14 @@ public class GcdTypesTests {
     @Description("Run API for Forging Process Group")
     public void testGetGcdTypesForging() {
 
-        ResponseWrapper<GcdTypesForgingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.FORGING.getProcessGroup(), GcdTypesForgingResponse.class);
+        GcdTypesForgingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.FORGING.getProcessGroup(), GcdTypesForgingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getRingedHole().get(1).getDisplayName()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getVoids().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getComponent().get(6).getUnitType()).isEqualTo("Area");
-        softAssertions.assertThat(response.getResponseEntity().getComponent().get(6).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getCurvedWall().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getRingedHole().get(1).getDisplayName()).isEqualTo("Time");
+        softAssertions.assertThat(response.getVoids().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getComponent().get(6).getUnitType()).isEqualTo("Area");
+        softAssertions.assertThat(response.getComponent().get(6).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -184,14 +184,14 @@ public class GcdTypesTests {
     @Description("Run API for Plastic Molding Process Group")
     public void testGetGcdTypesPlasticMolding() {
 
-        ResponseWrapper<GcdTypesPlasticMoldingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup(), GcdTypesPlasticMoldingResponse.class);
+        GcdTypesPlasticMoldingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup(), GcdTypesPlasticMoldingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getPartingLine().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getPartingLine().get(1).getDisplayName()).isEqualTo("Draw Direction");
-        softAssertions.assertThat(response.getResponseEntity().getRib().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getMultiStepHole().get(3).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getComboVoid().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getPartingLine().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getPartingLine().get(1).getDisplayName()).isEqualTo("Draw Direction");
+        softAssertions.assertThat(response.getRib().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getMultiStepHole().get(3).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getComboVoid().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -200,14 +200,14 @@ public class GcdTypesTests {
     @Description("Run API for Powder Metal Process Group")
     public void testGetGcdTypesPowderMetal() {
 
-        ResponseWrapper<GcdTypesForgingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.POWDER_METAL.getProcessGroup(), GcdTypesForgingResponse.class);
+        GcdTypesForgingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.POWDER_METAL.getProcessGroup(), GcdTypesForgingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getKeyway().get(2).getDisplayName()).isEqualTo("Tolerance (coordinate)");
-        softAssertions.assertThat(response.getResponseEntity().getRing().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getRingedHole().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getAxiGroove().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getKeyway().get(2).getDisplayName()).isEqualTo("Tolerance (coordinate)");
+        softAssertions.assertThat(response.getRing().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getCurvedWall().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getRingedHole().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -216,14 +216,14 @@ public class GcdTypesTests {
     @Description("Run API for Rapid Prototyping Process Group")
     public void testGetGcdTypesRapidPrototyping() {
 
-        ResponseWrapper<GcdTypesRapidPrototypingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup(), GcdTypesRapidPrototypingResponse.class);
+        GcdTypesRapidPrototypingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup(), GcdTypesRapidPrototypingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getRingedHole().get(2).getDisplayName()).isEqualTo("Status");
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getCurvedWall().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getRingedHole().get(2).getDisplayName()).isEqualTo("Status");
+        softAssertions.assertThat(response.getPlanarFace().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getSimpleHole().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -232,14 +232,14 @@ public class GcdTypesTests {
     @Description("Run API for Roto & Blow Molding Process Group")
     public void testGetGcdTypesRotoAndBlowMolding() {
 
-        ResponseWrapper<GcdTypesRotoAndBlowMoldingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup(), GcdTypesRotoAndBlowMoldingResponse.class);
+        GcdTypesRotoAndBlowMoldingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup(), GcdTypesRotoAndBlowMoldingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getPerimeter().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(2).getDisplayName()).isEqualTo("Num Curved Edges");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getPartingLine().get(4).getUnitType()).isEqualTo("Area");
-        softAssertions.assertThat(response.getResponseEntity().getSpout().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getPerimeter().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getComplexHole().get(2).getDisplayName()).isEqualTo("Num Curved Edges");
+        softAssertions.assertThat(response.getAxiGroove().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getPartingLine().get(4).getUnitType()).isEqualTo("Area");
+        softAssertions.assertThat(response.getSpout().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -248,14 +248,14 @@ public class GcdTypesTests {
     @Description("Run API for Sheet Metal - Transfer Die Process Group")
     public void testGetGcdTypesSheetMetalTransferDie() {
 
-        ResponseWrapper<GcdTypesSheetMetalTransferDieResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class);
+        GcdTypesSheetMetalTransferDieResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getBlank().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
-        softAssertions.assertThat(response.getResponseEntity().getForm().get(1).getStorageType()).isEqualTo("OBJECT");
-        softAssertions.assertThat(response.getResponseEntity().getEdgeSegment().get(3).getUnitType()).isEqualTo("Length");
-        softAssertions.assertThat(response.getResponseEntity().getLance().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getBlank().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getComplexHole().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
+        softAssertions.assertThat(response.getForm().get(1).getStorageType()).isEqualTo("OBJECT");
+        softAssertions.assertThat(response.getEdgeSegment().get(3).getUnitType()).isEqualTo("Length");
+        softAssertions.assertThat(response.getLance().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -264,14 +264,14 @@ public class GcdTypesTests {
     @Description("Run API for Sheet Metal - Hydroforming Process Group")
     public void testGetGcdTypesSheetMetalHydroforming() {
 
-        ResponseWrapper<GcdTypesSheetMetalHydroformingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup(), GcdTypesSheetMetalHydroformingResponse.class);
+        GcdTypesSheetMetalHydroformingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup(), GcdTypesSheetMetalHydroformingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getBlank().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
-        softAssertions.assertThat(response.getResponseEntity().getEdgeSegment().get(1).getStorageType()).isEqualTo("OBJECT");
-        softAssertions.assertThat(response.getResponseEntity().getMultiBend().get(2).getUnitType()).isEqualTo("Angle");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedSurface().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getStraightBend().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getBlank().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
+        softAssertions.assertThat(response.getEdgeSegment().get(1).getStorageType()).isEqualTo("OBJECT");
+        softAssertions.assertThat(response.getMultiBend().get(2).getUnitType()).isEqualTo("Angle");
+        softAssertions.assertThat(response.getCurvedSurface().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -280,14 +280,14 @@ public class GcdTypesTests {
     @Description("Run API for Sheet Metal - Roll Forming Process Group")
     public void testGetGcdTypesSheetMetalRollForming() {
 
-        ResponseWrapper<GcdTypesSheetMetalRollFormingResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup(), GcdTypesSheetMetalRollFormingResponse.class);
+        GcdTypesSheetMetalRollFormingResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup(), GcdTypesSheetMetalRollFormingResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getForm().get(1).getDisplayName()).isEqualTo("Sub Type");
-        softAssertions.assertThat(response.getResponseEntity().getBend().get(0).getStorageType()).isEqualTo("STRING");
-        softAssertions.assertThat(response.getResponseEntity().getLance().get(2).getUnitType()).isEqualTo("Length");
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getStraightBend().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getForm().get(1).getDisplayName()).isEqualTo("Sub Type");
+        softAssertions.assertThat(response.getBend().get(0).getStorageType()).isEqualTo("STRING");
+        softAssertions.assertThat(response.getLance().get(2).getUnitType()).isEqualTo("Length");
+        softAssertions.assertThat(response.getPlanarFace().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -296,14 +296,14 @@ public class GcdTypesTests {
     @Description("Run API for Sheet Metal - Stretch Forming Process Group")
     public void testGetGcdTypesSheetMetalStretchForming() {
 
-        ResponseWrapper<GcdTypesSheetMetalTransferDieResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class);
+        GcdTypesSheetMetalTransferDieResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup(), GcdTypesSheetMetalTransferDieResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getBlank().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
-        softAssertions.assertThat(response.getResponseEntity().getForm().get(1).getStorageType()).isEqualTo("OBJECT");
-        softAssertions.assertThat(response.getResponseEntity().getEdgeSegment().get(3).getUnitType()).isEqualTo("Length");
-        softAssertions.assertThat(response.getResponseEntity().getLance().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getBlank().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getComplexHole().get(1).getDisplayName()).isEqualTo("Number of Coining Chains");
+        softAssertions.assertThat(response.getForm().get(1).getStorageType()).isEqualTo("OBJECT");
+        softAssertions.assertThat(response.getEdgeSegment().get(3).getUnitType()).isEqualTo("Length");
+        softAssertions.assertThat(response.getLance().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
@@ -312,14 +312,14 @@ public class GcdTypesTests {
     @Description("Run API for Sheet Plastic Process Group")
     public void testGetGcdTypesSheetPlastic() {
 
-        ResponseWrapper<GcdTypesSheetPlasticResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup(), GcdTypesSheetPlasticResponse.class);
+        GcdTypesSheetPlasticResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup(), GcdTypesSheetPlasticResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getComboVoid().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getComplexHole().get(2).getDisplayName()).isEqualTo("Num Curved Edges");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(1).getStorageType()).isEqualTo("DOUBLE");
-        softAssertions.assertThat(response.getResponseEntity().getCoreBundle().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getCurvedWall().get(2).getEditable()).isEqualTo(true);
+        softAssertions.assertThat(response.getComboVoid().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getComplexHole().get(2).getDisplayName()).isEqualTo("Num Curved Edges");
+        softAssertions.assertThat(response.getAxiGroove().get(1).getStorageType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(response.getCoreBundle().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getCurvedWall().get(2).getEditable()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -328,14 +328,14 @@ public class GcdTypesTests {
     @Description("Run API for Stock Machining Process Group")
     public void testGetGcdTypesStockMachining() {
 
-        ResponseWrapper<GcdTypesStockMachiningResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(), GcdTypesStockMachiningResponse.class);
+        GcdTypesStockMachiningResponse response = acsResources.getGcdTypes(
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(), GcdTypesStockMachiningResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getResponseEntity().getPerimeter().get(0).getName()).isEqualTo("name");
-        softAssertions.assertThat(response.getResponseEntity().getAxiGroove().get(1).getDisplayName()).isEqualTo("Helix Angle");
-        softAssertions.assertThat(response.getResponseEntity().getRing().get(1).getStorageType()).isEqualTo("DOUBLE");
-        softAssertions.assertThat(response.getResponseEntity().getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
-        softAssertions.assertThat(response.getResponseEntity().getSimpleHole().get(0).getEditable()).isEqualTo(false);
+        softAssertions.assertThat(response.getPerimeter().get(0).getName()).isEqualTo("name");
+        softAssertions.assertThat(response.getAxiGroove().get(1).getDisplayName()).isEqualTo("Helix Angle");
+        softAssertions.assertThat(response.getRing().get(1).getStorageType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(response.getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
+        softAssertions.assertThat(response.getSimpleHole().get(0).getEditable()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
