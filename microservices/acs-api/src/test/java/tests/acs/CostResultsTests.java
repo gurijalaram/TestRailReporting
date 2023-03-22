@@ -40,6 +40,30 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
+    @TestRail(testCaseId = "21569")
+    @Description("Get Root Cost Results after Costing Additive Manufacturing")
+    public void testGetCostRootResultsAdditiveManufacturing() {
+        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "ADD-LOW-001.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Additive Manufacturing");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21570")
+    @Description("Get Root Cost Results after Costing Bar & Tube")
+    public void testGetCostRootResultsBarAndTubeFab() {
+        String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "B&T-LOW-001.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Bar & Tube Fab");
+    }
+
+    @Test
+    @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
