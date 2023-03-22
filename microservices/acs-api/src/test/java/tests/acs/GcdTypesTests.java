@@ -11,7 +11,7 @@ import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesPlasticMoldingRespon
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesRapidPrototypingResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesRotoAndBlowMoldingResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetMetalHydroformingResponse;
-import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetMetalResponse;
+import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetMetalRollFormingResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetMetalTransferDieResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesSheetPlasticResponse;
@@ -40,8 +40,8 @@ public class GcdTypesTests {
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGcdTypesSheetMetal() {
 
-        ResponseWrapper<GcdTypesSheetMetalResponse> response = acsResources.getGcdTypes(
-            ProcessGroupEnum.SHEET_METAL.getProcessGroup(), GcdTypesSheetMetalResponse.class);
+        ResponseWrapper<GcdTypesResponse> response = acsResources.getGcdTypes(
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup(), GcdTypesResponse.class);
 
         softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(0).getName()).isEqualTo("name");
         softAssertions.assertThat(response.getResponseEntity().getStraightBend().get(4).getDisplayName()).isEqualTo("Bend Angle");
