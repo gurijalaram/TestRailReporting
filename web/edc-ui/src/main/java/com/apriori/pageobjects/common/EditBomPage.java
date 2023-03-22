@@ -34,7 +34,7 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
     @FindBy(id = "manufacturer-part-number")
     private WebElement partNumber;
 
-    @FindBy(css = "input[class='form-control is-invalid']")
+    @FindBy(css = "input[class='is-invalid form-control'][name='mountType']")
     private WebElement mountTypeError;
 
     @FindBy(xpath = "//div[@class='modal-footer'] //button[.='Save']")

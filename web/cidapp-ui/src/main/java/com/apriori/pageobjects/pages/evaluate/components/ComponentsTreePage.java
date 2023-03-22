@@ -20,6 +20,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -61,6 +62,9 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
     @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
+
+    @FindBy(css = ".sub-component-tree .component-name")
+    private List<WebElement> subcomponentNames;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -391,7 +395,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return string
      */
     public List<String> getListOfSubcomponents() {
-        return assembliesComponentsController.getListOfSubcomponents();
+        return assembliesComponentsController.getListOfSubcomponents(subcomponentNames);
     }
 
     /**
@@ -530,6 +534,17 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
             ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent)).findFirst().get();
             new ScenariosUtil().checkComponentDeleted(componentDetails.getComponentIdentity(), componentDetails.getScenarioIdentity(), componentDetails.getUser());
         });
+        return this;
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ComponentsTreePage addColumn(ColumnsEnum columnToAdd) {
+        assembliesComponentsController.addColumnTreeView(columnToAdd);
         return this;
     }
 }

@@ -9,7 +9,7 @@ import com.apriori.pages.workflows.schedule.details.WorkflowSchedule;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
 
 import org.openqa.selenium.WebDriver;
 
@@ -54,7 +54,7 @@ public class WorkFlowFeatures extends CICBasePage {
      * @return WorkflowHome page object
      */
     public WorkflowHome createScheduledWorkflow(WorkflowSchedule workflowSchedule) {
-        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
             this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
                 .selectWorkflowConnector(workFlowData.getConnectorName())
