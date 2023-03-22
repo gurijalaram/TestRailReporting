@@ -4,13 +4,13 @@ import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
 public enum ATSAPIEnum implements ExternalEndpointEnum {
-    POST_TOKEN("tokens"),
-    PATCH_USER_PASSWORD_BY_EMAIL("users/%s/password"),
+    TOKEN("tokens"),
+    USER_PASSWORD_BY_EMAIL("users/%s/password"),
     USER_BY_EMAIL("users/%s"),
     AUTHENTICATE("authenticate"),
-    UPDATE_SAML_PROVIDERS("upsertSamlUser"),
-    RESET_USER_MFA("users/%s/reset-mfa"),
-    RESET_CUSTOMER_USERS_MFA("customers/%s/reset-mfa"),
+    SAML_PROVIDERS("upsertSamlUser"),
+    USER_MFA("users/%s/reset-mfa"),
+    CUSTOMER_USERS_MFA("customers/%s/reset-mfa"),
     CLOUD_CONTEXT("context/%s");
 
     private final String endpoint;

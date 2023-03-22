@@ -82,8 +82,8 @@ public class AtsUsersTests {
         user = cdsTestUtil.addUser(customerIdentity, userName, emailPattern);
         userIdentity = user.getResponseEntity().getIdentity();
 
-        atsTestUtil.resetUserMFA(ATSAPIEnum.RESET_CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
-        atsTestUtil.resetUserMFA(ATSAPIEnum.RESET_USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
+        atsTestUtil.resetUserMFA(ATSAPIEnum.CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
+        atsTestUtil.resetUserMFA(ATSAPIEnum.USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
     }
 
     @Test

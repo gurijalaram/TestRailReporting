@@ -45,7 +45,7 @@ public class AtsTestUtil extends TestUtil {
     public ResponseWrapper<UserByEmail> putSAMLProviders(String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
         String userName = generator.generateUserName();
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.UPDATE_SAML_PROVIDERS, UserByEmail.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.SAML_PROVIDERS, UserByEmail.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
                 .email(userName + email + ".com")
@@ -83,7 +83,7 @@ public class AtsTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> changePassword(String email) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.PATCH_USER_PASSWORD_BY_EMAIL, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
             .inlineVariables(email)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
             .body(ResetAutoUsers.builder()
