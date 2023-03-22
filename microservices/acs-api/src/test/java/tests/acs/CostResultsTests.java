@@ -52,6 +52,54 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
+    @TestRail(testCaseId = "21581")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Hydroforming")
+    public void testGetCostRootResultsSheetMetalHydroforming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Hydroforming");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21580")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Transfer Die")
+    public void testGetCostRootResultsSheetMetalTransferDie() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Transfer Die");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21583")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Stretch Forming")
+    public void testGetCostRootResultsSheetMetalStretchForming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Stretch Forming");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21582")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Roll Forming")
+    public void testGetCostRootResultsSheetMetalRollForming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "z_purlin.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Roll Forming");
+    }
+
+    @Test
+    @Category(AcsTest.class)
     @TestRail(testCaseId = "21584")
     @Description("Get Root Cost Results after Costing Stock Machining")
     public void testGetCostRootResultsStockMachining() {
