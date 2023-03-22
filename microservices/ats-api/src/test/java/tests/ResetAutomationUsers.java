@@ -40,7 +40,8 @@ public class ResetAutomationUsers {
                 .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
                 .body(ResetAutoUsers.builder()
-                    .password(automationPassword))
+                    .password(automationPassword)
+                    .build())
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
             HTTPRequest.build(requestEntity).patch();
