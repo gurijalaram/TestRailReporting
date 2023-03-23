@@ -76,6 +76,42 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
+    @TestRail(testCaseId = "21576")
+    @Description("Get Root Cost Results after Costing Powder Metal")
+    public void testGetCostRootResultsPowderMetal() {
+        String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "116-5809.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Powder Metal");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21577")
+    @Description("Get Root Cost Results after Costing Rapid Prototyping")
+    public void testGetCostRootResultsRapidPrototyping() {
+        String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Rapid Prototyping");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21578")
+    @Description("Get Root Cost Results after Costing Roto and Blow Molding")
+    public void testGetCostRootResultsRotoBlowMolding() {
+        String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Roto & Blow Molding");
+    }
+
+    @Test
+    @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
