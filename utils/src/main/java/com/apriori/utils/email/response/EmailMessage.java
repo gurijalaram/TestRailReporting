@@ -12,11 +12,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@Slf4j
 @Data
 @Builder
 @AllArgsConstructor
@@ -56,9 +58,11 @@ public class EmailMessage {
 
     /**
      * Get Email Message Attachment using Message I
+     *
      * @return EmailMessageAttachment
      */
     public EmailMessageAttachment emailMessageAttachment() {
+        EmailMessageAttachment emailMessageAttachment = null;
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
             .inlineVariables(this.id)
             .headers(new HashMap<String, String>() {
@@ -69,7 +73,13 @@ public class EmailMessage {
 
         ResponseWrapper<EmailMessageAttachments> emailMessageAttachmentsResponse = HTTPRequest.build(requestEntity).get();
 
-        return emailMessageAttachmentsResponse.getResponseEntity().value.get(0);
+        try {
+            emailMessageAttachment = emailMessageAttachmentsResponse.getResponseEntity().value.get(0);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            log.error("ATTACHMENT NOT FOUND IN THE EMAIL !!!");
+        }
+        return emailMessageAttachment;
     }
 
     /**

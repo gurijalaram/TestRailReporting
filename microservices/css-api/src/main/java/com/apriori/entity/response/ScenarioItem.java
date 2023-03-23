@@ -130,6 +130,7 @@ public class ScenarioItem {
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
+    private Boolean iterationHasWatchpointReport;
 
     public static class PartNestingDiagram {
     }

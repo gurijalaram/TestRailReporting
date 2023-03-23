@@ -6,6 +6,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -20,6 +21,10 @@ import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
+import software.amazon.awssdk.services.ssm.SsmClient;
+import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
+import software.amazon.awssdk.services.ssm.model.GetParameterResponse;
+import software.amazon.awssdk.services.ssm.model.SsmException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -396,11 +401,32 @@ public class FileResourceUtil {
     }
 
     /**
-     * wait certain time to check if file exists(appear)
+     * Get the parameter value from AWS systems manager -> parameter store
      *
-     * @param path - path to the file
-     * @param waitTimeInSec - how long wait to appear
-     *
-     * @throws Exception
+     * @param parameterName Parameter name
+     * @return Parameter value
      */
+    public static String getAwsSystemParameter(String parameterName) {
+        String parameterValue = "";
+        SsmClient ssmClient = SsmClient.builder()
+            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+            ? EnvironmentVariableCredentialsProvider.create()
+            : ProfileCredentialsProvider.create())
+            .region(S3_REGION_NAME)
+            .build();
+
+        try {
+            GetParameterRequest parameterRequest = GetParameterRequest.builder()
+                .name(parameterName)
+                .withDecryption(true)
+                .build();
+
+            GetParameterResponse parameterResponse = ssmClient.getParameter(parameterRequest);
+            parameterValue = parameterResponse.parameter().value();
+
+        } catch (SsmException e) {
+            log.error(e.getMessage());
+        }
+        return parameterValue;
+    }
 }

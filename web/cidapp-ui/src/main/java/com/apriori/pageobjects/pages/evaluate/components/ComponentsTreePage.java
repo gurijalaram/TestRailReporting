@@ -4,11 +4,13 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.AssembliesComponentsController;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -18,6 +20,7 @@ import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +30,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -55,6 +59,12 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
     @FindBy(css = ".scenario-preview")
     private WebElement previewDataPanel;
+
+    @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
+    private WebElement deleteButton;
+
+    @FindBy(css = ".sub-component-tree .component-name")
+    private List<WebElement> subcomponentNames;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -256,6 +266,26 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
     }
 
     /**
+     * clicks the delete button
+     *
+     * @return - the current page object
+     */
+    public DeletePage deleteSubcomponent() {
+        return assembliesComponentsController.deleteSubComponent(deleteButton);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param component - the component object
+     * @return new page object
+     */
+    public EvaluatePage checkComponentDelete(ComponentInfoBuilder component) {
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Updates a cad file
      *
      * @return new page object
@@ -365,7 +395,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * @return string
      */
     public List<String> getListOfSubcomponents() {
-        return assembliesComponentsController.getListOfSubcomponents();
+        return assembliesComponentsController.getListOfSubcomponents(subcomponentNames);
     }
 
     /**
@@ -489,5 +519,32 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isScenarioCheckboxSelected(String componentName, String scenarioName) {
         return assembliesComponentsController.isScenarioCheckboxSelected(componentName, scenarioName);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param componentInfo - the component info builder
+     * @param subcomponents - the list of subcomponents
+     * @return current object
+     */
+    // TODO: change this method so that it takes in an array of Strings
+    public ComponentsTreePage checkComponentDeleted(ComponentInfoBuilder componentInfo, String... subcomponents) {
+        Arrays.stream(subcomponents).forEach(subcomponent -> {
+            ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(subcomponent)).findFirst().get();
+            new ScenariosUtil().checkComponentDeleted(componentDetails.getComponentIdentity(), componentDetails.getScenarioIdentity(), componentDetails.getUser());
+        });
+        return this;
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ComponentsTreePage addColumn(ColumnsEnum columnToAdd) {
+        assembliesComponentsController.addColumnTreeView(columnToAdd);
+        return this;
     }
 }

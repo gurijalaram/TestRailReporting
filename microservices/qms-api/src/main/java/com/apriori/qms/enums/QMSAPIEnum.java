@@ -9,6 +9,9 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     PROJECTS("projects"),
     PROJECT("projects/%s"),
 
+    //USER PREFERENCE
+    USER_PREFERENCE("user-preferences"),
+
     //BID PACKAGE
     BID_PACKAGES("bid-packages"),
     BID_PACKAGE("bid-packages/%s"),
@@ -67,7 +70,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.qms.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+        return PropertiesContext.get("qms.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 
     private String addQuery(String endpointString) {
@@ -77,6 +80,6 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
             querySymbol = "&";
         }
 
-        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
+        return querySymbol + "key=" + PropertiesContext.get("secret_key");
     }
 }

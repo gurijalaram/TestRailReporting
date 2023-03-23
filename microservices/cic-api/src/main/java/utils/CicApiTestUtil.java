@@ -1,8 +1,5 @@
 package utils;
 
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.enums.ReportsEnum;
-import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
@@ -17,7 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.ConnectorRequest;
 import entity.request.CostingInputs;
@@ -28,7 +25,6 @@ import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
 import entity.request.WorkflowRow;
 import entity.response.AgentConnectionInfo;
-import entity.response.AgentConnectionOptions;
 import entity.response.AgentConnectionsInfo;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
@@ -47,10 +43,11 @@ import enums.CICPartSelectionType;
 import enums.CICReportType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
+import enums.ReportsEnum;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.openqa.selenium.WebDriver;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -58,12 +55,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CicApiTestUtil extends TestUtil {
+public class CicApiTestUtil extends TestBase {
 
     /**
      * Deserialize workflow data from json file to string.
@@ -94,7 +92,7 @@ public class CicApiTestUtil extends TestUtil {
             case "REST":
                 workflowRequestDataBuilder = (isCostingInputData)
                     ? new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class) :
-                      new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
+                    new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
 
                 workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
                 break;
@@ -198,12 +196,8 @@ public class CicApiTestUtil extends TestUtil {
      * @return response of created work flow string
      */
     public static ResponseWrapper<String> CreateWorkflow(String session, String workflowData) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -217,12 +211,8 @@ public class CicApiTestUtil extends TestUtil {
      * @return ResponseWrapper<String>
      */
     public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -236,13 +226,8 @@ public class CicApiTestUtil extends TestUtil {
      * @return response
      */
     public static ResponseWrapper<String> deleteWorkFlow(String session, JobDefinition jobDefinition) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
-
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .body(jobDefinition)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -259,20 +244,6 @@ public class CicApiTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         requestEntity.headers(setupHeader());
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Login to CI-connect GUI to get JSessionID
-     *
-     * @param currentUser - user credentials to login to ci-connect gui
-     * @param webDriver   - WebDriver
-     * @return JSessionID
-     */
-    public static String getLoginSession(UserCredentials currentUser, WebDriver webDriver) {
-        new CicLoginPage(webDriver)
-            .login(currentUser)
-            .clickUsersMenu();
-        return String.valueOf(webDriver.manage().getCookies()).replace("[", "").replace("]", "");
     }
 
     /**
@@ -310,7 +281,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.plm_agent_id");
+        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
     }
 
     /**
@@ -429,7 +400,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return customer
      */
     public static String getCustomerName() {
-        return PropertiesContext.get("${env}.ci-connect.${customer}.customer_name");
+        return PropertiesContext.get("${customer}.ci-connect.customer_name");
     }
 
     /**
@@ -593,7 +564,7 @@ public class CicApiTestUtil extends TestUtil {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
+        header.put("cookie", String.format("JSESSIONID=%s", session));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_CONNECTOR, null)
             .headers(header)
             .body(connectorRequestDataBuilder)
@@ -608,23 +579,26 @@ public class CicApiTestUtil extends TestUtil {
      * @param session       Login session
      * @return ConnectorInfo response class object
      */
+    @SneakyThrows
     public static ConnectorInfo getMatchedConnector(String connectorName, String session) {
+        ConnectorInfo connectorInfo = null;
         String getConnectorJson = String.format("{\"customerThingName\": \"%s\"}", getCustomerName());
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_CONNECTORS, ConnectorsResponse.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
         ConnectorsResponse connectorResponse = (ConnectorsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
-
-        return connectorResponse.getRows().stream()
-            .filter(conn -> conn.getDisplayName().equals(connectorName))
-            .findFirst()
-            .get();
+        try {
+            connectorInfo = connectorResponse.getRows().stream()
+                .filter(conn -> conn.getDisplayName().equals(connectorName))
+                .findFirst()
+                .get();
+        } catch (NoSuchElementException noSuchElementException) {
+            log.error(String.format("MATCHING CONNECTOR (%s) NOT FOUND!! ", connectorName));
+        }
+        return connectorInfo;
     }
+
 
     /**
      * Get connector connection info contains appKey and wss URL options
@@ -633,15 +607,10 @@ public class CicApiTestUtil extends TestUtil {
      * @param session           login session
      * @return AgentConnectionInfo
      */
-    public static AgentConnectionInfo getAgentConnectionOptions(String connectorIdentity, String session) {
-        AgentConnectionOptions agentConnectionOptions = new AgentConnectionOptions();
+    public static AgentConnectionInfo getAgentConnectorOptions(String connectorIdentity, String session) {
         String getConnectorJson = String.format("{\"connectorName\": \"%s\"}", connectorIdentity);
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_AGENT_CONNECTION_INFO, AgentConnectionsInfo.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
         AgentConnectionsInfo agentConnectionInfo = (AgentConnectionsInfo) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -651,27 +620,38 @@ public class CicApiTestUtil extends TestUtil {
     /**
      * get Workflow Report template names
      *
-     * @param reportName    ReportsEnum
      * @param cicReportType EMAIL or PLM_WRITE
      * @param session       login session
      * @return ReportTemplatesRow
      */
-    public static ReportTemplatesRow getAgentReportTemplate(ReportsEnum reportName, CICReportType cicReportType, String session) {
+    public static AgentWorkflowReportTemplates getAgentReportTemplates(CICReportType cicReportType, String session) {
         String getConnectorJson = String.format("{\"customer\":\"%s\",\"reportType\":\"%s\"}", getCustomerName(), cicReportType);
-        Map<String, String> header = new HashMap<>();
-        header.put("Accept", "application/json");
-        header.put("Content-Type", "application/json");
-        header.put("cookie", session.replace("[", "").replace("]", ""));
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_GET_WORKFLOW_REPORT_TEMPLATES, AgentWorkflowReportTemplates.class)
-            .headers(header)
+            .headers(initHeadersWithJSession(session))
             .customBody(getConnectorJson)
             .expectedResponseCode(HttpStatus.SC_OK);
-        AgentWorkflowReportTemplates agentWorkflowReportTemplates = (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (AgentWorkflowReportTemplates) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
 
-        return agentWorkflowReportTemplates.getRows().stream()
-            .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
-            .findFirst()
-            .get();
+    /**
+     * get the report template id
+     *
+     * @param agentWorkflowReportTemplates list of templates
+     * @param reportName                   expected report name
+     * @return ReportTemplatesRow single template object
+     */
+    public static ReportTemplatesRow getAgentReportTemplate(AgentWorkflowReportTemplates agentWorkflowReportTemplates, ReportsEnum reportName) {
+        ReportTemplatesRow reportTemplate = null;
+        try {
+            reportTemplate = agentWorkflowReportTemplates.getRows().stream()
+                .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
+                .findFirst()
+                .get();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error("REPORT TEMPLATE NOT FOUND  --- " + reportName.getReportName());
+        }
+        return reportTemplate;
     }
 
     /**
@@ -697,5 +677,21 @@ public class CicApiTestUtil extends TestUtil {
         workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
         workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
         return workflowRequestDataBuilder;
+    }
+
+    /**
+     * setup header information for CIC Agent API Cookie
+     *
+     * @param session
+     * @return Map
+     */
+    private static Map<String, String> initHeadersWithJSession(String session) {
+        return new HashMap<String, String>() {
+            {
+                put("Accept", "*/*");
+                put("Accept", "application/json");
+                put("cookie", String.format("JSESSIONID=%s", session));
+            }
+        };
     }
 }

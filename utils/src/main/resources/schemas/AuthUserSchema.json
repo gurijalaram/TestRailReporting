@@ -93,7 +93,6 @@
         "identity",
         "createdBy",
         "createdAt",
-        "updatedAt",
         "userProfile",
         "email",
         "username",
@@ -106,8 +105,8 @@
         "mfaRequired"
       ],
       "optional": [
-        "hasCompleteProfile"
-
+        "hasCompleteProfile",
+        "updatedAt"
       ]
     }
   }

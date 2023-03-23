@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.partsandassembliesdetails;
 
 import com.apriori.pageobjects.common.PartsAndAssemblyDetailsController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -428,9 +429,49 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//button[@data-testid='button-secondary-scenario-participant-remove-confirmation-modal']")
     private WebElement btnParticipantCancel;
 
+    @FindBy(id = "open-in-button")
+    private WebElement btnOpenIn;
+
+    @FindBy(xpath = "//li[@role='menuitem']")
+    private WebElement btnCid;
+
+    @FindBy(xpath = "//div[text()='Length']//..")
+    private WebElement lengthType;
+
+    @FindBy(xpath = "//div[text()='Unit Cost']//..")
+    private WebElement costType;
+
+    @FindBy(xpath = "//div[text()='Milling Speed']//..")
+    private WebElement timeType;
+
+    @FindBy(xpath = "//p[text()='Piece Part Cost']//following-sibling::p")
+    private WebElement decimalPlace;
+
+    @FindBy(xpath = "//button[@aria-label='More Options...']//*[local-name()='svg' and @data-testid='collapsible-card-menu-icon-process-routing']")
+    private WebElement moreOptionMenu;
+
+    @FindBy(id = "process.processName")
+    private WebElement processNameAttribute;
+
+    @FindBy(xpath = "//button[@data-testid='NEW_MESSAGE']//*[local-name()='svg']")
+    private WebElement processAttributeMessageIcon;
+
+    @FindBy(xpath = "//li[@data-testid='option-item-edit']")
+    private WebElement editProcessCardOption;
+
+    @FindBy(id = "chip-properties-process.fixtureCost")
+    private WebElement selectedProcessFieldName;
+
+    @FindBy(xpath = "//div[@data-testid='chip-properties-process.fixtureCost-data-chip']//*[local-name()='svg']")
+    private WebElement selectedProcessFieldRemoveIcon;
+
+    @FindBy(xpath = "//div[@data-testid='chip-properties-process.totalMachineCost-data-chip']//*[local-name()='svg']")
+    private WebElement totalMachineCostRemoveIcon;
+
+    @FindBy(xpath = "//div[@data-testid='chip-properties-process.laborTime-data-chip']//*[local-name()='svg']")
+    private WebElement laborTimeRemoveIcon;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
-
         this(driver, log);
     }
 
@@ -443,12 +484,10 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         PageFactory.initElements(driver, this);
         this.waitForCADViewerLoad();
         this.partsAndAssemblyDetailsController = new PartsAndAssemblyDetailsController(driver);
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -1125,7 +1164,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage selectProcess(String processName) {
         getPageUtils().waitForElementToAppear(processDropdown);
         getPageUtils().moveAndClick(processDropdown);
-        getPageUtils().waitForElementAndClick(By.xpath("//ul[@role='listbox']//span[text()='" + processName + "']"));
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//ul[@role='listbox']//span[text()='%s']", processName)));
         return this;
     }
 
@@ -1692,6 +1731,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectAUser(String user) {
+        getPageUtils().waitForElementAndClick(usersDropdownOption);
         getPageUtils().waitForElementToAppear(usersDropdownOption).sendKeys(user);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + user + "')]"));
         return this;
@@ -2514,6 +2554,185 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickOnSharedUserRemoveCancelButton() {
         getPageUtils().waitForElementAndClick(btnParticipantCancel);
+        return this;
+    }
+
+    /**
+     * Checks if open in cid button displayed
+     *
+     * @return true/false
+     */
+    public boolean isOpenInCIDButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnOpenIn).isDisplayed();
+    }
+
+    /**
+     * clicks on open component button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnOpenComponent() {
+        getPageUtils().waitForElementAndClick(btnOpenIn);
+        return this;
+    }
+
+    /**
+     * Click on open CID
+     *
+     * @return new page object
+     */
+    public EvaluatePage clickOnCid() {
+        getPageUtils().waitForElementAndClick(btnCid);
+        return new EvaluatePage(getDriver());
+    }
+
+    /**
+     * get length type
+     *
+     * @return a String
+     */
+    public String getLengthType() {
+        return getPageUtils().waitForElementToAppear(lengthType).getAttribute("innerText");
+    }
+
+    /**
+     * get cost type
+     *
+     * @return a String
+     */
+    public String getCostType() {
+        return getPageUtils().waitForElementToAppear(costType).getAttribute("innerText");
+    }
+
+    /**
+     * get time type
+     *
+     * @return a String
+     */
+    public String getTimeType() {
+        return getPageUtils().waitForElementToAppear(timeType).getAttribute("innerText");
+    }
+
+    /**
+     * get decimal places
+     *
+     * @return a String
+     */
+    public String getDecimalPlaces() {
+        return getPageUtils().waitForElementToAppear(decimalPlace).getAttribute("innerText");
+    }
+
+    /**
+     * Checks if process attribute message icon displayed
+     *
+     * @return true/false
+     */
+    public boolean isNewMessageOptionDisplayed() {
+        getPageUtils().mouseMove(processNameAttribute);
+        return getPageUtils().waitForElementAppear(processAttributeMessageIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on new message icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickProcessNameMessageIcon() {
+        getPageUtils().moveAndClick(processAttributeMessageIcon);
+        return this;
+    }
+
+    /**
+     * Checks if process card-more options displayed
+     *
+     * @return true/false
+     */
+    public boolean isMoreOptionsMenuDisplayed() {
+        return getPageUtils().waitForElementAppear(moreOptionMenu).isDisplayed();
+    }
+
+    /**
+     * clicks on more options
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnMoreOptionMenu() {
+        getPageUtils().waitForElementAndClick(moreOptionMenu);
+        return this;
+    }
+
+    /**
+     * clicks on more options
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickEditProcessCardOption() {
+        getPageUtils().waitForElementAndClick(editProcessCardOption);
+        return this;
+    }
+
+    /**
+     * Checks if process details card modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isProcessCardModalDisplayed() {
+        return getPageUtils().waitForElementAppear(createCardModal).isDisplayed();
+    }
+
+    /**
+     * clicks to open/close the process drop-down field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage openAndCloseProcessDropDown() {
+        getPageUtils().waitForElementAndClick(dropDownFieldOnModal);
+        return this;
+    }
+
+    /**
+     * get selected process field name
+     *
+     * @return a String
+     */
+    public String getSelectedProcessFieldName() {
+        return getPageUtils().waitForElementToAppear(selectedProcessFieldName).getAttribute("innerText");
+    }
+
+    /**
+     * clicks to remove the selected process field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToRemoveProcessField() {
+        getPageUtils().waitForElementAndClick(selectedProcessFieldRemoveIcon);
+        return this;
+    }
+
+    /**
+     * clicks save button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickProcessModalSaveButton() {
+        getPageUtils().waitForElementToAppear(btnSave);
+        getPageUtils().javaScriptClick(btnSave);
+        return this;
+    }
+
+    /**
+     * Reset process card to default
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage resetToDefaultConfiguration() {
+        clickOnMoreOptionMenu();
+        clickEditProcessCardOption();
+        openAndCloseProcessDropDown();
+        getPageUtils().waitForElementAndClick(totalMachineCostRemoveIcon);
+        getPageUtils().waitForElementAndClick(laborTimeRemoveIcon);
+        openAndCloseProcessDropDown();
+        clickProcessModalSaveButton();
         return this;
     }
 }

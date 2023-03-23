@@ -4,18 +4,19 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-import com.apriori.enums.ReportsEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.ConnectorRequest;
 import entity.response.AgentConnectionInfo;
 import entity.response.AgentConnectionOptions;
+import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
-import entity.response.ReportTemplatesRow;
 import enums.CICAgentType;
 import enums.CICReportType;
+import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
@@ -23,9 +24,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicLoginUtil;
 
 public class CicConnectorTest extends TestBase {
 
+    private UserCredentials currentUser = UserUtil.getUser();
     private static String loginSession;
     private static ConnectorInfo connectorInfo;
     private static SoftAssertions softAssertions;
@@ -34,7 +37,7 @@ public class CicConnectorTest extends TestBase {
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = CicApiTestUtil.getLoginSession(UserUtil.getUser(), driver);
+        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData(CICAgentType.WINDCHILL);
     }
 
@@ -46,7 +49,7 @@ public class CicConnectorTest extends TestBase {
         assertThat(responseWrapper.getBody(), is(containsString(">true<")));
         connectorInfo = CicApiTestUtil.getMatchedConnector(connectorRequestDataBuilder.getDisplayName(), loginSession);
 
-        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectionOptions(connectorInfo.getName(), loginSession);
+        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), loginSession);
 
         AgentConnectionOptions agentConnectionOptions = AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
@@ -59,10 +62,10 @@ public class CicConnectorTest extends TestBase {
     @Test
     @Description("Get report template names")
     public void testGetReportTemplates() {
-        ReportTemplatesRow reportTemplatesRow = CicApiTestUtil.getAgentReportTemplate(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY, CICReportType.EMAIL, loginSession);
-        softAssertions.assertThat(reportTemplatesRow.getValue()).isNotNull();
-    }
+        AgentWorkflowReportTemplates reportTemplates = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
 
+        softAssertions.assertThat(CicApiTestUtil.getAgentReportTemplate(reportTemplates, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY)).isNotNull();
+    }
 
     @AfterClass
     public static void cleanup() {

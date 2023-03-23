@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 // TODO ALL: test it
 public class ResetAutomationUsers {
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
-    private static final String automationPassword = PropertiesContext.get("${env}.ats.automation_password");
+    private static final String automationPassword = PropertiesContext.get("ats.automation_password");
     private String automationUser;
 
     /**
@@ -27,7 +27,7 @@ public class ResetAutomationUsers {
     @Test
     @Description("Resets the password of the automation users")
     public void resetAllAutomationUsers() {
-        String automationUser = PropertiesContext.get("${env}.ats.automation_username");
+        String automationUser = PropertiesContext.get("ats.automation_username");
 
         IntStream.range(1, 41).forEach(x -> {
             String userIndex = (x < 10 ? "0" : "") + x;
@@ -36,11 +36,12 @@ public class ResetAutomationUsers {
 
             this.automationUser = String.format(automationUser, userIndex);
 
-            RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.PATCH_USER_PASSWORD_BY_USERNAME, null)
+            RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
                 .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
-                .body(new ResetAutoUsers()
-                    .setPassword(automationPassword))
+                .body(ResetAutoUsers.builder()
+                    .password(automationPassword)
+                    .build())
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
             HTTPRequest.build(requestEntity).patch();

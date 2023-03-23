@@ -19,12 +19,15 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -88,6 +91,15 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
 
+    @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
+    private WebElement reportButton;
+
+    @FindBy(id = "qa-action-bar-generate-report")
+    private WebElement generateReportButton;
+
+    @FindBy(id = "qa-action-bar-download-report")
+    private WebElement downloadReportButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -147,7 +159,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
-        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        new ScenariosUtil().checkComponentDeleted(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
         return new ExplorePage(driver);
     }
 
@@ -319,7 +331,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return a new page object
      */
     public EvaluatePage navigateToScenario(ScenarioItem cssComponent) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -330,7 +342,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return - A new page object
      */
     public EvaluatePage navigateToScenario(ComponentInfoBuilder component) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
+        driver.navigate().to(PropertiesContext.get("cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -582,5 +594,98 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isActionsDropdownEnabled() {
         return pageUtils.waitForElementToAppear(actionsButton).isEnabled();
+    }
+
+    /**
+     * Clicks the report button
+     *
+     * @return current page object
+     */
+    public ExploreToolbar clickReportDropdown() {
+        pageUtils.waitForElementAndClick(reportButton);
+        return this;
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T generateReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(generateReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Generates a report
+     *
+     * @return generic page object
+     */
+    public <T> T downloadReport(Class<T> klass) {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.waitForElementAndClick(downloadReportButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks if report button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isReportButtonEnabled() {
+        return pageUtils.waitForElementToAppear(reportButton).isEnabled();
+    }
+
+    /**
+     * Checks if download button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDownloadButtonEnabled() {
+        return pageUtils.waitForElementToAppear(downloadReportButton).isEnabled();
+    }
+
+    /**
+     * Gets the jquery data for a report
+     * Some available fields are ->
+     * String fileName
+     * String byExtName
+     * Boolean fileExternallyRemoved
+     * Long total (or size)
+     * String fileUrl
+     * String id
+     * String progressStatusText
+     * String state
+     * String filePath
+     * String dateString
+     * Boolean hideDate
+     * String url
+     *
+     * @return HashMap
+     */
+    public HashMap<String, ?> getReportJQueryData() {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+        final int WAIT_TIME = 15;
+
+        ArrayList<HashMap<String, String>> element = getReportMapData();
+
+        while (element.isEmpty() || !element.get(0).get("state").equalsIgnoreCase("Complete") && ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
+            driver.navigate().back();
+            element = getReportMapData();
+        }
+        return element.get(0);
+    }
+
+    private ArrayList<HashMap<String, String>> getReportMapData() {
+        JavascriptExecutor js;
+        ArrayList<HashMap<String, String>> element;
+
+        driver.get("chrome://downloads/");
+        js = (JavascriptExecutor) driver;
+        element = (ArrayList<HashMap<String, String>>)
+            js.executeScript("return document.querySelector('downloads-manager').shadowRoot.getElementById('downloadsList').items;");
+
+        return element;
     }
 }

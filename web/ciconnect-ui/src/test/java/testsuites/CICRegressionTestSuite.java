@@ -7,10 +7,12 @@ import com.cic.tests.ConnectorTabTests;
 import com.cic.tests.CostingInputTabTests;
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
+import com.cic.tests.PlmIntegrationTests;
 import com.cic.tests.PublishResultsTests;
 import com.cic.tests.QueryDefinitionTests;
 import com.cic.tests.UsersTests;
 import com.cic.tests.WorkflowHistoryTests;
+import com.cic.tests.WorkflowScheduleTests;
 import com.cic.tests.WorkflowTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -26,7 +28,9 @@ import org.junit.runners.Suite;
     WorkflowHistoryTests.class,
     PublishResultsTests.class,
     CostingInputTabTests.class,
-    ConnectorTabTests.class
+    ConnectorTabTests.class,
+    WorkflowScheduleTests.class,
+    PlmIntegrationTests.class
 })
 
 public class CICRegressionTestSuite {

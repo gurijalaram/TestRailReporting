@@ -56,7 +56,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     @FindBy(css = "div[data-testid='loader']")
     private WebElement loadingSpinner;
 
-    @FindBy(css = ".sub-component-tree .component-name")
+    @FindBy(css = ".sub-component-list .component-name")
     private List<WebElement> subcomponentNames;
 
     @FindBy(css = ".sub-components-detail-card .table-body")
@@ -64,6 +64,9 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
 
     @FindBy(id = "qa-sub-components-detail-card-filter-selector")
     private WebElement filterDropdown;
+
+    @FindBy(css = ".sub-component-list [id='qa-sub-header-delete-button'] button")
+    private WebElement deleteButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -384,7 +387,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return - the current page object
      */
     public DeletePage deleteSubcomponent() {
-        return assembliesComponentsController.deleteSubComponent();
+        return assembliesComponentsController.deleteSubComponent(deleteButton);
     }
 
     /**
@@ -510,7 +513,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return string
      */
     public List<String> getListOfSubcomponents() {
-        return assembliesComponentsController.getListOfSubcomponents();
+        return assembliesComponentsController.getListOfSubcomponents(subcomponentNames);
     }
 
     /**
@@ -610,7 +613,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return - The current page object
      */
     public ComponentsTablePage addColumn(ColumnsEnum columnToAdd) {
-        assembliesComponentsController.addColumn(columnToAdd);
+        assembliesComponentsController.addColumnTableView(columnToAdd);
         return this;
     }
 }

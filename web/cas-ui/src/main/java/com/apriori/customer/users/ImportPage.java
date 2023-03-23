@@ -113,7 +113,7 @@ public class ImportPage extends UsersPage {
      * @return ImportPage
      */
     public static ImportPage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/import";
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/users/import";
         driver.navigate().to(String.format(url, customer));
         return new ImportPage(driver);
     }

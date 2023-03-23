@@ -1,0 +1,234 @@
+########################################################################################################################
+# If there is no variable for this environment,
+# check global-config.yml file,
+# if the value in the file is missing or does not match the required one, add it to the current file
+######################################################## QA-TEST #######################################################
+qa-test:
+  application_name: cid
+  base_url: https://na-1-v${version}-demo.apriori-internal.qa-test.apriori.net/
+  customer_identity: 6C1F8C1D4D75
+  name: qa-test
+  secret_key: PG9E795ML3P4
+  user_identity: AK8JJH37GM54
+
+  admin:
+    ui_url: ${qa-test.base_url}apriori/login
+
+  cds:
+    apriori_core_services_installation_identity: 7GFDL6LCI5N4
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: 7FLINC95H3A3
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: AKC81M50KGFE
+    automation_user_identity03: AFMMDK0IJHG4
+    identity_role: 67J517C9L763
+
+  ci-connect:
+    agent_type: windchill
+    agent_api_authorization_key: DogCatMonkey
+    agent_api_url: http://conqscic02.fbc.com:8811/
+    plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
+    plm_wc_api_url: https://consvwc02.fbc.com/
+    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
+
+  reports:
+    ui_url: ${qa-test.base_url}jasperserver-pro/
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+
+########################################################################################################################
+
+
+######################################################## CIS_QA ########################################################
+cis-qa:
+  application_name: cis
+  aws_region: na-1
+  customer_identity: 6C1F8C1D4D75
+  deployment_name: qa
+  installation_name: cis.na-1-v22-1
+  name: cis-qa
+  secret_key: PG9E795ML3P4
+  user_identity: 1F7GAI5DLI2B
+
+  core_service_url_template: ${aws_region}.qa-test.apriori.net/
+  deployment_url_template: ${aws_region}-v${version}.qa-test.apriori.net/
+
+########################################################################################################################
+
+
+######################################################## INT-CORE ######################################################
+int-core:
+  application_name: cid
+  customer_identity: H337GKD0LA0M
+  base_url: https://cost.apriori-internal.int.apriori.net/
+  installation_name: Core Services
+  name: int-core
+  secret_key: 65J1ID2B6LDG
+  user_identity: 8GFDIG229629
+
+
+  core_service_url_template: core.int.apriori.net/
+  deployment_url_template: core.int.apriori.net/
+
+  admin:
+    ui_url: ${qa-test.base_url}apriori/login
+
+  bcs:
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+  cds:
+    apriori_core_services_installation_identity: 70EGN68B5CMH
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: H337GKD0LA0N
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
+  reports:
+    ui_url: ${qa-test.base_url}jasperserver-pro/
+
+
+########################################################################################################################
+
+
+######################################################## STAGING #######################################################
+staging:
+  ap_user_context:
+  base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
+  customer_identity: 7G0JGBE2N4GM
+  secret_key: K6JWVF8KV884
+  user_identity: 6AHL1HHGB15E
+
+  cds:
+    apriori_core_services_installation_identity: 2GIKI57NE7M4
+    appro_application_identity: 1J8M416FBJ94
+    cia_application_identity: 1J8M416FBJCD
+    apriori_production_deployment_identity: 7G0JGBE2N4GN
+    apriori_cloud_home_identity: 1J8M416FBJDE
+    automation_user_identity02: 6AHL3EHF264K
+    automation_user_identity03: 1K2LKIB78J6A
+    identity_role: 7G0JGBE2N2GE
+
+  bcs:
+    api_url: https://bcs.us.staging.apriori.net/
+
+########################################################################################################################
+
+
+######################################################## On Prem #######################################################
+onprem:
+  base_url: https://conqbaci01/
+  name: onprem
+
+########################################################################################################################
+
+
+######################################################## MIGRATION #####################################################
+migration:
+  name: migration
+  customer_identity: 3KED5H5BKN85
+  secret_key: X0V4XXK2SF87
+
+########################################################################################################################
+
+
+######################################################## MIGRATION-PREVIEW #############################################
+migration-preview:
+  name: migration-preview
+  secret_key: X0V4XXK2SF87
+
+########################################################################################################################
+
+
+######################################################## DEV-CFIRST ####################################################
+dev-cfirst:
+  secret_key: 9FRTP0TSZO5W
+
+########################################################################################################################
+
+
+######################################################## LOCAL #########################################################
+local:
+  ap_user_context:
+  base_url: http://localhost
+  name: local
+  secret_key: 65J1ID2B6LDG
+
+  admin:
+    ui_url: ${local.base_url}apriori/login
+
+  ats:
+    api_url: ${local.base_url}:8805/
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
+
+  bcs:
+    api_url: ${local.base_url}:8810/
+
+  cas:
+    ui_url: ${local.base_url}:3002/
+    api_url: ${local.base_url}:8818/
+
+  cds:
+    api_url: ${local.base_url}:8808/
+    apriori_core_services_installation_identity: 70EGN68B5CMH
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: H337GKD0LA0N
+    identity_role: H337GKD0L80E
+
+  cidapp:
+    ui_url: ${local.base_url}:3003/
+    api_url: ${local.base_url}:8813/
+
+  cus:
+    api_url: ${local.base_url}:8828/
+
+  cis:
+    ui_url: ${local.base_url}:3004/
+
+  css:
+    ui_url: ${local.base_url}:8802
+    api_url: ${local.base_url}:8802/
+
+  fms:
+    api_url: ${local.base_url}:8806/
+
+  nts:
+    api_url: ${local.base_url}:8807/
+
+  reports:
+    ui_url: ${local.base_url}jasperserver-pro/login.html
+
+  sds:
+    api_url: ${local.base_url}:8811/
+
+########################################################################################################################
+
+######################################################## DEVELOPMENT ###################################################
+development:
+  application_name: cid
+  base_url: https://cloud.na-1.development.apriori.net/
+  customer_identity: 212B5ABD2F6C
+  deployment_name: production
+  installation_name: core-na-1 - v23 Production
+  name: development
+  secret_key: O85XMATZEMBO
+  user_identity: 4N630F61FGNG
+
+  cds:
+    apriori_core_services_installation_identity: ND11N124DE4F
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: N6LFCKE8GL94
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 4N8BBMII4MM4
+    automation_user_identity03: 4N8BIL9AC4DH
+    identity_role: 67J517C9L763
+
+########################################################################################################################

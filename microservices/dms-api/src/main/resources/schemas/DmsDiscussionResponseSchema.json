@@ -184,6 +184,9 @@
           "pinDetails": {
             "type": "string"
           },
+          "cadModelSnapshot": {
+            "type": "string"
+          },
           "projectIdentity": {
             "type": "string"
           },
@@ -201,6 +204,15 @@
           },
           "type": {
             "type": "string"
+          },
+          "gcds": {
+            "type": "string"
+          },
+          "attributeCategory": {
+            "type": "string"
+          },
+          "processIdentity": {
+            "type": "string"
           }
         },
         "optional": [
@@ -212,12 +224,16 @@
           "customerIdentity",
           "models",
           "pinDetails",
+          "cadModelSnapshot",
           "projectIdentity",
           "projectItemIdentity",
           "scenarioDiscussionIdentity",
           "scenarioIdentity",
           "subject",
-          "type"
+          "type",
+          "gcds",
+          "attributeCategory",
+          "processIdentity"
         ]
       }
     },

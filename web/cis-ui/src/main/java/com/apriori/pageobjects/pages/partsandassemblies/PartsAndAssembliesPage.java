@@ -172,6 +172,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[contains(@class,'Switch-checked')]")
     private WebElement btnCheckedStatus;
 
+    @FindBy(xpath = "//span[@data-testid='switch']//span")
+    private WebElement statusField;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -853,9 +856,13 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage disableStateField() {
-        getPageUtils().waitForElementToAppear(toggleButton);
-        getPageUtils().moveAndClick(toggleButton);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),2);
+        if (getPageUtils().waitForElementToAppear(statusField).getAttribute("class").contains("Switch-checked")) {
+            getPageUtils().waitForElementToAppear(toggleButton);
+            getPageUtils().moveAndClick(toggleButton);
+            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),3);
+        } else {
+            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),3);
+        }
         return this;
     }
 

@@ -1,9 +1,16 @@
 package com.apriori.pages.workflows.schedule.details;
 
-import com.apriori.utils.StringUtils;
+import com.apriori.utils.GenerateStringUtil;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WorkflowSchedule {
     public enum Schedule {
         MINUTES,
@@ -194,7 +201,7 @@ public class WorkflowSchedule {
     }
 
     public String getMonthlyOccurance() {
-        return StringUtils.getFirstLetterUpperCase(monthlyOccurance.toString());
+        return GenerateStringUtil.getFirstLetterUpperCase(monthlyOccurance.toString());
     }
 
     public void setMonthlyOccurance(MonthlyOccurance monthlyOccurance) {
@@ -202,7 +209,7 @@ public class WorkflowSchedule {
     }
 
     public String getMonth() {
-        return StringUtils.getFirstLetterUpperCase(month.toString());
+        return GenerateStringUtil.getFirstLetterUpperCase(month.toString());
     }
 
     public void setMonth(Month month) {
@@ -217,6 +224,6 @@ public class WorkflowSchedule {
      * @return
      */
     private String getWeekDayString(WeekDay weekDay) {
-        return StringUtils.getFirstLetterUpperCase(weekDay.toString());
+        return GenerateStringUtil.getFirstLetterUpperCase(weekDay.toString());
     }
 }

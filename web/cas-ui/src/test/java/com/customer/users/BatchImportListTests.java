@@ -2,7 +2,6 @@ package com.customer.users;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -11,6 +10,7 @@ import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
@@ -23,7 +23,6 @@ import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -31,42 +30,33 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BatchImportListTests extends TestBase {
 
-    private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
-
+    private String cloudRef;
+    private String customerName;
     private ImportPage importPage;
+    private String email;
     private SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private String fileName = "testUsersBatch.csv";
+    private final String fileName = "testUsersBatch.csv";
     private String invalidDataFile = "invalidUsersData.csv";
 
     @Before
     public void setup() {
-        Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
-        String customerType = Constants.ON_PREM_CUSTOMER;
+        customerName = new GenerateStringUtil().generateCustomerName();
+        cloudRef = new GenerateStringUtil().generateCloudReference();
+        email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
-        targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, null, salesforce, email).getResponseEntity()
-            : targetCustomer;
-
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         importPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -93,7 +83,7 @@ public class BatchImportListTests extends TestBase {
     @Description("New CSV file with users can be uploaded in CAS")
     @TestRail(testCaseId = {"4344", "4361", "4354", "4357", "4352", "13234"})
     public void testUploadCsvNewUsers() {
-        cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
+        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
         ImportPage uploadUsers = importPage.refreshBatchFilesList()
             .validateImportUsersTableHasCorrectColumns("User Name", "userName", soft)
             .validateImportUsersTableHasCorrectColumns("Status", "cdsStatus", soft)
@@ -156,7 +146,8 @@ public class BatchImportListTests extends TestBase {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(testCaseId = {"5598", "5599", "4360", "4353", "4358", "4359"})
     public void testLoadUsersFromFile() {
-        cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
+        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
+
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
 
         soft.assertThat(uploadUsers.getFieldName()).containsExactly("Users in Total:", "Successfully Loaded:", "Failed Loaded:", "Created By:", "Created At:");
@@ -209,7 +200,7 @@ public class BatchImportListTests extends TestBase {
     @Description("Upload user csv with invalid users data")
     @TestRail(testCaseId = {"4348"})
     public void testCsvInvalidUsersData() {
-        cdsTestUtil.addCASBatchFile(customerIdentity, invalidDataFile);
+        cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile);
         importPage.refreshBatchFilesList();
 
         PageUtils utils = new PageUtils(getDriver());

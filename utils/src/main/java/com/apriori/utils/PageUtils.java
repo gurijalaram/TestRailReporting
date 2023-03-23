@@ -339,7 +339,7 @@ public class PageUtils {
      *                         You can set this to null to not send anything.
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
-        setValueOfElement(elementWithValue, value, new CharSequence[] {endOfInput});
+        setValueOfElement(elementWithValue, value, new CharSequence[]{endOfInput});
     }
 
     /**
@@ -1344,10 +1344,8 @@ public class PageUtils {
     /**
      * Waits for a WebElement to become visible.
      *
-     * @param element          - WebElement for which visibility is being waited.
-     * @param timeoutInSeconds Number of seconds to wait for WebElement to become visible before assuming
-     *                         it will not become visible. Defaults to 60 seconds.
-     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visisble
+     * @param element - WebElement for which visibility is being waited.
+     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visible
      */
     public Boolean waitForWebElement(WebElement element) {
         try {
@@ -1382,5 +1380,23 @@ public class PageUtils {
     public void rightClick(WebElement element) {
         Actions actions = new Actions(driver);
         actions.contextClick(element).perform();
+    }
+
+    /**
+     * Navigate to url, stop page loading and get the redirected current url
+     *
+     * @param url - url to navigate
+     * @return current redirected url
+     */
+    public String stopPageLoadAndGetCurrentUrl(String url) {
+        String currentUrl;
+        try {
+            driver.manage().timeouts().pageLoadTimeout(DURATION_SLOW);
+            driver.navigate().to(url);
+            currentUrl = driver.getCurrentUrl();
+        } catch (Exception interruptedException) {
+            currentUrl = driver.getCurrentUrl();
+        }
+        return currentUrl;
     }
 }

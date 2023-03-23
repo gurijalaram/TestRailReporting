@@ -25,4 +25,8 @@ public class DmsAttributes {
     private String scenarioIdentity;
     private String subject;
     private String type;
+    private String cadModelSnapshot;
+    private String gcds;
+    private String attributeCategory;
+    private String processIdentity;
 }

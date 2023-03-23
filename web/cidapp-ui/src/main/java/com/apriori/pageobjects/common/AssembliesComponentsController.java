@@ -12,6 +12,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -79,11 +80,8 @@ public class AssembliesComponentsController {
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
 
-    @FindBy(css = ".sub-components-action-bar [id='qa-sub-header-delete-button']")
+    @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
-
-    @FindBy(css = ".sub-component-tree .component-name")
-    private List<WebElement> subcomponentNames;
 
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
@@ -131,6 +129,15 @@ public class AssembliesComponentsController {
      */
     public boolean isSetInputsEnabled() {
         return pageUtils.waitForElementToAppear(setInputsButton).isEnabled();
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteButton).isEnabled();
     }
 
     /**
@@ -294,6 +301,10 @@ public class AssembliesComponentsController {
                 return pageUtils.isElementEnabled(publishButton);
             case EDIT:
                 return pageUtils.isElementEnabled(editButton);
+            case DELETE:
+                return pageUtils.isElementEnabled(deleteButton);
+            case SET_INPUTS:
+                return pageUtils.isElementEnabled(setInputsButton);
             default:
                 return false;
         }
@@ -343,8 +354,8 @@ public class AssembliesComponentsController {
      *
      * @return - the current page object
      */
-    public DeletePage deleteSubComponent() {
-        pageUtils.waitForElementAndClick(deleteButton);
+    public DeletePage deleteSubComponent(WebElement button) {
+        pageUtils.waitForElementAndClick(button);
         return new DeletePage(driver);
     }
 
@@ -450,9 +461,10 @@ public class AssembliesComponentsController {
     /**
      * Gets list of subcomponent names
      *
+     * @param subcomponentNames - the list of subcomponents
      * @return string
      */
-    public List<String> getListOfSubcomponents() {
+    public List<String> getListOfSubcomponents(List<WebElement> subcomponentNames) {
         return pageUtils.waitForElementsToAppear(subcomponentNames).stream()
             .map(x -> x.getAttribute("textContent"))
             .map(String::trim).collect(Collectors.toList());
@@ -551,7 +563,26 @@ public class AssembliesComponentsController {
      * @param columnToAdd - Name of column to be added
      * @return - The current page object
      */
-    public AssembliesComponentsController addColumn(ColumnsEnum columnToAdd) {
+    public AssembliesComponentsController addColumnTreeView(ColumnsEnum columnToAdd) {
+        if (!getTableHeaders().contains(columnToAdd.toString())) {
+            componentTableActions.configure(configureButton)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.RIGHT)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .submit(ComponentsTreePage.class);
+        }
+        return this;
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public AssembliesComponentsController addColumnTableView(ColumnsEnum columnToAdd) {
         if (!getTableHeaders().contains(columnToAdd.toString())) {
             componentTableActions.configure(configureButton)
                 .selectColumn(columnToAdd)

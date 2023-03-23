@@ -160,7 +160,6 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-
     @Test
     @TestRail(testCaseId = {"14755", "14757"})
     @Description("Verify that user can filter discussions by assigned user")
@@ -207,6 +206,141 @@ public class MessagesTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"15525","15526"})
+    @Description("Verify that user can filter discussions by mentioned user")
+    public void testFilterMessagesByMentionedUser() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("This is a discussion with a mention user @22")
+                .selectMentionUser("qa-automation-22@apriori.com")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread()
+                .clickOnFilter()
+                .clickOnAddCondition()
+                .selectMentionedUserToFilter("QA Automation Account 22")
+                .clickOnFilteredDiscussion();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15534","15535"})
+    @Description("Verify that user can filter discussions by state")
+    public void testFilterMessagesByResolvedState() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .clickOnResolveIcon();
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread()
+                .clickOnFilter()
+                .clickOnAddCondition()
+                .selectStatusToFilter("Resolved")
+                .clickOnFilteredDiscussion();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(messagesPage.getResolveStatus()).contains("resolved");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15523","15524","16251","16252"})
+    @Description("Verify that user can assign a discussion on message page")
+    public void testAssignDiscussionInMessagePage() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .shareScenario()
+                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser("qa-automation-23@apriori.com")
+                .selectAUser("qa-automation-24@apriori.com")
+                .clickOnInvite()
+                .clickOnCreatedDiscussion()
+                .clickMoreOption()
+                .clickAssignToOption()
+                .selectAParticipant("QA Automation Account 22");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread();
+
+        softAssertions.assertThat(messagesPage.isMoreOptionMenuDisplayed()).isEqualTo(true);
+
+        messagesPage.clickOnMoreOptionMenu()
+                .clickOnUnAssignToOption();
+
+        softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).doesNotContain("QA Automation Account 22");
+
+        messagesPage.clickOnMoreOptionMenu()
+                .clickOnAssignToOption();
+
+        softAssertions.assertThat(messagesPage.isAssignToUserListDisplayed()).isEqualTo(true);
+
+        messagesPage.selectAUserToAssign("QA Automation Account 23");
+
+        softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).contains("QA Automation Account 23");
+
+        softAssertions.assertAll();
+    }
 }
-
-

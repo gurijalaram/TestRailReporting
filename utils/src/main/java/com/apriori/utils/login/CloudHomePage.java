@@ -39,7 +39,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
      * @return UserProfilePage object
      */
     public UserProfilePage goToProfilePage() {
-        driver.get(PropertiesContext.get("${env}.cloud.ui_url").concat("user-profile"));
+        driver.get(PropertiesContext.get("cloud.ui_url").concat("user-profile"));
         return new UserProfilePage(driver);
     }
 }

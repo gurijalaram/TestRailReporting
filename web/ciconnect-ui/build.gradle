@@ -1,6 +1,21 @@
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(':microservices:cic-api').sourceSets.test.resources
+            ]
+        }
+    }
+}
+
 dependencies {
     implementation project(':utils')
     implementation project(':apibase')
+    implementation project(':microservices:cic-api')
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.assertj:assertj-core:3.6.1'
 }
