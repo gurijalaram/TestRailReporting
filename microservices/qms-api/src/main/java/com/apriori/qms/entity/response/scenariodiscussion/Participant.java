@@ -21,4 +21,5 @@ public class Participant {
     private String createdBy;
     private String userIdentity;
     private String userCustomerIdentity;
+    private String creatorAvatarColor;
 }

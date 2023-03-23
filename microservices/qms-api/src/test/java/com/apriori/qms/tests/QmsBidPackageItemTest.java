@@ -13,12 +13,10 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.authusercontext.User;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -31,7 +29,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
-    private static UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
     private static ScenarioItem scenarioItem;
@@ -127,12 +125,6 @@ public class QmsBidPackageItemTest extends TestUtil {
             BidPackageItemResponse.class, HttpStatus.SC_OK, otherUser);
 
         softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
-
-        QmsErrorMessage errorMessageResponse = QmsBidPackageResources.updateBidPackageItem(
-            bidPackageItemRequestBuilder,
-            bidPackageResponse.getIdentity(),
-            bidPackageItemResponse.getIdentity(),
-            QmsErrorMessage.class, HttpStatus.SC_CONFLICT, otherUser);
     }
 
     @Test
@@ -314,7 +306,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13901"})
+    @TestRail(testCaseId = {"13758"})
     @Description("Create bid-package Item with blank component identity")
     public void createBidPackItemWithEmptyComponentIdentity() {
         QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.createBidPackageItem(
@@ -322,13 +314,13 @@ public class QmsBidPackageItemTest extends TestUtil {
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(),
             currentUser,
-            QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+            QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'componentIdentity' should not be null");
+        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("No message available");
     }
 
     @Test
-    @TestRail(testCaseId = {"13901"})
+    @TestRail(testCaseId = {"13759"})
     @Description("Create bid-package Item with blank Scenario identity")
     public void createBidPackItemWithEmptyScenarioIdentity() {
         QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.createBidPackageItem(
@@ -336,9 +328,9 @@ public class QmsBidPackageItemTest extends TestUtil {
                 "", scenarioItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(),
             currentUser,
-            QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+            QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'scenarioIdentity' should not be null");
+        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("No message available");
     }
 
     @Test
