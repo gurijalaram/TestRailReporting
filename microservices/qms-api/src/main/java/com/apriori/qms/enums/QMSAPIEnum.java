@@ -9,6 +9,9 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     PROJECTS("projects"),
     PROJECT("projects/%s"),
 
+    //USER PREFERENCE
+    USER_PREFERENCE("user-preferences"),
+
     //BID PACKAGE
     BID_PACKAGES("bid-packages"),
     BID_PACKAGE("bid-packages/%s"),

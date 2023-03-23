@@ -30,4 +30,5 @@ public class Assignee {
     public boolean mfaRequired;
     public CustomAttributes customAttributes;
     public String userType;
+    public String avatarColor;
 }

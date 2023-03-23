@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "isSystemUser",
+        "identity",
+        "customerIdentity",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "mfaRequired",
+        "customAttributes",
+        "awsRole",
+        "userType"
+      ],
+      "optional": [
+        "mfaAuthenticator"
+      ],
+      "properties": {
+        "isSystemUser": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "userProfile": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "givenName",
+            "familyName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            }
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "mfaRequired": {
+          "type": "boolean"
+        },
+        "mfaAuthenticator": {
+          "type": "string"
+        },
+        "customAttributes": {
+          "type": "object"
+        },
+        "awsRole": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
