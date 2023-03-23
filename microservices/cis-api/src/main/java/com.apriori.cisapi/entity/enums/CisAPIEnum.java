@@ -35,8 +35,11 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
     //USERS_CURRENT_PREFERENCES("users/current/preferences"),
 
     //Users
-    USERS_CURRENT("users/current");
+    USERS_CURRENT("users/current"),
 
+    USERS_CURRENT_EXTENDED_PREFERENCES("users/current/extended-preferences"),
+
+    USERS_EXTENDED_PREFERENCES("users/extended-preferences");
 
     private final String endpoint;
 

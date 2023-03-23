@@ -83,9 +83,6 @@ public class AssembliesComponentsController {
     @FindBy(css = ".sub-component-tree [id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
-    @FindBy(css = ".sub-component-tree .component-name")
-    private List<WebElement> subcomponentNames;
-
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
@@ -464,9 +461,10 @@ public class AssembliesComponentsController {
     /**
      * Gets list of subcomponent names
      *
+     * @param subcomponentNames - the list of subcomponents
      * @return string
      */
-    public List<String> getListOfSubcomponents() {
+    public List<String> getListOfSubcomponents(List<WebElement> subcomponentNames) {
         return pageUtils.waitForElementsToAppear(subcomponentNames).stream()
             .map(x -> x.getAttribute("textContent"))
             .map(String::trim).collect(Collectors.toList());
