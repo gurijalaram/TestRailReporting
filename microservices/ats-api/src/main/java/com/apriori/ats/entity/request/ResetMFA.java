@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Claims {
-    private String name;
-    private String email;
+public class ResetMFA {
+    private String resetBy;
 }
