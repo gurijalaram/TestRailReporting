@@ -190,7 +190,6 @@
                 "identity",
                 "createdAt",
                 "createdBy",
-                "updatedAt",
                 "customerIdentity",
                 "userProfile",
                 "email",
@@ -199,6 +198,9 @@
                 "mfaRequired",
                 "customAttributes",
                 "userType"
+              ],
+              "optional": [
+                "updatedAt"
               ]
             }
           },

@@ -8,10 +8,10 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
 import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -22,14 +22,13 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.QmsApiTestUtils;
 
 public class QmsComponentTest extends TestUtil {
 
     public static ScenarioItem scenarioItem;
     private static SoftAssertions softAssertions;
-    private UserCredentials currentUser;
     private static String userContext;
+    private UserCredentials currentUser;
 
     @Before
     public void testSetup() {
@@ -80,6 +79,18 @@ public class QmsComponentTest extends TestUtil {
             scenarioItem.getComponentIdentity());
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(componentScenariosResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22094"})
+    @Description("Get component Scenarios Users and Verify avatarColor field is present in User object in Share")
+    public void getComponentScenarioUsers() {
+        ResponseWrapper<ScenarioProjectUserResponse> componentScenariosResponse =
+            QmsComponentResources.getComponentScenarioUsers(userContext,
+                scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity());
+        softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isGreaterThan(0);
+        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().get(0).getAvatarColor());
     }
 
     @After

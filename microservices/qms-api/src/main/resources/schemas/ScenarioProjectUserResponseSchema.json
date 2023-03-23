@@ -59,6 +59,9 @@
     "mfaRequired": {
       "type": "boolean"
     },
+    "avatarColor": {
+      "type": "string"
+    },
     "customAttributes": {
       "type": "object",
       "properties": {
@@ -79,7 +82,6 @@
     "identity",
     "createdAt",
     "createdBy",
-    "updatedAt",
     "customerIdentity",
     "userProfile",
     "email",
@@ -87,6 +89,10 @@
     "active",
     "mfaRequired",
     "customAttributes",
-    "userType"
+    "userType",
+    "avatarColor"
+  ],
+  "optional": [
+    "updatedAt"
   ]
 }
