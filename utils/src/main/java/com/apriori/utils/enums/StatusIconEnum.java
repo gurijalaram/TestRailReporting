@@ -10,7 +10,7 @@ public enum StatusIconEnum {
     VERIFIED("shield-check"),
     ASSEMBLY("assembly"),
     PUBLIC("users"),
-    MISSING("missing"),
+    MISSING("ban"),
     VIRTUAL("virtual"),
     PRIVATE("user");
 

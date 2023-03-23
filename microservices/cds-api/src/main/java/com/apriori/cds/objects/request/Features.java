@@ -16,4 +16,5 @@ public class Features {
     private String identity;
     private String createdBy;
     private String createdAt;
+    private String updatedAt;
 }
