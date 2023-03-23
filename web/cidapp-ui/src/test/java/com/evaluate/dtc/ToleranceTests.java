@@ -26,7 +26,6 @@ import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
@@ -498,7 +497,6 @@ public class ToleranceTests extends TestBase {
             .inputOverride(OverridesEnum.ROUGHNESS_RZ, "0.2")
             .inputOverride(OverridesEnum.DIAMETER_TOLERANCE, "0.3")
             .inputOverride(OverridesEnum.POSITION_TOLERANCE, "0.4")
-            .inputOverride(OverridesEnum.BEND_ANGLE, "0.5")
             .inputOverride(OverridesEnum.CIRCULARITY, "0.6")
             .inputOverride(OverridesEnum.CONCENTRICITY, "0.7")
             .inputOverride(OverridesEnum.CYLINDRICITY, "0.8")
