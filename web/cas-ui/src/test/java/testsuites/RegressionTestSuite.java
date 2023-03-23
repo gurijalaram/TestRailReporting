@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.infrastructure.AccessControlsApplicationTests;
 import com.navigation.NavigationTests;
 import com.security.MfaEnabledTests;
 import org.junit.runner.RunWith;
@@ -15,7 +16,8 @@ import org.junit.runners.Suite;
     NavigationTests.class,
     UsersTestSuite.class,
     SystemConfigurationTestSuite.class,
-    MfaEnabledTests.class
+    MfaEnabledTests.class,
+    AccessControlsApplicationTests.class
 })
 public final class RegressionTestSuite {
 }

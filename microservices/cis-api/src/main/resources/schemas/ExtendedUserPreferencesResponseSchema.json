@@ -19,7 +19,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "UserPreferences.json"
+                "$ref": "ExtendedUserPreferenceParameters.json"
               }
             }
           }

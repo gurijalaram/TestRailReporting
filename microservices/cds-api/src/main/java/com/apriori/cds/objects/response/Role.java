@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "RoleSchema.json")
 @JsonRootName("response")
@@ -27,6 +28,7 @@ public class Role {
     private String createdBy;
     private String name;
     private String description;
+    private List<Application> applications;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;

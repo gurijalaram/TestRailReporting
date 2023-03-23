@@ -3,7 +3,9 @@
   "type": "object",
   "properties": {
     "timestamp": {
-      "type": "string"
+      "type": [
+        "string"
+      ]
     },
     "status": {
       "type": "integer"

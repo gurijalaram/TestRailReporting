@@ -11,6 +11,7 @@ import tests.acs.AllMaterialStocksInfoTests;
 import tests.acs.ArtifactPropertiesTests;
 import tests.acs.ArtifactTableInfoTests;
 import tests.acs.AvailableRoutingsTests;
+import tests.acs.CostResultsTests;
 import tests.acs.CreateMissingScenarioTests;
 import tests.acs.DisplayUnitsTests;
 import tests.acs.EnabledCurrencyRateVersionsTests;
@@ -36,6 +37,7 @@ import tests.acs.UserPreferencesTests;
     AllMaterialStocksInfoTests.class,
     ArtifactTableInfoTests.class,
     ArtifactPropertiesTests.class,
+    CostResultsTests.class,
     CreateMissingScenarioTests.class,
     DisplayUnitsTests.class,
     EnabledCurrencyRateVersionsTests.class,

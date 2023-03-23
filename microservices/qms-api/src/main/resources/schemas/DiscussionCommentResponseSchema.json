@@ -14,12 +14,6 @@
         "createdBy": {
           "type": "string"
         },
-        "updatedAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "string"
-        },
         "content": {
           "type": "string"
         },
@@ -59,20 +53,118 @@
               },
               "required": [
                 "identity",
+                "createdAt",
+                "createdBy",
                 "participantIdentity",
                 "userCustomerIdentity",
                 "userIdentity"
-              ],
-              "optional": [
-                "createdAt",
-                "createdBy"
               ]
             }
           ]
         },
         "mentionedUsers": {
           "type": "array",
-          "items": {}
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "isSystemUser": {
+                  "type": "boolean"
+                },
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "customerIdentity": {
+                  "type": "string"
+                },
+                "userProfile": {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    },
+                    "givenName": {
+                      "type": "string"
+                    },
+                    "familyName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity",
+                    "createdAt",
+                    "createdBy",
+                    "givenName",
+                    "familyName"
+                  ]
+                },
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "mfaRequired": {
+                  "type": "boolean"
+                },
+                "customAttributes": {
+                  "type": "object",
+                  "properties": {
+                    "workspaceId": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "workspaceId"
+                  ]
+                },
+                "userType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "isSystemUser",
+                "identity",
+                "createdAt",
+                "createdBy",
+                "customerIdentity",
+                "userProfile",
+                "email",
+                "username",
+                "active",
+                "mfaRequired",
+                "customAttributes",
+                "userType"
+              ],
+              "optional": [
+                "updatedAt"
+              ]
+            }
+          ]
+        },
+        "creatorAvatarColor": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
         }
       },
       "required": [
@@ -84,11 +176,9 @@
         "status",
         "publishedAt",
         "commentView",
-        "mentionedUsers"
-      ],
-      "optional": [
-        "updatedAt",
-        "updatedBy"
+        "mentionedUsers",
+        "creatorAvatarColor",
+        "customerIdentity"
       ]
     }
   },

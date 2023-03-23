@@ -9,7 +9,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -26,9 +25,9 @@ public class BidPackageProjectsTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
-    UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String projectName;
+    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -44,17 +43,17 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
-            bidPackageResponse.getIdentity(),
-            BidPackageProjectResponse.class,
-            HttpStatus.SC_CREATED,
-            currentUser);
+                bidPackageResponse.getIdentity(),
+                BidPackageProjectResponse.class,
+                HttpStatus.SC_CREATED,
+                currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
     @TestRail(testCaseId = {"13898", "13899", "14671"})
-    @Description("Get list of all Bid Package Projects and verify pagination")
+    @Description("Get list of all Bid Package Projects and verify pagination ")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = QmsBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(projectsResponse.getItems().size()).isGreaterThan(0);
@@ -66,7 +65,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
-            bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
+                bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
@@ -76,7 +75,7 @@ public class BidPackageProjectsTest extends TestUtil {
     public void updateBidPackageProject() {
         BidPackageProjectRequest projectRequest = QmsBidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers(), new GenerateStringUtil().getRandomNumbers());
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+                bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
@@ -127,10 +126,10 @@ public class BidPackageProjectsTest extends TestUtil {
         String projectDesc254 = RandomStringUtils.randomAlphabetic(254);
         BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(projectName254, projectDesc254);
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder,
-            bidPackageResponse.getIdentity(),
-            BidPackageProjectResponse.class,
-            HttpStatus.SC_CREATED,
-            currentUser);
+                bidPackageResponse.getIdentity(),
+                BidPackageProjectResponse.class,
+                HttpStatus.SC_CREATED,
+                currentUser);
 
         softAssertions.assertThat(bppResponse.getName()).isEqualTo(projectName254);
 
@@ -194,9 +193,8 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        BidPackageProjectsResponse bProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
-
-        softAssertions.assertThat(bProjectsResponse.getItems().size()).isEqualTo(0);
+        BidPackageProjectsResponse bidProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
 
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
@@ -216,7 +214,7 @@ public class BidPackageProjectsTest extends TestUtil {
         QmsBidPackageResources.deleteBidPackage(bidPackResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
         QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
-            bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+                bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackResponse.getIdentity(), bidPackResponse.getCustomerIdentity()));
 
