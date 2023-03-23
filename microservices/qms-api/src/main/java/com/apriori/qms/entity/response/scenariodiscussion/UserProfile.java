@@ -28,4 +28,7 @@ public class UserProfile {
     private String townCity;
     private String county;
     private String timezone;
+    private String stateProvince;
+    private String countryCode;
+    private String supervisor;
 }
