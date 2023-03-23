@@ -186,6 +186,15 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a 12 character password string
+     *
+     * @return string
+     */
+    public String getRandomPassword() {
+        return RandomStringUtils.randomAlphanumeric(10) + RandomStringUtils.random(2, "!#$%&()");
+    }
+
+    /**
      * Generates a specific length character alpanumeric string
      *
      * @return string
