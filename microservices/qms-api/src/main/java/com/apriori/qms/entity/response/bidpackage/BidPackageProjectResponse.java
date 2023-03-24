@@ -23,6 +23,8 @@ public class BidPackageProjectResponse {
     private LocalDateTime updatedAt;
     private String name;
     private String description;
+    private String organizationName;
+    private String owner;
     private String type;
     private String status;
     private String bidPackageIdentity;

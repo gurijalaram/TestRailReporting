@@ -10,7 +10,6 @@ import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserRes
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -52,7 +51,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     public void getScenarioProjectUsers() {
         ScenarioProjectUserResponse responseWrapper = QmsScenarioDiscussionResources.getScenarioProjectUsers(
             scenarioItem.getComponentIdentity(),scenarioItem.getScenarioIdentity(),currentUser);
-        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(responseWrapper.size()).isGreaterThan(0);
     }
 
     @After

@@ -369,7 +369,7 @@ public class CisBidPackageResources {
      * @param responseClass             - expected response class
      * @param httpStatus                - expected http status code
      * @param currentUser               - UserCredentials
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static <T> T deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, responseClass)

@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "$ref": "common/PaginationSchema.json",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "assignee": {
+                  "type": "object"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {}
+                },
+                "participants": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "identity": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "createdBy": {
+                          "type": "string"
+                        },
+                        "userIdentity": {
+                          "type": "string"
+                        },
+                        "userCustomerIdentity": {
+                          "type": "string"
+                        },
+                        "creatorAvatarColor": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "identity",
+                        "createdAt",
+                        "createdBy",
+                        "userIdentity",
+                        "userCustomerIdentity"
+                      ]
+                    }
+                  ]
+                },
+                "attributes": {
+                  "type": "object",
+                  "properties": {
+                    "customerIdentity": {
+                      "type": "string"
+                    },
+                    "projectIdentity": {
+                      "type": "string"
+                    },
+                    "projectItemIdentity": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "attribute": {
+                      "type": "string"
+                    },
+                    "bidPackageIdentity": {
+                      "type": "string"
+                    },
+                    "componentIdentity": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "scenarioIdentity": {
+                      "type": "string"
+                    },
+                    "scenarioDiscussionIdentity": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "customerIdentity",
+                    "projectIdentity",
+                    "projectItemIdentity",
+                    "subject",
+                    "attribute",
+                    "bidPackageIdentity",
+                    "componentIdentity",
+                    "type",
+                    "scenarioIdentity",
+                    "scenarioDiscussionIdentity"
+                  ]
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "assignee",
+                "description",
+                "status",
+                "comments",
+                "participants",
+                "attributes"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

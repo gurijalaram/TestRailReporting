@@ -8,9 +8,9 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "UserPreferencesItemsResponse.json")
+@Schema(location = "ExtendedUserPreferencesResponseSchema.json")
 @Data
 @JsonRootName("response")
-public class UserPreferencesItemsResponse extends Pagination {
-    private List<UserPreferencesResponse> items;
+public class ExtendedUserPreferencesResponse extends Pagination {
+    private List<ExtendedUserPreferenceParameters> items;
 }
