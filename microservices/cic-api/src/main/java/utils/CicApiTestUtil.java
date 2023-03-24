@@ -55,7 +55,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -267,12 +266,18 @@ public class CicApiTestUtil extends TestBase {
      * @return AgentWorkflow java POJO contains matched workflow information.
      */
     public static AgentWorkflow getMatchedWorkflowId(String workFlowName) {
+        AgentWorkflow agentWorkflow = null;
         ResponseWrapper<String> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
         AgentWorkflow[] agentWorkflows = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflow[].class);
-        return Arrays.stream(agentWorkflows)
-            .filter(wf -> wf.getName().equals(workFlowName))
-            .findFirst()
-            .get();
+        try {
+            agentWorkflow = Arrays.stream(agentWorkflows)
+                .filter(wf -> wf.getName().equals(workFlowName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Could not find workflow with name " + workFlowName));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return agentWorkflow;
     }
 
     /**
@@ -312,6 +317,14 @@ public class CicApiTestUtil extends TestBase {
         return true;
     }
 
+    /**
+     * Track the workflow status until expected agent status is matched
+     *
+     * @param workflowID     workflow id
+     * @param jobID          job id
+     * @param cicAgentStatus expected agent status
+     * @return boolean true or false
+     */
     public static Boolean waitUntilExpectedJobStatusMatched(String workflowID, String jobID, CICAgentStatus cicAgentStatus) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(2);
         String finalJobStatus;
@@ -436,15 +449,20 @@ public class CicApiTestUtil extends TestBase {
      * @param searchFilter
      * @return PlmPart response class
      */
+    @SneakyThrows
     public static PlmPart getPlmPart(SearchFilter searchFilter) {
         PlmParts plmParts = searchPlmWindChillParts(searchFilter);
         PlmPart plmPart;
-        if (plmParts.getItems().size() > 1) {
-            plmPart = plmParts
-                .getItems()
-                .get(new Random().nextInt(plmParts.getItems().size()));
-        } else {
-            plmPart = plmParts.getItems().get(0);
+        try {
+            if (plmParts.getItems().size() > 1) {
+                plmPart = plmParts
+                    .getItems()
+                    .get(new Random().nextInt(plmParts.getItems().size()));
+            } else {
+                plmPart = plmParts.getItems().get(0);
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
         }
         return plmPart;
     }
@@ -482,34 +500,10 @@ public class CicApiTestUtil extends TestBase {
                     .build());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             logger.error("PARTS NOT FOUND IN PLM SYSTEM WITH PART NUMBER --- " + partData.getPlmPartNumber());
+            throw new IllegalArgumentException(e);
         }
 
-        return WorkflowParts.builder()
-            .parts(part)
-            .build();
-    }
-
-    /**
-     * Get Duplicate parts worflow part data builder
-     *
-     * @param partData   PartData
-     * @param numOfParts number of times same part
-     * @return WorflowParts class
-     */
-    public static WorkflowParts getDuplicateWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
-        PlmParts plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build());
-        ArrayList<WorkflowPart> part = new ArrayList<>();
-        for (int i = 0; i < numOfParts; i++) {
-            part.add(WorkflowPart.builder()
-                .id(plmParts.getItems().get(0).getId())
-                .costingInputs(CostingInputs.builder().build())
-                .build());
-        }
         return WorkflowParts.builder()
             .parts(part)
             .build();
@@ -524,13 +518,17 @@ public class CicApiTestUtil extends TestBase {
      */
     public static Boolean verifyAgentErrorMessage(AgentWorkflowJobResults agentWorkflowJobResults, String errorMessage) {
         Boolean isTextMatched = false;
-        for (AgentWorkflowJobPartsResult result : agentWorkflowJobResults) {
-            if (null != result.getErrorMessage()) {
-                if (result.getErrorMessage().contains(errorMessage)) {
-                    isTextMatched = true;
-                    break;
+        try {
+            for (AgentWorkflowJobPartsResult result : agentWorkflowJobResults) {
+                if (null != result.getErrorMessage()) {
+                    if (result.getErrorMessage().contains(errorMessage)) {
+                        isTextMatched = true;
+                        break;
+                    }
                 }
             }
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         }
         return isTextMatched;
     }
@@ -592,13 +590,12 @@ public class CicApiTestUtil extends TestBase {
             connectorInfo = connectorResponse.getRows().stream()
                 .filter(conn -> conn.getDisplayName().equals(connectorName))
                 .findFirst()
-                .get();
-        } catch (NoSuchElementException noSuchElementException) {
-            log.error(String.format("MATCHING CONNECTOR (%s) NOT FOUND!! ", connectorName));
+                .orElseThrow(() -> new IllegalArgumentException("Could not find connector with name " + connectorName));
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         }
         return connectorInfo;
     }
-
 
     /**
      * Get connector connection info contains appKey and wss URL options
@@ -646,10 +643,9 @@ public class CicApiTestUtil extends TestBase {
             reportTemplate = agentWorkflowReportTemplates.getRows().stream()
                 .filter(conn -> conn.getDisplayName().equals(reportName.getReportName()))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalArgumentException("Could not find report template with name " + reportName.getReportName()));
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error("REPORT TEMPLATE NOT FOUND  --- " + reportName.getReportName());
+            log.error(e.getMessage());
         }
         return reportTemplate;
     }
