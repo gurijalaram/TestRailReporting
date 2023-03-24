@@ -258,7 +258,8 @@ public class ActionsTests extends TestBase {
 
         infoPage.inputNotes(bulletPointNotes)
             .submit(EvaluatePage.class)
-            .costScenario()
+            .clickCostButton()
+            .confirmCost("Yes")
             .clickActions()
             .info();
 

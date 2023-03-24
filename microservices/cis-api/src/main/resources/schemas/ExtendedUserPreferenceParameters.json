@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "familyName": {
+      "type": "string"
+    },
+    "givenName": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "customerIdentity",
+    "email",
+    "familyName",
+    "givenName",
+    "username"
+  ]
+}

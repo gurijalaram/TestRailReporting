@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "customerIdentity": {
+          "type": "string"
+        },
+        "deploymentIdentity": {
+          "type": "string"
+        },
+        "installationIdentity": {
+          "type": "string"
+        },
+        "applicationIdentity": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

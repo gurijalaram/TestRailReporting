@@ -40,6 +40,78 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
+    @TestRail(testCaseId = "21569")
+    @Description("Get Root Cost Results after Costing Additive Manufacturing")
+    public void testGetCostRootResultsAdditiveManufacturing() {
+        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "ADD-LOW-001.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Additive Manufacturing");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21570")
+    @Description("Get Root Cost Results after Costing Bar & Tube")
+    public void testGetCostRootResultsBarAndTubeFab() {
+        String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "B&T-LOW-001.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Bar & Tube Fab");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21574")
+    @Description("Get Root Cost Results after Costing Forging")
+    public void testGetCostRootResultsForging() {
+        String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "Pin.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Forging");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21576")
+    @Description("Get Root Cost Results after Costing Powder Metal")
+    public void testGetCostRootResultsPowderMetal() {
+        String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "116-5809.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Powder Metal");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21577")
+    @Description("Get Root Cost Results after Costing Rapid Prototyping")
+    public void testGetCostRootResultsRapidPrototyping() {
+        String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Rapid Prototyping");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21578")
+    @Description("Get Root Cost Results after Costing Roto and Blow Molding")
+    public void testGetCostRootResultsRotoBlowMolding() {
+        String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Roto & Blow Molding");
+    }
+
+    @Test
+    @Category(AcsTest.class)
     @TestRail(testCaseId = "21579")
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
@@ -48,6 +120,54 @@ public class CostResultsTests {
         CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21581")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Hydroforming")
+    public void testGetCostRootResultsSheetMetalHydroforming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Hydroforming");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21580")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Transfer Die")
+    public void testGetCostRootResultsSheetMetalTransferDie() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Transfer Die");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21583")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Stretch Forming")
+    public void testGetCostRootResultsSheetMetalStretchForming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Stretch Forming");
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "21582")
+    @Description("Get Root Cost Results after Costing Sheet Metal - Roll Forming")
+    public void testGetCostRootResultsSheetMetalRollForming() {
+        String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
+
+        CostResultsRootResponse costResultsRootResponse = acsResources.uploadAndCost(processGroup, "z_purlin.prt.1", "ROOT", workorderAPITests.setupProductionInfoInputs());
+
+        costResultsAssertion(costResultsRootResponse, "Sheet Metal - Roll Forming");
     }
 
     @Test

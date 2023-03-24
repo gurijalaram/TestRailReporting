@@ -2,7 +2,6 @@ package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
@@ -692,15 +691,15 @@ public class AcsResources {
      * @param processGroupName - String - Selected from ENUM
      */
 
-    public GcdTypesResponse getGcdTypes(String processGroupName) {
+    public <T> ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
-            .headers(headers)
-            .inlineVariables(processGroupName);
+                .init(AcsApiEnum.GCD_TYPES, klass)
+                .headers(headers)
+                .inlineVariables(processGroupName);
 
-        return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
