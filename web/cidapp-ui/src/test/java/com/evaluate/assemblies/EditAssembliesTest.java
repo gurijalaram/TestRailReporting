@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -63,6 +64,7 @@ public class EditAssembliesTest extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private static ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @Category(SmokeTests.class)
@@ -1223,6 +1225,62 @@ public class EditAssembliesTest extends TestBase {
             .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10843"})
+    @Description("Validate assembly explorer table updates when sub-components changed")
+    public void testAssemblyExplorerTableUpdates() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        List<String> pinDetailsDefault = componentsTreePage.getRowDetails(PIN, scenarioName);
+
+        componentsTreePage.multiSelectSubcomponents(PIN + "," + scenarioName)
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .enterAnnualVolume("1234")
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class);
+
+        scenariosUtil.getScenarioCompleted(componentAssembly.getSubComponents().get(1));
+        componentsTreePage = componentsTreePage.closePanel()
+                .clickRefresh(EvaluatePage.class)
+                    .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).as("Verify details updated")
+            .contains(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory(), "1,234");
 
         softAssertions.assertAll();
     }
