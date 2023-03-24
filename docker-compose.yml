@@ -1,41 +1,26 @@
 version: "3"
 services:
-  qa-test:
-    image: ciene:latest
-    depends_on:
-      - selenium-hub
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - TOKEN_EMAIL=${TOKEN_EMAIL}
-      - PASSWORD=${PASSWORD}
-      - HEADLESS=${HEADLESS}
-      - MODE=${MODE}
-      - THREAD_COUNTS=${THREAD_COUNTS}
-    volumes:
-      - ./automation-reports/allure-results:/app/target/allure-results
-
   chrome:
-    image: selenium/node-chrome:latest
+    image: selenium/node-chrome:4.0.0-20211025
     shm_size: 2gb
     restart: always
     depends_on:
       - selenium-hub
     deploy:
-      replicas: 3
+      replicas: 3    
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   edge:
-    image: selenium/node-edge:latest
+    image: selenium/node-edge:4.0.0-20211025
     shm_size: 2gb
     restart: always
     depends_on:
       - selenium-hub
     deploy:
-      replicas: 3
+      replicas: 3 
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -43,7 +28,7 @@ services:
       - SE_NODE_GRID_URL=http://localhost:4444
 
   firefox:
-    image: selenium/node-firefox:latest
+    image: selenium/node-firefox:4.0.0-20211025
     shm_size: 2gb
     restart: always
     depends_on:
@@ -57,13 +42,13 @@ services:
       - SE_NODE_GRID_URL=http://localhost:4444
 
   selenium-hub:
-    image: selenium/hub:latest
+    image: selenium/hub:4.0.0-20211025
     container_name: selenium-hub
     restart: always
     healthcheck:  
-      interval: 5m
-      timeout: 30s
-      retries: 1
+      interval: "15"
+      timeout: "30" 
+      retries: "5"
     ports:
       - "4442:4442"
       - "4443:4443"
