@@ -1265,8 +1265,6 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        List<String> pinDetailsDefault = componentsTreePage.getRowDetails(PIN, scenarioName);
-
         componentsTreePage.multiSelectSubcomponents(PIN + "," + scenarioName)
             .setInputs()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
@@ -1281,6 +1279,17 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).as("Verify details updated")
             .contains(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory(), "1,234");
+
+        assemblyUtils.publishSubComponents(componentAssembly)
+                .publishAssembly(componentAssembly);
+
+        componentsTreePage = componentsTreePage.closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents();
+
+        componentsTreePage.multiSelectSubcomponents(BIG_RING + "," + scenarioName)
+                .editSubcomponent(EditScenarioStatusPage.class)
+                    .close(ComponentsTreePage.class);
 
         softAssertions.assertAll();
     }
