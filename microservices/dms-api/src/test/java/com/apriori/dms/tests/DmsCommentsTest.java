@@ -1,11 +1,15 @@
 package com.apriori.dms.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
+import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.CssComponent;
+import com.apriori.sds.entity.response.Scenario;
+import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -29,26 +33,47 @@ import org.junit.Test;
 import utils.DmsApiTestUtils;
 
 import java.util.Collections;
+import java.util.HashSet;
 
-public class DmsCommentsTest extends TestUtil {
-    private static String userContext;
+public class DmsCommentsTest extends SDSTestUtil {
     private static SoftAssertions softAssertions;
-    private static String contentDesc = StringUtils.EMPTY;
+    private static String bidPackageName;
+    private static String projectName;
     private static ScenarioItem scenarioItem;
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageItemResponse bidPackageItemResponse;
+    private static BidPackageProjectResponse bidPackageProjectResponse;
+    private static String userContext;
+    private static String contentDesc = StringUtils.EMPTY;
     private static DmsScenarioDiscussionResponse dmsScenarioDiscussionResponse;
     private static ScenarioDiscussionResponse qmsScenarioDiscussionResponse;
-    private static DmsCommentResponse dmsCommentResponse = null;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static DmsCommentResponse dmsCommentResponse;
 
     @Before
     public void testSetup() {
-        contentDesc = RandomStringUtils.randomAlphabetic(12);
         softAssertions = new SoftAssertions();
+        contentDesc = RandomStringUtils.randomAlphabetic(12);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+
+        // Create new Component and published Scenario via SDS
+        scenarioItem = postTestingComponentAndAddToRemoveList();
+        publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
+            .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .build(), Scenario.class, HttpStatus.SC_OK);
+
+        //Create new bid-package & project
+        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
+        bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
+            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+            bidPackageResponse.getIdentity(),
+            currentUser,
+            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
 
         //Create scenario discussion on QMS
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
-        softAssertions.assertThat(scenarioItem.getComponentIdentity()).isNotNull();
         qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
 
         //Get generic DMS discussion identity from QMS discussion
@@ -116,6 +141,9 @@ public class DmsCommentsTest extends TestUtil {
     @Description("Verify user can add comment to discussion with another mentioned user")
     public void addCommentWithAnotherMentionedUser() {
         UserCredentials otherUser = UserUtil.getUser();
+        if (otherUser.getEmail().equals(currentUser.getEmail())) {
+            otherUser = UserUtil.getUser();
+        }
         String commentDescription = new GenerateStringUtil().getRandomString();
         DmsCommentsRequest dmsCommentsRequest = DmsCommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
@@ -133,8 +161,11 @@ public class DmsCommentsTest extends TestUtil {
     @Description("Verify that only discussion participants can add comment to current discussion")
     public void addCommentByOtherUser() {
         UserCredentials otherUser = UserUtil.getUser();
-        String commentcDescription = new GenerateStringUtil().getRandomString();
-        DmsErrorMessageResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(otherUser, commentcDescription, dmsScenarioDiscussionResponse.getItems()
+        if (otherUser.getEmail().equals(currentUser.getEmail())) {
+            otherUser = UserUtil.getUser();
+        }
+        String commentsDescription = new GenerateStringUtil().getRandomString();
+        DmsErrorMessageResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(otherUser, commentsDescription, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), DmsErrorMessageResponse.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(dcResponse.getErrorMessage()).contains("Participant with user identity '"
             + new AuthUserContextUtil().getAuthUserIdentity(otherUser.getEmail()) +
@@ -144,7 +175,19 @@ public class DmsCommentsTest extends TestUtil {
 
     @After
     public void testCleanup() {
+        //Delete Scenario Discussion
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
+
+        //Delete Bidpackage and Scenario
+        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        if (!scenariosToDelete.isEmpty()) {
+            scenariosToDelete.forEach(component -> {
+                removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
+            });
+        }
+        scenariosToDelete = new HashSet<>();
         softAssertions.assertAll();
     }
+
+    private static final UserCredentials currentUser = testingUser;
 }
