@@ -66,6 +66,9 @@ public class CIConnectHome extends CICBasePage {
     @FindBy(xpath = "//span[contains(text(), 'Cost Insight Connect |')]")
     private WebElement cicVersionText;
 
+    @FindBy(css = "div.tw-status-msg-box > div.status-msg-container > div.status-msg > div[id='status-msg-text']")
+    private WebElement statusMessageLbl;
+
 
     public CIConnectHome(WebDriver driver) {
         super(driver);
@@ -81,6 +84,7 @@ public class CIConnectHome extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForJavascriptLoadComplete();
     }
 
     /**
@@ -197,7 +201,7 @@ public class CIConnectHome extends CICBasePage {
      *
      * @return CostingServiceSettings page object
      */
-    public CostingServiceSettings openCostingServiceSettings() {
+    public CostingServiceSettings clickCostingServiceSettings() {
         pageUtils.waitForElementAndClick(settingsBtn);
         return new CostingServiceSettings(driver);
     }
@@ -211,4 +215,12 @@ public class CIConnectHome extends CICBasePage {
         return pageUtils.waitForElementToAppear(cicVersionText).getText();
     }
 
+    /**
+     * get Status Message
+     *
+     * @return String
+     */
+    public String getStatusMessage() {
+        return pageUtils.waitForElementToAppear(statusMessageLbl).getText();
+    }
 }
