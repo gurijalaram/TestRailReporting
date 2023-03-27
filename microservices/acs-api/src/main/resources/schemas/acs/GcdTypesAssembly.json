@@ -1,0 +1,4210 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "AxiGroove": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "AssemblyComponentGcd": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "Stage": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "SimpleHole": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "ContactRegion": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "ContactGroup": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "Component": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        }
+      ]
+    },
+    "Weld": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "storageType": {
+              "type": "string"
+            },
+            "unitType": {
+              "type": "string"
+            },
+            "editable": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "displayName",
+            "name",
+            "storageType",
+            "unitType",
+            "editable"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "AxiGroove",
+    "AssemblyComponentGcd",
+    "Stage",
+    "SimpleHole",
+    "ContactRegion",
+    "ContactGroup",
+    "Component",
+    "Weld"
+  ]
+}
