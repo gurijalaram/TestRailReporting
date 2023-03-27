@@ -27,5 +27,7 @@ public class DiscussionCommentResponse {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime publishedAt;
     private ArrayList<CommentView> commentView;
-    private ArrayList<Object> mentionedUsers;
+    private ArrayList<MentionedUser> mentionedUsers;
+    private String creatorAvatarColor;
+    private String customerIdentity;
 }

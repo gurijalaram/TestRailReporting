@@ -206,7 +206,7 @@ public class QmsBidPackageResources {
      * @param responseClass
      * @param httpStatus
      * @param currentUser
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static <T> T deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT, responseClass)
@@ -444,7 +444,7 @@ public class QmsBidPackageResources {
      * @param projectIdentity
      * @param projectUserIdentity
      * @param currentUser
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static ResponseWrapper<String> deleteBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, null)

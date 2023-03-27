@@ -3,13 +3,14 @@ package com.apriori.pages;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.TableUtils;
 
-
+@Slf4j
 public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     protected static final String OPTIONS_CONTENT_OPEN_DROPDOWN_CSS = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
@@ -29,6 +30,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     @Override
     protected void load() {
+
     }
 
     @Override
@@ -61,7 +63,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
             .filter(e -> e.getText().equals(ddlValue))
             .findFirst()
             .get();
-        pageUtils.waitForElementToAppear(webElement);
+        pageUtils.waitForElementToBeClickable(webElement);
     }
 
     protected void waitUntilDropDownValuesAreLoaded(Integer index, String ddlValue) {
@@ -71,7 +73,6 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
             .filter(e -> e.getText().equals(ddlValue))
             .findFirst()
             .get();
-        pageUtils.waitForElementToAppear(webElement);
+        pageUtils.waitForElementToBeClickable(webElement);
     }
-
 }

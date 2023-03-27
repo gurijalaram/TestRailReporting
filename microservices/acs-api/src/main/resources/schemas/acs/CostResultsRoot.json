@@ -4444,6 +4444,201 @@
                     "supportedSerializedType"
                   ]
                 },
+                "defaultDirectTrimAngleThreshold": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultToolingCoatingType": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "minAllowedMaxValue": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultMinPartSpacing": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultNum800SeriesAerialCamUnits": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultNum150SeriesAerialCamUnits": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultMaxStripWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultCalculatedAddendumWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultTransferPitchControl": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultAddendumWidth": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultIncrementAmount": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultNum800SeriesCamUnits": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "defaultNum150SeriesCamUnits": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
                 "rentCost": {
                   "type": "object",
                   "properties": {
@@ -4521,6 +4716,21 @@
                   ]
                 },
                 "batchSize": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "supportedSerializedType"
+                  ]
+                },
+                "maxAllowedValue": {
                   "type": "object",
                   "properties": {
                     "name": {

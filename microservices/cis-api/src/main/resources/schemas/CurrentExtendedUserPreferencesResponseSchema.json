@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "userIdentity": {
+          "type": "string"
+        },
+        "avatarColor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "updatedAt",
+        "updatedBy",
+        "customerIdentity",
+        "userIdentity",
+        "avatarColor"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}
