@@ -421,10 +421,11 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
                 getScenarioManifestState(componentInfo, componentName);
             }
             new ExploreToolbar(driver).refresh();
+            new ComponentsTreePage(driver).selectTableView();
 
             isLoaded();
 
-            if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-tree [data-icon='gear']"))) {
+            if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-list [data-icon='gear']"))) {
                 checkManifestComplete(componentInfo, componentName);
             }
         });

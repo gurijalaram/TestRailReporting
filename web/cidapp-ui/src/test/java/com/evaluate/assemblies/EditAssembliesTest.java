@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -36,7 +35,6 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -988,7 +986,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Issue("BA-2764")
-    @TestRail(testCaseId = {"12037", "12039"})
+    @TestRail(testCaseId = {"12037"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1044,7 +1042,8 @@ public class EditAssembliesTest extends TestBase {
             .changeName(editedComponentScenarioName)
             .clickContinue(PublishPage.class)
             .publish(ComponentsTablePage.class)
-            .checkManifestComplete(componentAssembly, PIN);
+            .checkManifestComplete(componentAssembly, PIN)
+            .addColumn(ColumnsEnum.PUBLISHED);
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
