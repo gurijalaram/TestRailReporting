@@ -15,16 +15,16 @@ public class DriverFactory {
 
     private WebDriver createDriver(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (testMode) {
-            case SELENIUM_GRID:
+            case HOSTED_GRID:
                 remoteWebDriverService(browser, "conqsldocker01", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
-            case LOCAL_DOCKER:
+            case LOCAL_GRID:
                 remoteWebDriverService(browser, "localhost", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
-            case HOSTED_DOCKER:
+            case DOCKER_GRID:
                 remoteWebDriverService(browser, "host.docker.internal", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
-            case LOCAL:
+            case QA_LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
                 break;
             default:

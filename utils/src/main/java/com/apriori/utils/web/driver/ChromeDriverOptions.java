@@ -52,7 +52,7 @@ public class ChromeDriverOptions {
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--disable-dev-shm-usage");
 
-            if (System.getProperty("mode").equalsIgnoreCase(TestMode.SELENIUM_GRID.value())) {
+            if (System.getProperty("mode").equalsIgnoreCase(TestMode.HOSTED_GRID.value())) {
                 chromeOptions.addArguments("--headless");
             }
         }
