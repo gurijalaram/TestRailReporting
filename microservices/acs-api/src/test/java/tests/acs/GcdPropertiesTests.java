@@ -1,7 +1,9 @@
 package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesInputs;
+import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToReset;
+import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
+import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -16,6 +18,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
+
+import java.util.Arrays;
 
 public class GcdPropertiesTests {
     @Test
@@ -50,11 +54,13 @@ public class GcdPropertiesTests {
             false
         );
 
-        GcdPropertiesInputs response = acsResources.saveGcdProperties(
+        PropertiesToReset roughnessRz = null;
+        PropertiesToSet tolerance = null;
+        GcdTypesResponse response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
-            "tolerance"
-
+            tolerance,
+            Arrays.asList(roughnessRz)
         );
-
+    }
 }
