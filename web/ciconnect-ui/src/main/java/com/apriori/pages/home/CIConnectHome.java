@@ -7,6 +7,7 @@ import com.apriori.pages.home.settings.CostingServiceSettings;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.pages.workflows.WorkflowHome;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -84,6 +85,7 @@ public class CIConnectHome extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForJavascriptLoadComplete();
     }
 
@@ -222,5 +224,15 @@ public class CIConnectHome extends CICBasePage {
      */
     public String getStatusMessage() {
         return pageUtils.waitForElementToAppear(statusMessageLbl).getText();
+    }
+
+    /**
+     * get session
+     *
+     * @return jsession id
+     */
+    public String getSession() {
+        pageUtils.waitForElementToBeClickable(usersMenuBtn);
+        return driver.manage().getCookieNamed("JSESSIONID").getValue();
     }
 }
