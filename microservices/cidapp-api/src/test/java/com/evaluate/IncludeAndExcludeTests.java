@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -302,6 +303,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
+    @Ignore("Caused by APD-1119 which is marked as Won't Do")
     @TestRail(testCaseId = {"11932", "11933", "11939", "11940", "11941"})
     @Description("Error returned on invalid Scenario Association Identity, invalid Child Scenario Identity, empty Scenario Association Identity, Child Scenario Identity and mismatched Ids")
     public void testIncorrectAndEmptyAssociationScenarioId() {
@@ -402,6 +404,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
+    @Ignore("Caused by APD-1119 which is marked as Won't Do")
     @TestRail(testCaseId = {"11934"})
     @Description("Error returned when more occurrences than exist requested")
     public void testIncorrectOccurrences() {
@@ -450,6 +453,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
+    @Ignore("Caused by APD-1119 which is marked as Won't Do")
     @TestRail(testCaseId = {"11937"})
     @Description("Error returned when including an included component")
     public void testIncludeIncludedSubcomponent() {
@@ -500,6 +504,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
+    @Ignore("Caused by APD-1119 which is marked as Won't Do")
     @TestRail(testCaseId = {"11938"})
     @Description("Error returned when excluding an excluded component")
     public void testExcludingExcludedSubcomponent() {
