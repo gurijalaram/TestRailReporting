@@ -1268,28 +1268,47 @@ public class EditAssembliesTest extends TestBase {
         componentsTreePage.multiSelectSubcomponents(PIN + "," + scenarioName)
             .setInputs()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
             .enterAnnualVolume("1234")
             .clickApplyAndCost(SetInputStatusPage.class)
             .close(ComponentsTreePage.class);
 
         scenariosUtil.getScenarioCompleted(componentAssembly.getSubComponents().get(1));
         componentsTreePage = componentsTreePage.closePanel()
-                .clickRefresh(EvaluatePage.class)
-                    .openComponents();
+            .clickRefresh(EvaluatePage.class)
+            .openComponents();
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).as("Verify details updated")
             .contains(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory(), "1,234");
 
         assemblyUtils.publishSubComponents(componentAssembly)
-                .publishAssembly(componentAssembly);
+            .publishAssembly(componentAssembly);
 
-        componentsTreePage = componentsTreePage.closePanel()
+        evaluatePage = componentsTreePage.closePanel()
             .clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .clickHere()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
+
+        evaluatePage.enterAnnualVolume("7777")
+            .goToAdvancedTab()
+            .enterBatchSize("612")
+            .goToBasicTab()
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .clickContinue(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+
+        componentsTreePage = evaluatePage.clickExplore()
+            .navigateToScenario(componentAssembly)
             .openComponents();
 
-        componentsTreePage.multiSelectSubcomponents(BIG_RING + "," + scenarioName)
-                .editSubcomponent(EditScenarioStatusPage.class)
-                    .close(ComponentsTreePage.class);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
+            .contains("7,777", "612");
 
         softAssertions.assertAll();
     }
