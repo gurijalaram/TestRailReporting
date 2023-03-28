@@ -1,7 +1,6 @@
 package com.apriori.acs.entity.response.acs.materialsinfo;
 
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.PropertyInfoMap;
-import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.PropertyValuesList;
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
