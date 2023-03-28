@@ -16,6 +16,7 @@ import com.apriori.acs.entity.response.acs.gcdmapping.GcdMappingResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoResponse;
 import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioInputs;
 import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
@@ -118,6 +119,27 @@ public class AcsResources {
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return (AllMaterialStocksInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets All Material Stocks Info
+     *
+     * @param vpeName      - String
+     * @param processGroup - String
+     * @return instance of AllMaterialSocksInfoResponse
+     */
+    public MaterialsInfoResponse getMaterialsInfo(String vpeName, String processGroup) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.MATERIALS_INFO, MaterialsInfoResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                vpeName,
+                processGroup)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return (MaterialsInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
