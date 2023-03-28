@@ -697,15 +697,15 @@ public class AcsResources {
      * @param processGroupName - String - Selected from ENUM
      */
 
-    public GcdTypesResponse getGcdTypes(String processGroupName) {
+    public <T> ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
-            .headers(headers)
-            .inlineVariables(processGroupName);
+                .init(AcsApiEnum.GCD_TYPES, klass)
+                .headers(headers)
+                .inlineVariables(processGroupName);
 
-        return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
