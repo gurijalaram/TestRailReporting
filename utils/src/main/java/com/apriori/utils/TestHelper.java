@@ -44,7 +44,7 @@ public class TestHelper {
         }
 
         switch (testMode.toUpperCase()) {
-            case "QA":
+            case "LOCAL_DOCKER":
                 result = TestMode.LOCAL_DOCKER;
                 break;
             case "LOCAL":
@@ -53,10 +53,10 @@ public class TestHelper {
             case "EXPORT":
                 result = TestMode.EXPORT;
                 break;
-            case "GRID":
+            case "SELENIUM_GRID":
                 result = TestMode.SELENIUM_GRID;
                 break;
-            case "DOCKER":
+            case "HOSTED_DOCKER":
                 result = TestMode.HOSTED_DOCKER;
                 break;
             default:
