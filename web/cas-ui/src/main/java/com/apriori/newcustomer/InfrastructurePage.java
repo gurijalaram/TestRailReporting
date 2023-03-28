@@ -26,10 +26,10 @@ public class InfrastructurePage extends CustomerWorkspacePage {
     @FindBy(className = "application-deny-all-button")
     private WebElement denyAllButton;
 
-    @FindBy(css = ".btn.btn-primary")
+    @FindBy(css = "[data-testid='primary-button']")
     private WebElement confirmAllOkButton;
 
-    @FindBy(css = ".btn.btn-secondary.mr-2")
+    @FindBy(css = "[data-testid='secondary-button']")
     private WebElement confirmAllCancelButton;
 
     @FindBy(css = ".Toastify__toast.Toastify__toast--success .Toastify__toast-body")

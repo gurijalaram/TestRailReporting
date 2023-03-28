@@ -6,6 +6,8 @@ import static org.hamcrest.core.Is.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
@@ -26,6 +28,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Issues;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
@@ -33,6 +36,7 @@ import testsuites.suiteinterface.ExtendedRegression;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IncludeAndExcludeTests extends TestBase {
@@ -43,6 +47,7 @@ public class IncludeAndExcludeTests extends TestBase {
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     SoftAssertions softAssertions = new SoftAssertions();
     private File assemblyResourceFile;
@@ -55,6 +60,16 @@ public class IncludeAndExcludeTests extends TestBase {
 
     public IncludeAndExcludeTests() {
         super();
+    }
+
+    private ComponentInfoBuilder assemblyInfo;
+
+    @After
+    public void deleteScenarios() {
+        if (currentUser != null) {
+            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
+            assemblyInfo = null;
+        }
     }
 
     @Test
@@ -424,22 +439,23 @@ public class IncludeAndExcludeTests extends TestBase {
     @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        String assemblyName = "autobotasm";
+        final String assemblyExtension = ".asm.2";
 
         final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        assemblyResourceFile = FileResourceUtil.getCloudCadFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
+        assemblyResourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        String componentName = "box";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
+        List<String> subComponentNames = Arrays.asList(
+            "autoparthead", "autoparttorso", "autopartarm", "autoparthand", "autopartleg", "autopartfoot");
+        String componentName = "autoparthelm";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final String componentExtension = ".prt.1";
         componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
 
-        UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroupEnum,
@@ -448,12 +464,12 @@ public class IncludeAndExcludeTests extends TestBase {
             processGroupEnum,
             scenarioName,
             currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(assemblyInfo)
+            .uploadAssembly(assemblyInfo);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
+            .navigateToScenario(assemblyInfo)
             .openComponents();
 
         subComponentNames.forEach(component ->
@@ -474,19 +490,21 @@ public class IncludeAndExcludeTests extends TestBase {
             .closePanel()
             .clickRefresh(ComponentsTreePage.class);
 
+        List<ScenarioItem> autoHelmDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, currentUser);
+
+        ComponentInfoBuilder helmInfo = ComponentInfoBuilder.builder()
+            .scenarioName(scenarioName)
+            .scenarioIdentity(autoHelmDetails.get(0).getScenarioIdentity())
+            .componentIdentity(autoHelmDetails.get(0).getComponentIdentity())
+            .componentName(componentName)
+            .user(currentUser)
+            .build();
+
+        assemblyInfo.getSubComponents().add(helmInfo);
+
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
 
         softAssertions.assertAll();
-
-        componentsTreePage.closePanel()
-            .clickExplore()
-            .selectFilter("Recent")
-            .highlightScenario(assemblyName, scenarioName)
-            .clickDeleteIcon()
-            .clickDelete(ExplorePage.class)
-            .highlightScenario(componentName, scenarioName)
-            .clickDeleteIcon()
-            .clickDelete(ExplorePage.class);
     }
 
     @Test

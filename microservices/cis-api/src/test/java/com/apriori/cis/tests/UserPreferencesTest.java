@@ -2,9 +2,12 @@ package com.apriori.cis.tests;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 
-import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesResponse;
+import com.apriori.cisapi.entity.response.user.preferences.CurrentExtendedUserPreferencesResponse;
+import com.apriori.cisapi.entity.response.user.preferences.ExtendedUserPreferencesResponse;
 import com.apriori.cisapi.utils.UserPreferencesController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -14,7 +17,6 @@ import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.List;
 
 public class UserPreferencesTest extends UserPreferencesController {
 
@@ -24,10 +26,27 @@ public class UserPreferencesTest extends UserPreferencesController {
     }
 
     @Test
-    @TestRail(testCaseId = "9798")
-    @Description("Get User Preferences call to CIS API")
-    public void testGetUserPreferences() {
-        List<UserPreferencesResponse> userPreferenceItems = getUserPreferences();
-        assertThat(userPreferenceItems.size(), is(greaterThan(0)));
+    @TestRail(testCaseId = "22095")
+    @Description("Get Extended User Preferences")
+    public void testGetCurrentExtendedUserPreferences() {
+        CurrentExtendedUserPreferencesResponse currentExtendedUserPreferenceResponse = getCurrentExtendedUserPreferences();
+        assertThat(currentExtendedUserPreferenceResponse.getIdentity(), is(notNullValue()));
+    }
+
+    @Test
+    @TestRail(testCaseId = "22096")
+    @Description("Get Logged in user's Extended User Preferences")
+    public void testGetLoggedExtendedUserPreferences() {
+        ExtendedUserPreferencesResponse loggedExtendedUserPreferenceResponse = getLoggedExtendedUserPreferences();
+        assertThat(loggedExtendedUserPreferenceResponse.getItems().size(), is(greaterThan(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "22097")
+    @Description("Update Extended User Preferences")
+    public void testUpdateCurrentExtendedUserPreferences() {
+        String avatarColor = "#009999";
+        CurrentExtendedUserPreferencesResponse loggedExtendedUserPreferenceResponse = updateCurrentExtendedUserPreferences(avatarColor);
+        assertThat(loggedExtendedUserPreferenceResponse.getAvatarColor(), is(equalTo(avatarColor)));
     }
 }

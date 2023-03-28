@@ -80,7 +80,7 @@ public class NavBarTests extends TestBase {
     public void testNavigateToCostingServiceSettings() {
         CostingServiceSettings costingServiceSettings = new CicLoginPage(driver)
             .login(currentUser)
-            .openCostingServiceSettings();
+            .clickCostingServiceSettings();
 
         Assert.assertEquals("Verify Settings model page", "Costing Service Settings", costingServiceSettings.getCostingServiceSettingsText());
     }
