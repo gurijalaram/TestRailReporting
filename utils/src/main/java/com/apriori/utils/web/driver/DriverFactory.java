@@ -15,14 +15,14 @@ public class DriverFactory {
 
     private WebDriver createDriver(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         switch (testMode) {
-            case GRID:
-                driver = new RemoteWebDriverService(browser, ("http://").concat("conqsldocker01").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+            case SELENIUM_GRID:
+                remoteWebDriverService(browser, "conqsldocker01", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
-            case QA:
-                driver = new RemoteWebDriverService(browser, ("http://").concat("localhost").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+            case LOCAL_DOCKER:
+                remoteWebDriverService(browser, "localhost", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
-            case DOCKER:
-                driver = new RemoteWebDriverService(browser, ("http://").concat("host.docker.internal").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+            case HOSTED_DOCKER:
+                remoteWebDriverService(browser, "host.docker.internal", proxy, downloadPath, remoteDownloadPath, locale);
                 break;
             case LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
@@ -35,5 +35,9 @@ public class DriverFactory {
 
     public WebDriver getDriver() {
         return driver;
+    }
+
+    private void remoteWebDriverService(BrowserTypes browser, String host, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+        driver = new RemoteWebDriverService(browser, ("http://").concat(host).concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
     }
 }

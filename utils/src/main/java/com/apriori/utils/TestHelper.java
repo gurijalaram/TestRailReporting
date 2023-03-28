@@ -45,7 +45,7 @@ public class TestHelper {
 
         switch (testMode.toUpperCase()) {
             case "QA":
-                result = TestMode.QA;
+                result = TestMode.LOCAL_DOCKER;
                 break;
             case "LOCAL":
                 result = TestMode.LOCAL;
@@ -54,10 +54,10 @@ public class TestHelper {
                 result = TestMode.EXPORT;
                 break;
             case "GRID":
-                result = TestMode.GRID;
+                result = TestMode.SELENIUM_GRID;
                 break;
             case "DOCKER":
-                result = TestMode.DOCKER;
+                result = TestMode.HOSTED_DOCKER;
                 break;
             default:
                 throw new IllegalStateException("testMode could not be identified");
