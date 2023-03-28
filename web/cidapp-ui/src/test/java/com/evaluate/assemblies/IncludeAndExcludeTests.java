@@ -63,6 +63,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     private ComponentInfoBuilder assemblyInfo;
+
     @After
     public void deleteScenarios() {
         if (currentUser != null) {
