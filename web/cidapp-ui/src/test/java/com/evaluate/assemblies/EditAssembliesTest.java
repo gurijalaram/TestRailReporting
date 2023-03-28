@@ -36,6 +36,7 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.http.cookie.SM;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -1309,6 +1310,58 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
             .contains("7,777", "612");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10860", "21552"})
+    @Description("Validate 'missing' scenario created if sub-component deleted'")
+    public void testMissingSubComponentOnDeletion() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        softAssertions = new SoftAssertions();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        ComponentInfoBuilder smallRing = assemblyUtils.getSubComponent(componentAssembly, SMALL_RING);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(SMALL_RING + "," +scenarioName)
+            .deleteSubcomponent()
+            .clickDelete(ComponentsTreePage.class);
+
+        scenariosUtil.checkComponentDeleted(smallRing.getComponentIdentity(), smallRing.getScenarioIdentity(), currentUser);
+
+        componentsTreePage = componentsTreePage.closePanel().clickRefresh(EvaluatePage.class).openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SMALL_RING)).as("Verify 'missing' Small Ring Struck Out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName))
+            .as("Verify that 'missing' Small Ring is CAD DIsconnected").contains(StatusIconEnum.DISCONNECTED.getStatusIcon());
 
         softAssertions.assertAll();
     }
