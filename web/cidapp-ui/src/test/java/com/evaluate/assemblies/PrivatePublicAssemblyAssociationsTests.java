@@ -6,16 +6,11 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
-import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.PreferencesEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -45,7 +40,6 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -57,8 +51,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemE;
     private ComponentInfoBuilder cidComponentItemF;
     private ComponentInfoBuilder cidComponentItemG;
-    private ComponentInfoBuilder cidComponentItemH;
-    private List<ComponentInfoBuilder> listOfSubcomponents;
+    private List<ComponentInfoBuilder> listOfSubcomponentsA;
     private List<ComponentInfoBuilder> listOfSubcomponentsB;
 
     private String bigRing;
@@ -119,10 +112,10 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
             userPreferencesUtil.resetSettings(currentUser);
         }
 
-        listOfSubcomponents = Arrays.asList(cidComponentItemA, cidComponentItemC, cidComponentItemE,
+        listOfSubcomponentsA = Arrays.asList(cidComponentItemA, cidComponentItemC, cidComponentItemE,
             cidComponentItemG);
 
-        listOfSubcomponents.forEach(subcomponent -> {
+        listOfSubcomponentsA.forEach(subcomponent -> {
             if (subcomponent != null) {
                 scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), currentUser);
             }
@@ -141,242 +134,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11955", "11956"})
-    @Description("Validate assembly associations takes preference for private sub-components")
-    public void testDefaultAssemblyAssociationsPrivatePreference() {
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        componentsTablePage = componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .publishSubcomponent()
-            .publish(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView()
-            .addColumn(ColumnsEnum.PUBLISHED);
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTablePage.closePanel()
-            .clickExplore()
-            .selectFilter("Public")
-            .multiSelectScenarios(bigRing + "," + scenarioName)
-            .editScenario(EditComponentsPage.class)
-            .renameScenarios()
-            .enterScenarioName(newScenarioName)
-            .clickContinue(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .navigateToScenario(componentAssembly)
-            .openComponents()
-            .selectTableView()
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .deleteSubcomponent()
-            .clickDelete(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView()
-            .addColumn(ColumnsEnum.SCENARIO_TYPE);
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon(),
-            StatusIconEnum.PRIVATE.getStatusIcon());
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(testCaseId = {"11958", "6522"})
-    @Description("Validate assembly association with different named sub-component when publishing from private workspace")
-    public void testDefaultAssemblyAssociationsNewScenarioName() {
-
-        assemblyUtils.publishSubComponents(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        componentsTablePage = componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView()
-            .addColumn(ColumnsEnum.PUBLISHED);
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTablePage.openAssembly(bigRing, scenarioName)
-            .publishScenario(PublishPage.class)
-            .changeName(newScenarioName)
-            .clickContinue(PublishPage.class)
-            .publish(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
-            .navigateToScenario(componentAssembly)
-            .openComponents()
-            .selectTableView()
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, newScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(newScenarioName);
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11960", "6600"})
-    @Description("Validate a private sub component will take preference over a public iteration when editing a public assembly")
-    public void testEditDefaultAssemblyAssociationsPrivatePreference() {
-
-        assemblyUtils.costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly).publishAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
-
-        componentsTablePage = componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView()
-            .addColumn(ColumnsEnum.PUBLISHED);
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTreePage.closePanel()
-            .editScenario(EditScenarioStatusPage.class)
-            .close(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(testCaseId = {"11961"})
-    @Description("Validate a new private sub component will take preference over a public iteration when editing a public assembly")
-    public void testEditDefaultAssemblyAssociationsPrivateNewScenarioPreference() {
-        final File resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, bigRing + subComponentExtension);
-
-        assemblyUtils.costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly).publishAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-
-        cidComponentItemA = loginPage.login(currentUser)
-            .uploadComponent(bigRing, newScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new EvaluatePage(driver).refresh()
-            .navigateToScenario(componentAssembly);
-
-        componentsTreePage = evaluatePage.openComponents();
-
-        componentsTablePage = componentsTreePage.selectTableView()
-            .multiSelectSubcomponents(bigRing + "," + scenarioName)
-            .editSubcomponent(EditScenarioStatusPage.class)
-            .close(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, bigRing + "," + pin + "," + smallRing)
-            .closePanel()
-            .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView()
-            .addColumn(ColumnsEnum.PUBLISHED);
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        componentsTreePage.closePanel()
-            .editScenario(EditScenarioStatusPage.class)
-            .close(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
-
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-
-        componentsTablePage.selectTreeView();
-
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(bigRing)).contains(scenarioName);
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"21707", "21708", "21709", "21710"})
+    @TestRail(testCaseId = {"21707", "21708", "21709", "21710", "11955", "11958", "6600"})
     @Description("Validate assembly association priority for Default strategy")
     public void testDefaultAssemblyAssociationsWorkflow() {
 
