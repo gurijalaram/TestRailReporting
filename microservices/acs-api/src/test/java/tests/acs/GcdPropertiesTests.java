@@ -19,9 +19,10 @@ import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class GcdPropertiesTests {
+
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "17203")
@@ -54,13 +55,20 @@ public class GcdPropertiesTests {
             false
         );
 
-        PropertiesToReset roughnessRz = null;
-        PropertiesToSet tolerance = null;
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .tolerance("tolerance")
+            .build();
+
+        PropertiesToReset roughnessRz = PropertiesToReset.builder()
+            .roughnessRz("roughnessRz")
+            .build();
+
         GcdTypesResponse response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
-            tolerance,
-            Arrays.asList(roughnessRz)
+            propertiesToSet,
+            //or use Arrays.asList with more than one
+            Collections.singletonList(roughnessRz)
         );
     }
 }
