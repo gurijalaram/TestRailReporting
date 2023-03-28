@@ -5,6 +5,7 @@ public enum TestMode {
     LOCAL("LOCAL"), // test locally, default
     EXPORT("EXPORT"), // run export tests, handy when running over RemoteWebDriver as download will happen on remote machine ;
     SELENIUM_GRID("SELENIUM_GRID"),
+    GRID("GRID"),
     HOSTED_DOCKER("HOSTED_DOCKER");
 
     private final String value;

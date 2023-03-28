@@ -53,6 +53,7 @@ public class TestHelper {
             case "EXPORT":
                 result = TestMode.EXPORT;
                 break;
+            case "GRID":
             case "SELENIUM_GRID":
                 result = TestMode.SELENIUM_GRID;
                 break;
