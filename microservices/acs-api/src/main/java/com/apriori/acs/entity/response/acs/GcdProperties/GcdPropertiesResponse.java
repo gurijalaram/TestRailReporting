@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(location = "acs/GcdArtifactsResponse.json")
+@Schema(location = "acs/GcdArtifactsSave.json")
 public class GcdPropertiesResponse {
 
     private Integer scenarioInputSet;

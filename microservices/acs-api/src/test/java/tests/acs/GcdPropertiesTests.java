@@ -1,9 +1,9 @@
 package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToReset;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
-import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -14,6 +14,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
@@ -56,19 +57,25 @@ public class GcdPropertiesTests {
         );
 
         PropertiesToSet propertiesToSet = PropertiesToSet.builder()
-            .tolerance("tolerance")
+            .tolerance("0.4")
+            .roughness("0.8")
             .build();
 
         PropertiesToReset roughnessRz = PropertiesToReset.builder()
-            .roughnessRz("roughnessRz")
+            .roughnessRz("")
             .build();
 
-        GcdTypesResponse response = acsResources.saveGcdProperties(
+        GcdPropertiesResponse response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
             propertiesToSet,
-            //or use Arrays.asList with more than one
             Collections.singletonList(roughnessRz)
         );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getScenarioInputSet()).isNotNull();
+        softAssertions.assertThat(response.getSuccesses()).isNotNull();
+        softAssertions.assertThat(response.getFailures()).isNull();
+        softAssertions.assertAll();
     }
 }

@@ -7,7 +7,6 @@ import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesInputs;
 import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToReset;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
-import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
@@ -714,7 +713,7 @@ public class AcsResources {
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
      */
 
-    public GcdTypesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, PropertiesToSet propertiesToSet, List<PropertiesToReset> propertiesToReset) {
+    public GcdPropertiesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, PropertiesToSet propertiesToSet, List<PropertiesToReset> propertiesToReset) {
         setupHeader();
 
         List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();
@@ -739,7 +738,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return (GcdTypesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GcdPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
