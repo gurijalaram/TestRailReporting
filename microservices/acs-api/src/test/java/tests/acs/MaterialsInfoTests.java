@@ -13,7 +13,7 @@ import org.junit.Test;
 public class MaterialsInfoTests {
 
     @Test
-    @TestRail(testCaseId = "16829")
+    @TestRail(testCaseId = "22701")
     @Description("Test Get Materials Info endpoint for Sheet Metal")
     public void testGetMaterialsInfoSheetMetal() {
         AcsResources acsResources = new AcsResources();

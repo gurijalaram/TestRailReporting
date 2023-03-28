@@ -33,4 +33,5 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem costPerUnit;
     private GenericExtendedPropertyInfoItem altName5;
     private GenericExtendedPropertyInfoItem materialTypeName;
+    private GenericExtendedPropertyInfoItem baseCostPerUnit;
 }
