@@ -64,7 +64,7 @@ public class TestHelper {
                 throw new IllegalStateException("testMode could not be identified");
         }
 
-        TestHelper.logger.info("Test mode set to: " + result.toString());
+        TestHelper.logger.info("Test mode set to: " + result);
         return result;
     }
 
