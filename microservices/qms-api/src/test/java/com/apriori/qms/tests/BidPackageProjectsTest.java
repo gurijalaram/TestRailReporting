@@ -6,7 +6,7 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
+import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -192,11 +192,8 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"14627"})
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         BidPackageProjectsResponse bidProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
-
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
     @Test

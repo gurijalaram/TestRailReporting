@@ -20,7 +20,7 @@ public class QmsUserPreferenceTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
 
-    UserCredentials currentUser = UserUtil.getUser();
+    UserCredentials currentUser = UserUtil.getUser("admin");
 
     @Before
     public void testSetup() {

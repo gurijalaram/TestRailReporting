@@ -7,10 +7,9 @@ import com.apriori.qds.entity.response.layout.ViewElementResponse;
 import com.apriori.qms.controller.QmsLayoutResources;
 import com.apriori.qms.entity.request.layout.LayoutConfigurationParameters;
 import com.apriori.qms.entity.request.layout.LayoutConfigurationRequest;
-import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
+import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationResponse;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationsResponse;
-import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -159,10 +158,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12539"})
     @Description("Create layout configuration with name that already exists")
     public void createLayoutConfigurationWithSameName() {
-        ErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(layoutConfigName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            ErrorMessage.class,
+            QmsErrorMessage.class,
             HttpStatus.SC_CONFLICT,
             currentUser);
 
@@ -173,10 +172,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12541"})
     @Description("Create layout configuration with blank name")
     public void createLayoutConfigurationWithEmptyName() {
-        ErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder("", layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            ErrorMessage.class,
+            QmsErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST,
             currentUser);
 
@@ -187,10 +186,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12881"})
     @Description("Create layout configuration name more than 64 characters")
     public void createLayoutConfigurationNameMoreThan64() {
-        ErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(RandomStringUtils.randomAlphabetic(70), layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            ErrorMessage.class,
+            QmsErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST,
             currentUser);
 

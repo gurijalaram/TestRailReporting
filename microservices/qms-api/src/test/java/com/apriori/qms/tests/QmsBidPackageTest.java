@@ -10,7 +10,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackagesResponse;
-import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
+import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;

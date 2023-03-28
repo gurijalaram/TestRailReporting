@@ -8,7 +8,7 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
+import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

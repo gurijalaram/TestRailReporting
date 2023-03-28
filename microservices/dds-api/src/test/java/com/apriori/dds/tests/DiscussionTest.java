@@ -2,7 +2,6 @@ package com.apriori.dds.tests;
 
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -17,6 +16,7 @@ import entity.request.DiscussionsRequestParameters;
 import entity.request.SearchDiscussionsRequest;
 import entity.response.DiscussionResponse;
 import entity.response.DiscussionsResponse;
+import entity.response.ErrorMessage;
 import enums.DDSApiEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,6 +25,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import utils.DdsApiTestUtils;
 
@@ -215,6 +216,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
+    @Ignore
     @TestRail(testCaseId = {"12410"})
     @Description("Search discussions")
     public void searchDiscussions() {

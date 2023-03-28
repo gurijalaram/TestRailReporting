@@ -2,7 +2,6 @@ package com.apriori.dds.tests;
 
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -19,6 +18,7 @@ import entity.request.CommentsRequestParameters;
 import entity.response.CommentResponse;
 import entity.response.CommentsResponse;
 import entity.response.DiscussionResponse;
+import entity.response.ErrorMessage;
 import enums.DDSApiEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;

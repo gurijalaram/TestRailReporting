@@ -188,6 +188,9 @@
             },
             "processIdentity": {
               "type": "string"
+            },
+            "description": {
+              "type": "string"
             }
           },
           "required": [
@@ -202,7 +205,8 @@
             "pinDetails",
             "gcds",
             "attributeCategory",
-            "processIdentity"
+            "processIdentity",
+            "description"
           ]
         },
         "customerIdentity": {
