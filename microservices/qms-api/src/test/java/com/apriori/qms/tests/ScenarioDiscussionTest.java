@@ -13,6 +13,7 @@ import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionReque
 import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
@@ -20,7 +21,6 @@ import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsRes
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -58,14 +58,10 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-
-        // Create new Component and published Scenario via SDS
         scenarioItem = postTestingComponentAndAddToRemoveList();
         publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
             .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
             .build(), Scenario.class, HttpStatus.SC_OK);
-
-        //Create new bid-package & project
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
@@ -74,8 +70,6 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-
-        //Create Scenario Discussion and Comment
         scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
         discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
             new GenerateStringUtil().generateNotes(), "ACTIVE", currentUser);
@@ -266,10 +260,7 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
 
     @After
     public void testCleanup() {
-        //Delete Scenario Discussion
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), currentUser);
-
-        //Delete Bidpackage and Scenario
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         if (!scenariosToDelete.isEmpty()) {
             scenariosToDelete.forEach(component -> {
@@ -289,8 +280,6 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
             assignedUser = UserUtil.getUser();
         }
 
-        //User_A and User_B must be participants of this discussion
-        //one of the users must be assignee of this discussion
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
@@ -310,7 +299,6 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
-        //As the User_A - unassign the discussion
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .assigneeEmail("").build()).build();
@@ -323,19 +311,17 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         softAssertions.assertThat(updateResponseCurrentUser.getAssigneeUserIdentity()).isNull();
         softAssertions.assertThat(updateResponseCurrentUser.getAssignee()).isNull();
 
-        //As the User_B try to unassign same discussion again
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .assigneeEmail("").build()).build();
-        ErrorMessage updateResponseAssigneeUserError = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(),
+        QmsErrorMessage updateResponseAssigneeUserError = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(),
             scenarioDiscussionRequest,
-            ErrorMessage.class,
+            QmsErrorMessage.class,
             HttpStatus.SC_CONFLICT, assignedUser);
 
         softAssertions.assertThat(updateResponseAssigneeUserError.getMessage())
             .isEqualTo("Can't update discussion. No changes detected.");
 
-        //As the User_B RESOLVE this discussion
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .status("RESOLVED").build()).build();

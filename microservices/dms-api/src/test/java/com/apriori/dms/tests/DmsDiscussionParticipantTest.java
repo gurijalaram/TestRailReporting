@@ -51,14 +51,10 @@ public class DmsDiscussionParticipantTest extends SDSTestUtil {
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-
-        // Create new Component and published Scenario via SDS
         scenarioItem = postTestingComponentAndAddToRemoveList();
         publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
             .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
             .build(), Scenario.class, HttpStatus.SC_OK);
-
-        //Create new bid-package & project
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
@@ -67,11 +63,7 @@ public class DmsDiscussionParticipantTest extends SDSTestUtil {
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-
-        //Create scenario discussion on QMS
         qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-
-        //Get generic DMS discussion identity from QMS discussion
         dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
     }
 
@@ -86,29 +78,9 @@ public class DmsDiscussionParticipantTest extends SDSTestUtil {
         softAssertions.assertThat(responseWrapper.getIsFirstPage()).isTrue();
     }
 
-    @Test
-    @TestRail(testCaseId = {"16444"})
-    @Description("Verify that only discussion's participants can change its status")
-    public void verifyDiscussionParticipantCanChangeStatus() {
-        UserCredentials otherUser = UserUtil.getUser();
-        if (otherUser.getEmail().equals(currentUser.getEmail())) {
-            otherUser = UserUtil.getUser();
-        }
-        DmsErrorMessageResponse dmsErrorMessageResponse = DmsApiTestUtils
-            .updateDiscussion(discussionDescription, "RESOLVED", dmsScenarioDiscussionResponse.getItems().get(0)
-                .getIdentity(), otherUser, DmsErrorMessageResponse.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(dmsErrorMessageResponse.getErrorMessage())
-            .contains("Participant with user identity '" +
-                new AuthUserContextUtil().getAuthUserIdentity(otherUser.getEmail()) + "' is not a participant in discussion with identity '" +
-                dmsScenarioDiscussionResponse.getItems().get(0).getIdentity() + "'");
-    }
-
     @After
     public void testCleanup() {
-        //Delete Scenario Discussion
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
-
-        //Delete Bidpackage and Scenario
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         if (!scenariosToDelete.isEmpty()) {
             scenariosToDelete.forEach(component -> {

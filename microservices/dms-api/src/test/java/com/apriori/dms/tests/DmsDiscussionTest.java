@@ -10,7 +10,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -18,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import entity.response.DmsDiscussionResponse;
 import entity.response.DmsDiscussionsResponse;
 import entity.response.DmsScenarioDiscussionResponse;
+import entity.response.ErrorMessage;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,14 +49,10 @@ public class DmsDiscussionTest extends SDSTestUtil {
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-
-        // Create new Component and published Scenario via SDS
         scenarioItem = postTestingComponentAndAddToRemoveList();
         publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
             .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
             .build(), Scenario.class, HttpStatus.SC_OK);
-
-        //Create new bid-package & project
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
@@ -65,11 +61,7 @@ public class DmsDiscussionTest extends SDSTestUtil {
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-
-        //Create scenario discussion on QMS
         qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-
-        //Get generic DMS discussion identity from QMS discussion
         dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
     }
 
@@ -103,10 +95,7 @@ public class DmsDiscussionTest extends SDSTestUtil {
 
     @After
     public void testCleanup() {
-        //Delete Scenario Discussion
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
-
-        //Delete Bidpackage and Scenario
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         if (!scenariosToDelete.isEmpty()) {
             scenariosToDelete.forEach(component -> {
