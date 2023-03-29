@@ -19,9 +19,9 @@ dependencies {
     implementation project(':db')
     implementation project(':microservices:css-api')
     implementation 'com.massisframework:j-text-utils:0.3.4'
-    implementation project(path: ':microservices:sds-api')
-    implementation project(path: ':microservices:cidapp-api')
-    implementation project(path: ':microservices:qms-api')
+    implementation project(':microservices:sds-api')
+    implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:qms-api')
 
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'

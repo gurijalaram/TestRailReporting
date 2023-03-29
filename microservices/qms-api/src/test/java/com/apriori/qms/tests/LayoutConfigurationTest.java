@@ -7,9 +7,9 @@ import com.apriori.qds.entity.response.layout.ViewElementResponse;
 import com.apriori.qms.controller.QmsLayoutResources;
 import com.apriori.qms.entity.request.layout.LayoutConfigurationParameters;
 import com.apriori.qms.entity.request.layout.LayoutConfigurationRequest;
-import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationResponse;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationsResponse;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -73,31 +73,31 @@ public class LayoutConfigurationTest extends TestUtil {
 
         QmsLayoutResources.deleteLayoutConfiguration(viewElementsResponse.getIdentity(), layoutConfigurationResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
-        QmsErrorMessage getLYCResponse = QmsLayoutResources.getLayoutConfiguration(
+        ApwErrorMessage getLYCResponse = QmsLayoutResources.getLayoutConfiguration(
             viewElementsResponse.getName(),
             layoutConfigurationResponse.getIdentity(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_NOT_FOUND,
             currentUser);
 
         softAssertions.assertThat(getLYCResponse.getMessage()).contains("Resource 'Layout' with identity '" + layoutConfigurationResponse.getIdentity() + "' was not found");
 
 
-        QmsErrorMessage deletedLYCResponse = QmsLayoutResources.updateLayoutConfiguration(
+        ApwErrorMessage deletedLYCResponse = QmsLayoutResources.updateLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(new GenerateStringUtil().getRandomNumbers(),
                 layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
             layoutConfigurationResponse.getIdentity(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_NOT_FOUND,
             currentUser);
 
         softAssertions.assertThat(deletedLYCResponse.getMessage()).contains("Resource 'Layout' with identity '" + layoutConfigurationResponse.getIdentity() + "' was not found");
 
-        QmsErrorMessage errorMessageResponse = QmsLayoutResources.deleteLayoutConfiguration(
+        ApwErrorMessage errorMessageResponse = QmsLayoutResources.deleteLayoutConfiguration(
             viewElementsResponse.getIdentity(),
             layoutConfigurationResponse.getIdentity(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_NOT_FOUND,
             currentUser);
 
@@ -158,10 +158,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12539"})
     @Description("Create layout configuration with name that already exists")
     public void createLayoutConfigurationWithSameName() {
-        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(layoutConfigName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_CONFLICT,
             currentUser);
 
@@ -172,10 +172,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12541"})
     @Description("Create layout configuration with blank name")
     public void createLayoutConfigurationWithEmptyName() {
-        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder("", layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST,
             currentUser);
 
@@ -186,10 +186,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12881"})
     @Description("Create layout configuration name more than 64 characters")
     public void createLayoutConfigurationNameMoreThan64() {
-        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(RandomStringUtils.randomAlphabetic(70), layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST,
             currentUser);
 
@@ -200,10 +200,10 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(testCaseId = {"12887"})
     @Description("Delete Invalid layout configuration")
     public void deleteInvalidLayoutConfiguration() {
-        QmsErrorMessage errorMessageResponse = QmsLayoutResources.deleteLayoutConfiguration(
+        ApwErrorMessage errorMessageResponse = QmsLayoutResources.deleteLayoutConfiguration(
             viewElementsResponse.getIdentity(),
             "INVALIDLYC",
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_NOT_FOUND,
             currentUser);
 
@@ -223,10 +223,10 @@ public class LayoutConfigurationTest extends TestUtil {
                 .shareable(false)
                 .build())
             .build();
-        QmsErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
+        ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
             layoutConfigurationRequestBuilder,
             viewElementsResponse.getName(),
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_INTERNAL_SERVER_ERROR,
             currentUser);
 

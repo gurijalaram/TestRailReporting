@@ -13,7 +13,6 @@ import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionReque
 import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.error.QmsErrorMessage;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
@@ -21,6 +20,7 @@ import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsRes
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -39,8 +39,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
-
-import java.util.HashSet;
 
 public class ScenarioDiscussionTest extends SDSTestUtil {
     private static String bidPackageName;
@@ -262,12 +260,6 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
     public void testCleanup() {
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), currentUser);
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        if (!scenariosToDelete.isEmpty()) {
-            scenariosToDelete.forEach(component -> {
-                removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
-            });
-        }
-        scenariosToDelete = new HashSet<>();
         softAssertions.assertAll();
     }
 
@@ -314,9 +306,9 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .assigneeEmail("").build()).build();
-        QmsErrorMessage updateResponseAssigneeUserError = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(),
+        ApwErrorMessage updateResponseAssigneeUserError = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(),
             scenarioDiscussionRequest,
-            QmsErrorMessage.class,
+            ApwErrorMessage.class,
             HttpStatus.SC_CONFLICT, assignedUser);
 
         softAssertions.assertThat(updateResponseAssigneeUserError.getMessage())

@@ -6,7 +6,7 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.error.QmsErrorMessage;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -83,7 +83,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13744"})
     @Description("Create Bid Package is greater than 64 characters")
     public void createProjectNameGreaterThan64() {
-        QmsErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(70), bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(70), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'name' should not be more than 64 characters");
     }
 
@@ -91,7 +91,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13745"})
     @Description("Create Bid Package with empty name")
     public void createProjectWithEmptyName() {
-        QmsErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject("", bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject("", bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'name' should not be null");
     }
 
@@ -99,7 +99,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13746"})
     @Description("Create Bid Package with project description greater than 254 characters")
     public void createProjectNameGreaterThan254() {
-        QmsErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(258), bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(258), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'description' should not be more than 254 characters");
     }
 
@@ -112,7 +112,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getName()).isEqualTo(projectName);
 
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        QmsErrorMessage bppErrorResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage bppErrorResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(bppErrorResponse.getMessage()).contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackageResponse.getIdentity(), bidPackageResponse.getCustomerIdentity()));
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
@@ -142,7 +142,7 @@ public class BidPackageProjectsTest extends TestUtil {
     public void createProjectWithEmptyDescription() {
         String projectName12 = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(projectName12, "");
-        QmsErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder, bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'description' should not be null");
     }
 
@@ -151,7 +151,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Verify bid package project is deleted")
     public void verifyBidPackageProjectIsDeleted() {
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains(String.format("Can't find Project for bid package with identity '%s' and identity '%s'", bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity()));
     }
@@ -160,7 +160,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13894"})
     @Description("Find a project with invalid identity")
     public void getProjectWithInvalidIdentity() {
-        QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'projectIdentity' is not a valid identity");
     }
 
@@ -168,7 +168,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13753"})
     @Description("delete a project with invalid identity")
     public void deleteProjectWithInvalidIdentity() {
-        QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'projectIdentity' is not a valid identity");
     }
 
@@ -210,12 +210,12 @@ public class BidPackageProjectsTest extends TestUtil {
 
         QmsBidPackageResources.deleteBidPackage(bidPackResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
-        QmsErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
-                bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
+                bidPackProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackResponse.getIdentity(), bidPackResponse.getCustomerIdentity()));
 
-        QmsErrorMessage bppErrorResponse = QmsBidPackageResources.getProject(bidPackProjectResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage bppErrorResponse = QmsBidPackageResources.getProject(bidPackProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
         softAssertions.assertThat(bppErrorResponse.getMessage()).contains(String.format("Resource 'Project' with identity '%s' was not found", bidPackProjectResponse.getIdentity()));
     }
 

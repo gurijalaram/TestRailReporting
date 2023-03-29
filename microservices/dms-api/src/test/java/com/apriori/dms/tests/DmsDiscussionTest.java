@@ -10,6 +10,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -17,7 +18,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import entity.response.DmsDiscussionResponse;
 import entity.response.DmsDiscussionsResponse;
 import entity.response.DmsScenarioDiscussionResponse;
-import entity.response.ErrorMessage;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,8 +27,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DmsApiTestUtils;
-
-import java.util.HashSet;
 
 public class DmsDiscussionTest extends SDSTestUtil {
     private static SoftAssertions softAssertions;
@@ -79,7 +77,7 @@ public class DmsDiscussionTest extends SDSTestUtil {
     @Test
     @Description("update a invalid discussion")
     public void updateInValidDiscussion() {
-        ErrorMessage discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription, "RESOLVED", "INVALIDDISCUSSION", currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        ApwErrorMessage discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionDescription, "RESOLVED", "INVALIDDISCUSSION", currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(discussionUpdateResponse.getMessage())
             .contains("'discussionIdentity' is not a valid identity");
     }
@@ -97,12 +95,6 @@ public class DmsDiscussionTest extends SDSTestUtil {
     public void testCleanup() {
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        if (!scenariosToDelete.isEmpty()) {
-            scenariosToDelete.forEach(component -> {
-                removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
-            });
-        }
-        scenariosToDelete = new HashSet<>();
         softAssertions.assertAll();
     }
 }

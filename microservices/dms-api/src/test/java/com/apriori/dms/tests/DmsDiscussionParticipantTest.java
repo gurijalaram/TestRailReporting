@@ -82,12 +82,6 @@ public class DmsDiscussionParticipantTest extends SDSTestUtil {
     public void testCleanup() {
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        if (!scenariosToDelete.isEmpty()) {
-            scenariosToDelete.forEach(component -> {
-                removeTestingScenario(component.getComponentIdentity(), component.getScenarioIdentity());
-            });
-        }
-        scenariosToDelete = new HashSet<>();
         softAssertions.assertAll();
     }
 }
