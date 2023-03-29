@@ -30,7 +30,7 @@ public class WebDriverUtils {
     private static final String xpathSecondFormLoginButton = ".//span[@class='auth0-label-submit']";
 
     public String getToken(final String email, final String password) {
-        WebDriver driver = new DriverFactory(TestMode.LOCAL,
+        WebDriver driver = new DriverFactory(TestMode.QA_LOCAL,
             TestType.UI,
             BrowserTypes.CHROME,
             null,

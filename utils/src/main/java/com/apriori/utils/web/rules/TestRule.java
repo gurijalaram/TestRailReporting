@@ -56,7 +56,7 @@ public class TestRule implements MethodRule {
                 try {
                     MDC.put("methodName", frameworkMethod.getMethod().getDeclaringClass().getSimpleName() + "." + frameworkMethod.getName());
 
-                    if (testBaseNew.getMode().equals(TestMode.QA) || (StringUtils.isNotEmpty(System.getProperty("repeatTests")) && System.getProperty("repeatTests").equalsIgnoreCase("true"))) {
+                    if (testBaseNew.getMode().equals(TestMode.LOCAL_GRID) || (StringUtils.isNotEmpty(System.getProperty("repeatTests")) && System.getProperty("repeatTests").equalsIgnoreCase("true"))) {
                         logger.debug("Running test: ' " + frameworkMethod.getMethod().getDeclaringClass().getCanonicalName() + "." + frameworkMethod.getName() + "' through retry with retry count: " + times);
                         retry = true;
                         repeatTest(statement, times, frameworkMethod, testBaseNew);
