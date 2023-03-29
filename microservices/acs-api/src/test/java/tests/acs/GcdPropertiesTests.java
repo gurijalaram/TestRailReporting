@@ -61,7 +61,7 @@ public class GcdPropertiesTests {
             .roughness("0.8")
             .build();
 
-        PropertiesToReset roughnessRz = PropertiesToReset.builder()
+        PropertiesToReset propertiesToReset = PropertiesToReset.builder()
             .roughnessRz("")
             .build();
 
@@ -69,7 +69,7 @@ public class GcdPropertiesTests {
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
             propertiesToSet,
-            Collections.singletonList(roughnessRz)
+            Collections.singletonList(propertiesToReset)
         );
 
         SoftAssertions softAssertions = new SoftAssertions();
