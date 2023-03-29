@@ -336,6 +336,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
         getPageUtils().waitForElementAndClick(assignedToFilterFiled);
         getPageUtils().waitForElementAndClick(filterConditionType);
         getPageUtils().waitForElementAndClick(isAnyOfFilterType);
+        getPageUtils().waitForElementAndClick(filterValue);
         getPageUtils().waitForElementToAppear(filterValue).sendKeys(assignee);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + assignee + "')]"));
         return this;
