@@ -86,7 +86,7 @@ public class TestRailRule extends TestWatcher {
         
         // Do not post to Test Rail if mode (aka Test Mode) is Local.
         // This allows for test development/break-fix
-        if (System.getProperty("mode", DEFAULT_TEST_MODE).equals(TestMode.LOCAL.value())) {
+        if (System.getProperty("mode", DEFAULT_TEST_MODE).equals(TestMode.QA_LOCAL.value())) {
             return;
         }
 

@@ -685,7 +685,6 @@ public class CicApiTestUtil extends TestBase {
         return new HashMap<String, String>() {
             {
                 put("Accept", "*/*");
-                put("Accept", "application/json");
                 put("cookie", String.format("JSESSIONID=%s", session));
             }
         };

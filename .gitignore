@@ -121,3 +121,6 @@ screenshots/
 build/
 /vim.exe.stackdump
 /utils/gradle/
+
+#Sensitive files
+.env

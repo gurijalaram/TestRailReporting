@@ -33,7 +33,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='scenario-results-expanded']")
     private WebElement scenarioResultsCard;
 
-    @FindBy(xpath = "//div[@data-testid='insights-expaned']")
+    @FindBy(xpath = "//div[@data-testid='insights-expanded']")
     private WebElement insightsCard;
 
     @FindBy(xpath = "//div[@data-testid='comments-expanded']")
@@ -306,7 +306,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "costingInput.vpeName")
     private WebElement attributeDigitalFactory;
 
-    @FindBy(xpath = "//button[@data-testid='message']//*[local-name()='svg']")
+    @FindBy(xpath = "//button[@data-testid='NEW_MESSAGE']//*[local-name()='svg']")
     private WebElement attributeMessageIcon;
 
     @FindBy(id = "new-comment-popper")
@@ -366,10 +366,10 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='uncosted-message-Cost the scenario to see the cost result summary.']")
     private WebElement unCostMessage;
 
-    @FindBy(xpath = "//div[@aria-label='Resolve Comment']//*[local-name()='svg']")
+    @FindBy(xpath = "//button[@aria-label='Resolve Comment']//*[local-name()='svg']")
     private WebElement unResolveIcon;
 
-    @FindBy(xpath = "//div[@aria-label='Unresolve Comment']//*[local-name()='svg']")
+    @FindBy(xpath = "//button[@aria-label='Unresolve Comment']//*[local-name()='svg']")
     private WebElement resolveIcon;
 
     @FindBy(xpath = "//button[contains(@data-testid,'more-options-menu-icon-button')]")
@@ -1267,7 +1267,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return string
      */
     public String getProcessDetails(String processDetails) {
-        return driver.findElement(By.xpath("//div[@id='process-routing']//div[text()='" + processDetails + "']")).getAttribute("textContent");
+        return driver.findElement(By.xpath("//div[starts-with(@id,'process')]//div[text()='" + processDetails + "']")).getAttribute("textContent");
     }
 
     /**

@@ -91,7 +91,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3601", "4324", "4325"})
+    @TestRail(testCaseId = {"3601", "4324", "4325", "4331"})
     @Description("1. Create minutes schedule workflow to invoke in 1 minute " +
         "2. Edit workflow to disable the schedule and verify job is not invoked" +
         "3. Edit workflow to enable the schedule and verify job is invoked")
