@@ -737,7 +737,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return (GcdPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GcdPropertiesResponse) HTTPRequest.build(requestEntity).put().getResponseEntity();
     }
 
     /**

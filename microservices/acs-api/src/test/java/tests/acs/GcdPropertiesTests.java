@@ -56,15 +56,15 @@ public class GcdPropertiesTests {
         );
 
         PropertiesToSet propertiesToSet = PropertiesToSet.builder()
-            .tolerance("0.4")
-            .roughness("0.8")
+            .roughnessRz("0.4")
+            .concentricity("0.8")
             .build();
 
         GcdPropertiesResponse response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
             propertiesToSet,
-            Collections.singletonList("roughnessRz")
+            Collections.singletonList("roughness")
         );
 
         SoftAssertions softAssertions = new SoftAssertions();

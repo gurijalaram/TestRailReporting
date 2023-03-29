@@ -11,4 +11,5 @@ public class PropertiesToSet {
     private String roughnessRz;
     private String roughness;
     private String tolerance;
+    private String concentricity;
 }
