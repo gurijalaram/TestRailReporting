@@ -16,7 +16,6 @@ import com.apriori.acs.entity.response.acs.gcdmapping.GcdMappingResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
-import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoResponse;
 import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioInputs;
 import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
@@ -128,18 +127,18 @@ public class AcsResources {
      * @param processGroup - String
      * @return instance of AllMaterialSocksInfoResponse
      */
-    public MaterialsInfoResponse getMaterialsInfo(String vpeName, String processGroup) {
+    public <T> ResponseWrapper<T> getMaterialsInfo(String vpeName, String processGroup, Class<T> klass) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.MATERIALS_INFO, MaterialsInfoResponse.class)
+            .init(AcsApiEnum.MATERIALS_INFO, klass)
             .headers(headers)
             .inlineVariables(
                 vpeName,
                 processGroup)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        return (MaterialsInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

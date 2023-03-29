@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(location = "acs/MaterialsInfoResponse.json")
-public class MaterialsInfoResponse {
+@Schema(location = "acs/MaterialsInfoSheetMetalResponse.json")
+public class MaterialsInfoSheetMetalResponse {
     private List<PropertyValuesList> propertyValuesList;
     private PropertyInfoMap propertyInfoMap;
 }
