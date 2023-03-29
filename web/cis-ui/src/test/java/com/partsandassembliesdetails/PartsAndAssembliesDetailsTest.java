@@ -360,11 +360,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getModalTitle()).isEqualTo("Card Settings");
 
         partsAndAssembliesDetailsPage.clickToOpenDropDown()
-            .selectAnOption("Process Group");
-
-        partsAndAssembliesDetailsPage.clickToOpenDropDown()
+            .selectAnOption("Process Group")
             .selectAnOption("Additional Amortized Investment")
-            .clickToOpenDropDown()
             .selectAnOption("Digital Factory");
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedFieldName()).contains("Process Group");
 
@@ -407,9 +404,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
             .clickToOpenModal()
             .clickToOpenDropDown()
             .selectAnOption("Process Group")
-            .clickToOpenDropDown()
             .selectAnOption("Additional Amortized Investment")
-            .clickToOpenDropDown()
             .selectAnOption("Digital Factory")
             .enterCardName(cardName)
             .clickSaveButton()
@@ -427,7 +422,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getNewSelectedFieldName()).contains("Annual Cost");
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSaveButtonStatus()).isEqualTo(true);
 
-        partsAndAssembliesDetailsPage.clickSaveButton();
+        partsAndAssembliesDetailsPage.clickToOpenDropDown()
+                .clickSaveButton();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(editedCardName)).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.deleteScenarioResultsCard(editedCardName);
@@ -461,9 +457,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
             .clickToOpenModal()
             .clickToOpenDropDown()
             .selectAnOption("Process Group")
-            .clickToOpenDropDown()
             .selectAnOption("Additional Amortized Investment")
-            .clickToOpenDropDown()
             .selectAnOption("Digital Factory")
             .enterCardName(cardName)
             .clickSaveButton()
