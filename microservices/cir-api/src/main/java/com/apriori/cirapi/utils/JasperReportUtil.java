@@ -88,7 +88,7 @@ public class JasperReportUtil {
         do {
             TimeUnit.SECONDS.sleep(5);
 
-        } while (HTTPRequest.build(requestEntity).get().getBody().contains("ready")
+        } while (!HTTPRequest.build(requestEntity).get().getBody().contains("ready")
             || ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
     }
 

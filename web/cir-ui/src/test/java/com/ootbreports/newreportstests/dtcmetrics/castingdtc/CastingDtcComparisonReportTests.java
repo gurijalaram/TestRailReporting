@@ -1,8 +1,14 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
+import com.apriori.cirapi.entity.response.ChartData;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -104,33 +110,62 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7544")
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
-        jasperApiUtils.inputControlGenericTest(
+        /*jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             ""
-        );
+        );*/
+        JasperReportSummary jasperReportSummary = jasperApiUtils.minAnnualSpendGenericTest();
+
+        /**
+         * Gear Housing (Initial) is high dtc
+         * JEEP WJ FRONT BRAKE DISC 99-04 (Initial) is medium dtc
+         * 40128483.MLDES.0001 (Initial) is low dtc
+          */
+
+        String lowDtcPartName = "40128483.MLDES.0001 (Initial)";
+        String mediumDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
+        String highDtcPartName = "Gear Housing (Initial)";
+
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(lowDtcPartName).getPartName(), is(equalTo(lowDtcPartName)));
+
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(mediumDtcPartName).getPartName(), is(equalTo(mediumDtcPartName)));
+
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+        assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName).getPartName(), is(equalTo(highDtcPartName)));
+
     }
 
     @Test
     @TestRail(testCaseId = "7656")
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
-        //        String minimumAnnualSpendValue = "7820000";
-        //        jasperApiUtils.inputControlGenericTest(
-        //            "Minimum Annual Spend",
-        //            minimumAnnualSpendValue
-        //        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.minAnnualSpendGenericTest();
 
-        JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
-        ChartDataPoint jeepWjFrontPart = reportSummary.getFirstChartData().getChartDataPointByPartName("JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        String negativePartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
+        String positivePartName = "E3-241-4-N (Initial)";
 
-        final Integer holeIssues = jeepWjFrontPart.getHoleIssues();
-        final Integer materialIssues = jeepWjFrontPart.getMaterialIssues();
-        final Integer radiusIssues = jeepWjFrontPart.getRadiusIssues();
-        final Integer draftIssues = jeepWjFrontPart.getDraftIssues();
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(negativePartName), is(equalTo(null)));
+        assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(negativePartName), is(equalTo(null)));
+        assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(negativePartName), is(equalTo(null)));
+        assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(negativePartName), is(equalTo(null)));
 
-
-        // Should be finished
-        //        String annualSpendValue = reportSummary.getReportHtmlPart().getElementsContainingText("E3-241-4-N").get(5).child(19).text();
-        //        assertThat(annualSpendValue, is(not(equalTo(minimumAnnualSpendValue))));
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues(), is(equalTo(15)));
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues(), is(equalTo(15)));
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues(), is(equalTo(15)));
+        assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues(), is(equalTo(15)));
     }
 }

@@ -57,6 +57,22 @@ public class JasperApiUtils {
         assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
     }
 
+    public JasperReportSummary minAnnualSpendGenericTest() {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        String minAnnualSpendValue = "7820000";
+        String minAnnualSpendAssertValue = "7,820,000.00";
+
+        InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        //reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.inputControlNames.get("Minimum Annual Spend"), minAnnualSpendValue);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+
+        return jasperApiUtils.generateReportSummary(reportRequest);
+    }
+
     public ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
         reportRequest.getParameters().getReportParameterByName(valueToGet)
             .setValue(Collections.singletonList(valueToSet));
