@@ -19,5 +19,6 @@ public class ExtendedUserPreferenceParameters {
     private String givenName;
     private String identity;
     private String username;
+    private String avatarColor;
 
 }
