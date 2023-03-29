@@ -2,10 +2,10 @@ package com.apriori.cisapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
-import com.apriori.cisapi.entity.request.user.preferences.CurrentUserPreferenceParameters;
-import com.apriori.cisapi.entity.request.user.preferences.CurrentUserPreferenceRequest;
-import com.apriori.cisapi.entity.response.user.preferences.CurrentExtendedUserPreferencesResponse;
-import com.apriori.cisapi.entity.response.user.preferences.ExtendedUserPreferencesResponse;
+import com.apriori.cisapi.entity.request.userpreferences.CurrentUserPreferenceParameters;
+import com.apriori.cisapi.entity.request.userpreferences.CurrentUserPreferenceRequest;
+import com.apriori.cisapi.entity.response.userpreferences.CurrentExtendedUserPreferencesResponse;
+import com.apriori.cisapi.entity.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;

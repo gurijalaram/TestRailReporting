@@ -1,4 +1,4 @@
-package com.apriori.cisapi.entity.response.user.preferences;
+package com.apriori.cisapi.entity.response.userpreferences;
 
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;

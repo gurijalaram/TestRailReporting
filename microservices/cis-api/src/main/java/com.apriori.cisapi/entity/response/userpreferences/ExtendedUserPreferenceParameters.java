@@ -1,5 +1,5 @@
 
-package com.apriori.cisapi.entity.response.user.preferences;
+package com.apriori.cisapi.entity.response.userpreferences;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
