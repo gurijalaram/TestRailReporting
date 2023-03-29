@@ -32,6 +32,7 @@ import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
@@ -57,10 +58,19 @@ public class UploadAssembliesTests extends TestBase {
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private ComponentsTreePage componentsTreePage;
+    private ComponentInfoBuilder assemblyInfo;
     private File resourceFile;
 
     public UploadAssembliesTests() {
         super();
+    }
+
+    @After
+    public void deleteScenarios() {
+        if (currentUser != null && assemblyInfo != null) {
+            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
+            assemblyInfo = null;
+        }
     }
 
     @Test
@@ -703,5 +713,58 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "5625")
+    @Description("Validate updating of CAD file for the sub-component of a sub-assembly via components table.")
+    public void updateSubAssemblyCADFilesFromComponentTableTest() {
+        SoftAssertions soft = new SoftAssertions();
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String componentExtension = ".prt.1";
+//        final String modifiedComponentExtension = ".prt.2";
+        final String originalAsmExtension = ".asm.1";
+//        final String modifiedAsmExtension = ".asm.2";
+        final String topLevelAsmExtension = ".asm.3";
+
+        String autoBotAsm = "autobotasm";
+        String autoHelm = "autoparthelm";
+        String autoHead = "autoparthead";
+        String autoTorso = "autoparttorso";
+        String autoArm = "autopartarm";
+        String autoHand = "autoparthand";
+        String autoLeg = "autopartleg";
+        String autoFoot = "autopartfoot";
+        String autoSword = "autosword";
+//        String autoPommel = "autopommel";
+//        String autoHandle = "autohandle";
+//        String autoGuard = "autoguard";
+//        String autoBlade = "autoblade";
+        ComponentInfoBuilder assemblyInfo;
+        ComponentInfoBuilder subAssemblyInfo;
+
+        List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
+//        List<String> subAsmComponents = Arrays.asList(autoPommel, autoGuard, autoBlade);
+
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+
+//        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
+//            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+//
+//        assemblyUtils.uploadSubComponents(subAssemblyInfo);
+
+        assemblyUtils.uploadSubComponents(assemblyInfo);
+        assemblyUtils.uploadAssembly(assemblyInfo);
+
+        evaluatePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(autoBotAsm, scenarioName);
+        componentsTreePage = evaluatePage.openComponents();
+
+        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        soft.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
+            .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
     }
 }
