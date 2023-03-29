@@ -2,7 +2,6 @@ package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
-import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToReset;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
@@ -61,15 +60,11 @@ public class GcdPropertiesTests {
             .roughness("0.8")
             .build();
 
-        PropertiesToReset propertiesToReset = PropertiesToReset.builder()
-            .roughnessRz("")
-            .build();
-
         GcdPropertiesResponse response = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
             "SimpleHole:2",
             propertiesToSet,
-            Collections.singletonList(propertiesToReset)
+            Collections.singletonList("roughnessRz")
         );
 
         SoftAssertions softAssertions = new SoftAssertions();

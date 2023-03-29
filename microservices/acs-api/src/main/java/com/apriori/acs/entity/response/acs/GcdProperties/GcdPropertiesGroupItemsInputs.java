@@ -10,5 +10,5 @@ import java.util.List;
 public class GcdPropertiesGroupItemsInputs {
     private String artifactKey;
     private PropertiesToSet propertiesToSet;
-    private List<PropertiesToReset> propertiesToReset;
+    private List<String> propertiesToReset;
 }
