@@ -6,8 +6,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ConfigurePage;
-import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
@@ -55,10 +56,12 @@ public class UploadAssembliesTests extends TestBase {
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private ComponentsTreePage componentsTreePage;
     private ComponentInfoBuilder assemblyInfo;
+    private ComponentInfoBuilder subAssemblyInfo;
     private File resourceFile;
 
     public UploadAssembliesTests() {
@@ -70,6 +73,10 @@ public class UploadAssembliesTests extends TestBase {
         if (currentUser != null && assemblyInfo != null) {
             assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
             assemblyInfo = null;
+        }
+        if (subAssemblyInfo != null) {
+            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo);
+            subAssemblyInfo = null;
         }
     }
 
@@ -717,44 +724,37 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "5625")
-    @Description("Validate updating of CAD file for the sub-component of a sub-assembly via components table.")
-    public void updateSubAssemblyCADFilesFromComponentTableTest() {
-        SoftAssertions soft = new SoftAssertions();
+    @Description("Validate missing sub-assembly association when manually uploaded")
+    public void verifySubAsmAssociationOnUpload() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String componentExtension = ".prt.1";
-//        final String modifiedComponentExtension = ".prt.2";
         final String originalAsmExtension = ".asm.1";
-//        final String modifiedAsmExtension = ".asm.2";
         final String topLevelAsmExtension = ".asm.3";
 
-        String autoBotAsm = "autobotasm";
-        String autoHelm = "autoparthelm";
-        String autoHead = "autoparthead";
-        String autoTorso = "autoparttorso";
-        String autoArm = "autopartarm";
-        String autoHand = "autoparthand";
-        String autoLeg = "autopartleg";
-        String autoFoot = "autopartfoot";
-        String autoSword = "autosword";
-//        String autoPommel = "autopommel";
-//        String autoHandle = "autohandle";
-//        String autoGuard = "autoguard";
-//        String autoBlade = "autoblade";
-        ComponentInfoBuilder assemblyInfo;
-        ComponentInfoBuilder subAssemblyInfo;
+        final String autoBotAsm = "autobotasm";
+        final String autoHelm = "autoparthelm";
+        final String autoHead = "autoparthead";
+        final String autoTorso = "autoparttorso";
+        final String autoArm = "autopartarm";
+        final String autoHand = "autoparthand";
+        final String autoLeg = "autopartleg";
+        final String autoFoot = "autopartfoot";
+        final String autoSword = "autosword";
+
+        final String autoPommel = "autopommel";
+        final String autoHandle = "autohandle";
+        final String autoGuard = "autoguard";
+        final String autoBlade = "autoblade";
+
+        final File autoSwordFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoSword + originalAsmExtension);
 
         List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
-//        List<String> subAsmComponents = Arrays.asList(autoPommel, autoGuard, autoBlade);
+        List<String> subAsmComponents = Arrays.asList(autoPommel, autoHandle, autoGuard, autoBlade);
 
         assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ProcessGroupEnum.ASSEMBLY,
             components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
-
-//        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
-//            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
-//
-//        assemblyUtils.uploadSubComponents(subAssemblyInfo);
 
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
@@ -763,8 +763,36 @@ public class UploadAssembliesTests extends TestBase {
             .openScenario(autoBotAsm, scenarioName);
         componentsTreePage = evaluatePage.openComponents();
 
-        soft.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
-        soft.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
             .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
+
+        explorePage = componentsTreePage.closePanel()
+                .importCadFile()
+                    .inputScenarioName(scenarioName)
+                    .enterFilePath(autoSwordFile)
+                        .submit()
+                            .clickClose();
+
+        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+        List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
+        subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
+        subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
+
+        subAssemblyInfo.getSubComponents().forEach(subComponent -> {
+            List<ScenarioItem> componenetDetails = componentsUtil.getUnCostedComponent(subComponent.getComponentName(), scenarioName, currentUser);
+            subComponent.setScenarioIdentity(componenetDetails.get(0).getScenarioIdentity());
+            subComponent.setComponentIdentity(componenetDetails.get(0).getComponentIdentity());
+        });
+
+        componentsTreePage = explorePage.openScenario(autoBotAsm, scenarioName)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Sub-Assembly is no longer struck out").isFalse();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+            .as("Verify sub-assembly is shown as CAD connected").isTrue();
+
+        softAssertions.assertAll();
     }
 }
