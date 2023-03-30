@@ -390,7 +390,7 @@ public class EditAssembliesTest extends TestBase {
         final String subcomponent3 = "550-05676-001 1 1 ---";
         final List<String> uploadedSubcomponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3);
         final String subComponentExtension = ".CATPart";
-        final List<String> allSubComponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3, "MS14108-3 1 ---", "505-04596-001 1 1 ---", "550-05526-001 1 1 --A", "550-05629-401 PRIMARY 1 ---", "550-05673-401 PRIMARY 1 ---",
+        final List<String> listOfSubComponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3, "MS14108-3 1 ---", "505-04596-001 1 1 ---", "550-05526-001 1 1 --A", "550-05629-401 PRIMARY 1 ---", "550-05673-401 PRIMARY 1 ---",
             "550-05676-002 1 1 ---", "550-05682-001 1 1 --A", "550-05683-001 1 1 ---", "550-05683-002 1 1 ---", "550-05689-001 1 1 ---", "550-05690-001 1 1 ---", "CCR244SS-3-2 1 ---",
             "MS14108-15 1 ---", "MS14218AD4-4 1 ---", "MS20392-1C15 1 ---", "MS20470AD4-5 1 ---", "MS20470AD4-6 1 ---", "MS21059L3 1 ---", "MS21059L08 1 ---", "MS24665-132 1 ---", "NAS1789-3 1 ---", "NAS9309M-6-04 1 ---");
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
@@ -421,7 +421,7 @@ public class EditAssembliesTest extends TestBase {
             .openComponents()
             .selectTableView();
 
-        allSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+        listOfSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
     @Test
