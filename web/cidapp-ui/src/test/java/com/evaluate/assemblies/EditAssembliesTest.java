@@ -1351,7 +1351,7 @@ public class EditAssembliesTest extends TestBase {
         componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(SMALL_RING + "," +scenarioName)
+            .multiSelectSubcomponents(SMALL_RING + "," + scenarioName)
             .deleteSubcomponent()
             .clickDelete(ComponentsTreePage.class);
 
