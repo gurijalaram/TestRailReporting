@@ -12,7 +12,6 @@ import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStoc
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -990,12 +989,10 @@ public class AcsResources {
      *
      * @param processGroup         - the process group
      * @param fileName             - the filename
-     * @param depth                - the depth
      * @param productionInfoInputs - the production information
      * @return CostResultsResponse object
      */
-    public CostResultsRootResponse uploadAndCost(String processGroup, String fileName, String depth, NewPartRequest productionInfoInputs) {
-        AcsResources acsResources = new AcsResources();
+    public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         FileUploadResources fileUploadResources = new FileUploadResources();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1012,18 +1009,12 @@ public class AcsResources {
             testScenarioName
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+        return fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
             processGroup,
             false
         );
-
-        return acsResources.getCostResults(
-            costOutputs.getScenarioIterationKey(),
-            depth,
-            CostResultsRootResponse.class
-        ).getResponseEntity();
     }
 
     /**

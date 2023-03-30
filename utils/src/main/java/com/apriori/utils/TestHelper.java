@@ -40,27 +40,31 @@ public class TestHelper {
 
         if (testMode == null || testMode.isEmpty()) {
             TestHelper.logger.info("Test mode was null. Setting LOCAL mode.");
-            return TestMode.LOCAL;
+            return TestMode.QA_LOCAL;
         }
 
         switch (testMode.toUpperCase()) {
-            case "QA":
-                result = TestMode.QA;
+            case "LOCAL_GRID":
+                result = TestMode.LOCAL_GRID;
                 break;
-            case "LOCAL":
-                result = TestMode.LOCAL;
+            case "QA_LOCAL":
+                result = TestMode.QA_LOCAL;
                 break;
             case "EXPORT":
                 result = TestMode.EXPORT;
                 break;
             case "GRID":
-                result = TestMode.GRID;
+            case "HOSTED_GRID":
+                result = TestMode.HOSTED_GRID;
+                break;
+            case "DOCKER_GRID":
+                result = TestMode.DOCKER_GRID;
                 break;
             default:
                 throw new IllegalStateException("testMode could not be identified");
         }
 
-        TestHelper.logger.info("Test mode set to: " + result.toString());
+        TestHelper.logger.info("Test mode set to: " + result);
         return result;
     }
 

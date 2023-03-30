@@ -57,11 +57,11 @@ public class HibernateUtil {
     }
 
     private static URL getHibernateConfigurationFile() {
-        String dbType = System.getProperty("mode", TestMode.LOCAL.value());
+        String dbType = System.getProperty("mode", TestMode.QA_LOCAL.value());
         String fileName = "%s/hibernate.cfg.xml";
 
 
-        if (dbType.equals(TestMode.LOCAL.value())) {
+        if (dbType.equals(TestMode.QA_LOCAL.value())) {
             fileName = String.format(fileName, "local");
         } else {
             fileName = String.format(fileName, "prod");
