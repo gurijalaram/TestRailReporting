@@ -1393,7 +1393,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled until 1.1.0 release")
     @Test
     @TestRail(testCaseId = {"16676","16678"})
     @Description("Verify user can open the same component in CID app from details view")
@@ -1427,7 +1426,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled until 1.1.0 release")
     @Test
     @TestRail(testCaseId = {"17093","17094","17095","17096","17098","17099"})
     @Description("Verify discussions can create from process details card")
@@ -1484,7 +1482,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled until 1.1.0 release")
     @Test
     @TestRail(testCaseId = {"16672","16673","16838","16839","16840"})
     @Description("Verify user can add/remove process details fields")
