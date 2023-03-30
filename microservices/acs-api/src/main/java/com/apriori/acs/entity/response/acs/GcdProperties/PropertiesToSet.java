@@ -24,5 +24,6 @@ public class PropertiesToSet {
     private String positionTolerance;
     private String diamTolerance;
     private String minTolerance;
+    private String truePosition;
     private String bendAngleTolerance;
 }

@@ -39,16 +39,15 @@ public class GcdPropertiesTests {
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SheetMetalTray.SLDPRT", workorderAPITests.setupProductionInfoInputs());
 
         PropertiesToSet propertiesToSet = PropertiesToSet.builder()
             .roughnessRz("0.4")
-            .concentricity("0.8")
             .build();
 
         GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
             costOutputs.getScenarioIterationKey(),
-            "SimpleHole:2",
+            "ComplexHole:2",
             propertiesToSet,
             Collections.singletonList("roughness")
         );
@@ -157,6 +156,301 @@ public class GcdPropertiesTests {
             "SimpleHole:1",
             propertiesToSet,
             Arrays.asList("straightness", "parallelism")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17193")
+    @Description("Get save GCD Properties for Sheet Metal - Additive Manufacturing")
+    public void testSaveGcdPropertiesAdditiveManufacturing() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "ADD-LOW-001.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .circularity("0.3")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedWall:1",
+            propertiesToSet,
+            Arrays.asList("straightness", "parallelism")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17194")
+    @Description("Get save GCD Properties for Sheet Metal - Bar & Tube Fab")
+    public void testSaveGcdPropertiesBarAndTubeFab() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "4287081-2.prt.2", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .bendAngleTolerance("1.4")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "Bend:1",
+            propertiesToSet,
+            Collections.singletonList("parallelism")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17195")
+    @Description("Get save GCD Properties for Casting - Die")
+    public void testSaveGcdPropertiesCastingDie() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "manifold.prt.1", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .profileOfSurface("0.3")
+            .symmetry("0.8")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedSurface:1",
+            propertiesToSet,
+            Arrays.asList("runout", "roughness")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17196")
+    @Description("Get save GCD Properties for Casting - Sand")
+    public void testSaveGcdPropertiesCastingSand() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SandCastIssues.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .parallelism("0.5")
+            .perpendicularity("0.2")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "PlanarFace:1",
+            propertiesToSet,
+            Arrays.asList("straightness", "symmetry")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17197")
+    @Description("Get save GCD Properties for Casting - Investment")
+    public void testSaveGcdPropertiesCastingInvestment() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .parallelism("0.5")
+            .perpendicularity("0.2")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedWall:11",
+            propertiesToSet,
+            Arrays.asList("straightness", "symmetry")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17198")
+    @Description("Get save GCD Properties for Forging")
+    public void testSaveGcdPropertiesForging() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Pin.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .positionTolerance("0.5")
+            .profileOfSurface("0.2")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "PlanarFace:4",
+            propertiesToSet,
+            null
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17199")
+    @Description("Get save GCD Properties for Plastic Molding")
+    public void testSaveGcdPropertiesPlasticMolding() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .positionTolerance("0.5")
+            .profileOfSurface("0.2")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "PlanarFace:4",
+            propertiesToSet,
+            null
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17200")
+    @Description("Get save GCD Properties for Powder Metal")
+    public void testSaveGcdPropertiesPowderMetal() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "116-5809.prt.1", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .positionTolerance("1.5")
+            .profileOfSurface("0.3")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "PlanarFace:2",
+            propertiesToSet,
+            null
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17202")
+    @Description("Get save GCD Properties for Roto & Blow Molding")
+    public void testSaveGcdPropertiesRotoBlowMolding() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .roughness("1.5")
+            .profileOfSurface("0.3")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedSurface:1",
+            propertiesToSet,
+            Arrays.asList("profileOfSurface", "symmetry")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17208")
+    @Description("Get save GCD Properties for Sheet Plastic")
+    public void testSaveGcdPropertiesSheetPlastic() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "r151294.prt.1", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .roughnessRz("1.5")
+            .profileOfSurface("0.3")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedSurface:1",
+            propertiesToSet,
+            Arrays.asList("roughness", "symmetry")
+        );
+
+        saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "17209")
+    @Description("Get save GCD Properties for Stock Machining")
+    public void testSaveGcdPropertiesStockMachining() {
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+        String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
+
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace.CATPart", workorderAPITests.setupProductionInfoInputs());
+
+        PropertiesToSet propertiesToSet = PropertiesToSet.builder()
+            .roughnessRz("1.5")
+            .profileOfSurface("0.3")
+            .build();
+
+        GcdPropertiesResponse saveGcdPropertiesresponse = acsResources.saveGcdProperties(
+            costOutputs.getScenarioIterationKey(),
+            "CurvedSurface:1",
+            propertiesToSet,
+            Arrays.asList("roughness", "symmetry")
         );
 
         saveGcdPropertiesAssertion(saveGcdPropertiesresponse);
