@@ -6,7 +6,9 @@ import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import entity.request.CostingInputs;
 import entity.request.JobDefinition;
+import entity.request.WorkflowPart;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
 import entity.response.AgentErrorMessage;
@@ -30,6 +32,11 @@ import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 import utils.PlmPartsUtil;
 import utils.SearchFilter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class CicAgentRunPartsTest extends TestBase {
 
@@ -160,7 +167,20 @@ public class CicAgentRunPartsTest extends TestBase {
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
 
-        workflowPartsRequestDataBuilder = CicApiTestUtil.getDuplicateWorkflowPartDataBuilder(plmPartData, 2);
+        PlmParts plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), plmPartData.getPlmPartNumber()))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build());
+
+        WorkflowPart workFlowPart = WorkflowPart.builder()
+            .id(plmParts.getItems().get(0).getId())
+            .costingInputs(new CostingInputs())
+            .build();
+
+        workflowPartsRequestDataBuilder = WorkflowParts.builder()
+            .parts(Collections.nCopies(2, workFlowPart))
+            .build();
+
         AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
             agentWorkflowResponse.getId(),
             workflowPartsRequestDataBuilder,
@@ -205,8 +225,13 @@ public class CicAgentRunPartsTest extends TestBase {
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
 
-        workflowPartsRequestDataBuilder = CicApiTestUtil.getDuplicateWorkflowPartDataBuilder(plmPartData, 1);
-        workflowPartsRequestDataBuilder.getParts().get(0).setId("InvalidPartIdentity");
+        workflowPartsRequestDataBuilder = WorkflowParts.builder()
+            .parts(Collections.singletonList(WorkflowPart.builder()
+                .id("InvalidPartIdentity")
+                .costingInputs(new CostingInputs())
+                .build()))
+            .build();
+
         AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
             agentWorkflowResponse.getId(),
             workflowPartsRequestDataBuilder,
@@ -235,7 +260,7 @@ public class CicAgentRunPartsTest extends TestBase {
         softAssertions.assertThat(cwfResponse.getBody()).contains(">true<");
         AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());
 
-        WorkflowParts wfPartRequestDataBuilder  = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 5);
+        WorkflowParts wfPartRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 5);
 
         AgentErrorMessage errorMessage = CicApiTestUtil.runCicAgentWorkflowPartList(
             awfResponse.getId(),

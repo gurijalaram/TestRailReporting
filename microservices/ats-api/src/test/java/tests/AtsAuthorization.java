@@ -8,7 +8,11 @@ import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
+import com.apriori.ats.entity.response.CloudContextResponse;
+import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.AuthorizeUserUtil;
+import com.apriori.ats.utils.enums.ATSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.authorization.Token;
@@ -17,9 +21,15 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class AtsAuthorization extends TestUtil {
+    final UserCredentials userCredentials = UserUtil.getUser();
+    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+    SoftAssertions soft = new SoftAssertions();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Test
     @TestRail(testCaseId = {"3581"})
@@ -34,10 +44,21 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = {"3913"})
     @Description("Authorize a user to access a specified application")
     public void authorizeUserTest() {
-        final UserCredentials userCredentials = UserUtil.getUser();
 
         ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(userCredentials.generateCloudContext().getCloudContext(), userCredentials.getToken());
 
         assertThat(response.getResponseEntity().getEmail(), is(equalTo(userCredentials.getEmail())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22088"})
+    @Description("Get a Cloud Context identified by a cloud context string")
+    public void getCloudContext() {
+        String customerIdentity = cdsTestUtil.getAprioriInternal().getIdentity();
+        String contextString = userCredentials.generateCloudContext().getCloudContext();
+        ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
+
+        soft.assertThat(getCloudContext.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);
+        soft.assertAll();
     }
 }

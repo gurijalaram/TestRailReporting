@@ -1,7 +1,7 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesResponse;
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
@@ -31,8 +31,12 @@ import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettin
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesInputs;
 import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesResponse;
+import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.Constants;
+import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authorization.OldAuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -77,16 +81,16 @@ public class AcsResources {
             .init(AcsApiEnum.CREATE_MISSING_SCENARIO, MissingScenarioResponse.class)
             .headers(headers)
             .body(MissingScenarioInputs.builder()
-                    .baseName(Constants.PART_FILE_NAME)
-                    .configurationName(Constants.PART_CONFIG_NAME)
-                    .modelName(Constants.PART_MODEL_NAME)
-                    .scenarioName(new GenerateStringUtil().generateScenarioName())
-                    .scenarioType(Constants.PART_COMPONENT_TYPE)
-                    .missing(true)
-                    .publicItem(true)
-                    .createdBy(validUsername)
-                    .userId(validUsername)
-                    .build()
+                .baseName(Constants.PART_FILE_NAME)
+                .configurationName(Constants.PART_CONFIG_NAME)
+                .modelName(Constants.PART_MODEL_NAME)
+                .scenarioName(new GenerateStringUtil().generateScenarioName())
+                .scenarioType(Constants.PART_COMPONENT_TYPE)
+                .missing(true)
+                .publicItem(true)
+                .createdBy(validUsername)
+                .userId(validUsername)
+                .build()
             );
 
         return (MissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -95,7 +99,7 @@ public class AcsResources {
     /**
      * Gets All Material Stocks Info
      *
-     * @param vpeName - String
+     * @param vpeName      - String
      * @param processGroup - String
      * @param materialName - String
      * @return instance of AllMaterialSocksInfoResponse
@@ -108,9 +112,9 @@ public class AcsResources {
             .headers(headers)
             .inlineVariables(
                 vpeName,
-                processGroup,
-                materialName
-            ).expectedResponseCode(HttpStatus.SC_OK);
+                processGroup)
+            .queryParams(new QueryParams().use("materialName", materialName))
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         return (AllMaterialStocksInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -135,7 +139,7 @@ public class AcsResources {
             );
 
         return (ScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
-                .build(requestEntity).get().getResponseEntity();
+            .build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -170,8 +174,8 @@ public class AcsResources {
      * @return instance of GetScenariosInfoResponse
      */
     public ResponseWrapper<ScenariosInfoResponse> getScenariosInformation(
-            ScenarioIterationKey scenarioIterationKeyOne,
-            ScenarioIterationKey scenarioIterationKeyTwo) {
+        ScenarioIterationKey scenarioIterationKeyOne,
+        ScenarioIterationKey scenarioIterationKeyTwo) {
         setupHeader();
 
         List<ScenarioIterationKey> listOfKeys = new ArrayList<>();
@@ -324,10 +328,9 @@ public class AcsResources {
     /**
      * Sets Tolerance Policy Defaults Values
      *
-     * @param totalRunoutOverride - double
-     * @param toleranceMode - String
+     * @param totalRunoutOverride       - double
+     * @param toleranceMode             - String
      * @param useCadToleranceThreshhold - boolean
-     *
      * @return GenericResourceCreatedResponse instance
      */
     public GenericResourceCreatedResponse setTolerancePolicyDefaults(double totalRunoutOverride,
@@ -339,10 +342,10 @@ public class AcsResources {
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(TolerancePolicyDefaultsInputs.builder()
-                    .totalRunoutOverride(totalRunoutOverride)
-                    .toleranceMode(toleranceMode)
-                    .useCadToleranceThreshhold(useCadToleranceThreshhold)
-                    .build()
+                .totalRunoutOverride(totalRunoutOverride)
+                .toleranceMode(toleranceMode)
+                .useCadToleranceThreshhold(useCadToleranceThreshhold)
+                .build()
             )
             .inlineVariables(validUsername);
 
@@ -389,18 +392,18 @@ public class AcsResources {
      */
     public GenericResourceCreatedResponse setProductionDefaults() {
         setupHeader();
-
+        //TODO: 16/03/2023 Use JSON for Production Defaults entry
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(ProductionDefaultsInputs.builder()
-                    .material("Accura 10")
-                    .annualVolume("5500")
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .useVpeForAllProcesses(false)
-                    .batchSizeMode(false)
-                    .build()
+                .material("Accura 10")
+                .annualVolume("5500")
+                .productionLife(5.0)
+                .batchSize(458)
+                .useVpeForAllProcesses(false)
+                .batchSizeMode(false)
+                .build()
             ).inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
@@ -535,8 +538,8 @@ public class AcsResources {
      * Set user preferences
      *
      * @param costTableDecimalPlaces - String - value to set
-     * @param useVpe - String - value to set
-     * @param toleranceMode - String - value to set
+     * @param useVpe                 - String - value to set
+     * @param toleranceMode          - String - value to set
      * @return GenericResourceCreatedResponse instance
      */
     public GenericResourceCreatedResponse setUserPreferences(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
@@ -575,7 +578,7 @@ public class AcsResources {
     /**
      * Sets user preference by name
      *
-     * @param prefToSetKey - String - key of preference to set
+     * @param prefToSetKey   - String - key of preference to set
      * @param prefToSetValue - String - value of preference to set
      * @return GenericResourceCreatedResponse instance
      */
@@ -595,7 +598,7 @@ public class AcsResources {
      * Set production info
      *
      * @param getProductionInfoResponse - for use in body of request
-     * @param scenarioIterationKey - scenario to set production info for
+     * @param scenarioIterationKey      - scenario to set production info for
      * @return GenericResourceCreatedIdResponse
      */
     public GenericResourceCreatedIdResponse setProductionInfo(ProductionInfoResponse getProductionInfoResponse,
@@ -618,11 +621,43 @@ public class AcsResources {
     }
 
     /**
+     * Get Cost Results
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param depth                - String - value to set
+     * @return GetCostResults instance
+     */
+
+    public <T> ResponseWrapper<T> getCostResults(ScenarioIterationKey scenarioIterationKey, String depth, Class<T> klass) {
+        setupHeader();
+
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.COST_RESULTS, klass)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString())
+                .queryParams(new QueryParams().use("depth", depth))
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            log.error("Failed to encode url parameters. " + e);
+            throw new RuntimeException(e);
+        }
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
-     * @param vpeName - String - value to set
-     * @param processGroupName - String - Selected from ENUM
+     * @param vpeName              - String - value to set
+     * @param processGroupName     - String - Selected from ENUM
      * @return GetAvailableRoutingsResponse instance
      */
 
@@ -655,15 +690,15 @@ public class AcsResources {
      * @param processGroupName - String - Selected from ENUM
      */
 
-    public GcdTypesResponse getGcdTypes(String processGroupName) {
+    public <T> ResponseWrapper<T> getGcdTypes(String processGroupName, Class<T> klass) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GCD_TYPES, GcdTypesResponse.class)
+                .init(AcsApiEnum.GCD_TYPES, klass)
                 .headers(headers)
                 .inlineVariables(processGroupName);
 
-        return (GcdTypesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -747,7 +782,7 @@ public class AcsResources {
      * Gets image by scenario iteration key
      *
      * @param scenarioIterationKey - values to input into url
-     * @param getWebImage - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
+     * @param getWebImage          - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
      * @return String - Base64 image
      */
     public String getImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey, boolean getWebImage) {
@@ -880,7 +915,7 @@ public class AcsResources {
     /**
      * Gets Artifact Properties
      *
-     * @param scenarioIterationKey - ScenarioIterationKey to use in url
+     * @param scenarioIterationKey  - ScenarioIterationKey to use in url
      * @param getGcdMappingResponse - GetGcdMappingResponse to use in body
      * @return GetArtifactPropertiesResponse instance
      */
@@ -909,6 +944,39 @@ public class AcsResources {
             );
 
         return (ArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Upload and cost part
+     *
+     * @param processGroup         - the process group
+     * @param fileName             - the filename
+     * @param productionInfoInputs - the production information
+     * @return CostResultsResponse object
+     */
+    public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            fileName,
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        return fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
     }
 
     /**

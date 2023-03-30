@@ -1,10 +1,12 @@
 package com.apriori.utils.web.driver;
 
 public enum TestMode {
-    QA("QA"), // test against env that QA uses like cid-te
-    LOCAL("LOCAL"), // test locally, default
+    LOCAL_GRID("LOCAL_GRID"), // test against env that QA uses like cid-te
+    QA_LOCAL("QA_LOCAL"), // test locally, default
     EXPORT("EXPORT"), // run export tests, handy when running over RemoteWebDriver as download will happen on remote machine ;
-    GRID("GRID");
+    HOSTED_GRID("HOSTED_GRID"),
+    GRID("GRID"),
+    DOCKER_GRID("DOCKER_GRID");
 
     private final String value;
 

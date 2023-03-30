@@ -5,6 +5,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.cic.tests.ConnectorTabTests;
 import com.cic.tests.CostingInputTabTests;
+import com.cic.tests.CostingPreferencesTests;
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
 import com.cic.tests.PlmIntegrationTests;
@@ -30,7 +31,8 @@ import org.junit.runners.Suite;
     CostingInputTabTests.class,
     ConnectorTabTests.class,
     WorkflowScheduleTests.class,
-    PlmIntegrationTests.class
+    PlmIntegrationTests.class,
+    CostingPreferencesTests.class
 })
 
 public class CICRegressionTestSuite {

@@ -56,7 +56,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     @FindBy(css = "div[data-testid='loader']")
     private WebElement loadingSpinner;
 
-    @FindBy(css = ".sub-component-tree .component-name")
+    @FindBy(css = ".sub-component-list .component-name")
     private List<WebElement> subcomponentNames;
 
     @FindBy(css = ".sub-components-detail-card .table-body")
@@ -514,7 +514,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return string
      */
     public List<String> getListOfSubcomponents() {
-        return assembliesComponentsController.getListOfSubcomponents();
+        return assembliesComponentsController.getListOfSubcomponents(subcomponentNames);
     }
 
     /**

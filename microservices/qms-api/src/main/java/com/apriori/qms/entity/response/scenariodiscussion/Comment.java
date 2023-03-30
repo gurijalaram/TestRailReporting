@@ -20,11 +20,17 @@ public class Comment {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime createdAt;
     public String createdBy;
+    public String updatedBy;
     public String content;
     public String discussionIdentity;
     public String status;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime publishedAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    public LocalDateTime updatedAt;
     public ArrayList<CommentView> commentView;
     public ArrayList<Object> mentionedUsers;
+    public String creatorAvatarColor;
+    public String customerIdentity;
+
 }

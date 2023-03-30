@@ -20,7 +20,7 @@ public class DateTimeDeserializer_Epoch extends JsonDeserializer<LocalDateTime> 
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
 
-        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
+        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_NUMBER_INT)) {
             return Instant.ofEpochMilli(jsonParser.readValueAs(Long.class)).atZone(ZoneId.systemDefault()).toLocalDateTime();
         }
         return null;
