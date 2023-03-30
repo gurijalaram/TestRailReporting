@@ -792,6 +792,7 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Sub-Assembly is no longer struck out").isFalse();
         softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
             .as("Verify sub-assembly is shown as CAD connected").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName)).as("Verify 'missing' sub-asm overridden").isNotEmpty();
 
         softAssertions.assertAll();
     }
