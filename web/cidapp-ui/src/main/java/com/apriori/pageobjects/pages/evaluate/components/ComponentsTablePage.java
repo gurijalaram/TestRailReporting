@@ -421,6 +421,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
                 getScenarioManifestState(componentInfo, componentName);
             }
             new ExploreToolbar(driver).refresh();
+            // Navigating to tree page because after refresh the component table reverts to tree view as default
             new ComponentsTreePage(driver).selectTableView();
 
             isLoaded();
