@@ -101,4 +101,6 @@ public class PropertyValuesList {
     private Double coolingFactor;
     private Double ejectionTemp;
     private Double pourTemp;
+    private Double annealedTensileYieldStrength;
+    private Double annealedUltimateTensileStrength;
 }

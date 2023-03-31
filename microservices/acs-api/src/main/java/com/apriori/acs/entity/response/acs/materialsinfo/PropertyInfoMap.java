@@ -103,4 +103,6 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem coolingFactor;
     private GenericExtendedPropertyInfoItem ejectionTemp;
     private GenericExtendedPropertyInfoItem pourTemp;
+    private GenericExtendedPropertyInfoItem annealedTensileYieldStrength;
+    private GenericExtendedPropertyInfoItem annealedUltimateTensileStrength;
 }

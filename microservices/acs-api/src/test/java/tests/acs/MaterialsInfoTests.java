@@ -6,7 +6,11 @@ import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoBarAndTube
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingDieResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingInvestmentResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingSandResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalHydroformingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalRollFormingResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalStretchFormingResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalTransferDieResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -149,6 +153,98 @@ public class MaterialsInfoTests {
         softAssertions.assertThat(materialsInfoSheetMetalResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
         GenericExtendedPropertyInfoItem costPerKG = materialsInfoSheetMetalResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22702")
+    @Description("Test Get Materials Info endpoint for Sheet Metal - Transfer Die")
+    public void testGetMaterialsInfoSheetMetalTransferDie() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoSheetMetalTransferDieResponse materialsInfoSheetMetalTransferDieResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup(),
+                MaterialsInfoSheetMetalTransferDieResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoSheetMetalTransferDieResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoSheetMetalTransferDieResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22703")
+    @Description("Test Get Materials Info endpoint for Sheet Metal - Hydroforming")
+    public void testGetMaterialsInfoSheetMetalHydroforming() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoSheetMetalHydroformingResponse materialsInfoSheetMetalHydroformingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup(),
+                MaterialsInfoSheetMetalHydroformingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoSheetMetalHydroformingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoSheetMetalHydroformingResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22704")
+    @Description("Test Get Materials Info endpoint for Sheet Metal - Roll Forming")
+    public void testGetMaterialsInfoSheetMetalRollForming() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoSheetMetalRollFormingResponse materialsInfoSheetMetalRollFormingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup(),
+                MaterialsInfoSheetMetalRollFormingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoSheetMetalRollFormingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoSheetMetalRollFormingResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22705")
+    @Description("Test Get Materials Info endpoint for Sheet Metal - Stretch Forming")
+    public void testGetMaterialsInfoSheetMetalStretchForming() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoSheetMetalStretchFormingResponse materialsInfoSheetMetalStretchFormingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup(),
+                MaterialsInfoSheetMetalStretchFormingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoSheetMetalStretchFormingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoSheetMetalStretchFormingResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
         softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
