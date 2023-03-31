@@ -90,4 +90,15 @@ public class PropertyValuesList {
     private Double squareTubeCostPerUnit;
     private Double baseIBeamCostPerUnit;
     private Double baseAngleBarCostPerUnit;
+    private Integer chamberType;
+    private Double clampingMNPerSqM;
+    private Double liquidusTemp;
+    private Double dieLife;
+    private Double injectTemp;
+    private Double yieldLossFactor;
+    private Double moldTemp;
+    private Double specificHeatSolidus;
+    private Double coolingFactor;
+    private Double ejectionTemp;
+    private Double pourTemp;
 }

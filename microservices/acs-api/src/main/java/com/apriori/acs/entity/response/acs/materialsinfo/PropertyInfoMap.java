@@ -92,4 +92,15 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem squareTubeCostPerUnit;
     private GenericExtendedPropertyInfoItem baseIBeamCostPerUnit;
     private GenericExtendedPropertyInfoItem baseAngleBarCostPerUnit;
+    private GenericExtendedPropertyInfoItem chamberType;
+    private GenericExtendedPropertyInfoItem clampingMNPerSqM;
+    private GenericExtendedPropertyInfoItem liquidusTemp;
+    private GenericExtendedPropertyInfoItem dieLife;
+    private GenericExtendedPropertyInfoItem injectTemp;
+    private GenericExtendedPropertyInfoItem yieldLossFactor;
+    private GenericExtendedPropertyInfoItem moldTemp;
+    private GenericExtendedPropertyInfoItem specificHeatSolidus;
+    private GenericExtendedPropertyInfoItem coolingFactor;
+    private GenericExtendedPropertyInfoItem ejectionTemp;
+    private GenericExtendedPropertyInfoItem pourTemp;
 }
