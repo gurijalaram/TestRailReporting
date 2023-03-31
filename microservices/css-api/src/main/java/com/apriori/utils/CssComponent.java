@@ -189,4 +189,17 @@ public class CssComponent {
 
         return HTTPRequest.build(requestEntity).post();
     }
+
+    /**
+     * Gets request of common iteration endpoint
+     *
+     * @param userCredentials - the user credentials
+     * @return The response wrapper that contains the response data.
+     */
+    public ResponseWrapper<CssComponentResponse> getIterationsRequest(UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .token(userCredentials.getToken());
+        return HTTPRequest.build(requestEntity).get();
+    }
 }

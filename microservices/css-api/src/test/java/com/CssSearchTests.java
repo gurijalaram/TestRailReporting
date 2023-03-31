@@ -23,6 +23,7 @@ public class CssSearchTests {
     private CssComponent cssComponent = new CssComponent();
     private static UserCredentials currentUser;
     private final String componentType = "PART";
+    private ScenarioItem scenarioItem;
 
     @Before
     public void setupUser() {
@@ -32,12 +33,16 @@ public class CssSearchTests {
     @Test
     @Description("Test CSS base search")
     public void testCssBaseSearchCapability() {
-        List<ScenarioItem> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, COMPONENT_IDENTITY_EQ.getKey() + " 50MFHK5MA6FI",
-            SCENARIO_IDENTITY_EQ.getKey() + " 50N5K6J03I9F");
+        scenarioItem = cssComponent.getIterationsRequest(currentUser).getResponseEntity().getItems().get(0);
+        String componentIdentity = scenarioItem.getComponentIdentity();
+        String scenarioIdentity = scenarioItem.getScenarioIdentity();
+
+        List<ScenarioItem> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, COMPONENT_IDENTITY_EQ.getKey() + componentIdentity,
+            SCENARIO_IDENTITY_EQ.getKey() + scenarioIdentity);
 
         cssComponentResponses.forEach(o -> {
-            soft.assertThat(o.getComponentIdentity()).isEqualTo("50MFHK5MA6FI");
-            soft.assertThat(o.getScenarioIdentity()).isEqualTo("50N5K6J03I9F");
+            soft.assertThat(o.getComponentIdentity()).isEqualTo(componentIdentity);
+            soft.assertThat(o.getScenarioIdentity()).isEqualTo(scenarioIdentity);
         });
 
         soft.assertAll();
