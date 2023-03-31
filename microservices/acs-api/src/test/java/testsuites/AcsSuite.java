@@ -15,6 +15,7 @@ import tests.acs.CostResultsTests;
 import tests.acs.CreateMissingScenarioTests;
 import tests.acs.DisplayUnitsTests;
 import tests.acs.EnabledCurrencyRateVersionsTests;
+import tests.acs.GcdPropertiesTests;
 import tests.acs.GcdTypesTests;
 import tests.acs.LoadCadFileTests;
 import tests.acs.PartPrimaryProcessGroupsTests;
@@ -42,6 +43,7 @@ import tests.acs.UserPreferencesTests;
     DisplayUnitsTests.class,
     EnabledCurrencyRateVersionsTests.class,
     GcdTypesTests.class,
+    GcdPropertiesTests.class,
     LoadCadFileTests.class,
     PartPrimaryProcessGroupsTests.class,
     ProductionDefaultsTests.class,
