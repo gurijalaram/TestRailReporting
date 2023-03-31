@@ -6,6 +6,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartData;
@@ -19,6 +22,7 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import utils.Constants;
@@ -63,10 +67,44 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7489")
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
-        jasperApiUtils.inputControlGenericTest(
+        /*jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
+        );*/
+
+        String massMetricAssertValue = MassMetricEnum.FINISH_MASS.getMassMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.massMetricGenericTest(massMetricAssertValue);
+
+        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
+        String secondDtcPartName = "CYLINDER HEAD (Initial)";
+        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);*/
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);*/
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);*/
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -78,38 +116,38 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );*/
 
-        JasperReportSummary jasperReportSummary = jasperApiUtils.massMetricGenericTest(MassMetricEnum.ROUGH_MASS.getMassMetricName());
+        String massMetricAssertValue = MassMetricEnum.ROUGH_MASS.getMassMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.massMetricGenericTest(massMetricAssertValue);
 
-        /**
-         * Gear Housing (Initial) is high dtc
-         * JEEP WJ FRONT BRAKE DISC 99-04 (Initial) is medium dtc
-         * 40128483.MLDES.0001 (Initial) is low dtc
-         */
+        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
+        String secondDtcPartName = "CYLINDER HEAD (Initial)";
+        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
 
-        String lowDtcPartName = "40128483.MLDES.0001 (Initial)";
-        String mediumDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String highDtcPartName = "GEAR HOUSING (Initial)";
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);*/
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
-        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);*/
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);*/
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);
-        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(mediumDtcPartName)).isEqualTo(null);*/
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);*/
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
-        /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);*/
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
+
         softAssertions.assertAll();
     }
 
@@ -154,6 +192,11 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
         /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);*/
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Low");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Low")).isEqualTo(true);
+
         softAssertions.assertAll();
     }
 
@@ -198,6 +241,11 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
         /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName)).isEqualTo(null);*/
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Medium");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Medium")).isEqualTo(true);
+
         softAssertions.assertAll();
     }
 
@@ -242,6 +290,11 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);*/
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("High");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("High")).isEqualTo(true);
+
         softAssertions.assertAll();
     }
 
@@ -263,7 +316,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
 
         String lowDtcPartName = "40128483.MLDES.0001 (Initial)";
         String mediumDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String highDtcPartName = "Gear Housing (Initial)";
+        String highDtcPartName = "GEAR HOUSING (Initial)";
 
         softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
@@ -285,6 +338,10 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         /*softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);*/
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("High");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("High, Low, Medium")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -309,6 +366,12 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getMaterialIssues()).isEqualTo(0);
         softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getRadiusIssues()).isEqualTo(18);
         softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues()).isEqualTo(15);
+
+        String minAnnualSpendAssertValue = "7,820,000.00";
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(minAnnualSpendAssertValue);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.toString().contains(minAnnualSpendAssertValue)).isEqualTo(true);
+
         softAssertions.assertAll();
     }
 }
