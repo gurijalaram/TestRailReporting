@@ -57,6 +57,38 @@ public class JasperApiUtils {
         assertThat(tdResultElements.toString().contains(valueToSet), is(equalTo(true)));
     }
 
+    public JasperReportSummary dtcScoreGenericTest(String valueToSet) {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+
+        InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = !valueToSet.isEmpty()
+            ? jasperApiUtils.setReportParameterByName(reportRequest, Constants.inputControlNames.get("DTC Score"), valueToSet) :
+            reportRequest;
+
+        return jasperApiUtils.generateReportSummary(reportRequest);
+    }
+
+    public JasperReportSummary massMetricGenericTest(String valueToSet) {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+
+        InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = !valueToSet.isEmpty()
+            ? jasperApiUtils.setReportParameterByName(reportRequest, Constants.inputControlNames.get("Mass Metric"), valueToSet) :
+            reportRequest;
+
+        return jasperApiUtils.generateReportSummary(reportRequest);
+    }
+
     public JasperReportSummary minAnnualSpendGenericTest() {
         JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
         String minAnnualSpendValue = "7820000";
