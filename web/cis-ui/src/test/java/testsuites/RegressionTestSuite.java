@@ -7,6 +7,7 @@ import com.messages.MessagesTest;
 import com.navigation.NavigationPanelTest;
 import com.partsandassemblies.PartsAndAssemblyTest;
 import com.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
+import com.userpreference.UserPreferenceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -16,7 +17,8 @@ import org.junit.runners.Suite;
     PartsAndAssemblyTest.class,
     NavigationPanelTest.class,
     PartsAndAssembliesDetailsTest.class,
-    MessagesTest.class
+    MessagesTest.class,
+    UserPreferenceTest.class
 })
 public class RegressionTestSuite {
 }
