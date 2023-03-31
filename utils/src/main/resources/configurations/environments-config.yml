@@ -161,7 +161,7 @@ local:
   secret_key: 65J1ID2B6LDG
 
   admin:
-    ui_url: ${local.base_url}apriori/login
+    ui_url: ${local.base_url}/apriori/login
 
   ats:
     api_url: ${local.base_url}:8805/

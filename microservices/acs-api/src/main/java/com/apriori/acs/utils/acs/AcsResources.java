@@ -2,13 +2,16 @@ package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesInputs;
+import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
+import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -703,6 +706,40 @@ public class AcsResources {
     }
 
     /**
+     * Save GCD Properties
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     */
+
+    public GcdPropertiesResponse saveGcdProperties(ScenarioIterationKey scenarioIterationKey, String artifactKey, PropertiesToSet propertiesToSet, List<String> propertiesToReset) {
+        setupHeader();
+
+        List<GcdPropertiesGroupItemsInputs> groupItemsList = new ArrayList<>();
+        groupItemsList.add(GcdPropertiesGroupItemsInputs.builder()
+                .artifactKey(artifactKey)
+                .propertiesToSet(propertiesToSet)
+                .propertiesToReset(propertiesToReset)
+            .build()
+        );
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GCD_PROPERTIES, GcdPropertiesResponse.class)
+            .headers(headers)
+            .body(GcdPropertiesInputs.builder()
+                .groupItems(groupItemsList)
+                .build())
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return (GcdPropertiesResponse) HTTPRequest.build(requestEntity).put().getResponseEntity();
+    }
+
+    /**
      * Save routing selection
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
@@ -952,12 +989,10 @@ public class AcsResources {
      *
      * @param processGroup         - the process group
      * @param fileName             - the filename
-     * @param depth                - the depth
      * @param productionInfoInputs - the production information
      * @return CostResultsResponse object
      */
-    public CostResultsRootResponse uploadAndCost(String processGroup, String fileName, String depth, NewPartRequest productionInfoInputs) {
-        AcsResources acsResources = new AcsResources();
+    public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         FileUploadResources fileUploadResources = new FileUploadResources();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -974,18 +1009,12 @@ public class AcsResources {
             testScenarioName
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+        return fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
             processGroup,
             false
         );
-
-        return acsResources.getCostResults(
-            costOutputs.getScenarioIterationKey(),
-            depth,
-            CostResultsRootResponse.class
-        ).getResponseEntity();
     }
 
     /**
