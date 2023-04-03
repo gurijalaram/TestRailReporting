@@ -11,6 +11,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.DeletePage;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -447,6 +448,15 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      */
     public boolean isEditButtonDisabled() {
         return !assembliesComponentsController.isEditButtonDisabled();
+    }
+
+    /**
+     * clicks the publish button
+     *
+     * @return - the current page object
+     */
+    public PublishPage publishSubcomponent() {
+        return assembliesComponentsController.publishSubcomponent();
     }
 
     /**
