@@ -26,6 +26,7 @@ public class CostingInput {
     private String processGroupName;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private String vpeName;
+    private Double targetCost;
     private List<Object> scenarioCustomAttributes;
     private List<Object> scenarioDesignIssues;
     private ProcessSetupOptions processSetupOptions;
@@ -59,5 +60,7 @@ public class CostingInput {
 
     public static class Tolerances {
     }
+
+
 }
 
