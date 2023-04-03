@@ -133,4 +133,8 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem apparentDensity;
     private GenericExtendedPropertyInfoItem canRotationalMold;
     private GenericExtendedPropertyInfoItem canBlowMold;
+    private GenericExtendedPropertyInfoItem basePlateCostPerUnit;
+    private GenericExtendedPropertyInfoItem plateCostPerKG;
+    private GenericExtendedPropertyInfoItem plateCostUnits;
+    private GenericExtendedPropertyInfoItem plateCostPerUnit;
 }

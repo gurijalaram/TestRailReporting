@@ -16,6 +16,7 @@ import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetal
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalRollFormingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalStretchFormingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalTransferDieResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoStockMachiningResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -369,6 +370,29 @@ public class MaterialsInfoTests {
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
         softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
         softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22706")
+    @Description("Test Get Materials Info endpoint for Stock Machining")
+    public void testGetMaterialsInfoStockMachining() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoStockMachiningResponse materialsInfoStockMachiningResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+                MaterialsInfoStockMachiningResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoStockMachiningResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem plateCostPerKG = materialsInfoStockMachiningResponse.getPropertyInfoMap().getPlateCostPerKG();
+
+        softAssertions.assertThat(plateCostPerKG.getName()).isEqualTo("plateCostPerKG");
+        softAssertions.assertThat(plateCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(plateCostPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
         softAssertions.assertAll();
     }
 }

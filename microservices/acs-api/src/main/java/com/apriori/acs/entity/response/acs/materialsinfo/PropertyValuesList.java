@@ -131,4 +131,8 @@ public class PropertyValuesList {
     private Double apparentDensity;
     private Boolean canRotationalMold;
     private Boolean canBlowMold;
+    private Double basePlateCostPerUnit;
+    private Double plateCostPerKG;
+    private String plateCostUnits;
+    private Double plateCostPerUnit;
 }
