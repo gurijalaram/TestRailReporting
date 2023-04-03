@@ -23,7 +23,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class MaterialsInfoTests {
@@ -51,7 +50,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @Ignore
+//    @Ignore
     @TestRail(testCaseId = "22691")
     @Description("Test Get Materials Info endpoint for Bar & Tube Fab")
     public void testGetMaterialsInfoBarAndTubeFab() {
@@ -66,11 +65,11 @@ public class MaterialsInfoTests {
 
         softAssertions.assertThat(materialsInfoBarAndTubeResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
-        GenericExtendedPropertyInfoItem costPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTBeamCostPerKG();
+        GenericExtendedPropertyInfoItem tBeamCostPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTBeamCostPerKG();
 
-        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
-        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
-        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(tBeamCostPerKG.getName()).isEqualTo("tBeamCostPerKG");
+        softAssertions.assertThat(tBeamCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(tBeamCostPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
         softAssertions.assertAll();
     }
 
