@@ -6,6 +6,8 @@ import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoBarAndTube
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingDieResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingInvestmentResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingSandResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoForgingResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoPlasticMoldingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalHydroformingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalRollFormingResponse;
@@ -130,6 +132,52 @@ public class MaterialsInfoTests {
         softAssertions.assertThat(materialsInfoCastingInvestmentResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
         GenericExtendedPropertyInfoItem costPerKG = materialsInfoCastingInvestmentResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22696")
+    @Description("Test Get Materials Info endpoint for Forging")
+    public void testGetMaterialsInfoForging() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoForgingResponse materialsInfoForgingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.FORGING.getProcessGroup(),
+                MaterialsInfoForgingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoForgingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem roundBarCostPerKG = materialsInfoForgingResponse.getPropertyInfoMap().getRoundBarCostPerKG();
+
+        softAssertions.assertThat(roundBarCostPerKG.getName()).isEqualTo("roundBarCostPerKG");
+        softAssertions.assertThat(roundBarCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(roundBarCostPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22697")
+    @Description("Test Get Materials Info endpoint for Plastic Molding")
+    public void testGetMaterialsInfoPlasticMolding() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoPlasticMoldingResponse materialsInfoPlasticMoldingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup(),
+                MaterialsInfoPlasticMoldingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoPlasticMoldingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoPlasticMoldingResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
         softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");

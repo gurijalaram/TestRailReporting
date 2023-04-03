@@ -103,4 +103,23 @@ public class PropertyValuesList {
     private Double pourTemp;
     private Double annealedTensileYieldStrength;
     private Double annealedUltimateTensileStrength;
+    private Double forgingTemperature;
+    private Double specificHeatCapacity;
+    private Double strengthCoefficient;
+    private Double strainRateSensitivity;
+    private Double meltingTemp;
+    private Double ejectDeflectionTemp;
+    private Double flowLengthRatio;
+    private Double cureTime;
+    private Double compressionMoldingPressureMax;
+    private Double compressionMoldingPressureMin;
+    private Double injectionPressureMax;
+    private Double injectionPressureMin;
+    private Double densityMelt;
+    private Double specificHeat;
+    private Boolean canCM;
+    private Boolean canRIM;
+    private Boolean canIM_SFM;
+    private Boolean canRegrind;
+    private String materialForm;
 }

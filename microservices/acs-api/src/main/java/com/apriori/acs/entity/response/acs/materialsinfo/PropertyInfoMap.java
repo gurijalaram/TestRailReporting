@@ -105,4 +105,23 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem pourTemp;
     private GenericExtendedPropertyInfoItem annealedTensileYieldStrength;
     private GenericExtendedPropertyInfoItem annealedUltimateTensileStrength;
+    private GenericExtendedPropertyInfoItem forgingTemperature;
+    private GenericExtendedPropertyInfoItem specificHeatCapacity;
+    private GenericExtendedPropertyInfoItem strengthCoefficient;
+    private GenericExtendedPropertyInfoItem strainRateSensitivity;
+    private GenericExtendedPropertyInfoItem meltingTemp;
+    private GenericExtendedPropertyInfoItem ejectDeflectionTemp;
+    private GenericExtendedPropertyInfoItem flowLengthRatio;
+    private GenericExtendedPropertyInfoItem cureTime;
+    private GenericExtendedPropertyInfoItem compressionMoldingPressureMax;
+    private GenericExtendedPropertyInfoItem compressionMoldingPressureMin;
+    private GenericExtendedPropertyInfoItem canCM;
+    private GenericExtendedPropertyInfoItem canRIM;
+    private GenericExtendedPropertyInfoItem canIM_SFM;
+    private GenericExtendedPropertyInfoItem materialForm;
+    private GenericExtendedPropertyInfoItem injectionPressureMax;
+    private GenericExtendedPropertyInfoItem injectionPressureMin;
+    private GenericExtendedPropertyInfoItem canRegrind;
+    private GenericExtendedPropertyInfoItem densityMelt;
+    private GenericExtendedPropertyInfoItem specificHeat;
 }
