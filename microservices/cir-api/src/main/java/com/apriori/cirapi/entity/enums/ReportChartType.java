@@ -8,6 +8,7 @@ import java.util.Map;
 @Slf4j
 public enum ReportChartType {
     BUBBLE_SCATTER("Scatter"),
+    BAR("Bar"),
     STACKED_BAR("StackedBar");
 
     private static final Map<String, ReportChartType> lookup = new HashMap<>();
