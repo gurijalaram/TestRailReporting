@@ -8,6 +8,7 @@ import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingInv
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoCastingSandResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoForgingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoPlasticMoldingResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoPowderMetalResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalHydroformingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalRollFormingResponse;
@@ -178,6 +179,29 @@ public class MaterialsInfoTests {
         softAssertions.assertThat(materialsInfoPlasticMoldingResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
         GenericExtendedPropertyInfoItem costPerKG = materialsInfoPlasticMoldingResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22698")
+    @Description("Test Get Materials Info endpoint for Powder Metal")
+    public void testGetMaterialsInfoPowderMetal() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoPowderMetalResponse materialsInfoPowderMetalResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.POWDER_METAL.getProcessGroup(),
+                MaterialsInfoPowderMetalResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoPowderMetalResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoPowderMetalResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
         softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");

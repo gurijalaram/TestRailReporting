@@ -122,4 +122,11 @@ public class PropertyValuesList {
     private Boolean canIM_SFM;
     private Boolean canRegrind;
     private String materialForm;
+    private Double graphitePercentContent;
+    private Double coefC;
+    private Double coefB;
+    private Double coefA;
+    private Double maxGreenDensity;
+    private Double minGreenDensity;
+    private Double apparentDensity;
 }

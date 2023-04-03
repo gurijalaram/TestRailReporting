@@ -124,4 +124,11 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem canRegrind;
     private GenericExtendedPropertyInfoItem densityMelt;
     private GenericExtendedPropertyInfoItem specificHeat;
+    private GenericExtendedPropertyInfoItem graphitePercentContent;
+    private GenericExtendedPropertyInfoItem coefC;
+    private GenericExtendedPropertyInfoItem coefB;
+    private GenericExtendedPropertyInfoItem coefA;
+    private GenericExtendedPropertyInfoItem maxGreenDensity;
+    private GenericExtendedPropertyInfoItem minGreenDensity;
+    private GenericExtendedPropertyInfoItem apparentDensity;
 }
