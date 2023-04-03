@@ -129,4 +129,6 @@ public class PropertyValuesList {
     private Double maxGreenDensity;
     private Double minGreenDensity;
     private Double apparentDensity;
+    private Boolean canRotationalMold;
+    private Boolean canBlowMold;
 }

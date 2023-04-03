@@ -131,4 +131,6 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem maxGreenDensity;
     private GenericExtendedPropertyInfoItem minGreenDensity;
     private GenericExtendedPropertyInfoItem apparentDensity;
+    private GenericExtendedPropertyInfoItem canRotationalMold;
+    private GenericExtendedPropertyInfoItem canBlowMold;
 }

@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoForgingRes
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoPlasticMoldingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoPowderMetalResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoRapidPrototypingResponse;
+import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoRotoBlowMoldingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalHydroformingResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalResponse;
 import com.apriori.acs.entity.response.acs.materialsinfo.MaterialsInfoSheetMetalRollFormingResponse;
@@ -226,6 +227,29 @@ public class MaterialsInfoTests {
         softAssertions.assertThat(materialsInfoRapidPrototypingResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
         GenericExtendedPropertyInfoItem costPerKG = materialsInfoRapidPrototypingResponse.getPropertyInfoMap().getCostPerKG();
+
+        softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "22700")
+    @Description("Test Get Materials Info endpoint for Roto & Blow Molding")
+    public void testGetMaterialsInfoRotoBlowMolding() {
+        AcsResources acsResources = new AcsResources();
+        MaterialsInfoRotoBlowMoldingResponse materialsInfoRotoBlowMoldingResponse = acsResources
+            .getMaterialsInfo(
+                "aPriori USA",
+                ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup(),
+                MaterialsInfoRotoBlowMoldingResponse.class).getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialsInfoRotoBlowMoldingResponse.getPropertyValuesList().size()).isGreaterThan(0);
+
+        GenericExtendedPropertyInfoItem costPerKG = materialsInfoRotoBlowMoldingResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
         softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
