@@ -1,0 +1,301 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "process": {
+              "type": "string"
+            },
+            "costPerKG": {
+              "type": "number"
+            },
+            "density": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "manufacturer": {
+              "type": "string"
+            },
+            "materialCutCodeName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "materialTypeName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "process",
+            "costPerKG",
+            "density",
+            "description",
+            "baseCostPerUnit",
+            "manufacturer",
+            "materialCutCodeName",
+            "name",
+            "costUnits",
+            "sourceName",
+            "millingSpeed",
+            "costPerUnit",
+            "materialTypeName"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "process": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "manufacturer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "process",
+        "costPerKG",
+        "density",
+        "materialCutCodeName",
+        "name",
+        "description",
+        "sourceName",
+        "costUnits",
+        "millingSpeed",
+        "baseCostPerUnit",
+        "costPerUnit",
+        "manufacturer",
+        "materialTypeName"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}
