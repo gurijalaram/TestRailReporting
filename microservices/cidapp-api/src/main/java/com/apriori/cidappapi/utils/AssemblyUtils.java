@@ -284,4 +284,16 @@ public class AssemblyUtils {
         Arrays.stream(subcomponents).forEach(subcomponent -> componentAssembly.getSubComponents().removeIf(o -> o.getComponentName().equalsIgnoreCase(subcomponent)));
         return this;
     }
+
+    /**
+     * Get the ComponentInfoBuilder object of a specified subcomponent
+     *
+     * @param componentAssembly - The Component Assembly
+     * @param subComponentName - The name of the desired subcomponent
+     * @return ComponentInfoBuilder object of desired subcomponent
+     */
+    public ComponentInfoBuilder getSubComponent(ComponentInfoBuilder componentAssembly, String subComponentName) {
+        return componentAssembly.getSubComponents().stream()
+            .filter(subComponent -> subComponent.getComponentName().equals(subComponentName)).findFirst().orElse(null);
+    }
 }

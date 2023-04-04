@@ -72,7 +72,7 @@ public class QueryDefinitionTests extends TestBase {
             .clickWFDetailsNextBtn();
 
         DetailsPart detailsPart = queryDefinitions.clickPreviousBtn();
-        Assert.assertTrue("Verify previous button in query definitions", detailsPart.worflowNameField.isDisplayed());
+        Assert.assertTrue("Verify previous button in query definitions", detailsPart.getNameTextFieldElement().isDisplayed());
         queryDefinitions = (QueryDefinitions) detailsPart.clickWFDetailsNextBtn();
         Assert.assertTrue("Verify next button is displayed in Query definitions", queryDefinitions.getQueryDefinitionRuleNameDdl(0).isDisplayed());
 

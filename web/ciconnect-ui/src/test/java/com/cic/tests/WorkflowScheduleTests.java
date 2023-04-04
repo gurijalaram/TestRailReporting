@@ -77,7 +77,7 @@ public class WorkflowScheduleTests extends TestBase {
             .setSchedule(workflowSchedule)
             .clickWFDetailsNextBtn();
 
-        queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size())
+        workflowHome = queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size())
             .clickWFQueryDefNextBtn()
             .clickCINextBtn()
             .clickCINotificationNextBtn()
@@ -112,7 +112,7 @@ public class WorkflowScheduleTests extends TestBase {
             .selectEnabledCheckbox("off")
             .clickWFDetailsNextBtn();
 
-        queryDefinitions.clickWFQueryDefNextBtn()
+        workflowHome = queryDefinitions.clickWFQueryDefNextBtn()
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();
@@ -126,7 +126,7 @@ public class WorkflowScheduleTests extends TestBase {
             .selectEnabledCheckbox("on")
             .clickWFDetailsNextBtn();
 
-        queryDefinitions.clickWFQueryDefNextBtn()
+        workflowHome = queryDefinitions.clickWFQueryDefNextBtn()
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();
@@ -193,7 +193,7 @@ public class WorkflowScheduleTests extends TestBase {
         workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
             .clickDeleteButton().clickConfirmAlertBoxDelete();
 
-        workflowHome.selectScheduleTab().clickNewWorkflowBtn();
+        workFlowFeatures = workflowHome.selectScheduleTab().clickNewWorkflowBtn();
 
         workflowSchedule = WorkflowSchedule.builder()
             .schedule(WorkflowSchedule.Schedule.HOUR)
@@ -300,7 +300,6 @@ public class WorkflowScheduleTests extends TestBase {
             .startMinutes("15")
             .build();
 
-        workFlowData.setWorkflowName("- - - 0Auto");
         workflowHome = workFlowFeatures.createScheduledWorkflow(workflowSchedule);
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
         workflowHome.closeMessageAlertBox();

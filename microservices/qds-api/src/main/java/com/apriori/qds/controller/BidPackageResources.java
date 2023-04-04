@@ -118,7 +118,7 @@ public class BidPackageResources {
      * @param bidPackageIdentity
      * @param bidPackageProjectIdentity
      * @param currentUser
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static ResponseWrapper<String> deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT, null)
@@ -468,7 +468,7 @@ public class BidPackageResources {
      * @param projectIdentity
      * @param projectUserIdentity
      * @param currentUser
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper[String]
      */
     public static ResponseWrapper<String> deleteBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USER, null)
