@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,6 +159,47 @@ public class CssComponent {
             .socketTimeout(SOCKET_TIMEOUT)
             .expectedResponseCode(HttpStatus.SC_OK);
 
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Creates search request by component type
+     *
+     * @param userCredentials - the user credentials
+     * @param componentType - the component type
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, CssComponentResponse.class)
+            .token(userCredentials.getToken())
+            .headers(new HashMap<String, String>() {
+                {
+                    put("content-type", "application/x-www-form-urlencoded");
+                }
+            }).xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
+                {
+                    put("pageNumber", "1");
+                    put("pageSize", "10");
+                    put("latest[EQ]", "true");
+                    put("scenarioPublished[EQ]", "true");
+                    put("componentType[IN]", componentType);
+                    put("sortBy[DESC]", "scenarioCreatedAt");
+                }
+            })).expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Gets request of common iteration endpoint
+     *
+     * @param userCredentials - the user credentials
+     * @return The response wrapper that contains the response data.
+     */
+    public ResponseWrapper<CssComponentResponse> getIterationsRequest(UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .token(userCredentials.getToken());
         return HTTPRequest.build(requestEntity).get();
     }
 }
