@@ -98,7 +98,7 @@ public class SchedulePage extends CICBasePage {
      * @return NewEditWorkflow page object
      */
     public WorkFlowFeatures clickNewWorkflowBtn() {
-        newWorkflowBtn.click();
+        pageUtils.waitForElementAndClick(newWorkflowBtn);
         return new WorkFlowFeatures(this.driver);
     }
 
@@ -108,7 +108,7 @@ public class SchedulePage extends CICBasePage {
      * @return DetailsPart page object
      */
     public DetailsPart clickNewButton() {
-        newWorkflowBtn.click();
+        pageUtils.waitForElementAndClick(newWorkflowBtn);
         return new DetailsPart(this.driver);
     }
 

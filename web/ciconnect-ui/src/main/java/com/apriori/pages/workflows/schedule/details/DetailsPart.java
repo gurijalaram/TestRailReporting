@@ -1,5 +1,7 @@
 package com.apriori.pages.workflows.schedule.details;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
@@ -23,44 +25,14 @@ public class DetailsPart extends CICBasePage {
 
     public static final String PARENT_WEBELEMENT = "div[id^='root_pagemashupcontainer-1_navigation-']";
 
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_textbox-148'] > table > tbody > tr > td > input")
-    public WebElement worflowNameField;
+    @FindBy(css = "div[class$='modalTitle']")
+    private WebElement workflowPopUpTitleElement;
 
     @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_label-220'] > span")
     private WebElement workflowNameErrorLbl;
 
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_textarea-152'] > div > textarea")
-    private WebElement workflowDescription;
-
-    @FindBy(css = "#runtime > div.ss-content.ss-open > div.ss-list")
-    private WebElement workflowConnectorSelection;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-154-bounding-box']")
-    private WebElement workflowConnectorDropDown;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-154']")
-    private WebElement workflowConnectorDropDownOpen;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-154'] > div > div > span.ss-arrow > span.arrow-down")
-    private WebElement connectorDropdownArrowDownImg;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-154'] > div > div > span.ss-arrow > span.arrow-up")
-    private WebElement connectorDropdownArrowUpImg;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_DrowpdownWidget-399']")
-    private WebElement connectorComponentDropDown;
-
     @FindBy(css = "input[id^=root_pagemashupcontainer-1_navigation-][id$=-popup_checkbox-149-input]")
     private WebElement checkboxEnabled;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_button-92'] > button")
-    private WebElement workflowDetailsNextButton;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_checkbox-393'] > label > span")
-    private WebElement workflowQDReturnOnlyCheckbox;
-
-    @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_button-189'] > button")
-    private WebElement costingInputAddRowButton;
 
     @FindBy(css = "div.ss-content.ss-open> div.ss-search > input")
     private WebElement searchConnectorTxtElement;
@@ -172,18 +144,19 @@ public class DetailsPart extends CICBasePage {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(worflowNameField);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(workflowPopUpTitleElement);
     }
 
     /**
      * @param name The name of the new workflow
      */
     public DetailsPart enterWorkflowNameField(String name) {
-        pageUtils.waitForElementAndClick(worflowNameField);
-        if (!worflowNameField.getAttribute("value").isEmpty()) {
-            worflowNameField.clear();
+        pageUtils.waitForElementToAppear(getNameTextFieldElement());
+        if (!getNameTextFieldElement().getAttribute("value").isEmpty()) {
+            pageUtils.clearValueOfElement(getNameTextFieldElement());
         }
-        worflowNameField.sendKeys(name + Keys.TAB);
+        getNameTextFieldElement().sendKeys(name + Keys.TAB);
         return this;
     }
 
@@ -192,8 +165,8 @@ public class DetailsPart extends CICBasePage {
      * @param description Description of the new workflow
      */
     public DetailsPart enterWorkflowDescriptionField(String description) {
-        pageUtils.waitForElementAndClick(workflowDescription);
-        workflowDescription.sendKeys(description);
+        pageUtils.waitForElementAndClick(getDescriptionTextAreaElement());
+        getDescriptionTextAreaElement().sendKeys(description);
         return this;
     }
 
@@ -201,15 +174,15 @@ public class DetailsPart extends CICBasePage {
      *
      */
     public DetailsPart selectEnabledCheckbox(String checkboxState) {
-        if (checkboxState.toString().equals("on")) {
+        if (checkboxState.equals("on")) {
             if (!checkboxEnabled.isSelected()) {
-                pageUtils.waitForElementAndClick(checkboxEnabled);
+                pageUtils.waitForElementAndClick(driver.findElement(By.xpath("//span[.='Enabled']")));
             }
         }
 
-        if (checkboxState.toString().equals("off")) {
+        if (checkboxState.equals("off")) {
             if (checkboxEnabled.isSelected()) {
-                pageUtils.waitForElementAndClick(checkboxEnabled);
+                pageUtils.waitForElementAndClick(driver.findElement(By.xpath("//span[.='Enabled']")));
             }
         }
         return this;
@@ -219,11 +192,11 @@ public class DetailsPart extends CICBasePage {
      * Select an existing connector
      */
     public DetailsPart selectWorkflowConnector(String connectorName) {
-        pageUtils.waitForElementAndClick(workflowConnectorDropDown);
+        pageUtils.waitForElementAndClick(getConnectorDropDownElement());
         pageUtils.waitForElementToAppear(searchConnectorTxtElement);
         searchConnectorTxtElement.sendKeys(connectorName);
         this.selectValueFromDDL(0, connectorName);
-        pageUtils.waitForElementToBeClickable(connectorComponentDropDown);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         return this;
     }
 
@@ -234,18 +207,18 @@ public class DetailsPart extends CICBasePage {
      * @return NewEditWorkflow page object
      */
     public Object clickWFDetailsNextBtn() {
-        pageUtils.waitForElementToAppear(workflowDetailsNextButton);
-        pageUtils.waitForElementToBeClickable(workflowDetailsNextButton);
+        pageUtils.waitForElementToBeClickable(this.getNextButtonElement());
         Object object = null;
-        if (!workflowDetailsNextButton.isEnabled()) {
+        if (!this.getNextButtonElement().isEnabled()) {
             logger.warn("Next button in Query Definitions Page is not enabled");
             return new QueryDefinitions(driver);
         }
-        pageUtils.waitForElementAndClick(workflowDetailsNextButton);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        if (pageUtils.isElementDisplayed(workflowQDReturnOnlyCheckbox)) {
+        pageUtils.waitForElementAndClick(this.getNextButtonElement());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(getQDReturnOnlyCheckboxElement());
+        if (pageUtils.isElementDisplayed(getQDReturnOnlyCheckboxElement())) {
             object = new QueryDefinitions(driver);
-        } else if (pageUtils.isElementDisplayed(costingInputAddRowButton)) {
+        } else if (pageUtils.isElementDisplayed(getCostingInputAddRowButton())) {
             object = new CostingInputsPart(driver);
         }
         return object;
@@ -499,5 +472,25 @@ public class DetailsPart extends CICBasePage {
         pageUtils.selectDropdownOption(yearlyHours, schedule.getStartHour());
         pageUtils.selectDropdownOption(yearlyMinutes, schedule.getStartMinutes());
 
+    }
+
+    public WebElement getNameTextFieldElement() {
+        return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
+    }
+
+    private WebElement getDescriptionTextAreaElement() {
+        return driver.findElement(with(By.xpath("//textarea")).below(By.xpath("//span[.='Description']")));
+    }
+
+    private WebElement getConnectorDropDownElement() {
+        return driver.findElement(with(By.xpath("//div")).below(By.xpath("//span[.='Connector']")));
+    }
+
+    private WebElement getQDReturnOnlyCheckboxElement() {
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//label/span[.='Return only the latest revision of each part from the PLM system']", workflowPopUpActiveTabElement.getText())));
+    }
+
+    private WebElement getCostingInputAddRowButton() {
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Add Row']", workflowPopUpActiveTabElement.getText())));
     }
 }
