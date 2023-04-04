@@ -1,5 +1,10 @@
 package utils;
 
+import com.apriori.entity.response.ScenarioItem;
+import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
+import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
+import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -22,12 +27,28 @@ public class QmsApiTestUtils {
     }
 
     public static UserCredentials getCustomerUser() {
-        switch (PropertiesContext.get("customer")) {
-            case "ap-int":
-                return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
-            default:
-                return new UserCredentials().setEmail("qa-automation-01@apriori.com");
+        if (PropertiesContext.get("customer").equals("ap-int")) {
+            return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
         }
+        return new UserCredentials().setEmail("qa-automation-01@apriori.com");
+    }
+
+    public static ScenarioDiscussionRequest getScenarioDiscussionRequest(UserCredentials assignedUser, ScenarioItem scenarioItem, String description) {
+        ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
+                .status("ACTIVE")
+                .type("SCENARIO")
+                .assigneeEmail(assignedUser.getEmail())
+                .description(description)
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .attributes(Attributes.builder()
+                    .attribute("materialName")
+                    .subject("4056-23423-003")
+                    .build())
+                .build())
+            .build();
+        return scenarioDiscussionRequest;
     }
 }
 
