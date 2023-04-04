@@ -30,7 +30,7 @@ public class QdsApiTestUtils {
         return header;
     }
 
-    public static BidPackageRequest getBidPackageRequest(String userIdentity, String bidPackageName, String description){
+    public static BidPackageRequest getBidPackageRequest(String userIdentity, String bidPackageName, String description) {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
                 .description(description)
