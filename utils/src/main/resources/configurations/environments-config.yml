@@ -98,11 +98,22 @@ int-core:
 
 ######################################################## STAGING #######################################################
 staging:
+  deployment_name: Production
+  installation_name: Production na-1
+  application_name: CID
+  name: staging
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
+
+  #Templates
+  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+
+  admin:
+    ui_url: https://${deployment_url_template}apriori/login
 
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
@@ -116,6 +127,35 @@ staging:
 
   bcs:
     api_url: https://bcs.us.staging.apriori.net/
+
+  ats:
+    api_url: https://ats.${staging.core_service_url_template}
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
+    token_issuer: 2021 R1
+    token_subject: ${${customer}.token_subject}
+    auth_application: CID
+    automation_username: qa-automation-%s@apriori.com
+    automation_password: TrumpetSnakeFridgeToasty18!%
+
+  cis:
+    ui_url: https://cis.${staging.deployment_url_template}
+    api_url: https://cis-api.${staging.deployment_url_template}
+
+  dds:
+    api_url: https://dds.${staging.deployment_url_template}
+
+  dms:
+    api_url: https://dms.${staging.deployment_url_template}
+
+  sds:
+    api_url: https://sds.${staging.deployment_url_template}
+
+  qds:
+    api_url: https://qds.${staging.deployment_url_template}
+
+  qms:
+    api_url: https://qms.${staging.deployment_url_template}
 
 ########################################################################################################################
 
@@ -217,7 +257,7 @@ development:
   base_url: https://cloud.na-1.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
-  installation_name: core-na-1 - v23 Production
+  installation_name: core-na-1 - v22 Production
   name: development
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
