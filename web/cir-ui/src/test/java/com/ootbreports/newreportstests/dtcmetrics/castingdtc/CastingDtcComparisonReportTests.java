@@ -1,18 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.entity.response.ChartData;
-import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -28,19 +16,20 @@ import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil {
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private static ReportRequest reportRequest;
-    private static JasperApiUtils jasperApiUtils;
 
-    private static SoftAssertions softAssertions = new SoftAssertions();
+    private static final SoftAssertions softAssertions = new SoftAssertions();
+    private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-        reportRequest = jasperApiUtils.getReportRequest();
     }
 
     @Test
