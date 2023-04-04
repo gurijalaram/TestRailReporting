@@ -31,7 +31,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -208,31 +207,12 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         if (assignedUser.getEmail().equals(currentUser.getEmail())) {
             assignedUser = UserUtil.getUser();
         }
-
-        //Create Discussion with assignee
         String description = new GenerateStringUtil().generateNotes();
-        ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
-                .status("ACTIVE")
-                .type("SCENARIO")
-                .assigneeEmail(assignedUser.getEmail())
-                .description(description)
-                .componentIdentity(scenarioItem.getComponentIdentity())
-                .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                .attributes(Attributes.builder()
-                    .attribute("materialName")
-                    .subject("4056-23423-003")
-                    .build())
-                .build())
-            .build();
-
+        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
-        //Add comment to assigned discussion
         QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(), new GenerateStringUtil().generateNotes(), "ACTIVE", currentUser);
-
-        //Get scenario discussion with assignee useridentity
         String[] params = {"pageNumber,1", "status[NE],DELETED", "assignee.userIdentity[IN]," + scenarioDiscussionAssigneeResponse.getAssigneeUserIdentity(), "sortBy[DESC],createdAt"};
         ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, params);
         softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
@@ -273,21 +253,7 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         }
 
         String description = new GenerateStringUtil().generateNotes();
-        ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
-                .status("ACTIVE")
-                .type("SCENARIO")
-                .assigneeEmail(assignedUser.getEmail())
-                .description(description)
-                .componentIdentity(scenarioItem.getComponentIdentity())
-                .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                .attributes(Attributes.builder()
-                    .attribute("materialName")
-                    .subject("4056-23423-003")
-                    .build())
-                .build())
-            .build();
-
+        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 

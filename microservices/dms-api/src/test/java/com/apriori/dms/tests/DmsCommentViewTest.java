@@ -28,56 +28,20 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
 import java.util.HashSet;
 
-public class DmsCommentViewTest extends SDSTestUtil {
-    private static String bidPackageName;
-    private static String projectName;
-    private static ScenarioItem scenarioItem;
-    private static BidPackageResponse bidPackageResponse;
-    private static BidPackageItemResponse bidPackageItemResponse;
-    private static BidPackageProjectResponse bidPackageProjectResponse;
+public class DmsCommentViewTest extends DmsApiTestDataUtils {
     private static String userContext;
     private static SoftAssertions softAssertions;
-    private static String contentDesc = StringUtils.EMPTY;
-    private static DmsScenarioDiscussionResponse dmsScenarioDiscussionResponse;
-    private static ScenarioDiscussionResponse qmsScenarioDiscussionResponse;
-    private static DmsCommentResponse dmsCommentResponse;
-    private static DmsCommentViewResponse dmsCommentViewResponse;
-    private static final UserCredentials currentUser = testingUser;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        contentDesc = RandomStringUtils.randomAlphabetic(12);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = postTestingComponentAndAddToRemoveList();
-        publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
-            .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .build(), Scenario.class, HttpStatus.SC_OK);
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getIdentity(),
-            currentUser,
-            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-        dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
-        dmsCommentResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, contentDesc, dmsScenarioDiscussionResponse.getItems()
-            .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
-        dmsCommentViewResponse = DmsApiTestUtils.markCommentViewAsRead(
-            dmsScenarioDiscussionResponse.getItems().get(0).getIdentity(),
-            dmsCommentResponse.getIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getUserIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getUserCustomerIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getParticipantIdentity(),
-            currentUser);
+        createTestData();
     }
 
     @Test
