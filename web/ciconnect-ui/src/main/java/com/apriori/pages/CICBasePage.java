@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.TableUtils;
 
@@ -21,6 +22,9 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     protected WebDriver driver;
     protected PageUtils pageUtils;
     protected TableUtils tableUtils;
+
+    @FindBy(css = "div[class='apriori-stepper'] > div[class='step active'] > div[class='number']")
+    protected WebElement workflowPopUpActiveTabElement;
 
     public CICBasePage(WebDriver driver) {
         this.driver = driver;
@@ -74,5 +78,9 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
             .findFirst()
             .get();
         pageUtils.waitForElementToBeClickable(webElement);
+    }
+
+    protected WebElement getNextButtonElement() {
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Next']", workflowPopUpActiveTabElement.getText())));
     }
 }
