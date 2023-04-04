@@ -17,7 +17,4 @@ import java.util.List;
 public class CustomAttributes {
     private String function;
     private int workspaceId;
-
-    private String defaultRole;
-    private List<Object> roles;
 }
