@@ -20,4 +20,5 @@ public class Attributes {
     private String subject;
     private String attributeCategory;
     private String processIdentity;
+    private String description;
 }

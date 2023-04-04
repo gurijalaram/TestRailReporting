@@ -19,6 +19,9 @@
     },
     "username": {
       "type": "string"
+    },
+    "avatarColor": {
+      "type": "string"
     }
   },
   "required": [
@@ -28,5 +31,8 @@
     "familyName",
     "givenName",
     "username"
+  ],
+  "optional": [
+    "avatarColor"
   ]
 }

@@ -53,11 +53,13 @@
               },
               "required": [
                 "identity",
-                "createdAt",
-                "createdBy",
                 "participantIdentity",
                 "userCustomerIdentity",
                 "userIdentity"
+              ],
+              "optional": [
+                "createdAt",
+                "createdBy"
               ]
             }
           ]

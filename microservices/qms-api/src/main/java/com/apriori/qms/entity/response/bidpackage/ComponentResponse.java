@@ -24,4 +24,5 @@ public class ComponentResponse {
     public String componentName;
     public String componentType;
     public String filename;
+    public String configurationName;
 }

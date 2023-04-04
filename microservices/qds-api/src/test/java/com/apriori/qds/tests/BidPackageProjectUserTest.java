@@ -9,7 +9,6 @@ import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 

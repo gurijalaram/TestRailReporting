@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
-import com.apriori.cisapi.entity.response.user.preferences.CurrentExtendedUserPreferencesResponse;
-import com.apriori.cisapi.entity.response.user.preferences.ExtendedUserPreferencesResponse;
+import com.apriori.cisapi.entity.response.userpreferences.CurrentExtendedUserPreferencesResponse;
+import com.apriori.cisapi.entity.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.cisapi.utils.UserPreferencesController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
