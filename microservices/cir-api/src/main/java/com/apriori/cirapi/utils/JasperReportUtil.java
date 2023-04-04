@@ -155,7 +155,7 @@ public class JasperReportUtil {
             ReportChartType reportChartType = ReportChartType.get(chartTypeNode.asText());
 
             if (reportChartType == null) {
-                log.warn("Chart type {} is not supported.", chartTypeNode.asText());
+                log.warn("Failed to parse chart response. Chart type {} ", chartTypeNode.asText());
                 continue;
             }
 
@@ -174,10 +174,11 @@ public class JasperReportUtil {
         switch (chartType) {
             case BUBBLE_SCATTER:
                 return parseBubbleChart(dataNode);
+            case BAR:
             case STACKED_BAR:
                 return parseStackedBar(dataNode);
             default:
-                throw new IllegalArgumentException("Report Chart type is not supported by JSON parser. Chart type " + chartType);
+                throw new IllegalArgumentException("Failed to parse chart: " + chartType);
         }
     }
 
