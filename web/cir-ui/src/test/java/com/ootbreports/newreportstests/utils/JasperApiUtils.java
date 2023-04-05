@@ -125,24 +125,6 @@ public class JasperApiUtils {
         return jasperApiUtils.generateReportSummary(reportRequest);
     }
 
-    public void performChartAsserts(JasperReportSummary jasperReportSummary, HashMap<String, String> partNamesToCheck) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("Low")).getPartName()).isEqualTo(partNamesToCheck.get("Low"));
-        for (int i = 1; i < 6; i++) {
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("Low")).getPartName()).isEqualTo(partNamesToCheck.get("Low"));
-        }
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("Medium")).getPartName()).isEqualTo(partNamesToCheck.get("Medium"));
-        for (int i = 1; i < 6; i++) {
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("Medium")).getPartName()).isEqualTo(partNamesToCheck.get("Medium"));
-        }
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("High")).getPartName()).isEqualTo(partNamesToCheck.get("High"));
-        for (int i = 1; i < 6; i++) {
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("High")).getPartName()).isEqualTo(partNamesToCheck.get("High"));
-        }
-    }
-
     public ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
         reportRequest.getParameters().getReportParameterByName(valueToGet)
             .setValue(Collections.singletonList(valueToSet));
