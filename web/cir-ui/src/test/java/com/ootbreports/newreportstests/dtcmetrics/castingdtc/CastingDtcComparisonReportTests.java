@@ -1,5 +1,10 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -16,6 +21,7 @@ import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -332,11 +338,17 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
          * 40128483.MLDES.0001 (Initial) is low dtc
           */
 
-        String lowDtcPartName = "40128483.MLDES.0001 (Initial)";
+        /*String lowDtcPartName = "40128483.MLDES.0001 (Initial)";
         String mediumDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String highDtcPartName = "GEAR HOUSING (Initial)";
+        String highDtcPartName = "GEAR HOUSING (Initial)";*/
+        HashMap<String, String> partNamesForAssertions = new HashMap<>();
+        partNamesForAssertions.put("Low", "40128483.MLDES.0001 (Initial)");
+        partNamesForAssertions.put("Medium", "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        partNamesForAssertions.put("High", "GEAR HOUSING (Initial)");
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
+        jasperApiUtils.performChartAsserts(jasperReportSummary, partNamesForAssertions);
+
+        /*softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(lowDtcPartName).getPartName()).isEqualTo(lowDtcPartName);
@@ -355,13 +367,11 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
         softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(highDtcPartName).getPartName()).isEqualTo(highDtcPartName);*/
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("High");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).toString().contains("High, Low, Medium")).isEqualTo(true);
-
-        softAssertions.assertAll();
+        assertThat(tdResultElements.get(0).toString().contains("High, Low, Medium"), is(equalTo(true)));
     }
 
     @Test

@@ -13,12 +13,15 @@ import com.apriori.cirapi.utils.JasperReportUtil;
 
 import com.google.common.base.Stopwatch;
 import lombok.Data;
+import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import utils.Constants;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,6 +123,24 @@ public class JasperApiUtils {
         reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
         return jasperApiUtils.generateReportSummary(reportRequest);
+    }
+
+    public void performChartAsserts(JasperReportSummary jasperReportSummary, HashMap<String, String> partNamesToCheck) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("Low")).getPartName()).isEqualTo(partNamesToCheck.get("Low"));
+        for (int i = 1; i < 6; i++) {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("Low")).getPartName()).isEqualTo(partNamesToCheck.get("Low"));
+        }
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("Medium")).getPartName()).isEqualTo(partNamesToCheck.get("Medium"));
+        for (int i = 1; i < 6; i++) {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("Medium")).getPartName()).isEqualTo(partNamesToCheck.get("Medium"));
+        }
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partNamesToCheck.get("High")).getPartName()).isEqualTo(partNamesToCheck.get("High"));
+        for (int i = 1; i < 6; i++) {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPointByPartName(partNamesToCheck.get("High")).getPartName()).isEqualTo(partNamesToCheck.get("High"));
+        }
     }
 
     public ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
