@@ -155,10 +155,6 @@ public class CustomerAccessTests extends TestBase {
             .isEqualTo("Access successfully revoked");
         customerAccess.closeMessage();
 
-        soft.assertThat(customerAccess.canRequest())
-            .overridingErrorMessage("Expected request access button to be enabled.")
-            .isTrue();
-
         StaffAccessHistoryPage goToHistoryTab = customerAccess
             .goToUsersPage()
             .goToAccessHistory()
@@ -182,6 +178,9 @@ public class CustomerAccessTests extends TestBase {
         long count = accountFound.getRows().count();
         soft.assertThat(count)
             .isEqualTo(1L);
+        soft.assertThat(customerAccess.canRequest())
+            .overridingErrorMessage("Expected request access button to be enabled.")
+            .isTrue();
         soft.assertAll();
     }
 
