@@ -29,4 +29,5 @@ public class DmsAttributes {
     private String gcds;
     private String attributeCategory;
     private String processIdentity;
+    private String description;
 }

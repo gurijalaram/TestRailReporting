@@ -1,5 +1,5 @@
 
-package com.apriori.cisapi.entity.request.user.preferences;
+package com.apriori.cisapi.entity.request.userpreferences;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 
-public class CurrentUserPreferenceParameters {
+public class CurrentUserPreferenceRequest {
 
-    private String avatarColor;
+    private CurrentUserPreferenceParameters userPreferences;
 
 }

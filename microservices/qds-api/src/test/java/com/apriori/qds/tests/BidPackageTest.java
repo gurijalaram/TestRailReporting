@@ -8,7 +8,7 @@ import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackagesResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
-import com.apriori.utils.ErrorMessage;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -55,23 +55,13 @@ public class BidPackageTest extends TestUtil {
     @Description("Create Bid Package with existing name")
     public void createBidPackageWithExistingName() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(bidPackageName)
-                .name(bidPackageName)
-                .status("NEW")
-                .assignedTo(userIdentity)
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,bidPackageName,bidPackageName);
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_CONFLICT);
-
-        ResponseWrapper<ErrorMessage> bidPackageErrorResponse = HTTPRequest.build(requestEntity).post();
-
+        ResponseWrapper<ApwErrorMessage> bidPackageErrorResponse = HTTPRequest.build(requestEntity).post();
         softAssertions.assertThat(bidPackageErrorResponse.getResponseEntity().getMessage()).contains("already exists for Customer");
     }
 
@@ -79,23 +69,14 @@ public class BidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13313"})
     @Description("Create Bid Package greater than 64 characters")
     public void createBidPackageNameMoreThan64() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("descripton")
-                .name(RandomStringUtils.randomAlphabetic(70))
-                .status("NEW")
-                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,RandomStringUtils.randomAlphabetic(70),"descripton");
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
-
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
-
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("should not be more than 64 characters");
     }
 
@@ -104,15 +85,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Create Bid Package is equal to 64 characters, delete bid package and verify bid package is deleted")
     public void createBidPackageNameEqualTo64() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description("description")
-                .name(RandomStringUtils.randomAlphabetic(64))
-                .status("NEW")
-                .assignedTo(userIdentity)
-                .build())
-            .build();
-
+        BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,RandomStringUtils.randomAlphabetic(64),"descripton");
         ResponseWrapper<BidPackageResponse> bidPackageCreatedResponse = HTTPRequest.build(
                 RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
                     .body(bidPackageRequest)
@@ -120,13 +93,10 @@ public class BidPackageTest extends TestUtil {
                     .apUserContext(userContext)
                     .expectedResponseCode(HttpStatus.SC_CREATED))
             .post();
-
         softAssertions.assertThat(bidPackageCreatedResponse.getResponseEntity().getAssignedTo()).isEqualTo(userIdentity);
-
         ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageCreatedResponse.getResponseEntity().getIdentity(), currentUser);
-
-        ResponseWrapper<ErrorMessage> bidPackageResponse = HTTPRequest.build(
-                RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
+        ResponseWrapper<ApwErrorMessage> bidPackageResponse = HTTPRequest.build(
+                RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
                     .inlineVariables(bidPackageCreatedResponse.getResponseEntity().getIdentity())
                     .headers(QdsApiTestUtils.setUpHeader())
                     .apUserContext(userContext)
@@ -141,25 +111,14 @@ public class BidPackageTest extends TestUtil {
     @Description("Create Bid Package description is equal to 254 characters")
     public void createBidPackageNameEqualTo254() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(RandomStringUtils.randomAlphabetic(254))
-                .name(RandomStringUtils.randomAlphabetic(15))
-                .status("NEW")
-                .assignedTo(userIdentity)
-                .build())
-            .build();
-
+        BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,RandomStringUtils.randomAlphabetic(15),RandomStringUtils.randomAlphabetic(254));
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_CREATED);
-
         ResponseWrapper<BidPackageResponse> bidPackageAssignedResponse = HTTPRequest.build(requestEntity).post();
-
         softAssertions.assertThat(bidPackageAssignedResponse.getResponseEntity().getAssignedTo()).isEqualTo(userIdentity);
-
         BidPackageResources.deleteBidPackage(bidPackageAssignedResponse.getResponseEntity().getIdentity(), currentUser);
     }
 
@@ -167,23 +126,14 @@ public class BidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13325"})
     @Description("Create Bid Package description is greater 254 characters")
     public void createBidPackageNameGreaterThan254() {
-        BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
-            .bidPackage(BidPackageParameters.builder()
-                .description(RandomStringUtils.randomAlphabetic(260))
-                .name(bidPackageName)
-                .status("NEW")
-                .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,bidPackageName,RandomStringUtils.randomAlphabetic(260));
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
-
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
-
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("should not be more than 254 characters");
     }
 
@@ -199,13 +149,13 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
 
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'name' should not be null");
     }
@@ -222,13 +172,13 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
 
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'description' should not be null");
     }
@@ -245,13 +195,13 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
 
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'status' should not be null");
     }
@@ -381,13 +331,13 @@ public class BidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13333"})
     @Description("Get bid package with invalid identity")
     public void getBidPackageWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
             .inlineVariables("INVALID IDENTITY")
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
 
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
     }

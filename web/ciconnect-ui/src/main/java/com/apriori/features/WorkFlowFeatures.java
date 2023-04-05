@@ -11,8 +11,10 @@ import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.utils.GenerateStringUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 
+@Slf4j
 public class WorkFlowFeatures extends CICBasePage {
 
     private QueryDefinitions queryDefinitions;
@@ -55,21 +57,26 @@ public class WorkFlowFeatures extends CICBasePage {
      */
     public WorkflowHome createScheduledWorkflow(WorkflowSchedule workflowSchedule) {
         workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
-        if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
-            this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
-                .selectWorkflowConnector(workFlowData.getConnectorName())
-                .selectEnabledCheckbox("on")
-                .setSchedule(workflowSchedule)
-                .clickWFDetailsNextBtn();
-        } else {
-            this.costingInputsPart = (CostingInputsPart) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
-                .selectWorkflowConnector(workFlowData.getConnectorName())
-                .clickWFDetailsNextBtn();
+        try {
+            if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
+                this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
+                    .selectWorkflowConnector(workFlowData.getConnectorName())
+                    .selectEnabledCheckbox("on")
+                    .setSchedule(workflowSchedule)
+                    .clickWFDetailsNextBtn();
+            } else {
+                this.costingInputsPart = (CostingInputsPart) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
+                    .selectWorkflowConnector(workFlowData.getConnectorName())
+                    .clickWFDetailsNextBtn();
+            }
+            if (this.queryDefinitions != null) {
+                this.costingInputsPart = this.queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size()).clickWFQueryDefNextBtn();
+            }
+            return this.costingInputsPart.clickCINextBtn().clickCINotificationNextBtn().clickSaveButton();
+        } catch (Exception e) {
+            log.error("FAILED TO CREATE WORKFLOW!!!");
+            throw new IllegalArgumentException(e);
         }
-        if (this.queryDefinitions != null) {
-            this.costingInputsPart = this.queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size()).clickWFQueryDefNextBtn();
-        }
-        return this.costingInputsPart.clickCINextBtn().clickCINotificationNextBtn().clickSaveButton();
     }
 
     /**
