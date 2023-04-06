@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -45,30 +46,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         String costMetricAssertValue = CostMetricEnum.PIECE_PART_COST.getCostMetricName();
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
 
-        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String secondDtcPartName = "CYLINDER HEAD (Initial)";
-        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "40137441.MLDES.0002 (Initial)");
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
@@ -84,30 +64,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         String costMetricAssertValue = CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName();
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
 
-        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String secondDtcPartName = "CYLINDER HEAD (Initial)";
-        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "40137441.MLDES.0002 (Initial)");
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
@@ -123,30 +82,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         String massMetricAssertValue = MassMetricEnum.FINISH_MASS.getMassMetricName();
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
 
-        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String secondDtcPartName = "CYLINDER HEAD (Initial)";
-        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "40137441.MLDES.0002 (Initial)");
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
@@ -162,30 +100,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         String massMetricAssertValue = MassMetricEnum.ROUGH_MASS.getMassMetricName();
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
 
-        String firstDtcPartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
-        String secondDtcPartName = "CYLINDER HEAD (Initial)";
-        String thirdDtcPartName = "40137441.MLDES.0002 (Initial)";
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(firstDtcPartName).getPartName()).isEqualTo(firstDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(secondDtcPartName).getPartName()).isEqualTo(secondDtcPartName);
-
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(thirdDtcPartName).getPartName()).isEqualTo(thirdDtcPartName);
+        performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
+        performDtcPositiveAsserts(jasperReportSummary, "40137441.MLDES.0002 (Initial)");
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
@@ -269,17 +186,13 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         String negativePartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
         String positivePartName = "E3-241-4-N (Initial)";
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(negativePartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(1).getChartDataPointByPartName(negativePartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(2).getChartDataPointByPartName(negativePartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(3).getChartDataPointByPartName(negativePartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(4).getChartDataPointByPartName(negativePartName)).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(5).getChartDataPointByPartName(negativePartName)).isEqualTo(null);
+        performDtcNegativeAsserts(jasperReportSummary, negativePartName);
 
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getHoleIssues()).isEqualTo(10);
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getMaterialIssues()).isEqualTo(0);
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getRadiusIssues()).isEqualTo(18);
-        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName).getDraftIssues()).isEqualTo(15);
+        ChartDataPoint chartDataPoint = jasperReportSummary.getFirstChartData().getChartDataPointByPartName(positivePartName);
+        softAssertions.assertThat(chartDataPoint.getHoleIssues()).isEqualTo(10);
+        softAssertions.assertThat(chartDataPoint.getMaterialIssues()).isEqualTo(0);
+        softAssertions.assertThat(chartDataPoint.getRadiusIssues()).isEqualTo(18);
+        softAssertions.assertThat(chartDataPoint.getDraftIssues()).isEqualTo(15);
 
         String minAnnualSpendAssertValue = "7,820,000.00";
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(minAnnualSpendAssertValue);

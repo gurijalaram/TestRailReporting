@@ -5,7 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: onprem
+env: qa-test
 version: 23-1
 deployment: production
 customer: ap-int
@@ -23,7 +23,7 @@ global:
   console_log_level: "OFF"
   db_recording: true
   different_parts: true
-  different_users: false
+  different_users: true
   schema_base_path: schemas/
   users_csv_file: common-users.csv
   nexus:
