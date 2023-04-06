@@ -196,7 +196,12 @@ public class CicApiTestUtil extends TestBase {
      */
     public static ResponseWrapper<String> CreateWorkflow(String session, String workflowData) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(initHeadersWithJSession(session))
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Accept", "*/*");
+                    put("cookie", String.format("JSESSIONID=%s", session));
+                }
+            })
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -211,7 +216,12 @@ public class CicApiTestUtil extends TestBase {
      */
     public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(initHeadersWithJSession(session))
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Accept", "*/*");
+                    put("cookie", String.format("JSESSIONID=%s", session));
+                }
+            })
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -254,7 +264,7 @@ public class CicApiTestUtil extends TestBase {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Accept", "application/json");
-        header.put("Authorization", PropertiesContext.get("${env}.ci-connect.agent_api_authorization_key"));
+        header.put("Authorization", PropertiesContext.get("ci-connect.authorization_key"));
         return header;
     }
 
@@ -286,7 +296,13 @@ public class CicApiTestUtil extends TestBase {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
+        String agentName = StringUtils.EMPTY;
+        try {
+            agentName = PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.agent_name");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+        return agentName;
     }
 
     /**
@@ -435,7 +451,7 @@ public class CicApiTestUtil extends TestBase {
         }
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_PLM_WC_SEARCH, PlmParts.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
             {
-                put("Authorization", "Basic " + PropertiesContext.get("${env}.ci-connect.plm_wc_api_token"));
+                put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
@@ -686,7 +702,9 @@ public class CicApiTestUtil extends TestBase {
             {
                 put("Accept", "*/*");
                 put("cookie", String.format("JSESSIONID=%s", session));
+                put("Accept", "application/json");
             }
         };
     }
+
 }

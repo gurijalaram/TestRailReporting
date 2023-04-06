@@ -132,32 +132,22 @@ Those marked with a * are required or the job will not run
 
                     agent_type = params.AGENT_TYPE
                     if (agent_type && agent_type != "none") {
-                       javaOpts = javaOpts + " -Dagent_type=${params.AGENT_TYPE}"
+                       javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
                     }
 
                     nexus_repository = params.NEXUS_REPOSITORY
                     if (nexus_repository && nexus_repository != "none") {
-                       javaOpts = javaOpts + " -Dnexus_repository=${params.NEXUS_REPOSITORY}"
+                       javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
                     }
 
                     nexus_version = params.NEXUS_VERSION
                     if (nexus_version && nexus_version != "none") {
-                       javaOpts = javaOpts + " -Dnexus_version=${params.NEXUS_VERSION}"
+                       javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
                     }
 
                     custom_install = params.CUSTOM_INSTALL
                     if (custom_install && custom_install != "none") {
-                       javaOpts = javaOpts + " -Dcustom_install=${params.CUSTOM_INSTALL}"
-                    }
-
-                    connector = params.CONNECTOR
-                    if (connector && connector != "none") {
-                       javaOpts = javaOpts + " -Dconnector=${params.CONNECTOR}"
-                    }
-
-                    port = params.PORT
-                    if (port && port != "none") {
-                       javaOpts = javaOpts + " -Dport=${params.PORT}"
+                       javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS
