@@ -229,7 +229,8 @@ Those marked with a * are required or the job will not run
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
-            sh "docker system prune --force"
+            sh "docker volume rm \$(docker volume ls -qf dangling=true)"
+            sh "docker system prune --all --force"
             cleanWs()
         }
     }
