@@ -24,14 +24,6 @@ qa-test:
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
 
-  ci-connect:
-    agent_type: windchill
-    agent_api_authorization_key: DogCatMonkey
-    agent_api_url: http://conqscic02.fbc.com:8811/
-    plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
-    plm_wc_api_url: https://consvwc02.fbc.com/
-    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
-
   reports:
     ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/

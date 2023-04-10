@@ -42,14 +42,18 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        String cicUri = StringUtils.EMPTY;
+        return getAgentUrl() + String.format(getEndpointString(), variables);
+    }
+
+    public String getAgentUrl() {
+        String apiUrl = StringUtils.EMPTY;
         if (this.endpoint.contains("Thingworx")) {
-            cicUri = PropertiesContext.get("${env}.ci-connect.ui_url") + String.format(getEndpointString(), variables);
+            apiUrl = PropertiesContext.get("ci-connect.ui_url");
         } else if (this.endpoint.contains("Windchill")) {
-            cicUri = PropertiesContext.get("${env}.ci-connect.plm_wc_api_url") + String.format(getEndpointString(), variables);
+            apiUrl = PropertiesContext.get("ci-connect.windchill.host_name");
         } else {
-            cicUri = PropertiesContext.get("${customer}.ci-connect.agent_api_url") + String.format(getEndpointString(), variables);
+            apiUrl = PropertiesContext.get("ci-connect.agent_api_url") + ":" + PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.port") + "/";
         }
-        return cicUri;
+        return apiUrl;
     }
 }

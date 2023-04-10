@@ -203,24 +203,12 @@ public class AgentService {
     public AgentService searchNexusRepositoryByGroup() {
         Map<String, String> paramMap = new HashMap<>();
         NexusAgentResponse nexusAgentResponse = null;
-        String nexusRepository;
-        String nexusVersion;
         RequestEntity requestEntity;
-        try {
-            nexusRepository = PropertiesContext.get("nexus_repository");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            nexusRepository = PropertiesContext.get("ci-connect.nexus_repository");
-        }
-        try {
-            nexusVersion = PropertiesContext.get("nexus_version").replace("/", ".");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            nexusVersion = PropertiesContext.get("ci-connect.nexus_version");
-        }
-        String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + nexusVersion;
+        String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + PropertiesContext.get("ci-connect.nexus_version");
         String credential = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
         try {
             requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                .inlineVariables(nexusRepository, group)
+                .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                 .headers(new HashMap<String, String>() {
                     {
                         put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
@@ -230,13 +218,14 @@ public class AgentService {
             nexusAgentResponse = (NexusAgentResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
         } catch (NullPointerException nullPointerException) {
             log.error(nullPointerException.getMessage() + "REPOSITORY NOT FOUND IN NEXUS - " + group);
+            throw new IllegalArgumentException(nullPointerException);
         }
 
         try {
             while (nexusAgentResponse.getContinuationToken() != null) {
                 paramMap.put("continuationToken", nexusAgentResponse.getContinuationToken());
                 requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                    .inlineVariables(nexusRepository, group)
+                    .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                     .headers(new HashMap<String, String>() {
                         {
                             put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
@@ -265,7 +254,6 @@ public class AgentService {
      * @return current class object
      */
     public AgentService downloadAgentFile() {
-        Boolean customInstall;
         try {
             agentData.setBaseFolder(String.valueOf(FileResourceUtil.createTempDir(null)).toLowerCase());
             agentData.setAgentZipFolder(agentData.getBaseFolder() + File.separator + StringUtils.substringAfterLast(nexusAgentItem.getName(), "/"));
@@ -274,12 +262,7 @@ public class AgentService {
             log.error("PATH NOT FOUND!!");
         }
 
-        try {
-            customInstall = Boolean.valueOf(PropertiesContext.get("custom_install"));
-        } catch (IllegalArgumentException illegalArgumentException) {
-            customInstall = Boolean.valueOf(PropertiesContext.get("ci-connect.custom_install"));
-        }
-        if (customInstall) {
+        if (Boolean.valueOf(PropertiesContext.get("ci-connect.custom_install"))) {
             NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL.setEndpoint(nexusAgentItem.getAssets().get(0).getDownloadUrl());
             downloadAgent(NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL);
         } else {
@@ -410,15 +393,15 @@ public class AgentService {
     public AgentService getConnector(String loginSession) {
         webLoginSession = loginSession;
         ConnectorRequest connectorRequestDataBuilder = null;
-        String connectorName;
+        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
         try {
-            connectorName = PropertiesContext.get("connector");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            connectorName = PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".connector");
+            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+        } catch (Exception e) {
+            log.info("CONNECTOR NOT FOUND WITH NAME - " + connectorName);
+            throw new IllegalArgumentException(e);
         }
-        connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
         if (null == connectorInfo) {
-            switch (PropertiesContext.get("agent_type")) {
+            switch (PropertiesContext.get("ci-connect.agent_type")) {
                 case "windchill":
                     connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData(CICAgentType.WINDCHILL);
                     connectorRequestDataBuilder.setDisplayName(connectorName);
@@ -441,13 +424,8 @@ public class AgentService {
      */
     public AgentService getConnectorOptions() {
         AgentConnectionInfo agentConnectionInfo = null;
-        Integer portNumber;
-        try {
-            portNumber = Integer.valueOf(PropertiesContext.get("port"));
-        } catch (IllegalArgumentException illegalArgumentException) {
-            portNumber = Integer.valueOf(PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".port"));
-        }
-        switch (PropertiesContext.get("agent_type")) {
+        Integer portNumber = Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type"))));
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "windchill":
                 agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), webLoginSession);
                 agentConnectionOptions = AgentConnectionOptions.builder()
@@ -493,12 +471,7 @@ public class AgentService {
      */
     public ConnectorInfo getConnectorStatusInfo() {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(5);
-        String connectorName;
-        try {
-            connectorName = PropertiesContext.get("connector");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            connectorName = PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".connector");
-        }
+        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
         ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
         try {
             while (!(connectorInfo.getConnectionStatus().equals("Connected to PLM"))) {

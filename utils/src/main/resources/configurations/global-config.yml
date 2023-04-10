@@ -96,16 +96,26 @@ default:
 
   ci-connect:
     ui_url: https://ci-connect.${deployment_url_template}
+    agent_api_url: http://conqscic02.fbc.com
+    authorization_key: DogCatMonkey
     nexus_repository: apriori-zip-dev
     nexus_group: apriori-cic-agt
-    nexus_version: 3.1*-snapshot
+    nexus_version: 3.1.0-snapshot
     nexus_extension: zip
     custom_install: false
+    agent_type: windchill
     windchill:
-      connector: WC-consvwc02
-      port: 8811
+      host_name: https://consvwc02.fbc.com/
+      host_token: d2NhZG1pbjp0ZXN0MTIzIw==
     teamcenter:
-      connector: RC TC
+      host_name: https://3dx-2019x.apriori.com:447/internal
+      fsc_url: https://consvtc12-01.apriori.com:4545
+      username: teamcenter
+      password: FarIce88ForestryZen
+    enovia:
+      host_name: https://consvtc12-01.apriori.com:8443/tc
+      username: admin_platform
+      password: 3Dpassport
 
   css:
     api_url: https://css.${deployment_url_template}
