@@ -156,7 +156,8 @@
             "avatarColor"
           ],
           "optional": [
-            "updatedAt"
+            "updatedAt",
+            "updatedBy"
           ]
         },
         "attributes": {

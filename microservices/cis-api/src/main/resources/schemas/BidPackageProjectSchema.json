@@ -175,6 +175,13 @@
                   "properties": {
                     "workspaceId": {
                       "type": "integer"
+                    },
+                    "defaultRole": {
+                      "type": "integer"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {}
                     }
                   },
                   "required": [

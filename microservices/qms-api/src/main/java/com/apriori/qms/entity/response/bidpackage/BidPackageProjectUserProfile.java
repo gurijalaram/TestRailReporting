@@ -18,6 +18,8 @@ public class BidPackageProjectUserProfile {
     public String identity;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String createdBy;
     private String givenName;
     private String familyName;

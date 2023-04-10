@@ -105,7 +105,7 @@ staging:
   deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
 
   admin:
-    ui_url: https://${deployment_url_template}apriori/login
+    ui_url: https://${staging.deployment_url_template}apriori/login
 
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
@@ -148,6 +148,9 @@ staging:
 
   qms:
     api_url: https://qms.${staging.deployment_url_template}
+
+  fms:
+    api_url: https://fms.${staging.deployment_url_template}
 
 ########################################################################################################################
 
