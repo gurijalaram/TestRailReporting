@@ -26,7 +26,7 @@ qa-test:
 
   reports:
     ui_url: ${qa-test.base_url}jasperserver-pro/
-    on_prem_vm_url: https://conqbaci10-05/jasperserver-pro/
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 
 ########################################################################################################################
 
