@@ -52,8 +52,8 @@ public class Constants {
     );
     public static final String STOCK_MACHINING_TWO_MODEL_NAME = String.format(
         "%s, %s",
-            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup(),
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
+        ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
+        ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
     );
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
     public static final String OTHER_SCENARIO_NAME = "sand casting";

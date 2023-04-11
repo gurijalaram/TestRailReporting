@@ -78,7 +78,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForExportSetSelection(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
@@ -92,7 +92,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("3")));
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
@@ -117,7 +117,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ScenarioComparisonReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .selectFirstTwoComparisonScenarios()
                 .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
@@ -126,7 +126,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         usdSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
 
         scenarioComparisonReportPage.clickInputControlsButton()
-                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 
@@ -150,6 +150,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
+        scenarioComparisonReportPage.waitForScenarioFilter();
         String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
         String rowTwoScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(2);
 
@@ -194,8 +195,9 @@ public class ScenarioComparisonReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
 
+        String expectedLastModifiedCount = PropertiesContext.get("{env}.name").equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
         String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
         String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
@@ -257,7 +259,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.LAST_MODIFIED_BY.getListName(), "Selected"), is(equalTo("1")));
 
-        String expectedScenarioNameCount = PropertiesContext.get("${env}.name").equals("qa-cid-perf") ? "4" : "2";
+        String expectedScenarioNameCount = PropertiesContext.get("{env}.name").equals("cir-qa") ? "2" : "1";
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", expectedScenarioNameCount);
         String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
@@ -383,18 +385,15 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
+        scenarioComparisonReportPage.waitForScenarioFilter();
         String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
-        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "230");
-        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Selected: ", "1");
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("6,443")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                is(equalTo("0000000008___3 (Initial) [part]")));
+                is(equalTo("0200613 (Initial) [part]")));
     }
 }

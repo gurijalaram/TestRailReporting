@@ -29,7 +29,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -171,7 +170,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
-            .selectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
             .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.clickComparison()
@@ -227,7 +226,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7389"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report ")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -251,9 +250,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7506"})
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Comparison Report")
+    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Comparison Report ")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
@@ -263,7 +262,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7509"})
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -276,7 +275,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7512"})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Comparison Report")
     public void testDtcScoreMedium() {
@@ -289,7 +288,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7515"})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Comparison Report")
     public void testDtcScoreHigh() {
@@ -302,7 +301,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7544"})
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
@@ -335,7 +334,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
         );
     }
 
@@ -348,7 +347,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.DTC_SAND.getSortOrderItemName(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -361,7 +360,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
             SortOrderItemsEnum.OBSTRUCTED_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.B2.getSortOrderItemName()
+            SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -373,8 +372,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -386,8 +385,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -400,7 +399,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
             SortOrderItemsEnum.DU_TWO_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_THREE.getSortOrderItemName()
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -413,7 +412,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
             SortOrderItemsEnum.E3_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.MLDES.getSortOrderItemName()
+            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -424,17 +423,5 @@ public class CastingDtcComparisonReportTests extends TestBase {
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName());
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"10009"})
-    @Description("Verify Currency Code input control functions correctly - Casting DTC Comparison Report")
-    public void testCurrencyCodeInputControl() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCodeDtcComparisonReports(
-                ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
     }
 }

@@ -311,7 +311,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Comparison Report")
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCodeDtcComparisonReports(
+        inputControlsTests.testCurrencyCodeDtcReports(
                 ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
                 ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
         );

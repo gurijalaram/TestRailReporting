@@ -187,7 +187,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
         String scenarioName = firstScenarioToCompare.getAttribute("title");
-        return substringName ? scenarioName.substring(0, 14) : scenarioName;
+        return substringName ? scenarioName.substring(0, 7) : scenarioName;
     }
 
     /**
@@ -202,7 +202,7 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
         By scenarioNameLocator = By.xpath("(//div[@title='Scenario Name']//ul)[1]/li[@title='Initial']");
         By scenariosToCompareLocator =
-                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0000000008___3 (Initial) [part]']");
+                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0200613 (Initial) [part]']");
         pageUtils.waitForElementToAppear(scenarioNameLocator);
         pageUtils.waitForElementToAppear(scenariosToCompareLocator);
         waitForCorrectAvailableSelectedCount(

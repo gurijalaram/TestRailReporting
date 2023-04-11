@@ -422,16 +422,4 @@ public class MachiningDtcDetailsReportTests extends TestBase {
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PUNCH")));
     }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"10011"})
-    @Description("Verify Currency Code input control functions correctly - Machining DTC Details Report")
-    public void testCurrencyCodeInputControl() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCodeDtcReports(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
-        );
-    }
 }

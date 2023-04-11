@@ -74,7 +74,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -98,7 +98,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -128,7 +128,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -155,7 +155,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .waitForComponentFilter()
                 .selectDefaultScenarioName(ComponentCostReportPage.class);
 
@@ -182,14 +182,14 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
                 .clickOk(true, ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
 
         componentCostReportPage.clickInputControlsButton()
-                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
 

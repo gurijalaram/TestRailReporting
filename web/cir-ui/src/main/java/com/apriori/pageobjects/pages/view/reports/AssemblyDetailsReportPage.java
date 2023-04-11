@@ -374,18 +374,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
     }
 
     /**
-     * Waits for correct assembly to be selected in input controls
-     *
-     * @param assemblyName - String - assembly name to wait for
-     * @return AssemblyDetailsReportPage instance
-     */
-    public AssemblyDetailsReportPage waitForCorrectAssemblyInDropdownAd(String assemblyName) {
-        By locator = By.xpath(String.format("//a[contains(@title, '%s')]", assemblyName));
-        pageUtils.waitForElementToAppear(locator);
-        return this;
-    }
-
-    /**
      * Generic method to get numeric values in a given row
      *
      * @param row - String of row to get values from

@@ -28,7 +28,7 @@ public class CostOutlierIdentificationReportPage extends GenericReportPage {
     @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[34]/span")
     private WebElement costOutlierPercentDifferenceValueInChartPercentSet;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//tr[18]//td[14]/span")
+    @FindBy(xpath = "//div[@id='reportContainer']//tr[19]//td[14]/span")
     private WebElement costOutlierTotalAnnualisedValuePercentSet;
 
     @FindBy(xpath = "//div[@id='reportContainer']//tr[16]//td[33]/span")

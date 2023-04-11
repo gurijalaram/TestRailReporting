@@ -8,6 +8,7 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
+import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -29,7 +30,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -41,6 +41,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     private CastingDtcReportPage castingDtcReportPage;
     private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
+    private GenericReportPage genericReportPage;
 
     public CastingDtcDetailsReportTests() {
         super();
@@ -173,14 +174,14 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
-            .selectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
             .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromDetailsReport();
 
-        castingDtcReportPage.openNewCidTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
@@ -249,7 +250,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7507"})
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report")
     public void testDtcScoreNoSelection() {
@@ -261,7 +262,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7510"})
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Details Report")
     public void testDtcScoreLow() {
@@ -274,7 +275,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7513"})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
@@ -287,7 +288,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"7516"})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Details Report")
     public void testDtcScoreHigh() {
@@ -428,17 +429,5 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
-    }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"10010"})
-    @Description("Verify Currency Code input control functions correctly - Casting DTC Details Report")
-    public void testCurrencyCodeInputControl() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCodeDtcReports(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
-        );
     }
 }

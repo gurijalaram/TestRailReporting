@@ -64,9 +64,6 @@ public class ReportsPageHeader extends ReportsHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    @FindBy(xpath = "//h2[contains(text(), 'Domains')]")
-    private WebElement domainsItem;
-
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
@@ -76,15 +73,6 @@ public class ReportsPageHeader extends ReportsHeader {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-    }
-
-    /**
-     * Waits for home page to load
-     * @return instance of ReportsPageHeader
-     */
-    public ReportsPageHeader waitForHomePageToLoad() {
-        pageUtils.waitForElementToAppear(domainsItem);
-        return this;
     }
 
     /**

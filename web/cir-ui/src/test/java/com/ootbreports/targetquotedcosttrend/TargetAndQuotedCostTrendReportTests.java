@@ -132,7 +132,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3358"})
-    @Description("Validate Cost Metric Input Control - FBC")
+    @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -145,7 +145,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7423"})
-    @Description("Validate Cost Metric Input Control - PPC")
+    @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -166,14 +166,16 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
 
-        targetQuotedCostTrendReportPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class);
+        targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .clickOk(true, TargetQuotedCostTrendReportPage.class)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
-                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class);
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .clickOk(true, TargetQuotedCostTrendReportPage.class)
+                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 

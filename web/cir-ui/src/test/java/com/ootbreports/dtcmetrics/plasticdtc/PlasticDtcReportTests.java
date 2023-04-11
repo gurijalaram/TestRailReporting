@@ -104,7 +104,7 @@ public class PlasticDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1370"})
-    @Description("Verify currency code functionality works correctly - Plastic DTC Report")
+    @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
         BigDecimal gbpAnnualSpend;
         BigDecimal usdAnnualSpend;
@@ -121,7 +121,7 @@ public class PlasticDtcReportTests extends TestBase {
             is(equalTo(RollupEnum.ROLL_UP_A.getRollupName()))
         );
 
-        genericReportPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+        genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
@@ -130,7 +130,7 @@ public class PlasticDtcReportTests extends TestBase {
         usdAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
         genericReportPage.clickInputControlsButton()
-            .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
@@ -181,7 +181,7 @@ public class PlasticDtcReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
-            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());

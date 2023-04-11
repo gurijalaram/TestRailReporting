@@ -4,7 +4,6 @@ public enum AssemblySetEnum {
     SUB_ASSEMBLY("SUB-ASSEMBLY (Initial)"),
     SUB_ASSEMBLY_SHORT("SUB-ASSEMBLY"),
     SUB_ASSEMBLY_LOWERCASE("Sub Assembly"),
-    SUB_ASSEMBLY_FULL("SUB-ASSEMBLY (Initial) [assembly]"),
     SUB_SUB_ASM("SUB-SUB-ASM (Initial)"),
     SUB_SUB_ASM_SHORT("SUB-SUB-ASM"),
     SUB_SUB_ASM_LOWERCASE("Sub Sub ASM"),

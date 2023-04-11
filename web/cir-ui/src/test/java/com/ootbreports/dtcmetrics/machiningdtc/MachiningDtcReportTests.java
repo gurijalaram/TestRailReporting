@@ -74,7 +74,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"3026"})
-    @Description("Verify currency code input control functions correctly - Machining DTC Report")
+    @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCodeDtcReports(
@@ -540,7 +540,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7662"})
-    @Description("Verify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
+    @Description("\tVerify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()

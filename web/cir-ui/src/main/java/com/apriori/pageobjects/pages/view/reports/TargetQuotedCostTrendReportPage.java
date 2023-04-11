@@ -49,7 +49,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     @FindBy(xpath = "//table[@class='jrPage']//tr[16]/td[17]/span")
     private WebElement costAvoidedFinal;
 
-    @FindBy(xpath = "//table[contains(@class, 'jrPage')]//tr[16]/td[10]/span")
+    @FindBy(xpath = "//table[contains(@class, 'jrPage')]//tr[16]/td[17]/span")
     private WebElement finalAprioriCost;
 
     @FindBy(xpath = "(//div[@class='highcharts_parent_container']/div//*[local-name() = 'tspan'])[3]")

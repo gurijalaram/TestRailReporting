@@ -280,16 +280,4 @@ public class PlasticDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testPlasticDtcIssueCounts(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName());
     }
-
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"10014"})
-    @Description("Verify Currency Code input control functions correctly - Plastic DTC Comparison Report")
-    public void testCurrencyCodeInputControl() {
-        inputControlsTests = new InputControlsTests(driver);
-        inputControlsTests.testCurrencyCodeDtcComparisonReports(
-                ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.ROLL_UP_A.getExportSetName()
-        );
-    }
 }

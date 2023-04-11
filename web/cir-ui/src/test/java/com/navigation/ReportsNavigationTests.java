@@ -61,14 +61,14 @@ public class ReportsNavigationTests extends TestBase {
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"2987"})
     @Description("Ensure that the CI Reports User Guide Link works")
-    public void testCIReportsUserGuideNavigation() {
+    public void testCIReportsUserGuideNavigation() throws Exception {
         cirUserGuide = new ReportsLoginPage(driver)
             .login()
             .navigateToReportUserGuide()
-            .switchTab();
+            .switchTab()
+            .switchToIFrameUserGuide("page_iframe");
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(containsString("Cost Insight Report")));
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(containsString("User Guide")));
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
     }

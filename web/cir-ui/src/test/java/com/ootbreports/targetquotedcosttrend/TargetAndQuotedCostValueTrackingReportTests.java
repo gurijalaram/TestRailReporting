@@ -107,14 +107,14 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class);
 
-        targetAndQuotedCostValueTrackingPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+        targetAndQuotedCostValueTrackingPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
                 .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         targetAndQuotedCostValueTrackingPage.clickInputControlsButton()
-                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
