@@ -33,7 +33,7 @@ qa-test:
     plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
 
   reports:
-    ui_url: https://conqbaci10-05/jasperserver-pro/
+    ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci10-05/jasperserver-pro/
 
 ########################################################################################################################

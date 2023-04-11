@@ -11,7 +11,6 @@ import org.jsoup.nodes.Document;
 
 import java.util.List;
 
-
 @Data
 @Builder
 @NoArgsConstructor
