@@ -13,9 +13,24 @@ ap-int:
   token_subject: 4127
   ci-connect:
     customer_identity: 6C1F8C1D4D75
-    agent_api_url: http://conqscic02.fbc.com:8811/
-    plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
     customer_name: aPrioriInternal_Customer
+    agent_type: windchill
+    windchill:
+      port: 8811
+      connector: WC-consvwc02
+      agent_name: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
+    teamcenter:
+      port: 8810
+      connector: TC-consvtc12
+      agent_name: c3101e82-4cfc-4a3b-a341-ee53c3f05f55_Agent
+    filesystem:
+      port: 8809
+      connector: FS-consvwc02
+    enovia:
+      port: 8808
+      connector: EN-consvwc02
+
+
 
 #################################################### AP-INT-STAGING ####################################################
 ap-int-staging:
@@ -33,9 +48,12 @@ widgets:
   token_subject: 739e
   ci-connect:
     customer_identity: 52IC4D3J98GN
-    agent_api_url: http://conqsct01:8817/
-    plm_agent_id: 3e5056e2-dc98-4ef4-a2d3-e6f7b97147db_Agent
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
+    agent_type: windchill
+    windchill:
+      port: 8807
+      connector: WC-consvwc02
+      agent_name: 3e5056e2-dc98-4ef4-a2d3-e6f7b97147db_Agent
 
 ########################################################################################################################
 

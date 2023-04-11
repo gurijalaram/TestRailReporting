@@ -58,13 +58,13 @@ public class CustomerWorkspacePage extends NavToolbar {
     private WebElement serviceAccountsDropDown;
     private SelectComponent serviceAccountsSelectField;
 
-    @FindBy(css = ".mr-2.btn.btn-secondary")
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement requestCancelButton;
 
     @FindBy(css = ".MuiDialogActions-spacing [data-testid='secondary-button']")
     private WebElement revokeCancelButton;
 
-    @FindBy(css = "[data-testid='form-action-buttons'] .btn-primary")
+    @FindBy(css = ".MuiDialogActions-spacing [data-testid='primary-button']")
     private WebElement requestOkButton;
 
     @FindBy(xpath = "//button[.='Ok']")
