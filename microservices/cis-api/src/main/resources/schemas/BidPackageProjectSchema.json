@@ -177,7 +177,7 @@
                       "type": "integer"
                     },
                     "defaultRole": {
-                      "type": "integer"
+                      "type": "string"
                     },
                     "roles": {
                       "type": "array",

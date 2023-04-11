@@ -1,23 +1,11 @@
 package com.apriori.dms.tests;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.qms.controller.QmsBidPackageResources;
-import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.sds.entity.response.Scenario;
-import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import entity.response.DmsDiscussionResponse;
 import entity.response.DmsDiscussionsResponse;
-import entity.response.DmsScenarioDiscussionResponse;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +25,6 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
-        createTestData();
     }
 
     @Test
@@ -70,8 +57,6 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
 
     @After
     public void testCleanup() {
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

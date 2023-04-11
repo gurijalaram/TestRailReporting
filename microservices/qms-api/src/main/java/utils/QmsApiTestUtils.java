@@ -4,7 +4,6 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
