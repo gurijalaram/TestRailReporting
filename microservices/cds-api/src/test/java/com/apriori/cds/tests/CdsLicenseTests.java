@@ -17,6 +17,7 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -121,6 +122,22 @@ public class CdsLicenseTests {
             licenseIdentity
         );
         soft.assertThat(licenseResponse.getResponseEntity().getIdentity()).isEqualTo(licenseIdentity);
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6623"})
+    @Description("Activate a license.")
+    public void activateLicenseTest() {
+        String userIdentity = PropertiesContext.get("user_identity");
+        cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
+        ResponseWrapper<LicenseResponse> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
+            LicenseResponse.class,
+            HttpStatus.SC_OK,
+            customerIdentity,
+            licenseIdentity);
+
+        soft.assertThat(license.getResponseEntity().getActive()).isTrue();
         soft.assertAll();
     }
 
