@@ -26,7 +26,7 @@ public class QmsApiTestUtils {
     }
 
     public static UserCredentials getCustomerUser() {
-        if (PropertiesContext.get("customer").equals("ap-int")) {
+        if (PropertiesContext.get("customer").startsWith("ap-int")) {
             return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
         }
         return new UserCredentials().setEmail("qa-automation-01@apriori.com");
