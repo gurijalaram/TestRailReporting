@@ -30,6 +30,7 @@ public class LicenseResponse {
     private List<LicensedModule> licensedModules = null;
     private String customerIdentity;
     private String siteIdentity;
+    private String updatedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
