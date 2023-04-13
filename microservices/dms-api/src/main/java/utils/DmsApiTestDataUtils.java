@@ -30,12 +30,17 @@ import entity.response.DmsScenarioDiscussionResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.File;
 
 public abstract class DmsApiTestDataUtils extends TestUtil {
+    protected static SoftAssertions softAssertions;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -54,36 +59,66 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
      */
     @BeforeClass
     public static void createTestData() {
+        softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         contentDesc = RandomStringUtils.randomAlphabetic(12);
         scenarioItem = createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getIdentity(),
-            currentUser,
-            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-        dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
-        dmsCommentResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, contentDesc, dmsScenarioDiscussionResponse.getItems()
-            .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
-        dmsCommentViewResponse = DmsApiTestUtils.markCommentViewAsRead(
-            dmsScenarioDiscussionResponse.getItems().get(0).getIdentity(),
-            dmsCommentResponse.getIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getUserIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getUserCustomerIdentity(),
-            dmsCommentResponse.getCommentView().get(0).getParticipantIdentity(),
-            currentUser);
+        if (scenarioItem != null) {
+            bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
+            if (bidPackageResponse != null) {
+                bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
+                    QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+                    bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+                if (bidPackageItemResponse != null) {
+                    bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                    if (bidPackageProjectResponse != null) {
+                        qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+                        if (qmsScenarioDiscussionResponse != null) {
+                            dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
+                            if (dmsScenarioDiscussionResponse != null) {
+                                dmsCommentResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, contentDesc, dmsScenarioDiscussionResponse.getItems()
+                                    .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
+                                if (dmsCommentResponse != null) {
+                                    dmsCommentViewResponse = DmsApiTestUtils.markCommentViewAsRead(
+                                        dmsScenarioDiscussionResponse.getItems().get(0).getIdentity(),
+                                        dmsCommentResponse.getIdentity(),
+                                        dmsCommentResponse.getCommentView().get(0).getUserIdentity(),
+                                        dmsCommentResponse.getCommentView().get(0).getUserCustomerIdentity(),
+                                        dmsCommentResponse.getCommentView().get(0).getParticipantIdentity(),
+                                        currentUser);
+                                    if (dmsCommentViewResponse == null) {
+                                        softAssertions.fail("Create DMS discussion comment view failed");
+                                    }
+                                } else {
+                                    softAssertions.fail("Create DMS discussion comment failed");
+                                }
+                            } else {
+                                softAssertions.fail("Get DMS discussion failed");
+                            }
+                        } else {
+                            softAssertions.fail("Create QMS discussion failed");
+                        }
+                    } else {
+                        softAssertions.fail("Create QMS Bidpackage Project failed");
+                    }
+                } else {
+                    softAssertions.fail("Create QMS Bidpackage Item failed");
+                }
+            } else {
+                softAssertions.fail("Create QMS Bidpackage failed");
+            }
+        } else {
+            softAssertions.fail("Create & Publish Scenario via cid-app failed");
+        }
     }
 
     @AfterClass
     public static void deleteTestData() {
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        deleteScenarioViaCidApp(scenarioItem, currentUser);
+        softAssertions.assertAll();
+        if (scenarioItem != null) {
+            deleteScenarioViaCidApp();
+        }
     }
 
     /**
@@ -104,21 +139,33 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             .user(currentUser)
             .build();
         new ComponentsUtil().postComponent(componentInfoBuilder);
-        ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).get(0);
-        componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
-        componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
-        new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+                SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+            .get(0);
+        if (scenarioItem != null) {
+            componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
+            componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
+            new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
+        }
         return scenarioItem;
     }
 
     /**
      * Delete scenario via Cid-app
-     *
-     * @param scenarioItem the scenario item
-     * @param currentUser  the current user
      */
-    private static void deleteScenarioViaCidApp(ScenarioItem scenarioItem, UserCredentials currentUser) {
+    private static void deleteScenarioViaCidApp() {
         new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
     }
+
+    @Before
+    public void testSetup() {
+        Assume.assumeTrue(softAssertions.wasSuccess());
+    }
+
+    @After
+    public void after() {
+        softAssertions.assertAll();
+    }
 }
+
+
