@@ -27,7 +27,7 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
     CIC_UI_GET_AGENT_CONNECTION_INFO("Thingworx/Things/PLMC_NewAgentPopup/Services/GetThingworxConnectionInfo"),
     CIC_UI_GET_WORKFLOW_REPORT_TEMPLATES("Thingworx/Things/PLMC_NewSchedulePopup/Services/GetReportTemplateNames"),
 
-    CIC_PLM_WC_SEARCH("Windchill/servlet/rest/search/objects");
+    CIC_PLM_WC_SEARCH("/servlet/rest/search/objects");
 
     private final String endpoint;
 
@@ -49,7 +49,7 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
         String apiUrl = StringUtils.EMPTY;
         if (this.endpoint.contains("Thingworx")) {
             apiUrl = PropertiesContext.get("ci-connect.ui_url");
-        } else if (this.endpoint.contains("Windchill")) {
+        } else if (this.endpoint.contains("servlet")) {
             apiUrl = PropertiesContext.get("ci-connect.windchill.host_name");
         } else {
             apiUrl = PropertiesContext.get("ci-connect.agent_api_url") + ":" + PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.port") + "/";
