@@ -103,17 +103,18 @@ default:
     nexus_version: 3.1.0-snapshot
     nexus_extension: zip
     custom_install: false
+    maximum_parts: 5
     agent_type: windchill
     windchill:
-      host_name: https://consvwc02.fbc.com/
+      host_name: https://consvwc02.fbc.com/Windchill
       host_token: d2NhZG1pbjp0ZXN0MTIzIw==
     teamcenter:
-      host_name: https://3dx-2019x.apriori.com:447/internal
+      host_name: https://consvtc12-01.apriori.com:8443/tc
       fsc_url: https://consvtc12-01.apriori.com:4545
       username: teamcenter
       password: FarIce88ForestryZen
     enovia:
-      host_name: https://consvtc12-01.apriori.com:8443/tc
+      host_name: https://3dx-2019x.apriori.com:447/internal
       username: admin_platform
       password: 3Dpassport
 
