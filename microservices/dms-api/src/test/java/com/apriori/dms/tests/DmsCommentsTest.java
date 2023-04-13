@@ -23,12 +23,10 @@ import utils.DmsApiTestUtils;
 import java.util.Collections;
 
 public class DmsCommentsTest extends DmsApiTestDataUtils {
-    private static SoftAssertions softAssertions;
     private static String userContext;
 
     @Before
     public void testSetup() {
-        softAssertions = new SoftAssertions();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }
 
@@ -115,10 +113,5 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
             + new AuthUserContextUtil().getAuthUserIdentity(otherUser.getEmail()) +
             "' is not a participant in discussion with identity '" +
             dmsScenarioDiscussionResponse.getItems().get(0).getIdentity() + "'");
-    }
-
-    @After
-    public void testCleanup() {
-        softAssertions.assertAll();
     }
 }

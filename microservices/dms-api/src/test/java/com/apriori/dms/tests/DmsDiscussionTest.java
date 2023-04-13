@@ -18,12 +18,10 @@ import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
 public class DmsDiscussionTest extends DmsApiTestDataUtils {
-    private static SoftAssertions softAssertions;
     private static String discussionDescription = StringUtils.EMPTY;
 
     @Before
     public void testSetup() {
-        softAssertions = new SoftAssertions();
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
     }
 
@@ -53,10 +51,5 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
         DmsDiscussionsResponse responseWrapper = DmsApiTestUtils.getDiscussions(DmsDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(responseWrapper.getIsFirstPage()).isTrue();
-    }
-
-    @After
-    public void testCleanup() {
-        softAssertions.assertAll();
     }
 }

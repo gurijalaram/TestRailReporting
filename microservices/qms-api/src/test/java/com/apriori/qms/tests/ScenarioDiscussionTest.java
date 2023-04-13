@@ -25,21 +25,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
 public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
-    private static SoftAssertions softAssertions;
-
-    @Before
-    public void testSetup() {
-        softAssertions = new SoftAssertions();
-    }
-
     @Test
     @TestRail(testCaseId = {"14608", "14613"})
     @Description("Create and delete Scenario Discussion")
@@ -261,10 +251,5 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
         ResponseWrapper<ScenarioDiscussionsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(300);
-    }
-
-    @After
-    public void testCleanup() {
-        softAssertions.assertAll();
     }
 }

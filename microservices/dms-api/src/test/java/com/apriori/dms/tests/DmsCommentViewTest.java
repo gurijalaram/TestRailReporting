@@ -16,11 +16,9 @@ import utils.DmsApiTestUtils;
 
 public class DmsCommentViewTest extends DmsApiTestDataUtils {
     private static String userContext;
-    private static SoftAssertions softAssertions;
 
     @Before
     public void testSetup() {
-        softAssertions = new SoftAssertions();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }
 
@@ -64,10 +62,5 @@ public class DmsCommentViewTest extends DmsApiTestDataUtils {
             dmsCommentViewResponse.getIdentity(), currentUser);
 
         softAssertions.assertThat(responseWrapper.getIdentity()).isNotNull();
-    }
-
-    @After
-    public void testCleanup() {
-        softAssertions.assertAll();
     }
 }
