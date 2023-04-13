@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Data
@@ -119,7 +120,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer));
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
         return jasperReportSummary.getFirstChartData().getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 

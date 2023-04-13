@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.InputControl;
@@ -20,6 +21,8 @@ import com.apriori.utils.enums.reports.SortOrderEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -29,6 +32,8 @@ import utils.JasperApiAuthenticationUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
 
@@ -36,6 +41,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static ReportRequest reportRequest;
     private static JasperApiUtils jasperApiUtils;
+
+    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
     public void setupGenericMethods() {
@@ -48,7 +55,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCode() {
         String currencyCode = "currencyCode";
-        String partToGet = "1271576 (Bulkload)";
+        //String partToGet = "1271576 (Bulkload)";
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();
@@ -60,14 +67,14 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
         reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
         reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
-        ChartDataPoint usdChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest, partToGet);
+        ChartDataPoint usdChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
         String usdFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
         double usdAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(usdChartDataPoint);
 
         reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
 
-        ChartDataPoint gbpChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest, partToGet);
+        ChartDataPoint gbpChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest);
 
         String gbpFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
         double gbpAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
@@ -80,40 +87,72 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3043"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
-        jasperApiUtils.inputControlGenericTest(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
+        String costMetricAssertValue = CostMetricEnum.PIECE_PART_COST.getCostMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(costMetricAssertValue)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"7418"})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Report")
     public void testCostMetricInputControlFbc() {
-        jasperApiUtils.inputControlGenericTest(
-            "Cost Metric",
-            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
+        String costMetricAssertValue = CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)").getPropertyByName("costMetric").getValue()).isEqualTo(costMetricAssertValue);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(costMetricAssertValue)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"3044"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        jasperApiUtils.inputControlGenericTest(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
+        String massMetricAssertValue = MassMetricEnum.FINISH_MASS.getMassMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"7398"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        jasperApiUtils.inputControlGenericTest(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
+        String massMetricAssertValue = MassMetricEnum.ROUGH_MASS.getMassMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)").getPropertyByName("massMetric").getValue()).isEqualTo(massMetricAssertValue);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -131,10 +170,17 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7532"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.LOW.getDtcScoreName()
-        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.LOW.getDtcScoreName());
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_LINK (Bulkload)").getPropertyByName("dtcScore").getValue()).isEqualTo("Low");
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)")).isEqualTo(null);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Low");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Low")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -142,10 +188,22 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7535"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
-        jasperApiUtils.inputControlGenericTest(
+        /*jasperApiUtils.inputControlGenericTest(
             "DTC Score",
             DtcScoreEnum.MEDIUM.getDtcScoreName()
-        );
+        );*/
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName());
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_LINK (Bulkload)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("dtcScore").getValue()).isEqualTo("Medium");
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)")).isEqualTo(null);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Low");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Low")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
