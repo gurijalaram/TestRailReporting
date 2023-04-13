@@ -1,7 +1,5 @@
 package agent.tests;
 
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -10,7 +8,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.AgentConstants;
 import utils.AgentService;
 import utils.CicLoginUtil;
 

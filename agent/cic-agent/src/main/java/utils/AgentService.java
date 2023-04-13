@@ -172,7 +172,7 @@ public class AgentService {
     public AgentService cleanUnInstall() {
         String executableFile = StringUtils.EMPTY;
         try {
-            channelSftp.cd(AgentConstants.REMOTE_WC_INSTALL_FOLDER);
+            channelSftp.cd(this.getInstallFolder());
             Vector<ChannelSftp.LsEntry> list = channelSftp.ls("*");
             try {
                 executableFile = list.stream()
@@ -184,9 +184,9 @@ public class AgentService {
                 log.warn("UNINSTALL EXECUTABLE FILE NOT FOUND!!!");
             }
             if (!executableFile.isEmpty()) {
-                execute(AgentConstants.REMOTE_WC_INSTALL_FOLDER + File.separator + executableFile + " -q");
+                execute(this.getInstallFolder() + File.separator + executableFile + " -q");
             }
-            if (recursiveFolderDelete(AgentConstants.REMOTE_WC_INSTALL_FOLDER)) {
+            if (recursiveFolderDelete(this.getInstallFolder())) {
                 log.info("AGENT UNINSTALLED AND DELETED THE FOLDER SUCCESSFULLY!!!!");
             }
         } catch (SftpException sftpException) {
@@ -333,12 +333,6 @@ public class AgentService {
                         case "installDirectory=":
                             stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("\n");
                             break;
-                        case "port=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
-                            break;
-                        case "auth-token=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
-                            break;
                         case "url=":
                             stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("\n");
                             break;
@@ -348,23 +342,35 @@ public class AgentService {
                         case "scanRate=":
                             stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("\n");
                             break;
-                        case "reconnectionInterval=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
-                            break;
                         case "agentId=":
                             stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("\n");
+                            break;
+                        case "port=":
+                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
+                            break;
+                        case "auth-token=":
+                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
+                            break;
+                        case "reconnectionInterval=":
+                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
                             break;
                         case "plmType=":
                             stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
                             break;
                         case "hostName=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append(StringUtils.capitalize(agentConnectionOptions.getPlmType())).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
                             break;
                         case "user=":
                             stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
                             break;
                         case "password=":
                             stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
+                            break;
+                        case "fscUrl=":
+                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("\n");
                             break;
                         default:
                             stringBuilder.append(line).append("\n");
@@ -423,26 +429,26 @@ public class AgentService {
      * @return current class object
      */
     public AgentService getConnectorOptions() {
-        AgentConnectionInfo agentConnectionInfo = null;
-        Integer portNumber = Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type"))));
+        agentConnectionOptions = getBasicConnectorOptions();
         switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "windchill":
-                agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), webLoginSession);
-                agentConnectionOptions = AgentConnectionOptions.builder()
-                    .agentName(connectorInfo.getName())
-                    .appKey(agentConnectionInfo.getAppKey())
-                    .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
-                    .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
-                    .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
-                    .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
-                    .reconnectionInterval(3)
-                    .authToken("DogCatMonkey")
-                    .port(portNumber)
-                    .installDirectory("C:" + AgentConstants.REMOTE_WC_INSTALL_FOLDER)
-                    .plmUser(agentCredentials.getPlmUser())
-                    .plmPassword(agentCredentials.getPlmPassword())
-                    .hostName("https://consvwc02.apriori.com/")
-                    .build();
+                agentConnectionOptions.setReconnectionInterval(3);
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
+                agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
+                agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.windchill.host_name"));
+                break;
+            case "teamcenter":
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
+                agentConnectionOptions.setPlmUser(PropertiesContext.get("ci-connect.teamcenter.username"));
+                agentConnectionOptions.setPlmPassword(PropertiesContext.get("ci-connect.teamcenter.password"));
+                agentConnectionOptions.setFscUrl(PropertiesContext.get("ci-connect.teamcenter.fsc_url"));
+                agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
         }
         return this;
     }
@@ -453,13 +459,45 @@ public class AgentService {
      * @return current class object
      */
     public AgentService installCertificates() {
-        String jreBinDirectory = AgentConstants.REMOTE_WC_INSTALL_FOLDER + File.separator + "jre/bin/";
+        String jreBinDirectory = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                jreBinDirectory = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+                break;
+            default:
+                jreBinDirectory = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+        }
         try {
             channelSftp.cd(jreBinDirectory);
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + AgentConstants.REMOTE_WC_INSTALL_FOLDER + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + AgentConstants.REMOTE_WC_INSTALL_FOLDER + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
         } catch (Exception e) {
             log.error("FAILED TO IMPORT CERTIFICATES");
+            throw new IllegalArgumentException(e);
+        }
+        return this;
+    }
+
+    /**
+     * Restart Agent Service
+     *
+     * @return current class object
+     */
+    public AgentService restartService() {
+        String agentService = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                agentService = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            default:
+                agentService = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+        }
+        try {
+            channelSftp.cd(agentService);
+            execute(agentService + File.separator + "nssm restart \"aPriori Agent - \"" + StringUtils.substringAfterLast(agentService, "/"));
+        } catch (Exception e) {
+            log.error("FAILED TO RESTART SERVICE!!");
+            throw new IllegalArgumentException(e);
         }
         return this;
     }
@@ -692,5 +730,40 @@ public class AgentService {
                 "DESTINATION FOLDER (%s) ON REMOTE SERVER NOT FOUND!!",
                 destinationPath));
         }
+    }
+
+    /**
+     * Get installation folder for each customer and agent tpe
+     *
+     * @return installation path
+     */
+    private String getInstallFolder() {
+        String installFolder = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "windchill":
+                installFolder = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            case "teamcenter":
+                installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+        }
+        return installFolder;
+    }
+
+    /**
+     * Get basic connector options from connector
+     *
+     * @return AgentConnectionOptions class object
+     */
+    private AgentConnectionOptions getBasicConnectorOptions() {
+        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), webLoginSession);
+        return AgentConnectionOptions.builder()
+            .agentName(connectorInfo.getName())
+            .appKey(agentConnectionInfo.getAppKey())
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
+            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
+            .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
+            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
+            .build();
     }
 }
