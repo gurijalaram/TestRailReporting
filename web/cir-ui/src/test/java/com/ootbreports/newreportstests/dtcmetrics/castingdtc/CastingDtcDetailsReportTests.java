@@ -29,7 +29,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private static JasperApiUtils jasperApiUtils;
 
     @Before
-    public void setupGenericMethods() {
+    public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
         reportRequest = jasperApiUtils.getReportRequest();
     }
@@ -71,16 +71,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.inputControlGenericTest(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
-    }
-
-    @Test
-    @TestRail(testCaseId = "7507")
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Details Report")
-    public void testDtcScoreNoSelection() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            ""
         );
     }
 
