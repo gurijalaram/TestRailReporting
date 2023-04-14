@@ -1549,4 +1549,54 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"16460","16461","16462","16463"})
+    @Description("Verify non-applicable fields are hidden in scenario info cards")
+    public void testShowHideNonApplicableFieldsInScenarioInfoCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        String cardName = "Liability Inputs";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateNewCardOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickToOpenModal()
+                .clickToOpenDropDown()
+                .selectAnOption("Liability Insurance Cost")
+                .selectAnOption("Liability Insurance Factor")
+                .selectAnOption("Logistics")
+                .selectAnOption("Lifetime Cost")
+                .enterCardName(cardName)
+                .clickSaveButton();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(cardName)).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName,"Show Non-Applicable Fields")).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).doesNotContain("Liability Insurance Cost","Liability Insurance Factor");
+
+        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName,"Show Non-Applicable Fields");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).contains("Liability Insurance Cost","Liability Insurance Factor");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName,"Hide Non-Applicable Fields")).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName,"Hide Non-Applicable Fields")
+                .deleteScenarioResultsCard(cardName);
+
+        softAssertions.assertAll();
+    }
 }
