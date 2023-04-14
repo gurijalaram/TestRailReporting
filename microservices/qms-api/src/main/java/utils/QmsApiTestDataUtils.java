@@ -124,6 +124,9 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
             componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
             componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
             new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
+            scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+                    SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+                .get(0);
         }
         return scenarioItem;
     }
