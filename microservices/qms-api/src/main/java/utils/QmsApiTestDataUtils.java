@@ -31,7 +31,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assume;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -92,9 +92,8 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
         }
     }
 
-    @AfterClass
+    @AfterClass()
     public static void deleteTestData() {
-        softAssertions.assertAll();
         if (scenarioItem != null) {
             deleteScenarioViaCidApp();
         }
@@ -137,12 +136,14 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     }
 
     @Before
-    public void testSetup() {
-        Assume.assumeTrue(softAssertions.wasSuccess());
+    public void beforeTest() {
+        if (!softAssertions.wasSuccess()) {
+            Assert.fail(softAssertions.errorsCollected().toString());
+        }
     }
 
     @After
-    public void after() {
+    public void afterTest() {
         softAssertions.assertAll();
     }
 
