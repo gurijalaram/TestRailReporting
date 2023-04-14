@@ -163,6 +163,14 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             "Process Group",
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup());
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains("Sheet Metal")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -172,9 +180,9 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     public void testDtcScoreLow() {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.LOW.getDtcScoreName());
 
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_LINK (Bulkload)").getPropertyByName("dtcScore").getValue()).isEqualTo("Low");
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("3574707 (Bulkload)").getPropertyByName("dtcScore").getValue()).isEqualTo("Low");
         softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)")).isEqualTo(null);
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Low");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
@@ -188,20 +196,15 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7535"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
-        /*jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.MEDIUM.getDtcScoreName()
-        );*/
-
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName());
 
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_LINK (Bulkload)")).isEqualTo(null);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("dtcScore").getValue()).isEqualTo("Medium");
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("3574707 (Bulkload)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)").getPropertyByName("dtcScore").getValue()).isEqualTo("Medium");
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)")).isEqualTo(null);
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Low");
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Medium");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Low")).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("Medium")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -211,10 +214,17 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7538"})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.HIGH.getDtcScoreName()
-        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.HIGH.getDtcScoreName());
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("3574707 (Bulkload)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("AP_SHEETMETAL_EXERCISE (Initial)")).isEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("BRACKET_V4 (rev1)").getPropertyByName("dtcScore").getValue()).isEqualTo("High");
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("High");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).toString().contains("High")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -222,9 +232,15 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3045"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
-        jasperApiUtils.inputControlGenericTest(
-            "Sort Order",
-            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
-        );
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum());
+
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("annualSpend").getValue()).isEqualTo(4406.160458693279);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("3575137 (Bulkload)").getPropertyByName("annualSpend").getValue()).isEqualTo(8264352.305448065);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains("Annual Spend")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }
