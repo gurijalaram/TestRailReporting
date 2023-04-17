@@ -436,7 +436,8 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return current page object
      */
     public MessagesPage clickOnAssignToOption() {
-        getPageUtils().waitForElementAndClick(assignToOption);
+        getPageUtils().waitForElementToAppear(assignToOption);
+        getPageUtils().javaScriptClick(assignToOption);
         return this;
     }
 
