@@ -115,13 +115,13 @@ public class JasperApiUtils {
      * @param reportRequest ReportRequest instance to submit to the api
      * @return ChartDataPoint instance of the specified part
      */
-    public ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest) {
+    public ChartDataPoint generateReportAndGetChartDataPoint(ReportRequest reportRequest, String partToGet) {
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
         JasperReportSummary jasperReportSummary = generateReportSummary(reportRequest);
         timer.stop();
         logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
-        return jasperReportSummary.getFirstChartData().getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        return jasperReportSummary.getChartData().get(0).getChartDataPointByPartName(partToGet);
     }
 
     /**
