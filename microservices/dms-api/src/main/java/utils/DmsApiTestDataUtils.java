@@ -16,6 +16,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -115,6 +116,9 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
 
     @AfterClass
     public static void deleteTestData() {
+        if (bidPackageResponse != null) {
+            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        }
         if (scenarioItem != null) {
             deleteScenarioViaCidApp();
         }
