@@ -347,6 +347,9 @@ public class AgentService {
                         case "port=":
                             stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
                             break;
+                        case "plmType=":
+                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
+                            break;
                         case "auth-token=":
                             stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("\n") :
                                 stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
@@ -355,21 +358,25 @@ public class AgentService {
                             stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("\n") :
                                 stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
                             break;
-                        case "plmType=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
-                            break;
                         case "hostName=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
                             break;
                         case "user=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
                             break;
                         case "password=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
                             break;
                         case "fscUrl=":
                             stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("\n") :
                                 stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("\n");
+                            break;
+                        case "rootFolderPath=":
+                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("\n");
                             break;
                         default:
                             stringBuilder.append(line).append("\n");
@@ -448,6 +455,13 @@ public class AgentService {
                 agentConnectionOptions.setPlmPassword(PropertiesContext.get("ci-connect.teamcenter.password"));
                 agentConnectionOptions.setFscUrl(PropertiesContext.get("ci-connect.teamcenter.fsc_url"));
                 agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
+                break;
+            case "filesystem":
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("customer"))));
+                break;
         }
         return this;
     }
@@ -462,6 +476,9 @@ public class AgentService {
         switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "teamcenter":
                 jreBinDirectory = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+                break;
+            case "filesystem":
+                jreBinDirectory = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
                 break;
             default:
                 jreBinDirectory = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
@@ -482,22 +499,20 @@ public class AgentService {
      *
      * @return current class object
      */
-    public AgentService restartService() {
+    public AgentService executeAgentService() {
         String agentService = StringUtils.EMPTY;
         switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "teamcenter":
                 agentService = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
                 break;
+            case "filesystem":
+                agentService = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
             default:
                 agentService = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
         }
-        try {
-            channelSftp.cd(agentService);
-            execute(agentService + File.separator + "nssm restart \"aPriori Agent - \"" + StringUtils.substringAfterLast(agentService, "/"));
-        } catch (Exception e) {
-            log.error("FAILED TO RESTART SERVICE!!");
-            throw new IllegalArgumentException(e);
-        }
+        runService(agentService, "stop");
+        runService(agentService, "start");
         return this;
     }
 
@@ -527,13 +542,41 @@ public class AgentService {
     }
 
     /**
+     * start agent service
+     *
+     * @param agentService   service Name
+     * @param serviceRunType (start, stop or restart)
+     */
+    private void runService(String agentService, String serviceRunType) {
+        try {
+            channelSftp.cd(agentService);
+            switch (serviceRunType) {
+                case "start":
+                    execute(agentService + File.separator + String.format("nssm start \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+                case "stop":
+                    execute(agentService + File.separator + String.format("nssm stop \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+                case "restart":
+                    execute(agentService + File.separator + String.format("nssm restart \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+            }
+        } catch (Exception e) {
+            log.error("FAILED TO RUN SERVICE!!");
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
      * Execute coommand on remote VM machine using JSch open channel sftp connection
      *
      * @param command command to execute
      */
-    private void execute(String command) {
+    private String execute(String command) {
         int exitStatus = -1;
         StringBuilder stringBuilder = new StringBuilder();
+        String status = StringUtils.EMPTY;
+        byte[] buffer = new byte[1024];
         try {
             channel = (Channel) jSchSession.openChannel("exec");
             ((ChannelExec) channel).setCommand(command);
@@ -552,13 +595,15 @@ public class AgentService {
                     break;
                 }
             }
-            log.info(stringBuilder.toString());
+            status = (stringBuilder.toString().contains("\u0000")) ? stringBuilder.toString().replaceAll("\u0000", "") : stringBuilder.toString();
+            log.info("COMMAND EXECUTION STATUS : " + status);
             log.info(String.format("Exit status of the execution: %s ", (exitStatus == 0) ? exitStatus + "(FINISHED EXECUTION)" : exitStatus + "(EXECUTION FAILED)"));
         } catch (JSchException e) {
             log.error(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+        return status;
     }
 
     /**
@@ -744,6 +789,9 @@ public class AgentService {
                 break;
             case "teamcenter":
                 installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            case "filesystem":
+                installFolder = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
                 break;
         }
         return installFolder;
