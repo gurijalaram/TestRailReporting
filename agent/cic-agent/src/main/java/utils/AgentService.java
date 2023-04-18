@@ -21,7 +21,6 @@ import entity.response.AgentConnectionOptions;
 import entity.response.ConnectorInfo;
 import entity.response.NexusAgentItem;
 import entity.response.NexusAgentResponse;
-import enums.CICAgentType;
 import enums.NexusAPIEnum;
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
@@ -409,7 +408,7 @@ public class AgentService {
         if (null == connectorInfo) {
             switch (PropertiesContext.get("ci-connect.agent_type")) {
                 case "windchill":
-                    connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData(CICAgentType.WINDCHILL);
+                    connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
                     connectorRequestDataBuilder.setDisplayName(connectorName);
                     ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateConnector(connectorRequestDataBuilder, loginSession);
                     if (responseWrapper.getBody().contains("true")) {
