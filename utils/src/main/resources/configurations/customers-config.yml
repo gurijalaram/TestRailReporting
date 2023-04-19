@@ -25,7 +25,7 @@ ap-int:
       agent_name: c3101e82-4cfc-4a3b-a341-ee53c3f05f55_Agent
     filesystem:
       port: 8809
-      connector: FS-consvwc02
+      connector: FS-conqcic01
     enovia:
       port: 8808
       connector: EN-consvwc02
