@@ -38,7 +38,6 @@ import entity.response.PlmParts;
 import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
-import enums.CICAgentType;
 import enums.CICPartSelectionType;
 import enums.CICReportType;
 import enums.PlmPartsSearch;
@@ -552,17 +551,18 @@ public class CicApiTestUtil extends TestBase {
     /**
      * Get Connector request base data based on CICAgentType (Windchill, Team_Center or File_system)
      *
-     * @param cicAgentType CICAgentType (Windchill, Team_Center or File_system)
      * @return ConnectorRequest java class object
      */
-    public static ConnectorRequest getConnectorBaseData(CICAgentType cicAgentType) {
+    public static ConnectorRequest getConnectorBaseData() {
         ConnectorRequest connectorRequestDataBuilder = null;
-        switch (cicAgentType.getAgentType()) {
-            default:
-                connectorRequestDataBuilder = new TestDataService().getTestData("CicCreateConnectorData.json", ConnectorRequest.class);
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                connectorRequestDataBuilder = new TestDataService().getTestData("ConnectorTeamCenterData.json", ConnectorRequest.class);
                 connectorRequestDataBuilder.setCustomer(getCustomerName());
-                connectorRequestDataBuilder.setDisplayName("WC-" + DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMdd));
-                connectorRequestDataBuilder.setAgentType(cicAgentType.getAgentType());
+                break;
+            default:
+                connectorRequestDataBuilder = new TestDataService().getTestData("ConnectorWindchillData.json", ConnectorRequest.class);
+                connectorRequestDataBuilder.setCustomer(getCustomerName());
         }
         return connectorRequestDataBuilder;
     }

@@ -47,6 +47,7 @@ public class AgentInstallTest extends TestBase {
             .cleanUnInstall()
             .uploadAndInstall()
             .installCertificates()
+            .executeAgentService()
             .close();
 
         softAssertions.assertThat(agentService.getConnectorStatusInfo().getConnectionStatus()).isEqualTo("Connected to PLM");
