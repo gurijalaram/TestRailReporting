@@ -15,6 +15,7 @@ import com.apriori.pageobjects.common.LetNavigationBarController;
 import com.apriori.pageobjects.pages.messages.MessagesPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
+import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -56,6 +57,9 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     @FindBy(xpath = "//div[@data-testid='loader']")
     private WebElement spinner;
+
+    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.projects']")
+    private WebElement btnProjects;
 
     private LetNavigationBarController letNavigationBarController;
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -274,5 +278,25 @@ public class LeftHandNavigationBar extends CisHeaderBar {
         cssComponent.getComponentParts(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_STATE_EQ.getKey() + NOT_COSTED);
         scenariosUtil.postPublishScenario(myComponent);
         return this;
+    }
+
+    /**
+     * Checks if projects button displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectsBtnDisplayed() {
+        return getPageUtils().waitForElementToAppear(btnProjects).isDisplayed();
+    }
+
+    /**
+     * Navigate to projects page
+     *
+     * @return new page object
+     */
+
+    public ProjectsPage clickProjects() {
+        getPageUtils().waitForElementAndClick(btnProjects);
+        return new ProjectsPage(getDriver());
     }
 }
