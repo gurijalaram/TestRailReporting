@@ -1,0 +1,466 @@
+{
+  "agentType": "windchill",
+  "description": "CONQSCT01",
+  "connectorName": "%s",
+  "name": "%s",
+  "standardMappings": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "dataType": {
+          "name": "dataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 12,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "displayDataType": {
+          "name": "displayDataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 18,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 13,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isMandatoryField": {
+          "name": "isMandatoryField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 10,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isSaved": {
+          "name": "isSaved",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 14,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isStandardField": {
+          "name": "isStandardField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 9,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 17,
+          "aspects": {
+            "defaultValue": true,
+            "isPrimaryKey": false
+          }
+        },
+        "mappingRule": {
+          "name": "mappingRule",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 15,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "plmAttributeName": {
+          "name": "plmAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 5,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "readOnly": {
+          "name": "readOnly",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 19,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "twxAttributeName": {
+          "name": "twxAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 6,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "usageType": {
+          "name": "usageType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 11,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 16,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [{
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "0648a6fc-f696-4242-abf4-5d873975861d",
+      "isMandatoryField": true,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "ID",
+      "readOnly": true,
+      "twxAttributeName": "partId",
+      "usageType": "READ",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "1d3a2f75-d717-426d-a806-fe9fbb5893df",
+      "isMandatoryField": true,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "Revision",
+      "readOnly": false,
+      "twxAttributeName": "revisionNumber",
+      "usageType": "READ",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "e887e924-2afe-4503-b72a-a7f10be35a42",
+      "isMandatoryField": true,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "Number",
+      "readOnly": false,
+      "twxAttributeName": "partNumber",
+      "usageType": "READ",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "54990d56-9c32-410a-8894-e27047321bdb",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "String1",
+      "readOnly": false,
+      "twxAttributeName": "UDA1",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "NUMBER",
+      "displayDataType": "NUMBER",
+      "identifier": "b6516207-a013-4ec9-a1ad-496207fd3f61",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "RealNumber1",
+      "readOnly": false,
+      "twxAttributeName": "UDA2",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "DATETIME",
+      "displayDataType": "DATETIME",
+      "identifier": "8a746e96-c0da-4932-b68a-2afa546694ff",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "DateTime1",
+      "readOnly": false,
+      "twxAttributeName": "UDA3",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "bafaa23e-4909-4e4a-bc38-61f9d2cfbbfe",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "MultiselectString",
+      "readOnly": false,
+      "twxAttributeName": "UDA4",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "INTEGER",
+      "displayDataType": "INTEGER",
+      "identifier": "e16d447f-3e3f-4c7f-8bd1-b22eeaf76114",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "AnnualVolume",
+      "readOnly": false,
+      "twxAttributeName": "annualVolume",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "603d7ae5-c836-48c8-82d8-8246e83d911f",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "ApPG",
+      "readOnly": false,
+      "twxAttributeName": "processGroupName",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "INTEGER",
+      "displayDataType": "INTEGER",
+      "identifier": "733140be-31a8-4465-9bd0-7377b8973820",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "BatchSize",
+      "readOnly": false,
+      "twxAttributeName": "batchSize",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "NUMBER",
+      "displayDataType": "NUMBER",
+      "identifier": "c56c5506-2822-45a6-9a78-36ae66d0235f",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "ProductionLife",
+      "readOnly": false,
+      "twxAttributeName": "productionLife",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "b277c0a8-3c90-455a-9c21-e06a722cee49",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "ScenarioName",
+      "readOnly": false,
+      "twxAttributeName": "scenarioName",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "3b55eefb-a295-4fe4-a991-9980850e25d6",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "VPE",
+      "readOnly": false,
+      "twxAttributeName": "vpeName",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "84f301c0-a6c9-4ea4-bebb-db03fec7d7f0",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "ApMaterial",
+      "readOnly": false,
+      "twxAttributeName": "materialName",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }, {
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "82ecb0b2-32a0-4bc9-a1d3-1f81f33329f7",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": true,
+      "plmAttributeName": "Description",
+      "readOnly": false,
+      "twxAttributeName": "description",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false,
+      "errorMessage": ""
+    }],
+    "name": "",
+    "description": ""
+  },
+  "additonalMappings": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "dataType": {
+          "name": "dataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 12,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "displayDataType": {
+          "name": "displayDataType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 18,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 13,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isMandatoryField": {
+          "name": "isMandatoryField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 10,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isSaved": {
+          "name": "isSaved",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 14,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isStandardField": {
+          "name": "isStandardField",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 9,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 17,
+          "aspects": {
+            "defaultValue": true,
+            "isPrimaryKey": false
+          }
+        },
+        "mappingRule": {
+          "name": "mappingRule",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 15,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "plmAttributeName": {
+          "name": "plmAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 5,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "readOnly": {
+          "name": "readOnly",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 19,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "twxAttributeName": {
+          "name": "twxAttributeName",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 6,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "usageType": {
+          "name": "usageType",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 11,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 16,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [{
+      "dataType": "STRING",
+      "displayDataType": "STRING",
+      "identifier": "918765a2-40fe-4987-bffb-c965dec2f655",
+      "isMandatoryField": false,
+      "isSaved": true,
+      "isStandardField": false,
+      "plmAttributeName": "String1",
+      "twxAttributeName": "String1",
+      "usageType": "READ_AND_WRITE",
+      "_isSelected": false
+    }],
+    "name": "",
+    "description": ""
+  }
+}

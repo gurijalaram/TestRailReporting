@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,6 +21,22 @@ public class ChartDataPoint {
 
     private List<ChartDataPointProperty> properties;
 
+    public Integer getHoleIssues() {
+        return this.getNotNullIntPropertyValue("Hole Issues");
+    }
+
+    public Integer getMaterialIssues() {
+        return this.getNotNullIntPropertyValue("Material Issues");
+    }
+
+    public Integer getRadiusIssues() {
+        return this.getNotNullIntPropertyValue("Radius Issues");
+    }
+
+    public Integer getDraftIssues() {
+        return this.getNotNullIntPropertyValue("Draft Issues");
+    }
+
     public String getMassMetric() {
         return (String) getPropertyValueIfExist("massMetric");
     }
@@ -34,6 +51,10 @@ public class ChartDataPoint {
 
     public Double getAnnualSpend() {
         return (Double) getPropertyValueIfExist("annualSpend");
+    }
+
+    private Integer getNotNullIntPropertyValue(String propertyName) {
+        return Integer.valueOf((String) Objects.requireNonNull(getPropertyValueIfExist(propertyName)));
     }
 
     private Object getPropertyValueIfExist(final String propertyName) {

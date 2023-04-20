@@ -1,11 +1,12 @@
 package com.apriori.cirapi.entity;
 
-import com.apriori.cirapi.entity.response.ChartDataPoint;
+import com.apriori.cirapi.entity.response.ChartData;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 
 import java.util.List;
@@ -14,12 +15,17 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class JasperReportSummary {
     private Document reportHtmlPart;
-    private List<ChartDataPoint> chartDataPoints;
+    private List<ChartData> chartData;
 
-    public ChartDataPoint getChartDataPointByPartName(final String partName) {
-        return chartDataPoints.stream().filter(dataPoint -> dataPoint.getPartName().equals(partName))
-            .findFirst().orElse(null);
+    public ChartData getFirstChartData() {
+        if (chartData.isEmpty()) {
+            log.warn("Chart data is not present");
+            return null;
+        }
+
+        return chartData.get(0);
     }
 }

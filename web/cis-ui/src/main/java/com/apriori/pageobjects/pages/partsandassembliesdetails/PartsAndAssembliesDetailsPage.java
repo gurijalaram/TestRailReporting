@@ -1685,6 +1685,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickOnShare() {
         getPageUtils().waitForElementToAppear(proximityLbl);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='comments-expanded']//parent::div//..//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementAndClick(btnShare);
         return this;
     }
@@ -2734,5 +2735,33 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         openAndCloseProcessDropDown();
         clickProcessModalSaveButton();
         return this;
+    }
+
+    /**
+     * Checks if show/hide non-applicable fields link displayed
+     *
+     * @return true/false
+     */
+    public boolean isShowOrHideNonApplicableFieldsDisplayed(String cardName, String linkName) {
+        return getPageUtils().isElementDisplayed(By.xpath("//div[@data-testid='" + cardName + "']//span[contains(text(),'" + linkName + "')]"));
+    }
+
+    /**
+     * clicks to view/hide non-applicable fields
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToViewOrHideNonApplicableFields(String cardName, String linkName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid='" + cardName + "']//span[contains(text(),'" + linkName + "')]"));
+        return this;
+    }
+
+    /**
+     * gets the non-applicable fields
+     *
+     * @return a String
+     */
+    public String getNonApplicableFields(String cardName) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-testid='" + cardName + "']")).getAttribute("innerText");
     }
 }
