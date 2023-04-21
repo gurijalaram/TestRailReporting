@@ -2,6 +2,7 @@ package com.navigation;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
@@ -119,6 +120,6 @@ public class NavigationPanelTest extends TestBase {
             .clickSupport()
             .switchTab();
 
-        assertThat(zendeskSignInPage.isSupportLogoDisplayed(), is(true));
+        assertThat(zendeskSignInPage.getCurrentUrl(), containsString("https://support.apriori.com/hc/en-us"));
     }
 }

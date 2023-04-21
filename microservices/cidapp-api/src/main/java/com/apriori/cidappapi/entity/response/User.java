@@ -45,5 +45,7 @@ public class User {
     @Data
     public static class CustomAttributes {
         private Integer workspaceId;
+        private String defaultRole;
+        private List<Object> roles;
     }
 }

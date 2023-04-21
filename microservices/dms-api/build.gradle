@@ -19,7 +19,6 @@ dependencies {
     implementation project(':db')
     implementation project(':microservices:css-api')
     implementation 'com.massisframework:j-text-utils:0.3.4'
-    implementation project(':microservices:sds-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:qms-api')
 
