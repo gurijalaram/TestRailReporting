@@ -24,6 +24,7 @@ public class ScenarioProjectUserInformation {
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private BidPackageProjectUserProfile userProfile;
     private String email;

@@ -1,15 +1,5 @@
 package com.apriori.dms.tests;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.qms.controller.QmsBidPackageResources;
-import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.sds.entity.response.Scenario;
-import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -21,10 +11,7 @@ import entity.request.DmsCommentsRequest;
 import entity.response.DmsCommentResponse;
 import entity.response.DmsCommentsResponse;
 import entity.response.DmsErrorMessageResponse;
-import entity.response.DmsScenarioDiscussionResponse;
 import io.qameta.allure.Description;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -34,17 +21,13 @@ import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
 import java.util.Collections;
-import java.util.HashSet;
 
 public class DmsCommentsTest extends DmsApiTestDataUtils {
-    private static SoftAssertions softAssertions;
     private static String userContext;
 
     @Before
     public void testSetup() {
-        softAssertions = new SoftAssertions();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        createTestData();
     }
 
     @Test
@@ -106,9 +89,6 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @Description("Verify user can add comment to discussion with another mentioned user")
     public void addCommentWithAnotherMentionedUser() {
         UserCredentials otherUser = UserUtil.getUser();
-        if (otherUser.getEmail().equals(currentUser.getEmail())) {
-            otherUser = UserUtil.getUser();
-        }
         String commentDescription = new GenerateStringUtil().getRandomString();
         DmsCommentsRequest dmsCommentsRequest = DmsCommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
@@ -126,9 +106,6 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @Description("Verify that only discussion participants can add comment to current discussion")
     public void addCommentByOtherUser() {
         UserCredentials otherUser = UserUtil.getUser();
-        if (otherUser.getEmail().equals(currentUser.getEmail())) {
-            otherUser = UserUtil.getUser();
-        }
         String commentsDescription = new GenerateStringUtil().getRandomString();
         DmsErrorMessageResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(otherUser, commentsDescription, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), DmsErrorMessageResponse.class, HttpStatus.SC_BAD_REQUEST);
@@ -136,12 +113,5 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
             + new AuthUserContextUtil().getAuthUserIdentity(otherUser.getEmail()) +
             "' is not a participant in discussion with identity '" +
             dmsScenarioDiscussionResponse.getItems().get(0).getIdentity() + "'");
-    }
-
-    @After
-    public void testCleanup() {
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(qmsScenarioDiscussionResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        softAssertions.assertAll();
     }
 }
