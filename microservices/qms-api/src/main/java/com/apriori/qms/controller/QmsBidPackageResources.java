@@ -24,6 +24,10 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
+import utils.QmsApiTestUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class QmsBidPackageResources {
 
@@ -547,6 +551,42 @@ public class QmsBidPackageResources {
     }
 
     /**
+     * ProjectRequestBuilder
+     *
+     * @param projectName        the project name
+     * @param projectDescription the project description
+     * @param itemsList          the items list
+     * @param usersList          the users list
+     * @return BidPackageProjectRequest project request builder
+     */
+    public static BidPackageProjectRequest getProjectRequestBuilder(String projectName, String projectDescription, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList) {
+        return BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name(projectName)
+                .displayName(projectName)
+                .dueAt(LocalDateTime.now().plusDays(10))
+                .description(projectDescription)
+                .status("COMPLETED")
+                .type("INTERNAL")
+                .projectProfile(BidPackageProjectProfile.builder()
+                    .emailReminder(EmailReminder.builder()
+                        .active(true)
+                        .startDuration("P1DT5M")
+                        .frequencyValue("R2/P1D")
+                        .build())
+                    .commentReminder(CommentReminder.builder()
+                        .active(true)
+                        .startDuration("P1D")
+                        .frequencyValue("R/P4H")
+                        .build())
+                    .build())
+                .items(itemsList)
+                .users(usersList)
+                .build())
+            .build();
+    }
+
+    /**
      * Get list of all projects
      *
      * @param responseClass expected response class
@@ -557,6 +597,7 @@ public class QmsBidPackageResources {
      */
     public static <T> T getProjects(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
@@ -580,5 +621,28 @@ public class QmsBidPackageResources {
             .expectedResponseCode(httpStatus);
 
         return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Create project
+     *
+     * @param <T>                Response class type
+     * @param projectName        Unique project name
+     * @param projectDescription Unique project description
+     * @param itemsList          the items list
+     * @param usersList          the users list
+     * @param responseClass      Expected response class
+     * @param httpStatus         Expected http status code
+     * @param currentUser        UserCredentials
+     * @return response class object
+     */
+    public static <T> T createProject(String projectName, String projectDescription, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        BidPackageProjectRequest projectRequest = getProjectRequestBuilder(projectName, projectDescription, itemsList, usersList);
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, responseClass)
+            .body(projectRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 }
