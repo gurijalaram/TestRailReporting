@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -19,6 +19,7 @@ import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -35,14 +36,15 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.http.cookie.SM;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,7 +64,9 @@ public class EditAssembliesTest extends TestBase {
 
     private SoftAssertions softAssertions = new SoftAssertions();
     private static ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder cidComponentItem;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private static ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @Category(SmokeTests.class)
@@ -390,7 +394,7 @@ public class EditAssembliesTest extends TestBase {
         final String subcomponent3 = "550-05676-001 1 1 ---";
         final List<String> uploadedSubcomponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3);
         final String subComponentExtension = ".CATPart";
-        final List<String> allSubComponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3, "MS14108-3 1 ---", "505-04596-001 1 1 ---", "550-05526-001 1 1 --A", "550-05629-401 PRIMARY 1 ---", "550-05673-401 PRIMARY 1 ---",
+        final List<String> listOfSubComponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3, "MS14108-3 1 ---", "505-04596-001 1 1 ---", "550-05526-001 1 1 --A", "550-05629-401 PRIMARY 1 ---", "550-05673-401 PRIMARY 1 ---",
             "550-05676-002 1 1 ---", "550-05682-001 1 1 --A", "550-05683-001 1 1 ---", "550-05683-002 1 1 ---", "550-05689-001 1 1 ---", "550-05690-001 1 1 ---", "CCR244SS-3-2 1 ---",
             "MS14108-15 1 ---", "MS14218AD4-4 1 ---", "MS20392-1C15 1 ---", "MS20470AD4-5 1 ---", "MS20470AD4-6 1 ---", "MS21059L3 1 ---", "MS21059L08 1 ---", "MS24665-132 1 ---", "NAS1789-3 1 ---", "NAS9309M-6-04 1 ---");
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
@@ -421,7 +425,7 @@ public class EditAssembliesTest extends TestBase {
             .openComponents()
             .selectTableView();
 
-        allSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+        listOfSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
     @Test
@@ -920,7 +924,6 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @Issue("BA-2764")
     @TestRail(testCaseId = {"12040", "11954", "6521", "10874", "11027"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
@@ -987,8 +990,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @Issue("BA-2764")
-    @TestRail(testCaseId = {"12037", "12039"})
+    @TestRail(testCaseId = {"12037"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1044,7 +1046,8 @@ public class EditAssembliesTest extends TestBase {
             .changeName(editedComponentScenarioName)
             .clickContinue(PublishPage.class)
             .publish(ComponentsTablePage.class)
-            .checkManifestComplete(componentAssembly, PIN);
+            .checkManifestComplete(componentAssembly, PIN)
+            .addColumn(ColumnsEnum.PUBLISHED);
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
@@ -1160,7 +1163,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6601", "6602", "11869", "12022", "12023"})
+    @TestRail(testCaseId = {"6601", "6602", "11869", "12022", "12023", "6522"})
     @Description("Validate user can open a public component from a private workspace")
     public void testOpeningPublicComponentFromPrivateWorkspace() {
         String assemblyName = "Hinge assembly";
@@ -1223,6 +1226,301 @@ public class EditAssembliesTest extends TestBase {
             .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11960"})
+    @Description("Validate a private sub component will take preference over a public iteration when editing a public assembly")
+    public void testEditPublicAssemblyAssociationsPrivatePreference() {
+        final String hinge_assembly = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+        final String big_ring = "big ring";
+        final String pin = "Pin";
+        final String small_ring = "small ring";
+        final String subComponentExtension = ".SLDPRT";
+        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            hinge_assembly,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly).publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        componentsTablePage = componentsTreePage.selectTableView()
+            .multiSelectSubcomponents(big_ring + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(ComponentsTablePage.class)
+            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
+            .closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .selectTableView()
+            .addColumn(ColumnsEnum.PUBLISHED);
+
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
+
+        componentsTreePage.closePanel()
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .openComponents()
+            .selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+
+        componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11961", "11956"})
+    @Description("Validate a new private sub component will take preference over a public iteration when editing a public assembly")
+    public void testEditPublicAssemblyAssociationsPrivateNewScenarioPreferenceAndDelete() {
+        final String hinge_assembly = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+        final String big_ring = "big ring";
+        final String pin = "Pin";
+        final String small_ring = "small ring";
+        final String subComponentExtension = ".SLDPRT";
+        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final File resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, big_ring + subComponentExtension);
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            hinge_assembly,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly).publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(big_ring, newScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new EvaluatePage(driver).refresh()
+            .navigateToScenario(componentAssembly);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        componentsTablePage = componentsTreePage.selectTableView()
+            .multiSelectSubcomponents(big_ring + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(ComponentsTablePage.class)
+            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
+            .closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .selectTableView()
+            .addColumn(ColumnsEnum.PUBLISHED);
+
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
+
+        componentsTreePage.closePanel()
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .openComponents()
+            .selectTableView();
+
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+
+        componentsTablePage.selectTreeView();
+
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(scenarioName);
+
+        componentsTreePage.selectTableView()
+            .multiSelectSubcomponents(big_ring + "," + scenarioName)
+            .deleteSubcomponent()
+            .clickDelete(ComponentsTablePage.class)
+            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
+            .closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .clickCostButton()
+            .confirmCost("Yes")
+            .openComponents()
+            .selectTableView()
+            .addColumn(ColumnsEnum.SCENARIO_TYPE);
+
+        softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon(),
+            StatusIconEnum.PRIVATE.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10843"})
+    @Description("Validate assembly explorer table updates when sub-components changed")
+    public void testAssemblyExplorerTableUpdates() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        componentsTreePage.multiSelectSubcomponents(PIN + "," + scenarioName)
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .enterAnnualVolume("1234")
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class);
+
+        scenariosUtil.getScenarioCompleted(componentAssembly.getSubComponents().get(1));
+        componentsTreePage = componentsTreePage.closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).as("Verify details updated")
+            .contains(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory(), "1,234");
+
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .clickHere()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
+
+        evaluatePage.enterAnnualVolume("7777")
+            .goToAdvancedTab()
+            .enterBatchSize("612")
+            .goToBasicTab()
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .clickContinue(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+
+        componentsTreePage = evaluatePage.clickExplore()
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
+            .contains("7,777", "612");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10860", "21552"})
+    @Description("Validate 'missing' scenario created if sub-component deleted'")
+    public void testMissingSubComponentOnDeletion() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        softAssertions = new SoftAssertions();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        ComponentInfoBuilder smallRing = assemblyUtils.getSubComponent(componentAssembly, SMALL_RING);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(SMALL_RING + "," + scenarioName)
+            .deleteSubcomponent()
+            .clickDelete(ComponentsTreePage.class);
+
+        scenariosUtil.checkComponentDeleted(smallRing.getComponentIdentity(), smallRing.getScenarioIdentity(), currentUser);
+
+        componentsTreePage = componentsTreePage.closePanel().clickRefresh(EvaluatePage.class).openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SMALL_RING)).as("Verify 'missing' Small Ring Struck Out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName))
+            .as("Verify that 'missing' Small Ring is CAD DIsconnected").contains(StatusIconEnum.DISCONNECTED.getStatusIcon());
 
         softAssertions.assertAll();
     }

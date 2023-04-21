@@ -2,7 +2,7 @@ package com.apriori.dds.tests;
 
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ErrorMessage;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -154,9 +154,9 @@ public class CommentsTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
+        ResponseWrapper<ApwErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
             discussionResponse.getResponseEntity().getIdentity(),
-            currentUser, ErrorMessage.class,
+            currentUser, ApwErrorMessage.class,
             HttpStatus.SC_INTERNAL_SERVER_ERROR);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("Unable to find constant 'INVALID' in enum 'CommentStatus'");
@@ -174,9 +174,9 @@ public class CommentsTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
+        ResponseWrapper<ApwErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
             "INVALID",
-            currentUser, ErrorMessage.class,
+            currentUser, ApwErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'discussionIdentity' is not a valid identity");
@@ -194,9 +194,9 @@ public class CommentsTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
+        ResponseWrapper<ApwErrorMessage> responseWrapper = DdsApiTestUtils.createComment(commentsRequestBuilder,
             discussionResponse.getResponseEntity().getIdentity(),
-            currentUser, ErrorMessage.class,
+            currentUser, ApwErrorMessage.class,
             HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'content' should not be null");
@@ -206,7 +206,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(testCaseId = {"12374"})
     @Description("get a invalid comment")
     public void getInvalidComment() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ApwErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"),
                 discussionResponse.getResponseEntity().getIdentity(),
                 "INVALID")
@@ -214,7 +214,7 @@ public class CommentsTest extends TestUtil {
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ApwErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'identity' is not a valid identity");
     }
 
@@ -222,7 +222,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(testCaseId = {"12377"})
     @Description("get a comment With Invalid discussion")
     public void getCommentWithInvalidDiscussion() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ApwErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"),
                 "INVALID",
                 commentResponse.getResponseEntity().getIdentity())
@@ -230,7 +230,7 @@ public class CommentsTest extends TestUtil {
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ApwErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'discussionIdentity' is not a valid identity");
     }
 

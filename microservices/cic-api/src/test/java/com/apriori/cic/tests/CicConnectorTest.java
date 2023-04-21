@@ -14,7 +14,6 @@ import entity.response.AgentConnectionInfo;
 import entity.response.AgentConnectionOptions;
 import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
-import enums.CICAgentType;
 import enums.CICReportType;
 import enums.ReportsEnum;
 import io.qameta.allure.Description;
@@ -38,7 +37,7 @@ public class CicConnectorTest extends TestBase {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
-        connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData(CICAgentType.WINDCHILL);
+        connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
     }
 
     @Test

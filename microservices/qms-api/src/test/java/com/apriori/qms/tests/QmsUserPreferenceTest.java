@@ -15,18 +15,17 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Order;
 
 public class QmsUserPreferenceTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-
-    UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
     }
-
 
     @Test
     @TestRail(testCaseId = {"16854"})
@@ -44,7 +43,6 @@ public class QmsUserPreferenceTest extends TestUtil {
         UserPreferenceRequest userPreferenceRequestBuilder = UserPreferenceRequest.builder()
             .userPreferences(UserPreferenceParameters.builder().avatarColor("#FF015").build())
             .build();
-
         UserPreferenceResponse userPreferenceResponse =
             QmsUserPreferenceResources.updateUserPreference(userPreferenceRequestBuilder, UserPreferenceResponse.class, currentUser, HttpStatus.SC_OK);
         softAssertions.assertThat(userPreferenceResponse.getAvatarColor())

@@ -7,16 +7,18 @@ import com.messages.MessagesTest;
 import com.navigation.NavigationPanelTest;
 import com.partsandassemblies.PartsAndAssemblyTest;
 import com.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
+import com.userpreference.UserPreferenceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @ProjectRunID("2123")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    PartsAndAssemblyTest.class,
     NavigationPanelTest.class,
+    MessagesTest.class,
+    UserPreferenceTest.class,
     PartsAndAssembliesDetailsTest.class,
-    MessagesTest.class
+    PartsAndAssemblyTest.class
 })
 public class RegressionTestSuite {
 }

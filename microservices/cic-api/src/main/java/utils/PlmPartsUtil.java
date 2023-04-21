@@ -9,6 +9,7 @@ import com.apriori.utils.reader.file.part.PartData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
@@ -42,5 +43,20 @@ public class PlmPartsUtil {
         return IntStream.range(0, numOfParts)
             .mapToObj(i -> getPlmPartData())
             .collect(Collectors.toList());
+    }
+
+    /**
+     * get plm part data from plm test parts csv file from cloud
+     *
+     * @return PartData
+     */
+    public static PartData getPlmPartData(String plmMapped) {
+        PartData partData = plmPartsQueue.poll();
+        while (true) {
+            if (partData.getPlmMapped().equals(plmMapped)) {
+                return partData;
+            }
+            partData = plmPartsQueue.poll();
+        }
     }
 }

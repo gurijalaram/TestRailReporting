@@ -15,6 +15,7 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
 import io.restassured.internal.mapping.Jackson2Mapper;
@@ -53,7 +54,7 @@ class ConnectionManager<T> {
         this.returnType = returnType;
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.urlEncodingEnabled = requestEntity.urlEncodingEnabled();
-
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.BODY);
     }
 
     private RequestSpecification createRequestSpecification() {

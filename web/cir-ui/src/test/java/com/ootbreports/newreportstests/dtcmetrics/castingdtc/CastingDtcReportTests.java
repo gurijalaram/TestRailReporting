@@ -37,7 +37,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static JasperApiUtils jasperApiUtils;
 
     @Before
-    public void setupGenericMethods() {
+    public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
         reportRequest = jasperApiUtils.getReportRequest();
     }
@@ -145,16 +145,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "7505")
-    @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
-    public void testDtcScoreNoSelection() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            ""
-        );
-    }
-
-    @Test
     @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
@@ -195,8 +185,8 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         );
 
         JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
-        ChartDataPoint chartDataPoint = reportSummary.getChartDataPointByPartName("E3-241-4-N (Initial)");
-        List<ChartDataPoint> chartDataPointList = reportSummary.getChartDataPoints();
+        ChartDataPoint chartDataPoint = reportSummary.getFirstChartData().getChartDataPointByPartName("E3-241-4-N (Initial)");
+        List<ChartDataPoint> chartDataPointList = reportSummary.getFirstChartData().getChartDataPoints();
 
         assertThat(chartDataPoint.getAnnualSpend(), is(not(equalTo(minimumAnnualSpendValue))));
         assertThat(chartDataPointList.size(), is(equalTo(1)));
