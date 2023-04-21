@@ -41,7 +41,6 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(aprioriSupportLogo);
     }
 
     /**
@@ -61,6 +60,14 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
      */
     public boolean isSupportLogoDisplayed() {
         return pageUtils.isElementDisplayed(aprioriSupportLogo);
+    }
 
+    /**
+     * Gets the current url
+     *
+     * @return string
+     */
+    public String getCurrentUrl() {
+        return pageUtils.getTabTwoUrl();
     }
 }
