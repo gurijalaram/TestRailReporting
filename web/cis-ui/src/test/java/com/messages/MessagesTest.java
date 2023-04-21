@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -345,6 +346,7 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Until 1.2.0 Release")
     @Test
     @TestRail(testCaseId = {"22677","22678","22679"})
     @Description("Verify that user configured message view is saved")
