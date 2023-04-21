@@ -1,25 +1,16 @@
 package com.apriori.qms.tests;
 
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
-import com.apriori.sds.entity.response.Scenario;
-import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -34,45 +25,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
-public class ScenarioDiscussionTest extends SDSTestUtil {
-    private static String bidPackageName;
-    private static String projectName;
-    private static ScenarioItem scenarioItem;
-    private static BidPackageResponse bidPackageResponse;
-    private static BidPackageItemResponse bidPackageItemResponse;
-    private static BidPackageProjectResponse bidPackageProjectResponse;
-    private static SoftAssertions softAssertions;
-    private static ScenarioDiscussionResponse scenarioDiscussionResponse;
-    private static DiscussionCommentResponse discussionCommentResponse;
-
-    @Before
-    public void testSetup() {
-        softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = postTestingComponentAndAddToRemoveList();
-        publishAssembly(ComponentInfoBuilder.builder().scenarioName(scenarioItem.getScenarioName()).user(testingUser)
-            .componentIdentity(scenarioItem.getComponentIdentity()).scenarioIdentity(scenarioItem.getScenarioIdentity())
-            .build(), Scenario.class, HttpStatus.SC_OK);
-        bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-            bidPackageResponse.getIdentity(),
-            currentUser,
-            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-        discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
-            new GenerateStringUtil().generateNotes(), "ACTIVE", currentUser);
-    }
-
+public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
     @Test
     @TestRail(testCaseId = {"14608", "14613"})
     @Description("Create and delete Scenario Discussion")
@@ -205,9 +162,6 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
     @Description("Create, get scenario discussion with assignee user and useridentity")
     public void getScenarioDiscussionsByUserIdentity() {
         UserCredentials assignedUser = UserUtil.getUser();
-        if (assignedUser.getEmail().equals(currentUser.getEmail())) {
-            assignedUser = UserUtil.getUser();
-        }
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
@@ -237,22 +191,11 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
         softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
     }
 
-    @After
-    public void testCleanup() {
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        softAssertions.assertAll();
-    }
-
     @Test
     @TestRail(testCaseId = {"22256"})
     @Description("Verify that User will not get 409 error on valid actions after getting this error on invalid action")
     public void verifyScenarioDiscussionNo409ErrorWith2Users() {
         UserCredentials assignedUser = UserUtil.getUser();
-        if (assignedUser.getEmail().equals(currentUser.getEmail())) {
-            assignedUser = UserUtil.getUser();
-        }
-
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
@@ -309,6 +252,4 @@ public class ScenarioDiscussionTest extends SDSTestUtil {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(300);
     }
-
-    private static final UserCredentials currentUser = testingUser;
 }

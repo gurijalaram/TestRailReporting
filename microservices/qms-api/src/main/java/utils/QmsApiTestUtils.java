@@ -1,13 +1,28 @@
 package utils;
 
+import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.utils.CssComponent;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.apache.http.HttpStatus;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +42,7 @@ public class QmsApiTestUtils {
     }
 
     public static UserCredentials getCustomerUser() {
-        if (PropertiesContext.get("customer").equals("ap-int")) {
+        if (PropertiesContext.get("customer").startsWith("ap-int")) {
             return new UserCredentials().setEmail("testUser1@widgets.aprioritest.com");
         }
         return new UserCredentials().setEmail("qa-automation-01@apriori.com");
@@ -49,6 +64,45 @@ public class QmsApiTestUtils {
                 .build())
             .build();
         return scenarioDiscussionRequest;
+    }
+
+    /**
+     * Create & Publish Scenario via Cid-app
+     *
+     * @param processGroupEnum - ProcessGroupEnum
+     * @param componentName    - component name
+     * @param currentUser      - UserCredentials
+     * @return ScenarioItem object
+     */
+    public static ScenarioItem createAndPublishScenarioViaCidApp(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentInfoBuilder = ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build();
+        new ComponentsUtil().postComponent(componentInfoBuilder);
+        ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+                SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+            .get(0);
+        if (scenarioItem != null) {
+            componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
+            componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
+            new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
+            scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+                    SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+                .get(0);
+        }
+        return scenarioItem;
+    }
+
+    /**
+     * Delete scenario via Cid-app
+     */
+    public static void deleteScenarioViaCidApp(ScenarioItem scenarioItem, UserCredentials currentUser) {
+        new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
     }
 }
 
