@@ -8,10 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
-import com.apriori.cirapi.entity.response.InputControl;
-import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -20,14 +17,16 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
@@ -35,6 +34,8 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
     private static JasperApiUtils jasperApiUtils;
+
+    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
     public void setupJasperApiUtils() {
@@ -46,133 +47,112 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
-        String currencyCode = "currencyCode";
-        String partToGet = "40137441.MLDES.0002 (Initial)";
-
-        InputControl inputControl = JasperReportUtil.init(jSessionId)
-            .getInputControls();
-        String exportSetValue = inputControl.getExportSetName().getOption(exportSetName).getValue();
-
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.USD.getCurrency());
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetValue);
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
-
-        ChartDataPoint usdChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest, "");
-
-        String usdFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(usdChartDataPoint);
-        double usdAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(usdChartDataPoint);
-
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, currencyCode, CurrencyEnum.GBP.getCurrency());
-
-        ChartDataPoint gbpChartDataPoint = jasperApiUtils.generateReportAndGetChartDataPoint(reportRequest, "");
-
-        String gbpFullyBurdenedCost = jasperApiUtils.getFullyBurdenedCostFromChartDataPoint(gbpChartDataPoint);
-        double gbpAnnualSpend = jasperApiUtils.getAnnualSpendFromChartDataPoint(gbpChartDataPoint);
-
-        assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
-        assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
+        jasperApiUtils.genericDtcCurrencyTest("84C602281P1_D (Initial)", true);
     }
 
     @Test
     @TestRail(testCaseId = {"1695"})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
-        jasperApiUtils.inputControlGenericTest(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K (Initial)", "CASE_03 (Initial)");
+        List<String> miscData = Arrays.asList("Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName(), "Cost", "<td");
+        jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"7408"})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
-        jasperApiUtils.inputControlGenericTest(
-            "Cost Metric",
-            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K (Initial)", "CASE_03 (Initial)");
+        List<String> miscData = Arrays.asList("Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName(), "Cost", "<td");
+        jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"1696"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        jasperApiUtils.inputControlGenericTest(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K (Initial)", "CASE_03 (Initial)");
+        List<String> miscData = Arrays.asList("Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName(), "Mass", "<td");
+        jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"7388"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        jasperApiUtils.inputControlGenericTest(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K (Initial)", "CASE_03 (Initial)");
+        List<String> miscData = Arrays.asList("Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName(), "Mass", "<td");
+        jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"7454"})
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieCastingOnly() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K");
+        List<String> miscData = Arrays.asList(
             "Process Group",
-            ProcessGroupEnum.CASTING_DIE.getProcessGroup()
-        );
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup(),
+            "Process",
+            "<td",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup());
+        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"7453"})
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupInputControlSandCastingOnly() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K");
+        List<String> miscData = Arrays.asList(
             "Process Group",
-            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
-        );
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup(),
+            "Process",
+            "<td",
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup());
+        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = {"7455"})
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieAndSandCasting() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> partNames = Arrays.asList("40137441.MLDES.0002 (Initial)", "1205DU1017494_K");
+        List<String> miscData = Arrays.asList(
             "Process Group",
-            ""
-        );
+            "",
+            "Process",
+            "<td",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup().concat(", ").concat(ProcessGroupEnum.CASTING_SAND.getProcessGroup()));
+        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = "7508")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.LOW.getDtcScoreName()
-        );
+        List<String> partNames = Arrays.asList("84C602281P1_D (Initial)", "CASE_13 (Initial)", "GEAR HOUSING (Initial)");
+        List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.LOW.getDtcScoreName(), "DTC", "<td");
+        jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = "7511")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.MEDIUM.getDtcScoreName()
-        );
+        List<String> partNames = Arrays.asList("84C602281P1_D (Initial)", "CASE_13 (Initial)", "GEAR HOUSING (Initial)");
+        List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName(), "DTC", "<td");
+        jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
     @Test
     @TestRail(testCaseId = "7514")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
-        jasperApiUtils.inputControlGenericTest(
-            "DTC Score",
-            DtcScoreEnum.HIGH.getDtcScoreName()
-        );
+        List<String> partNames = Arrays.asList("84C602281P1_D (Initial)", "CASE_13 (Initial)", "GEAR HOUSING (Initial)");
+        List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.HIGH.getDtcScoreName(), "DTC", "<td");
+        jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
     @Test

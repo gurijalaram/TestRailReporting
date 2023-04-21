@@ -11,8 +11,12 @@ import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 
+import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.google.common.base.Stopwatch;
 import lombok.Data;
+import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import utils.Constants;
 
@@ -29,6 +33,7 @@ public class JasperApiUtils {
     private String jSessionId;
     private String exportSetName;
     private String reportsJsonFileName;
+    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     /**
      * Default constructor for this class
@@ -79,7 +84,7 @@ public class JasperApiUtils {
      * @param valueToSet String - value which to set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTest(String keyToSet, String valueToSet) {
+    public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
         JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
 
         InputControl inputControls = JasperReportUtil.init(jSessionId).getInputControls();
@@ -93,6 +98,71 @@ public class JasperApiUtils {
         reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
 
         return jasperApiUtils.generateReportSummary(reportRequest);
+    }
+
+    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
+        String currencyAssertValue = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
+
+        String currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        currencyAssertValue = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
+
+        currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        String usdCurrencyValue = areBubblesPresent ?
+            getCurrencyValueFromChart(jasperReportSummaryUsd, partName) :
+            getCurrencyValueFromChart(jasperReportSummaryUsd, "");
+        String gbpCurrencyValue = areBubblesPresent ?
+            getCurrencyValueFromChart(jasperReportSummaryGbp, partName) :
+            getCurrencyValueFromChart(jasperReportSummaryGbp, "");
+
+        softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+
+        softAssertions.assertAll();
+    }
+
+    public void genericDtcTest(List<String> miscData, List<String> partNames) {
+        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+
+        for (String partName : partNames) {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName(partName));
+        }
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(2));
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith(miscData.get(3))).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(miscData.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    public void genericDtcScoreTest(List<String> partNames, List<String> miscData) {
+        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+
+        for (String partName : partNames) {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName(partName));
+        }
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0)).get(6)
+            .parent().children().get(11).text()).isEqualTo(miscData.get(1));
+
+        softAssertions.assertAll();
+    }
+
+    public void genericProcessGroupTest(List<String> miscData, List<String> partNames) {
+        JasperReportSummary jasperReportSummary = genericTestCore("Process Group", "");
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName("40137441.MLDES.0002 (Initial)")).isNotEqualTo(null);
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPointByPartName("1205DU1017494_K (Initial)")).isNotEqualTo(null);
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains("Casting - Die, Casting - Sand")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     /**
@@ -152,5 +222,21 @@ public class JasperApiUtils {
      */
     public String getFullyBurdenedCostFromChartDataPoint(ChartDataPoint dataToUse) {
         return dataToUse.getFullyBurdenedCost();
+    }
+
+    private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {
+        return areBubblesPresent ?
+            getCurrentCurrency(jasperReportSummary, "2", 3) :
+            getCurrentCurrency(jasperReportSummary, "3", 6);
+    }
+
+    private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+    }
+
+    private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
+        return partName.isEmpty() ?
+            jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text() :
+            jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
     }
 }

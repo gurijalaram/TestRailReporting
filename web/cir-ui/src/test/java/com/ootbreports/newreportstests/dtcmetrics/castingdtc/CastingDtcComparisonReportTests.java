@@ -22,7 +22,6 @@ import org.junit.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
         String costMetricAssertValue = CostMetricEnum.PIECE_PART_COST.getCostMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Cost Metric", costMetricAssertValue);
 
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
@@ -62,7 +61,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
         String costMetricAssertValue = CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Cost Metric", costMetricAssertValue);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Cost Metric", costMetricAssertValue);
 
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
@@ -80,7 +79,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         String massMetricAssertValue = MassMetricEnum.FINISH_MASS.getMassMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricAssertValue);
 
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
@@ -98,7 +97,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         String massMetricAssertValue = MassMetricEnum.ROUGH_MASS.getMassMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Mass Metric", massMetricAssertValue);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricAssertValue);
 
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "CYLINDER HEAD (Initial)");
@@ -115,7 +114,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7509")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Comparison Report")
     public void testDtcScoreLow() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.LOW.getDtcScoreName());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("DTC Score", DtcScoreEnum.LOW.getDtcScoreName());
 
         performDtcPositiveAsserts(jasperReportSummary, "40128483.MLDES.0001 (Initial)");
         performDtcNegativeAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
@@ -132,7 +131,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7512")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Comparison Report")
     public void testDtcScoreMedium() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName());
 
         performDtcNegativeAsserts(jasperReportSummary, "40128483.MLDES.0001 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
@@ -149,7 +148,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7515")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Comparison Report")
     public void testDtcScoreHigh() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", DtcScoreEnum.HIGH.getDtcScoreName());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("DTC Score", DtcScoreEnum.HIGH.getDtcScoreName());
 
         performDtcNegativeAsserts(jasperReportSummary, "40128483.MLDES.0001 (Initial)");
         performDtcNegativeAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
@@ -166,7 +165,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7544")
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("DTC Score", "");
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("DTC Score", "");
 
         performDtcPositiveAsserts(jasperReportSummary, "40128483.MLDES.0001 (Initial)");
         performDtcPositiveAsserts(jasperReportSummary, "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)");
@@ -181,7 +180,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = "7656")
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTest("Minimum Annual Spend", "7820000");
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Minimum Annual Spend", "7820000");
 
         String negativePartName = "JEEP WJ FRONT BRAKE DISC 99-04 (Initial)";
         String positivePartName = "E3-241-4-N (Initial)";
