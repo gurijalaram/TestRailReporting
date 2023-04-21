@@ -1,13 +1,10 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -17,8 +14,6 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
-import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import utils.Constants;
@@ -26,7 +21,6 @@ import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
@@ -34,8 +28,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static ReportRequest reportRequest;
     private static JasperApiUtils jasperApiUtils;
-
-    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
     public void setupJasperApiUtils() {
@@ -97,7 +89,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Process",
             "<td",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup());
-        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
+        jasperApiUtils.genericProcessGroupDtcTest(miscData, partNames);
     }
 
     @Test
@@ -111,7 +103,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Process",
             "<td",
             ProcessGroupEnum.CASTING_SAND.getProcessGroup());
-        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
+        jasperApiUtils.genericProcessGroupDtcTest(miscData, partNames);
     }
 
     @Test
@@ -125,7 +117,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Process",
             "<td",
             ProcessGroupEnum.CASTING_DIE.getProcessGroup().concat(", ").concat(ProcessGroupEnum.CASTING_SAND.getProcessGroup()));
-        jasperApiUtils.genericProcessGroupTest(miscData, partNames);
+        jasperApiUtils.genericProcessGroupDtcTest(miscData, partNames);
     }
 
     @Test
@@ -159,17 +151,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "1700")
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {
-        String minimumAnnualSpendValue = "7820000";
-        jasperApiUtils.inputControlGenericTest(
-            "Minimum Annual Spend",
-            minimumAnnualSpendValue
-        );
-
-        JasperReportSummary reportSummary = jasperApiUtils.generateReportSummary(reportRequest);
-        ChartDataPoint chartDataPoint = reportSummary.getFirstChartData().getChartDataPointByPartName("E3-241-4-N (Initial)");
-        List<ChartDataPoint> chartDataPointList = reportSummary.getFirstChartData().getChartDataPoints();
-
-        assertThat(chartDataPoint.getAnnualSpend(), is(not(equalTo(minimumAnnualSpendValue))));
-        assertThat(chartDataPointList.size(), is(equalTo(1)));
+        jasperApiUtils.genericMinAnnualSpendDtcTest();
     }
 }

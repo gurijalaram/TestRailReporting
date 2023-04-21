@@ -51,8 +51,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3043"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName(), "Cost", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
@@ -60,8 +60,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7418"})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Report")
     public void testCostMetricInputControlFbc() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName(), "Cost", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
@@ -69,8 +69,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3044"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName(), "Mass", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
@@ -78,8 +78,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7398"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName(), "Mass", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcTest(miscData, partNames);
     }
 
@@ -87,13 +87,14 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7448"})
     @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Report")
     public void testSingleProcessGroup() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup());
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains("Sheet Metal")).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> partNames = Arrays.asList("1271576 (Bulkload)", "2840020_JACK_WHEEL_ATTACH_TR50 (Bulkload)");
+        List<String> miscData = Arrays.asList(
+            "Process Group",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup(),
+            "Process",
+            "<td",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup());
+        jasperApiUtils.genericProcessGroupDtcTest(miscData, partNames);
     }
 
     @Test
@@ -101,8 +102,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7532"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.LOW.getDtcScoreName(), "DTC", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
@@ -111,8 +112,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7535"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName(), "DTC", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
@@ -121,8 +122,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7538"})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
-        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         List<String> miscData = Arrays.asList("DTC Score", DtcScoreEnum.HIGH.getDtcScoreName(), "DTC", "<td");
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "AP_SHEETMETAL_EXERCISE (Initial)", "BRACKET_V4 (rev1)");
         jasperApiUtils.genericDtcScoreTest(miscData, partNames);
     }
 
@@ -131,15 +132,9 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3045"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum());
-
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("2980123_CLAMP (Bulkload)").getPropertyByName("annualSpend").getValue()).isEqualTo(4406.160458693279);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName("3575137 (Bulkload)").getPropertyByName("annualSpend").getValue()).isEqualTo(8264352.305448065);
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains("Annual Spend")).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList("Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(), "<td", "annualSpend");
+        List<Double> assertFigures = Arrays.asList(4406.160458693279, 8264352.305448065);
+        List<String> partNames = Arrays.asList("2980123_CLAMP (Bulkload)", "3575137 (Bulkload)");
+        jasperApiUtils.genericSortOrderDtcTest(miscData, assertFigures, partNames);
     }
 }

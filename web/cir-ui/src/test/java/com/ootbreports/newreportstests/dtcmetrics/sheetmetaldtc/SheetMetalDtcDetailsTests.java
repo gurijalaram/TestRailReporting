@@ -21,6 +21,7 @@ import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
