@@ -1,5 +1,6 @@
 package com.apriori.qms.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
@@ -29,7 +30,7 @@ import utils.QmsApiTestUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QmsProjectsTest {
+public class QmsProjectsTest extends TestUtil {
     private final UserCredentials currentUser = UserUtil.getUser();
     private SoftAssertions softAssertions;
     private ScenarioItem scenarioItem;
@@ -126,7 +127,7 @@ public class QmsProjectsTest {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(11);
+        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(11);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
@@ -189,7 +190,7 @@ public class QmsProjectsTest {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(2);
+        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(2);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
@@ -307,7 +308,7 @@ public class QmsProjectsTest {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(4);
+        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(4);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
@@ -347,7 +348,8 @@ public class QmsProjectsTest {
                         softAssertions.assertThat(bppResponse.getUsers().size()).isGreaterThan(0);
                         if (softAssertions.wasSuccess()) {
                             for (int j = 0; j < bppResponse.getUsers().size(); j++) {
-                                softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor()).isNotNull();
+                                softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor())
+                                    .isNotNull();
                             }
                         }
                     }

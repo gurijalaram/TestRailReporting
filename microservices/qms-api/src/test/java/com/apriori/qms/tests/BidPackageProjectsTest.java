@@ -124,9 +124,9 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13746"})
+    @TestRail(testCaseId = {"13747"})
     @Description("Create Bid Package with project description greater than 254 characters")
-    public void createProjectNameGreaterThan254() {
+    public void createProjectDescGreaterThan254() {
         ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(258), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage())
             .contains("'description' should not be more than 254 characters");
