@@ -193,7 +193,7 @@ local:
   ap_user_context:
   base_url: http://localhost
   name: local
-  secret_key: 65J1ID2B6LDG
+  secret_key: O85XMATZEMBO
 
   admin:
     ui_url: ${local.base_url}/apriori/login
