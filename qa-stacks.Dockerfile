@@ -27,6 +27,7 @@ ENV MODE=$MODE
 ENV PASSWORD=$PASSWORD
 ENV TESTS=$TESTS
 ENV HEADLESS=$HEADLESS
+ENV BROWER=$BROWSER
 ENV THREAD_COUNTS=$THREAD_COUNTS
 ENV ENVS=$ENVS
 
@@ -37,6 +38,7 @@ CMD java \
   -Dtoken_email=$TOKEN_EMAIL \
   -Dpassword=$PASSWORD \
   -Dheadless=$HEADLESS \
+  -Dbrowser=$BROWSER \
   -Denv=$ENVS \
   -jar app.jar \
   -test $TESTS
