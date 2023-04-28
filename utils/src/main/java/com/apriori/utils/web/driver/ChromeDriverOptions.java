@@ -33,7 +33,7 @@ public class ChromeDriverOptions {
         // TODO: 20/10/2021 commented because this doesn't work on vnc
         //chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
 
-        if (System.getProperty("mode") == TestMode.DOCKER_GRID.value().toLowerCase()) {
+        if (System.getProperty("mode").toUpperCase() == TestMode.DOCKER_GRID.value()) {
             chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal");
         }
 
