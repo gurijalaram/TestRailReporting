@@ -1,8 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -11,8 +10,6 @@ import com.apriori.utils.enums.reports.SortOrderEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
-import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -23,20 +20,15 @@ import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/sheetmetaldtc/SheetMetalDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
-    private static ReportRequest reportRequest;
     private static JasperApiUtils jasperApiUtils;
-
-    private static final SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
     public void setupGenericMethods() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-        reportRequest = jasperApiUtils.getReportRequest();
     }
 
     @Test
@@ -44,19 +36,19 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7421"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
-        String costMetricAssertValue = CostMetricEnum.PIECE_PART_COST.getCostMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Cost Metric", costMetricAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(1).toString().contains(costMetricAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Cost Metric",
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
+        );
     }
 
     @Test
@@ -64,19 +56,19 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7422"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
-        String costMetricAssertValue = CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Cost Metric", costMetricAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Cost");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(1).toString().contains(costMetricAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Cost Metric",
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
+        );
     }
 
     @Test
@@ -84,19 +76,19 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7401"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
-        String massMetricAssertValue = MassMetricEnum.FINISH_MASS.getMassMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Mass Metric",
+            MassMetricEnum.FINISH_MASS.getMassMetricName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
+        );
     }
 
     @Test
@@ -104,19 +96,19 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7402"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
-        String massMetricAssertValue = MassMetricEnum.ROUGH_MASS.getMassMetricName();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Mass");
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(1).toString().contains(massMetricAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Mass Metric",
+            MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
+        );
     }
 
     @Test
@@ -124,17 +116,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7682"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Details Report")
     public void testSortOrderManufacturingIssues() {
-        String sortOrderAssertValue = SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6).siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "0.0",
+            "0.0"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -142,17 +141,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7681"})
     @Description("Verify Sort Order input control functions correctly - Bends- Sheet Metal DTC Details Report")
     public void testSortOrderBends() {
-        String sortOrderAssertValue = SortOrderEnum.BENDS.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("BRACKET_SHORTENED")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_SHORTENED_ISSUES")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V1_HEMS")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6).siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.BENDS.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(37),
+            Constants.PART_NAMES_FOR_INPUT.get(33),
+            Constants.PART_NAMES_FOR_INPUT.get(38)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "0.0",
+            "0.0"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -160,17 +166,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7677"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Details Report")
     public void testSortOrderTolerances() {
-        String sortOrderAssertValue = SortOrderEnum.TOLERANCES.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V2")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V3")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6).siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.TOLERANCES.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36),
+            Constants.PART_NAMES_FOR_INPUT.get(39)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "0.0",
+            "0.0"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -178,17 +191,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7678"})
     @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Details Report")
     public void testSortOrderMachiningTime() {
-        String sortOrderAssertValue = SortOrderEnum.MACHINING_TIME.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V3")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V4")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6).siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(39),
+            Constants.PART_NAMES_FOR_INPUT.get(40)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "0.0",
+            "0.0"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -196,18 +216,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7679"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Details Report")
     public void testSortOrderAnnualSpend() {
-        String sortOrderAssertValue = SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("3575137")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("3575136")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6)
-            .siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(34),
+            Constants.PART_NAMES_FOR_INPUT.get(41)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "10,616,713.67",
+            "8,264,352.31"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -215,18 +241,24 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7680"})
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {
-        String sortOrderAssertValue = SortOrderEnum.DTC_RANK.getSortOrderEnum();
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Sort Order", sortOrderAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("BRACKET_SHORTENED")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V1_HEMS")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort").get(6)
-            .siblingElements().get(6).toString().contains(sortOrderAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Sort Order",
+            SortOrderEnum.DTC_RANK.getSortOrderEnum()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(37),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(38)
+        );
+        List<String> assertFigures = Arrays.asList(
+            "0.0",
+            "0.0"
+        );
+        jasperApiUtils.genericSortOrderDtcDetailsTest(
+            miscData,
+            partNames,
+            assertFigures
+        );
     }
 
     @Test
@@ -234,7 +266,10 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7379"})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Details Report")
     public void testCurrencyCodeInputControl() {
-        jasperApiUtils.genericDtcCurrencyTest("", false);
+        jasperApiUtils.genericDtcCurrencyTest(
+            "",
+            false
+        );
     }
 
     @Test
@@ -242,18 +277,19 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3048"})
     @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
-        String processGroupAssertValue = "Sheet Metal";
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Process Group", processGroupAssertValue);
-
-        List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        softAssertions.assertThat(partNumberElements.get(6).toString().contains("1271576")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(7).toString().contains("BRACKET_V1")).isEqualTo(true);
-        softAssertions.assertThat(partNumberElements.get(8).toString().contains("BRACKET_V2")).isEqualTo(true);
-
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process Group").get(6)
-            .siblingElements().get(10).toString().contains(processGroupAssertValue)).isEqualTo(true);
-
-        softAssertions.assertAll();
+        List<String> miscData = Arrays.asList(
+            "Process Group",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            miscData,
+            partNames
+        );
     }
 
     @Test
@@ -261,9 +297,18 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7534"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreLow() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> miscData = Arrays.asList(
             "DTC Score",
             DtcScoreEnum.LOW.getDtcScoreName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(30),
+            Constants.PART_NAMES_FOR_INPUT.get(42),
+            Constants.PART_NAMES_FOR_INPUT.get(43)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
         );
     }
 
@@ -272,9 +317,18 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7537"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreMedium() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> miscData = Arrays.asList(
             "DTC Score",
             DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(44),
+            Constants.PART_NAMES_FOR_INPUT.get(45),
+            Constants.PART_NAMES_FOR_INPUT.get(31)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
         );
     }
 
@@ -283,9 +337,18 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7540"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreHigh() {
-        jasperApiUtils.inputControlGenericTest(
+        List<String> miscData = Arrays.asList(
             "DTC Score",
             DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+        List<String> partNames = Arrays.asList(
+            Constants.PART_NAMES_FOR_INPUT.get(25),
+            Constants.PART_NAMES_FOR_INPUT.get(35),
+            Constants.PART_NAMES_FOR_INPUT.get(36)
+        );
+        jasperApiUtils.genericDtcDetailsTest(
+            miscData,
+            partNames
         );
     }
 }
