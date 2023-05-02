@@ -5,8 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: onprem
-version: 23-1
+env: qa-test
 deployment: production
 customer: ap-int
 
@@ -77,7 +76,7 @@ default:
 
 ###########################
 #  Deployment URL
-  deployment_url_template: ${default.aws_region}-v${version}.${${deployment}.url_part}.apriori.net/
+  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
 
   admin:
     ui_url: https://${deployment_url_template}apriori/login
