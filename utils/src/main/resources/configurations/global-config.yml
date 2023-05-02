@@ -22,7 +22,7 @@ global:
   console_log_level: "OFF"
   db_recording: true
   different_parts: true
-  different_users: false
+  different_users: true
   schema_base_path: schemas/
   users_csv_file: common-users.csv
   nexus:
