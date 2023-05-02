@@ -8,21 +8,32 @@ import java.security.InvalidParameterException;
 public class DriverFactory {
 
     private WebDriver driver;
+    private BrowserTypes browser;
+    private Proxy proxy;
+    private String downloadPath;
+    private String remoteDownloadPath;
+    private String locale;
 
     public DriverFactory(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
         this.driver = createDriver(testMode, testType, browser, proxy, downloadPath, remoteDownloadPath, locale);
     }
 
     private WebDriver createDriver(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
+        this.browser = browser;
+        this.proxy = proxy;
+        this.downloadPath = downloadPath;
+        this.remoteDownloadPath = remoteDownloadPath;
+        this.locale = locale;
+
         switch (testMode) {
             case HOSTED_GRID:
-                remoteWebDriverService(browser, "conqsldocker01", proxy, downloadPath, remoteDownloadPath, locale);
+                remoteWebDriverService("conqsldocker01");
                 break;
             case LOCAL_GRID:
-                remoteWebDriverService(browser, "localhost", proxy, downloadPath, remoteDownloadPath, locale);
+                remoteWebDriverService("localhost");
                 break;
             case DOCKER_GRID:
-                remoteWebDriverService(browser, "host.docker.internal", proxy, downloadPath, remoteDownloadPath, locale);
+                remoteWebDriverService("host.docker.internal");
                 break;
             case QA_LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
@@ -37,7 +48,7 @@ public class DriverFactory {
         return driver;
     }
 
-    private void remoteWebDriverService(BrowserTypes browser, String host, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
-        driver = new RemoteWebDriverService(browser, ("http://").concat(host).concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+    private void remoteWebDriverService(String host) {
+        driver = new RemoteWebDriverService(this.browser, ("http://").concat(host).concat(":4444"), this.proxy, this.downloadPath, this.remoteDownloadPath, this.locale).startService();
     }
 }
