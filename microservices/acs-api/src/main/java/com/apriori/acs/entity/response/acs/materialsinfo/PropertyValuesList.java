@@ -1,5 +1,6 @@
 package com.apriori.acs.entity.response.acs.materialsinfo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -46,6 +47,7 @@ public class PropertyValuesList {
     private Double roundBarCostPerUnit;
     private Double angleBarCostPerUnit;
     private String hexBarCostUnits;
+    @JsonProperty("twoBeamCostUnits")
     private String tBeamCostUnits;
     private Double baseRoundBarCostPerUnit;
     private Double baseHexBarCostPerUnit;
