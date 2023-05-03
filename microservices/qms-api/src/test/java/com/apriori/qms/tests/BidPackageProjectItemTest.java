@@ -7,10 +7,21 @@ import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.QmsApiTestDataUtils;
 
 public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
+    @BeforeClass
+    public static void beforeClass() {
+        createTestData();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        deleteTestData();
+    }
 
     @Test
     @TestRail(testCaseId = {"14685", "14912"})

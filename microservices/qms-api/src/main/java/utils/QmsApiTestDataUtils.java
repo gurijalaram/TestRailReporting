@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 public abstract class QmsApiTestDataUtils extends TestUtil {
-    protected static SoftAssertions softAssertions;
+    protected static SoftAssertions softAssertions = new SoftAssertions();
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
