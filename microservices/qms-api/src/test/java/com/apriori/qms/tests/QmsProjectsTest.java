@@ -3,6 +3,7 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
+import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
@@ -60,7 +61,7 @@ public class QmsProjectsTest extends TestUtil {
                 .build())
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
             new GenerateStringUtil().getRandomNumbers(),
             itemsList,
             null,
@@ -102,7 +103,7 @@ public class QmsProjectsTest extends TestUtil {
 
         projectUsersList.add(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 12; i++) {
             UserCredentials user = UserUtil.getUser();
             String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(user.getEmail());
             usersList.add(BidPackageProjectUserParameters.builder()
@@ -112,14 +113,7 @@ public class QmsProjectsTest extends TestUtil {
             projectUsersList.add(userIdentity);
         }
 
-        String userIdentity = new AuthUserContextUtil().getAuthUserIdentity("qa-automation-11@apriori.com");
-        usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(userIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
-            .build());
-        projectUsersList.add(userIdentity);
-
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
             new GenerateStringUtil().getRandomNumbers(),
             itemsList,
             usersList,
@@ -127,13 +121,12 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(11);
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(12);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
                     .getIdentity()));
-                softAssertions.assertThat(bppResponse.getUsers().get(i).getUser().getAvatarColor())
-                    .isNotNull();
+                softAssertions.assertThat(bppResponse.getUsers().get(i).getUser().getAvatarColor()).isNotNull();
             }
         }
 
@@ -182,7 +175,7 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
             new GenerateStringUtil().getRandomNumbers(),
             itemsList,
             usersList,
@@ -190,7 +183,7 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(2);
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(2);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
@@ -236,7 +229,7 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
             new GenerateStringUtil().getRandomNumbers(),
             itemsList,
             usersList,
@@ -300,7 +293,7 @@ public class QmsProjectsTest extends TestUtil {
             .build());
         projectUsersList.add(userIdentity3);
 
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
             new GenerateStringUtil().getRandomNumbers(),
             itemsList,
             usersList,
@@ -308,7 +301,7 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().stream().distinct().count()).isEqualTo(4);
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(4);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
                 softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
@@ -340,7 +333,7 @@ public class QmsProjectsTest extends TestUtil {
                 if (bidPackageItemResponse != null) {
                     BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject("PROJ" + new GenerateStringUtil().getRandomNumbers(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                     {
-                        BidPackageProjectResponse bppResponse = QmsBidPackageResources.getProject(
+                        BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(
                             bidPackageProjectResponse.getIdentity(),
                             BidPackageProjectResponse.class,
                             HttpStatus.SC_OK,
@@ -363,7 +356,7 @@ public class QmsProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"23094"})
     @Description("Verify user is able to retrieve avatarColor inside all QMS project's user model")
     public void getAllProjects() {
-        BidPackageProjectsResponse bppResponse = QmsBidPackageResources.getProjects(
+        BidPackageProjectsResponse bppResponse = QmsProjectResources.getProjects(
             BidPackageProjectsResponse.class,
             HttpStatus.SC_OK,
             currentUser);

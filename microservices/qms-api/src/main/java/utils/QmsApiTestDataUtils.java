@@ -19,10 +19,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
@@ -40,8 +38,7 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     /**
      * Create test data.
      */
-    @BeforeClass
-    public static void createTestData() {
+    protected static void createTestData() {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
@@ -77,23 +74,48 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
         } else {
             softAssertions.fail("Create & Publish Scenario via cid-app failed");
         }
+        checkAllureTestDataError();
     }
 
-    @AfterClass()
-    public static void deleteTestData() {
-        if (bidPackageResponse != null) {
-            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+    /**
+     * Delete test data.
+     */
+    protected static void deleteTestData() {
+        try {
+            if (bidPackageResponse != null) {
+                QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+            }
+            if (scenarioItem != null) {
+                QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+            }
+        } catch (Exception e) {
+            softAssertions.fail(e.getMessage());
+        } finally {
+            softAssertions.assertAll();
+            clearEntities();
+            checkAllureTestDataError();
         }
-        if (scenarioItem != null) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+    }
+
+    private static void checkAllureTestDataError() {
+        if (!softAssertions.wasSuccess()) {
+            Assert.fail(softAssertions.errorsCollected().toString());
         }
+    }
+
+    private static void clearEntities() {
+        scenarioItem = null;
+        bidPackageResponse = null;
+        bidPackageItemResponse = null;
+        bidPackageProjectResponse = null;
+        scenarioDiscussionResponse = null;
+        discussionCommentResponse = null;
     }
 
     @Before
     public void beforeTest() {
-        if (!softAssertions.wasSuccess()) {
-            Assert.fail(softAssertions.errorsCollected().toString());
-        }
+        checkAllureTestDataError();
+        softAssertions = new SoftAssertions();
     }
 
     @After

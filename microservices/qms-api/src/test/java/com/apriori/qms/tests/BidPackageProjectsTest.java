@@ -2,6 +2,7 @@ package com.apriori.qms.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qms.controller.QmsBidPackageResources;
+import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
@@ -39,7 +40,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13742", "13752", "22955"})
+    @TestRail(testCaseId = {"13742", "13752", "22955","14738"})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
@@ -53,6 +54,7 @@ public class BidPackageProjectsTest extends TestUtil {
                 softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor()).isNotNull();
             }
         }
+        softAssertions.assertThat(bppResponse.getItems().size()).isZero();
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
@@ -207,7 +209,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"14625"})
     @Description("Verify that the user can find only those projects in which he participates")
     public void getProjectsForParticipant() {
-        BidPackageProjectsResponse bidPackageProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        BidPackageProjectsResponse bidPackageProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(bidPackageProjectsResponse.getItems().size()).isGreaterThan(0);
     }
 
@@ -215,7 +217,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"14626", "14469"})
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getProjectForParticipant() {
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.getProject(bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
+        BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
     }
 
@@ -223,7 +225,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"14627"})
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
-        BidPackageProjectsResponse bidProjectsResponse = QmsBidPackageResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        BidPackageProjectsResponse bidProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
     }
 
@@ -235,19 +237,15 @@ public class BidPackageProjectsTest extends TestUtil {
         String bidProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         BidPackageResponse bidPackResponse = QmsBidPackageResources.createBidPackage(bidPackName, currentUser);
         softAssertions.assertThat(bidPackResponse.getName()).isEqualTo(bidPackName);
-
         BidPackageProjectResponse bidPackProjectResponse = QmsBidPackageResources.createBidPackageProject(bidProjectName, bidPackResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         softAssertions.assertThat(bidPackProjectResponse.getName()).isEqualTo(bidProjectName);
 
         QmsBidPackageResources.deleteBidPackage(bidPackResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
             bidPackProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
-
         softAssertions.assertThat(qmsErrorMessage.getMessage())
             .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackResponse.getIdentity(), bidPackResponse.getCustomerIdentity()));
-
-        ApwErrorMessage bppErrorResponse = QmsBidPackageResources.getProject(bidPackProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage bppErrorResponse = QmsProjectResources.getProject(bidPackProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
         softAssertions.assertThat(bppErrorResponse.getMessage())
             .contains(String.format("Resource 'Project' with identity '%s' was not found", bidPackProjectResponse.getIdentity()));
     }

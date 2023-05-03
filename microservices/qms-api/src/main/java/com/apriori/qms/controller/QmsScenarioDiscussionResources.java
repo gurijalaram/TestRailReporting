@@ -8,7 +8,6 @@ import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionReque
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
@@ -20,6 +19,8 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
@@ -128,6 +129,37 @@ public class QmsScenarioDiscussionResources {
     }
 
     /**
+     * Add comment to discussion
+     *
+     * @param <T>                        the type parameter
+     * @param scenarioDiscussionIdentity the scenario discussion identity
+     * @param commentContent             the comment content
+     * @param responseClass              the response class
+     * @param httpStatus                 the http status
+     * @param currentUser                the current user
+     * @return the t
+     */
+    public static <T> T addCommentToDiscussion(String scenarioDiscussionIdentity, String commentContent, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        DiscussionCommentRequest discussionCommentRequestBuilder = DiscussionCommentRequest.builder()
+            .comment(DiscussionCommentParameters.builder()
+                .content(commentContent)
+                .status("ACTIVE")
+                .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
+                .build())
+            .build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, responseClass)
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Update comment in scenario discussion
      *
      * @param scenarioDiscussionIdentity
@@ -230,26 +262,55 @@ public class QmsScenarioDiscussionResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenarioDiscussionsResponse> scenarioDiscussionsResponse = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ScenarioDiscussionsResponse> scenarioDiscussionsResponse = HTTPRequest.build(requestEntity)
+            .get();
         return scenarioDiscussionsResponse.getResponseEntity();
     }
 
     /**
-     * get scenario project users
+     * Update discussion comment t.
      *
-     * @param componentIdentity
-     * @param scenarioIdentity
-     * @param currentUser
-     * @return ScenarioProjectUserResponse
+     * @param <T>                             the type parameter
+     * @param scenarioDiscussionIdentity      the scenario discussion identity
+     * @param discussionCommentIdentity       the discussion comment identity
+     * @param discussionCommentRequestBuilder the discussion comment request builder
+     * @param responseClass                   the response class
+     * @param httpStatus                      the http status
+     * @param currentUser                     the current user
+     * @return the t
      */
-    public static ScenarioProjectUserResponse getScenarioProjectUsers(String componentIdentity, String scenarioIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
-            .inlineVariables(componentIdentity, scenarioIdentity)
+    public static <T> T updateDiscussionComment(String scenarioDiscussionIdentity, String discussionCommentIdentity, DiscussionCommentRequest discussionCommentRequestBuilder, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, responseClass)
+            .inlineVariables(scenarioDiscussionIdentity, discussionCommentIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
-        ResponseWrapper<ScenarioProjectUserResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Posts scenario discussion comment view status.
+     *
+     * @param <T>                        the type parameter
+     * @param scenarioDiscussionIdentity the scenario discussion identity
+     * @param discussionCommentIdentity  the discussion comment identity
+     * @param responseClass              the response class
+     * @param httpStatus                 the http status
+     * @param currentUser                the current user
+     * @return the scenario discussion comment view status
+     */
+    public static <T> T postScenarioDiscussionCommentViewStatus(String scenarioDiscussionIdentity, String discussionCommentIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT_VIEW_STATUS, responseClass)
+            .inlineVariables(scenarioDiscussionIdentity, discussionCommentIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(new ObjectNode(JsonNodeFactory.instance))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
     }
 }

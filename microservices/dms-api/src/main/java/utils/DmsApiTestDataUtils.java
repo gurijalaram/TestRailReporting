@@ -167,6 +167,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         if (!softAssertions.wasSuccess()) {
             Assert.fail(softAssertions.errorsCollected().toString());
         }
+        softAssertions = new SoftAssertions();
     }
 
     @After

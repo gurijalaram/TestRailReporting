@@ -10,8 +10,6 @@ import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DmsApiTestDataUtils;

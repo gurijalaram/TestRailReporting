@@ -7,7 +7,6 @@ import com.apriori.qms.tests.QmsBidPackageItemTest;
 import com.apriori.qms.tests.QmsBidPackageTest;
 import com.apriori.qms.tests.QmsComponentTest;
 import com.apriori.qms.tests.QmsProjectsTest;
-import com.apriori.qms.tests.QmsScenarioSharingTest;
 import com.apriori.qms.tests.QmsUserPreferenceTest;
 import com.apriori.qms.tests.ScenarioDiscussionTest;
 import com.apriori.utils.ProjectRunID;
@@ -25,10 +24,10 @@ import org.junit.runners.Suite;
     BidPackageProjectsTest.class,
     BidPackageProjectUserTest.class,
     ScenarioDiscussionTest.class,
-    QmsScenarioSharingTest.class,
     LayoutConfigurationTest.class,
     QmsUserPreferenceTest.class,
     QmsProjectsTest.class
 })
+
 public class QmsApiSuite {
 }
