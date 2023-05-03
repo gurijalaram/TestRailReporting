@@ -14,6 +14,7 @@ import com.apriori.qms.tests.QmsUserPreferenceTest;
 import com.apriori.qms.tests.ScenarioDiscussionTest;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
