@@ -235,6 +235,9 @@
                       "customAttributes": {
                         "type": "object"
                       },
+                      "gcdProperties": {
+                        "type": "object"
+                      },
                       "processSetupOptions": {
                         "type": "object"
                       },
