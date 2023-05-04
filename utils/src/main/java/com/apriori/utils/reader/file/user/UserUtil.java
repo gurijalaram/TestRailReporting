@@ -4,6 +4,7 @@ import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.reader.file.user.service.UserCommonService;
 import com.apriori.utils.reader.file.user.service.UserSecurityService;
 
+import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -44,8 +45,8 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser()
-            .generateToken();
+        UserCredentials user = UserCommonService.getUser();
+            //.generateToken();
         logInfo(user);
         return user;
     }
@@ -88,7 +89,12 @@ public class UserUtil {
     }
 
     private static void logInfo(UserCredentials user) {
-        log.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel()));
+        log.info(getUserLogInfo(user));
+    }
+
+    @Attachment
+    public static String getUserLogInfo(UserCredentials user) {
+        return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel());
     }
 
 }
