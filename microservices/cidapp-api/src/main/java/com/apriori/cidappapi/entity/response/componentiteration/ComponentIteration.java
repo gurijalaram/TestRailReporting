@@ -41,7 +41,7 @@ public class ComponentIteration {
     private String costingMessage;
     private String scenarioIterationKey;
     private CostingInput costingInput;
-    private List<Object> scenarioCustomAttributes = null;
+    private List<ScenarioCustomAttribute> scenarioCustomAttributes = null;
     private List<ScenarioDtcIssue> scenarioDtcIssues = null;
     private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
