@@ -36,6 +36,7 @@ public class CostingInput {
     private Thumbnail thumbnail;
     private String materialUtilizationMode;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
+    private Gcds gcdProperties;
 
     static class ProcessSetupOptions {
     }

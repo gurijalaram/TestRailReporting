@@ -42,68 +42,104 @@
           "type": "string"
         },
         "costingInput": {
-          "type": "object",
-          "properties": {
-            "identity": {
-              "type": "string"
-            },
-            "annualVolume": {
-              "type": "integer"
-            },
-            "batchSize": {
-              "type": "integer"
-            },
-            "customAttributes": {
-              "type": "object",
-              "properties": {
-                "language": {
-                  "type": "string"
-                },
-                "projectType": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "array"
-                },
-                "epamAssembly": {
-                  "type": "string"
+          "anyOf": [{
+            "type": "object",
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "annualVolume": {
+                "type": "integer"
+              },
+              "batchSize": {
+                "type": "integer"
+              },
+              "customAttributes": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string"
+                  },
+                  "projectType": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array"
+                  },
+                  "epamAssembly": {
+                    "type": "string"
+                  }
                 }
+              },
+              "gcdProperties": {
+                "type": "object"
+              },
+              "machiningMode": {
+                "type": "string"
+              },
+              "materialMode": {
+                "type": "string"
+              },
+              "materialName": {
+                "type": "string"
+              },
+              "processGroupName": {
+                "type": "string"
+              },
+              "processSetupOptions": {
+                "type": "object"
+              },
+              "productionLife": {
+                "type": "number"
+              },
+              "routingNodeOptions": {
+                "type": "array",
+                "items": {
+                }
+              },
+              "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
+                "type": "boolean"
+              },
+              "vpeName": {
+                "type": "string"
               }
-            },
-            "machiningMode": {
-              "type": "string"
-            },
-            "materialMode": {
-              "type": "string"
-            },
-            "materialName": {
-              "type": "string"
-            },
-            "processGroupName": {
-              "type": "string"
-            },
-            "processSetupOptions": {
-              "type": "object"
-            },
-            "productionLife": {
-              "type": "number"
-            },
-            "routingNodeOptions": {
-              "type": "array",
-              "items": {
-              }
-            },
-            "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
-              "type": "boolean"
-            },
-            "vpeName": {
-              "type": "string"
             }
-          }
+          }]
         },
         "scenarioCustomAttributes": {
           "type": "array",
-          "items": {}
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "optional": [
+                  "identity",
+                  "key",
+                  "value",
+                  "valueType"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": ["string", "array"],
+                    "items": [
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "valueType": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
         },
         "scenarioDesignInvestigations": {
           "type": "array",
