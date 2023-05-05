@@ -19,6 +19,7 @@ public class CostingInput {
     private Integer annualVolume;
     private Integer batchSize;
     private CustomAttributes customAttributes;
+    private GcdProperties gcdProperties;
     private String machiningMode;
     private String materialMode;
     private String materialName;
@@ -61,6 +62,7 @@ public class CostingInput {
     public static class Tolerances {
     }
 
-
+    public static class GcdProperties {
+    }
 }
 
