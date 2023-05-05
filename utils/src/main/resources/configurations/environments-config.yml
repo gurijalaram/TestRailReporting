@@ -96,7 +96,7 @@ staging:
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: conqsbel10-04/
+  base_url: conqsbel10-01/
   name: onprem
   deployment_url_template: ${base_url}
 
