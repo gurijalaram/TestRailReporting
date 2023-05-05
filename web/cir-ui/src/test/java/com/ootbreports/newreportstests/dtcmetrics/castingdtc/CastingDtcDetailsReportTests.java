@@ -4,6 +4,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
 
@@ -37,9 +38,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -52,9 +53,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         List<String> miscData = Arrays.asList(
             "Cost Metric",
@@ -75,9 +76,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -94,9 +95,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -113,9 +114,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             DtcScoreEnum.LOW.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(3),
-            Constants.PART_NAMES_FOR_INPUT.get(5),
-            Constants.PART_NAMES_FOR_INPUT.get(6)
+            JasperCirApiPartsEnum.P_40128483_MLDES_0001.getPartName(),
+            JasperCirApiPartsEnum.P_40089252_MLDES_0004_REDRAW.getPartName(),
+            JasperCirApiPartsEnum.DU100024720_G.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -132,9 +133,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(7),
-            Constants.PART_NAMES_FOR_INPUT.get(0)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.P_40116211_MLDES_0004.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -151,9 +152,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1),
-            Constants.PART_NAMES_FOR_INPUT.get(8)
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName(),
+            JasperCirApiPartsEnum.BARCO_R8552931.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -177,9 +178,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
@@ -201,9 +202,10 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(9),
-            Constants.PART_NAMES_FOR_INPUT.get(10),
-            Constants.PART_NAMES_FOR_INPUT.get(11));
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
+            JasperCirApiPartsEnum.P_1205DU1017494_K.getPartName()
+        );
         List<String> assertFigures = Arrays.asList(
             "0.0",
             "0.0"
@@ -224,9 +226,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(12),
-            Constants.PART_NAMES_FOR_INPUT.get(13),
-            Constants.PART_NAMES_FOR_INPUT.get(8)
+            JasperCirApiPartsEnum.OBSTRUCTED_MACHINING.getPartName(),
+            JasperCirApiPartsEnum.B2315.getPartName(),
+            JasperCirApiPartsEnum.BARCO_R8552931.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
@@ -248,9 +250,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(10),
-            Constants.PART_NAMES_FOR_INPUT.get(9),
-            Constants.PART_NAMES_FOR_INPUT.get(11)
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
+            JasperCirApiPartsEnum.P_1205DU1017494_K.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
@@ -272,9 +274,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(10),
-            Constants.PART_NAMES_FOR_INPUT.get(9),
-            Constants.PART_NAMES_FOR_INPUT.get(11)
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
+            JasperCirApiPartsEnum.P_1205DU1017494_K.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
@@ -296,9 +298,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(14),
-            Constants.PART_NAMES_FOR_INPUT.get(15),
-            Constants.PART_NAMES_FOR_INPUT.get(4)
+            JasperCirApiPartsEnum.DU600051458.getPartName(),
+            JasperCirApiPartsEnum.DU200068073_B.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
@@ -320,9 +322,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(16),
-            Constants.PART_NAMES_FOR_INPUT.get(0),
-            Constants.PART_NAMES_FOR_INPUT.get(11)
+            JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName(),
+            JasperCirApiPartsEnum.P_1205DU1017494_K.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "10,013,204.23",
@@ -344,9 +346,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(17),
-            Constants.PART_NAMES_FOR_INPUT.get(8),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.BARCO_R8761310.getPartName(),
+            JasperCirApiPartsEnum.BARCO_R8552931.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",

@@ -4,6 +4,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -36,9 +37,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,
@@ -56,9 +57,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,
@@ -76,9 +77,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,
@@ -96,9 +97,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,
@@ -116,9 +117,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             DtcScoreEnum.LOW.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(3),
-            Constants.PART_NAMES_FOR_INPUT.get(5),
-            Constants.PART_NAMES_FOR_INPUT.get(6)
+            JasperCirApiPartsEnum.P_40128483_MLDES_0001.getPartName(),
+            JasperCirApiPartsEnum.P_40089252_MLDES_0004_REDRAW.getPartName(),
+            JasperCirApiPartsEnum.DU100024720_G.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             miscData,
@@ -136,9 +137,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(7),
-            Constants.PART_NAMES_FOR_INPUT.get(0)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.P_40116211_MLDES_0004.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             miscData,
@@ -156,9 +157,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1),
-            Constants.PART_NAMES_FOR_INPUT.get(8)
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName(),
+            JasperCirApiPartsEnum.BARCO_R8552931.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             miscData,
@@ -176,9 +177,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             ""
         );
         List<String> partNames = Arrays.asList(
-            Constants.PART_NAMES_FOR_INPUT.get(2),
-            Constants.PART_NAMES_FOR_INPUT.get(4),
-            Constants.PART_NAMES_FOR_INPUT.get(1)
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             miscData,

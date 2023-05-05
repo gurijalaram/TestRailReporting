@@ -214,7 +214,6 @@ public class JasperApiUtils {
             i++;
         }
 
-
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscData.get(1))).isEqualTo(true);
@@ -254,7 +253,7 @@ public class JasperApiUtils {
      */
     public void genericMinAnnualSpendDtcTest(boolean areBubblesPresent) {
         String minimumAnnualSpendValue = "7820000";
-        JasperReportSummary jasperReportSummary = genericTestCore("annualSpendMin", minimumAnnualSpendValue);
+        JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
         if (areBubblesPresent) {
             softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
@@ -274,7 +273,7 @@ public class JasperApiUtils {
      */
     public void genericMinAnnualSpendDtcDetailsTest() {
         String minimumAnnualSpendValue = "7820000";
-        JasperReportSummary jasperReportSummary = genericTestCore("annualSpendMin", minimumAnnualSpendValue);
+        JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
         String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
         softAssertions.assertThat(minAnnualSpendValue).isEqualTo("10,013,204.23");
