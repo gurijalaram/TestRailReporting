@@ -1,5 +1,6 @@
 package com.apriori.cds.entity.response;
 
+import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -12,6 +13,7 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Schema(location = "LicenseModuleResponseSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class LicensedModule {
