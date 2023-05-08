@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "name",
+    "expiresAt",
+    "licenseSignature"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "type": "string"
+    },
+    "licenseSignature": {
+      "type": "string"
+    }
+  }
+}

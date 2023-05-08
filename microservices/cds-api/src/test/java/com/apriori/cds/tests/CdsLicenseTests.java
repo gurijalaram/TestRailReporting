@@ -5,6 +5,8 @@ import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.entity.response.SubLicense;
 import com.apriori.cds.entity.response.SubLicenses;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.objects.response.ActiveLicenseModules;
+import com.apriori.cds.objects.response.CdsErrorResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
 import com.apriori.cds.objects.response.Site;
@@ -169,6 +171,27 @@ public class CdsLicenseTests {
         );
 
         soft.assertThat(licenseById.getResponseEntity().getIdentity()).isEqualTo(licenseIdentity);
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24043"})
+    @Description("Get a list of active licensed sub-modules")
+    public void getActiveModules() {
+        String userIdentity = PropertiesContext.get("user_identity");
+        cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
+        ResponseWrapper<ActiveLicenseModules> activeModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, ActiveLicenseModules.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
+        soft.assertThat(activeModules.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(activeModules.getResponseEntity().getItems().get(0).getName()).isNotEmpty();
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24044"})
+    @Description("Get a list of modules for inactive license")
+    public void getModulesInactiveLicense() {
+        ResponseWrapper<CdsErrorResponse> notActiveLicenseModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, CdsErrorResponse.class, HttpStatus.SC_NOT_FOUND, customerIdentity, siteIdentity);
+        soft.assertThat(notActiveLicenseModules.getResponseEntity().getMessage()).isEqualTo(String.format("Site, '%s', does not have an active license", siteIdentity));
         soft.assertAll();
     }
 
