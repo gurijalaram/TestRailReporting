@@ -114,27 +114,14 @@ public class AuthorizationUtil {
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         String cloudContext = PropertiesContext.get("customer_identity");
-        String installationName;
-
-        try {
-            installationName = PropertiesContext.get("installation_name");
-        } catch (IllegalArgumentException e) {
-            log.info("installation_name property not present, generate it by code value");
-
-            installationName = String.format("core-na-1 - %s production deployment",
-                StringUtils.substringBefore(PropertiesContext.get("version"), "-")
-            );
-        }
-
 
         String applicationNameFromConfig = PropertiesContext.get("application_name");
 
         DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
-        String finalInstallationName = installationName;
         InstallationItem installationItem = deploymentItem.getInstallations()
             .stream()
-            .filter(element -> element.getName().equals(finalInstallationName))
+            .filter(element -> element.getName().equals(PropertiesContext.get("installation_name")))
             .limit(1)
             .collect(Collectors.toList()).get(0);
 
