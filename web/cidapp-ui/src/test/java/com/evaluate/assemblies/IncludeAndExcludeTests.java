@@ -63,17 +63,18 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @After
     public void deleteScenarios() {
-        if (currentUser != null && assemblyInfo != null) {
-            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
-            assemblyInfo = null;
+        if (currentUser != null) {
+            if (assemblyInfo != null) {
+                assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
+                assemblyInfo = null;
+            }
+            if (componentAssembly1 != null) {
+                assemblyUtils.deleteAssemblyAndComponents(componentAssembly1);
+            }
+            if (componentAssembly2 != null) {
+                assemblyUtils.deleteAssemblyAndComponents(componentAssembly2);
+            }
         }
-        if (currentUser != null && componentAssembly1 != null) {
-            assemblyUtils.deleteAssemblyAndComponents(componentAssembly1);
-        }
-        if (currentUser != null && componentAssembly2 != null) {
-            assemblyUtils.deleteAssemblyAndComponents(componentAssembly2);
-        }
-
     }
 
     @Test
@@ -439,7 +440,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issues({@Issue("AP-74028")})
+    @Issues( {@Issue("AP-74028")})
     @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
