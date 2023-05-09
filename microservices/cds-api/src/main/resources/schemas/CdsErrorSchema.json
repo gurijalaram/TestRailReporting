@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": [
+    "path",
+    "method",
+    "status",
+    "error",
+    "message"
+  ],
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "error": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    }
+  }
+}
