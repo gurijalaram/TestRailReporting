@@ -11,7 +11,6 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -36,40 +35,45 @@ import testsuites.suiteinterface.ExtendedRegression;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IncludeAndExcludeTests extends TestBase {
 
-    private CidAppLoginPage loginPage;
-    private ComponentsTablePage componentsTablePage;
-    private ComponentsTreePage componentsTreePage;
-    private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    SoftAssertions softAssertions = new SoftAssertions();
-    private File assemblyResourceFile;
-    private File componentResourceFile;
     private static String scenarioName;
     private static ComponentInfoBuilder componentAssembly1;
     private static ComponentInfoBuilder componentAssembly2;
     private final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
     private final String SUB_ASSEMBLY = "sub-assembly";
+    private CidAppLoginPage loginPage;
+    private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
+    private EvaluatePage evaluatePage;
+    private UserCredentials currentUser;
+    private SoftAssertions softAssertions = new SoftAssertions();
+    private File assemblyResourceFile;
+    private File componentResourceFile;
+    private ComponentInfoBuilder assemblyInfo;
 
     public IncludeAndExcludeTests() {
         super();
     }
 
-    private ComponentInfoBuilder assemblyInfo;
-
     @After
     public void deleteScenarios() {
-        if (currentUser != null) {
+        if (currentUser != null && assemblyInfo != null) {
             assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
             assemblyInfo = null;
         }
+        if (currentUser != null && componentAssembly1 != null) {
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly1);
+        }
+        if (currentUser != null && componentAssembly2 != null) {
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly2);
+        }
+
     }
 
     @Test
