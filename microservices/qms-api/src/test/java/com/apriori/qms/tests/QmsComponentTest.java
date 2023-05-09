@@ -29,7 +29,7 @@ public class QmsComponentTest extends QmsApiTestDataUtils {
 
     @After
     public void afterTest() {
-        deleteTestData();
+        deleteTestDataAndClearEntities();
     }
 
     @Test
@@ -86,7 +86,7 @@ public class QmsComponentTest extends QmsApiTestDataUtils {
         softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(1);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
-                .allMatch(u -> !u.getAvatarColor().equals(null))).isTrue();
+                .allMatch(u -> u.getAvatarColor() != null)).isTrue();
         }
     }
 }

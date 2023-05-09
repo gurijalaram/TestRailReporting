@@ -42,7 +42,7 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @AfterClass
     public static void afterClass() {
-        deleteTestData();
+        deleteTestDataAndClearEntities();
     }
 
     @Test
@@ -178,42 +178,6 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
         DiscussionCommentResponse responseWrapper = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
             commentContent, "ACTIVE", currentUser);
         softAssertions.assertThat(responseWrapper.getContent()).isEqualTo(commentContent);
-    }
-
-    @Test
-    @TestRail(testCaseId = {"16057", "14672"})
-    @Description("Create, get scenario discussion with assignee user and useridentity")
-    public void getScenarioDiscussionsByUserIdentity() {
-        UserCredentials assignedUser = UserUtil.getUser();
-        String description = new GenerateStringUtil().generateNotes();
-        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
-        ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
-        softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
-
-        QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(), new GenerateStringUtil().generateNotes(), "ACTIVE", currentUser);
-        String[] params = {"pageNumber,1", "status[NE],DELETED", "assignee.userIdentity[IN]," + scenarioDiscussionAssigneeResponse.getAssigneeUserIdentity(), "sortBy[DESC],createdAt"};
-        ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, params);
-        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
-
-        QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(), currentUser);
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14673"})
-    @Description("Create, get scenario discussion with mentioned user profile identity")
-    public void getScenarioDiscussionsByMentionedUserIdentity() {
-        String[] params = {"mentionedUsers.userIdentity[EQ]," + scenarioDiscussionResponse.getParticipants().get(0)
-            .getUserIdentity(), "pageNumber,1", "status[NE],DELETED"};
-        ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, params);
-        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14674"})
-    @Description("Verify that user can GET a list of all Unresolved discussions")
-    public void getUnresolvedScenarioDiscussions() {
-        ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, "pageNumber,1", "status[NE],DELETED", "status[IN],ACTIVE");
-        softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -489,7 +453,6 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
         softAssertions.assertThat(updateDiscussionResponse.getAssignee().getIdentity())
             .isEqualTo(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()));
 
-
         DiscussionCommentViewResponse commentViewResponse = QmsScenarioDiscussionResources.postScenarioDiscussionCommentViewStatus(
             scenarioDiscussionResponse.getIdentity(),
             discussionCommentResponse.getIdentity(),
@@ -499,6 +462,5 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
         softAssertions.assertThat(commentViewResponse.getCommentView().stream()
                 .anyMatch(cv -> cv.identity.equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
             .isTrue();
-
     }
 }

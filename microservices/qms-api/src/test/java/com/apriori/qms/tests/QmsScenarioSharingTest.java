@@ -37,7 +37,7 @@ public class QmsScenarioSharingTest extends QmsApiTestDataUtils {
 
     @After
     public void afterTest() {
-        deleteTestData();
+        deleteTestDataAndClearEntities();
     }
 
     @Test
@@ -93,7 +93,7 @@ public class QmsScenarioSharingTest extends QmsApiTestDataUtils {
     @Description("Verify that more than 10 Users can be added by using SHARE option")
     public void addMoreThan10ComponentScenarioUsers() {
         List<ProjectUserParameters> projectUsersList = new ArrayList<>();
-        for (int i = 1; i < 12; i++) {
+        for (int i = 0; i < 11; i++) {
             projectUsersList.add(ProjectUserParameters.builder()
                 .email(UserUtil.getUser().getEmail())
                 .build());

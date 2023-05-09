@@ -1,0 +1,20 @@
+{
+  "project": {
+    "name": "PROJ73026930",
+    "description": "PROJ73026930",
+    "status": "COMPLETED",
+    "type": "INTERNAL",
+    "projectProfile": {
+      "emailReminder": {
+        "active": true,
+        "startDuration": "P1DT5M",
+        "frequencyValue": "R2/P1D"
+      },
+      "commentReminder": {
+        "active": true,
+        "startDuration": "P1D",
+        "frequencyValue": "R/P4H"
+      }
+    }
+  }
+}

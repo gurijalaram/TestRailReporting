@@ -1,15 +1,13 @@
 package com.apriori.cisapi.controller;
 
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectProfile;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectRequest;
-import com.apriori.cisapi.entity.request.bidpackage.CommentReminder;
-import com.apriori.cisapi.entity.request.bidpackage.EmailReminder;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 public class CisBidPackageProjectResources {
@@ -129,26 +127,11 @@ public class CisBidPackageProjectResources {
      * @return BidPackageProjectRequest
      */
     public static BidPackageProjectRequest getBidPackageProjectRequestBuilder(String projectName, String projectDescription) {
-        return BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .name(projectName)
-                .description(projectDescription)
-                .status("COMPLETED")
-                .type("INTERNAL")
-                .projectProfile(BidPackageProjectProfile.builder()
-                    .emailReminder(EmailReminder.builder()
-                        .active(true)
-                        .startDuration("P1DT5M")
-                        .frequencyValue("R2/P1D")
-                        .build())
-                    .commentReminder(CommentReminder.builder()
-                        .active(true)
-                        .startDuration("P1D")
-                        .frequencyValue("R/P4H")
-                        .build())
-                    .build())
-                .build())
-            .build();
+        BidPackageProjectRequest bidPackageProjectRequest = JsonManager.deserializeJsonFromInputStream(
+            FileResourceUtil.getResourceFileStream("testdata/BidPackageProjectRequest.json"), BidPackageProjectRequest.class);
+        bidPackageProjectRequest.getProject().setName(projectName);
+        bidPackageProjectRequest.getProject().setDescription(projectDescription);
+        return bidPackageProjectRequest;
     }
 }
 

@@ -19,7 +19,7 @@ public class QmsProjectItemTest extends QmsApiTestDataUtils {
 
     @AfterClass
     public static void afterClass() {
-        deleteTestData();
+        deleteTestDataAndClearEntities();
     }
 
     @Test

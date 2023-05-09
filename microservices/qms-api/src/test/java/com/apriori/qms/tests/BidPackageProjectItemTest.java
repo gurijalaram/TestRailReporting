@@ -20,7 +20,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
 
     @AfterClass
     public static void afterClass() {
-        deleteTestData();
+        deleteTestDataAndClearEntities();
     }
 
     @Test

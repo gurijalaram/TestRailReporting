@@ -19,8 +19,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
@@ -306,7 +304,7 @@ public class QmsScenarioDiscussionResources {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT_VIEW_STATUS, responseClass)
             .inlineVariables(scenarioDiscussionIdentity, discussionCommentIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .body(new ObjectNode(JsonNodeFactory.instance))
+            .customBody("{}")
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 

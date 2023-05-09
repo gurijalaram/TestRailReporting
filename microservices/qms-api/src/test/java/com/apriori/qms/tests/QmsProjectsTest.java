@@ -162,16 +162,16 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        UserCredentials user1 = UserUtil.getUser();
-        String userIdentity1 = new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail());
+        UserCredentials duplicateUser = UserUtil.getUser();
+        String duplicateUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(duplicateUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail()))
+            .userIdentity(duplicateUserIdentity)
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
-        projectUsersList.add(userIdentity1);
+        projectUsersList.add(duplicateUserIdentity);
 
         usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail()))
+            .userIdentity(duplicateUserIdentity)
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 

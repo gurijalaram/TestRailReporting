@@ -84,9 +84,9 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     }
 
     /**
-     * Delete test data.
+     * Delete test data and clear entities
      */
-    protected static void deleteTestData() {
+    protected static void deleteTestDataAndClearEntities() {
         try {
             if (bidPackageResponse != null) {
                 QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);

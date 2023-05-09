@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include. NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BidPackageProjectUserParameters {
     private String userIdentity;
     private String userEmail;
