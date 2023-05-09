@@ -5,7 +5,7 @@ public enum MaterialNameEnum {
     ABS("ABS"),
     ABS_10_GLASS("ABS, 10% Glass"),
     ABS_PLATING("ABS, Plating"),
-    ALUMINIUM_ANSI_AL380("Aluminum, ANSI AL380.0"),
+    ALUMINIUM_ANSI_AL380("Aluminum, Cast, ANSI AL380.0"),
     ALUMINIUM_ANSI_7075("Aluminum, ANSI 7075"),
     ALUMINIUM_ANSI_1050A("Aluminum, ANSI 1050A"),
     ALUMINIUM_ANSI_2017("Aluminum, ANSI 2017"),
