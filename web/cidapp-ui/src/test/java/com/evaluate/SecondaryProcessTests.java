@@ -446,7 +446,7 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Paint")
             .selectSecondaryProcess("Wet Coat Line")
             .inputFractionOverride("0.40")
-            .inputMaskedFeatures("1")
+            .inputMaskedFeatures("10")
             .inputBatchSizeOverride("254")
             .inputCompLoadBar("1")
             .submit(EvaluatePage.class)
@@ -456,7 +456,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.40);
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features")).isEqualTo(1.0);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features")).isEqualTo(10.0);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Components Per Load Bar")).isEqualTo(1.0);
 
         softAssertions.assertAll();

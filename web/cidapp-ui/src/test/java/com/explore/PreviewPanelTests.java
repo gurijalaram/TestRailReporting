@@ -125,12 +125,12 @@ public class PreviewPanelTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "Casting";
-        String componentName2 = "manifold";
+        String componentName2 = "Y_shape";
         String componentName3 = "Casting-Die";
         String componentName4 = "partbody_2";
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt.1");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt");
         resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, componentName3 + ".stp");
         resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, componentName4 + ".stp");
         currentUser = UserUtil.getUser();
