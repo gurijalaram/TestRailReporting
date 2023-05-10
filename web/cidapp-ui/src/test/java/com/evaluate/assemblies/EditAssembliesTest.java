@@ -614,6 +614,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -957,7 +963,8 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+//        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
@@ -982,10 +989,10 @@ public class EditAssembliesTest extends TestBase {
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
+//            .selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }

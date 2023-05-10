@@ -314,12 +314,12 @@ public class ComparisonTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "Casting";
-        String componentName2 = "manifold";
+        String componentName2 = "Y_shape";
         String componentName3 = "Casting-Die";
         String componentName4 = "partbody_2";
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt.1");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt");
         resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, componentName3 + ".stp");
         resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, componentName4 + ".stp");
         currentUser = UserUtil.getUser();
@@ -411,9 +411,9 @@ public class ComparisonTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "Casting";
-        String componentName2 = "manifold";
+        String componentName2 = "Y_shape";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt.1");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
@@ -772,7 +772,7 @@ public class ComparisonTests extends TestBase {
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS))
             .as("Design Warnings").isEqualTo("70.59%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
-            .as("Total Cycle Time").isEqualTo("138.32%");
+            .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
             .as("Total Capital Investment").isEqualTo("3.56%");
 

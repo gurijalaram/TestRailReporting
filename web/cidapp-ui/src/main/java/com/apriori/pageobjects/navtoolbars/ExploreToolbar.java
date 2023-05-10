@@ -43,7 +43,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
-    @FindBy(css = "[id='qa-sub-header-import-dropdown']")
+    @FindBy(css = "[id='qa-sub-header-import-button']")
     private WebElement importButton;
 
     @FindBy(css = "[id='qa-sub-header-import-component']")
@@ -320,7 +320,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ImportCadFilePage importCadFile() {
         pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
         return new ImportCadFilePage(driver);
     }
 
