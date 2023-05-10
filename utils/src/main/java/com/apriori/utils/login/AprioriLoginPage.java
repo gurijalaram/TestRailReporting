@@ -65,10 +65,10 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     private WebElement welcomeText;
 
     @FindBy(css = ".legal-text")
-    private WebElement legalText;
+    private WebElement legalText;*/
 
     @FindBy(xpath = "//a[@class='white-link']")
-    private WebElement learnMore;*/
+    private WebElement learnMore;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -93,7 +93,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
         log.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
-        this.get();
+        //this.get();
     }
 
     @Override

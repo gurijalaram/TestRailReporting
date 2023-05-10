@@ -51,7 +51,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @return new page object
      */
     public ExplorePage login(UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, ExplorePage.class);
+        return aprioriLoginPage.login(userCredentials, false, false, ExplorePage.class);
     }
 
     /**
@@ -61,7 +61,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @return new page object
      */
     public LeftHandNavigationBar cisLogin(UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, LeftHandNavigationBar.class);
+        return aprioriLoginPage.login(userCredentials, false, false, LeftHandNavigationBar.class);
     }
 
     /**
