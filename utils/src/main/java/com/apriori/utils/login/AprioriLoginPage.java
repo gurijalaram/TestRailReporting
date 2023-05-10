@@ -114,7 +114,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      */
     public String getLoginTitle(boolean isAdmin) {
         return isAdmin ? adminLoginTitle.getText() : reportsLoginTitle.getText();
-       // return loginTitle.getAttribute("textContent");
+        // return loginTitle.getAttribute("textContent");
         //return "";
     }
 
