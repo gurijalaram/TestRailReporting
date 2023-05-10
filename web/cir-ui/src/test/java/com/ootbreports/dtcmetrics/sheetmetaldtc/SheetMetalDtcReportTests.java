@@ -212,7 +212,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3044"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report ")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
