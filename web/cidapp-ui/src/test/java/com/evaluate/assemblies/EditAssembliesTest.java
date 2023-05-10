@@ -963,7 +963,6 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-//        componentsTablePage = loginPage.login(currentUser)
         componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
@@ -990,7 +989,6 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
             .openComponents();
-//            .selectTableView();
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
