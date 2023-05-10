@@ -48,7 +48,7 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("EDC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Electronics Data Collection"));
+        assertTrue("EDC login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Electronics Data Collection"));
     }
 
     /**

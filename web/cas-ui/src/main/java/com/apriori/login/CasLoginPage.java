@@ -38,7 +38,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CAS login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Customer Admin"));
+        assertTrue("CAS login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Customer Admin"));
     }
 
     /**

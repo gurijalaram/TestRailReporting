@@ -33,12 +33,12 @@ public class CicLoginUtil extends TestBase {
      * @return new page object
      */
     public CicLoginUtil login(UserCredentials currentUser) {
-        aprioriLoginPage.executeLogin(currentUser.getEmail(), currentUser.getPassword());
+        aprioriLoginPage.executeLogin(currentUser.getEmail(), currentUser.getPassword(), false, false);
         return this;
     }
 
     public CicLoginUtil navigateToUserMenu() {
-        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Connect"));
+        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Cost Insight Connect"));
         pageUtils.waitForElementAndClick(usersMenuBtn);
         return this;
     }

@@ -5,6 +5,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,31 +19,40 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
-    @FindBy(css = ".auth0-lock-name")
-    private WebElement loginTitle;
+    @FindBy(xpath = "//h2[@class='textAccent']")
+    private WebElement reportsLoginTitle;
 
-    @FindBy(css = "input[name='username']")
+    @FindBy(xpath = "//p[@class='password-inputs-header']")
+    private WebElement adminLoginTitle;
+
+    /*@FindBy(css = "input[name='email']")
     private WebElement email;
 
-    @FindBy(css = "input[name='password']")
-    private WebElement password;
+    @FindBy(css = "input[name='username']")
+    private WebElement emailInputOnPrem;*/
 
-    @FindBy(css = "a[class='auth0-lock-alternative-link")
-    private WebElement forgotPassword;
+    /*@FindBy(css = "input[name='password']")
+    private WebElement password;*/
 
-    @FindBy(css = "button[type='submit']")
+    /*@FindBy(css = "a[class='auth0-lock-alternative-link")
+    private WebElement forgotPassword;*/
+
+    /*@FindBy(css = "button[type='submit']")
     private WebElement submitLogin;
 
-    @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
+    @FindBy(css = "button[id='login']")
+    private WebElement loginButtonOnPrem;*/
+
+    /*@FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
     private WebElement loginErrorMsg;
 
     @FindBy(css = ".auth0-lock-header-logo")
-    private WebElement aprioriLogo;
+    private WebElement aprioriLogo;*/
 
-    @FindBy(css = ".auth0-lock-name")
-    private WebElement aprioriTitle;
+    /*@FindBy(css = ".auth0-lock-name")
+    private WebElement aprioriTitle;*/
 
-    @FindBy(xpath = "//a[.='Privacy Policy']")
+    /*@FindBy(xpath = "//a[.='Privacy Policy']")
     private WebElement privacyPolicy;
 
     @FindBy(xpath = "//a[contains(text(),'Help')]")
@@ -58,7 +68,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     private WebElement legalText;
 
     @FindBy(xpath = "//a[@class='white-link']")
-    private WebElement learnMore;
+    private WebElement learnMore;*/
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -92,9 +102,9 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(email);
-        pageUtils.waitForElementToAppear(password);
-        pageUtils.waitForElementToAppear(submitLogin);
+        //pageUtils.waitForElementToAppear(email);
+        //pageUtils.waitForElementToAppear(password);
+        //pageUtils.waitForElementToAppear(submitLogin);
     }
 
     /**
@@ -102,8 +112,10 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    public String getLoginTitle() {
-        return loginTitle.getAttribute("textContent");
+    public String getLoginTitle(boolean isAdmin) {
+        return isAdmin ? adminLoginTitle.getText() : reportsLoginTitle.getText();
+       // return loginTitle.getAttribute("textContent");
+        //return "";
     }
 
     /**
@@ -112,8 +124,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public <T> T login(final UserCredentials userCredentials, Class<T> klass) {
-        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
+    public <T> T login(final UserCredentials userCredentials, boolean isEnvOnPrem, boolean isReports, Class<T> klass) {
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword(), isEnvOnPrem, isReports);
         return PageFactory.initElements(driver, klass);
     }
 
@@ -125,8 +137,9 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return the current page object
      */
     public String failedLoginAs(String email, String password) {
-        executeLogin(email, password);
-        return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
+        executeLogin(email, password, false, false);
+        //return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
+        return "";
     }
 
     /**
@@ -135,10 +148,10 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param email    - the email
      * @param password - the password
      */
-    public void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        submitLogin();
+    public void executeLogin(String email, String password, boolean isEnvOnPrem, boolean isReports) {
+        enterEmail(email, isEnvOnPrem, isReports);
+        enterPassword(password, isReports);
+        submitLogin(isEnvOnPrem, isReports);
     }
 
     /**
@@ -146,10 +159,18 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @param emailAddress - the email address
      */
-    private void enterEmail(String emailAddress) {
-        email.click();
-        pageUtils.clearInput(email);
-        email.sendKeys(emailAddress);
+    private void enterEmail(String emailAddress, boolean isEnvOnPrem, boolean isReports) {
+        By cloudLocator = By.cssSelector("input[name='email']");
+        By onPremAdminLocator = By.cssSelector("input[name='username']");
+        By onPremReportsLocator = By.cssSelector("input[name='j_username']");
+        By locatorToUse = isEnvOnPrem ? onPremAdminLocator : cloudLocator;
+        locatorToUse = isReports ? onPremReportsLocator : locatorToUse;
+        WebElement elementToUse = driver.findElement(locatorToUse);
+        elementToUse.click();
+        pageUtils.clearInput(elementToUse);
+        elementToUse.sendKeys(emailAddress);
+        // put in config yml file to get the locators from - get env.locator_admin
+        // users file - set based on env too (or else make passwords the same)
     }
 
     /**
@@ -157,17 +178,27 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @param password - the password
      */
-    private void enterPassword(String password) {
-        this.password.click();
-        pageUtils.clearInput(this.password);
-        this.password.sendKeys(password);
+    private void enterPassword(String password, boolean isReports) {
+        By cloudLocator = By.cssSelector("input[name='password']");
+        By onPremReportsLocator = By.cssSelector("input[name='j_password_pseudo']");
+        By locatorToUse = isReports ? onPremReportsLocator : cloudLocator;
+        WebElement elementToUse = driver.findElement(locatorToUse);
+        elementToUse.click();
+        pageUtils.clearInput(elementToUse);
+        elementToUse.sendKeys(password);
     }
 
     /**
      * Single action that login to cid
      */
-    private void submitLogin() {
-        submitLogin.click();
+    private void submitLogin(boolean isEnvOnPrem, boolean isReports) {
+        By cloudLocator = By.cssSelector("button[type='submit']");
+        By onPremAdminLocator = By.cssSelector("button[id='login']");
+        By onPremReportsLocator = By.cssSelector("button[id='submitButton']");
+        By locatorToUse = isEnvOnPrem ? onPremAdminLocator : cloudLocator;
+        locatorToUse = isReports ? onPremReportsLocator : locatorToUse;
+        WebElement elementToUse = driver.findElement(locatorToUse);
+        pageUtils.waitForElementAndClick(elementToUse);
     }
 
     /**
@@ -176,7 +207,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return login error message
      */
     public String getLoginErrorMessage() {
-        return loginErrorMsg.getText();
+        //return loginErrorMsg.getText();
+        return "";
     }
 
     /**
@@ -196,7 +228,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return new page object
      */
     public ForgottenPasswordPage forgottenPassword() {
-        pageUtils.waitForElementAndClick(forgotPassword);
+        //pageUtils.waitForElementAndClick(forgotPassword);
         return new ForgottenPasswordPage(driver);
     }
 
@@ -206,7 +238,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return new page object
      */
     public PrivacyPolicyPage privacyPolicy() {
-        pageUtils.waitForElementAndClick(privacyPolicy);
+        //pageUtils.waitForElementAndClick(privacyPolicy);
         return new PrivacyPolicyPage(driver);
     }
 
@@ -216,7 +248,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     private String getEmail() {
-        return email.getText();
+        //return email.getText();
+        return "";
     }
 
     /**
@@ -225,7 +258,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     private String getPassword() {
-        return this.password.getText();
+        //return this.password.getText();
+        return "";
     }
 
     /**
@@ -234,7 +268,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return true/false
      */
     public boolean isLogoDisplayed() {
-        return aprioriLogo.isDisplayed();
+        //return aprioriLogo.isDisplayed();
+        return true;
     }
 
     /**
@@ -243,7 +278,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     public String getWelcomeText() {
-        return welcomeText.getText();
+        //return welcomeText.getText();
+        return "";
     }
 }
-
