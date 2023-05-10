@@ -405,6 +405,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Issue("APD-1663")
     @TestRail(testCaseId = {"5789"})
     @Description("Be able to filter table contents within Add Scenarios dialog box")
     public void filterScenariosAddDialog() {

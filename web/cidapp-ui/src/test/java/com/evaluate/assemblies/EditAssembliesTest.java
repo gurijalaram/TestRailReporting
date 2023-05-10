@@ -36,7 +36,6 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.apache.http.cookie.SM;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -586,6 +585,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"10895", "10897"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndOverridePrivateSubcomponent() {
@@ -990,6 +990,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"12037"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
