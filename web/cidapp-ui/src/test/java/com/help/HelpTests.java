@@ -1,6 +1,5 @@
 package com.help;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -109,7 +108,7 @@ public class HelpTests extends TestBase {
             .openDesignGuidance()
             .openHelp();
 
-        assertThat(helpDocPage.getDesignGuidanceChildPageTitle(), containsString("Cost Insight Design Documentation"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Design Issues"));
     }
 
     @Test
