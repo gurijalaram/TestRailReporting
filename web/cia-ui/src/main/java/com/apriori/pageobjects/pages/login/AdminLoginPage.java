@@ -21,7 +21,7 @@ public class AdminLoginPage extends AdminHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
-    private UserCredentials userCredentials = UserUtil.getUser();
+    private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     @FindBy(xpath = "//input[@type='email']")
     private WebElement emailInput;
