@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
@@ -36,7 +37,6 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.apache.http.cookie.SM;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -586,6 +586,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"10895", "10897"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndOverridePrivateSubcomponent() {
@@ -613,6 +614,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -956,7 +963,7 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
@@ -981,15 +988,15 @@ public class EditAssembliesTest extends TestBase {
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"12037"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
@@ -1018,6 +1025,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
