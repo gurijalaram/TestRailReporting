@@ -88,7 +88,7 @@ public class IgnoredTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
 

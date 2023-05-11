@@ -72,7 +72,7 @@ public class UploadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(newScenarioName)
             .submit(EvaluatePage.class);
 

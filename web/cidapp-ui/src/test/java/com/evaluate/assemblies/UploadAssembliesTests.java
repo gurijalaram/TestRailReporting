@@ -33,7 +33,6 @@ import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -846,7 +845,7 @@ public class UploadAssembliesTests extends TestBase {
         List<String> pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
 
         evaluatePage = componentsTreePage.closePanel()
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(newScenarioNamePrivateEvaluate)
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
@@ -862,7 +861,7 @@ public class UploadAssembliesTests extends TestBase {
         evaluatePage = componentsTreePage.closePanel()
             .clickExplore()
             .multiSelectScenarios(hinge_assembly + "," + scenarioName)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(newScenarioNamePrivateExplore)
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
@@ -895,7 +894,7 @@ public class UploadAssembliesTests extends TestBase {
         pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
 
         evaluatePage = componentsTreePage.closePanel()
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(newScenarioNamePublicEvaluate)
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
@@ -911,7 +910,7 @@ public class UploadAssembliesTests extends TestBase {
         evaluatePage = componentsTreePage.closePanel()
             .clickExplore()
             .multiSelectScenarios(hinge_assembly + "," + scenarioName)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(newScenarioNamePublicExplore)
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);

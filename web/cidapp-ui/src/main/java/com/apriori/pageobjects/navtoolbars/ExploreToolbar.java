@@ -46,6 +46,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-import-button']")
     private WebElement importButton;
 
+    @FindBy(css = "[id='qa-sub-header-copy-button']")
+    private WebElement copyButton;
+
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
 
@@ -392,13 +395,12 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the scenario page
+     * Copies a scenario
      *
      * @return new page object
      */
-    public ScenarioPage createScenario() {
-        pageUtils.waitForElementAndClick(newButton);
-        pageUtils.waitForElementAndClick(scenarioButton);
+    public ScenarioPage copyScenario() {
+        pageUtils.waitForElementAndClick(copyButton);
         return new ScenarioPage(driver);
     }
 
