@@ -7,13 +7,14 @@ qa-test:
   application_name: cid
   installation_name: core-na-1 - Production
   base_url: https://na-1-demo.apriori-internal.qa-test.apriori.net/
+  base_server_platform_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   admin:
-    ui_url: ${base_url}apriori/login
+    ui_url: ${base_server_platform_url}apriori/login
 
   cds:
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
@@ -26,7 +27,7 @@ qa-test:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_url}jasperserver-pro/
+    ui_url: ${base_server_platform_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 
 ########################################################################################################################
