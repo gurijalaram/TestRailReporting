@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @SuppressWarnings("unused")
-public class BidPackageProjectItemRequest {
-    private BidPackageProjectItemParameters projectItem;
+public class BidPackageProjectItem {
+    private BidPackageItem bidPackageItem;
 
 }

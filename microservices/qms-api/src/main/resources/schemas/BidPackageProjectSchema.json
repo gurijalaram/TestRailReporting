@@ -26,6 +26,12 @@
     "name": {
       "type": "string"
     },
+    "displayName": {
+      "type": "string"
+    },
+    "dueAt": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -87,7 +93,71 @@
     },
     "items": {
       "type": "array",
-      "items": {}
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "bidPackageIdentity": {
+              "type": "string"
+            },
+            "projectIdentity": {
+              "type": "string"
+            },
+            "bidPackageItem": {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "bidPackageIdentity": {
+                  "type": "string"
+                },
+                "componentIdentity": {
+                  "type": "string"
+                },
+                "iterationIdentity": {
+                  "type": "string"
+                },
+                "scenarioIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "bidPackageIdentity",
+                "componentIdentity",
+                "iterationIdentity",
+                "scenarioIdentity"
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "bidPackageIdentity",
+            "projectIdentity",
+            "bidPackageItem"
+          ]
+        }
+      ]
     },
     "users": {
       "type": "array",
@@ -237,6 +307,8 @@
   ],
   "optional": [
     "organizationName",
-    "owner"
+    "owner",
+    "displayName",
+    "dueAt"
   ]
 }

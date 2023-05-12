@@ -20,6 +20,18 @@
     "name": {
       "type": "string"
     },
+    "organizationName": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "dueAt": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -235,5 +247,11 @@
     "projectProfile",
     "items",
     "users"
+  ],
+  "optional": [
+    "organizationName",
+    "owner",
+    "displayName",
+    "dueAt"
   ]
 }

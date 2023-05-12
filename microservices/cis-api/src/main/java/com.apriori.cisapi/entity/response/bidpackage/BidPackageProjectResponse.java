@@ -29,4 +29,6 @@ public class BidPackageProjectResponse {
     private BidPackageProjectProfileResponse projectProfile;
     public List<Object> items;
     public List<BidPackageProjectUserResponse> users;
+    private String organizationName;
+    private String owner;
 }

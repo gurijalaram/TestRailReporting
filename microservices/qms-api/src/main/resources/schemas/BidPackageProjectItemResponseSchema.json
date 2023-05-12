@@ -17,9 +17,6 @@
             "bidPackageIdentity": {
               "type": "string"
             },
-            "projectIdentity": {
-              "type": "string"
-            },
             "componentIdentity": {
               "type": "string"
             },
@@ -33,7 +30,6 @@
           "required": [
             "identity",
             "bidPackageIdentity",
-            "projectIdentity",
             "componentIdentity",
             "scenarioIdentity",
             "iterationIdentity"
