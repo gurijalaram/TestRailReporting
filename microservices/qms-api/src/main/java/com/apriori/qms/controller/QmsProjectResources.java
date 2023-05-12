@@ -1,17 +1,15 @@
 package com.apriori.qms.controller;
 
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectProfile;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
-import com.apriori.qms.entity.request.bidpackage.CommentReminder;
-import com.apriori.qms.entity.request.bidpackage.EmailReminder;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import utils.QmsApiTestUtils;
@@ -31,30 +29,14 @@ public class QmsProjectResources {
      * @return BidPackageProjectRequest project request builder
      */
     public static BidPackageProjectRequest getProjectRequestBuilder(String projectName, String projectDescription, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList) {
-        return BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .name(projectName)
-                .displayName(projectName)
-                .dueAt(LocalDateTime.now().plusDays(10))
-                .description(projectDescription)
-                .status("COMPLETED")
-                .type("INTERNAL")
-                .projectProfile(BidPackageProjectProfile.builder()
-                    .emailReminder(EmailReminder.builder()
-                        .active(true)
-                        .startDuration("P1DT5M")
-                        .frequencyValue("R2/P1D")
-                        .build())
-                    .commentReminder(CommentReminder.builder()
-                        .active(true)
-                        .startDuration("P1D")
-                        .frequencyValue("R/P4H")
-                        .build())
-                    .build())
-                .items(itemsList)
-                .users(usersList)
-                .build())
-            .build();
+        BidPackageProjectRequest projectRequest = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/QmsProjectRequest.json"), BidPackageProjectRequest.class);
+        projectRequest.getProject().setName("PN" + projectName);
+        projectRequest.getProject().setDisplayName("DN" + projectName);
+        projectRequest.getProject().setDescription("PD" + projectDescription);
+        projectRequest.getProject().setDueAt(LocalDateTime.now().plusDays(10));
+        projectRequest.getProject().setItems(itemsList);
+        projectRequest.getProject().setUsers(usersList);
+        return projectRequest;
     }
 
     /**
