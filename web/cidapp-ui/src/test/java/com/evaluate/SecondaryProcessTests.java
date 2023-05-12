@@ -424,7 +424,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(testCaseId = {"5144", "5145", "5146", "5147"})
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
