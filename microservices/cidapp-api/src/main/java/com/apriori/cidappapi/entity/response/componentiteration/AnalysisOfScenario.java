@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnalysisOfScenario {
     private String identity;
+    private String analysisType;
     private Double additionalAmortizedInvestment;
     private Double additionalDirectCosts;
     private Double amortizedInvestment;
@@ -97,4 +98,13 @@ public class AnalysisOfScenario {
     private Double stockPropertyOutsideDia;
     private Double stockPropertyWallThickness;
     private Double materialOverheadPercent;
+    private String annualManufacturingCarbon;
+    private String energyCarbonFactor;
+    private String primaryMaterialCarbonFactor;
+    private String logisticsCarbon;
+    private String materialCarbon;
+    private String processCarbon;
+    private String supportsSustainability;
+    private String totalCarbon;
+
 }
