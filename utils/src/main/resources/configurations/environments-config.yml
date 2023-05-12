@@ -6,6 +6,7 @@
 qa-test:
   application_name: cid
   base_url: https://na-1-demo.apriori-internal.qa-test.apriori.net/
+  installation_name: core-na-1 - Production
   customer_identity: 6C1F8C1D4D75
   name: qa-test
   secret_key: PG9E795ML3P4
