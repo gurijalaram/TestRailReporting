@@ -547,38 +547,46 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Get list of all projects
+     * Gets bid package project item.
      *
-     * @param responseClass expected response class
-     * @param httpStatus    expected http status code
-     * @param currentUser   UserCredentials
-     * @param <T>           response class type
-     * @return Response class object
+     * @param <T>                 the type parameter
+     * @param bidPackageIdentity  the bid package identity
+     * @param projectIdentity     the project identity
+     * @param projectItemIdentity the project item identity
+     * @param currentUser         the current user
+     * @param klass               the klass
+     * @param httpStatus          the http status
+     * @return the bid package project item
      */
-    public static <T> T getProjects(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, responseClass)
+    public static <T> T getBidPackageProjectItem(String bidPackageIdentity, String projectIdentity, String projectItemIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEM, klass)
+            .inlineVariables(bidPackageIdentity, projectIdentity, projectItemIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Find  a project by identity in which user participates
+     * Gets bid package project items.
      *
-     * @param projectIdentity Project identity
-     * @param responseClass   expected response class
-     * @param httpStatus      expected http status code
-     * @param currentUser     UserCredentials
-     * @param <T>             response class type
-     * @return Response class object
+     * @param <T>                the type parameter
+     * @param bidPackageIdentity the bid package identity
+     * @param projectIdentity    the project identity
+     * @param currentUser        the current user
+     * @param klass              the klass
+     * @param httpStatus         the http status
+     * @return the bid package project items
      */
-    public static <T> T getProject(String projectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECT, responseClass)
-            .inlineVariables(projectIdentity)
+    public static <T> T getBidPackageProjectItems(String bidPackageIdentity, String projectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, klass)
+            .inlineVariables(bidPackageIdentity, projectIdentity)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
+
     }
 }

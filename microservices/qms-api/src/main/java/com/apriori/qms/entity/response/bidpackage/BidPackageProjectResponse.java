@@ -14,6 +14,8 @@ import java.util.List;
 @JsonRootName("response")
 @Schema(location = "BidPackageProjectResponseSchema.json")
 public class BidPackageProjectResponse {
+    public List<BidPackageProjectItemResponse> items;
+    public List<BidPackageProjectUserResponse> users;
     private String identity;
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -29,6 +31,7 @@ public class BidPackageProjectResponse {
     private String status;
     private String bidPackageIdentity;
     private BidPackageProjectProfileResponse projectProfile;
-    public List<Object> items;
-    public List<BidPackageProjectUserResponse> users;
+    private String displayName;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime dueAt;
 }

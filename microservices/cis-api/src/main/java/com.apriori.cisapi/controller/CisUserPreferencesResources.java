@@ -1,4 +1,4 @@
-package com.apriori.cisapi.utils;
+package com.apriori.cisapi.controller;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
@@ -13,7 +13,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
 
-public class UserPreferencesController extends TestUtil {
+public class CisUserPreferencesResources extends TestUtil {
 
     /**
      * Get extended User Preferences
