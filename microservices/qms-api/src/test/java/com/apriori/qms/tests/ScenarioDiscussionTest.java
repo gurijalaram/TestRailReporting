@@ -25,11 +25,23 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
 public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
+    @BeforeClass
+    public static void beforeClass() {
+        createTestData();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        deleteTestDataAndClearEntities();
+    }
+
     @Test
     @TestRail(testCaseId = {"14608", "14613"})
     @Description("Create and delete Scenario Discussion")

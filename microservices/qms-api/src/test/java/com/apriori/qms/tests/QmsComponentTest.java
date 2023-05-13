@@ -90,7 +90,7 @@ public class QmsComponentTest extends TestUtil {
                 scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity());
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isGreaterThan(0);
-        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().get(0).getAvatarColor());
+        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().get(0).getAvatarColor()).isNotNull();
     }
 
     @After

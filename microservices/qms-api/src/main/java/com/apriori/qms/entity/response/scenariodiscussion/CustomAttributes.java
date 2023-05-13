@@ -16,4 +16,5 @@ public class CustomAttributes {
     private Integer workspaceId;
     private String defaultRole;
     private List<Object> roles;
+    private String department;
 }

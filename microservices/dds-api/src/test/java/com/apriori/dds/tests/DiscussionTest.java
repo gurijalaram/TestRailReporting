@@ -2,7 +2,7 @@ package com.apriori.dds.tests;
 
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ApwErrorMessage;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -66,14 +66,14 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_CONFLICT);
 
-        ResponseWrapper<ApwErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(requestEntity).post();
         softAssertions.assertThat(errorMessageResponseWrapper.getResponseEntity().getMessage()).contains("Status should be ACTIVE for all new discussions");
     }
 
@@ -124,8 +124,8 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ApwErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
-                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ApwErrorMessage.class)
+        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
+                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(discussionsRequest)
@@ -146,8 +146,8 @@ public class DiscussionTest extends TestUtil {
         ResponseWrapper<String> discussionDeletedResponse = DdsApiTestUtils.deleteDiscussion(discussionCreatedResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertThat(discussionDeletedResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<ApwErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
-                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ApwErrorMessage.class)
+        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
+                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), discussionCreatedResponse.getResponseEntity().getIdentity())
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(DiscussionsRequest.builder()
@@ -166,8 +166,8 @@ public class DiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"12413"})
     @Description("delete a invalid discussion")
     public void deleteInvalidDiscussion() {
-        ResponseWrapper<ApwErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil
-                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ApwErrorMessage.class)
+        ResponseWrapper<ErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil
+                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDWXINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .apUserContext(userContext)
@@ -188,8 +188,8 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ApwErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(RequestEntityUtil
-                .init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ApwErrorMessage.class)
+        ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(RequestEntityUtil
+                .init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
                 .inlineVariables("INVALIDCUSTOMER")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(discussionsRequest)
@@ -204,8 +204,8 @@ public class DiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"14328"})
     @Description("Get Discussion with invalid Discussion Identity")
     public void getDiscussionWithInvalidIdentity() {
-        ResponseWrapper<ApwErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil
-                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ApwErrorMessage.class)
+        ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil
+                .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .apUserContext(userContext)

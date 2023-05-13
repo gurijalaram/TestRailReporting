@@ -335,16 +335,20 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13893"})
     @Description("Find bid package from other customer identity user")
     public void getBidPackagesFromAnotherCustomer() {
-        String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser().getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGES, BidPackagesResponse.class)
+        String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser()
+            .getEmail());
+        String otherUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(QmsApiTestUtils.getCustomerUser()
+            .getEmail());
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
+            .inlineVariables(bidPackageResponse.getIdentity())
             .apUserContext(otherUserContext)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
 
-        ResponseWrapper<BidPackagesResponse> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
-
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getIsFirstPage()).isTrue();
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getPageNumber()).isEqualTo(1);
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getItems().size()).isEqualTo(0);
+        ResponseWrapper<ApwErrorMessage> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getMessage())
+            .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity", bidPackageResponse.getIdentity()));
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getStatus()).isEqualTo(404);
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getError()).isEqualTo("Not Found");
     }
 
     @Test
