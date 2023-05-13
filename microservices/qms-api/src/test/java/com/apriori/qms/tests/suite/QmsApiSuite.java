@@ -18,15 +18,15 @@ import org.junit.runners.Suite;
 @ProjectRunID("1712")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-//    QmsComponentTest.class,
-//    QmsBidPackageTest.class,
-//    QmsBidPackageItemTest.class,
-//    BidPackageProjectsTest.class,
+    QmsComponentTest.class,
+    QmsBidPackageTest.class,
+    QmsBidPackageItemTest.class,
+    BidPackageProjectsTest.class,
     BidPackageProjectUserTest.class,
     ScenarioDiscussionTest.class,
-//    QmsScenarioSharingTest.class,
-//    LayoutConfigurationTest.class,
-//    QmsUserPreferenceTest.class
+    QmsScenarioSharingTest.class,
+    LayoutConfigurationTest.class,
+    QmsUserPreferenceTest.class
 })
 public class QmsApiSuite {
 }
