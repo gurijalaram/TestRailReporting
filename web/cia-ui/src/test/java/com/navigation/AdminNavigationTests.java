@@ -1,6 +1,6 @@
 package com.navigation;
 
-import com.apriori.pageobjects.cirpages.CirUserGuidePage;
+import com.apriori.pageobjects.pages.userguides.CirUserGuidePage1;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
 import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
@@ -21,7 +21,7 @@ public class AdminNavigationTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
-    private CirUserGuidePage cirUserGuide;
+    private CirUserGuidePage1 cirUserGuide;
     private CiaUserGuide ciaUserGuide;
     private AdminHomePage homePage;
     private AdminLogoutPage logout;

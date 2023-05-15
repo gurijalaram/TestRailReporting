@@ -1185,15 +1185,6 @@ public class PageUtils {
     }
 
     /**
-     * Gets header to assert against
-     *
-     * @return String
-     */
-    public String getHeaderToCheck(boolean isAdmin) {
-        return isAdmin ? "Log in to Cost Insight | Admin" : "aPriori Cost Insight Report";
-    }
-
-    /**
      * Gets URL to assert against
      *
      * @return String

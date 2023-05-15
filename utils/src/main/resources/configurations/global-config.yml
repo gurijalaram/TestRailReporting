@@ -5,8 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: onprem
-version: 23-1
+env: qa-test
 deployment: production
 customer: ap-int
 
@@ -23,7 +22,7 @@ global:
   console_log_level: "OFF"
   db_recording: true
   different_parts: true
-  different_users: false
+  different_users: true
   schema_base_path: schemas/
   users_csv_file: common-users.csv
   onprem_users_csv_file: onprem-users.csv
@@ -75,11 +74,11 @@ default:
 
   nts:
     api_url: https://nts.${core_service_url_template}
-  ###########################
+###########################
 
-  ###########################
-  #  Deployment URL
-  deployment_url_template: ${default.aws_region}-v${version}.${${deployment}.url_part}.apriori.net/
+###########################
+#  Deployment URL
+  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
 
   admin:
     ui_url: https://${deployment_url_template}apriori/login
@@ -146,9 +145,10 @@ default:
 
   reports:
     ui_url: https://${deployment_url_template}jasperserver-pro/
-  ###########################
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+###########################
 
-  ###########################
-  # Other URL
+###########################
+# Other URL
   cnh:
     api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/

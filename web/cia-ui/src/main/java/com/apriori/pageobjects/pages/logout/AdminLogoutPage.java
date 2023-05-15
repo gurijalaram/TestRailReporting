@@ -70,12 +70,4 @@ public class AdminLogoutPage extends AdminHeader {
         pageUtils.waitForElementToAppear(loginButton);
         return loginButton.isDisplayed() && loginButton.isEnabled();
     }
-
-    /**
-     * Gets expected header text
-     * @return String
-     */
-    public String getExpectedHeader() {
-        return pageUtils.getHeaderToCheck(true);
-    }
 }

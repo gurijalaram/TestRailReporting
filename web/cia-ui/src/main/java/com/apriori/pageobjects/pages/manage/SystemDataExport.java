@@ -47,8 +47,6 @@ public class SystemDataExport extends AdminHeader {
         return pageUtils.isElementDisplayed(manageSystemDataExportTitle);
     }
 
-    // Generic version of above, to solve having all these wrapper methods?
-
     /**
      * Gets isEnabled value for header
      *
@@ -57,14 +55,5 @@ public class SystemDataExport extends AdminHeader {
     public boolean isHeaderEnabled() {
         pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
         return pageUtils.isElementEnabled(manageSystemDataExportTitle);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getHeaderText() {
-        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
-        return manageSystemDataExportTitle.getText();
     }
 }

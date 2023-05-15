@@ -6,11 +6,8 @@ import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -59,28 +56,25 @@ public class RemoteWebDriverService extends BrowserManager {
                 case CHROME:
                     log.info("Starting ChromeDriver........ ");
 
-                    ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
-                    options.setAcceptInsecureCerts(true);
-                    options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-                    options.setCapability(ChromeOptions.CAPABILITY, options);
-                    //options.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                    ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
+                    chromeOptions.setAcceptInsecureCerts(true);
+                    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
+                    capabilities.setCapability("browserName", Browser.CHROME.browserName());
                     break;
 
                 case FIREFOX:
                     log.info("Starting GeckoDriver........ ");
 
-                    FirefoxProfile fp = new FirefoxProfile();
-                    fp.setAcceptUntrustedCertificates(true);
-                    //dc.setCapability(FirefoxDriver.PROFILE, fp);
-                    //dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+                    capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
+                    capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
                     break;
 
                 case EDGE:
                     log.info("Starting EdgeDriver........ ");
 
-                    EdgeOptions edgeOptions = new EdgeOptions();
-                    edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
-                    //dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
+                    capabilities.setCapability("browserName", Browser.EDGE.browserName());
                     break;
 
                 default:

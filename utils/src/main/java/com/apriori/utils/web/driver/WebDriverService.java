@@ -45,9 +45,7 @@ public class WebDriverService extends BrowserManager {
 
                     WebDriverManager.chromedriver().setup();
 
-                    ChromeOptions chromeOptions = new ChromeOptions();
-                    chromeOptions.setCapability("browser.download.dir", downloadPath);
-                    chromeOptions.setCapability("intl.accept.languages", locale);
+                    ChromeOptions chromeOptions = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
                     chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                     chromeOptions.setAcceptInsecureCerts(true);
                     chromeOptions.addArguments("--remote-allow-origins=*");

@@ -34,7 +34,6 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     private CostOutlierIdentificationReportPage costOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public CostOutlierIdentificationDetailsReportTests() {
         super();

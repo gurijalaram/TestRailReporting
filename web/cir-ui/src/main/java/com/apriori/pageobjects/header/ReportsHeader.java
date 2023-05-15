@@ -312,7 +312,6 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
      */
     public String getHomeTitleText() {
         return driver.getTitle();
-        //return homePageTitle.getAttribute("innerText");
     }
 
     /**
@@ -354,7 +353,6 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
         searchInput.sendKeys(textToType);
         pageUtils.waitForSteadinessOfElement(By.cssSelector("span[id='globalSearch'] > a"));
         searchInput.sendKeys(Keys.ENTER);
-        //pageUtils.waitForElementAndClick(searchButton);
         pageUtils.isPageLoaded(homePageAprioriLogo);
         pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));
         return new ViewSearchResultsPage(driver);

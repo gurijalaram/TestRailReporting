@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.pageobjects.cirpages.CirUserGuidePage;
+import com.apriori.pageobjects.pages.userguides.CirUserGuidePage1;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
@@ -119,8 +119,8 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      *
      * @return CIR user guide instance
      */
-    public CirUserGuidePage navigateToHelpReportsGuide() {
-        return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage.class);
+    public CirUserGuidePage1 navigateToHelpReportsGuide() {
+        return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage1.class);
     }
 
     /**
@@ -149,15 +149,6 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
     public AdminLogoutPage navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
         return navigateToSubPage(userButton, logoutButton, AdminLogoutPage.class);
-    }
-
-    /**
-     * Returns header to check
-     *
-     * @return
-     */
-    public String getHeaderToCheck() {
-        return pageUtils.getHeaderToCheck(true);
     }
 
     /**

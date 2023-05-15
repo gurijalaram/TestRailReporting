@@ -15,7 +15,6 @@ import testsuites.suiteinterface.ReportsTest;
 
 public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase {
 
-
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
