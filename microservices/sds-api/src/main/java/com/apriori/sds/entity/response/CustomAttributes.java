@@ -30,5 +30,5 @@ public class CustomAttributes {
     @JsonProperty("Test_Field_04")
     private String testField4;
     @JsonProperty("UDA5")
-    private List<String> UDA5;
+    private List<String> uda5;
 }

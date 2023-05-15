@@ -5,6 +5,7 @@ import com.apriori.cidappapi.entity.response.componentiteration.ScenarioCustomAt
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioMetadata;
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioRoutings;
 import com.apriori.entity.response.CostingInput;
+import com.apriori.entity.response.ScenarioGcd;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.entity.response.Thumbnail;
 import com.apriori.entity.response.componentiteration.PartNestingDiagram;
@@ -39,7 +40,7 @@ public class ScenarioIteration {
     private String updatedBy;
     private CostingInput costingInput;
     private String identity;
-    private ScenarioItem.ScenarioGcd scenarioGcd;
+    private ScenarioGcd scenarioGcd;
     private String iteration;
     private String hasWebImage;
     private Boolean hasWatchpointReport;
