@@ -27,6 +27,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import entity.response.DmsCommentResponse;
 import entity.response.DmsCommentViewResponse;
 import entity.response.DmsScenarioDiscussionResponse;
+import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -41,6 +42,7 @@ import java.io.File;
 
 public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
+    private static SoftAssertions softAssertionsTestData;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -58,68 +60,80 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
      * Create test data.
      */
     @BeforeClass
+    @Description("Create Test Data")
     public static void createTestData() {
-        softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        contentDesc = RandomStringUtils.randomAlphabetic(12);
-        scenarioItem = createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        if (scenarioItem != null) {
-            bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-            if (bidPackageResponse != null) {
-                bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
-                    QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-                    bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-                if (bidPackageItemResponse != null) {
-                    bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-                    if (bidPackageProjectResponse != null) {
-                        qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-                        if (qmsScenarioDiscussionResponse != null) {
-                            dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
-                            if (dmsScenarioDiscussionResponse != null) {
-                                dmsCommentResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, contentDesc, dmsScenarioDiscussionResponse.getItems()
-                                    .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
-                                if (dmsCommentResponse != null) {
-                                    dmsCommentViewResponse = DmsApiTestUtils.markCommentViewAsRead(
-                                        dmsScenarioDiscussionResponse.getItems().get(0).getIdentity(),
-                                        dmsCommentResponse.getIdentity(),
-                                        dmsCommentResponse.getCommentView().get(0).getUserIdentity(),
-                                        dmsCommentResponse.getCommentView().get(0).getUserCustomerIdentity(),
-                                        dmsCommentResponse.getCommentView().get(0).getParticipantIdentity(),
-                                        currentUser);
-                                    if (dmsCommentViewResponse == null) {
-                                        softAssertions.fail("Create DMS discussion comment view failed");
+        try {
+            softAssertionsTestData = new SoftAssertions();
+            bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+            projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+            contentDesc = RandomStringUtils.randomAlphabetic(12);
+            scenarioItem = createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+            if (scenarioItem != null) {
+                bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
+                if (bidPackageResponse != null) {
+                    bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
+                        QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+                        bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+                    if (bidPackageItemResponse != null) {
+                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                        if (bidPackageProjectResponse != null) {
+                            qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+                            if (qmsScenarioDiscussionResponse != null) {
+                                dmsScenarioDiscussionResponse = DmsApiTestUtils.getScenarioDiscussions(DmsScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser, qmsScenarioDiscussionResponse);
+                                if (dmsScenarioDiscussionResponse != null) {
+                                    dmsCommentResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, contentDesc, dmsScenarioDiscussionResponse.getItems()
+                                        .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
+                                    if (dmsCommentResponse != null) {
+                                        dmsCommentViewResponse = DmsApiTestUtils.markCommentViewAsRead(
+                                            dmsScenarioDiscussionResponse.getItems().get(0).getIdentity(),
+                                            dmsCommentResponse.getIdentity(),
+                                            dmsCommentResponse.getCommentView().get(0).getUserIdentity(),
+                                            dmsCommentResponse.getCommentView().get(0).getUserCustomerIdentity(),
+                                            dmsCommentResponse.getCommentView().get(0).getParticipantIdentity(),
+                                            currentUser);
+                                        if (dmsCommentViewResponse == null) {
+                                            softAssertionsTestData.fail("Create DMS discussion comment view failed");
+                                        }
+                                    } else {
+                                        softAssertionsTestData.fail("Create DMS discussion comment failed");
                                     }
                                 } else {
-                                    softAssertions.fail("Create DMS discussion comment failed");
+                                    softAssertionsTestData.fail("Get DMS discussion failed");
                                 }
                             } else {
-                                softAssertions.fail("Get DMS discussion failed");
+                                softAssertionsTestData.fail("Create QMS discussion failed");
                             }
                         } else {
-                            softAssertions.fail("Create QMS discussion failed");
+                            softAssertionsTestData.fail("Create QMS Bidpackage Project failed");
                         }
                     } else {
-                        softAssertions.fail("Create QMS Bidpackage Project failed");
+                        softAssertionsTestData.fail("Create QMS Bidpackage Item failed");
                     }
                 } else {
-                    softAssertions.fail("Create QMS Bidpackage Item failed");
+                    softAssertionsTestData.fail("Create QMS Bidpackage failed");
                 }
             } else {
-                softAssertions.fail("Create QMS Bidpackage failed");
+                softAssertionsTestData.fail("Create & Publish Scenario via cid-app failed");
             }
-        } else {
-            softAssertions.fail("Create & Publish Scenario via cid-app failed");
+        } catch (Exception e) {
+            softAssertionsTestData.fail(e.getMessage());
         }
     }
 
     @AfterClass
+    @Description("Delete Test Data")
     public static void deleteTestData() {
-        if (bidPackageResponse != null) {
-            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        }
-        if (scenarioItem != null) {
-            deleteScenarioViaCidApp();
+        try {
+            if (bidPackageResponse != null) {
+                QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+            }
+            if (scenarioItem != null) {
+                deleteScenarioViaCidApp();
+            }
+        } catch (Exception e) {
+            softAssertionsTestData.fail(e.getMessage());
+        } finally {
+            clearEntities();
         }
     }
 
@@ -162,11 +176,19 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
     }
 
+    private static void clearEntities() {
+        scenarioItem = null;
+        bidPackageResponse = null;
+        bidPackageItemResponse = null;
+        bidPackageProjectResponse = null;
+    }
+
     @Before
     public void beforeTest() {
-        if (!softAssertions.wasSuccess()) {
-            Assert.fail(softAssertions.errorsCollected().toString());
+        if (!softAssertionsTestData.wasSuccess()) {
+            Assert.fail(softAssertionsTestData.errorsCollected().toString());
         }
+        softAssertions = new SoftAssertions();
     }
 
     @After
@@ -174,5 +196,3 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         softAssertions.assertAll();
     }
 }
-
-

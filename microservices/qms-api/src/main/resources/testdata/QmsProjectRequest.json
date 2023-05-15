@@ -1,0 +1,37 @@
+{
+  "project": {
+    "name": "56455886",
+    "description": "35546961",
+    "status": "COMPLETED",
+    "type": "INTERNAL",
+    "projectProfile": {
+      "emailReminder": {
+        "active": true,
+        "startDuration": "P1DT5M",
+        "frequencyValue": "R2/P1D"
+      },
+      "commentReminder": {
+        "active": true,
+        "startDuration": "P1D",
+        "frequencyValue": "R/P4H"
+      }
+    },
+    "displayName": "56455886",
+    "dueAt": "2023-05-19T13:49:38Z",
+    "items": [
+      {
+        "bidPackageItem": {
+          "componentIdentity": "CRTRQLQDM5XS",
+          "scenarioIdentity": "CSHLLRV6VF54",
+          "iterationIdentity": "CSHLLTAJ1A5I"
+        }
+      }
+    ],
+    "users": [
+      {
+        "userIdentity": "4N630F61FGNG",
+        "customerIdentity": "212B5ABD2F6C"
+      }
+    ]
+  }
+}
