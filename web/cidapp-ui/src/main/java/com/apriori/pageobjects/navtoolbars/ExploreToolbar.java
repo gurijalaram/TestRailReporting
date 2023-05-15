@@ -37,9 +37,6 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
-    @FindBy(css = "[id='qa-sub-header-new-dropdown']")
-    private WebElement newButton;
-
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
@@ -472,7 +469,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ComparePage createComparison() {
-        pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparePage(driver);
     }
