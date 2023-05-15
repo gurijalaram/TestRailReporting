@@ -30,6 +30,9 @@ import utils.QmsApiTestUtils;
 import java.io.File;
 import java.util.Collections;
 
+/**
+ * The type Qms component resources.
+ */
 public class QmsComponentResources {
 
     /**
@@ -54,8 +57,8 @@ public class QmsComponentResources {
     /**
      * Get Component with componentID
      *
-     * @param userContext
-     * @param componentIdentity
+     * @param userContext       the user context
+     * @param componentIdentity the component identity
      * @return ResponseWrapper of class object ComponentResponse
      */
     public static ResponseWrapper<ComponentResponse> getComponent(String userContext, String componentIdentity) {
@@ -67,10 +70,10 @@ public class QmsComponentResources {
     /**
      * Get Component scenario using component id and scenario id.
      *
-     * @param userContext
-     * @param componentIdentity
-     * @param scenarioIdentity
-     * @return ResponseWrapper[ScenarioResponse]
+     * @param userContext       the user context
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
+     * @return ResponseWrapper[ScenarioResponse] component scenario
      */
     public static ResponseWrapper<ScenarioResponse> getComponentScenario(String userContext, String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO, ScenarioResponse.class)
@@ -81,8 +84,8 @@ public class QmsComponentResources {
     /**
      * get component scenarios
      *
-     * @param userContext
-     * @param componentIdentity
+     * @param userContext       the user context
+     * @param componentIdentity the component identity
      * @return ResponseWrapper of class object ScenariosResponse
      */
     public static ResponseWrapper<ScenariosResponse> getComponentScenarios(String userContext, String componentIdentity) {
@@ -94,9 +97,9 @@ public class QmsComponentResources {
     /**
      * get component scenarios users
      *
-     * @param userContext
-     * @param componentIdentity
-     * @param scenarioIdentity
+     * @param userContext       the user context
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
      * @return ResponseWrapper of class object ScenariosResponse
      */
     public static ResponseWrapper<ScenarioProjectUserResponse> getComponentScenarioUsers(String userContext,
@@ -111,11 +114,11 @@ public class QmsComponentResources {
     /**
      * Get component scenario latest iteration
      *
-     * @param userContext
-     * @param componentIdentity
-     * @param scenarioIdentity
-     * @param iterationIdentity
-     * @return ResponseWrapper[ComponentIteration]
+     * @param userContext       the user context
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
+     * @param iterationIdentity the iteration identity
+     * @return ResponseWrapper[ComponentIteration] latest iteration
      */
     public static ResponseWrapper<ComponentIteration> getLatestIteration(String userContext, String componentIdentity, String scenarioIdentity, String iterationIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID, ComponentIteration.class)
@@ -123,11 +126,20 @@ public class QmsComponentResources {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public static ResponseWrapper<String> addProjectUser(String componentIdentity, String scenarioIdentity, ProjectUserParameters projectUsers, UserCredentials currentUser) {
+    /**
+     * Add component scenario user response wrapper.
+     *
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
+     * @param projectUsers      the project users
+     * @param currentUser       the current user
+     * @return the response wrapper
+     */
+    public static ResponseWrapper<ScenarioProjectUserResponse> addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserParameters projectUsers, UserCredentials currentUser) {
         ProjectUserRequest projectUserRequest = ProjectUserRequest.builder()
             .users(Collections.singletonList(projectUsers)).build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(projectUserRequest)
@@ -135,5 +147,46 @@ public class QmsComponentResources {
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Add component scenario user scenario project user response.
+     *
+     * @param componentIdentity        the component identity
+     * @param scenarioIdentity         the scenario identity
+     * @param createProjectUserRequest the create project user request
+     * @param currentUser              the current user
+     * @return the scenario project user response
+     */
+    public static ScenarioProjectUserResponse addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest createProjectUserRequest, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .body(createProjectUserRequest)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<ScenarioProjectUserResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Delete component scenario user response wrapper.
+     *
+     * @param componentIdentity        the component identity
+     * @param scenarioIdentity         the scenario identity
+     * @param deleteProjectUserRequest the delete project user request
+     * @param currentUser              the current user
+     * @return the response wrapper
+     */
+    public static ResponseWrapper<String> deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .body(deleteProjectUserRequest)
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        return HTTPRequest.build(requestEntity).delete();
     }
 }

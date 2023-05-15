@@ -1,41 +1,35 @@
 package com.apriori.qms.tests;
 
 
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
 import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
-import com.apriori.utils.CssComponent;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.QmsApiTestDataUtils;
 
-public class QmsComponentTest extends TestUtil {
-
-    public static ScenarioItem scenarioItem;
-    private static SoftAssertions softAssertions;
+public class QmsComponentTest extends QmsApiTestDataUtils {
     private static String userContext;
-    private UserCredentials currentUser;
 
     @Before
-    public void testSetup() {
-        softAssertions = new SoftAssertions();
-        currentUser = UserUtil.getUser();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
+    public void beforeTest() {
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
+        createTestData();
+    }
+
+    @After
+    public void afterTest() {
+        deleteTestDataAndClearEntities();
     }
 
     @Test
@@ -82,19 +76,17 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22094"})
+    @TestRail(testCaseId = {"22094", "15475"})
     @Description("Get component Scenarios Users and Verify avatarColor field is present in User object in Share")
     public void getComponentScenarioUsers() {
         ResponseWrapper<ScenarioProjectUserResponse> componentScenariosResponse =
             QmsComponentResources.getComponentScenarioUsers(userContext,
                 scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity());
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isGreaterThan(0);
-        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().get(0).getAvatarColor()).isNotNull();
-    }
-
-    @After
-    public void testCleanup() {
-        softAssertions.assertAll();
+        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(1);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
+                .allMatch(u -> u.getAvatarColor() != null)).isTrue();
+        }
     }
 }

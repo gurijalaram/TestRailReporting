@@ -9,6 +9,10 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     PROJECTS("projects"),
     PROJECT("projects/%s"),
 
+    // PROJECTS
+    PROJECT_ITEMS("projects/%s/project-items"),
+    PROJECT_ITEM("projects/%s/project-items/%s"),
+
     //USER PREFERENCE
     USER_PREFERENCE("user-preferences"),
 
@@ -38,6 +42,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     SCENARIO_DISCUSSION("scenario-discussions/%s"),
     SCENARIO_DISCUSSION_COMMENTS("scenario-discussions/%s/comments"),
     SCENARIO_DISCUSSION_COMMENT("scenario-discussions/%s/comments/%s"),
+    SCENARIO_DISCUSSION_COMMENT_VIEW_STATUS("scenario-discussions/%s/comments/%s/view-status"),
 
     //ITERATIONS
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest"),

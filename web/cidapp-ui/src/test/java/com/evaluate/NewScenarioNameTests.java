@@ -41,7 +41,6 @@ public class NewScenarioNameTests extends TestBase {
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemD;
@@ -67,7 +66,7 @@ public class NewScenarioNameTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(testScenarioName2)
             .submit(EvaluatePage.class);
 
@@ -142,17 +141,16 @@ public class NewScenarioNameTests extends TestBase {
     @TestRail(testCaseId = {"5425"})
     @Description("Failure to create a new scenario that is named identical to existing scenario")
     public void usingAnExistingScenarioName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         scenarioPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .createScenario()
+            .copyScenario()
             .enterScenarioName(scenarioName)
             .submit(ScenarioPage.class);
 

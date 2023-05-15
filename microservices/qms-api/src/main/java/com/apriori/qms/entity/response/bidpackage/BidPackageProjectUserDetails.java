@@ -31,5 +31,5 @@ public class BidPackageProjectUserDetails {
     private boolean mfaRequired;
     private CustomAttributes customAttributes;
     private String userType;
-
+    private String avatarColor;
 }

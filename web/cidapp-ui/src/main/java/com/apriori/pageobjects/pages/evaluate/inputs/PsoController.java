@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.Objects;
-
 
 @Slf4j
 public class PsoController {
@@ -33,7 +31,7 @@ public class PsoController {
      * @return current page object
      */
     public PsoController inputOverrideValue(WebElement override, WebElement input, String value) {
-        pageUtils.waitForElementAndClick(override);
+        pageUtils.javaScriptClick(override);
         pageUtils.clearValueOfElement(input);
         input.sendKeys(value);
         return this;

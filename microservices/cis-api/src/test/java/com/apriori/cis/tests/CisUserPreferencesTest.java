@@ -6,9 +6,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.apriori.cisapi.controller.CisUserPreferencesResources;
 import com.apriori.cisapi.entity.response.userpreferences.CurrentExtendedUserPreferencesResponse;
 import com.apriori.cisapi.entity.response.userpreferences.ExtendedUserPreferencesResponse;
-import com.apriori.cisapi.utils.UserPreferencesController;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class UserPreferencesTest extends UserPreferencesController {
+public class CisUserPreferencesTest extends CisUserPreferencesResources {
 
     @BeforeClass
     public static void setUp() {
