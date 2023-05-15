@@ -38,7 +38,7 @@ public class CicLoginUtil extends TestBase {
     }
 
     public CicLoginUtil navigateToUserMenu() {
-        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Cost Insight Connect"));
+        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Connect"));
         pageUtils.waitForElementAndClick(usersMenuBtn);
         return this;
     }

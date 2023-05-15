@@ -127,9 +127,10 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    public String getLoginTitle(boolean isAdmin) {
+    public String getLoginTitle() {
         boolean isOnPrem = PropertiesContext.get("${env}").equals("onprem");
-        String loginTitle = "";
+        boolean isAdmin = Thread.currentThread().getStackTrace()[5].getFileName().contains("Admin");
+        String loginTitle;
         if (isOnPrem) {
             loginTitle = isAdmin ? adminLoginTitle.getText() : reportsLoginTitle.getText();
         } else {

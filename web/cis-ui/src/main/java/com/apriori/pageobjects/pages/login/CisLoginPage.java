@@ -41,7 +41,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIS login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("aP Workspace"));
+        assertTrue("CIS login page was not displayed", aprioriLoginPage.getLoginTitle().contains("aP Workspace"));
     }
 
     /**

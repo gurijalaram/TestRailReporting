@@ -38,7 +38,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CID login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Cost Insight Design"));
+        assertTrue("CID login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Design"));
     }
 
     /**

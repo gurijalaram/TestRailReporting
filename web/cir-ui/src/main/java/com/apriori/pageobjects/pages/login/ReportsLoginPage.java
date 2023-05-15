@@ -44,7 +44,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle(false).contains("Cost Insight Report"));
+        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Report"));
     }
 
     /**
