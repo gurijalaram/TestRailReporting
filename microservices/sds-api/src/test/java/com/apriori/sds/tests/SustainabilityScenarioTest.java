@@ -59,26 +59,36 @@ public class SustainabilityScenarioTest extends SDSTestUtil {
 
     private ScenarioIteration getScenarioViaSDS(List<ScenarioItem> testingScenarios) {
 
-        final RequestEntity requestEntity1 =
-            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
-                .inlineVariables(testingScenarios.get(0).getComponentIdentity(), testingScenarios.get(0).getScenarioIdentity(),
-                    testingScenarios.get(0).getIterationIdentity())
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        final RequestEntity requestEntity2 =
-            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
-                .inlineVariables(testingScenarios.get(1).getComponentIdentity(), testingScenarios.get(1).getScenarioIdentity(),
-                    testingScenarios.get(1).getIterationIdentity())
-                .expectedResponseCode(HttpStatus.SC_OK);
+//        final RequestEntity requestEntity1 =
+//            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+//                .inlineVariables(testingScenarios.get(0).getComponentIdentity(), testingScenarios.get(0).getScenarioIdentity(),
+//                    testingScenarios.get(0).getIterationIdentity())
+//                .expectedResponseCode(HttpStatus.SC_OK);
+//
+//        final RequestEntity requestEntity2 =
+//            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+//                .inlineVariables(testingScenarios.get(1).getComponentIdentity(), testingScenarios.get(1).getScenarioIdentity(),
+//                    testingScenarios.get(1).getIterationIdentity())
+//                .expectedResponseCode(HttpStatus.SC_OK);
 
         List<ScenarioIteration> scenarios = new ArrayList<>();
-        scenarios.add((ScenarioIteration)HTTPRequest.build(requestEntity1).get().getResponseEntity());
-        scenarios.add((ScenarioIteration)HTTPRequest.build(requestEntity2).get().getResponseEntity());
+//        scenarios.add((ScenarioIteration)HTTPRequest.build(requestEntity1).get().getResponseEntity());
+//        scenarios.add((ScenarioIteration)HTTPRequest.build(requestEntity2).get().getResponseEntity());
+
+        scenarios.add((ScenarioIteration)HTTPRequest.build(initRequestToGetIteration(0,testingScenarios)).get().getResponseEntity());
+        scenarios.add((ScenarioIteration)HTTPRequest.build(initRequestToGetIteration(1,testingScenarios)).get().getResponseEntity());
 
         return scenarios.stream()
             .filter(p -> (!p.getScenarioProcesses().isEmpty()))
             .findFirst()
             .orElse(null);
+    }
+
+    public RequestEntity initRequestToGetIteration(Integer itemNumber, List<ScenarioItem> testingScenarios) {
+        return  RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+            .inlineVariables(testingScenarios.get(itemNumber).getComponentIdentity(), testingScenarios.get(itemNumber).getScenarioIdentity(),
+                testingScenarios.get(itemNumber).getIterationIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
     }
 
     private List<ScenarioItem> costAndGetReadyScenarios() {
