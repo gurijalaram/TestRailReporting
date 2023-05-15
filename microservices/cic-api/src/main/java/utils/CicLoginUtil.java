@@ -33,7 +33,7 @@ public class CicLoginUtil extends TestBase {
      * @return new page object
      */
     public CicLoginUtil login(UserCredentials currentUser) {
-        aprioriLoginPage.executeLogin(currentUser.getEmail(), currentUser.getPassword(), false, false);
+        aprioriLoginPage.executeLogin(currentUser.getEmail(), currentUser.getPassword());
         return this;
     }
 

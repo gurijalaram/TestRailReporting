@@ -51,6 +51,6 @@ public class AdminLoginPage extends AdminHeader {
      * @return new page object
      */
     public AdminHomePage login() {
-        return aprioriLoginPage.login(userCredentials, isEnvOnPrem, false, AdminHomePage.class);
+        return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
     }
 }

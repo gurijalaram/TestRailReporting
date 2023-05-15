@@ -39,7 +39,7 @@ public class UserProfileTests extends TestBase {
         List<String> expectedResults = Arrays.asList("Username", "Email", "Given Name", "Family Name", "Name prefix", "Name suffix", "Job title", "Department", "Town or City",
             "County", "Country", "Time Zone", "Office Phone Country Code", "Office Phone Number");
         currentUser = UserUtil.getUser();
-        UserProfilePage userProfilePage = aprioriLoginPage.login(currentUser, false, false, CloudHomePage.class)
+        UserProfilePage userProfilePage = aprioriLoginPage.login(currentUser, CloudHomePage.class)
             .goToProfilePage();
         assertThat(userProfilePage.getAllInputFieldsName(), is(expectedResults));
     }

@@ -39,6 +39,6 @@ public class CicLoginPage extends CICBasePage {
      * @return new page object
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, false, false, CIConnectHome.class);
+        return aprioriLoginPage.login(userCredentials, CIConnectHome.class);
     }
 }

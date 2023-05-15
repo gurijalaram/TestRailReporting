@@ -96,7 +96,7 @@ staging:
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: walqbaci01/
+  base_url: conqsbel10-04/
   name: onprem
   deployment_url_template: ${base_url}
 

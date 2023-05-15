@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.logout;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +19,10 @@ public class ReportsLogoutPage extends ReportsPageHeader {
     private WebElement loginPageTitle;
 
     @FindBy(css = "button[type='submit']")
-    private WebElement loginButton;
+    private WebElement cloudLoginButton;
+
+    @FindBy(css = "button[id='submitButton']")
+    private WebElement loginButtonOnPremReports;
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
@@ -67,6 +71,8 @@ public class ReportsLogoutPage extends ReportsPageHeader {
      * @return boolean
      */
     public boolean isLoginButtonEnabled() {
-        return loginButton.isEnabled();
+        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? loginButtonOnPremReports : cloudLoginButton;
+        pageUtils.waitForElementToBeClickable(elementToUse);
+        return elementToUse.isEnabled();
     }
 }

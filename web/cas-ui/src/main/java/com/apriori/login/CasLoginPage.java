@@ -48,6 +48,6 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @return new page object
      */
     public CustomerAdminPage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, false, false, CustomerAdminPage.class);
+        return aprioriLoginPage.login(userCredentials, CustomerAdminPage.class);
     }
 }

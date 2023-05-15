@@ -48,7 +48,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @return new page object
      */
     public ExplorePage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, false, false, ExplorePage.class);
+        return aprioriLoginPage.login(userCredentials, ExplorePage.class);
     }
 }
 

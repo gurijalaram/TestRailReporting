@@ -58,6 +58,6 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
      * @return new page object
      */
     public ElectronicsDataCollectionPage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, false, false, ElectronicsDataCollectionPage.class);
+        return aprioriLoginPage.login(userCredentials, ElectronicsDataCollectionPage.class);
     }
 }
