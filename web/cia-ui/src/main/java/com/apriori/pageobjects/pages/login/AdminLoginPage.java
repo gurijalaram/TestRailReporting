@@ -20,7 +20,7 @@ public class AdminLoginPage extends AdminHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
-    private boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
+    private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     //private UserCredentials userCredentials = UserUtil.getUser();
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();

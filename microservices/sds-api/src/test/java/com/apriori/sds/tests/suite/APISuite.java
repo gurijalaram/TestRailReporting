@@ -11,6 +11,7 @@ import com.apriori.sds.tests.ScenarioAssociationsTest;
 import com.apriori.sds.tests.ScenarioIterationsTest;
 import com.apriori.sds.tests.ScenariosTest;
 import com.apriori.sds.tests.SecondaryProcessesTest;
+import com.apriori.sds.tests.SustainabilityScenarioTest;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
@@ -30,7 +31,8 @@ import org.junit.runners.Suite;
     ScenariosTest.class,
     SecondaryProcessesTest.class,
     PublishAssembliesTests.class,
-    FeatureDecisionsTests.class
+    FeatureDecisionsTests.class,
+    SustainabilityScenarioTest.class
 })
 public class APISuite {
 }

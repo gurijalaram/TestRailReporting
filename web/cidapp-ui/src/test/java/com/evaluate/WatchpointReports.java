@@ -12,6 +12,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -33,6 +34,7 @@ public class WatchpointReports extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("BA-2962")
     @TestRail(testCaseId = {"21933", "21934", "21940"})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {

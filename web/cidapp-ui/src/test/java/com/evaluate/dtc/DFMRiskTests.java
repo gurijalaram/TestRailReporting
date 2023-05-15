@@ -350,10 +350,10 @@ public class DFMRiskTests extends TestBase {
     @Issue("APD-1663")
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
-        final String file = "manifold.prt.1";
+        final String file = "Y_shape.prt";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        String componentName = "manifold";
+        String componentName = "Y_shape";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, file);
         currentUser = UserUtil.getUser();
