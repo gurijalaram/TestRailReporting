@@ -125,6 +125,51 @@
     "squareTubeCostUnits": {
       "type": "string"
     },
+    "sustainabilityInfo": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "hexBarCarbonEmissionsFactor",
+        "rectangularBarCarbonEmissionsFactor",
+        "roundBarCarbonEmissionsFactor",
+        "roundTubeCarbonEmissionsFactor",
+        "squareBarCarbonEmissionsFactor"
+      ],
+      "optional": [
+        "updatedBy"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "hexBarCarbonEmissionsFactor": {
+          "type": "number"
+        },
+        "rectangularBarCarbonEmissionsFactor": {
+          "type": "number"
+        },
+        "roundBarCarbonEmissionsFactor": {
+          "type": "number"
+        },
+        "roundTubeCarbonEmissionsFactor": {
+          "type": "number"
+        },
+        "squareBarCarbonEmissionsFactor": {
+          "type": "number"
+        }
+      }
+    },
     "tBeamCostUnits": {
       "type": "string"
     },
