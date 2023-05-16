@@ -1,7 +1,5 @@
 package utils;
 
-import com.apriori.utils.DateFormattingUtils;
-import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
@@ -234,6 +232,9 @@ public class CicApiTestUtil extends TestBase {
      * @return response
      */
     public static ResponseWrapper<String> deleteWorkFlow(String session, JobDefinition jobDefinition) {
+        if (jobDefinition.getJobDefinition() == null) {
+            return null;
+        }
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
             .headers(initHeadersWithJSession(session))
             .body(jobDefinition)
