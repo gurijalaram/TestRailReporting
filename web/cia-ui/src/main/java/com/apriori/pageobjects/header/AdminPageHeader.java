@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.pageobjects.pages.userguides.CirUserGuidePage1;
+import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
@@ -119,8 +119,8 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      *
      * @return CIR user guide instance
      */
-    public CirUserGuidePage1 navigateToHelpReportsGuide() {
-        return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage1.class);
+    public CirUserGuidePage navigateToHelpReportsGuide() {
+        return navigateToSubPage(helpButton, reportGuideButton, CirUserGuidePage.class);
     }
 
     /**

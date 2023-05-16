@@ -162,6 +162,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
     }
 
+    public void submitEmailForgotPwd(String email) {
+        enterEmail(email, emailInputCloud);
+        submitLogin(loginButtonCloud);
+    }
+
     /**
      * Execute actions to login
      *
@@ -198,7 +203,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @param emailAddress - the email address
      */
-    private void enterEmail(String emailAddress, WebElement webElementToUse) {
+    public void enterEmail(String emailAddress, WebElement webElementToUse) {
         webElementToUse.click();
         pageUtils.clearInput(webElementToUse);
         webElementToUse.sendKeys(emailAddress);

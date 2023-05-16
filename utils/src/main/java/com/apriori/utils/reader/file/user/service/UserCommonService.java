@@ -43,7 +43,7 @@ public class UserCommonService {
 
     static List<UserCredentials> initUsers() {
         List<String> users;
-        String csvFileName = Thread.currentThread().getStackTrace()[4].getMethodName().contains("OnPrem")
+        String csvFileName = PropertiesContext.get("${env}").equals("onprem")
             ? PropertiesContext.get("global.onprem_users_csv_file")
             : PropertiesContext.get("global.users_csv_file");
         users = InitFileData.initRows(csvFileName);

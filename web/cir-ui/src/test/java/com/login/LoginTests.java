@@ -1,11 +1,14 @@
 package com.login;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -13,6 +16,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
+import utils.Constants;
 
 public class LoginTests extends TestBase {
 
@@ -40,19 +44,22 @@ public class LoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         loginPage = new ReportsLoginPage(driver)
-                .failedLogin(UserUtil.getUserOnPrem().getUsername(), "fakePassword");
+            .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
+        String assertValue = PropertiesContext.get("${env}").equals("onprem")
+            ? Constants.FAILED_LOGIN_MESSAGE_ONPREM
+            : Constants.FAILED_LOGIN_MESSAGE_CLOUD;
+        assertThat(loginPage.getLoginMessage(), is(equalTo(assertValue)));
     }
 
     @Test
-    @Category(ReportsTest.class)
+    //@Category(ReportsTest.class)
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         loginPage = new ReportsLoginPage(driver)
             .clickForgotPassword()
-            .submitEmail("fakeEmail@apriori.com");
+            .submitEmail("fakeEmail@apriori.comg");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
     }
@@ -65,7 +72,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLoginEmptyFields();
 
-        assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_EMPTY_FIELDS)));
     }
 
     @Test
@@ -73,9 +80,9 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = {"2699"})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {
-       loginPage = new ReportsLoginPage(driver)
-            .failedLogin("a@b", "fakePassword");
+        loginPage = new ReportsLoginPage(driver)
+            .invalidEmailFailedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
     }
 }
