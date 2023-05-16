@@ -37,9 +37,6 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
-    @FindBy(css = "[id='qa-sub-header-new-dropdown']")
-    private WebElement newButton;
-
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
@@ -112,7 +109,7 @@ public class ExploreToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(newButton);
+        pageUtils.waitForElementToAppear(copyButton);
         pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementToAppear(costButton);
     }
@@ -472,7 +469,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ComparePage createComparison() {
-        pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparePage(driver);
     }

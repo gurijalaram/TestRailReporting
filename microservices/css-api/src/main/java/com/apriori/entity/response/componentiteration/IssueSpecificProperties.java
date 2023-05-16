@@ -15,11 +15,19 @@ import java.util.List;
 @Builder
 public class IssueSpecificProperties  {
     private String tableType;
+    private String holeCount;
     private String panelOutput;
     private String unitType;
+    private String thickerStock;
+    private String utilizationProcessName;
     private Integer current;
+    private Double suggested;
     private Integer suggestedMin;
     private String edgeList;
+    private String holeSize;
+    private String suggestedStock;
+    private String thinnerStock;
+    private String allStockThicknesses;
     private OpName opName;
     private ProcName procName;
     private String gcdType;
