@@ -4,7 +4,9 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,8 +38,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     @FindBy(css = "input[name='j_username']")
     private WebElement emailInputOnPremReports;
 
-    @FindBy(css = "input[name='password']")
-    private WebElement passwordInputCloudAndOnPremAdmin;
+    @FindBy(css = "input[type='password']")
+    private WebElement passwordInput;
 
     @FindBy(css = "input[name='j_password_pseudo']")
     private WebElement passwordInputReportsOnPrem;
@@ -113,13 +115,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        WebElement elementToWaitFor;
-        if (PropertiesContext.get("${env}").equals("onprem") && Thread.currentThread().getStackTrace()[5].getFileName().contains("Reports")) {
-            elementToWaitFor = passwordInputReportsOnPrem;
-        } else {
-            elementToWaitFor = passwordInputCloudAndOnPremAdmin;
-        }
-        pageUtils.waitForElementToAppear(elementToWaitFor);
+        pageUtils.waitForElementToAppear(passwordInput);
     }
 
     /**
@@ -128,15 +124,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     public String getLoginTitle() {
-        boolean isOnPrem = PropertiesContext.get("${env}").equals("onprem");
         boolean isAdmin = Thread.currentThread().getStackTrace()[5].getFileName().contains("Admin");
-        String loginTitle;
-        if (isOnPrem) {
-            loginTitle = isAdmin ? adminLoginTitle.getText() : reportsLoginTitle.getText();
-        } else {
-            loginTitle = cloudLoginTitle.getAttribute("textContent");
-        }
-        return loginTitle;
+        WebElement elementToUse = isAdmin
+            ? driver.findElement(By.xpath(PropertiesContext.get("${env}.admin.login_title_locator")))
+            : driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.login_title_locator")));
+        return elementToUse.getText();
     }
 
     /**
@@ -175,26 +167,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      */
     public void executeLogin(String email, String password) {
         boolean isReports = driver.getCurrentUrl().contains("jasperserver");
-        WebElement emailInputToUse;
-        WebElement passwordInputToUse;
-        WebElement loginButtonToUse;
-        if (PropertiesContext.get("${env}").equals("onprem")) {
-            if (isReports) {
-                emailInputToUse = emailInputOnPremReports;
-                passwordInputToUse = passwordInputReportsOnPrem;
-                loginButtonToUse = loginButtonOnPremReports;
-            } else {
-                emailInputToUse = emailInputOnPremAdmin;
-                passwordInputToUse = passwordInputCloudAndOnPremAdmin;
-                loginButtonToUse = loginButtonOnPremAdmin;
-            }
-        } else {
-            emailInputToUse = emailInputCloud;
-            passwordInputToUse = passwordInputCloudAndOnPremAdmin;
-            loginButtonToUse = loginButtonCloud;
-        }
+        WebElement emailInputToUse = driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.username_locator")));
+        WebElement loginButtonToUse = isReports ? driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.login_locator")))
+            : driver.findElement(By.xpath(PropertiesContext.get("${env}.admin.login_locator")));
         enterEmail(email, emailInputToUse);
-        enterPassword(password, passwordInputToUse);
+        enterPassword(password, passwordInput);
         submitLogin(loginButtonToUse);
     }
 
@@ -282,7 +259,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     private String getPasswordCloud() {
-        return this.passwordInputCloudAndOnPremAdmin.getText();
+        return this.passwordInput.getText();
     }
 
     /**

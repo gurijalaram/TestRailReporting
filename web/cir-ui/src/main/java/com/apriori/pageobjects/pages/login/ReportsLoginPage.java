@@ -55,7 +55,6 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();
-    private boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
 
     @FindBy(xpath = "//input[@type='email']")
     private WebElement emailInput;
@@ -77,8 +76,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        String titleToAssertOn = PropertiesContext.get("${env}").equals("onprem") ? "Cost Insight Report" : "CI-Admin aPriori Internal";
-        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains(titleToAssertOn));
+        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
     }
 
     /**
@@ -126,12 +124,12 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return String
      */
     public String getLoginMessage() {
-        pageUtils.waitForElementToAppear(By.xpath("//*[contains(@class, 'error')]"));
-        pageUtils.waitForElementToBeClickable(By.xpath("//*[contains(@class, 'error')]"));
-        boolean isOnPrem = PropertiesContext.get("${env}").equals("onprem");
-        List<WebElement> errorElements = driver.findElements(By.xpath("//*[contains(@class, 'error')]"));
+        By loginMessageLocator = By.xpath("//*[contains(@class, 'error')]");
+        pageUtils.waitForElementToAppear(loginMessageLocator);
+        pageUtils.waitForElementToBeClickable(loginMessageLocator);
+        List<WebElement> errorElements = driver.findElements(loginMessageLocator);
         String errorText = "";
-        if (isOnPrem && errorElements.size() > 1) {
+        if (PropertiesContext.get("${env}").equals("onprem") && errorElements.size() > 1) {
             for (WebElement element : errorElements) {
                 errorText = errorText.concat(element.getText());
             }

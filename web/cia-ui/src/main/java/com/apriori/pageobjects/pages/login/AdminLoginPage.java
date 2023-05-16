@@ -6,6 +6,7 @@ import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -38,7 +39,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIA login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight | Admin"));
+        assertThat("CIA login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.admin.welcome_page_text")));
     }
 
     /**
