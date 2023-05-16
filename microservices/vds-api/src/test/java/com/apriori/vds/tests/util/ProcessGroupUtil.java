@@ -13,9 +13,12 @@ import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAs
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociationsItems;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
+import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
+import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialsStocksItems;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Assert;
 
 import java.util.List;
 
@@ -35,6 +38,52 @@ public class ProcessGroupUtil extends VDSTestUtil {
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
 
         return processGroupMaterialsItems.getResponseEntity().getItems();
+    }
+
+    protected static List<ProcessGroupMaterialStock> getProcessGroupMaterialStocks() {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        final ResponseWrapper<ProcessGroupMaterialsStocksItems> materialStocksItems = HTTPRequest.build(requestEntity).get();
+
+        return materialStocksItems.getResponseEntity().getItems();
+    }
+
+    protected static List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
+        for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
+            RequestEntity requestEntity =
+                RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                    .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity())
+                    .expectedResponseCode(HttpStatus.SC_OK);
+
+            ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
+
+            List<ProcessGroupMaterialStock> processGroupMaterialStocks = processGroupMaterialStocksResponse.getResponseEntity().getItems();
+
+            if (!processGroupMaterialStocks.isEmpty()) {
+                return processGroupMaterialStocks;
+            }
+        }
+
+        Assert.fail("Materials don't contain materials stocks");
+
+        return null;
+    }
+
+    protected static ResponseWrapper<ProcessGroupMaterialStock> getMaterialStockById(List<ProcessGroupMaterialStock> processGroupMaterialStocks) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
+                .inlineVariables(
+                    getDigitalFactoryIdentity(),
+                    getAssociatedProcessGroupIdentity(),
+                    getMaterialIdentity(),
+                    processGroupMaterialStocks.get(0).getIdentity()
+                )
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
