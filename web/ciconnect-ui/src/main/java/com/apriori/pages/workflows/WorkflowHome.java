@@ -165,4 +165,8 @@ public class WorkflowHome extends CICBasePage {
         return pageUtils.waitForElementToAppear(currentCompany).getText();
     }
 
+    public String getJsessionId() {
+        return driver.manage().getCookieNamed("JSESSIONID").getValue();
+    }
+
 }

@@ -6,6 +6,7 @@ import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
+import com.apriori.pages.workflows.history.HistoryPage;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
@@ -16,16 +17,19 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import entity.request.JobDefinition;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import utils.CicApiTestUtil;
 
 public class WorkflowTests extends TestBase {
     private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
+    private static JobDefinition jobDefinitionData;
     WorkflowHome workflowHome;
     SoftAssertions softAssertions;
 
@@ -35,14 +39,15 @@ public class WorkflowTests extends TestBase {
 
     @Before
     public void setup() {
+        softAssertions = new SoftAssertions();
+        jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
     }
 
     @Test
-    @TestRail(testCaseId = {"4109", "3586", "3588", "3587", "3591","3961"})
+    @TestRail(testCaseId = {"4109", "3586", "3588", "3587", "3591", "3961"})
     @Description("Test creating, editing and deletion of a workflow")
     public void testCreateEditAndDeleteWorkflow() {
-        softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         // CREATE WORK FLOW
         WorkFlowFeatures workFlowFeatures = new CicLoginPage(driver)
@@ -69,7 +74,6 @@ public class WorkflowTests extends TestBase {
         SchedulePage schedulePage = workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
             .clickDeleteButton().clickConfirmAlertBoxDelete();
         softAssertions.assertThat(schedulePage.isWorkflowExists(workFlowData.getWorkflowName())).isEqualTo(false);
-        softAssertions.assertAll();
     }
 
     @Test
@@ -77,8 +81,8 @@ public class WorkflowTests extends TestBase {
     @Description("Test the state of the edit, delete and invoke buttons on the WF schedule screen. With a WF selected" +
         "and with no WF selected")
     public void testButtonState() {
-        softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFBS"));
         // CREATE WORK FLOW
         QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
@@ -109,20 +113,16 @@ public class WorkflowTests extends TestBase {
         //Verify Schedule Page -> WorkFlow Edit and Delete button is in enabled mode
         softAssertions.assertThat(schedulePage.getEditWorkflowButton().isEnabled()).isEqualTo(true);
         softAssertions.assertThat(schedulePage.getDeleteWorkflowButton().isEnabled()).isEqualTo(true);
-
-        //DELETE WORKFLOW
-        schedulePage = workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
-            .clickDeleteButton().clickConfirmAlertBoxDelete();
-        softAssertions.assertThat(schedulePage.isWorkflowExists(workFlowData.getWorkflowName())).isEqualTo(false);
-        softAssertions.assertAll();
+        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()).getId() + "_Job");
+        CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), jobDefinitionData);
     }
 
     @Test
     @TestRail(testCaseId = {"3809", "3944"})
     @Description("Test default sorting, ascending and descending of workflows by name in the schedule table")
     public void testSortedByName() {
-        softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFS"));
         // CREATE WORK FLOW
         QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
@@ -149,18 +149,13 @@ public class WorkflowTests extends TestBase {
         softAssertions.assertThat(schedulePage.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.DESCENDING, workFlowData.getWorkflowName())).isEqualTo(false);
         //Verify workflow name are sorted by ascending order
         softAssertions.assertThat(schedulePage.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.ASCENDING, workFlowData.getWorkflowName())).isEqualTo(true);
-
-        //DELETE WORKFLOW
-        schedulePage = workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
-            .clickDeleteButton().clickConfirmAlertBoxDelete();
-        softAssertions.assertThat(schedulePage.isWorkflowExists(workFlowData.getWorkflowName())).isEqualTo(false);
-        softAssertions.assertAll();
+        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()).getId() + "_Job");
+        CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), jobDefinitionData);
     }
 
     @Test
     @TestRail(testCaseId = {"4302"})
     public void testValidateInputFields() {
-        softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
@@ -173,7 +168,6 @@ public class WorkflowTests extends TestBase {
         softAssertions.assertThat(detailsPart.getWeeklyTab().isDisplayed()).isEqualTo(true);
         softAssertions.assertThat(detailsPart.getMonthlyTab().isDisplayed()).isEqualTo(true);
         softAssertions.assertThat(detailsPart.getYearlyTab().isDisplayed()).isEqualTo(true);
-        softAssertions.assertAll();
     }
 
     @Test
@@ -192,7 +186,51 @@ public class WorkflowTests extends TestBase {
         Assert.assertEquals("verify Workflow name field with special characters", "Name must be less than or equal to 64 characters.", detailsPart.getWorkflowNameErrorLbl().getText());
     }
 
+    @Test
+    @TestRail(testCaseId = {"5842", "5956", "6070"})
+    @Description("Cancel job using the cancel button in CIC App, " +
+        "Job status and Status Details are as expected when cancelled from CIC App, " +
+        "Cancel button is not enabled for a job in a terminal state")
+    public void testCreateInvokeCancelWorkflow() {
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
+        // CREATE WORK FLOW
+        workflowHome = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickWorkflowMenu()
+            .setTestData(workFlowData)
+            .selectScheduleTab()
+            .clickNewButton()
+            .enterWorkflowNameField(workFlowData.getWorkflowName())
+            .selectWorkflowConnector(workFlowData.getConnectorName())
+            .clickNextBtnInDetailsTab()
+            .addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+            .clickWFQueryDefNextBtn()
+            .clickCINextBtn()
+            .clickCINotificationNextBtn()
+            .clickSaveButton();
+
+        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
+        workflowHome.closeMessageAlertBox()
+            .selectScheduleTab()
+            .selectWorkflow(workFlowData.getWorkflowName())
+            .clickInvokeButton();
+        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).contains("The job was successfully started");
+        HistoryPage historyPage = workflowHome.closeMessageAlertBox()
+            .selectViewHistoryTab()
+            .searchWorkflow(workFlowData.getWorkflowName())
+            .clickCancelButton();
+
+        softAssertions.assertThat(historyPage.searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName())).isTrue();
+        historyPage.searchWorkflow(workFlowData.getWorkflowName());
+        softAssertions.assertThat(historyPage.getWorkflowStatusDetails(workFlowData.getWorkflowName())).contains("ended with state 'CANCELLED'");
+        softAssertions.assertThat(historyPage.isCancelButtonEnabled()).isFalse();
+        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()).getId() + "_Job");
+        CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), jobDefinitionData);
+    }
+
     @After
     public void cleanup() {
+        softAssertions.assertAll();
     }
 }
