@@ -212,7 +212,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7399"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report ")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -225,7 +225,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7400"})
-    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report ")
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(

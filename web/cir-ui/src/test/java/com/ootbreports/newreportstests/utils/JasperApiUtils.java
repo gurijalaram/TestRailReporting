@@ -123,7 +123,7 @@ public class JasperApiUtils {
                 i++;
             }
         } else {
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < jasperReportSummary.getChartData().size(); i++) {
                 for (int j = 0; j < 3; j++) {
                     softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
                 }
