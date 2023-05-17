@@ -14,7 +14,7 @@ import java.util.List;
 @JsonRootName("response")
 @Schema(location = "BidPackageProjectResponseSchema.json")
 public class BidPackageProjectResponse {
-    public List<BidPackageProjectItemResponse> items;
+    public List<BidPackageProjectItemGetResponse> items;
     public List<BidPackageProjectUserResponse> users;
     private String identity;
     private String createdBy;

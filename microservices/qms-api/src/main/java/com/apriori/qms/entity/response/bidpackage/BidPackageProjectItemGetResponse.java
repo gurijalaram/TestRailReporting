@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "BidPackageProjectItemResponseSchema.json")
-public class BidPackageProjectItemResponse {
+@Schema(location = "BidPackageProjectItemGetResponseSchema.json")
+public class BidPackageProjectItemGetResponse {
     private String identity;
     private String createdAt;
     private String createdBy;

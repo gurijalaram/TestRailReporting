@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "BidPackageProjectItemsResponseSchema.json")
-public class BidPackageProjectItemsResponse extends Pagination {
-    List<BidPackageProjectItemResponse> items;
+@Schema(location = "BidPackageProjectItemsGetResponseSchema.json")
+public class BidPackageProjectItemsGetResponse extends Pagination {
+    List<BidPackageProjectItemGetResponse> items;
 }
