@@ -65,7 +65,7 @@ public class AdminNavigationTests extends TestBase {
             .navigateToHelpReportsGuide()
             .switchTab();
 
-        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading()).startsWith("Cost Insight Report");
+        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading().trim()).startsWith("Cost Insight Report");
         softAssertions.assertThat(cirUserGuide.getCurrentUrl()).contains("CIR_UG");
         softAssertions.assertThat(cirUserGuide.getTabCount()).isEqualTo(2);
         softAssertions.assertAll();
@@ -81,7 +81,8 @@ public class AdminNavigationTests extends TestBase {
 
         softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(ciaUserGuide.getCurrentUrl()).contains(Constants.CIA_USER_GUIDE_URL_SUBSTRING);
-        softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false))
+        softAssertions.assertThat(
+            ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false))
             .contains(Constants.CIA_USER_GUIDE_TITLE);
         softAssertions.assertAll();
     }
