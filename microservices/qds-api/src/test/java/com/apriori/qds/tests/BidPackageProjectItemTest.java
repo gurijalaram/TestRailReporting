@@ -10,8 +10,8 @@ import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
-import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -120,11 +120,11 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
 
-        ApwErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             bppResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
-            currentUser, ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
+            currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find Project for bid package with identity '" + bppResponse.getBidPackageIdentity()
             + "' and identity '" + bppResponse.getIdentity());
@@ -134,11 +134,11 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(testCaseId = {"13413"})
     @Description("Create  Bid Package Project Item with out bidPackageItemIdentity")
     public void createProjectItemWithoutPackageItem() {
-        ApwErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             "",
-            currentUser, ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
+            currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackageItem for bid package with identity '"
             + bidPackageProjectResponse.getBidPackageIdentity()
@@ -163,11 +163,11 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         BidPackageResources.deleteBidPackage(bpResponse.getIdentity(), currentUser);
 
-        ApwErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bpResponse.getIdentity(),
             bppResponse.getIdentity(),
             bpiResponse.getIdentity(),
-            currentUser, ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
+            currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackage with identity '" + bppResponse.getBidPackageIdentity() + "'");
     }
@@ -181,7 +181,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectItemResponse.getIdentity(),
             currentUser);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 bidPackageProjectResponse.getIdentity(),
                 bidPackageProjectItemResponse.getIdentity())
@@ -189,16 +189,16 @@ public class BidPackageProjectItemTest extends TestUtil {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
 
-        ResponseWrapper<ApwErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
             + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
 
-        ApwErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
+        ErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageProjectItemResponse.getIdentity(),
-            currentUser, ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
+            currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(getErrorResponse.getMessage()).contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
             + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
@@ -214,11 +214,11 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(testCaseId = {"13423"})
     @Description("Get project Item by Invalid Identity")
     public void grtProjectItemWithNoInvalidProjectIdentity() {
-        ApwErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
+        ErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             "INVALIDPROJECTIDENTITY",
             bidPackageProjectItemResponse.getIdentity(),
-            currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+            currentUser, ErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(getErrorResponse.getMessage()).contains("'projectIdentity' is not a valid identity");
 
@@ -228,7 +228,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(testCaseId = {"13428"})
     @Description("Delete project Item by incorrect project Identity")
     public void deleteProjectItemWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 "INVALIDPROJECTIDENTITY",
                 bidPackageProjectItemResponse.getIdentity())
@@ -236,7 +236,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<ApwErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'projectIdentity' is not a valid identity");
     }

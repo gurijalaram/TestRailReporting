@@ -3,15 +3,23 @@ package utils;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class TableUtils {
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -199,7 +207,6 @@ public class TableUtils {
     public WebElement getColumnHeader(WebElement tableHeaders, String columnHeader) {
         pageUtils.waitForElementToBeClickable(tableHeaders);
         WebElement column;
-
         try {
             column = getColumn(tableHeaders, columnHeader);
         } catch (StaleElementReferenceException staleElementReferenceException) {
@@ -260,6 +267,7 @@ public class TableUtils {
      */
     public WebElement getItemNameFromTable(WebElement tableRow, int columnIndex) {
         WebElement webElement = tableRow.findElement(By.cssSelector("td:nth-child(" + columnIndex + ")"));
+        pageUtils.waitForElementToAppear(webElement);
         return (webElement != null) ? webElement : null;
     }
 
@@ -279,11 +287,11 @@ public class TableUtils {
         WebElement dataElement = null;
         try {
             dataElement = table.findElements(By.tagName("tr"))
-                    .stream()
-                    .skip(1)
-                    .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(cellText))
-                    .findFirst()
-                    .orElse(null);
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(cellText))
+                .findFirst()
+                .orElse(null);
         } catch (StaleElementReferenceException staleElementReferenceException) {
             dataElement = table.findElements(By.tagName("tr"))
                 .stream()
@@ -303,5 +311,23 @@ public class TableUtils {
             column = tableRow.findElements(By.tagName("td")).get(columnIndex);
         }
         return column;
+    }
+
+    /**
+     * Wait until Table element value is available and handle stale element exception
+     * @param
+     * @return webelement
+     */
+    @SneakyThrows
+    public void waitForSteadinessOfElement(WebElement element, String cellValue, Integer columnIndex) {
+        for (int retry = 0; retry < 10; retry++) {
+            try {
+                this.selectRowByName(element, cellValue, columnIndex);
+                break;
+            } catch (StaleElementReferenceException e) {
+                log.debug("Trying to recover from a stale element reference exception");
+                TimeUnit.SECONDS.sleep(1);
+            }
+        }
     }
 }

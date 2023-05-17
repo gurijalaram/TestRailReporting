@@ -224,6 +224,27 @@ public class DetailsPart extends CICBasePage {
         return object;
     }
 
+    /**
+     * Click Next Button in  Workflow details tab
+     *
+     * @return QueryDefinitions class object
+     */
+    public QueryDefinitions clickNextBtnInDetailsTab() {
+        QueryDefinitions queryDefinitions = null;
+        pageUtils.waitForElementToBeClickable(this.getNextButtonElement());
+        if (!this.getNextButtonElement().isEnabled()) {
+            logger.warn("Next button in Query Definitions Page is not enabled");
+            queryDefinitions = new QueryDefinitions(driver);
+        }
+        pageUtils.waitForElementAndClick(this.getNextButtonElement());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(getQDReturnOnlyCheckboxElement());
+        if (pageUtils.isElementDisplayed(getQDReturnOnlyCheckboxElement())) {
+            queryDefinitions = new QueryDefinitions(driver);
+        }
+        return queryDefinitions;
+    }
+
 
     /**
      * Set a schedule on the Details tab on a New Workflow dialogue
