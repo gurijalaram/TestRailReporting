@@ -9,6 +9,7 @@ import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
+import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
 import com.google.common.base.Stopwatch;
 import lombok.Data;
@@ -124,7 +125,7 @@ public class JasperApiUtils {
             }
         } else {
             for (int i = 0; i < jasperReportSummary.getChartData().size(); i++) {
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < partNames.size(); j++) {
                     softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
                 }
             }
@@ -152,7 +153,7 @@ public class JasperApiUtils {
         for (String partName : partNames) {
             String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
             softAssertions.assertThat(partNumberElements.get(i).toString().contains(assertPartName)).isEqualTo(true);
-            i++;
+            i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
