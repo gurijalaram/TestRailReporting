@@ -49,7 +49,8 @@ public enum JasperCirApiPartsEnum {
     P_3574715("3574715 (Initial)"),
     P_3574688("3574688 (Initial)"),
     BRACKET_V1_REV_1("BRACKET_V1 (rev1)"),
-    BRACKET_V2_REV_1("BRACKET_V2 (rev1)");
+    BRACKET_V2_REV_1("BRACKET_V2 (rev1)"),
+    PLASTIC_MOULDED_CAP_THICKPART("PLASTIC MOULDED CAP THICKPART");
 
     private final String partName;
 
