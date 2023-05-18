@@ -30,6 +30,7 @@ ENV HEADLESS=$HEADLESS
 ENV BROWER=$BROWSER
 ENV THREAD_COUNTS=$THREAD_COUNTS
 ENV ENVS=$ENVS
+ENV BASE_URL=$BASE_URL
 
 CMD java \
   -javaagent:aspectjweaver-1.9.9.1.jar \
@@ -40,5 +41,6 @@ CMD java \
   -Dheadless=$HEADLESS \
   -Dbrowser=$BROWSER \
   -Denv=$ENVS \
+  -Dlocal_base_url=$BASE_URL \
   -jar app.jar \
   -test $TESTS
