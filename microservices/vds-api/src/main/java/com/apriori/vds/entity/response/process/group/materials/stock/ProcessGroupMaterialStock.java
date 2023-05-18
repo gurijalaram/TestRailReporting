@@ -2,6 +2,7 @@ package com.apriori.vds.entity.response.process.group.materials.stock;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.vds.entity.response.process.group.materials.SustainabilityInfo;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -53,4 +54,6 @@ public class ProcessGroupMaterialStock {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+
+    private SustainabilityInfo sustainabilityInfo;
 }
