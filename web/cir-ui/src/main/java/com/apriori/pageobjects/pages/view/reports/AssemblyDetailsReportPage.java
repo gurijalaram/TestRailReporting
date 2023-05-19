@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -868,13 +869,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub Assembly export set report table
      */
     private void initialiseSubAssemblyRowMap() {
-        putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
-
-        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "6");
-        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "7");
-        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "8");
-        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "9");
-        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "12");
+        int j = 5;
+        for (int i = 1; i < 7; i++) {
+            putItemIntoSubAssemblyRowMap(String.format("%s Sub Assembly", i), String.valueOf(j));
+            j++;
+            j = j == 10 ? 12 : j;
+        }
         putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "15");
         putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "18");
         putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "20");
@@ -895,19 +895,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseTopLevelRowMap() {
-        putItemIntoTopLevelRowMap("1 Top Level", "5");
-        putItemIntoTopLevelRowMap("2 Top Level", "6");
-        putItemIntoTopLevelRowMap("3 Top Level", "7");
-        putItemIntoTopLevelRowMap("4 Top Level", "8");
-        putItemIntoTopLevelRowMap("5 Top Level", "9");
-        putItemIntoTopLevelRowMap("6 Top Level", "10");
-        putItemIntoTopLevelRowMap("7 Top Level", "13");
-        putItemIntoTopLevelRowMap("8 Top Level", "14");
-        putItemIntoTopLevelRowMap("9 Top Level", "15");
-        putItemIntoTopLevelRowMap("10 Top Level", "16");
-        putItemIntoTopLevelRowMap("11 Top Level", "17");
-        putItemIntoTopLevelRowMap("12 Top Level", "20");
-        putItemIntoTopLevelRowMap("13 Top Level", "21");
+        List<String> indexList = Arrays.asList("5", "6", "7", "8", "9", "10", "13", "14", "15", "16", "17", "20", "21");
+        int j = 0;
+        for (int i = 1; i < 14; i++) {
+            putItemIntoTopLevelRowMap(String.format("%s Top Level", i), indexList.get(j));
+            j++;
+        }
         putItemIntoTopLevelRowMap("Component Subtotal Top Level", "24");
         putItemIntoTopLevelRowMap("Assembly Processes Top Level", "27");
         putItemIntoTopLevelRowMap("Grand Total Top Level", "29");
