@@ -1,0 +1,587 @@
+{
+  "first": {
+    "category": "root",
+    "children": [
+      {
+        "category": "Component",
+        "children": [
+          {
+            "category": "PartingLine",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "PartingLine",
+                  "sequenceNumber": 0,
+                  "gcdName": "PartingLine:1"
+                },
+                "gcdCount":0,
+                "displayName":"PartingLine:1"
+              }
+            ],
+            "gcdCount":1,
+            "displayName": "Parting Line"
+          },
+          {
+            "category": "SetupAxis",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 5,
+                  "gcdName": "SetupAxis:6"
+                },
+                "gcdCount":0,
+                "displayName": "SetupAxis:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 2,
+                  "gcdName": "SetupAxis:3"
+                },
+                "gcdCount":0,
+                "displayName": "SetupAxis:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 1,
+                  "gcdName": "SetupAxis:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 0,
+                  "gcdName": "SetupAxis:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:1"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 3,
+                  "gcdName": "SetupAxis:4"
+                },
+                "gcdCount": 0,
+                "displayName":"SetupAxis:4"
+              },
+              {
+                "gcdKey":
+                {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 4,
+                  "gcdName": "SetupAxis:5"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:5"
+              }
+            ],
+            "gcdCount": 6,
+            "displayName": "Setup Axes/Candidates"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName": "Component"
+      },
+      {
+        "category": "Holes",
+        "children": [
+          {
+            "category": "SimpleHole",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SimpleHole",
+                  "sequenceNumber": 1,
+                  "gcdName": "SimpleHole:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SimpleHole:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType":"SimpleHole",
+                  "sequenceNumber": 0,
+                  "gcdName": "SimpleHole:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SimpleHole:1"
+              }
+            ],
+            "gcdCount": 2,
+            "displayName": "Simple Holes"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName":"Holes"
+      },
+      {
+        "category": "Surfaces",
+        "children":[
+          {
+            "category": "PlanarFace",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 1,
+                  "gcdName": "PlanarFace:2"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 5,
+                  "gcdName": "PlanarFace:6"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 3,
+                  "gcdName": "PlanarFace:4"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:4"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 4,
+                  "gcdName": "PlanarFace:5"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:5"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 2,
+                  "gcdName": "PlanarFace:3"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 0,
+                  "gcdName": "PlanarFace:1"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:1"
+              }
+            ],
+            "gcdCount": 6,
+            "displayName": "Planar Faces"
+          },
+          {
+            "category": "SharpEdge",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 8,
+                  "gcdName": "SharpEdge:9"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:9"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 2,
+                  "gcdName": "SharpEdge:3"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 4,
+                  "gcdName": "SharpEdge:5"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:5"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 1,
+                  "gcdName": "SharpEdge:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType":"SharpEdge",
+                  "sequenceNumber": 6,
+                  "gcdName": "SharpEdge:7"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:7"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 7,
+                  "gcdName": "SharpEdge:8"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:8"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 3,
+                  "gcdName": "SharpEdge:4"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:4"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 5,
+                  "gcdName": "SharpEdge:6"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 0,
+                  "gcdName": "SharpEdge:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:1"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 9,
+                  "gcdName": "SharpEdge:10"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:10"
+              }
+            ],
+            "gcdCount": 10,
+            "displayName": "Sharp Edges"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName": "Surfaces"
+      }
+    ],
+    "gcdCount": 0,
+    "displayName":"root"
+  },
+  "second": {
+    "category": "root",
+    "children": [
+      {
+        "category": "Component",
+        "children": [
+          {
+            "category": "PartingLine",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "PartingLine",
+                  "sequenceNumber": 0,
+                  "gcdName": "PartingLine:1"
+                },
+                "gcdCount":0,
+                "displayName":"PartingLine:1"
+              }
+            ],
+            "gcdCount":1,
+            "displayName": "Parting Line"
+          },
+          {
+            "category": "SetupAxis",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 5,
+                  "gcdName": "SetupAxis:6"
+                },
+                "gcdCount":0,
+                "displayName": "SetupAxis:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 2,
+                  "gcdName": "SetupAxis:3"
+                },
+                "gcdCount":0,
+                "displayName": "SetupAxis:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 1,
+                  "gcdName": "SetupAxis:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 0,
+                  "gcdName": "SetupAxis:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:1"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 3,
+                  "gcdName": "SetupAxis:4"
+                },
+                "gcdCount": 0,
+                "displayName":"SetupAxis:4"
+              },
+              {
+                "gcdKey":
+                {
+                  "gcdType": "SetupAxis",
+                  "sequenceNumber": 4,
+                  "gcdName": "SetupAxis:5"
+                },
+                "gcdCount": 0,
+                "displayName": "SetupAxis:5"
+              }
+            ],
+            "gcdCount": 6,
+            "displayName": "Setup Axes/Candidates"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName": "Component"
+      },
+      {
+        "category": "Holes",
+        "children": [
+          {
+            "category": "SimpleHole",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SimpleHole",
+                  "sequenceNumber": 1,
+                  "gcdName": "SimpleHole:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SimpleHole:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType":"SimpleHole",
+                  "sequenceNumber": 0,
+                  "gcdName": "SimpleHole:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SimpleHole:1"
+              }
+            ],
+            "gcdCount": 2,
+            "displayName": "Simple Holes"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName":"Holes"
+      },
+      {
+        "category": "Surfaces",
+        "children":[
+          {
+            "category": "SharpEdge",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 8,
+                  "gcdName": "SharpEdge:9"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:9"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 2,
+                  "gcdName": "SharpEdge:3"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 4,
+                  "gcdName": "SharpEdge:5"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:5"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 1,
+                  "gcdName": "SharpEdge:2"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType":"SharpEdge",
+                  "sequenceNumber": 6,
+                  "gcdName": "SharpEdge:7"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:7"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 7,
+                  "gcdName": "SharpEdge:8"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:8"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 3,
+                  "gcdName": "SharpEdge:4"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:4"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 5,
+                  "gcdName": "SharpEdge:6"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 0,
+                  "gcdName": "SharpEdge:1"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:1"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "SharpEdge",
+                  "sequenceNumber": 9,
+                  "gcdName": "SharpEdge:10"
+                },
+                "gcdCount": 0,
+                "displayName": "SharpEdge:10"
+              }
+            ],
+            "gcdCount": 10,
+            "displayName": "Sharp Edges"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName": "Surfaces"
+      },
+      {
+        "category": "Volume",
+        "children":[
+          {
+            "category": "PlanarFace",
+            "children": [
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 1,
+                  "gcdName": "PlanarFace:2"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:2"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 5,
+                  "gcdName": "PlanarFace:6"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:6"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 3,
+                  "gcdName": "PlanarFace:4"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:4"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 4,
+                  "gcdName": "PlanarFace:5"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:5"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 2,
+                  "gcdName": "PlanarFace:3"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:3"
+              },
+              {
+                "gcdKey": {
+                  "gcdType": "PlanarFace",
+                  "sequenceNumber": 0,
+                  "gcdName": "PlanarFace:1"
+                },
+                "gcdCount": 0,
+                "displayName": "PlanarFace:1"
+              }
+            ],
+            "gcdCount": 6,
+            "displayName": "Planar Faces"
+          }
+        ],
+        "gcdCount": 0,
+        "displayName": "Volume"
+      }
+    ],
+    "gcdCount": 0,
+    "displayName":"root"
+  }
+}
