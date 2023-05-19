@@ -9,6 +9,8 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.apache.http.HttpStatus;
+
 public class GcdTreeController extends RequestEntityUtil {
 
     /**
@@ -18,11 +20,13 @@ public class GcdTreeController extends RequestEntityUtil {
      * @param currentUser - the current user
      * @return ResponseWrapper <GcdTree>
      */
-    public ResponseWrapper<GcdTree> getGcdTree(String gcdTree, UserCredentials currentUser) {
+    public GcdTree getGcdTree(String gcdTree, UserCredentials currentUser) {
         final RequestEntity requestEntity = init(GCDAPIEnum.TREE_DIFF, GcdTree.class)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .customBody(gcdTree);
+            .customBody(gcdTree)
+            .expectedResponseCode(HttpStatus.SC_OK);
 
-        return HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<GcdTree> gcdTreeResponse = HTTPRequest.build(requestEntity).post();
+        return gcdTreeResponse.getResponseEntity();
     }
 }
