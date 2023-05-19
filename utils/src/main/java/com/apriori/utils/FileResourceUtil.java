@@ -6,7 +6,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import org.apache.commons.io.FileUtils;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -376,7 +376,7 @@ public class FileResourceUtil {
     }
 
     /**
-     * wait certain time to check if file exists(appear)  - if exists - delete it
+     * Wait certain time to check if file exists(appear)  - if exists - delete it
      *
      * @param path          - path to the file
      * @param waitTimeInSec - how long wait to appear
@@ -410,8 +410,8 @@ public class FileResourceUtil {
         String parameterValue = "";
         SsmClient ssmClient = SsmClient.builder()
             .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-            ? EnvironmentVariableCredentialsProvider.create()
-            : ProfileCredentialsProvider.create())
+                ? EnvironmentVariableCredentialsProvider.create()
+                : ProfileCredentialsProvider.create())
             .region(S3_REGION_NAME)
             .build();
 
@@ -428,5 +428,16 @@ public class FileResourceUtil {
             log.error(e.getMessage());
         }
         return parameterValue;
+    }
+
+    /**
+     * Reads a file from an input stream as string
+     *
+     * @param fileName - the file name
+     * @return String
+     */
+    @SneakyThrows
+    public static String readFileToString(String fileName) {
+        return FileUtils.readFileToString(FileResourceUtil.getResourceAsFile(fileName), StandardCharsets.UTF_8);
     }
 }
