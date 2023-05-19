@@ -143,6 +143,9 @@ default:
   qms:
     api_url: https://qms.${deployment_url_template}
 
+  gcd:
+    api_url: https://gcd.${deployment_url_template}
+
   reports:
     ui_url: https://${deployment_url_template}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
