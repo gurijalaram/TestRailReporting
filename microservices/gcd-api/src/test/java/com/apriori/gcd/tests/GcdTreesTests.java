@@ -27,7 +27,7 @@ public class GcdTreesTests {
         UserCredentials currentUser = UserUtil.getUser();
         String gcdJson = FileResourceUtil.readFileToString("DifferentTrees.json");
 
-        GcdTree gcdTree = gcdTreeController.getGcdTree(gcdJson, currentUser);
+        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser);
 
         List<String> addedNames = Arrays.asList("SharpEdge:5", "SimpleHole:3");
 

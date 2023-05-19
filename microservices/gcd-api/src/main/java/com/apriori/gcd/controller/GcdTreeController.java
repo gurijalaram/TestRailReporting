@@ -20,7 +20,7 @@ public class GcdTreeController extends RequestEntityUtil {
      * @param currentUser - the current user
      * @return ResponseWrapper <GcdTree>
      */
-    public GcdTree getGcdTree(String gcdTree, UserCredentials currentUser) {
+    public GcdTree postGcdTree(String gcdTree, UserCredentials currentUser) {
         final RequestEntity requestEntity = init(GCDAPIEnum.TREE_DIFF, GcdTree.class)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .customBody(gcdTree)
