@@ -23,6 +23,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
+    private final List<String> mostCommonPartNames = Arrays.asList(
+        JasperCirApiPartsEnum.P_1271576.getPartName(),
+        JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
+        JasperCirApiPartsEnum.BRACKET_V2.getPartName()
+    );
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/sheetmetaldtc/SheetMetalDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
@@ -41,14 +46,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -61,14 +61,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -81,14 +76,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -101,14 +91,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -121,18 +106,13 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Sort Order",
             SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         List<String> assertFigures = Arrays.asList(
             "0.0",
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             assertFigures
         );
     }
@@ -282,14 +262,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Process Group",
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -342,14 +317,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "DTC Score",
             DtcScoreEnum.HIGH.getDtcScoreName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 }

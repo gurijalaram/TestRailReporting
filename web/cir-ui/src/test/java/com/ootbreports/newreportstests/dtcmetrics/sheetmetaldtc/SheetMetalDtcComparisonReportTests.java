@@ -20,6 +20,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationUtil {
+    private final List<String> partNames = Arrays.asList(
+        JasperCirApiPartsEnum.P_1271576.getPartName(),
+        JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
+        JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
+    );
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/sheetmetaldtc/SheetMetalDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
@@ -38,11 +43,6 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
@@ -58,11 +58,6 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         List<String> miscData = Arrays.asList(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,
@@ -80,11 +75,6 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
@@ -100,11 +90,6 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         List<String> miscData = Arrays.asList(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_1271576.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
-            JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
         );
         jasperApiUtils.genericDtcTest(
             miscData,

@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
+    private final List<String> mostCommonPartNames = Arrays.asList(
+        JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+        JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+        JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
+    );
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
@@ -37,14 +42,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -52,18 +52,13 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7412")
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         List<String> miscData = Arrays.asList(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -75,14 +70,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -94,14 +84,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
-            partNames
+            mostCommonPartNames
         );
     }
 
@@ -177,18 +162,13 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Sort Order",
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         List<String> assertFigures = Arrays.asList(
             "0.0",
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             assertFigures
         );
     }

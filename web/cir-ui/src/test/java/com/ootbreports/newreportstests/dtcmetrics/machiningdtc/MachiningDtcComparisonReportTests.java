@@ -11,6 +11,7 @@ import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -18,13 +19,13 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
+public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUtil {
     private final List<String> partNames = Arrays.asList(
-        JasperCirApiPartsEnum.P_0362752_CAD_INITIAL.getPartName(),
-        JasperCirApiPartsEnum.P_3572871_INITIAL.getPartName(),
-        JasperCirApiPartsEnum.P_3572871_ABC.getPartName()
+        JasperCirApiPartsEnum.DTCMACHINING_001_Toleranced.getPartName(),
+        JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
+        JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/machiningdtc/MachiningDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/machiningdtc/MachiningDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
@@ -34,9 +35,9 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3023"})
-    @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @TestRail(testCaseId = {"7414"})
+    @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
         List<String> miscData = Arrays.asList(
             "Cost Metric",
@@ -45,14 +46,14 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
-            true
+            false
         );
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7413"})
-    @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
+    @TestRail(testCaseId = {"7415"})
+    @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
         List<String> miscData = Arrays.asList(
             "Cost Metric",
@@ -61,14 +62,14 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
-            true
+            false
         );
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3024"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
+    @TestRail(testCaseId = {"7394"})
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         List<String> miscData = Arrays.asList(
             "Mass Metric",
@@ -77,14 +78,14 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
-            true
+            false
         );
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7393"})
-    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
+    @TestRail(testCaseId = {"7395"})
+    @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Comparison Report ")
     public void testMassMetricInputControlRoughMass() {
         List<String> miscData = Arrays.asList(
             "Mass Metric",
@@ -93,7 +94,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcTest(
             miscData,
             partNames,
-            true
+            false
         );
     }
 }

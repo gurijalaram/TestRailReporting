@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
+    private final List<String> partNames = Arrays.asList(
+        JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
+        JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
+        JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
+    );
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/machiningdtc/MachiningDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
@@ -37,11 +42,6 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
-            JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST.getPartName(),
-            JasperCirApiPartsEnum.PUNCH.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
             partNames
@@ -56,11 +56,6 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
         List<String> miscData = Arrays.asList(
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
-            JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST.getPartName(),
-            JasperCirApiPartsEnum.PUNCH.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
@@ -77,11 +72,6 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
-            JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST.getPartName(),
-            JasperCirApiPartsEnum.PUNCH.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,
             partNames
@@ -96,11 +86,6 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
         List<String> miscData = Arrays.asList(
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
-            JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST.getPartName(),
-            JasperCirApiPartsEnum.PUNCH.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
             miscData,

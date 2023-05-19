@@ -18,6 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil {
+    private final List<String> mostCommonPartNames = Arrays.asList(
+        JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+        JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+        JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
+    );
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
@@ -36,14 +41,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             false
         );
     }
@@ -56,14 +56,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             false
         );
     }
@@ -76,14 +71,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             false
         );
     }
@@ -96,14 +86,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             false
         );
     }
@@ -176,14 +161,9 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             "DTC Score",
             ""
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcScoreTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             false
         );
     }

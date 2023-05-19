@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
+    private final List<String> mostCommonPartNames = Arrays.asList(
+        JasperCirApiPartsEnum.B2315.getPartName(),
+        JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
+        JasperCirApiPartsEnum.CASE_08.getPartName()
+    );
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
@@ -47,14 +52,9 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.B2315.getPartName(),
-            JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
-            JasperCirApiPartsEnum.CASE_08.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             true
         );
     }
@@ -67,14 +67,9 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Cost Metric",
             CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.B2315.getPartName(),
-            JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
-            JasperCirApiPartsEnum.CASE_08.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             true
         );
     }
@@ -87,14 +82,9 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.B2315.getPartName(),
-            JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
-            JasperCirApiPartsEnum.CASE_08.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             true
         );
     }
@@ -107,14 +97,9 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
             "Mass Metric",
             MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.B2315.getPartName(),
-            JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
-            JasperCirApiPartsEnum.CASE_08.getPartName()
-        );
         jasperApiUtils.genericDtcTest(
             miscData,
-            partNames,
+            mostCommonPartNames,
             true
         );
     }
