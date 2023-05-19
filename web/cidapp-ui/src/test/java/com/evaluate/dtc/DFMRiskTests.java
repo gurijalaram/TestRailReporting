@@ -19,7 +19,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
@@ -347,7 +346,6 @@ public class DFMRiskTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"6476", "5439", "6477"})
-    @Issue("APD-1663")
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
         final String file = "Y_shape.prt";
