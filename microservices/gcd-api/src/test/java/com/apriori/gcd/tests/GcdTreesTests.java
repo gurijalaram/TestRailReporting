@@ -36,6 +36,11 @@ public class GcdTreesTests {
         List<String> addedNames = Arrays.asList("SharpEdge:5", "SimpleHole:3");
 
         soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).containsAll(addedNames);
+
+        // TODO: 19/05/2023 negative test so please do not put in production
+        List<String> incorrectNames = Arrays.asList("Metalbowl:5", "Alan:3");
+        soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).doesNotContain("Metalbowl:5", "Alan:3");
+
         soft.assertAll();
     }
 }
