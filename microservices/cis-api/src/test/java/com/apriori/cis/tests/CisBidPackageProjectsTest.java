@@ -11,6 +11,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -46,8 +47,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
-        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity()
-            , HttpStatus.SC_NO_CONTENT, currentUser);
+        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(),
+            HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
