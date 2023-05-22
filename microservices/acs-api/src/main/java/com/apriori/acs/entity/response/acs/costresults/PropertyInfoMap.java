@@ -261,4 +261,5 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem batchSize;
     private PropertyInfoMapLargerItem machinePrice;
     private PropertyInfoMapItem nonProductionFootprintFactor;
+    private PropertyInfoMapLargerItem consumableProcessCarbon;
 }
