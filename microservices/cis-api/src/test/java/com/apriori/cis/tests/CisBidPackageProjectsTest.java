@@ -11,7 +11,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -24,14 +23,13 @@ public class CisBidPackageProjectsTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
-    private UserCredentials currentUser = UserUtil.getUser();
-    private static String bidPackageName;
     private static String projectName;
+    private final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(),
@@ -48,8 +46,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
-        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(),
-            null, HttpStatus.SC_NO_CONTENT, currentUser);
+        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity()
+            , HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
@@ -69,7 +67,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageProjectResources.getBidPackageProject(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
 
-        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -79,7 +78,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.getBidPackageProjects(
             "Invalid BidPackageID", currentUser, CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("'bidPackageIdentity' is not a valid identity.");
+        softAssertions.assertThat(bidPackageProjectsError.getMessage())
+            .isEqualTo("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
@@ -89,9 +89,10 @@ public class CisBidPackageProjectsTest extends TestUtil {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.getBidPackageProject(
             "Invalid BidPackageID", "Invalid ProjectID", CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("2 validation failures were found:\n" +
-            "* 'bidPackageIdentity' is not a valid identity.\n" +
-            "* 'projectIdentity' is not a valid identity.");
+        softAssertions.assertThat(bidPackageProjectsError.getMessage())
+            .isEqualTo("2 validation failures were found:\n" +
+                "* 'bidPackageIdentity' is not a valid identity.\n" +
+                "* 'projectIdentity' is not a valid identity.");
     }
 
     @Test
@@ -101,7 +102,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.createBidPackageProject(
             projectName, "Invalid BidPackageID", CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(bidPackageProjectsError.getMessage()).isEqualTo("'bidPackageIdentity' is not a valid identity.");
+        softAssertions.assertThat(bidPackageProjectsError.getMessage())
+            .isEqualTo("'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test

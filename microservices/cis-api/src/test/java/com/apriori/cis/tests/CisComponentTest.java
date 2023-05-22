@@ -25,18 +25,16 @@ public class CisComponentTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private static BidPackageItemResponse bidPackageItemResponse;
-    private static String bidPackageName;
     private static ScenarioItem scenarioItem;
     private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageItemResponse = CisBidPackageItemResources.createBidPackageItem(
+        CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(),

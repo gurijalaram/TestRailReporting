@@ -6,7 +6,12 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+/**
+ * The type Cis component resources.
+ */
+@SuppressWarnings("unchecked")
 public class CisComponentResources {
+
     /**
      * Gets assigned components.
      *

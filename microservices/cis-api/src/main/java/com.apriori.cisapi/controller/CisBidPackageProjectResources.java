@@ -60,19 +60,16 @@ public class CisBidPackageProjectResources {
      *
      * @param bidPackageIdentity        - bid package identity
      * @param bidPackageProjectIdentity - bid package project identity
-     * @param responseClass             - expected response class
      * @param httpStatus                - expected http status code
      * @param currentUser               - UserCredentials
-     * @return ResponseWrapper[String]
      */
-    public static <T> T deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, responseClass)
+    public static void deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, null)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
-        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
-        return responseWrapper.getResponseEntity();
+        HTTPRequest.build(requestEntity).delete();
     }
 
     /**

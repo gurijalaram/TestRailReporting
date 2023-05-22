@@ -27,7 +27,7 @@ public class CisBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private static UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
 
     @BeforeClass
@@ -119,7 +119,7 @@ public class CisBidPackageTest extends TestUtil {
     public void testUpdateBidPackageWithInvalidIdentity() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
-                .description("Update description ASSDEF")
+                .description("Update description")
                 .name("BIITest")
                 .status("COMPLETE")
                 .build())
