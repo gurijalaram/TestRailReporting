@@ -14,7 +14,7 @@ public class ViewMessagesPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewMessagesPage.class);
 
-    @FindBy(xpath = "//div[contains(@class, 'showingToolBar')]/div/div[1]/div[contains(@class, 'title')]")
+    @FindBy(css = "div.pageHeader-title-text")
     private WebElement messagesPageTitle;
 
     private final PageUtils pageUtils;

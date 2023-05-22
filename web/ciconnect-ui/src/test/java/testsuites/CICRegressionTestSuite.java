@@ -9,6 +9,7 @@ import com.cic.tests.CostingPreferencesTests;
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
 import com.cic.tests.PlmIntegrationTests;
+import com.cic.tests.PlmUdaTests;
 import com.cic.tests.PublishResultsTests;
 import com.cic.tests.QueryDefinitionTests;
 import com.cic.tests.UsersTests;
@@ -32,7 +33,8 @@ import org.junit.runners.Suite;
     ConnectorTabTests.class,
     WorkflowScheduleTests.class,
     PlmIntegrationTests.class,
-    CostingPreferencesTests.class
+    CostingPreferencesTests.class,
+    PlmUdaTests.class
 })
 
 public class CICRegressionTestSuite {

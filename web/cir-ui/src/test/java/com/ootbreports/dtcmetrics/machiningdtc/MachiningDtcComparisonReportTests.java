@@ -27,7 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class MachiningDtcComparisonReportTests extends TestBase {
@@ -42,7 +42,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7251"})
     @Description("Validate report is available by navigation - Machining DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
@@ -62,7 +62,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7253"})
     @Description("Validate report is available by search - Machining DTC Comparison Report")
     public void testReportAvailabilityBySearch() {
@@ -80,7 +80,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7337"})
     @Description("Verify reset button functionality - Machining DTC Comparison Report")
     public void testApplyButton() {
@@ -126,7 +126,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3567"})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -137,7 +137,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7433"})
     @Description("Verify export date filters correctly filters export sets - Picker - Machining DTC Comparison Report")
     public void testBothExportDatesUsingDatePicker() {
@@ -157,7 +157,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7414"})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
@@ -170,7 +170,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7415"})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
@@ -183,7 +183,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7394"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
@@ -221,7 +221,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7496"})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -260,7 +260,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7543"})
     @Description("Verify DTC Score Input Control - All Selection - Machining DTC Comparison Report")
     public void testDtcScoreAll() {
@@ -273,7 +273,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -282,7 +282,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(true, MachiningDtcReportPage.class)
+            .clickOk(MachiningDtcReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         String partName = machiningDtcReportPage.clickMachiningDtcComparisonBar();
@@ -311,7 +311,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3027"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -391,7 +391,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {

@@ -14,9 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdminSmokeTest;
-import testsuites.suiteinterface.CustomerSmokeTests;
 import utils.Constants;
 
 public class AdminNavigationTests extends TestBase {
@@ -34,7 +31,6 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = {"2980"})
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -48,7 +44,6 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2981"})
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -62,7 +57,6 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() {
@@ -71,14 +65,13 @@ public class AdminNavigationTests extends TestBase {
             .navigateToHelpReportsGuide()
             .switchTab();
 
-        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading()).startsWith("Cost Insight Report");
+        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading().trim()).startsWith("Cost Insight Report");
         softAssertions.assertThat(cirUserGuide.getCurrentUrl()).contains("CIR_UG");
         softAssertions.assertThat(cirUserGuide.getTabCount()).isEqualTo(2);
         softAssertions.assertAll();
     }
 
     @Test
-    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2983"})
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -88,13 +81,13 @@ public class AdminNavigationTests extends TestBase {
 
         softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(ciaUserGuide.getCurrentUrl()).contains(Constants.CIA_USER_GUIDE_URL_SUBSTRING);
-        softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false))
+        softAssertions.assertThat(
+            ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false))
             .contains(Constants.CIA_USER_GUIDE_TITLE);
         softAssertions.assertAll();
     }
 
     @Test
-    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2984"})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -111,7 +104,6 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2985"})
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -126,7 +118,6 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({CustomerSmokeTests.class, AdminSmokeTest.class})
     @TestRail(testCaseId = {"2966"})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
@@ -136,7 +127,7 @@ public class AdminNavigationTests extends TestBase {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url").substring(0, 71));
+        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url"));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
         softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);

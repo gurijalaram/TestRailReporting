@@ -22,6 +22,7 @@ import entity.response.PlmPart;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
+import enums.PlmPartDataType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import io.qameta.allure.Description;
@@ -58,7 +59,7 @@ public class PlmIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"21965"})
     @Description("Test 'Mapped from PLM' mapping rule with value set in PLM system")
     public void testWorkflowMapSetInPlm() {
-        plmPartData = PlmPartsUtil.getPlmPartData("Mapped");
+        plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
@@ -78,7 +79,7 @@ public class PlmIntegrationTests extends TestBase {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
         PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
@@ -109,7 +110,7 @@ public class PlmIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"4329"})
     @Description("Test 'Default if no PLM Value' mapping rule with NO value set in PLM system")
     public void testWorkflowMapNoPlm() {
-        plmPartData = PlmPartsUtil.getPlmPartData("NotMapped");
+        plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
@@ -129,7 +130,7 @@ public class PlmIntegrationTests extends TestBase {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
         PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
@@ -160,7 +161,7 @@ public class PlmIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"21966"})
     @Description("Test 'Default if no PLM Value' mapping rule with value set in PLM system")
     public void testWorkflowMapSameAsSetInPlm() {
-        plmPartData = PlmPartsUtil.getPlmPartData("Mapped");
+        plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
@@ -180,7 +181,7 @@ public class PlmIntegrationTests extends TestBase {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
         PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
@@ -210,7 +211,7 @@ public class PlmIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"4330"})
     @Description("Test 'Constant' mapping rule")
     public void testWorkflowMapWithConstantPlm() {
-        plmPartData = PlmPartsUtil.getPlmPartData("NotMapped");
+        plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
@@ -230,7 +231,7 @@ public class PlmIntegrationTests extends TestBase {
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
         PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
@@ -282,7 +283,7 @@ public class PlmIntegrationTests extends TestBase {
 
         softAssertions.assertThat(ciConnectHome.getStatusMessage()).contains("Costing Settings updated");
 
-        plmPartData = PlmPartsUtil.getPlmPartData("NotMapped");
+        plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
@@ -303,7 +304,7 @@ public class PlmIntegrationTests extends TestBase {
             .build();
         PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
 
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());

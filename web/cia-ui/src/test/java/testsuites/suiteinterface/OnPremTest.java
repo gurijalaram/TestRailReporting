@@ -1,4 +1,4 @@
 package testsuites.suiteinterface;
 
-public interface AdminSmokeTest {
+public interface OnPremTest {
 }
