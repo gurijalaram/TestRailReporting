@@ -111,7 +111,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2334"})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
@@ -134,7 +134,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
         String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time")
                 .replace(",", "");
 
-        //cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
+        cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

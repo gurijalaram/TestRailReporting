@@ -35,6 +35,17 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"7326"})
+    @Description("Validate report is available by library - Target and Quoted Cost Trend Report")
+    public void testReportAvailabilityByLibrary() {
+        commonReportTests = new CommonReportTests(driver);
+        commonReportTests.testReportAvailabilityByLibrary(
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS.getReportName()
+        );
+    }
+
+    @Test
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7328"})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityBySearch() {

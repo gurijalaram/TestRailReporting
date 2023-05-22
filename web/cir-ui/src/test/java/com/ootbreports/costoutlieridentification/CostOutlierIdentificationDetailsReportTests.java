@@ -116,7 +116,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 true);
         BigDecimal reportsFbc = costOutlierIdentificationReportPage.getFirstFbcCostOutlierDetailsReport();
 
-        //costOutlierIdentificationReportPage.openNewCidTabAndFocus(1);
+        costOutlierIdentificationReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

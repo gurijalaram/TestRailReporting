@@ -160,7 +160,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7619"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -181,7 +181,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromComparisonReport();
 
-        //castingDtcReportPage.openNewCidTabAndFocus(2);
+        castingDtcReportPage.openNewCidTabAndFocus(2);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
@@ -417,7 +417,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1708"})
     @Description("Verify DTC issue counts are correct - Casting DTC Comparison Report")
     public void testDtcIssueCountsAreCorrect() {

@@ -180,7 +180,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3367"})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
@@ -207,7 +207,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .replace(",", "");
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
-        //targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
+        targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
