@@ -13,8 +13,10 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class CycleTimeValueTrackingReportTests extends TestBase {
@@ -73,14 +75,14 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
         assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
 
-        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo(expectedProjectRollup)));
         assertThat(cycleTimeValueTrackingPage.getRollupInUseInChart(), is(equalTo(expectedProjectRollup)));
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2332"})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
@@ -90,17 +92,18 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
                 .navigateToReport(
                         ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
                         CycleTimeValueTrackingPage.class
-                );
+                ).selectCycleTimeRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("1")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("10")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
 
-        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo("AC CYCLE TIME VT 1")));
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Issue("AP-66960")
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2335"})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
@@ -112,7 +115,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class
                 );
 
-        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.clickHyperlink("PROJECT 2", CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.switchTab(1);
         cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();

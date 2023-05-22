@@ -15,6 +15,9 @@ public class ScenarioExport extends AdminHeader {
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
 
+    @FindBy(css = "[id='exportscheduleslist']")
+    private WebElement exportTable;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -34,14 +37,24 @@ public class ScenarioExport extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(exportTable);
     }
 
+    /**
+     * Checks if header is displayed
+     *
+     * @return boolean - is element displayed
+     */
     public boolean isHeaderDisplayed() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
 
+    /**
+     * Checks if header is enabled
+     *
+     * @return boolean - is element enabled
+     */
     public boolean isHeaderEnabled() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementEnabled(manageScenarioExportTitle);

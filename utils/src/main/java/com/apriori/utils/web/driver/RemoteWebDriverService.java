@@ -7,6 +7,7 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -56,7 +57,10 @@ public class RemoteWebDriverService extends BrowserManager {
                     log.info("Starting ChromeDriver........ ");
 
                     ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
-                    capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.setAcceptInsecureCerts(true);
+                    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
                     capabilities.setCapability("browserName", Browser.CHROME.browserName());
                     break;
 

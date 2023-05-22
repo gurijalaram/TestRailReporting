@@ -2,7 +2,9 @@ package com.apriori.pageobjects.pages.logout;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,11 +16,14 @@ public class ReportsLogoutPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLogoutPage.class);
 
-    @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
+    @FindBy(css = "h2[class='textAccent']")
     private WebElement loginPageTitle;
 
-    @FindBy(css = "button[type='submit'")
-    private WebElement loginButton;
+    @FindBy(css = "button[type='submit']")
+    private WebElement cloudLoginButton;
+
+    @FindBy(css = "button[id='submitButton']")
+    private WebElement loginButtonOnPremReports;
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
@@ -63,12 +68,12 @@ public class ReportsLogoutPage extends ReportsPageHeader {
     }
 
     /**
-     * Checks if login button is displayed and enabled
-     *
+     * Checks if login button is enabled
      * @return boolean
      */
-    public boolean isLoginButtonDisplayedAndEnabled() {
-        pageUtils.waitForElementToAppear(loginButton);
-        return loginButton.isDisplayed() && loginButton.isEnabled();
+    public boolean isLoginButtonEnabled() {
+        WebElement elementToUse = driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.login_locator")));
+        pageUtils.waitForElementToBeClickable(elementToUse);
+        return elementToUse.isEnabled();
     }
 }

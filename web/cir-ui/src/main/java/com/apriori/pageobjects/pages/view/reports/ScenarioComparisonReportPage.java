@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.math.BigDecimal;
 
@@ -185,9 +186,32 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
      * @param substringName - boolean
      */
     public String getNameOfFirstScenarioToCompare(boolean substringName) {
+        By locator = By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0001-2140 (Initial) [part]']");
         pageUtils.waitForElementToAppear(firstScenarioToCompare);
-        String scenarioName = firstScenarioToCompare.getAttribute("title");
-        return substringName ? scenarioName.substring(0, 7) : scenarioName;
+        String scenarioName = "";
+        while (scenarioName.isEmpty()) {
+            if (firstScenarioToCompare.getAttribute("title").contains("0001-2140")) {
+                scenarioName = firstScenarioToCompare.getAttribute("title");
+            }
+            pageUtils.waitForElementToAppear(locator);
+        }
+        return substringName ? scenarioName.substring(0, 9) : scenarioName;
+    }
+
+    /**
+     * Gets first scenario name (generic)
+     *
+     * @param componentType - component type to wait for
+     * @return String
+     */
+    public String getFirstScenarioName(String componentType) {
+        String expectedScenariosCount = componentType.equals(Constants.PART_COMPONENT_TYPE) ? "9" : "1";
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.COMPONENT_TYPE.getListName(), "Selected: ", "1");
+        waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", expectedScenariosCount);
+        return firstScenarioToCompare.getAttribute("title");
     }
 
     /**
@@ -200,11 +224,6 @@ public class ScenarioComparisonReportPage extends GenericReportPage {
         pageUtils.clearInput(partNumberSearchCriteriaInput);
         partNumberSearchCriteriaInput.sendKeys(partNumberToInput);
         partNumberSearchCriteriaInput.sendKeys(Keys.ENTER);
-        By scenarioNameLocator = By.xpath("(//div[@title='Scenario Name']//ul)[1]/li[@title='Initial']");
-        By scenariosToCompareLocator =
-                By.xpath("(//div[@title='Scenarios to Compare']//ul)[1]/li[@title='0200613 (Initial) [part]']");
-        pageUtils.waitForElementToAppear(scenarioNameLocator);
-        pageUtils.waitForElementToAppear(scenariosToCompareLocator);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "1");
     }
