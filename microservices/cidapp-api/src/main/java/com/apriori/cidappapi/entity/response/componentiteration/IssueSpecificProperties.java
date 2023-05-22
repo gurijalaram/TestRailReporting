@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.entity.response.componentiteration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class IssueSpecificProperties  {
     private Integer suggestedMin;
     private String suggestedStock;
     private String edgeList;
-    private OpName opName;
+    private String opName;
     private ProcName processName;
     private ProcName procName;
     private String cavityTexture;
@@ -44,4 +45,19 @@ public class IssueSpecificProperties  {
     private String holeLength;
     private String msgTolType;
     private String cheaperFinishOptions;
+    private String toolHolderClearance;
+    private String toolHolderObstructionHeight;
+    private String toolDiameter;
+    private String gcdHeight;
+    private String opIndex;
+    private String toolReach;
+    private String roughingFeed;
+    private String finishingFeed;
+    private String finishingAxialEngagement;
+    private String standardHolderClearanceInFront;
+    private String slimProfileHolderClearanceBehind;
+    private String standardHolderClearanceBehind;
+    private String slimProfileHolderClearanceInFront;
+    @JsonProperty("lToDRatio")
+    private Double ltoDRatio;
 }

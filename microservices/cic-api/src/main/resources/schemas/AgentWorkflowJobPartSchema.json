@@ -57,14 +57,12 @@
           "type": "number"
         }
       },
-      "required": [
+      "optional": [
         "materialName",
         "processGroupName",
         "vpeName",
         "annualVolume",
-        "batchSize"
-      ],
-      "optional": [
+        "batchSize",
         "productionLife"
       ]
     },
