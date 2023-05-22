@@ -69,6 +69,7 @@ public class Material {
     private Double lowerFormingTemperature;
     private String manufacturer;
     private String materialCutCodeName;
+    private MaterialSustainabilityInfo sustainabilityInfo;
     private String materialForm;
     private String materialTypeName;
     private String meltingTemperature;
@@ -111,7 +112,6 @@ public class Material {
     private String roundTubeCostUnits;
     private Double squareBarCostPerUnit;
     private String squareBarCostUnits;
-    private MaterialSustainabilityInfo materialSustainabilityInfo;
     private Double strainRateSensitivity;
     private Double strengthCoefficient;
     private Double turningSpeed;

@@ -116,7 +116,7 @@ public class CICIntegrationTests extends TestBase {
         // Create WorkFlow
         PartsCost xlsWatchPointReportExpectedData = new TestDataService().getReportData("PartCostReport.json", PartsCost.class);
         loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
+        ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);
         softAssertions.assertThat(responseWrapper.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(responseWrapper.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
