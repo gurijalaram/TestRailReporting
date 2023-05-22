@@ -1,0 +1,60 @@
+{
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "default": {},
+      "required": [
+        "gcdsAdded",
+        "gcdsRemoved"
+      ],
+      "properties": {
+        "gcdsAdded": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": [
+              "gcdName",
+              "gcdType",
+              "sequenceNumber"
+            ],
+            "properties": {
+              "gcdName": {
+                "type": "string"
+              },
+              "sequenceNumber": {
+                "type": "integer"
+              }
+            }
+          },
+          "gcdsRemoved": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "object",
+              "required": [
+                "gcdName",
+                "gcdType",
+                "sequenceNumber"
+              ],
+              "properties": {
+                "gcdName": {
+                  "type": "string"
+                },
+                "gcdType": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
