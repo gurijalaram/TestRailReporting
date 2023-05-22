@@ -45,8 +45,8 @@ public class ProjectsTest extends TestBase {
     @Ignore("Disabled until 1.2.0 release")
     @Test
     @TestRail(testCaseId = {"22686","22687","22707"})
-    @Description("Verify user can access create a new project page")
-    public void testCreateANewProject() {
+    @Description("Verify user can access create a new project page and verify page elements")
+    public void testCreateAProjectPageContent() {
         loginPage = new CisLoginPage(driver);
         projectsPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickProjects()
