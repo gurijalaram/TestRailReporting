@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "$ref": "BidPackageProjectItemSchema.json"
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

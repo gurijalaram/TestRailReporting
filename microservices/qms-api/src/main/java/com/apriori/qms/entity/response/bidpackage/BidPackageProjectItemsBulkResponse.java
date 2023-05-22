@@ -15,8 +15,8 @@ import java.util.List;
 @Data
 @Builder
 @JsonRootName("response")
-@Schema(location = "BidPackageProjectItemsPostResponseSchema.json")
-public class BidPackageProjectItemsPostResponse {
-    private List<BidPackageProjectItemGetResponse> projectItem;
+@Schema(location = "BidPackageProjectItemsBulkResponseSchema.json")
+public class BidPackageProjectItemsBulkResponse {
+    private List<BidPackageProjectItemResponse> projectItem;
     private List<FailedProjectItem> failedProjectItem;
 }

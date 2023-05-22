@@ -1,7 +1,7 @@
 package com.apriori.qms.tests;
 
 import com.apriori.qms.controller.QmsProjectResources;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsGetResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -26,9 +26,9 @@ public class QmsProjectItemTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"13773", "14913"})
     @Description("Find all project Items for particular project")
     public void getAllProjectItems() {
-        BidPackageProjectItemsGetResponse bpPItemResponse = QmsProjectResources.getProjectItems(
+        BidPackageProjectItemsResponse bpPItemResponse = QmsProjectResources.getProjectItems(
             bidPackageProjectResponse.getIdentity(),
-            BidPackageProjectItemsGetResponse.class,
+            BidPackageProjectItemsResponse.class,
             HttpStatus.SC_OK,
             currentUser);
         softAssertions.assertThat(bpPItemResponse.getIsFirstPage()).isTrue();
@@ -40,10 +40,10 @@ public class QmsProjectItemTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"14914"})
     @Description("Get project Item for particular project using project URL")
     public void getAllProjectItemByIdentity() {
-        BidPackageProjectItemsGetResponse bpPItemResponse = QmsProjectResources.getProjectItem(
+        BidPackageProjectItemsResponse bpPItemResponse = QmsProjectResources.getProjectItem(
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
-            BidPackageProjectItemsGetResponse.class,
+            BidPackageProjectItemsResponse.class,
             HttpStatus.SC_OK,
             currentUser);
 

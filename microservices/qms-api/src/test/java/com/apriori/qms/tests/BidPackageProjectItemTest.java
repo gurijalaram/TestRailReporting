@@ -4,9 +4,9 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItem;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemGetResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsGetResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsPostResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -52,12 +52,12 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             softAssertions.assertThat(bidPackageProjectResponse.getItems().get(0).getBidPackageItem()
                 .getIterationIdentity()).isEqualTo(bidPackageItemResponse.getIterationIdentity());
 
-            BidPackageProjectItemGetResponse bpPItemResponse = QmsBidPackageResources.getBidPackageProjectItem(
+            BidPackageProjectItemResponse bpPItemResponse = QmsBidPackageResources.getBidPackageProjectItem(
                 bidPackageResponse.getIdentity(),
                 bidPackageProjectResponse.getIdentity(),
                 bidPackageProjectResponse.getItems().get(0).getIdentity(),
                 currentUser,
-                BidPackageProjectItemGetResponse.class,
+                BidPackageProjectItemResponse.class,
                 HttpStatus.SC_OK);
             softAssertions.assertThat(bpPItemResponse.getBidPackageIdentity())
                 .isEqualTo(bidPackageResponse.getIdentity());
@@ -76,17 +76,17 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"14911"})
     @Description("Find all project Items for particular project using bid-package URL")
     public void getAllProjectItems() {
-        BidPackageProjectItemsGetResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
+        BidPackageProjectItemsResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             currentUser,
-            BidPackageProjectItemsGetResponse.class,
+            BidPackageProjectItemsResponse.class,
             HttpStatus.SC_OK);
         softAssertions.assertThat(bpPItemsResponse.getItems().size()).isGreaterThan(0);
     }
 
     @Test
-    @TestRail(testCaseId = {"24020","24004"})
+    @TestRail(testCaseId = {"24020", "24004"})
     @Description("Verify user is able to create bulk project items by using project-items creation API")
     public void createBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        BidPackageProjectItemsPostResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
@@ -141,23 +141,16 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
         }
 
         //Get project-items
-        BidPackageProjectItemsGetResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
+        BidPackageProjectItemsResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             currentUser,
-            BidPackageProjectItemsGetResponse.class,
+            BidPackageProjectItemsResponse.class,
             HttpStatus.SC_OK);
         softAssertions.assertThat(bpPItemsResponse.getItems().size()).isEqualTo(4);
-
-        if (scenarioItem1 != null) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem1, currentUser);
-        }
-        if (scenarioItem2 != null) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem2, currentUser);
-        }
-        if (scenarioItem3 != null) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem3, currentUser);
-        }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem1, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem2, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem3, currentUser);
     }
 
     @Test
@@ -173,7 +166,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        BidPackageProjectItemsPostResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
@@ -207,7 +200,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
         String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         BidPackageProjectResponse newBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(newProjectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
 
-        BidPackageProjectItemsPostResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             newBidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
@@ -228,7 +221,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"24006"})
     @Description("Verify user is not able to create project items by using project-items creation API, for null component, scenario and iteration identity")
     public void createBidPackageNullProjectItems() {
-        //All Identites null
+        //All Identities null
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
@@ -238,7 +231,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        BidPackageProjectItemsPostResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
@@ -330,8 +323,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
     @Test
     @TestRail(testCaseId = {"24005"})
     @Description("Verify user is not able to create  project items by using project-items creation API,   for invalid  component, scenario and iteration identity")
-    public void createBidPackageInvaldProjectItems() {
-        //All Identites null
+    public void createBidPackageInvalidProjectItems() {
+        //All Identities null
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
@@ -341,7 +334,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        BidPackageProjectItemsPostResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,

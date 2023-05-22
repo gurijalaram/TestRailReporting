@@ -7,7 +7,7 @@
         "projectItem": {
           "type": "array",
           "items": {
-            "$ref": "BidPackageProjectItemPostResponseSchema.json"
+            "$ref": "BidPackageProjectItemSchema.json"
           }
         },
         "failedProjectItem": {
