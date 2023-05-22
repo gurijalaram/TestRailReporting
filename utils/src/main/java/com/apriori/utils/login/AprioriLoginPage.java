@@ -4,7 +4,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

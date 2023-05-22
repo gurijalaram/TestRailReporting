@@ -1,10 +1,8 @@
 package com.integration.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
