@@ -451,7 +451,7 @@ public class CommonReportTests extends TestBase {
                 assemblyCostReportPage.getGeneralCostInfoValue("Total", false);
         String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
-        //assemblyCostReportPage.openNewCidTabAndFocus(1);
+        assemblyCostReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

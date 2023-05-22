@@ -109,6 +109,7 @@ onprem:
   base_url: walqbaci01/
   name: onprem
   deployment_url_template: ${base_url}
+  users_csv_file: onprem-users.csv
 
   reports:
     username_locator: //input[contains(@name, 'username')]

@@ -51,7 +51,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2697"})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {

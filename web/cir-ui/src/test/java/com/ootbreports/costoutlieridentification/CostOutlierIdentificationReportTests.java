@@ -120,7 +120,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1959"})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
@@ -139,7 +139,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
         BigDecimal reportsCostValue = genericReportPage.getFBCValueFromBubbleTooltip(
                 "aPriori Cost Value (Cost Outlier) Bottom");
 
-        //genericReportPage.openNewCidTabAndFocus(1);
+        genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()

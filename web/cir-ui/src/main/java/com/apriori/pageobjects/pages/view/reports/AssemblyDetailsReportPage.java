@@ -776,18 +776,6 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         return returnValue;
     }
 
-
-    /**
-     * Gets date from two months ago
-     *
-     * @return String
-     */
-    private String getDateTwoMonthsAgo() {
-        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(2).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(pastDate);
-    }
-
     /**
      * Returns parsed markup of page and sets the CSS Locator
      *

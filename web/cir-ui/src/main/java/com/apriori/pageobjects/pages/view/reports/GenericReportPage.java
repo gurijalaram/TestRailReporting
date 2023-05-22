@@ -574,11 +574,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        /*pageUtils.waitForElementAndClick(locator);
-        pageUtils.waitForElementAndClick(resetButton);*/
-        pageUtils.waitFor(2000);
         driver.findElement(locator).click();
-        //pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
     }
@@ -661,12 +657,11 @@ public class GenericReportPage extends ReportsPageHeader {
     public String getCostOutlierAnnualisedOrPercentValueFromAboveChart(boolean isPercentSet,
                                                                        String annualisedOrPercent) {
         String valueIndex = isPercentSet && annualisedOrPercent.equals("Percent") ? "2" : "1";
-        //String valueIndex = "1";
         By locator = By.xpath(
-                String.format(
-                        "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
-                        annualisedOrPercent,
-                        valueIndex)
+            String.format(
+                "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
+                annualisedOrPercent,
+                valueIndex)
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
@@ -802,7 +797,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectCostMetric(String costMetric) {
-        pageUtils.waitFor(1000);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
             pageUtils.waitForElementAndClick(costMetricDropdown);
             pageUtils.waitForElementAndClick(
@@ -834,7 +828,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectSortOrder(String sortOrder) {
-        pageUtils.waitFor(2000);
         pageUtils.scrollWithJavaScript(sortOrderDropdown, true);
         pageUtils.waitForElementToAppear(sortOrderDropdown);
         if (!sortOrderDropdown.getAttribute("title").equals(sortOrder)) {
@@ -1063,7 +1056,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Generic Report Page instance
      */
     public GenericReportPage clickUseLatestExportDropdownTwice() {
-        //pageUtils.waitForElementAndClick(useLatestExportDropdown);
         useLatestExportDropdown.click();
         useLatestExportDropdown.click();
         return this;
@@ -1106,7 +1098,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(pickerTrigger);
 
         setDayValuePicker(newDt.getDayOfMonth());
-        pageUtils.waitFor(1000);
         setMonthValuePicker((newDt.getMonthValue() - 1));
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
@@ -1147,7 +1138,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Waits for SVG to render
      */
     public void waitForSvgToRender() {
-        By locator = By.xpath("//*[local-name()='svg']");
+        By locator = By.xpath("" +
+            "*[local-name()='svg']");
         pageUtils.waitForElementToAppear(locator);
         pageUtils.isElementDisplayed(locator);
         pageUtils.isElementEnabled(driver.findElement(locator));
@@ -1455,7 +1447,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickApply() {
-        pageUtils.waitFor(1000);
         pageUtils.waitForElementAndClick(applyButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return this;
@@ -1897,7 +1888,6 @@ public class GenericReportPage extends ReportsPageHeader {
         String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
                 ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
-            pageUtils.waitFor(2000);
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
@@ -2137,7 +2127,6 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String of element name
      */
     public String getTableElementNameDtcComparison(String tableIndex, String rowIndex) {
-        pageUtils.waitFor(1000);
         By locator = By.xpath(String.format(
                 "((//*[@class='highcharts-axis-labels highcharts-xaxis-labels '])[%s]//*[local-name()='text'])[%s]",
                 tableIndex,
