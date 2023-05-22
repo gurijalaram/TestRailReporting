@@ -41,4 +41,36 @@ public class ProjectsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Ignore("Disabled until 1.2.0 release")
+    @Test
+    @TestRail(testCaseId = {"22686","22687","22707"})
+    @Description("Verify user can access create a new project page and verify page elements")
+    public void testCreateAProjectPageContent() {
+        loginPage = new CisLoginPage(driver);
+        projectsPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickProjects()
+                .clickOnCreateNewProject();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(projectsPage.isProjectNameFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isProjectDescriptionFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isAddPartsAndAssembliesOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isInviteTeamMembersFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isDueDateFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isCreateProjectButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isCancelProjectCreationDisplayed()).isEqualTo(true);
+
+        projectsPage.clickOnDueDatePicker();
+
+        softAssertions.assertThat(projectsPage.getMonthSelectorStatus("Previous month")).contains("Mui-disabled");
+        softAssertions.assertThat(projectsPage.getMonthSelectorStatus("Next month")).doesNotContain("Mui-disabled");
+
+        projectsPage.clickOnCancelProject();
+
+        softAssertions.assertThat(projectsPage.isCreateNewProjectsOptionDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }
