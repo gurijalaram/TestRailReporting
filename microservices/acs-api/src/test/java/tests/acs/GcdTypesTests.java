@@ -269,7 +269,7 @@ public class GcdTypesTests {
         softAssertions.assertThat(response.getStraightBend().stream()).anyMatch(x -> x.getName().equalsIgnoreCase("name"));
         softAssertions.assertThat(response.getBlank().stream()).anyMatch(x -> x.getDisplayName().equalsIgnoreCase("Number of Coining Chains"));
         softAssertions.assertThat(response.getEdgeSegment().stream()).anyMatch(x -> x.getStorageType().equalsIgnoreCase("OBJECT"));
-        softAssertions.assertThat(response.getMultiBend().get(2).getUnitType()).isEqualTo("Angle");
+        softAssertions.assertThat(response.getForm().get(4).getUnitType()).isEqualTo("Area");
         softAssertions.assertThat(response.getCurvedSurface().stream()).anyMatch(x -> x.getEditable().equals(false));
         softAssertions.assertAll();
     }
@@ -314,7 +314,7 @@ public class GcdTypesTests {
         GcdTypesSheetPlasticResponse response = acsResources.getGcdTypes(
             ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup(), GcdTypesSheetPlasticResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(response.getComboVoid().stream()).anyMatch(x -> x.getName().equalsIgnoreCase("name"));
+        softAssertions.assertThat(response.getPerimeter().stream()).anyMatch(x -> x.getName().equalsIgnoreCase("name"));
         softAssertions.assertThat(response.getComplexHole().stream()).anyMatch(x -> x.getDisplayName().equalsIgnoreCase("Num Curved Edges"));
         softAssertions.assertThat(response.getAxiGroove().stream()).anyMatch(x -> x.getStorageType().equalsIgnoreCase("DOUBLE"));
         softAssertions.assertThat(response.getCoreBundle().get(1).getUnitType()).isEqualTo("Time");
@@ -332,7 +332,7 @@ public class GcdTypesTests {
 
         softAssertions.assertThat(response.getPerimeter().stream()).anyMatch(x -> x.getDisplayName().equalsIgnoreCase("name"));
         softAssertions.assertThat(response.getAxiGroove().stream()).anyMatch(x -> x.getDisplayName().equalsIgnoreCase("Helix Angle"));
-        softAssertions.assertThat(response.getRing().stream()).anyMatch(x -> x.getStorageType().equalsIgnoreCase("DOUBLE"));
+        softAssertions.assertThat(response.getMultiStepHole().stream()).anyMatch(x -> x.getStorageType().equalsIgnoreCase("DOUBLE"));
         softAssertions.assertThat(response.getPlanarFace().get(1).getUnitType()).isEqualTo("Time");
         softAssertions.assertThat(response.getSimpleHole().stream()).anyMatch(x -> x.getEditable().equals(false));
         softAssertions.assertAll();
