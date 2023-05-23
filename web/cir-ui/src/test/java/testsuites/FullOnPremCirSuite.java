@@ -1,9 +1,7 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.adhocview.AdHocViewTests;
 import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
@@ -34,41 +32,39 @@ import com.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingRep
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.ReportsTest;
+import testsuites.suiteinterface.OnPremTest;
 
-@ProjectRunID("261")
 @RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(ReportsTest.class)
+@Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
-    AdHocViewTests.class,
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
     CastingDtcReportTests.class,
-    com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests.class,
-    CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,
     ComponentCostReportTests.class,
     CostOutlierIdentificationReportTests.class,
     CostOutlierIdentificationDetailsReportTests.class,
-    CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
+    CycleTimeValueTrackingReportTests.class,
     DesignOutlierIdentificationReportTests.class,
     DesignOutlierIdentificationDetailsReportTests.class,
     LoginTests.class,
-    MachiningDtcReportTests.class,
-    MachiningDtcDetailsReportTests.class,
-    MachiningDtcComparisonReportTests.class,
-    PlasticDtcReportTests.class,
-    PlasticDtcDetailsReportTests.class,
     PlasticDtcComparisonReportTests.class,
+    PlasticDtcDetailsReportTests.class,
+    PlasticDtcReportTests.class,
+    MachiningDtcComparisonReportTests.class,
+    MachiningDtcDetailsReportTests.class,
+    MachiningDtcReportTests.class,
     ReportsNavigationTests.class,
-    ScenarioComparisonReportTests.class,
-    SheetMetalDtcReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
+    SheetMetalDtcDetailsReportTests.class,
+    SheetMetalDtcReportTests.class,
+    ScenarioComparisonReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class,
-    TargetAndQuotedCostTrendReportTests.class
+    TargetAndQuotedCostValueTrackingReportTests.class
 })
-public class ReportingSuite {
+
+public class FullOnPremCirSuite {
 }

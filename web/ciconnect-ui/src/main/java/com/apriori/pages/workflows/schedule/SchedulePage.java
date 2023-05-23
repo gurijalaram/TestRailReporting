@@ -136,6 +136,19 @@ public class SchedulePage extends CICBasePage {
         return new WorkFlowFeatures(this.driver);
     }
 
+    /**
+     * Click Edit Workflow button
+     *
+     * @return DetailsPart page object
+     */
+    public DetailsPart clickEditWorkflowBtn() {
+        pageUtils.waitForElementAndClick(editWorkflowButton);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(workflowPopUpTitleElement);
+        pageUtils.waitForElementToAppear(getNameTextFieldElement());
+        return new DetailsPart(this.driver);
+    }
+
 
     public SchedulePage clickConfirmAlertBoxDelete() {
         pageUtils.waitForElementToAppear(confirmAlertBox);

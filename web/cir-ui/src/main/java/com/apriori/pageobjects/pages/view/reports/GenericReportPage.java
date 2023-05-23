@@ -6,6 +6,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
+import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
@@ -48,14 +49,17 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), '* DTC Score')]")
     private WebElement dtcScoreControlTitle;
 
-    @FindBy(xpath = "(//div[@class='title'])[1]")
+    @FindBy(css = "div[class='header'] div.title")
     protected WebElement upperTitle;
 
-    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[3][local-name() = 'path']")
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[55][local-name() = 'path']")
     private WebElement castingDtcBubble;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[18][local-name() = 'path']")
     private WebElement castingDtcBubbleTwo;
+
+    @FindBy(xpath = "//*[@class='highcharts-series-group']//*[25][local-name() = 'path']")
+    private WebElement castingDtcBubbleThree;
 
     @FindBy(xpath = "//*[@class='highcharts-series-group']//*[7][local-name() = 'path']")
     private WebElement dtcScoreMediumBubble;
@@ -86,6 +90,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > " +
             "path:nth-child(4)")
     private WebElement designOutlierChartSpotTwo;
+
+    @FindBy(css = ".highcharts_parent_container > div > svg > .highcharts-series-group > g:nth-child(2) > path:nth-child(5)")
+    private WebElement designOutlierChartSpotThree;
 
     @FindBy(xpath = "(//*[@class='highcharts-series-group']//*[local-name() = 'path'])[30]")
     private WebElement costOutlierChartSpotOne;
@@ -123,7 +130,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//span[contains(text(), 'Currency:')]/../../td[4]/span")
     private WebElement currentCurrency;
 
-    @FindBy(xpath = "//div[@id='reportContainer']/table/tbody/tr[7]/td/span")
+    @FindBy(xpath = "(//div[@id='reportContainer']//table/tbody/tr[7])[1]/td/span")
     private WebElement currentAssembly;
 
     @FindBy(css = "a[class='navbar-brand']")
@@ -286,6 +293,9 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='sortOrder']//a")
     private WebElement sortOrderDropdown;
 
+    @FindBy(xpath = "//div[@id='sortOrder']//input")
+    private WebElement sortOrderDropdownInput;
+
     @FindBy(xpath = "//div[@id='costMetric']//a")
     private WebElement costMetricDropdown;
 
@@ -419,6 +429,9 @@ public class GenericReportPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span")
     private WebElement minimumAnnualSpend;
+
+    @FindBy(xpath = "//label[@title='Minimum Annual Spend']/input")
+    private WebElement minimumAnnualSpendInput;
 
     @FindBy(xpath = "//tr[13]/td[20]/span")
     private WebElement annualSpendDetailsValue;
@@ -561,9 +574,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        pageUtils.waitForElementAndClick(locator);
-        pageUtils.waitForElementAndClick(resetButton);
-        pageUtils.waitForElementAndClick(locator);
+        driver.findElement(locator).click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
     }
@@ -599,12 +610,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage inputMinimumAnnualSpend() {
-        By locator = By.xpath("//label[@title='Minimum Annual Spend']/input");
-        pageUtils.waitForElementAndClick(locator);
-        WebElement minimumAnnualSpend = driver.findElement(locator);
-        pageUtils.clearInput(driver.findElement(locator));
-        pageUtils.waitForSteadinessOfElement(locator);
-        minimumAnnualSpend.sendKeys("6631000");
+        minimumAnnualSpendInput.clear();
+        pageUtils.javaScriptClick(minimumAnnualSpendInput);
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Minimum Annual Spend']/input[@value='']"));
+        minimumAnnualSpendInput.sendKeys("6631000");
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        clickCurrencyTwice();
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Minimum Annual Spend']/input[@value='6631000']"));
         return this;
     }
 
@@ -646,10 +658,10 @@ public class GenericReportPage extends ReportsPageHeader {
                                                                        String annualisedOrPercent) {
         String valueIndex = isPercentSet && annualisedOrPercent.equals("Percent") ? "2" : "1";
         By locator = By.xpath(
-                String.format(
-                        "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
-                        annualisedOrPercent,
-                        valueIndex)
+            String.format(
+                "//span[contains(text(), '%s')]/../following-sibling::td[%s]/span",
+                annualisedOrPercent,
+                valueIndex)
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
@@ -696,9 +708,17 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage setProcessGroup(String processGroupOption) {
         pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "0");
+
         By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
-        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.waitForElementToAppear(locator);
         pageUtils.waitForElementAndClick(driver.findElement(locator));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+
+        By locator2 = By.xpath(
+                String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", processGroupOption));
+        pageUtils.waitForElementToAppear(locator2);
+        waitForCorrectAvailableSelectedCount("", "Selected: ", "1");
         return this;
     }
 
@@ -747,11 +767,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return String - process group value
      */
     public String getProcessGroupValueDtc(String reportName) {
-        WebElement elementToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName())
-                ? processGroupCurrentValueDtcPartSummary
-                : processGroupCurrentValueCastingDtc;
-        pageUtils.waitForElementToAppear(elementToUse);
-        return elementToUse.getText();
+        String indexToUse = reportName.equals(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()) ? "1" : "2";
+        By genericLocator = By.xpath(String.format(
+                "//span[contains(text(), 'Process Group:')]/../following-sibling::td[%s]/span", indexToUse));
+        pageUtils.waitForElementToAppear(genericLocator);
+        return driver.findElement(genericLocator).getText();
     }
 
     /**
@@ -777,23 +797,11 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectCostMetric(String costMetric) {
-        pageUtils.scrollWithJavaScript(costMetricDropdown, true);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='sortOrder']"));
-            pageUtils.waitForElementToAppear(applyButton);
-            pageUtils.waitForElementToAppear(okButton);
-            pageUtils.waitForElementToAppear(resetButton);
-            pageUtils.waitForElementToAppear(cancelButton);
-            pageUtils.waitForElementToAppear(upperTitle);
-            pageUtils.waitForElementToAppear(inputControlsDiv);
-            pageUtils.waitForElementToAppear(backButton);
-            pageUtils.waitForElementToAppear(inputControlsButton);
-            pageUtils.waitForElementToAppear(zoomInButton);
-            pageUtils.waitForElementToAppear(zoomOutButton);
-            pageUtils.waitForElementToAppear(zoomValueDropdown);
-
             pageUtils.waitForElementAndClick(costMetricDropdown);
-            pageUtils.waitForElementAndClick(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)));
+            pageUtils.waitForElementAndClick(
+                    driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)))
+            );
         }
         return this;
     }
@@ -805,22 +813,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage selectMassMetric(String massMetric) {
-        pageUtils.scrollWithJavaScript(massMetricDropdown, true);
-        if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriCostMin']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriCostMax']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriMassMin']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriMassMax']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='outlierLines']//input"));
-            pageUtils.waitForElementToAppear(okButton);
-            pageUtils.waitForElementToAppear(applyButton);
-            pageUtils.waitForElementToAppear(resetButton);
-            pageUtils.waitForElementToAppear(cancelButton);
-            pageUtils.waitForElementToAppear(massMetricDropdown);
-
-            pageUtils.waitForElementAndClick(massMetricDropdown);
-            pageUtils.waitForElementAndClick(driver.findElement(By.xpath(
-                    String.format("//li[@title='%s']/div/a", massMetric))));
+        if (massMetric.equals(MassMetricEnum.FINISH_MASS.getMassMetricName())) {
+            massMetricDropdown.click();
+            driver.findElement(By.xpath(
+                    String.format("//li[@title='%s']/div/a", MassMetricEnum.ROUGH_MASS.getMassMetricName()))).click();
         }
         return this;
     }
@@ -940,18 +936,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param className - className
      * @return Instance of class passed in
      */
-    public <T> T clickOk(boolean waitForReportLoad, Class<T> className) {
+    public <T> T clickOk(Class<T> className) {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).perform();
         actions.click().perform();
         if (!getInputControlsDivClassName().contains("hidden")) {
             actions.moveToElement(okButton).perform();
             actions.click().perform();
-        }
-        if (waitForReportLoad) {
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            waitForReportToLoad();
-            pageUtils.waitForElementToAppear(upperTitle);
         }
         return PageFactory.initElements(driver, className);
     }
@@ -1065,7 +1056,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Generic Report Page instance
      */
     public GenericReportPage clickUseLatestExportDropdownTwice() {
-        pageUtils.waitForElementAndClick(useLatestExportDropdown);
+        useLatestExportDropdown.click();
         useLatestExportDropdown.click();
         return this;
     }
@@ -1077,7 +1068,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return boolean of error displayed and enabled
      */
     public boolean isExportSetFilterErrorDisplayedAndEnabled(boolean isEarliest) {
-        pageUtils.waitForElementToAppear(earliestExportSetDateError);
+        WebElement elementToWaitFor = isEarliest ? earliestExportSetDateError : latestExportSetDateError;
+        pageUtils.waitForElementToAppear(elementToWaitFor);
         pageUtils.waitForElementToAppear(latestExportSetDateError);
         return isEarliest ? earliestExportSetDateError.isDisplayed() && earliestExportSetDateError.isEnabled() :
                 latestExportSetDateError.isDisplayed() && latestExportSetDateError.isEnabled();
@@ -1146,7 +1138,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * Waits for SVG to render
      */
     public void waitForSvgToRender() {
-        By locator = By.xpath("//*[local-name()='svg']");
+        By locator = By.xpath("" +
+            "*[local-name()='svg']");
         pageUtils.waitForElementToAppear(locator);
         pageUtils.isElementDisplayed(locator);
         pageUtils.isElementEnabled(driver.findElement(locator));
@@ -1336,6 +1329,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public void invertExportSetSelection() {
         String expectedCount = String.valueOf(getAvailableExportSetCount() - getSelectedExportSetCount());
         pageUtils.waitForElementAndClick(exportSetInvert);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.EXPORT_SET.getListName(),
                 "Selected: ",
@@ -1348,6 +1342,9 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void exportSetDeselectAll() {
         pageUtils.waitForElementAndClick(exportSetDeselect);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        clickUseLatestExportDropdownTwice();
+        pageUtils.waitForElementToAppear(By.xpath("(//div[@title='Single export set selection.']//ul)[1]/li[@class = 'jr-mSelectlist-item   jr'][1]"));
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ",
                 "0");
     }
@@ -1473,8 +1470,9 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return current page object
      */
     public GenericReportPage clickReset() {
-        pageUtils.waitForElementAndClick(resetButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementAndClick(resetButton);
+        resetButton.click();
         return this;
     }
 
@@ -1581,6 +1579,18 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Waits for part list to have expected count
+     *
+     * @param expected - String of expected count
+     * @return GenericReportPage instance
+     */
+    public GenericReportPage waitForCorrectPartListCount(String expected) {
+        waitForCorrectAvailableSelectedCount(ListNameEnum.PARTS.getListName(), "Available: ", expected);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return this;
+    }
+
+    /**
      * Method to return value from Bubble in DTC Casting or Machining DTC Report
      *
      * @param valueIndexToGet - String of value index to get
@@ -1639,6 +1649,18 @@ public class GenericReportPage extends ReportsPageHeader {
         if (this.reportName.equals(ReportNamesEnum.PLASTIC_DTC.getReportName())) {
             elementToUse.click();
         }
+    }
+
+    /**
+     * Hovers over the relevant bubble for any DTC Report test
+     * @param bubbleIndex String
+     */
+    public void hoverSpecificPartNameBubble(String bubbleIndex) {
+        By locator = By.xpath(
+                String.format("//*[@class='highcharts-series-group']//*[%s][local-name() = 'path']", bubbleIndex));
+        pageUtils.waitForElementToAppear(locator);
+        Actions builder = new Actions(driver).moveToElement(driver.findElement(locator));
+        builder.build().perform();
     }
 
     /**
@@ -1863,12 +1885,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of current page object
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
-        if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
+        String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
+                ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
+        if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
             pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
-            pageUtils.waitForSteadinessOfElement(locator);
-            pageUtils.waitForElementAndClick(driver.findElement(locator));
+            By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
+            pageUtils.waitForElementAndClick(locator);
         }
         pageUtils.waitForElementToAppear(By.xpath(String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", dtcScoreOption)));
         String dtcScoreSelectedCount = dtcScoreOption.equals("High, Low, Medium") ? "3" : "1";
@@ -2005,9 +2028,8 @@ public class GenericReportPage extends ReportsPageHeader {
                 true);
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementToAppear(locator);
-
         if (inputString.equals("random")) {
-            pageUtils.waitForElementToAppear(By.xpath("//label[@title='Assembly Select']/span[@class='warning']"));
+            pageUtils.waitForElementToAppear(By.xpath("//span[@class='warning' and contains(text(), 'This field')]"));
         }
     }
 
@@ -2298,6 +2320,14 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Clicks current currency dropdown twice to change focus
+     */
+    private void clickCurrencyTwice() {
+        pageUtils.waitForElementAndClick(currentCurrencyElement);
+        currentCurrencyElement.click();
+    }
+
+    /**
      * Initialises export set hash map
      */
     private void initialiseCurrencyMap() {
@@ -2337,6 +2367,8 @@ public class GenericReportPage extends ReportsPageHeader {
         bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(), designOutlierChartSpotOne);
         bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
                 designOutlierChartSpotTwo);
+        bubbleMap.put(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3"),
+                designOutlierChartSpotThree);
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierChartSpotOne);
         bubbleMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName().concat(" 2"),
                 costOutlierChartSpotTwo);
@@ -2349,6 +2381,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private void initialiseDtcScoreBubbleMap() {
         dtcScoreBubbleMap.put("Low", castingDtcBubbleTwo);
         dtcScoreBubbleMap.put("Medium", dtcScoreMediumBubble);
+        dtcScoreBubbleMap.put("Medium Casting", castingDtcBubbleThree);
         dtcScoreBubbleMap.put("High", dtcScoreHighBubble);
         dtcScoreBubbleMap.put("Sheet", dtcScoreSheetMetalMediumBubble);
     }
