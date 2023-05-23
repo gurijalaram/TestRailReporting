@@ -25,9 +25,6 @@ public class DetailsPart extends CICBasePage {
 
     public static final String PARENT_WEBELEMENT = "div[id^='root_pagemashupcontainer-1_navigation-']";
 
-    @FindBy(css = "div[class$='modalTitle']")
-    private WebElement workflowPopUpTitleElement;
-
     @FindBy(css = PARENT_WEBELEMENT + "[id$='-popup_label-220'] > span")
     private WebElement workflowNameErrorLbl;
 
@@ -36,6 +33,9 @@ public class DetailsPart extends CICBasePage {
 
     @FindBy(css = "div.ss-content.ss-open> div.ss-search > input")
     private WebElement searchConnectorTxtElement;
+
+    @FindBy(xpath = "//div[@class='rules-group-container']")
+    private WebElement addRuleGroupElement;
 
     @FindBy(css = "#msMinutesTab")
     private WebElement minutesTab;
@@ -215,7 +215,7 @@ public class DetailsPart extends CICBasePage {
         }
         pageUtils.waitForElementAndClick(this.getNextButtonElement());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
-        pageUtils.waitForElementToAppear(getQDReturnOnlyCheckboxElement());
+        pageUtils.waitForElementToAppear(addRuleGroupElement);
         if (pageUtils.isElementDisplayed(getQDReturnOnlyCheckboxElement())) {
             object = new QueryDefinitions(driver);
         } else if (pageUtils.isElementDisplayed(getCostingInputAddRowButton())) {
@@ -238,8 +238,9 @@ public class DetailsPart extends CICBasePage {
         }
         pageUtils.waitForElementAndClick(this.getNextButtonElement());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
-        pageUtils.waitForElementToAppear(getQDReturnOnlyCheckboxElement());
-        if (pageUtils.isElementDisplayed(getQDReturnOnlyCheckboxElement())) {
+        pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
+        pageUtils.waitForElementToBeClickable(this.getNextButtonElement());
+        if (pageUtils.isElementDisplayed(revisionLatestCheckBoxLblElement)) {
             queryDefinitions = new QueryDefinitions(driver);
         }
         return queryDefinitions;
@@ -495,20 +496,12 @@ public class DetailsPart extends CICBasePage {
 
     }
 
-    public WebElement getNameTextFieldElement() {
-        return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
-    }
-
     private WebElement getDescriptionTextAreaElement() {
         return driver.findElement(with(By.xpath("//textarea")).below(By.xpath("//span[.='Description']")));
     }
 
     private WebElement getConnectorDropDownElement() {
         return driver.findElement(with(By.xpath("//div")).below(By.xpath("//span[.='Connector']")));
-    }
-
-    private WebElement getQDReturnOnlyCheckboxElement() {
-        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//label/span[.='Return only the latest revision of each part from the PLM system']", workflowPopUpActiveTabElement.getText())));
     }
 
     private WebElement getCostingInputAddRowButton() {
