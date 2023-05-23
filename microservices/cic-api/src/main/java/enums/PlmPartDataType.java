@@ -11,7 +11,10 @@ public enum PlmPartDataType {
     PLM_INVALID_PG("InvalidProcessGroup"),
     PLM_INVALID_MATERIAL("InvalidMaterial"),
     PLM_INVALID_UDA_FORMAT("InvalidUdaFormat"),
-    PLM_INVALID_UDA_VALUE("InvalidUdaValue");
+    PLM_INVALID_UDA_VALUE("InvalidUdaValue"),
+    PLM_MULTI_REVISION_PARTS("MultiRevWithParts"),
+    PLM_MULTI_REVISION_NO_PARTS("MultiRevWithNoParts"),
+    PLM_MULTI_REVISION("MultiSpecificRevision");
 
     private final String plmPartType;
 

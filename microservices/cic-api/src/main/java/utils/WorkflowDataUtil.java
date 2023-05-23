@@ -99,4 +99,16 @@ public class WorkflowDataUtil {
         workflowRequestData.setDefaultValues(costingInputRows);
         return this;
     }
+
+
+    /**
+     * Set the boolean flag to use latest revision
+     *
+     * @param latestRevisionFlag
+     * @return current class Object
+     */
+    public WorkflowDataUtil useLatestRevision(Boolean latestRevisionFlag) {
+        workflowRequestData.setUseLatestRevision(latestRevisionFlag);
+        return this;
+    }
 }
