@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -85,7 +84,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
                 .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));
@@ -208,7 +207,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7401"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -244,7 +243,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -264,7 +263,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.BENDS.getSortOrderEnum())
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -284,7 +283,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -304,7 +303,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.MACHINING_TIME.getSortOrderEnum())
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -324,7 +323,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
@@ -344,7 +343,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),

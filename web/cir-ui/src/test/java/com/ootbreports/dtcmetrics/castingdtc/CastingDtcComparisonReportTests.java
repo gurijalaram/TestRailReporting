@@ -29,7 +29,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -44,9 +44,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7242"})
-    @Description("validate report is available by navigation - Casting DTC Comparison Report")
+    @Description("Validate report available by navigation - Casting DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
@@ -107,7 +107,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7348"})
     @Description("Verify cancel button functionality - Casting DTC Comparison Report ")
     public void testCancelButton() {
@@ -160,7 +160,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7619"})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
@@ -171,7 +171,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
-            .clickOk(true, CastingDtcReportPage.class);
+            .clickOk(CastingDtcReportPage.class);
 
         castingDtcReportPage.clickComparison()
             .switchTab(1);
@@ -326,7 +326,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7643"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
@@ -334,12 +334,12 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7637"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
@@ -347,12 +347,12 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.DTC_SAND.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7638"})
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderMaterialScrap() {
@@ -360,25 +360,25 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
             SortOrderItemsEnum.OBSTRUCTED_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.B2.getSortOrderItemName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7639"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderTolerances() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7640"})
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderSlowOperations() {
@@ -391,7 +391,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7641"})
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Comparison Report ")
     public void testCastingDtcComparisonSortOrderSpecialTooling() {
@@ -404,7 +404,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7642"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderAnnualSpend() {
@@ -417,7 +417,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1708"})
     @Description("Verify DTC issue counts are correct - Casting DTC Comparison Report")
     public void testDtcIssueCountsAreCorrect() {

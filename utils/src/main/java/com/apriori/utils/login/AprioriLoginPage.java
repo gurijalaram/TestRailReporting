@@ -5,6 +5,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,19 +20,40 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
     @FindBy(css = ".auth0-lock-name")
-    private WebElement loginTitle;
+    private WebElement cloudLoginTitle;
+
+    @FindBy(xpath = "//h2[@class='textAccent']")
+    private WebElement reportsLoginTitle;
+
+    @FindBy(xpath = "//p[@class='password-inputs-header']")
+    private WebElement adminLoginTitle;
 
     @FindBy(css = "input[name='email']")
-    private WebElement email;
+    private WebElement emailInputCloud;
 
-    @FindBy(css = "input[name='password']")
-    private WebElement password;
+    @FindBy(css = "input[name='username']")
+    private WebElement emailInputOnPremAdmin;
+
+    @FindBy(css = "input[name='j_username']")
+    private WebElement emailInputOnPremReports;
+
+    @FindBy(css = "input[type='password']")
+    private WebElement passwordInput;
+
+    @FindBy(css = "input[name='j_password_pseudo']")
+    private WebElement passwordInputReportsOnPrem;
 
     @FindBy(css = "a[class='auth0-lock-alternative-link")
     private WebElement forgotPassword;
 
     @FindBy(css = "button[type='submit']")
-    private WebElement submitLogin;
+    private WebElement loginButtonCloud;
+
+    @FindBy(css = "button[id='login']")
+    private WebElement loginButtonOnPremAdmin;
+
+    @FindBy(css = "button[id='submitButton']")
+    private WebElement loginButtonOnPremReports;
 
     @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
     private WebElement loginErrorMsg;
@@ -92,9 +114,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(email);
-        pageUtils.waitForElementToAppear(password);
-        pageUtils.waitForElementToAppear(submitLogin);
+        pageUtils.waitForElementToAppear(passwordInput);
     }
 
     /**
@@ -103,7 +123,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return string
      */
     public String getLoginTitle() {
-        return loginTitle.getAttribute("textContent");
+        boolean isAdmin = Thread.currentThread().getStackTrace()[5].getFileName().contains("Admin");
+        WebElement elementToUse = isAdmin
+            ? driver.findElement(By.xpath(PropertiesContext.get("${env}.admin.login_title_locator")))
+            : driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.login_title_locator")));
+        return elementToUse.getText();
     }
 
     /**
@@ -129,6 +153,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
     }
 
+    public void submitEmailForgotPwd(String email) {
+        enterEmail(email, emailInputCloud);
+        submitLogin(loginButtonCloud);
+    }
+
     /**
      * Execute actions to login
      *
@@ -136,9 +165,13 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param password - the password
      */
     public void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        submitLogin();
+        boolean isReports = driver.getCurrentUrl().contains("jasperserver");
+        WebElement emailInputToUse = driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.username_locator")));
+        WebElement loginButtonToUse = isReports ? driver.findElement(By.xpath(PropertiesContext.get("${env}.reports.login_locator")))
+            : driver.findElement(By.xpath(PropertiesContext.get("${env}.admin.login_locator")));
+        enterEmail(email, emailInputToUse);
+        enterPassword(password, passwordInput);
+        submitLogin(loginButtonToUse);
     }
 
     /**
@@ -146,10 +179,10 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @param emailAddress - the email address
      */
-    private void enterEmail(String emailAddress) {
-        email.click();
-        pageUtils.clearInput(email);
-        email.sendKeys(emailAddress);
+    public void enterEmail(String emailAddress, WebElement webElementToUse) {
+        webElementToUse.click();
+        pageUtils.clearInput(webElementToUse);
+        webElementToUse.sendKeys(emailAddress);
     }
 
     /**
@@ -157,17 +190,17 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @param password - the password
      */
-    private void enterPassword(String password) {
-        this.password.click();
-        pageUtils.clearInput(this.password);
-        this.password.sendKeys(password);
+    private void enterPassword(String password, WebElement webElementToUse) {
+        webElementToUse.click();
+        pageUtils.clearInput(webElementToUse);
+        webElementToUse.sendKeys(password);
     }
 
     /**
      * Single action that login to cid
      */
-    private void submitLogin() {
-        submitLogin.click();
+    private void submitLogin(WebElement webElementToUse) {
+        pageUtils.waitForElementAndClick(webElementToUse);
     }
 
     /**
@@ -185,8 +218,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return current page object
      */
     private AprioriLoginPage getUsernameAndPassword() {
-        getEmail();
-        getPassword();
+        getEmailInputCloud();
+        getPasswordCloud();
         return this;
     }
 
@@ -215,8 +248,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    private String getEmail() {
-        return email.getText();
+    private String getEmailInputCloud() {
+        return emailInputCloud.getText();
     }
 
     /**
@@ -224,8 +257,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    private String getPassword() {
-        return this.password.getText();
+    private String getPasswordCloud() {
+        return this.passwordInput.getText();
     }
 
     /**
@@ -246,4 +279,3 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         return welcomeText.getText();
     }
 }
-

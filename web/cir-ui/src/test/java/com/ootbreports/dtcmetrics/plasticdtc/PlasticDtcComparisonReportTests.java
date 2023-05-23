@@ -22,7 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class PlasticDtcComparisonReportTests extends TestBase {
@@ -36,7 +36,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7304"})
     @Description("Validate report is available by navigation - Plastic DTC Comparison Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -47,7 +47,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7307"})
     @Description("Validate report is available by library - Plastic DTC Comparison Report")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -82,7 +82,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7358"})
     @Description("Verify cancel button functionality - Plastic DTC Comparison Report")
     public void testCancelButton() {
@@ -115,7 +115,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7404"})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
@@ -154,7 +154,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7384"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
@@ -167,7 +167,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7518"})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Comparison Report")
     public void testDtcScoreNoSelection() {
@@ -179,7 +179,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7521"})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -231,7 +231,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1371"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -253,7 +253,7 @@ public class PlasticDtcComparisonReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
         genericReportPage.waitForSvgToRender();

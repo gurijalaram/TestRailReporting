@@ -15,7 +15,7 @@ public class LibraryPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryPage.class);
 
-    @FindBy(css = "div[id='results'] > div > div:nth-child(1) > div")
+    @FindBy(css = "div[class='pageHeader-title-text'")
     private WebElement libraryPageTitle;
 
     private final PageUtils pageUtils;
@@ -60,7 +60,8 @@ public class LibraryPage extends ReportsPageHeader {
     /**
      * Navigate to a particular report
      *
-     * @param reportName String
+     * @param reportName - String
+     * @param className - class to instantiate as new page object
      * @return new page object
      */
     public <T> T navigateToReport(String reportName, Class<T> className) {

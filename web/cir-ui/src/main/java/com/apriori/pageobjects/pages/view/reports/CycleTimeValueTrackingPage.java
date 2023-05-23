@@ -99,6 +99,16 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     }
 
     /**
+     * Selects Cycle Time Rollup in Cycle Time Value Tracking tests
+     * @return page object instance
+     */
+    public CycleTimeValueTrackingPage selectCycleTimeRollup() {
+        pageUtils.waitForElementAndClick(By.xpath("//div[@id='projectRollup']//a"));
+        pageUtils.waitForElementAndClick(By.xpath("//li[@title='AC CYCLE TIME VT 1']/div/a"));
+        return this;
+    }
+
+    /**
      * Selects project rollup
      *
      * @return instance of current page object

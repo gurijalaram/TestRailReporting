@@ -1,10 +1,8 @@
 package com.integration.tests;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
@@ -100,7 +98,7 @@ public class CIAIntegrationTests extends TestBase {
         assertThat(componentCostReportPage.getComponentListCount(), CoreMatchers.is(equalTo("14")));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
-        componentCostReportPage = componentCostReportPage.clickOk(true, ComponentCostReportPage.class);
+        componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
         assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("0200613")));
     }
 

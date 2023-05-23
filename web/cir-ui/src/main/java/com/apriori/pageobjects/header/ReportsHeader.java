@@ -18,6 +18,7 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,14 +28,20 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
+    @FindBy(xpath = "//div[contains(text(), 'Repository')]")
+    private WebElement repositoryLink;
+
     @FindBy(css = "button[aria-label='Create Dashboards']")
     protected WebElement createDashboardsButton;
 
     @FindBy(id = "helpLink")
     private WebElement helpButton;
 
-    @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
+    @FindBy(css = "title")
     private WebElement homePageTitle;
+
+    @FindBy(id = "logo")
+    private WebElement homePageAprioriLogo;
 
     @FindBy(id = "main_home")
     private WebElement homeMenuOption;
@@ -51,10 +58,10 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
     @FindBy(css = "ul[id=menuList] > li:nth-child(2)")
     private WebElement viewRepositoryMenuOption;
 
-    @FindBy(css = "ul[id=menuList] > li:nth-child(3)")
+    @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
     private WebElement viewSchedulesMenuOption;
 
-    @FindBy(css = "ul[id=menuList] > li:nth-child(4)")
+    @FindBy(css = "ul[id=menuList] > li:nth-child(5)")
     private WebElement viewMessagesMenuOption;
 
     @FindBy(id = "main_manage")
@@ -134,7 +141,6 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -305,7 +311,7 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
      * @return String - page title text
      */
     public String getHomeTitleText() {
-        return homePageTitle.getAttribute("innerText");
+        return driver.getTitle();
     }
 
     /**
@@ -345,8 +351,9 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
     public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
-        pageUtils.waitForElementAndClick(searchButton);
-        pageUtils.isPageLoaded(homePageTitle);
+        pageUtils.waitForSteadinessOfElement(By.cssSelector("span[id='globalSearch'] > a"));
+        searchInput.sendKeys(Keys.ENTER);
+        pageUtils.isPageLoaded(homePageAprioriLogo);
         pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));
         return new ViewSearchResultsPage(driver);
     }
