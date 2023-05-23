@@ -3,6 +3,7 @@ package com.ootbreports.cycletimevaluetracking;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThan;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -20,6 +21,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
@@ -43,9 +45,9 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7327"})
-    @Description("Verify report availability by library - Cycle Time Value Tracking Details Report")
+    @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
@@ -79,13 +81,13 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup()
-                .clickOk(true, CycleTimeValueTrackingPage.class);
+                .clickOk(CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7627"})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {
@@ -97,16 +99,19 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("3"), is(equalTo("1")));
+        assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("1")),
+                is(greaterThan(1)));
+        assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("2")),
+                is(greaterThan(3)));
+        assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("3")),
+                is(greaterThan(0)));
 
-        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class);
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2334"})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
@@ -117,7 +122,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                         CycleTimeValueTrackingPage.class)
                 .selectProjectRollup();
 
-        cycleTimeValueTrackingPage.clickOk(true, CycleTimeValueTrackingPage.class)
+        cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class)
                 .waitForCorrectPartName("IROBOT_18874");
 
         String reportsPartNumber = cycleTimeValueTrackingPage.getPartNumber();

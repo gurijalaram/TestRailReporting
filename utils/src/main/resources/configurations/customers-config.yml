@@ -53,7 +53,7 @@ widgets:
     windchill:
       port: 8807
       connector: WC-consvwc02
-      agent_name: 3e5056e2-dc98-4ef4-a2d3-e6f7b97147db_Agent
+      agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
 
 ########################################################################################################################
 

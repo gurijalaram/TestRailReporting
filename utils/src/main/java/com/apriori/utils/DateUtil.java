@@ -1,18 +1,19 @@
 package com.apriori.utils;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.UUID;
 
 public class DateUtil {
+
     /**
      * Returns a formatted date and time string
      *
-     * @return
+     * @return String
      */
     public static String getTimestamp() {
         return new Timestamp(System.currentTimeMillis()).toString();
@@ -21,7 +22,7 @@ public class DateUtil {
     /**
      * Extracts current date to be used in various queries
      *
-     * @return
+     * @return String
      */
     public static String now() {
 
@@ -34,11 +35,27 @@ public class DateUtil {
     }
 
     /**
-     * get Today's date
+     * Gets today's date
+     *
      * @param dateFormat DateTimeFormatter
-     * @return today date.
+     * @return today's date
      */
     public static String getCurrentDate(DateTimeFormatter dateFormat) {
         return dateFormat.format(LocalDateTime.now());
+    }
+
+    /**
+     * Gets date from two months ago
+     *
+     * @return String
+     */
+    public String getDateTwoMonthsAgo() {
+        return getDateMonthsAgo(2);
+    }
+
+    private String getDateMonthsAgo(final int monthsCount) {
+        LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(monthsCount).withNano(0);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(pastDate);
     }
 }

@@ -26,6 +26,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -108,14 +109,14 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                         TargetAndQuotedCostValueTrackingPage.class);
 
         targetAndQuotedCostValueTrackingPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         targetAndQuotedCostValueTrackingPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
@@ -124,7 +125,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3368"})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 1")
     public void testLinksToMilestoneProjectOne() {
@@ -171,7 +172,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
                 .replace("T", " ");
 
-        targetAndQuotedCostValueTrackingPage.clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+        targetAndQuotedCostValueTrackingPage.clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
@@ -179,7 +180,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3367"})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
@@ -189,7 +190,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectProjectNameToAppear("1");
 
@@ -243,7 +244,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .clickProjectLink(index)
                 .switchTab(1)
