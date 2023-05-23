@@ -27,7 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -54,7 +54,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3415"})
     @Description("Validate report is available by library - Machining DTC Report")
     public void testReportAvailabilityByLibrary() {
@@ -63,7 +63,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3416"})
     @Description("Validate report is available by search - Machining DTC Report")
     public void testReportAvailabilityBySearch() {
@@ -72,7 +72,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3026"})
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
@@ -84,7 +84,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3567"})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -113,7 +113,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3020"})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -340,7 +340,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -349,7 +349,7 @@ public class MachiningDtcReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(true, MachiningDtcReportPage.class)
+            .clickOk(MachiningDtcReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         machiningDtcReportPage.hoverMachiningBubbleTwice();
@@ -372,7 +372,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3572"})
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
@@ -384,7 +384,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3573"})
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
@@ -396,7 +396,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3575"})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
@@ -408,7 +408,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3576"})
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
@@ -420,7 +420,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3577"})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {

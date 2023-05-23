@@ -4,9 +4,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -14,7 +12,6 @@ public class Constants {
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
     public static final String SAVED_CONFIG_NAME = "Saved Config";
     public static final String DOMAIN_DESIGNER_URL_SUFFIX = String.format("%sdomaindesigner.html", REPORTS_URL_SUFFIX);
-    public static final String REPORTING_HELP_URL = "https://help.jaspersoft.com/Default";
     public static final String PISTON_ASSEMBLY_CID_NAME = "PISTON_ASSEMBLY";
     public static final String GENERAL_FOLDER = "General";
     public static final String SOURCING_FOLDER = "Sourcing";
@@ -40,6 +37,9 @@ public class Constants {
         ProcessGroupEnum.STOCK_MACHINING.getProcessGroup(),
         ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
     );
+    public static final String ASSEMBLY_COMPONENT_TYPE = "assembly";
+    public static final String PART_COMPONENT_TYPE = "part";
+    public static final String ROLLUP_COMPONENT_TYPE = "rollup";
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
     public static final String OTHER_SCENARIO_NAME = "sand casting";
     public static final String COST_NAME = "Cost";
@@ -47,8 +47,6 @@ public class Constants {
     public static final String PERCENT_VALUE = "Percent";
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";
     public static Map<String, String> INPUT_CONTROL_NAMES = new HashMap<String, String>() {{
             put("Cost Metric", "costMetric");
             put("Mass Metric", "massMetric");
@@ -56,6 +54,13 @@ public class Constants {
             put("DTC Score", "dtcScore");
             put("Minimum Annual Spend", "annualSpendMin");
             put("Sort Order", "sortOrder");
-            put("Currency", "currencyCode");
         }};
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";
+    public static final String FAILED_LOGIN_MESSAGE_ONPREM = "Invalid credentials supplied.Could not login to JasperReports Server.";
+    public static final String FAILED_LOGIN_MESSAGE_CLOUD = "WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.";
+    public static final String FAILED_LOGIN_EMPTY_FIELDS = "Email can't be blank";
+    public static final String FORGOT_PWD_MSG = "If the supplied email address is valid, you will receive an email shortly ".concat(
+        "with instructions on resetting your password. If you did not receive an email and still require assistance, please send an ").concat(
+        "email to support@apriori.com.");
 }

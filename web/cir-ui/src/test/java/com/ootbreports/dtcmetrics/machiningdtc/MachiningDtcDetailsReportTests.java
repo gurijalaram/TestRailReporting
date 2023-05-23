@@ -26,7 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class MachiningDtcDetailsReportTests extends TestBase {
@@ -41,7 +41,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7254"})
     @Description("Validate report is available by navigation - Machining DTC Details Report")
     public void testReportAvailabilityByNavigation() {
@@ -52,7 +52,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7255"})
     @Description("Validate report is available by library - Machining DTC Details Report")
     public void testReportAvailabilityByLibrary() {
@@ -70,7 +70,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3020"})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -101,7 +101,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7338"})
     @Description("Verify reset button functionality - Machining DTC Details Report")
     public void testResetButton() {
@@ -143,7 +143,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7434"})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Details Report")
     public void testBothExportDatesUsingInputField() {
@@ -167,7 +167,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7417"})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
@@ -180,7 +180,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7396"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -218,7 +218,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7497"})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Details Report")
     public void testDtcScoreLow() {
@@ -257,7 +257,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -266,7 +266,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), MachiningDtcReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), MachiningDtcReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
         String partName = machiningDtcReportPage.clickMachiningDtcDetailsPartName().replace("\n", "");
@@ -282,7 +282,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3031"})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -295,7 +295,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3027"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -318,7 +318,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(exportSet, GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.waitForReportToLoad();
 
@@ -329,7 +329,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
@@ -339,7 +339,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("DTCMACHINING_001")));
@@ -358,7 +358,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
@@ -377,7 +377,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));
@@ -396,7 +396,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("PMI_ROUGHNESSCREO")));
@@ -415,7 +415,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(), GenericReportPage.class)
             .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(true),
             is(equalTo("MACHININGDESIGN_TO_COST")));

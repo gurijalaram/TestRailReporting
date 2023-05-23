@@ -10,7 +10,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -23,7 +23,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2995"})
     @Description("Validate report is available by navigation - Assembly Cost (A4) Report")
     public void testReportAvailabilityByNavigationAssemblyCostA4() {
@@ -34,7 +34,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7132"})
     @Description("Validate report is available by navigation - Assembly Cost (Letter) Report")
     public void testReportAvailabilityByNavigationAssemblyCostLetter() {
@@ -64,25 +64,25 @@ public class AssemblyCostReportTests extends TestBase {
 
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7129"})
-    @Description("Validate report is available by library - Assembly Cost (A4) Report")
+    @Description("Validate report is available by library (Assembly Cost A4 Report)")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName());
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7131"})
-    @Description("Validate report is available by library - Assembly Cost (Letter) Report")
+    @Category({ReportsTest.class, OnPremTest.class})
+    @TestRail(testCaseId = "7131")
+    @Description("Validate report is available by library (Assembly Cost Letter Report)")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3008"})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
@@ -106,7 +106,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7622"})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (A4) Report")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -118,7 +118,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7623"})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (Letter) Report")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
@@ -142,7 +142,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7625"})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
@@ -163,7 +163,7 @@ public class AssemblyCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7626"})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")
     public void testSubAssemblySelectionAssemblyCostLetter() {
