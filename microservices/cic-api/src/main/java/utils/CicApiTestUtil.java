@@ -674,23 +674,35 @@ public class CicApiTestUtil extends TestBase {
     }
 
     /**
-     * Get Workflow job part result with matching Plm Part Number
+     * Get Workflow job part result with matching revision number
      *
      * @param agentWorkflowJobResults
-     * @param plmPartNumber
+     * @param revisionNumber
      * @return AgentWorkflowJobPartsResult
      */
-    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String plmPartNumber) {
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = null;
-        if (null != agentWorkflowJobResults) {
-            agentWorkflowJobPartsResult = agentWorkflowJobResults.stream()
-                .filter(a -> a.getPartNumber().equals(plmPartNumber))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
-        } else {
-            log.error(String.format("Matching workflow Job not found!"));
+    public static AgentWorkflowJobPartsResult getMatchedRevisionWorkflowPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String revisionNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with revision (%s)", revisionNumber));
         }
-        return agentWorkflowJobPartsResult;
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getRevisionNumber().equals(revisionNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with revision " + revisionNumber));
+    }
+
+    /**
+     * @param agentWorkflowJobResults
+     * @param plmPartNumber
+     * @return
+     */
+    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String plmPartNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with plm part number (%s)", plmPartNumber));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getPartNumber().equals(plmPartNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
     }
 
     /**
