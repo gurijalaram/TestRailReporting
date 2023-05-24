@@ -16,6 +16,7 @@ import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
+import com.evaluate.Sustainability;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.AssemblyGroupDeleteTests;
 import com.evaluate.assemblies.EditAssembliesTest;
@@ -116,7 +117,8 @@ import testsuites.suiteinterface.SmokeTests;
     UpdateCADFileTests.class,
     AssemblyGroupDeleteTests.class,
     MaturityAssemblyAssociationsTests.class,
-    MissingAssemblyAssociationsTests.class
+    MissingAssemblyAssociationsTests.class,
+    Sustainability.class
 })
 public class RegressionTestSuite {
 }
