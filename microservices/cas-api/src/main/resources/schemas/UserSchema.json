@@ -54,6 +54,9 @@
             "givenName",
             "familyName"
           ],
+          "optional": [
+            "updatedAt"
+          ],
           "properties": {
             "identity": {
               "type": "string"
@@ -68,6 +71,9 @@
               "type": "string"
             },
             "familyName": {
+              "type": "string"
+            },
+            "updatedAt": {
               "type": "string"
             }
           }
