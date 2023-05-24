@@ -1,10 +1,12 @@
 package com.apriori.pages.workflows.schedule.querydefinitions;
 
+import com.apriori.enums.CheckboxState;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -24,6 +26,7 @@ import java.util.Map;
 /**
  * Query Definitions part during workflow creation or modification process
  */
+@Slf4j
 public class QueryDefinitions extends CICBasePage {
 
     private static final Logger logger = LoggerFactory.getLogger(QueryDefinitions.class);
@@ -289,6 +292,29 @@ public class QueryDefinitions extends CICBasePage {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    /**
+     * select Return latest revision checkbox
+     *
+     * @param checkboxState
+     * @return QueryDefinitions
+     */
+    public QueryDefinitions selectReturnLatestRevisionOnlyCheckbox(CheckboxState checkboxState) {
+        if (checkboxState.toString().equals("on")) {
+            if (!getQDReturnOnlyCheckboxElement().isSelected()) {
+                pageUtils.waitForElementAndClick(revisionLatestCheckBoxLblElement);
+                log.info("Return only the latest revision of each part from the PLM system Checkbox is selected");
+            }
+        }
+
+        if (checkboxState.toString().equals("off")) {
+            if (getQDReturnOnlyCheckboxElement().isSelected()) {
+                pageUtils.waitForElementAndClick(revisionLatestCheckBoxLblElement);
+                log.info("Return only the latest revision of each part from the PLM system Checkbox is not selected");
+            }
+        }
+        return this;
     }
 
     /**
