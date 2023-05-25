@@ -17,6 +17,7 @@ import utils.QmsApiTestUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class QmsProjectResources {
 
     /**
@@ -55,6 +56,7 @@ public class QmsProjectResources {
     public static <T> T createProject(String projectName, String projectDescription, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         BidPackageProjectRequest projectRequest = getProjectRequestBuilder(projectName, projectDescription, itemsList, usersList);
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(projectRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
