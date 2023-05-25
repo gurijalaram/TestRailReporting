@@ -12,7 +12,6 @@ import com.apriori.qms.entity.response.layout.LayoutConfigurationsResponse;
 import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -30,18 +29,15 @@ public class LayoutConfigurationTest extends TestUtil {
     private static LayoutResponse layoutResponse;
     private static LayoutConfigurationResponse layoutConfigurationResponse;
     private static ViewElementResponse viewElementsResponse;
-    UserCredentials currentUser = UserUtil.getUser();
-    private static String userContext;
-    private static String viewElementName;
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String layoutConfigName;
-    private static String layoutName;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
         layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbers();
-        layoutName = "LN" + new GenerateStringUtil().getRandomNumbers();
-        viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
+        String layoutName = "LN" + new GenerateStringUtil().getRandomNumbers();
+        String viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
         layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
         viewElementsResponse = LayoutResources.createLayoutViewElement(layoutResponse.getIdentity(), viewElementName, currentUser);
         layoutConfigurationResponse = QmsLayoutResources.createLayoutConfiguration(
@@ -50,8 +46,6 @@ public class LayoutConfigurationTest extends TestUtil {
             LayoutConfigurationResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
-        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-
     }
 
     @Test

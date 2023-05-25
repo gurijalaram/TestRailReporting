@@ -243,7 +243,7 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"15448"})
-    @Description("Verify that user can Assign / Unassign scenario discussion")
+    @Description("Verify that user can Assign / Un-assign scenario discussion")
     public void assignUnAssignDiscussion() {
         UserCredentials assigneeUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
@@ -290,9 +290,9 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("RESOLVED");
 
-        ApwErrorMessage addCcommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), contentDesc, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
-        softAssertions.assertThat(addCcommentError.getStatus()).isEqualTo(HttpStatus.SC_CONFLICT);
-        softAssertions.assertThat(addCcommentError.getMessage()).contains("User can not update resolved discussion");
+        ApwErrorMessage addCommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), contentDesc, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
+        softAssertions.assertThat(addCommentError.getStatus()).isEqualTo(HttpStatus.SC_CONFLICT);
+        softAssertions.assertThat(addCommentError.getMessage()).contains("User can not update resolved discussion");
 
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();

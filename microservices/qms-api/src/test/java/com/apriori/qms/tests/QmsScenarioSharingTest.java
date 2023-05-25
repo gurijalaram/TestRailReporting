@@ -63,7 +63,7 @@ public class QmsScenarioSharingTest extends QmsApiTestDataUtils {
                 .anyMatch(u -> u.getIdentity()
                     .equals(new AuthUserContextUtil().getAuthUserIdentity(anotherUser.getEmail())))).isTrue();
             softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
-                .allMatch(u -> !u.getAvatarColor().equals(null))).isTrue();
+                .allMatch(u -> u.getAvatarColor() != null)).isTrue();
         }
 
         //Delete
