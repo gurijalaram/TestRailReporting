@@ -45,54 +45,42 @@ public class GcdTreesTests {
     @TestRail(testCaseId = {"24115"})
     @Description("Validate that no additions or deletions are returned when same trees are submitted in request")
     public void testSameGcdTrees() {
-        UserCredentials currentUser = UserUtil.getUser();
-        String gcdJson = FileResourceUtil.readFileToString("SameTrees.json");
-
-        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
-
-        soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).isEmpty();
-        soft.assertThat(gcdTree.getGcdsRemoved().stream().map(GcdsRemoved::getGcdName).collect(Collectors.toList())).isEmpty();
-
-        soft.assertAll();
+        validateGCDTrees("SameTrees.json");
     }
 
     @Test
     @TestRail(testCaseId = {"24116"})
     @Description("Validate that no additions or deletions are returned when same GCDs that have different trees are submitted in request")
     public void testDifferentTreesSameGcds() {
-        UserCredentials currentUser = UserUtil.getUser();
-        String gcdJson = FileResourceUtil.readFileToString("DifferentTreesSameGcds.json");
-
-        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
-
-        soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).isEmpty();
-        soft.assertThat(gcdTree.getGcdsRemoved().stream().map(GcdsRemoved::getGcdName).collect(Collectors.toList())).isEmpty();
-
-        soft.assertAll();
+        validateGCDTrees("DifferentTreesSameGcds.json");
     }
 
     @Test
     @TestRail(testCaseId = {"24117"})
     @Description("Validate input validation with first tree missing in request")
     public void testMissingFirstTree() {
-        UserCredentials currentUser = UserUtil.getUser();
-        String gcdJson = FileResourceUtil.readFileToString("MissingFirstTree.json");
-
-        ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
-
-        assert (gcdTree.getMessage()).contains("'first' should not be null.");
+        validateGCDTreeMissing("MissingFirstTree.json");
     }
 
     @Test
     @TestRail(testCaseId = {"24118"})
     @Description("Validate input validation with second tree missing in request")
     public void testMissingSecondTree() {
-        UserCredentials currentUser = UserUtil.getUser();
-        String gcdJson = FileResourceUtil.readFileToString("MissingSecondTree.json");
-
-        ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
-
-        assert (gcdTree.getMessage()).contains("'second' should not be null.");
+        validateGCDTreeMissing("MissingSecondTree.json");
     }
 
+    public void validateGCDTrees(final String fileName) {
+        UserCredentials currentUser = UserUtil.getUser();
+        String gcdJson = FileResourceUtil.readFileToString(fileName);
+        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
+        soft.assertThat(gcdTree.getGcdsAdded().stream().map(GcdsAdded::getGcdName).collect(Collectors.toList())).isEmpty();
+        soft.assertThat(gcdTree.getGcdsRemoved().stream().map(GcdsRemoved::getGcdName).collect(Collectors.toList())).isEmpty();
+    }
+
+    public void validateGCDTreeMissing(final String fileName) {
+        UserCredentials currentUser = UserUtil.getUser();
+        String gcdJson = FileResourceUtil.readFileToString(fileName);
+        ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
+        assert (gcdTree.getMessage()).contains("should not be null");
+    }
 }
