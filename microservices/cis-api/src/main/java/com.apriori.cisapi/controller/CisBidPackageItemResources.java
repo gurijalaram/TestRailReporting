@@ -14,13 +14,16 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
 import java.io.File;
 
+/**
+ * The type Cis bid package item resources.
+ */
+@SuppressWarnings("unchecked")
 public class CisBidPackageItemResources {
 
     /**
@@ -93,6 +96,7 @@ public class CisBidPackageItemResources {
      * @param bidPackageIdentity - bid package identity
      * @param currentUser        - UserCredentials
      * @param klass              - response class name
+     * @param httpStatus         the http status
      * @return klass object
      */
     public static <T> T getBidPackageItems(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
@@ -107,12 +111,12 @@ public class CisBidPackageItemResources {
     /**
      * Delete bid package item
      *
+     * @param <T>                    - response class type
      * @param bidPackageIdentity     - bid package identity
      * @param bidPackageItemIdentity - bid package item identity
      * @param httpStatus             - expected http status code
      * @param currentUser            - UserCredentials class object
      * @param klass                  - response class name
-     * @param <T>                    - response class type
      * @return klass object
      */
     public static <T> T deleteBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, Integer httpStatus, UserCredentials currentUser, Class<T> klass) {
@@ -130,15 +134,14 @@ public class CisBidPackageItemResources {
      * @param bidPackageIdentity     - bid package identity
      * @param bidPackageItemIdentity - bid package item identity
      * @param currentUser            - UserCredentials class object
-     * @return ResponseWrapper of String
      */
-    public static ResponseWrapper<String> deleteBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser) {
+    public static void deleteBidPackageItem(String bidPackageIdentity, String bidPackageItemIdentity, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_ITEM, null)
             .inlineVariables(bidPackageIdentity, bidPackageItemIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        return HTTPRequest.build(requestEntity).delete();
+        HTTPRequest.build(requestEntity).delete();
     }
 
 
@@ -148,7 +151,7 @@ public class CisBidPackageItemResources {
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
      * @param iterationIdentity - the iteration identity
-     * @return BidPackageItemRequest
+     * @return BidPackageItemRequest bid package item request
      */
     public static BidPackageItemRequest bidPackageItemRequestBuilder(String componentIdentity, String scenarioIdentity, String iterationIdentity) {
         return BidPackageItemRequest.builder()
