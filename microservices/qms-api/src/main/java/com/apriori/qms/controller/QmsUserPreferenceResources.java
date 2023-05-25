@@ -10,6 +10,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import utils.QmsApiTestUtils;
 
+@SuppressWarnings("unchecked")
 public class QmsUserPreferenceResources {
     /**
      * Get user preference
@@ -51,17 +52,14 @@ public class QmsUserPreferenceResources {
     /**
      * Delete user preference
      *
-     * @param responseClass expected response class
      * @param currentUser   UserCredentials
      * @param httpStatus    expected http status code
-     * @param <T>           response class type
-     * @return Response class object
      */
-    public static <T> T deleteUserPreference(Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
+    public static void deleteUserPreference(UserCredentials currentUser, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, null)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).delete().getResponseEntity();
+        HTTPRequest.build(requestEntity).delete().getResponseEntity();
     }
 }

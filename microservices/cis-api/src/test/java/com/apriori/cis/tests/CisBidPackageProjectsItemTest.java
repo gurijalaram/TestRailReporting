@@ -32,28 +32,29 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     private static BidPackageItemResponse bidPackageItemResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static BidPackageProjectItemResponse bidPackageProjectItemResponse;
-    private static String bidPackageName;
-    private static String projectName;
-    private static ScenarioItem scenarioItem;
     private final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        ScenarioItem scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        //        bidPackageItemResponse = CisBidPackageResources.createBidPackageItem(
-        //            CisBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
-        //                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-        //            bidPackageResponse.getIdentity(),
-        //            currentUser,
-        //            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+        /*
+                bidPackageItemResponse = CisBidPackageResources.createBidPackageItem(
+                    CisBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+                        scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+                    bidPackageResponse.getIdentity(),
+                    currentUser,
+                    BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+        */
         bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        //        bidPackageProjectItemResponse = CisBidPackageProjectItemResources.createBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageItemResponse.getIdentity(),
-        //            bidPackageProjectResponse.getIdentity(), BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED, currentUser);
+        /*
+                bidPackageProjectItemResponse = CisBidPackageProjectItemResources.createBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageItemResponse.getIdentity(),
+                    bidPackageProjectResponse.getIdentity(), BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED, currentUser);
+        */
     }
 
     @Test
@@ -64,7 +65,8 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
         CisBidPackageProjectItemResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectItemResponse.getIdentity(), null, currentUser);
         BidPackageProjectItemResponse bppItemResponse = CisBidPackageProjectItemResources.createBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageItemResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED, currentUser);
-        softAssertions.assertThat(bppItemResponse.getBidPackageItem().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bppItemResponse.getBidPackageItem().getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -75,7 +77,8 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
         CisBidPackageProjectItemResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectItemResponse.getIdentity(), null, currentUser);
         BidPackageProjectItemResponse bppItemResponse = CisBidPackageProjectItemResources.createBidPackageProjectItem("INVALID_BP_ID", "INVALID_BPI_ID",
             "INVALID_BPP_ID", BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED, currentUser);
-        softAssertions.assertThat(bppItemResponse.getBidPackageItem().getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bppItemResponse.getBidPackageItem().getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
