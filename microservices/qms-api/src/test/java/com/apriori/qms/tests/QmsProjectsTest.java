@@ -124,8 +124,8 @@ public class QmsProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(12);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
-                softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
-                    .getIdentity()));
+                softAssertions.assertThat(projectUsersList).contains(bppResponse.getUsers().get(i).getUser()
+                    .getIdentity());
                 softAssertions.assertThat(bppResponse.getUsers().get(i).getUser().getAvatarColor()).isNotNull();
             }
         }
@@ -186,8 +186,8 @@ public class QmsProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(2);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
-                softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
-                    .getIdentity()));
+                softAssertions.assertThat(projectUsersList).contains(bppResponse.getUsers().get(i).getUser()
+                    .getIdentity());
             }
         }
         softAssertions.assertThat(bppResponse.getItems().size()).isEqualTo(1);
@@ -304,8 +304,8 @@ public class QmsProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(4);
         if (softAssertions.wasSuccess()) {
             for (int i = 0; i < projectUsersList.size(); i++) {
-                softAssertions.assertThat(projectUsersList.contains(bppResponse.getUsers().get(i).getUser()
-                    .getIdentity()));
+                softAssertions.assertThat(projectUsersList).contains(bppResponse.getUsers().get(i).getUser()
+                    .getIdentity());
             }
         }
 
@@ -348,7 +348,9 @@ public class QmsProjectsTest extends TestUtil {
                     }
                 }
             }
-            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+            if (bidPackageResponse != null) {
+                QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+            }
         }
     }
 

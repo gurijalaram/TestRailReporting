@@ -14,8 +14,6 @@ import utils.QmsApiTestUtils;
 
 public class QmsLayoutResources {
 
-    private static final String CLOUD_CONTEXT = "6C1F8C1D4D757FLINC95H3A37GFDL6LCI5N41J8M416FBJBK";
-
     /**
      * create layout configuration for layout view element name
      *
@@ -131,7 +129,7 @@ public class QmsLayoutResources {
     }
 
     /**
-     * Get layout configurtation by view element name and layout configuration identity
+     * Get layout configuration by view element name and layout configuration identity
      *
      * @param viewElementName             view Element Name
      * @param layoutConfigurationIdentity layout configuration identity

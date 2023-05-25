@@ -12,6 +12,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
+@SuppressWarnings("unchecked")
 public class CisBidPackageProjectItemResources {
 
     /**

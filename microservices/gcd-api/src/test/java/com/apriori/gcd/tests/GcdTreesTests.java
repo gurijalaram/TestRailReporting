@@ -9,6 +9,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class GcdTreesTests {
         UserCredentials currentUser = UserUtil.getUser();
         String gcdJson = FileResourceUtil.readFileToString("DifferentTrees.json");
 
-        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser);
+        GcdTree gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_OK, GcdTree.class).getResponseEntity();
 
         List<String> addedNames = Arrays.asList("SharpEdge:5", "SimpleHole:3");
 
