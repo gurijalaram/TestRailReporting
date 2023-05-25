@@ -361,12 +361,20 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+        return Thread.currentThread().getStackTrace()[4].getFileName().contains("Assembly")
+            ? jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text()
+            : jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
-        return partName.isEmpty()
-            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text()
-            : jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
+        String valueToReturn;
+        if (Thread.currentThread().getStackTrace()[3].getFileName().contains("Assembly")) {
+            valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
+        } else if (partName.isEmpty()) {
+            valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text();
+        } else {
+            valueToReturn = jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
+        }
+        return valueToReturn;
     }
 }
