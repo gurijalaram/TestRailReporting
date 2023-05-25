@@ -12,14 +12,18 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
+/**
+ * The type Cis bid package resources.
+ */
+@SuppressWarnings("unchecked")
 public class CisBidPackageResources {
 
     /**
      * Create bid package
      *
-     * @param bidPackageName
-     * @param currentUser
-     * @return
+     * @param bidPackageName the bid package name
+     * @param currentUser    the current user
+     * @return bid package response
      */
     public static BidPackageResponse createBidPackage(String bidPackageName, UserCredentials currentUser) {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -43,11 +47,11 @@ public class CisBidPackageResources {
     /**
      * Create Bid Package
      *
+     * @param <T>                      Response class type
      * @param bidPackageRequestBuilder BidPackageRequest Data builder
      * @param responseClass            Expected response class
      * @param httpStatus               Expected http status code
      * @param currentUser              UserCredentials class object
-     * @param <T>                      Response class type
      * @return Expected response class object
      */
     public static <T> T createBidPackage(BidPackageRequest bidPackageRequestBuilder, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
@@ -62,11 +66,11 @@ public class CisBidPackageResources {
     /**
      * Get Bid Package
      *
+     * @param <T>                response class type
      * @param bidPackageIdentity Bid package identity
      * @param responseClass      Expected response class
      * @param httpStatus         expected http status code
      * @param currentUser        UserCredentials
-     * @param <T>                response class type
      * @return Expected response class object
      */
     public static <T> T getBidPackage(String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
@@ -81,10 +85,10 @@ public class CisBidPackageResources {
     /**
      * Get list of Bid packages
      *
+     * @param <T>           expected response class type
      * @param responseClass expected response class
      * @param httpStatus    expected http status code
      * @param currentUser   UserCredentials
-     * @param <T>           expected response class type
      * @return expected response class object
      */
     public static <T> T getBidPackages(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
@@ -98,12 +102,12 @@ public class CisBidPackageResources {
     /**
      * Update bid package
      *
+     * @param <T>                      expected response class type
      * @param bidPackageIdentity       Bid Package Identity
      * @param bidPackageRequestBuilder BidPackageRequest request data builder
      * @param responseClass            expected response class
      * @param httpStatus               expected http status code
      * @param currentUser              UserCredentials
-     * @param <T>                      expected response class type
      * @return Response class object
      */
     public static <T> T updateBidPackage(String bidPackageIdentity, BidPackageRequest bidPackageRequestBuilder, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
@@ -119,11 +123,11 @@ public class CisBidPackageResources {
     /**
      * Delete Bid package
      *
+     * @param <T>                response class type
      * @param bidPackageIdentity bid package identity
      * @param responseClass      expected class name
      * @param httpStatus         expected http status code
      * @param currentUser        UserCredentials class object
-     * @param <T>                response class tupe
      * @return expected class
      */
     public static <T> T deleteBidPackage(String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {

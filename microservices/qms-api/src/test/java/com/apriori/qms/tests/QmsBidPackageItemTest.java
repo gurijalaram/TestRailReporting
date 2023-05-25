@@ -12,7 +12,6 @@ import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -29,16 +28,14 @@ public class QmsBidPackageItemTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
-    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
-    private static String userContext;
     private static ScenarioItem scenarioItem;
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
@@ -104,7 +101,8 @@ public class QmsBidPackageItemTest extends TestUtil {
             BidPackageItemResponse.class, HttpStatus.SC_OK, currentUser
         );
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -124,7 +122,8 @@ public class QmsBidPackageItemTest extends TestUtil {
             bidPackageItemResponse.getIdentity(),
             BidPackageItemResponse.class, HttpStatus.SC_OK, otherUser);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -166,7 +165,8 @@ public class QmsBidPackageItemTest extends TestUtil {
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -180,7 +180,8 @@ public class QmsBidPackageItemTest extends TestUtil {
             otherUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
     }
 
     @Test
@@ -234,7 +235,8 @@ public class QmsBidPackageItemTest extends TestUtil {
             currentUser,
             ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'bidPackageIdentity' is not a valid identity");
+        softAssertions.assertThat(qmsErrorMessage.getMessage())
+            .contains("'bidPackageIdentity' is not a valid identity");
     }
 
     @Test
@@ -251,8 +253,9 @@ public class QmsBidPackageItemTest extends TestUtil {
             currentUser,
             ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity()
-            + "' for customerIdentity '");
+        softAssertions.assertThat(qmsErrorMessage.getMessage())
+            .contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity()
+                + "' for customerIdentity '");
 
         ApwErrorMessage updateErrorMessage = QmsBidPackageResources.updateBidPackageItem(
             QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),

@@ -40,7 +40,9 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
 
     USERS_CURRENT_EXTENDED_PREFERENCES("users/current/extended-preferences"),
 
-    USERS_EXTENDED_PREFERENCES("users/extended-preferences");
+    USERS_EXTENDED_PREFERENCES("users/extended-preferences"),
+
+    USER_ASSIGNED_COMPONENTS("components/already-assign-components");
 
     private final String endpoint;
 
