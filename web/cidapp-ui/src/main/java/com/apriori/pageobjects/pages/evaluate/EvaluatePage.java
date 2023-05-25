@@ -15,6 +15,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -164,7 +165,10 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = "[data-icon = 'xmark']")
     private WebElement closeInvalidSourcePanelButton;
-
+    @FindBy(xpath = "//div[contains(@class,'sustainability-summary-card card')]/div[1]")
+    private WebElement sustainabilityTabHeader;
+    @FindBy(xpath = "//div[contains(@class,'sustainability-summary-card card')]/div[2]")
+    private WebElement sustainabilityTabBody;
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -681,6 +685,39 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
+
+    /**
+     * Checks Sustainability tab is presented for costed part
+     *
+     * @return true/false
+     */
+    public boolean isSustainabilityTabIsPresentedForCosted() {
+        String header =
+            pageUtils.waitForElementToAppear(sustainabilityTabHeader).getText();
+        String body =
+            pageUtils.waitForElementToAppear(sustainabilityTabBody).getText();
+        if (!header.contains("SUSTAINABILITY")) {
+            System.out.println("header SUSTAINABILITY is not presented on the screen");
+            return false;
+        }
+        List<String> list = Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
+            "Logistics Carbon", "Total Carbon");
+
+        return list.stream()
+            .allMatch(elementToCheck -> {
+                if (!body.contains(elementToCheck)) {
+                    System.out.println("Missed element:" + elementToCheck);
+                    return false;
+                }
+                return true;
+            });
+    }
+
+    /**
+     * Opens the source selector table
+     *
+     * @return new page object
+     */
     public SourceModelExplorePage selectSourcePart() {
         inputsController.openSourceModelSelectorTable(sourceComponentPencil);
         return new SourceModelExplorePage(driver);
@@ -867,7 +904,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     *  Gets count of open tabs
+     * Gets count of open tabs
      *
      * @return int - number of open tabs
      */
