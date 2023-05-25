@@ -80,7 +80,7 @@ public class GcdTreesTests {
 
         ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
 
-        assert(gcdTree.getMessage()).contains("'first' should not be null.");
+        assert (gcdTree.getMessage()).contains("'first' should not be null.");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GcdTreesTests {
 
         ErrorMessage gcdTree = gcdTreeController.postGcdTree(gcdJson, currentUser, HttpStatus.SC_BAD_REQUEST, ErrorMessage.class).getResponseEntity();
 
-        assert(gcdTree.getMessage()).contains("'second' should not be null.");
+        assert (gcdTree.getMessage()).contains("'second' should not be null.");
     }
 
 }
