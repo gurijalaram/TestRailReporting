@@ -11,6 +11,7 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem thickness;
     private GenericExtendedPropertyInfoItem length;
     private GenericExtendedPropertyInfoItem description;
+    private GenericExtendedPropertyInfoItem materialStockCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem baseCostPerUnit;
     private GenericExtendedPropertyInfoItem hardness;
     private GenericExtendedPropertyInfoItem formName;
