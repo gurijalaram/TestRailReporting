@@ -27,14 +27,13 @@ public class BidPackageProjectsTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
-    private static String projectName;
     UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
