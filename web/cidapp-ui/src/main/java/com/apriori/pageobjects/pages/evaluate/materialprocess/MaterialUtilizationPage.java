@@ -100,11 +100,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      */
     public boolean isMaterialCarbonPresent() {
         pageUtils.waitForElementsToAppear(materialCarbonFactor);
-        if (materialCarbonFactor.size() == 2) {
-            return true;
-        }
-        return false;
-
+        return materialCarbonFactor.size() == 2;
     }
 
 

@@ -54,8 +54,5 @@ public class Sustainability extends TestBase {
 
         softAssertions.assertThat(materialUtilizationPage.isMaterialCarbonPresent()).isTrue();
         softAssertions.assertAll();
-
-
-
     }
 }

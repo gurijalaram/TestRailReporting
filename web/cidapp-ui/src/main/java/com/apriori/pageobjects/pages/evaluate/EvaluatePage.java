@@ -697,31 +697,20 @@ public class EvaluatePage extends EvaluateToolbar {
         String body =
             pageUtils.waitForElementToAppear(sustainabilityTabBody).getText();
         if (!header.contains("SUSTAINABILITY")) {
-            logger.error("header SUSTAINABILITY is not presented on the screen");
+            System.out.println("header SUSTAINABILITY is not presented on the screen");
             return false;
         }
         List<String> list = Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
             "Logistics Carbon", "Total Carbon");
-        if (!verifyIfStringContainsPhrases(list, body)) {
-            return false;
-        }
-        return true;
-    }
 
-    /**
-     * Checks if in the given string exists list of phrases
-     *
-     * @return true/false
-     */
-
-    private boolean verifyIfStringContainsPhrases(List<String> items, String inputString) {
-        for (String item : items) {
-            if (!inputString.contains(item)) {
-                logger.error(item + " is not presented on the screen");
-                return false;
-            }
-        }
-        return true;
+        return list.stream()
+            .allMatch(elementToCheck -> {
+                if (!body.contains(elementToCheck)) {
+                    System.out.println("Missed element:" + elementToCheck);
+                    return false;
+                }
+                return true;
+            });
     }
 
     /**
