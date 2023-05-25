@@ -8,6 +8,7 @@ public class PropertyValuesList {
     private String hardnessSystem;
     private double thickness;
     private double length;
+    private double materialStockCarbonEmissionsFactor;
     private double baseCostPerUnit;
     private double hardness;
     private String formName;
