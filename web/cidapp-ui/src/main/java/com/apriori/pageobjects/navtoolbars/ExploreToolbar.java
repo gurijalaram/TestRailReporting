@@ -7,6 +7,7 @@ import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.CompareTypePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
@@ -468,9 +469,9 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public ComparePage createComparison() {
+    public CompareTypePage createComparison() {
         pageUtils.waitForElementAndClick(comparisonButton);
-        return new ComparePage(driver);
+        return new CompareTypePage(driver);
     }
 
     /**

@@ -95,7 +95,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
         softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName2.toUpperCase() + "  / " + scenarioName2);
@@ -127,6 +129,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .clickExplore();
 
         softAssertions.assertThat(explorePage.getTableHeaders()).contains(COMPONENT_NAME.getColumns(), SCENARIO_NAME.getColumns());
@@ -164,6 +168,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .openBasisScenario();
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
@@ -185,6 +191,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .openScenario(componentName2, scenarioName2);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
@@ -215,6 +223,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .collapse("Info & Inputs")
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
@@ -279,6 +289,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .collapse("Info & Inputs")
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
@@ -345,6 +357,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -388,6 +402,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .modify()
             .configure()
             .selectColumn(COST_MATURITY)
@@ -429,6 +445,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .modify()
             .filter()
             .newFilter()
@@ -461,7 +479,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
@@ -495,7 +515,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result");
 
@@ -534,7 +556,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getOutput(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
 
@@ -564,6 +588,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -617,6 +643,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "", "" + componentName + ", " + scenarioName + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .clickExplore()
             .selectFilter("Public")
             .highlightScenario(componentName, scenarioName)
@@ -665,6 +693,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -726,7 +756,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
         softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
@@ -766,7 +798,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS))
             .as("Material Finish Mass").isEqualTo("31.97%");
@@ -829,6 +863,8 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
+            .create()
             .modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -886,7 +922,9 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .createComparison();
+            .createComparison()
+            .selectManualComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
@@ -988,6 +1026,8 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Private")
             .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "", "" + componentName3 + ", " + scenarioName3 + "", "" + componentName4 + ", " + scenarioName4 + "", "" + componentName5 + ", " + scenarioName5)
             .createComparison()
+            .selectManualComparison()
+            .create()
             .expand("Design Guidance");
 
         softAssertions.assertThat(comparePage.getOutput(componentName1, scenarioName1, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Critical");
