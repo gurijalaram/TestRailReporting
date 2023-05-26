@@ -25,7 +25,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -40,7 +40,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7313"})
     @Description("Validate report is available by navigation - Sheet Metal DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
@@ -68,9 +68,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName());
     }
 
-
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3038"})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
@@ -85,7 +84,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
                 .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));
@@ -118,7 +117,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7370"})
     @Description("Verify cancel button functionality - Sheet Metal DTC Comparison Report")
     public void testCancelButton() {
@@ -184,7 +183,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7419"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
@@ -223,7 +222,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7400"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report ")
     public void testMassMetricInputControlRoughMass() {
@@ -236,7 +235,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7672"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Comparison Report")
     public void testSortOrderManufacturingIssues() {
@@ -250,7 +249,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7673"})
     @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Comparison Report")
     public void testSortOrderBends() {
@@ -306,7 +305,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7378"})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Comparison Report")
     public void testCurrencyCodeInputControl() {
@@ -368,7 +367,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7533"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -407,7 +406,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7541"})
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreAll() {

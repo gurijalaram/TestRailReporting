@@ -52,6 +52,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -191,7 +192,7 @@ public class CicApiTestUtil extends TestBase {
      * @param workflowData - deserialized workflowdata
      * @return response of created work flow string
      */
-    public static ResponseWrapper<String> CreateWorkflow(String session, String workflowData) {
+    public static ResponseWrapper<String> createWorkflow(String session, String workflowData) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -211,7 +212,7 @@ public class CicApiTestUtil extends TestBase {
      * @param session                    - Login to CI-Connect GUI to get JSession
      * @return ResponseWrapper<String>
      */
-    public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
+    public static ResponseWrapper<String> createWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -416,11 +417,16 @@ public class CicApiTestUtil extends TestBase {
      * @return response class type
      */
     public static <T> T getCicAgentWorkflowJobPartsResult(String workFlowIdentity, String jobIdentity, String partIdentity, Class<T> responseClass, Integer httpStatus) {
+        T responseClassObject = null;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, responseClass)
             .inlineVariables(workFlowIdentity, jobIdentity, partIdentity)
             .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        responseClassObject = (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        if (Objects.isNull(responseClassObject)) {
+            throw new RuntimeException(HTTPRequest.build(requestEntity).get().toString());
+        }
+        return responseClassObject;
     }
 
     /**
@@ -500,7 +506,7 @@ public class CicApiTestUtil extends TestBase {
                 .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
                 .build());
 
-            List<PartData> partDataList = PlmPartsUtil.getPlmPartsFromCloud(numOfParts);
+            List<PartData> partDataList = new PlmPartsUtil().getPlmPartsFromCloud(numOfParts);
             part = new ArrayList<>();
             for (int i = 0; i < numOfParts; i++) {
                 part.add(WorkflowPart.builder()
@@ -665,6 +671,38 @@ public class CicApiTestUtil extends TestBase {
             log.error(e.getMessage());
         }
         return reportTemplate;
+    }
+
+    /**
+     * Get Workflow job part result with matching revision number
+     *
+     * @param agentWorkflowJobResults
+     * @param revisionNumber
+     * @return AgentWorkflowJobPartsResult
+     */
+    public static AgentWorkflowJobPartsResult getMatchedRevisionWorkflowPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String revisionNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with revision (%s)", revisionNumber));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getRevisionNumber().equals(revisionNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with revision " + revisionNumber));
+    }
+
+    /**
+     * @param agentWorkflowJobResults
+     * @param plmPartNumber
+     * @return
+     */
+    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String plmPartNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with plm part number (%s)", plmPartNumber));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getPartNumber().equals(plmPartNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
     }
 
     /**

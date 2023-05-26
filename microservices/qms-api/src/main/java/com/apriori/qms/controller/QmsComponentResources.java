@@ -177,9 +177,8 @@ public class QmsComponentResources {
      * @param scenarioIdentity         the scenario identity
      * @param deleteProjectUserRequest the delete project user request
      * @param currentUser              the current user
-     * @return the response wrapper
      */
-    public static ResponseWrapper<String> deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, UserCredentials currentUser) {
+    public static void deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -187,6 +186,6 @@ public class QmsComponentResources {
             .body(deleteProjectUserRequest)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        return HTTPRequest.build(requestEntity).delete();
+        HTTPRequest.build(requestEntity).delete();
     }
 }

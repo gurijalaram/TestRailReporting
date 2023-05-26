@@ -30,7 +30,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -48,7 +48,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7303"})
     @Description("Validate report is available by navigation - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -70,7 +70,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7309"})
     @Description("Validate report is available by search - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -122,7 +122,7 @@ public class PlasticDtcReportTests extends TestBase {
         );
 
         genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
@@ -131,7 +131,7 @@ public class PlasticDtcReportTests extends TestBase {
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.hoverPartNameBubbleDtcReports();
@@ -153,7 +153,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1345"})
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -171,7 +171,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1376"})
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
@@ -182,7 +182,7 @@ public class PlasticDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();

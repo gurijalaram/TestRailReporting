@@ -24,7 +24,7 @@ global:
   different_parts: true
   different_users: true
   schema_base_path: schemas/
-  users_csv_file: common-users.csv
+
   nexus:
     api_url: https://nexus.apriori.com/
     username: 1W_7fYw7
@@ -35,6 +35,7 @@ global:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
+  users_csv_file: common-users.csv
 
 ###########################
 #  Core services

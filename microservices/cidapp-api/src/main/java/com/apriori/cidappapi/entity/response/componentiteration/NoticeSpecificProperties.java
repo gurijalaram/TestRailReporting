@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NoticeSpecificProperties {
     private String operationSequence;
-    private Integer current;
-    private Integer threadLength;
-    private Integer defaultThreadLength;
-    private Integer cadThreadLength;
-    private Integer suggested;
-    private Integer cycleTime;
-    private Integer cycleTimePercent;
+    private Double current;
+    private Double threadLength;
+    private Double defaultThreadLength;
+    private Double cadThreadLength;
+    private Double suggested;
+    private Double cycleTime;
+    private Double cycleTimePercent;
     private String guidanceTopic;
     private String processGroup;
     private Boolean threaded;

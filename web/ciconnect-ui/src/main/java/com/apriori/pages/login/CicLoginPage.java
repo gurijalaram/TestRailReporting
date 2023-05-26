@@ -12,6 +12,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import utils.TableUtils;
 
+import java.util.Objects;
+
 public class CicLoginPage extends CICBasePage {
 
     private AprioriLoginPage aprioriLoginPage;
@@ -39,6 +41,10 @@ public class CicLoginPage extends CICBasePage {
      * @return new page object
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, CIConnectHome.class);
+        CIConnectHome ciConnectHome = aprioriLoginPage.login(userCredentials, CIConnectHome.class);
+        if (Objects.isNull(ciConnectHome)) {
+            throw new RuntimeException("Login failed!!");
+        }
+        return ciConnectHome;
     }
 }

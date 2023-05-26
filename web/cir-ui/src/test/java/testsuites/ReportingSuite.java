@@ -4,6 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.adhocview.AdHocViewTests;
+import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
@@ -53,6 +54,7 @@ import testsuites.suiteinterface.ReportsTest;
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
     DesignOutlierIdentificationDetailsReportTests.class,
+    LoginTests.class,
     MachiningDtcReportTests.class,
     MachiningDtcDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,

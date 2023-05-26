@@ -15,12 +15,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Order;
 
 public class QmsUserPreferenceTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-    private static UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -53,8 +52,7 @@ public class QmsUserPreferenceTest extends TestUtil {
     @TestRail(testCaseId = {"16856"})
     @Description("Verify that user can delete user preference")
     public void verifyDeleteUserPreference() {
-        UserPreferenceResponse userPreferenceResponse =
-            QmsUserPreferenceResources.deleteUserPreference(null, currentUser, HttpStatus.SC_NO_CONTENT);
+        QmsUserPreferenceResources.deleteUserPreference(currentUser, HttpStatus.SC_NO_CONTENT);
     }
 
     @After

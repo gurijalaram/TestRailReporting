@@ -22,7 +22,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -40,7 +40,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3245"})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -60,8 +60,8 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7322"})
+    @Category({ReportsTest.class, OnPremTest.class})
+    @TestRail(testCaseId = {"3245"})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -69,7 +69,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3246"})
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -119,7 +119,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .selectFirstTwoComparisonScenarios()
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
 
         usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -127,7 +127,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
         scenarioComparisonReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 
         gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -162,7 +162,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7665"})
     @Description("Verify Created By input control search works - Scenario Comparison Report")
     public void testCreatedByFilterSearch() {
@@ -174,7 +174,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3307"})
     @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
@@ -215,7 +215,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7667"})
     @Description("Verify Created By input control buttons work - Scenario Comparison Report")
     public void testCreatedByFilterButtons() {
@@ -323,7 +323,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3248"})
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -335,16 +335,16 @@ public class ScenarioComparisonReportTests extends TestBase {
         scenarioComparisonReportPage.waitForInputControlsLoad();
         scenarioComparisonReportPage.selectComponentType("assembly");
 
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                containsString("[assembly]"));
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.ASSEMBLY_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.ASSEMBLY_COMPONENT_TYPE)));
 
-        scenarioComparisonReportPage.selectComponentType("part");
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                containsString("[part]"));
+        scenarioComparisonReportPage.selectComponentType(Constants.PART_COMPONENT_TYPE);
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.PART_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.PART_COMPONENT_TYPE)));
 
-        scenarioComparisonReportPage.selectComponentType("rollup");
-        assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                containsString("[rollup]"));
+        scenarioComparisonReportPage.selectComponentType(Constants.ROLLUP_COMPONENT_TYPE);
+        assertThat(scenarioComparisonReportPage.getFirstScenarioName(Constants.ROLLUP_COMPONENT_TYPE),
+                containsString(String.format("[%s]", Constants.ROLLUP_COMPONENT_TYPE)));
     }
 
     @Test
@@ -374,7 +374,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3306"})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
