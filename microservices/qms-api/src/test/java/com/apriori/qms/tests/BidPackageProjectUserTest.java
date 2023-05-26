@@ -19,6 +19,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 public class BidPackageProjectUserTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
@@ -31,9 +33,8 @@ public class BidPackageProjectUserTest extends TestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         UserCredentials newUser = UserUtil.getUser();
         bidPackageProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newUser);

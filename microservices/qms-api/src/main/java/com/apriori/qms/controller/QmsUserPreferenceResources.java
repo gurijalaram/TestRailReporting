@@ -60,6 +60,6 @@ public class QmsUserPreferenceResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        HTTPRequest.build(requestEntity).delete().getResponseEntity();
+        HTTPRequest.build(requestEntity).delete();
     }
 }

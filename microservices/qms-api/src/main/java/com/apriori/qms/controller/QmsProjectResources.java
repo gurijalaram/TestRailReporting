@@ -4,6 +4,8 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -14,7 +16,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import utils.QmsApiTestUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -34,7 +35,8 @@ public class QmsProjectResources {
         projectRequest.getProject().setName("PN" + projectName);
         projectRequest.getProject().setDisplayName("DN" + projectName);
         projectRequest.getProject().setDescription("PD" + projectDescription);
-        projectRequest.getProject().setDueAt(LocalDateTime.now().plusDays(10));
+        projectRequest.getProject()
+            .setDueAt(DateUtil.getDateDaysAfter(10, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
         projectRequest.getProject().setItems(itemsList);
         projectRequest.getProject().setUsers(usersList);
         return projectRequest;

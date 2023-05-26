@@ -6,30 +6,32 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItem;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItems;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItemsRequest;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectProfile;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageRequest;
-import com.apriori.qms.entity.request.bidpackage.CommentReminder;
-import com.apriori.qms.entity.request.bidpackage.EmailReminder;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -159,19 +161,20 @@ public class QmsBidPackageResources {
         return (T) HTTPRequest.build(requestEntity).delete().getResponseEntity();
     }
 
+
     /**
-     * Create bid package project
+     * Create bid package project t.
      *
-     * @param <T>                response class type
-     * @param projectName        - Unique project name
-     * @param bidPackageIdentity bid package identity
-     * @param responseClass      expected response class
-     * @param httpStatus         expected http status code
-     * @param currentUser        UserCredentials
-     * @return response class object
+     * @param <T>                  the type parameter
+     * @param projectAttributesMap the project attributes map
+     * @param bidPackageIdentity   the bid package identity
+     * @param responseClass        the response class
+     * @param httpStatus           the http status
+     * @param currentUser          the current user
+     * @return the t
      */
-    public static <T> T createBidPackageProject(String projectName, String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        BidPackageProjectRequest projectRequest = getBidPackageProjectRequestBuilder(projectName, projectName);
+    public static <T> T createBidPackageProject(HashMap<String, String> projectAttributesMap, String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        BidPackageProjectRequest projectRequest = getBidPackageProjectRequestBuilder(projectAttributesMap, currentUser);
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .inlineVariables(bidPackageIdentity)
@@ -285,34 +288,32 @@ public class QmsBidPackageResources {
         return responseWrapper.getResponseEntity();
     }
 
+
     /**
-     * BidPackageProjectRequestBuilder
+     * Gets bid package project request builder.
      *
-     * @param projectName        the project name
-     * @param projectDescription the project description
-     * @return BidPackageProjectRequest bid package project request builder
+     * @param projectAttributesMap the attributes map
+     * @param currentUser          the current user
+     * @return the bid package project request builder
      */
-    public static BidPackageProjectRequest getBidPackageProjectRequestBuilder(String projectName, String projectDescription) {
-        return BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .name(projectName)
-                .description(projectDescription)
-                .status("COMPLETED")
-                .type("INTERNAL")
-                .projectProfile(BidPackageProjectProfile.builder()
-                    .emailReminder(EmailReminder.builder()
-                        .active(true)
-                        .startDuration("P1DT5M")
-                        .frequencyValue("R2/P1D")
-                        .build())
-                    .commentReminder(CommentReminder.builder()
-                        .active(true)
-                        .startDuration("P1D")
-                        .frequencyValue("R/P4H")
-                        .build())
-                    .build())
-                .build())
-            .build();
+    public static BidPackageProjectRequest getBidPackageProjectRequestBuilder(HashMap<String, String> projectAttributesMap, UserCredentials currentUser) {
+        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomString());
+        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomString());
+        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
+        String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
+        String projectOwner = projectAttributesMap.getOrDefault("projectOwner", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
+        String projectDueAt = projectAttributesMap.getOrDefault("projectDueAt", DateUtil.getDateDaysAfter(10, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+
+        BidPackageProjectRequest projectRequest = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/QmsProjectRequest.json"), BidPackageProjectRequest.class);
+        projectRequest.getProject().setName(projectName);
+        projectRequest.getProject().setDisplayName(projectDisplayName);
+        projectRequest.getProject().setDescription(projectDescription);
+        projectRequest.getProject().setDueAt(projectDueAt);
+        projectRequest.getProject().setOwner(projectOwner);
+        projectRequest.getProject().setStatus(projectStatus);
+        projectRequest.getProject().setItems(null);
+        projectRequest.getProject().setUsers(null);
+        return projectRequest;
     }
 
     // BID PACKAGE ITEM RESOURCES

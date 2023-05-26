@@ -3,13 +3,17 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.utils.ApwErrorMessage;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -21,37 +25,38 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BidPackageProjectsTest extends TestUtil {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
 
+public class BidPackageProjectsTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
-    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = new GenerateStringUtil().getRandomString();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
 
     @Test
-    @TestRail(testCaseId = {"13742", "13752", "22955","14738"})
+    @TestRail(testCaseId = {"13742", "13752", "22955", "14738"})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(),
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         if (softAssertions.wasSuccess()) {
-            for (int j = 0; j < bppResponse.getUsers().size(); j++) {
-                softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor()).isNotNull();
-            }
+            softAssertions.assertThat(bppResponse.getUsers().stream()
+                .allMatch(u -> u.getUser().getAvatarColor() != null)).isTrue();
         }
         softAssertions.assertThat(bppResponse.getItems().size()).isZero();
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
@@ -91,36 +96,57 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13751", "22958"})
+    @TestRail(testCaseId = {"13751", "22958", "24277"})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
-        BidPackageProjectRequest projectRequest = QmsBidPackageResources.getBidPackageProjectRequestBuilder(new GenerateStringUtil().getRandomNumbers(), new GenerateStringUtil().getRandomNumbers());
+        String projectNameNew = new GenerateStringUtil().getRandomString();
+        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        String displayNameNew = new GenerateStringUtil().getRandomString();
+        String statusNew = "COMPLETED";
+        String dueAtNew = DateUtil.getDateDaysAfter(15, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name(projectNameNew)
+                .description(projectDescriptionNew)
+                .displayName(displayNameNew)
+                .status(statusNew)
+                .dueAt(dueAtNew)
+                .build())
+            .build();
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
             .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getName()).isEqualTo(projectNameNew);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDescription()).isEqualTo(projectDescriptionNew);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEqualTo(displayNameNew);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo(statusNew);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDueAt())
+            .isEqualTo(LocalDateTime.parse(dueAtNew, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
         if (softAssertions.wasSuccess()) {
-            for (int j = 0; j < getBidPackageProjectResponse.getUsers().size(); j++) {
-                softAssertions.assertThat(getBidPackageProjectResponse.getUsers().get(j).getUser().getAvatarColor())
-                    .isNotNull();
-            }
+            softAssertions.assertThat(getBidPackageProjectResponse.getUsers().stream()
+                .allMatch(u -> u.getUser().getAvatarColor() != null)).isTrue();
         }
     }
 
     @Test
     @TestRail(testCaseId = {"13744"})
-    @Description("Create Bid Package is greater than 64 characters")
+    @Description("Create Bid Package project name is greater than 64 characters")
     public void createProjectNameGreaterThan64() {
-        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(70), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectName", RandomStringUtils.randomAlphabetic(70));
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage())
             .contains("'name' should not be more than 64 characters");
     }
 
     @Test
     @TestRail(testCaseId = {"13745"})
-    @Description("Create Bid Package with empty name")
+    @Description("Create Bid Package project with empty name")
     public void createProjectWithEmptyName() {
-        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject("", bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectName", "");
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'name' should not be null");
     }
 
@@ -128,21 +154,26 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13747"})
     @Description("Create Bid Package with project description greater than 254 characters")
     public void createProjectDescGreaterThan254() {
-        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(RandomStringUtils.randomAlphabetic(258), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectDescription", RandomStringUtils.randomAlphabetic(258));
+        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage())
             .contains("'description' should not be more than 254 characters");
     }
 
     @Test
     @TestRail(testCaseId = {"13743", "13749"})
-    @Description("Create Bid Package is equal to 64 characters, delete the bid package and create project with deleted Bid Package identity")
+    @Description("Create Bid Package project name equal to 64 characters, delete the bid package and create project with deleted Bid Package identity")
     public void createProjectNameEqualTo64() {
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
         String projectName = RandomStringUtils.randomAlphabetic(64);
-        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        prjAttributesMap.put("projectName", projectName);
+        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(),
+            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         softAssertions.assertThat(bppResponse.getName()).isEqualTo(projectName);
 
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        ApwErrorMessage bppErrorResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage bppErrorResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
         softAssertions.assertThat(bppErrorResponse.getMessage())
             .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'", bidPackageResponse.getIdentity(), bidPackageResponse.getCustomerIdentity()));
@@ -153,17 +184,16 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13746"})
     @Description("Create Bid Package description is equal to 254 characters")
     public void createProjectDescEqualTo254() {
-        String projectName254 = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        String projectDesc254 = RandomStringUtils.randomAlphabetic(254);
-        BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(projectName254, projectDesc254);
+        String projectDescription = RandomStringUtils.randomAlphabetic(254);
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectDescription", projectDescription);
+        BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(prjAttributesMap, currentUser);
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder,
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
-
-        softAssertions.assertThat(bppResponse.getName()).isEqualTo(projectName254);
-
+        softAssertions.assertThat(bppResponse.getDescription()).isEqualTo(projectDescription);
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
@@ -171,8 +201,9 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"13748"})
     @Description("Create Bid Package with empty description")
     public void createProjectWithEmptyDescription() {
-        String projectName12 = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(projectName12, "");
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectDescription", "");
+        BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(prjAttributesMap, currentUser);
         ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'description' should not be null");
     }
@@ -183,7 +214,6 @@ public class BidPackageProjectsTest extends TestUtil {
     public void verifyBidPackageProjectIsDeleted() {
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
-
         softAssertions.assertThat(qmsErrorMessage.getMessage())
             .contains(String.format("Can't find Project for bid package with identity '%s' and identity '%s'", bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity()));
     }
@@ -232,12 +262,14 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"14124", "14670"})
     @Description("Verify that project is deleted after deleting bid-package")
     public void verifyProjectIsDeletedAfterBidPackageDeleted() {
-        String bidPackName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        String bidProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackName = new GenerateStringUtil().getRandomNumbers();
+        String projectName = new GenerateStringUtil().getRandomNumbers();
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectName", projectName);
         BidPackageResponse bidPackResponse = QmsBidPackageResources.createBidPackage(bidPackName, currentUser);
         softAssertions.assertThat(bidPackResponse.getName()).isEqualTo(bidPackName);
-        BidPackageProjectResponse bidPackProjectResponse = QmsBidPackageResources.createBidPackageProject(bidProjectName, bidPackResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        softAssertions.assertThat(bidPackProjectResponse.getName()).isEqualTo(bidProjectName);
+        BidPackageProjectResponse bidPackProjectResponse = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        softAssertions.assertThat(bidPackProjectResponse.getName()).isEqualTo(projectName);
 
         QmsBidPackageResources.deleteBidPackage(bidPackResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackResponse.getIdentity(),
@@ -249,9 +281,427 @@ public class BidPackageProjectsTest extends TestUtil {
             .contains(String.format("Resource 'Project' with identity '%s' was not found", bidPackProjectResponse.getIdentity()));
     }
 
+    @Test
+    @TestRail(testCaseId = {"24265"})
+    @Description("Verify project name cannot be updated to null/empty")
+    public void updateEmptyProjectName() {
+        //Project Name is Empty
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name("").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+
+        //Project Name is null
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name(null).build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24266"})
+    @Description("Verify project display name can be updated to empty")
+    public void updateEmptyProjectDisplayName() {
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .displayName("").build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEmpty();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24267"})
+    @Description("Verify display name can be updated with maximum of 64 characters only")
+    public void updateProjectDisplayNameEqualTo64() {
+        String projectDisplayName = RandomStringUtils.randomAlphabetic(64);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .displayName(projectDisplayName).build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEqualTo(projectDisplayName);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24268"})
+    @Description("Verify display name cannot be updated to more than 64 characters")
+    public void updateProjectDisplayNameGreaterThan64() {
+        String projectDisplayName = RandomStringUtils.randomAlphabetic(70);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .displayName(projectDisplayName).build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("displayName should not be null and have less than 64 characters");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24269"})
+    @Description("Verify project status can not be updated to null")
+    public void updateEmptyProjectStatus() {
+        //Project Status is Empty
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("'status' should not be null");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+
+        //Project Status is null
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status(null).build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("'status' should not be null");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24270", "24295"})
+    @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
+    public void updateProjectStatuses() {
+        //Project Status is "COMPLETED"
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("COMPLETED").build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("COMPLETED");
+
+        //Project Status is "IN_NEGOTIATION"
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("IN_NEGOTIATION").build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("IN_NEGOTIATION");
+
+        //Project Status is "PURCHASED"
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("PURCHASED").build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("PURCHASED");
+
+        //Project Status is "ACTIVE"
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("ACTIVE").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24275"})
+    @Description("Verify other than admin users cannot update the project attributes")
+    public void updateProjectAttributesByNonAdminUser() {
+        softAssertions.assertThat(bidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bidPackageProjectResponse.getItems().size()).isZero();
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(bidPackageProjectResponse.getUsers().stream()
+                    .anyMatch(u -> u.getRole().equals("ADMIN") &&
+                        u.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))))
+                .isTrue();
+        }
+
+        //Update project with non-admin project user
+        UserCredentials nonAdminProjectUser = UserUtil.getUser();
+        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(projectDescriptionNew)
+                .build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), nonAdminProjectUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("User does not have rights to update the project attributes");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(403);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24276"})
+    @Description("Verify project owner(identity) cannot be updated to null, empty and invalid")
+    public void updateEmptyProjectOwner() {
+        //Project owner is Empty
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .owner("").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("owner should not be null or empty");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+
+        //Project owner is null
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .owner(null).build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("owner should not be null or empty");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+
+        //Project owner is invalid
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .owner("INVALID").build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Owner 'identity' is not a valid identity");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24278"})
+    @Description("Verify project name can be updated with maximum of 64 characters only")
+    public void updateProjectNameEqualTo64() {
+        String projectName64 = RandomStringUtils.randomAlphabetic(64);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name(projectName64).build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getName()).isEqualTo(projectName64);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24279"})
+    @Description("Verify project name cannot be updated to more than 64 characters")
+    public void updateProjectNameGreaterThan64() {
+        String projectName = RandomStringUtils.randomAlphabetic(70);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .name(projectName).build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("'name' should not be more than 64 characters");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24280"})
+    @Description("Verify dueAt can be updated to valid date or datetime format( yyyy-MM-dd & yyyy-MM-dd'T'HH:mm:ss.SSS'Z' )")
+    public void updateBidPackageProjectDueAtValidFormats() {
+        //yyyy-MM-dd
+        String dueAtNew = DateUtil.getDateDaysAfter(15, DateFormattingUtils.dtf_yyyyMMdd);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt(dueAtNew)
+                .build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getDueAt())
+            .isEqualTo(LocalDate.parse(dueAtNew).atTime(LocalTime.parse("23:59:59.999")));
+
+        //yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        dueAtNew = DateUtil.getDateDaysAfter(15, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt(dueAtNew)
+                .build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getDueAt())
+            .isEqualTo(LocalDateTime.parse(dueAtNew, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24281"})
+    @Description("Verify dueAt can be updated to null or empty")
+    public void updateEmptyProjectDueAt() {
+        //Project DueAt is Empty
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt("").build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDueAt()).isNull();
+
+        //Project DueAt is null
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt(null).build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDueAt()).isNull();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24347"})
+    @Description("Verify description can be updated to null/empty")
+    public void updateEmptyProjectDescription() {
+        //Project Description Name is empty
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description("").build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isEmpty();
+
+        //Project Description Name is null
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(null).build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isNull();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24349"})
+    @Description("Verify project description cannot be updated to more than 254 characters")
+    public void updateProjectDescriptionGreaterThan64() {
+        String projectDes = RandomStringUtils.randomAlphabetic(255);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(projectDes).build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("'description' should not be more than 254 characters");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24350"})
+    @Description("Verify project description can be updated with maximum of 254 characters only")
+    public void updateProjectDescriptionEqualTo254() {
+        String projectDescription254 = RandomStringUtils.randomAlphabetic(254);
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(projectDescription254).build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDescription()).isEqualTo(projectDescription254);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24354"})
+    @Description("Verify project display name cannot be updated to null")
+    public void updateNullProjectDisplayName() {
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .displayName(null).build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("displayName should not be null and have less than 64 characters");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24351"})
+    @Description("Verify updated owner/admin users can update the project attributes")
+    public void updateProjectWithNewOwner() {
+        //Update the project to new owner
+        UserCredentials newOwner = UserUtil.getUser();
+        String newOwnerUserContext = new AuthUserContextUtil().getAuthUserIdentity(newOwner.getEmail());
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .owner(newOwnerUserContext).build())
+            .build();
+
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getOwner()).isEqualTo(newOwnerUserContext);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(getBidPackageProjectResponse.getUsers().stream()
+                    .anyMatch(u -> u.getRole().equals("ADMIN") &&
+                        u.getUserIdentity().equals(newOwnerUserContext)))
+                .isTrue();
+        }
+
+        //Update the project description with new owner
+        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(projectDescriptionNew)
+                .build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newOwner, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getDescription()).isEqualTo(projectDescriptionNew);
+
+        //Update the project description with old owner
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .description(projectDescriptionNew)
+                .build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("User does not have rights to update the project attributes");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(403);
+    }
+
     @After
     public void testCleanup() {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
+
+    private static final UserCredentials currentUser = UserUtil.getUser();
 }

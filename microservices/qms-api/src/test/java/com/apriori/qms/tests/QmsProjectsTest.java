@@ -29,6 +29,7 @@ import org.junit.Test;
 import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class QmsProjectsTest extends TestUtil {
@@ -331,7 +332,7 @@ public class QmsProjectsTest extends TestUtil {
                     QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
                     bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
                 if (bidPackageItemResponse != null) {
-                    BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject("PROJ" + new GenerateStringUtil().getRandomNumbers(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                    BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                     {
                         BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(
                             bidPackageProjectResponse.getIdentity(),
