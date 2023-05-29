@@ -697,6 +697,34 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(403);
     }
 
+    @Test
+    @TestRail(testCaseId = {"24313"})
+    @Description("Verify dueAt can not be updated to invalid date or invalid datetime format")
+    public void updateInvalidProjectDueAt() {
+        //Invalid format #1
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt("13-03-2023").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+
+        //Invalid format #2
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt("2023-13-15T23:59:59.999Z").build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+
+    }
+
     @After
     public void testCleanup() {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);

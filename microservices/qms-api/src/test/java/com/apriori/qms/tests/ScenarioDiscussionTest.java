@@ -86,10 +86,13 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"14611", "14612", "15472", "16050"})
     @Description("Verify that User can update Scenario discussion description and status (ACTIVE & RESOLVED")
     public void updateScenarioDiscussionDescriptionAndStatus() {
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
+
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().description(description).build()).build();
-        ScenarioDiscussionResponse updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(),
+        ScenarioDiscussionResponse updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
             scenarioDiscussionRequest,
             ScenarioDiscussionResponse.class,
             HttpStatus.SC_OK, currentUser);
@@ -97,7 +100,7 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
 
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("RESOLVED").build()).build();
-        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(),
+        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
             scenarioDiscussionRequest,
             ScenarioDiscussionResponse.class,
             HttpStatus.SC_OK, currentUser);
@@ -105,11 +108,13 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
 
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
-        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(),
+        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
             scenarioDiscussionRequest,
             ScenarioDiscussionResponse.class,
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("ACTIVE");
+
+        QmsScenarioDiscussionResources.deleteScenarioDiscussion(csdResponse.getIdentity(), currentUser);
     }
 
     @Test
@@ -282,30 +287,35 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"16565"})
     @Description("Verify that User cannot add comments to discussion with RESOLVED status")
     public void verifyCannotAddCommentsResolvedStatus() {
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
+
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("RESOLVED").build()).build();
-        ScenarioDiscussionResponse updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(),
+        ScenarioDiscussionResponse updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
             scenarioDiscussionRequest,
             ScenarioDiscussionResponse.class,
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("RESOLVED");
 
-        ApwErrorMessage addCommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), contentDesc, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
+        ApwErrorMessage addCommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(csdResponse.getIdentity(), contentDesc, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
         softAssertions.assertThat(addCommentError.getStatus()).isEqualTo(HttpStatus.SC_CONFLICT);
         softAssertions.assertThat(addCommentError.getMessage()).contains("User can not update resolved discussion");
 
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
-        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(),
+        updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
             scenarioDiscussionRequest,
             ScenarioDiscussionResponse.class,
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("ACTIVE");
 
         String commentContent = new GenerateStringUtil().generateNotes();
-        DiscussionCommentResponse responseWrapper = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
+        DiscussionCommentResponse responseWrapper = QmsScenarioDiscussionResources.addCommentToDiscussion(csdResponse.getIdentity(),
             commentContent, "ACTIVE", currentUser);
         softAssertions.assertThat(responseWrapper.getContent()).isEqualTo(commentContent);
+
+        QmsScenarioDiscussionResources.deleteScenarioDiscussion(csdResponse.getIdentity(), currentUser);
     }
 
     @Test
@@ -460,7 +470,7 @@ public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
             HttpStatus.SC_CREATED,
             assigneeUser);
         softAssertions.assertThat(commentViewResponse.getCommentView().stream()
-                .anyMatch(cv -> cv.identity.equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
+                .anyMatch(cv -> cv.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
             .isTrue();
     }
 }

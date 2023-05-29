@@ -5,10 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BidPackageProjectUserRequest {
-    private BidPackageProjectUserParameters projectUser;
+    private List<BidPackageProjectUserParameters> projectUsers;
 }

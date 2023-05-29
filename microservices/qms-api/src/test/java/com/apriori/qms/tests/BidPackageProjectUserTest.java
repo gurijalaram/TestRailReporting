@@ -2,8 +2,11 @@ package com.apriori.qms.tests;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qms.controller.QmsBidPackageResources;
+import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersDeleteResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
@@ -19,6 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 public class BidPackageProjectUserTest extends TestUtil {
@@ -26,8 +30,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
-    private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static BidPackageProjectUsersPostResponse bidPackageProjectUserResponse;
 
     @Before
     public void testSetup() {
@@ -45,14 +48,22 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
         UserCredentials defaultUser = UserUtil.getUser();
-        BidPackageProjectUserResponse bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
+        BidPackageProjectUsersPostResponse bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
-        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
+        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.get(0).getProjectIdentity())
+            .isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+        BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(
+                BidPackageProjectUserParameters.builder()
+                    .identity(bidPackageDefaultProjectUserResponse.get(0)
+                        .getIdentity()).build()),
+            bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageDefaultProjectUserResponse.getIdentity(),
+            bidPackageDefaultProjectUserResponse.get(0).getIdentity(),
             defaultUser);
+
+        softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+            .anyMatch(i -> i.getIdentity().equals(bidPackageDefaultProjectUserResponse.get(0).getIdentity()))).isTrue();
     }
 
     @Test
@@ -60,15 +71,23 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
         UserCredentials adminUser = UserUtil.getUser();
-        BidPackageProjectUserResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN",
+        BidPackageProjectUsersPostResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 
-        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
+        softAssertions.assertThat(bidPackageAdminProjectUserResponse.get(0).getProjectIdentity())
+            .isEqualTo(bidPackageProjectResponse.getIdentity());
 
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+        BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(
+                BidPackageProjectUserParameters.builder()
+                    .identity(bidPackageAdminProjectUserResponse.get(0)
+                        .getIdentity()).build()),
+            bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageAdminProjectUserResponse.getIdentity(),
+            bidPackageAdminProjectUserResponse.get(0).getIdentity(),
             adminUser);
+
+        softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+            .anyMatch(i -> i.getIdentity().equals(bidPackageAdminProjectUserResponse.get(0).getIdentity()))).isTrue();
     }
 
     @Test
@@ -77,10 +96,11 @@ public class BidPackageProjectUserTest extends TestUtil {
     public void getBidPackageProjectUser() {
         BidPackageProjectUserResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageProjectUserResponse.getIdentity(),
+            bidPackageProjectUserResponse.get(0).getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectUserResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectUserResponse.getProjectIdentity())
+            .isEqualTo(bidPackageProjectResponse.getIdentity());
     }
 
     @Test
@@ -101,7 +121,7 @@ public class BidPackageProjectUserTest extends TestUtil {
         BidPackageProjectUserResponse updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser("ADMIN",
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageProjectUserResponse.getIdentity(),
+            bidPackageProjectUserResponse.get(0).getIdentity(),
             currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageProjectUserResponse.getRole()).isEqualTo("ADMIN");
@@ -120,12 +140,19 @@ public class BidPackageProjectUserTest extends TestUtil {
 
     @After
     public void testCleanup() {
-        QmsBidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
+        BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(
+                BidPackageProjectUserParameters.builder()
+                    .identity(bidPackageProjectUserResponse.get(0)
+                        .getIdentity()).build()),
+            bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageProjectUserResponse.getIdentity(),
+            bidPackageProjectUserResponse.get(0).getIdentity(),
             currentUser);
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-        QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+
+        softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+            .anyMatch(i -> i.getIdentity().equals(bidPackageProjectUserResponse.get(0).getIdentity()))).isTrue();
         softAssertions.assertAll();
     }
+
+    private static final UserCredentials currentUser = UserUtil.getUser();
 }

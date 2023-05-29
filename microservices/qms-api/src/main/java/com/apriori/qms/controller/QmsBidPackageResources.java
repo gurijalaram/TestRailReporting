@@ -11,7 +11,8 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersDeleteResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
@@ -31,6 +32,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -443,40 +445,49 @@ public class QmsBidPackageResources {
      * @param currentUser        the current user
      * @return BidPackageProjectUserResponse bid package project user response
      */
-    public static BidPackageProjectUserResponse createBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
+    public static BidPackageProjectUsersPostResponse createBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-            .projectUser(BidPackageProjectUserParameters.builder()
-                .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
+            .projectUsers(Collections.singletonList(BidPackageProjectUserParameters.builder()
                 .userEmail(currentUser.getEmail())
                 .role(role)
-                .build())
+                .build()))
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, BidPackageProjectUserResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, BidPackageProjectUsersPostResponse.class)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<BidPackageProjectUserResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<BidPackageProjectUsersPostResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
     }
 
     /**
      * Delete Bid Package Project User
      *
+     * @param userIdList          the user identities
      * @param bidPackageIdentity  the bid package identity
      * @param projectIdentity     the project identity
      * @param projectUserIdentity the project user identity
      * @param currentUser         the current user
+     * @return the bid package project users delete response
      */
-    public static void deleteBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, null)
-            .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+    public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
+        BidPackageProjectUserRequest deleteRequest = BidPackageProjectUserRequest.builder()
+            .projectUsers(userIdList)
+            .build();
 
-        HTTPRequest.build(requestEntity).delete();
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
+            .body(deleteRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<BidPackageProjectUsersDeleteResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
@@ -538,13 +549,14 @@ public class QmsBidPackageResources {
      */
     public static <T> T updateBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-            .projectUser(BidPackageProjectUserParameters.builder()
+            .projectUsers(Collections.singletonList(BidPackageProjectUserParameters.builder()
                 .userEmail(currentUser.getEmail())
                 .role(role)
-                .build())
+                .build()))
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
