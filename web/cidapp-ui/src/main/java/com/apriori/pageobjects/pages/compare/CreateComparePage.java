@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -20,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author ryabsley
  */
 
-public class CompareTypePage extends LoadableComponent<CompareTypePage> {
+public class CreateComparePage extends LoadableComponent<CreateComparePage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(CompareTypePage.class);
+    private static final Logger logger = LoggerFactory.getLogger(CreateComparePage.class);
 
     @FindBy(css = ".MuiPaper-root h2")
     private WebElement newComparisonLabel;
@@ -45,7 +44,7 @@ public class CompareTypePage extends LoadableComponent<CompareTypePage> {
     private ModalDialogController modalDialogController;
 
 
-    public CompareTypePage(WebDriver driver) {
+    public CreateComparePage(WebDriver driver) {
         super();
         this.driver = driver;
         this.statusIcon = new StatusIcon(driver);
@@ -85,7 +84,7 @@ public class CompareTypePage extends LoadableComponent<CompareTypePage> {
     /**
      * Select the Quick Comparison Option
      */
-    public CompareTypePage selectQuickComparison() {
+    public CreateComparePage selectQuickComparison() {
         quickComparisonButton.click();
         return this;
     }
@@ -93,7 +92,7 @@ public class CompareTypePage extends LoadableComponent<CompareTypePage> {
     /**
      * Select the Manual Comparison Option
      */
-    public CompareTypePage selectManualComparison() {
+    public CreateComparePage selectManualComparison() {
         manualComparisonButton.click();
         return this;
     }
