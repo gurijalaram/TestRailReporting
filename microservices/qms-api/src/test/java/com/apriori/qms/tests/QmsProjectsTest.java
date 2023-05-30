@@ -204,6 +204,7 @@ public class QmsProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"22125"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1837")
     @Description("Verify user can add multiple project users by project creation API(Invalid/null and without User identity)")
     public void createProjectWithInvalidUserIdentity() {
         List<BidPackageItemRequest> itemsList = new ArrayList<>();

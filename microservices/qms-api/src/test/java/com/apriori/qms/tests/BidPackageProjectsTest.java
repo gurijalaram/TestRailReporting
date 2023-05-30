@@ -18,6 +18,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Link;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -198,17 +199,6 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13748"})
-    @Description("Create Bid Package with empty description")
-    public void createProjectWithEmptyDescription() {
-        HashMap<String, String> prjAttributesMap = new HashMap<>();
-        prjAttributesMap.put("projectDescription", "");
-        BidPackageProjectRequest projectRequestBuilder = QmsBidPackageResources.getBidPackageProjectRequestBuilder(prjAttributesMap, currentUser);
-        ApwErrorMessage bppErrorResponse64 = QmsBidPackageResources.createBidPackageProject(projectRequestBuilder, bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
-        softAssertions.assertThat(bppErrorResponse64.getMessage()).contains("'description' should not be null");
-    }
-
-    @Test
     @TestRail(testCaseId = {"13754"})
     @Description("Verify bid package project is deleted")
     public void verifyBidPackageProjectIsDeleted() {
@@ -382,6 +372,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24270", "24295"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1836")
     @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
     public void updateProjectStatuses() {
         //Project Status is "COMPLETED"
@@ -560,6 +551,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24281"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
     @Description("Verify dueAt can be updated to null or empty")
     public void updateEmptyProjectDueAt() {
         //Project DueAt is Empty
@@ -583,6 +575,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24347"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
     @Description("Verify description can be updated to null/empty")
     public void updateEmptyProjectDescription() {
         //Project Description Name is empty
