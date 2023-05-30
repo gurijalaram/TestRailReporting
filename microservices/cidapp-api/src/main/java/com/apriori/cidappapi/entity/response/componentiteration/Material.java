@@ -69,6 +69,7 @@ public class Material {
     private Double lowerFormingTemperature;
     private String manufacturer;
     private String materialCutCodeName;
+    private MaterialSustainabilityInfo sustainabilityInfo;
     private String materialForm;
     private String materialTypeName;
     private String meltingTemperature;

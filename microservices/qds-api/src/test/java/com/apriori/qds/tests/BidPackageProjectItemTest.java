@@ -120,13 +120,13 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
 
-        ErrorMessage bPPIResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             bppResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bPPIResponse.getMessage()).contains("Can't find Project for bid package with identity '" + bppResponse.getBidPackageIdentity()
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find Project for bid package with identity '" + bppResponse.getBidPackageIdentity()
             + "' and identity '" + bppResponse.getIdentity());
     }
 
@@ -134,13 +134,13 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(testCaseId = {"13413"})
     @Description("Create  Bid Package Project Item with out bidPackageItemIdentity")
     public void createProjectItemWithoutPackageItem() {
-        ErrorMessage bPPIResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             "",
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bPPIResponse.getMessage()).contains("Can't find bidPackageItem for bid package with identity '"
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackageItem for bid package with identity '"
             + bidPackageProjectResponse.getBidPackageIdentity()
             + "' and identity 'null'");
     }
@@ -163,19 +163,19 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         BidPackageResources.deleteBidPackage(bpResponse.getIdentity(), currentUser);
 
-        ErrorMessage bPPIResponse = BidPackageResources.createBidPackageProjectItem(
+        ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
             bpResponse.getIdentity(),
             bppResponse.getIdentity(),
             bpiResponse.getIdentity(),
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bPPIResponse.getMessage()).contains("Can't find bidPackage with identity '" + bppResponse.getBidPackageIdentity() + "'");
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackage with identity '" + bppResponse.getBidPackageIdentity() + "'");
     }
 
     @Test
     @TestRail(testCaseId = {"13421", "13429", "13430"})
     @Description("Delete and Get project Item to verify project item is removed")
-    public void DeleteAndGetProjectItemWithNoItemIdentity() {
+    public void deleteAndGetProjectItemWithNoItemIdentity() {
         BidPackageResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageProjectItemResponse.getIdentity(),

@@ -22,6 +22,7 @@ public class BidPackageProjectUserDetails {
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private BidPackageProjectUserProfile userProfile;
     private String email;
@@ -30,5 +31,5 @@ public class BidPackageProjectUserDetails {
     private boolean mfaRequired;
     private CustomAttributes customAttributes;
     private String userType;
-
+    private String avatarColor;
 }

@@ -22,7 +22,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class PlasticDtcDetailsReportTests extends TestBase {
@@ -47,7 +47,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7308"})
     @Description("Validate report is available by library - Plastic DTC Details Report")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -82,7 +82,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7359"})
     @Description("Verify cancel button functionality - Plastic DTC Details Report")
     public void testCancelButton() {
@@ -115,7 +115,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class})
     @TestRail(testCaseId = {"7406"})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
@@ -128,7 +128,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7407"})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
@@ -141,7 +141,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7381"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -167,7 +167,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7519"})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
     public void testDtcScoreNoSelection() {
@@ -205,7 +205,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7528"})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
     public void testDtcScoreHigh() {
@@ -218,7 +218,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1371"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -230,7 +230,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"1369"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -240,7 +240,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(true, PlasticDtcReportPage.class);
+            .clickOk(PlasticDtcReportPage.class);
 
         plasticDtcReportPage.waitForReportToLoad();
 

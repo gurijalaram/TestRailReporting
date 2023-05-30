@@ -22,6 +22,7 @@ public class Assignee {
     public String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime updatedAt;
+    public String updatedBy;
     public String customerIdentity;
     public UserProfile userProfile;
     public String email;

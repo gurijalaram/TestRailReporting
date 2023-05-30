@@ -74,5 +74,13 @@ public class ScenarioProcess {
     private Double totalMachineCost;
     private Double productionDaysPerYear;
     private String vpeName;
+    private String energyCarbonFactor;
+    private String primaryMaterialCarbonFactor;
+    private String logisticsCarbon;
+    private String materialCarbon;
+    private String processCarbon;
+    private String supportsSustainabilityType;
+    private String totalCarbon;
+    private String annualManufacturingCarbon;
     private List<Gcds> gcds;
 }

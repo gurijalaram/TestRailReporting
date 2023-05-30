@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NoticeSpecificProperties {
     private String operationSequence;
+    private String operation;
+    private String unitType;
+    private String source;
     private Integer current;
     private Integer threadLength;
     private Integer defaultThreadLength;

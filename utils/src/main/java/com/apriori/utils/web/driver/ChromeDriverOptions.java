@@ -32,12 +32,19 @@ public class ChromeDriverOptions {
         chromeOptions.addArguments("--remote-allow-origins=*");
         // TODO: 20/10/2021 commented because this doesn't work on vnc
         //chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
+
+        final String mode = System.getProperty("mode");
+        if (mode != null && mode.toUpperCase().equals(TestMode.DOCKER_GRID.value())) {
+            chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal:3003");
+        }
+
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
         // Set custom download dir
         if (downloadPath != null) {
             chromePrefs.put("download.default_directory", downloadPath);
         }
+
         chromePrefs.put("profile.default_content_settings.popups", 0);
         chromePrefs.put("download.prompt_for_download", false);
         chromePrefs.put("download.directory_upgrade", true);
@@ -51,14 +58,9 @@ public class ChromeDriverOptions {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--disable-dev-shm-usage");
-
-            if (System.getProperty("mode").equalsIgnoreCase(TestMode.HOSTED_GRID.value())) {
-                chromeOptions.addArguments("--headless");
-            }
         }
 
         headless = !StringUtils.isEmpty(System.getProperty("headless")) && Boolean.parseBoolean(System.getProperty("headless"));
-
         if (headless) {
             // note: the window size in headless is not limited to the display size
             chromeOptions.addArguments("--disable-gpu");

@@ -52,7 +52,6 @@ public class EmailsTests extends TestHelper {
     }
 
     @Test
-    @Issue("IDS-1025")
     @TestRail(testCaseId = {"10469", "10470", "10471"})
     @Description("Send an email using the NTS API w/Attachment")
     public void sendEmailWithAttachment() {

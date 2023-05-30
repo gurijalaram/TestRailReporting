@@ -37,14 +37,14 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
-    @FindBy(css = "[id='qa-sub-header-new-dropdown']")
-    private WebElement newButton;
-
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
-    @FindBy(css = "[id='qa-sub-header-import-dropdown']")
+    @FindBy(css = "[id='qa-sub-header-import-button']")
     private WebElement importButton;
+
+    @FindBy(css = "[id='qa-sub-header-copy-button']")
+    private WebElement copyButton;
 
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
@@ -109,7 +109,7 @@ public class ExploreToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(newButton);
+        pageUtils.waitForElementToAppear(copyButton);
         pageUtils.waitForElementToAppear(deleteButton);
         pageUtils.waitForElementToAppear(costButton);
     }
@@ -320,7 +320,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ImportCadFilePage importCadFile() {
         pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
         return new ImportCadFilePage(driver);
     }
 
@@ -393,13 +392,12 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the scenario page
+     * Copies a scenario
      *
      * @return new page object
      */
-    public ScenarioPage createScenario() {
-        pageUtils.waitForElementAndClick(newButton);
-        pageUtils.waitForElementAndClick(scenarioButton);
+    public ScenarioPage copyScenario() {
+        pageUtils.waitForElementAndClick(copyButton);
         return new ScenarioPage(driver);
     }
 
@@ -471,7 +469,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public ComparePage createComparison() {
-        pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparePage(driver);
     }

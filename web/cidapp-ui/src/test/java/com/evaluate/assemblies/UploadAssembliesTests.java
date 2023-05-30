@@ -6,8 +6,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ConfigurePage;
-import com.apriori.pageobjects.navtoolbars.DeletePage;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
@@ -30,8 +33,8 @@ import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
@@ -54,13 +57,29 @@ public class UploadAssembliesTests extends TestBase {
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private ComponentsTreePage componentsTreePage;
+    private ComponentInfoBuilder assemblyInfo;
+    private ComponentInfoBuilder subAssemblyInfo;
     private File resourceFile;
 
     public UploadAssembliesTests() {
         super();
+    }
+
+    @After
+    public void deleteScenarios() {
+        if (currentUser != null && assemblyInfo != null) {
+            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
+            assemblyInfo = null;
+        }
+        if (subAssemblyInfo != null) {
+            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo);
+            subAssemblyInfo = null;
+        }
     }
 
     @Test
@@ -701,6 +720,208 @@ public class UploadAssembliesTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getComponentResults("Total")).isEqualTo(10);
         softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "5625")
+    @Description("Validate missing sub-assembly association when manually uploaded")
+    public void verifySubAsmAssociationOnUpload() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String componentExtension = ".prt.1";
+        final String originalAsmExtension = ".asm.1";
+        final String topLevelAsmExtension = ".asm.3";
+
+        final String autoBotAsm = "autobotasm";
+        final String autoHelm = "autoparthelm";
+        final String autoHead = "autoparthead";
+        final String autoTorso = "autoparttorso";
+        final String autoArm = "autopartarm";
+        final String autoHand = "autoparthand";
+        final String autoLeg = "autopartleg";
+        final String autoFoot = "autopartfoot";
+        final String autoSword = "autosword";
+
+        final String autoPommel = "autopommel";
+        final String autoHandle = "autohandle";
+        final String autoGuard = "autoguard";
+        final String autoBlade = "autoblade";
+
+        final File autoSwordFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoSword + originalAsmExtension);
+
+        List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
+        List<String> subAsmComponents = Arrays.asList(autoPommel, autoHandle, autoGuard, autoBlade);
+
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+
+        assemblyUtils.uploadSubComponents(assemblyInfo);
+        assemblyUtils.uploadAssembly(assemblyInfo);
+
+        evaluatePage = new CidAppLoginPage(driver).login(currentUser)
+            .openScenario(autoBotAsm, scenarioName);
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
+            .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
+
+        explorePage = componentsTreePage.closePanel()
+                .importCadFile()
+                    .inputScenarioName(scenarioName)
+                    .enterFilePath(autoSwordFile)
+                        .submit()
+                            .clickClose();
+
+        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
+            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+        List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
+        subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
+        subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
+
+        subAssemblyInfo.getSubComponents().forEach(subComponent -> {
+            List<ScenarioItem> componenetDetails = componentsUtil.getUnCostedComponent(subComponent.getComponentName(), scenarioName, currentUser);
+            subComponent.setScenarioIdentity(componenetDetails.get(0).getScenarioIdentity());
+            subComponent.setComponentIdentity(componenetDetails.get(0).getComponentIdentity());
+        });
+
+        componentsTreePage = explorePage.openScenario(autoBotAsm, scenarioName)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Sub-Assembly is no longer struck out").isFalse();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+            .as("Verify sub-assembly is shown as CAD connected").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName)).as("Verify 'missing' sub-asm overridden").isNotEmpty();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10748", "10761"})
+    @Description("Changing unit user preferences when viewing assembly")
+    public void testCopyScenarioRetainsAsmAssociation() {
+        currentUser = UserUtil.getUser();
+
+        final String hinge_assembly = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+        final String big_ring = "big ring";
+        final String pin = "Pin";
+        final String small_ring = "small ring";
+        final String subComponentExtension = ".SLDPRT";
+        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioNamePrivateEvaluate = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioNamePrivateExplore = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioNamePublicEvaluate = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioNamePublicExplore = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            hinge_assembly,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        List<String> bigRingDetails = componentsTreePage.getRowDetails(big_ring, scenarioName);
+        List<String> smallRingDetails = componentsTreePage.getRowDetails(small_ring, scenarioName);
+        List<String> pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .copyScenario()
+            .enterScenarioName(newScenarioNamePrivateEvaluate)
+            .submit(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).as("Verify new Scenario Name From Evaluate").isEqualTo(newScenarioNamePrivateEvaluate);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .clickExplore()
+            .multiSelectScenarios(hinge_assembly + "," + scenarioName)
+            .copyScenario()
+            .enterScenarioName(newScenarioNamePrivateExplore)
+            .submit(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).as("Verify new Scenario Name from Explore").isEqualTo(newScenarioNamePrivateExplore);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .clickExplore()
+            .openScenario(hinge_assembly, scenarioName)
+            .openComponents()
+            .selectCheckAllBox()
+            .publishSubcomponent()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(EvaluatePage.class);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.getScenarioCompleted(subComponent));
+
+        evaluatePage.clickRefresh(EvaluatePage.class);
+
+        componentsTreePage = evaluatePage.openComponents();
+        bigRingDetails = componentsTreePage.getRowDetails(big_ring, scenarioName);
+        smallRingDetails = componentsTreePage.getRowDetails(small_ring, scenarioName);
+        pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .copyScenario()
+            .enterScenarioName(newScenarioNamePublicEvaluate)
+            .submit(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).as("Verify new Scenario Name From Evaluate").isEqualTo(newScenarioNamePublicEvaluate);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .clickExplore()
+            .multiSelectScenarios(hinge_assembly + "," + scenarioName)
+            .copyScenario()
+            .enterScenarioName(newScenarioNamePublicExplore)
+            .submit(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).as("Verify new Scenario Name from Explore").isEqualTo(newScenarioNamePublicExplore);
+
+        componentsTreePage = evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
 
         softAssertions.assertAll();
     }

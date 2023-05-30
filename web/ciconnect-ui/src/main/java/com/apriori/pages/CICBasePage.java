@@ -1,5 +1,7 @@
 package com.apriori.pages;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.utils.PageUtils;
 
@@ -7,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.TableUtils;
 
@@ -21,6 +24,18 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     protected WebDriver driver;
     protected PageUtils pageUtils;
     protected TableUtils tableUtils;
+
+    @FindBy(css = "div[class='apriori-stepper'] > div[class='step active'] > div[class='number']")
+    protected WebElement workflowPopUpActiveTabElement;
+
+    @FindBy(xpath = "//span[text()='Edit Workflow']")
+    protected WebElement popUpEditWorkflowLbl;
+
+    @FindBy(xpath = "//span[.='Return only the latest revision of each part from the PLM system']")
+    protected WebElement revisionLatestCheckBoxLblElement;
+
+    @FindBy(css = "div[class$='modalTitle']")
+    protected WebElement workflowPopUpTitleElement;
 
     public CICBasePage(WebDriver driver) {
         this.driver = driver;
@@ -74,5 +89,17 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
             .findFirst()
             .get();
         pageUtils.waitForElementToBeClickable(webElement);
+    }
+
+    protected WebElement getNextButtonElement() {
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Next']", workflowPopUpActiveTabElement.getText())));
+    }
+
+    public WebElement getNameTextFieldElement() {
+        return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
+    }
+
+    protected WebElement getQDReturnOnlyCheckboxElement() {
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//input[@type='checkbox']",workflowPopUpActiveTabElement.getText())));
     }
 }

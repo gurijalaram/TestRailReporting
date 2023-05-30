@@ -135,10 +135,6 @@ public class BatchPartTest {
     }
 
     @Test
-    @Issues({
-        @Issue("CIG-292"),
-        @Issue("CIG-288")
-    })
     @TestRail(testCaseId = {"4280"})
     @Description("Create part with Valid UDA Field in form data")
     public void createBatchPartWithValidUDAField() {

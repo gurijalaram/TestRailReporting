@@ -5,12 +5,12 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackagesResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
-import com.apriori.cisapi.utils.CisBidPackageResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -27,7 +27,7 @@ public class CisBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private static UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
 
     @BeforeClass
@@ -119,7 +119,7 @@ public class CisBidPackageTest extends TestUtil {
     public void testUpdateBidPackageWithInvalidIdentity() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
-                .description("Update description ASSDEF")
+                .description("Update description")
                 .name("BIITest")
                 .status("COMPLETE")
                 .build())

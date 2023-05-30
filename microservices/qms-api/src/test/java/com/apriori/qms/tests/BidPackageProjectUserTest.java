@@ -9,7 +9,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -26,15 +25,13 @@ public class BidPackageProjectUserTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
-    UserCredentials currentUser = UserUtil.getUser();
-    private static String bidPackageName;
-    private static String projectName;
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         UserCredentials newUser = UserUtil.getUser();

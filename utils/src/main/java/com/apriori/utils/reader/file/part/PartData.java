@@ -31,6 +31,8 @@ public class PartData {
     private File file;
     private Double years;
     private String secondaryDigitalFactory;
+    private String plmPartNumber;
+    private String plmMapped;
     // benchmark metrics
     private String identity;
     private String partName;
@@ -40,7 +42,7 @@ public class PartData {
     private String state;
     private LocalDateTime startTime;
     private Long costingDuration;
-    private String plmPartNumber;
+
 
     public void setDigitalFactory(String digitalFactory) {
         if (digitalFactory == null) {

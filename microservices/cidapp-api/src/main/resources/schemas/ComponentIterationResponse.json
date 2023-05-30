@@ -42,68 +42,142 @@
           "type": "string"
         },
         "costingInput": {
-          "type": "object",
-          "properties": {
-            "identity": {
-              "type": "string"
-            },
-            "annualVolume": {
-              "type": "integer"
-            },
-            "batchSize": {
-              "type": "integer"
-            },
-            "customAttributes": {
+          "anyOf": [
+            {
               "type": "object",
               "properties": {
-                "language": {
+                "identity": {
                   "type": "string"
                 },
-                "projectType": {
+                "annualVolume": {
+                  "type": "integer"
+                },
+                "batchSize": {
+                  "type": "integer"
+                },
+                "customAttributes": {
+                  "type": "object",
+                  "properties": {
+                    "language": {
+                      "type": "string"
+                    },
+                    "projectType": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array"
+                    },
+                    "epamAssembly": {
+                      "type": "string"
+                    },
+                    "UDA5": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "UDA4": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "UDA3": {
+                      "type": "string"
+                    },
+                    "UDA1": {
+                      "type": "string"
+                    },
+                    "UDA2": {
+                      "type": ["string", "integer"]
+                    }
+                  },
+                  "optional": [
+                    "UDA5",
+                    "UDA4",
+                    "UDA3",
+                    "UDA2",
+                    "UDA1"
+                  ]
+                },
+                "gcdProperties": {
+                  "type": "object"
+                },
+                "machiningMode": {
                   "type": "string"
                 },
-                "tags": {
-                  "type": "array"
+                "materialMode": {
+                  "type": "string"
                 },
-                "epamAssembly": {
+                "materialName": {
+                  "type": "string"
+                },
+                "processGroupName": {
+                  "type": "string"
+                },
+                "processSetupOptions": {
+                  "type": "object"
+                },
+                "productionLife": {
+                  "type": "number"
+                },
+                "routingNodeOptions": {
+                  "type": "array",
+                  "items": {
+                  }
+                },
+                "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
+                  "type": "boolean"
+                },
+                "vpeName": {
                   "type": "string"
                 }
               }
-            },
-            "machiningMode": {
-              "type": "string"
-            },
-            "materialMode": {
-              "type": "string"
-            },
-            "materialName": {
-              "type": "string"
-            },
-            "processGroupName": {
-              "type": "string"
-            },
-            "processSetupOptions": {
-              "type": "object"
-            },
-            "productionLife": {
-              "type": "number"
-            },
-            "routingNodeOptions": {
-              "type": "array",
-              "items": {
-              }
-            },
-            "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
-              "type": "boolean"
-            },
-            "vpeName": {
-              "type": "string"
             }
-          }
+          ]
         },
         "scenarioCustomAttributes": {
           "type": "array",
-          "items": {}
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "key",
+                  "value",
+                  "valueType"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "array",
+                      "number",
+                      "string"
+                    ],
+                    "items": [
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "valueType": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
         },
         "scenarioDesignInvestigations": {
           "type": "array",
@@ -219,6 +293,250 @@
                     }
                   }
                 }
+              }
+            ]
+          }
+        },
+        "scenarioDesignIssues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "attribute": {
+                "type": "string"
+              },
+              "attributeDisplayName": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "categoryDisplayName": {
+                "type": "string"
+              },
+              "issueDescription": {
+                "type": "string"
+              },
+              "issueSeverity": {
+                "type": "string"
+              },
+              "issueSpecificProperties": {
+                "type": "object",
+                "properties": {
+                  "toolHolderClearance": {
+                    "type": "string"
+                  },
+                  "toolHolderObstructionHeight": {
+                    "type": "string"
+                  },
+                  "panelOutput": {
+                    "type": "string"
+                  },
+                  "current": {
+                    "type": "number"
+                  },
+                  "opName": {
+                    "type": "string"
+                  },
+                  "toolDiameter": {
+                    "type": "string"
+                  },
+                  "gcdHeight": {
+                    "type": "string"
+                  },
+                  "suggestedMax": {
+                    "type": "number"
+                  },
+                  "opIndex": {
+                    "type": "string"
+                  },
+                  "gcdsToHighlight": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "optional": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ]
+                      }
+                    ]
+                  },
+                  "toolReach": {
+                    "type": "string"
+                  },
+                  "roughingFeed": {
+                    "type": "string"
+                  },
+                  "finishingFeed": {
+                    "type": "string"
+                  },
+                  "unitType": {
+                    "type": "string"
+                  },
+                  "lToDRatio": {
+                    "type": "number"
+                  },
+                  "standardHolderClearanceInFront": {
+                    "type": "string"
+                  },
+                  "slimProfileHolderClearanceBehind": {
+                    "type": "string"
+                  },
+                  "standardHolderClearanceBehind": {
+                    "type": "string"
+                  },
+                  "slimProfileHolderClearanceInFront": {
+                    "type": "string"
+                  },
+                  "finishingAxialEngagement": {
+                    "type": "string"
+                  }
+                },
+                "optional": [
+                  "toolHolderClearance",
+                  "toolHolderObstructionHeight",
+                  "panelOutput",
+                  "current",
+                  "opName",
+                  "toolDiameter",
+                  "gcdHeight",
+                  "suggestedMax",
+                  "opIndex",
+                  "toolReach",
+                  "lToDRatio",
+                  "standardHolderClearanceInFront",
+                  "slimProfileHolderClearanceBehind",
+                  "standardHolderClearanceBehind",
+                  "slimProfileHolderClearanceInFront",
+                  "roughingFeed",
+                  "finishingFeed",
+                  "unitType",
+                  "finishingAxialEngagement"
+                ]
+              },
+              "primaryGcdArtifactType": {
+                "type": "string"
+              },
+              "primaryGcdDisplayName": {
+                "type": "string"
+              },
+              "primaryGcdSequenceNumber": {
+                "type": "integer"
+              },
+              "processGroupName": {
+                "type": "string"
+              },
+              "processName": {
+                "type": "string"
+              }
+            },
+            "optional": [
+              "identity",
+              "attribute",
+              "attributeDisplayName",
+              "category",
+              "categoryDisplayName",
+              "issueDescription",
+              "issueSeverity",
+              "issueSpecificProperties",
+              "primaryGcdArtifactType",
+              "primaryGcdDisplayName",
+              "primaryGcdSequenceNumber",
+              "processGroupName",
+              "processName"
+            ]
+          }
+        },
+        "scenarioDesignNotices": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "attribute": {
+                    "type": "string"
+                  },
+                  "attributeDisplayName": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "categoryDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdArtifactType": {
+                    "type": "string"
+                  },
+                  "gcdDisplayName": {
+                    "type": "string"
+                  },
+                  "gcdSequenceNumber": {
+                    "type": "integer"
+                  },
+                  "noticeSpecificProperties": {
+                    "type": "object",
+                    "properties": {
+                      "threadLength": {
+                        "type": "number"
+                      },
+                      "defaultThreadLength": {
+                        "type": "number"
+                      },
+                      "cadThreadLength": {
+                        "type": "number"
+                      },
+                      "threaded": {
+                        "type": "boolean"
+                      },
+                      "guidanceTopic": {
+                        "type": "string"
+                      },
+                      "cadThreaded": {
+                        "type": "boolean"
+                      }
+                    },
+                    "optional": [
+                      "threadLength",
+                      "defaultThreadLength",
+                      "cadThreadLength",
+                      "threaded",
+                      "guidanceTopic",
+                      "cadThreaded"
+                    ]
+                  }
+                },
+                "optional": [
+                  "identity",
+                  "attribute",
+                  "attributeDisplayName",
+                  "category",
+                  "categoryDisplayName",
+                  "gcdArtifactType",
+                  "gcdDisplayName",
+                  "gcdSequenceNumber",
+                  "noticeSpecificProperties"
+                ]
               }
             ]
           }
@@ -972,6 +1290,12 @@
                   "identity": {
                     "type": "string"
                   },
+                  "additionalDirectCosts": {
+                    "type": "number"
+                  },
+                  "amortizedInvestment": {
+                    "type": "number"
+                  },
                   "capitalInvestment": {
                     "type": "number"
                   },
@@ -981,17 +1305,137 @@
                   "cycleTime": {
                     "type": "number"
                   },
+                  "directOverheadCost": {
+                    "type": "number"
+                  },
+                  "directOverheadRate": {
+                    "type": "number"
+                  },
                   "displayName": {
                     "type": "string"
                   },
+                  "energyCarbonFactor": {
+                    "type": "number"
+                  },
+                  "finalYield": {
+                    "type": "number"
+                  },
+                  "fixtureCost": {
+                    "type": "number"
+                  },
+                  "fixtureCostPerPart": {
+                    "type": "number"
+                  },
                   "fullyBurdenedCost": {
+                    "type": "number"
+                  },
+                  "gcds": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "artifactTypeName": {
+                            "type": "string"
+                          },
+                          "sequenceNumber": {
+                            "type": "integer"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "artifactTypeName",
+                          "sequenceNumber",
+                          "displayName"
+                        ]
+                      }
+                    ]
+                  },
+                  "goodPartYield": {
+                    "type": "number"
+                  },
+                  "hardToolingCost": {
+                    "type": "number"
+                  },
+                  "hoursPerShift": {
+                    "type": "number"
+                  },
+                  "indirectOverheadPercent": {
+                    "type": "number"
+                  },
+                  "indirectOverheadRate": {
+                    "type": "number"
+                  },
+                  "laborCost": {
+                    "type": "number"
+                  },
+                  "laborRate": {
+                    "type": "number"
+                  },
+                  "laborTime": {
+                    "type": "number"
+                  },
+                  "logisticsCarbon": {
+                    "type": "number"
+                  },
+                  "logisticsCost": {
+                    "type": "number"
+                  },
+                  "machineLife": {
                     "type": "number"
                   },
                   "machineName": {
                     "type": "string"
                   },
+                  "machinePower": {
+                    "type": "number"
+                  },
+                  "machinePrice": {
+                    "type": "number"
+                  },
+                  "machineUptime": {
+                    "type": "number"
+                  },
+                  "margin": {
+                    "type": "number"
+                  },
+                  "materialCarbon": {
+                    "type": "number"
+                  },
+                  "materialCost": {
+                    "type": "number"
+                  },
+                  "materialOverheadCost": {
+                    "type": "number"
+                  },
+                  "numOperators": {
+                    "type": "number"
+                  },
+                  "numScrapParts": {
+                    "type": "number"
+                  },
+                  "otherDirectCosts": {
+                    "type": "number"
+                  },
                   "order": {
                     "type": "integer"
+                  },
+                  "overheadRate": {
+                    "type": "number"
+                  },
+                  "periodOverhead": {
+                    "type": "number"
+                  },
+                  "pieceAndPeriod": {
+                    "type": "number"
+                  },
+                  "pieceCost": {
+                    "type": "number"
+                  },
+                  "processCarbon": {
+                    "type": "number"
                   },
                   "processGroupName": {
                     "type": "string"
@@ -999,13 +1443,110 @@
                   "processName": {
                     "type": "string"
                   },
+                  "productionDaysPerYear": {
+                    "type": "number"
+                  },
+                  "programmingCost": {
+                    "type": "number"
+                  },
+                  "programmingCostPerPart": {
+                    "type": "number"
+                  },
+                  "setupCostPerPart": {
+                    "type": "number"
+                  },
+                  "sgaCost": {
+                    "type": "number"
+                  },
+                  "sgaPercent": {
+                    "type": "number"
+                  },
+                  "shiftsPerDay": {
+                    "type": "number"
+                  },
+                  "supportsSustainabilityType": {
+                    "type": "string"
+                  },
+                  "toolingCostPerPart": {
+                    "type": "number"
+                  },
+                  "totalCarbon": {
+                    "type": "number"
+                  },
                   "totalCost": {
+                    "type": "number"
+                  },
+                  "primaryMaterialCarbonFactor": {
+                    "type": "number"
+                  },
+                  "totalMachineCost": {
                     "type": "number"
                   },
                   "vpeName": {
                     "type": "string"
                   }
-                }
+                },
+                "optional": [
+                  "identity",
+                  "additionalDirectCosts",
+                  "amortizedInvestment",
+                  "capitalInvestment",
+                  "costingFailed",
+                  "cycleTime",
+                  "directOverheadCost",
+                  "directOverheadRate",
+                  "displayName",
+                  "energyCarbonFactor",
+                  "finalYield",
+                  "fixtureCost",
+                  "fixtureCostPerPart",
+                  "fullyBurdenedCost",
+                  "gcds",
+                  "goodPartYield",
+                  "hardToolingCost",
+                  "hoursPerShift",
+                  "indirectOverheadPercent",
+                  "indirectOverheadRate",
+                  "laborCost",
+                  "laborRate",
+                  "laborTime",
+                  "logisticsCarbon",
+                  "logisticsCost",
+                  "machineLife",
+                  "machineName",
+                  "machinePower",
+                  "machinePrice",
+                  "machineUptime",
+                  "margin",
+                  "materialCarbon",
+                  "materialCost",
+                  "materialOverheadCost",
+                  "numOperators",
+                  "numScrapParts",
+                  "otherDirectCosts",
+                  "order",
+                  "overheadRate",
+                  "periodOverhead",
+                  "pieceAndPeriod",
+                  "pieceCost",
+                  "primaryMaterialCarbonFactor",
+                  "processCarbon",
+                  "processGroupName",
+                  "processName",
+                  "productionDaysPerYear",
+                  "programmingCost",
+                  "programmingCostPerPart",
+                  "setupCostPerPart",
+                  "sgaCost",
+                  "sgaPercent",
+                  "shiftsPerDay",
+                  "supportsSustainabilityType",
+                  "toolingCostPerPart",
+                  "totalCarbon",
+                  "totalCost",
+                  "totalMachineCost",
+                  "vpeName"
+                ]
               }
             ]
           }
@@ -1124,6 +1665,9 @@
             "logisticsCost": {
               "type": "number"
             },
+            "logisticsCarbon": {
+              "type": "number"
+            },
             "margin": {
               "type": "number"
             },
@@ -1133,7 +1677,13 @@
             "materialCost": {
               "type": "number"
             },
+            "materialCarbon": {
+              "type": "number"
+            },
             "materialName": {
+              "type": "string"
+            },
+            "materialMode": {
               "type": "string"
             },
             "materialOverheadCost": {
@@ -1175,6 +1725,9 @@
             "pieceCost": {
               "type": "number"
             },
+            "processCarbon": {
+              "type": "number"
+            },
             "processRoutingName": {
               "type": "string"
             },
@@ -1212,6 +1765,9 @@
               "type": "number"
             },
             "totalCost": {
+              "type": "number"
+            },
+            "totalCarbon": {
               "type": "number"
             },
             "totalProductionVolume": {
@@ -1264,100 +1820,104 @@
           }
         },
         "material": {
-          "type": "object",
-          "properties": {
-            "identity": {
-              "type": "string"
-            },
-            "createdAt": {
-              "type": "string"
-            },
-            "createdBy": {
-              "type": "string"
-            },
-            "altName1": {
-              "type": "string"
-            },
-            "altName2": {
-              "type": "string"
-            },
-            "altName3": {
-              "type": "string"
-            },
-            "altName4": {
-              "type": "string"
-            },
-            "altName5": {
-              "type": "string"
-            },
-            "costPerUnit": {
-              "type": "number"
-            },
-            "costUnits": {
-              "type": "string"
-            },
-            "dataSource": {
-              "type": "string"
-            },
-            "density": {
-              "type": "number"
-            },
-            "description": {
-              "type": "string"
-            },
-            "hardness": {
-              "type": "number"
-            },
-            "hardnessSystem": {
-              "type": "string"
-            },
-            "k": {
-              "type": "number"
-            },
-            "materialCutCodeName": {
-              "type": "string"
-            },
-            "materialTypeName": {
-              "type": "string"
-            },
-            "millingSpeed": {
-              "type": "number"
-            },
-            "n": {
-              "type": "number"
-            },
-            "name": {
-              "type": "string"
-            },
-            "possionRatio": {
-              "type": "number"
-            },
-            "r": {
-              "type": "number"
-            },
-            "scrapCostPercent": {
-              "type": "number"
-            },
-            "shearStrength": {
-              "type": "number"
-            },
-            "tensileYieldStrength": {
-              "type": "number"
-            },
-            "ultimateTensileStrength": {
-              "type": "number"
-            },
-            "youngModulus": {
-              "type": "number"
-            },
-            "updatedAt": {
-              "type": "string"
-            },
-            "updatedBy": {
-              "type": "string"
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "altName1": {
+                  "type": "string"
+                },
+                "altName2": {
+                  "type": "string"
+                },
+                "altName3": {
+                  "type": "string"
+                },
+                "altName4": {
+                  "type": "string"
+                },
+                "altName5": {
+                  "type": "string"
+                },
+                "costPerUnit": {
+                  "type": "number"
+                },
+                "costUnits": {
+                  "type": "string"
+                },
+                "dataSource": {
+                  "type": "string"
+                },
+                "density": {
+                  "type": "number"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "hardness": {
+                  "type": "number"
+                },
+                "hardnessSystem": {
+                  "type": "string"
+                },
+                "k": {
+                  "type": "number"
+                },
+                "materialCutCodeName": {
+                  "type": "string"
+                },
+                "materialTypeName": {
+                  "type": "string"
+                },
+                "millingSpeed": {
+                  "type": "number"
+                },
+                "n": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "possionRatio": {
+                  "type": "number"
+                },
+                "r": {
+                  "type": "number"
+                },
+                "scrapCostPercent": {
+                  "type": "number"
+                },
+                "shearStrength": {
+                  "type": "number"
+                },
+                "tensileYieldStrength": {
+                  "type": "number"
+                },
+                "ultimateTensileStrength": {
+                  "type": "number"
+                },
+                "youngModulus": {
+                  "type": "number"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "updatedBy": {
+                  "type": "string"
+                }
+              }
             }
-          }
-        },
+            ]
+          },
         "materialStock": {
           "type": "object",
           "properties": {

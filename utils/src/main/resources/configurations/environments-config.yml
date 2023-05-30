@@ -5,14 +5,19 @@
 ######################################################## QA-TEST #######################################################
 qa-test:
   application_name: cid
-  base_url: https://na-1-v${version}-demo.apriori-internal.qa-test.apriori.net/
+  base_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
+  installation_name: core-na-1 - Production
+  base_server_platform_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   name: qa-test
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   admin:
-    ui_url: ${qa-test.base_url}apriori/login
+    ui_url: ${base_server_platform_url}apriori/login
+    welcome_page_text: CI-Admin
+    login_locator: //button[@id='1-submit']
+    login_title_locator: //*[@class='auth0-lock-name']
 
   cds:
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
@@ -24,37 +29,16 @@ qa-test:
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
 
-  ci-connect:
-    agent_type: windchill
-    agent_api_authorization_key: DogCatMonkey
-    agent_api_url: http://conqscic02.fbc.com:8811/
-    plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
-    plm_wc_api_url: https://consvwc02.fbc.com/
-    plm_wc_api_token: d2NhZG1pbjp0ZXN0MTIzIw==
-
   reports:
-    ui_url: ${qa-test.base_url}jasperserver-pro/
+    ui_url: ${base_server_platform_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+    username_locator: //input[@type='email']
+    login_locator: //button[@id='1-submit']
+    welcome_page_text: CI-Admin aPriori Internal
+    login_title_locator: //*[@class='auth0-lock-name']
+    failed_login_message: WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.
 
 ########################################################################################################################
-
-
-######################################################## CIS_QA ########################################################
-cis-qa:
-  application_name: cis
-  aws_region: na-1
-  customer_identity: 6C1F8C1D4D75
-  deployment_name: qa
-  installation_name: cis.na-1-v22-1
-  name: cis-qa
-  secret_key: PG9E795ML3P4
-  user_identity: 1F7GAI5DLI2B
-
-  core_service_url_template: ${aws_region}.qa-test.apriori.net/
-  deployment_url_template: ${aws_region}-v${version}.qa-test.apriori.net/
-
-########################################################################################################################
-
 
 ######################################################## INT-CORE ######################################################
 int-core:
@@ -92,12 +76,15 @@ int-core:
   reports:
     ui_url: ${qa-test.base_url}jasperserver-pro/
 
-
 ########################################################################################################################
 
 
 ######################################################## STAGING #######################################################
 staging:
+  deployment_name: Production
+  installation_name: Production na-1
+  application_name: CID
+  name: staging
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
@@ -114,16 +101,27 @@ staging:
     automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
 
-  bcs:
-    api_url: https://bcs.us.staging.apriori.net/
-
 ########################################################################################################################
 
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: https://conqbaci01/
+  base_url: walqbaci01/
   name: onprem
+  deployment_url_template: ${base_url}
+  users_csv_file: onprem-users.csv
+
+  reports:
+    username_locator: //input[contains(@name, 'username')]
+    login_locator: //button[@id='submitButton']
+    welcome_page_text: Cost Insight Report
+    login_title_locator: //h2[@class='textAccent']
+    failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
+
+  admin:
+    login_locator: //button[@id='login']
+    welcome_page_text: Cost Insight | Admin
+    login_title_locator: //p[@class='password-inputs-header']
 
 ########################################################################################################################
 
@@ -157,7 +155,7 @@ local:
   ap_user_context:
   base_url: http://localhost
   name: local
-  secret_key: 65J1ID2B6LDG
+  secret_key: O85XMATZEMBO
 
   admin:
     ui_url: ${local.base_url}/apriori/login
@@ -216,7 +214,7 @@ development:
   base_url: https://cloud.na-1.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
-  installation_name: core-na-1 - v23 Production
+  installation_name: core-na-1 - v22 Production
   name: development
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG

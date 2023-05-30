@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,17 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
         initialiseGenericColumnMap();
         initialiseSubSubAsmRowMap();
         initialiseTopLevelRowMap();
+    }
+
+    /**
+     * Gets capital investments grand total from table
+     *
+     * @return BigDecimal
+     */
+    public BigDecimal getCapitalInvestmentsGrandTotalFromTable() {
+        By locator = By.cssSelector("table.jrPage tbody tr:nth-child(16) td:nth-child(2) div div:nth-child(2) table ".concat(
+                "tr:nth-child(20) td:nth-child(34) span"));
+        return new BigDecimal(driver.findElement(locator).getText());
     }
 
     /**
@@ -842,12 +854,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub Assembly export set report table
      */
     private void initialiseSubAssemblyRowMap() {
-        putItemIntoSubAssemblyRowMap("1 Sub Assembly", "5");
-        putItemIntoSubAssemblyRowMap("2 Sub Assembly", "7");
-        putItemIntoSubAssemblyRowMap("3 Sub Assembly", "11");
-        putItemIntoSubAssemblyRowMap("4 Sub Assembly", "15");
-        putItemIntoSubAssemblyRowMap("5 Sub Assembly", "17");
-        putItemIntoSubAssemblyRowMap("6 Sub Assembly", "19");
+        int j = 5;
+        for (int i = 1; i < 7; i++) {
+            putItemIntoSubAssemblyRowMap(String.format("%s Sub Assembly", i), String.valueOf(j));
+            j++;
+            j = j == 10 ? 12 : j;
+        }
         putItemIntoSubAssemblyRowMap("Component Subtotal Sub Assembly", "15");
         putItemIntoSubAssemblyRowMap("Assembly Processes Sub Assembly", "18");
         putItemIntoSubAssemblyRowMap("Grand Total Sub Assembly", "20");
@@ -857,7 +869,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Sub-Sub-ASM export set report table
      */
     private void initialiseSubSubAsmRowMap() {
-        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "4");
+        putItemIntoSubSubAsmRowMap("1 Sub Sub ASM", "5");
         putItemIntoSubSubAsmRowMap("2 Sub Sub ASM", "6");
         putItemIntoSubSubAsmRowMap("Component Subtotal Sub Sub ASM", "8");
         putItemIntoSubSubAsmRowMap("Assembly Processes Sub Sub ASM", "11");
@@ -868,19 +880,12 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      * Hash Map initialisation for columns in Top Level export set report table
      */
     private void initialiseTopLevelRowMap() {
-        putItemIntoTopLevelRowMap("1 Top Level", "5");
-        putItemIntoTopLevelRowMap("2 Top Level", "8");
-        putItemIntoTopLevelRowMap("3 Top Level", "11");
-        putItemIntoTopLevelRowMap("4 Top Level", "14");
-        putItemIntoTopLevelRowMap("5 Top Level", "17");
-        putItemIntoTopLevelRowMap("6 Top Level", "19");
-        putItemIntoTopLevelRowMap("7 Top Level", "21");
-        putItemIntoTopLevelRowMap("8 Top Level", "23");
-        putItemIntoTopLevelRowMap("9 Top Level", "27");
-        putItemIntoTopLevelRowMap("10 Top Level", "31");
-        putItemIntoTopLevelRowMap("11 Top Level", "33");
-        putItemIntoTopLevelRowMap("12 Top Level", "35");
-        putItemIntoTopLevelRowMap("13 Top Level", "38");
+        List<String> indexList = Arrays.asList("5", "6", "7", "8", "9", "10", "13", "14", "15", "16", "17", "20", "21");
+        int j = 0;
+        for (int i = 1; i < 14; i++) {
+            putItemIntoTopLevelRowMap(String.format("%s Top Level", i), indexList.get(j));
+            j++;
+        }
         putItemIntoTopLevelRowMap("Component Subtotal Top Level", "24");
         putItemIntoTopLevelRowMap("Assembly Processes Top Level", "27");
         putItemIntoTopLevelRowMap("Grand Total Top Level", "29");

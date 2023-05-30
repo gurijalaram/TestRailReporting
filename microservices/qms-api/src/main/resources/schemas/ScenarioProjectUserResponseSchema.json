@@ -17,6 +17,9 @@
     "updatedAt": {
       "type": "string"
     },
+    "updatedBy": {
+      "type": "string"
+    },
     "customerIdentity": {
       "type": "string"
     },
@@ -93,6 +96,7 @@
     "avatarColor"
   ],
   "optional": [
-    "updatedAt"
+    "updatedAt",
+    "updatedBy"
   ]
 }

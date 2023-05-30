@@ -16,12 +16,9 @@ import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;
-import entity.response.PlmParts;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +28,6 @@ import org.junit.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 import utils.PlmPartsUtil;
-import utils.SearchFilter;
 
 import java.util.HashMap;
 
@@ -49,10 +45,12 @@ public class CicAgentJobResultsTest extends TestBase {
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();;
-        plmPartData = PlmPartsUtil.getPlmPartData();
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser())
+            .navigateToUserMenu()
+            .getWebSession();;
+        plmPartData = new PlmPartsUtil().getPlmPartData();
         workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, loginSession);
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, loginSession);
 
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
     }
@@ -90,6 +88,7 @@ public class CicAgentJobResultsTest extends TestBase {
         softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getAnnualVolume()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getAnnualVolume());
         softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getBatchSize()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getBatchSize());
         softAssertions.assertThat(agentWorkflowJobResult.get(0).getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
+
     }
 
     @Test
@@ -128,7 +127,7 @@ public class CicAgentJobResultsTest extends TestBase {
     public void testGetWorkflowJobResultPartSelectionQuery() {
         JobDefinition jdData = CicApiTestUtil.getJobDefinitionData();
         WorkflowRequest wfrQueryDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.QUERY, false);
-        ResponseWrapper<String> cwfResponse = CicApiTestUtil.CreateWorkflow(wfrQueryDataBuilder, loginSession);
+        ResponseWrapper<String> cwfResponse = CicApiTestUtil.createWorkflow(wfrQueryDataBuilder, loginSession);
         softAssertions.assertThat(cwfResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(cwfResponse.getBody()).contains(">true<");
         AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());
@@ -432,7 +431,7 @@ public class CicAgentJobResultsTest extends TestBase {
     @Description("Get Job results with deleted workflow Identity")
     public void testGetJobResultWithDeletedWorkFlow() {
         WorkflowRequest wfrDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        ResponseWrapper<String> createWfResponse = CicApiTestUtil.CreateWorkflow(wfrDataBuilder, loginSession);
+        ResponseWrapper<String> createWfResponse = CicApiTestUtil.createWorkflow(wfrDataBuilder, loginSession);
 
         JobDefinition jDData = CicApiTestUtil.getJobDefinitionData();
         softAssertions.assertThat(createWfResponse.getBody()).contains("CreateJobDefinition");

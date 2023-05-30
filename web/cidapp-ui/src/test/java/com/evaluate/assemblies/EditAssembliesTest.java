@@ -6,7 +6,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -34,6 +36,7 @@ import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -63,6 +66,7 @@ public class EditAssembliesTest extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder cidComponentItem;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private static ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @Category(SmokeTests.class)
@@ -582,6 +586,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"10895", "10897"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndOverridePrivateSubcomponent() {
@@ -609,6 +614,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -952,7 +963,7 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
@@ -977,15 +988,15 @@ public class EditAssembliesTest extends TestBase {
             .clickDelete(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
 
     @Test
+    @Issue("BA-2965")
     @TestRail(testCaseId = {"12037"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
@@ -1014,6 +1025,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -1381,6 +1398,142 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon(),
             StatusIconEnum.PRIVATE.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10843"})
+    @Description("Validate assembly explorer table updates when sub-components changed")
+    public void testAssemblyExplorerTableUpdates() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        componentsTreePage.multiSelectSubcomponents(PIN + "," + scenarioName)
+            .setInputs()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .enterAnnualVolume("1234")
+            .clickApplyAndCost(SetInputStatusPage.class)
+            .close(ComponentsTreePage.class);
+
+        scenariosUtil.getScenarioCompleted(componentAssembly.getSubComponents().get(1));
+        componentsTreePage = componentsTreePage.closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(PIN, scenarioName)).as("Verify details updated")
+            .contains(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory(), "1,234");
+
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        evaluatePage = componentsTreePage.closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .clickHere()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
+
+        evaluatePage.enterAnnualVolume("7777")
+            .goToAdvancedTab()
+            .enterBatchSize("612")
+            .goToBasicTab()
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .clickContinue(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+
+        componentsTreePage = evaluatePage.clickExplore()
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
+            .contains("7,777", "612");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10860", "21552"})
+    @Description("Validate 'missing' scenario created if sub-component deleted'")
+    public void testMissingSubComponentOnDeletion() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        softAssertions = new SoftAssertions();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        ComponentInfoBuilder smallRing = assemblyUtils.getSubComponent(componentAssembly, SMALL_RING);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsTreePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(SMALL_RING + "," + scenarioName)
+            .deleteSubcomponent()
+            .clickDelete(ComponentsTreePage.class);
+
+        scenariosUtil.checkComponentDeleted(smallRing.getComponentIdentity(), smallRing.getScenarioIdentity(), currentUser);
+
+        componentsTreePage = componentsTreePage.closePanel().clickRefresh(EvaluatePage.class).openComponents();
+
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SMALL_RING)).as("Verify 'missing' Small Ring Struck Out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, scenarioName))
+            .as("Verify that 'missing' Small Ring is CAD DIsconnected").contains(StatusIconEnum.DISCONNECTED.getStatusIcon());
 
         softAssertions.assertAll();
     }

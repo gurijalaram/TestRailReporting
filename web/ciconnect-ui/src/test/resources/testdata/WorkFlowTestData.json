@@ -1,7 +1,7 @@
 {
-  "workflowName": "- - - 0 0 Auto WF ",
+  "workflowName": "- - - 0 0 Auto WF",
   "workflowDescription": "Auto wf description",
-  "connectorName": "WC - consvwc02",
+  "connectorName": "WC-consvwc02",
   "componentName": "Query Definition",
   "scheduleData": {
     "enabled": "off",

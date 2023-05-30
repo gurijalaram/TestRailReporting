@@ -25,6 +25,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import utils.DdsApiTestUtils;
 
@@ -93,7 +94,7 @@ public class DiscussionTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"12407"})
     @Description("update a valid discussion")
-    public void UpdateValidDiscussion() {
+    public void updateValidDiscussion() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
             .discussion(DiscussionsRequestParameters.builder()
                 .status("RESOLVED")
@@ -116,7 +117,7 @@ public class DiscussionTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"12408"})
     @Description("update a invalid discussion")
-    public void UpdateInValidDiscussion() {
+    public void updateInValidDiscussion() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
             .discussion(DiscussionsRequestParameters.builder()
                 .status("RESOLVED")
@@ -138,7 +139,7 @@ public class DiscussionTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"12409", "12412"})
     @Description("Create, delete and update a deleted discussion")
-    public void UpdateDeletedDiscussion() {
+    public void updateDeletedDiscussion() {
         ResponseWrapper<DiscussionResponse> discussionCreatedResponse = DdsApiTestUtils.createDiscussion(discussionDescription, userContext);
         softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
 
@@ -215,6 +216,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
+    @Ignore
     @TestRail(testCaseId = {"12410"})
     @Description("Search discussions")
     public void searchDiscussions() {

@@ -96,6 +96,9 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//li[@data-testid='menu-item-UNASSIGN']")
     private WebElement unAssignToOption;
 
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Filter (1)']")
+    private WebElement addedFiltersOption;
+
     public MessagesPage(WebDriver driver) {
         this(driver, log);
     }
@@ -338,7 +341,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
         getPageUtils().waitForElementAndClick(isAnyOfFilterType);
         getPageUtils().waitForElementAndClick(filterValue);
         getPageUtils().waitForElementToAppear(filterValue).sendKeys(assignee);
-        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + assignee + "')]"));
+        getPageUtils().waitForElementAndClick(By.xpath("//*[contains(text(),'" + assignee + "')]"));
         return this;
     }
 
@@ -436,7 +439,8 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return current page object
      */
     public MessagesPage clickOnAssignToOption() {
-        getPageUtils().waitForElementAndClick(assignToOption);
+        getPageUtils().waitForElementToAppear(assignToOption);
+        getPageUtils().javaScriptClick(assignToOption);
         return this;
     }
 
@@ -478,5 +482,27 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     public String getDiscussionAssignedState() {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
+    }
+
+    /**
+     * Checks if added filter options displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddedFilterDisplayed() {
+        return getPageUtils().isElementDisplayed(addedFiltersOption);
+    }
+
+    /**
+     * reset to default configurations
+     *
+     * @return current page object
+     */
+    public MessagesPage resetToDefaultConfiguration() {
+        getPageUtils().waitForElementAndClick(unreadFilterIcon);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementAndClick(addedFiltersOption);
+        clickOnRemoveFilter();
+        return this;
     }
 }

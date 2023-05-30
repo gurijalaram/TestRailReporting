@@ -14,7 +14,7 @@ public class AdminLogoutPage extends AdminHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminLogoutPage.class);
 
-    @FindBy(css = "div[class='auth0-lock-header-welcome'] > div")
+    @FindBy(css = "p[class='password-inputs-header']")
     private WebElement loginPageTitle;
 
     @FindBy(css = "button[type='submit'")

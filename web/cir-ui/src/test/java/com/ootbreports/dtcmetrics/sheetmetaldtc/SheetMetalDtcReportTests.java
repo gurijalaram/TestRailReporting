@@ -26,7 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -43,7 +43,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7312"})
     @Description("Validate report is available by navigation - Sheet Metal DTC Report")
     public void testReportAvailabilityByNavigation() {
@@ -72,7 +72,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3038"})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
@@ -87,7 +87,7 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
                 .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));
@@ -184,7 +184,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3043"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -212,7 +212,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3044"})
-    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report ")
+    @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
@@ -246,7 +246,7 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         sheetMetalDtcReportPage.waitForReportToLoad();

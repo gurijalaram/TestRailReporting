@@ -1,49 +1,8 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
     "response": {
-      "type": "object",
-      "properties": {
-        "identity": {
-          "type": "string"
-        },
-        "bidPackageItem": {
-          "type": "object",
-          "properties": {
-            "identity": {
-              "type": "string"
-            },
-            "bidPackageIdentity": {
-              "type": "string"
-            },
-            "projectIdentity": {
-              "type": "string"
-            },
-            "componentIdentity": {
-              "type": "string"
-            },
-            "scenarioIdentity": {
-              "type": "string"
-            },
-            "iterationIdentity": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "identity",
-            "bidPackageIdentity",
-            "projectIdentity",
-            "componentIdentity",
-            "scenarioIdentity",
-            "iterationIdentity"
-          ]
-        }
-      },
-      "required": [
-        "identity",
-        "bidPackageItem"
-      ]
+      "$ref": "BidPackageProjectItemSchema.json"
     }
   },
   "required": [

@@ -19,6 +19,7 @@ public class CostingInput {
     private Integer annualVolume;
     private Integer batchSize;
     private CustomAttributes customAttributes;
+    private GcdProperties gcdProperties;
     private String machiningMode;
     private String materialMode;
     private String materialName;
@@ -26,6 +27,7 @@ public class CostingInput {
     private String processGroupName;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private String vpeName;
+    private Double targetCost;
     private List<Object> scenarioCustomAttributes;
     private List<Object> scenarioDesignIssues;
     private ProcessSetupOptions processSetupOptions;
@@ -58,6 +60,9 @@ public class CostingInput {
     }
 
     public static class Tolerances {
+    }
+
+    public static class GcdProperties {
     }
 }
 

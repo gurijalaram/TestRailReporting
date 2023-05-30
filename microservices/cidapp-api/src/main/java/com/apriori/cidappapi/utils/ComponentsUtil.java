@@ -409,6 +409,29 @@ public class ComponentsUtil {
     }
 
     /**
+     * Verify scenario custom attribute
+     *
+     * @param componentIteration Component Latest Iteration
+     * @param attributeValue     value to check
+     * @return true or false
+     */
+    public boolean checkScenarioCustomAttribute(ComponentIteration componentIteration, String attributeValue) {
+        boolean isCustomAttributeFound = false;
+        if (null != componentIteration) {
+            isCustomAttributeFound = componentIteration.getScenarioCustomAttributes().stream()
+                .anyMatch(a -> a.getValue().toString().contains(attributeValue));
+        } else {
+            log.error(String.format("Matching Component or scenario identity not found!!"));
+        }
+        if ((isCustomAttributeFound)) {
+            log.info(String.format("Matching scenario custom attribute (%s) found!!", attributeValue));
+        } else {
+            log.error(String.format("Matching scenario custom attribute (%s) not found!!", attributeValue));
+        }
+        return isCustomAttributeFound;
+    }
+
+    /**
      * Checks size of axes entries is not null and empty before proceeding
      *
      * @param requestEntity - the request body

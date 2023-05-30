@@ -480,11 +480,21 @@ public class FiltersTests extends TestBase {
         SoftAssertions soft = new SoftAssertions();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            ProcessGroupEnum.FORGING,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
             .selectFilter("Missing");
