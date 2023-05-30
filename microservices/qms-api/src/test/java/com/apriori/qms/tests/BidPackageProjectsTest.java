@@ -698,7 +698,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24313"})
+    @TestRail(testCaseId = {"24313","24412"})
     @Description("Verify dueAt can not be updated to invalid date or invalid datetime format")
     public void updateInvalidProjectDueAt() {
         //Invalid format #1
@@ -723,6 +723,16 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
+        //Invalid format #3 [Back Date]
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .dueAt("2023-02-02").build())
+            .build();
+        getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Given dueAt is before than Current Time");
     }
 
     @After

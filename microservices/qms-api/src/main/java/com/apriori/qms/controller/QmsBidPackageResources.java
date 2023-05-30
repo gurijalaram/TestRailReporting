@@ -568,6 +568,32 @@ public class QmsBidPackageResources {
     }
 
     /**
+     * Update bid package project user t.
+     *
+     * @param <T>                 the type parameter
+     * @param projectUserRequest  the project user request
+     * @param bidPackageIdentity  the bid package identity
+     * @param projectIdentity     the project identity
+     * @param projectUserIdentity the project user identity
+     * @param currentUser         the current user
+     * @param klass               the klass
+     * @param httpStatus          the http status
+     * @return the t
+     */
+    public static <T> T updateBidPackageProjectUser(BidPackageProjectUserRequest projectUserRequest, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USER, klass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
+            .body(projectUserRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+        return responseWrapper.getResponseEntity();
+
+    }
+
+    /**
      * get Participants
      *
      * @param currentUser the current user

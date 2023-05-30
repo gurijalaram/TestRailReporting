@@ -3,6 +3,7 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersDeleteResponse;
@@ -118,7 +119,13 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"13786"})
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
-        BidPackageProjectUserResponse updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser("ADMIN",
+        BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
+            .projectUser(BidPackageProjectUserParameters.builder()
+                .role("ADMIN")
+                .build())
+            .build();
+
+        BidPackageProjectUserResponse updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser(bidPackageProjectUserRequestBuilder,
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageProjectUserResponse.get(0).getIdentity(),
