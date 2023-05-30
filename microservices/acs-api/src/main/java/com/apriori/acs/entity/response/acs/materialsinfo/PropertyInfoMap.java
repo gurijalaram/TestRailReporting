@@ -137,4 +137,11 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem plateCostPerKG;
     private GenericExtendedPropertyInfoItem plateCostUnits;
     private GenericExtendedPropertyInfoItem plateCostPerUnit;
+    private GenericExtendedPropertyInfoItem carbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem roundBarCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem squareBarCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem plateCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem roundTubeCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem rectangularBarCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem hexBarCarbonEmissionsFactor;
 }

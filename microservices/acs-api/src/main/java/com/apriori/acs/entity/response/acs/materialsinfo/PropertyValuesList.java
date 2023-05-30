@@ -137,4 +137,11 @@ public class PropertyValuesList {
     private Double plateCostPerKG;
     private String plateCostUnits;
     private Double plateCostPerUnit;
+    private Double carbonEmissionsFactor;
+    private Double roundBarCarbonEmissionsFactor;
+    private Double squareBarCarbonEmissionsFactor;
+    private Double plateCarbonEmissionsFactor;
+    private Double roundTubeCarbonEmissionsFactor;
+    private Double rectangularBarCarbonEmissionsFactor;
+    private Double hexBarCarbonEmissionsFactor;
 }
