@@ -10,7 +10,15 @@
 
 ######################################################## AP-INT ########################################################
 ap-int:
-  token_subject: 4127
+  aws_account_type: dev
+
+  dev:
+    token_subject: 4127
+  staging:
+    token_subject: 4127
+#  production:
+#    token_subject: 4127
+
   ci-connect:
     customer_identity: 6C1F8C1D4D75
     customer_name: aPrioriInternal_Customer
