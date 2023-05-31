@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -283,6 +284,11 @@ public class QuickComparisonTests  extends TestBase {
         softAssertions.assertThat(comparePage.getScenariosInComparison().get(2)).as("Verify Most Recent Comparison")
             .isEqualTo(componentName.toUpperCase() + "  / " + baseScenarioName);
 
+        scenario1.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(scenario1.getProcessGroup().getProcessGroup())
+                .build()
+        );
         scenarioUtil.postCostScenario(scenario1);
 
         comparePage = comparePage.clickExplore()
