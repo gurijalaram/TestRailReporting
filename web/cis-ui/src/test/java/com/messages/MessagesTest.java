@@ -84,6 +84,8 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isCommentContentDisplayed()).isEqualTo(true);
         softAssertions.assertThat(messagesPage.getCommentContent()).isNotEmpty();
 
+        messagesPage.clickOnRead();
+
         softAssertions.assertAll();
     }
 
@@ -128,15 +130,14 @@ public class MessagesTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
 
-        messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+        messagesPage = leftHandNavigationBar.clickMessages();
 
         partsAndAssembliesDetailsPage = messagesPage.clickOnReplies();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
 
-        messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+        messagesPage = leftHandNavigationBar.clickMessages();
+
 
         partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Attribute");
 
@@ -157,7 +158,8 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isFilterConditionTypeDisplayed()).isEqualTo(true);
         softAssertions.assertThat(messagesPage.isFilterValueDisplayed()).isEqualTo(true);
 
-        messagesPage.clickOnRemoveFilter();
+        messagesPage.clickOnRemoveFilter()
+                .clickOnRead();
 
         softAssertions.assertAll();
     }
@@ -207,6 +209,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.getAssignedState()).contains("QA Automation Account 22");
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -246,6 +252,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -285,6 +295,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.getResolveStatus()).contains("resolved");
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -344,9 +358,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).contains("QA Automation Account 23");
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnRead();
     }
 
-    @Ignore("Until 1.2.0 Release")
     @Test
     @TestRail(testCaseId = {"22677","22678","22679"})
     @Description("Verify that user configured message view is saved")
@@ -369,7 +384,7 @@ public class MessagesTest extends TestBase {
                 .clickMessageIconOnCommentSection()
                 .clickOnAttribute()
                 .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("This is a discussion with a mention user @22")
+                .addComment("This is a discussion with a mention user @2")
                 .selectMentionUser("qa-automation-22@apriori.com")
                 .clickComment()
                 .selectCreatedDiscussion();
