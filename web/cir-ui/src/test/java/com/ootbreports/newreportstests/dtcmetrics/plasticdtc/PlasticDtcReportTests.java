@@ -15,7 +15,6 @@ import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,14 +34,9 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1366"})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Report")
     public void testCostMetricInputControlPpc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcTest(
-            miscData,
             partNames,
-            true
+            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -51,14 +45,9 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7403"})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Report")
     public void testCostMetricInputControlFbc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcTest(
-            miscData,
             partNames,
-            true
+            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -67,14 +56,9 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7380"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Report")
     public void testMassMetricInputControlFinishMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcTest(
-            miscData,
             partNames,
-            true
+            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -83,14 +67,9 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"1368"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Report")
     public void testMassMetricInputControlRoughMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcTest(
-            miscData,
             partNames,
-            true
+            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }

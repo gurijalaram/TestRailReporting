@@ -41,13 +41,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7421"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
+            mostCommonPartNames,
+            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -56,13 +52,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7422"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
+            mostCommonPartNames,
+            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -71,13 +63,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7401"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
+            mostCommonPartNames,
+            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -86,13 +74,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7402"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
+            mostCommonPartNames,
+            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -101,18 +85,14 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7682"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Details Report")
     public void testSortOrderManufacturingIssues() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
-        );
         List<String> assertFigures = Arrays.asList(
             "0.0",
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             mostCommonPartNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -121,10 +101,6 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7681"})
     @Description("Verify Sort Order input control functions correctly - Bends- Sheet Metal DTC Details Report")
     public void testSortOrderBends() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.BENDS.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.BRACKET_SHORTENED.getPartName(),
             JasperCirApiPartsEnum.BRACKET_SHORTENED_ISSUES.getPartName(),
@@ -135,9 +111,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.BENDS.getSortOrderEnum()
         );
     }
 
@@ -146,10 +122,6 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7677"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Details Report")
     public void testSortOrderTolerances() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.TOLERANCES.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V2.getPartName(),
@@ -160,9 +132,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
 
@@ -171,10 +143,6 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7678"})
     @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Details Report")
     public void testSortOrderMachiningTime() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_1271576.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V3.getPartName(),
@@ -185,9 +153,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
         );
     }
 
@@ -196,10 +164,6 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7679"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Details Report")
     public void testSortOrderAnnualSpend() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_1271576.getPartName(),
             JasperCirApiPartsEnum.P_3575137.getPartName(),
@@ -210,9 +174,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "8,264,352.31"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
 
@@ -221,10 +185,6 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7680"})
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.DTC_RANK.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.BRACKET_SHORTENED.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
@@ -235,9 +195,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
     }
 
@@ -257,13 +217,10 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3048"})
     @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
-        List<String> miscData = Arrays.asList(
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            mostCommonPartNames,
             "Process Group",
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
-        jasperApiUtils.genericProcessGroupDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
         );
     }
 
@@ -272,18 +229,14 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7534"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreLow() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.LOW.getDtcScoreName()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_0903238.getPartName(),
             JasperCirApiPartsEnum.P_1100149.getPartName(),
             JasperCirApiPartsEnum.P_1684443_OUTRIGGER_CAM.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -292,18 +245,14 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7537"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreMedium() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.MEDIUM.getDtcScoreName()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_3574715.getPartName(),
             JasperCirApiPartsEnum.P_3574688.getPartName(),
             JasperCirApiPartsEnum.P_1684402_TOP_BRACKET.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -312,13 +261,9 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7540"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreHigh() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.HIGH.getDtcScoreName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            mostCommonPartNames
+            mostCommonPartNames,
+            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 }

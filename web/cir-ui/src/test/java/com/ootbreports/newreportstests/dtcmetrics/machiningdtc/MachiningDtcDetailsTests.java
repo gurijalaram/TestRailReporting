@@ -38,13 +38,9 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7416"})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
     public void testCostMetricInputControlPpc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -53,13 +49,9 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7417"})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -68,13 +60,9 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7396"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -83,13 +71,9 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"7397"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }
