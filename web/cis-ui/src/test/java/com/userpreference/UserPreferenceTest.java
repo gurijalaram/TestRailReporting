@@ -79,6 +79,7 @@ public class UserPreferenceTest extends TestBase {
 
         userPreferencePage = new MyUserPage(driver)
                 .selectUserPreference()
+                .selectUnits("Custom")
                 .selectLength("Meter")
                 .selectMass("Gram")
                 .selectTime("Hour")
