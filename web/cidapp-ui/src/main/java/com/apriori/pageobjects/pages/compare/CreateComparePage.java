@@ -85,7 +85,7 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
      * Select the Quick Comparison Option
      */
     public CreateComparePage selectQuickComparison() {
-        quickComparisonButton.click();
+        pageUtils.waitForElementAndClick(quickComparisonButton);
         return this;
     }
 
@@ -93,7 +93,7 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
      * Select the Manual Comparison Option
      */
     public CreateComparePage selectManualComparison() {
-        manualComparisonButton.click();
+        pageUtils.waitForElementAndClick(manualComparisonButton);
         return this;
     }
 
@@ -107,7 +107,7 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
     }
 
     /**
-     * Selects the submit button
+     * Selects the Create button
      *
      * @return new page object
      */
