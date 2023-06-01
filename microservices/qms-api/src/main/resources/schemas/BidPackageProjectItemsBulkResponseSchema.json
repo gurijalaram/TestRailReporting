@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "projectItem": {
+          "type": "array",
+          "items": {
+            "$ref": "BidPackageProjectItemSchema.json"
+          }
+        },
+        "failedProjectItem": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "error"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "projectItem"
+      ],
+      "optional": [
+        "failedProjectItem"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

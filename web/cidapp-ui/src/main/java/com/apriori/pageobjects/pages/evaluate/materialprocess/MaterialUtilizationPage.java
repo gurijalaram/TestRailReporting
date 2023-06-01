@@ -16,6 +16,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * @author cfrith
  */
@@ -29,6 +31,9 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @FindBy(xpath = "//button[.='Material Utilization']")
     private WebElement materialTab;
+
+    @FindBy(xpath = "//span[contains(.,'Material Carbon Factor')]")
+    private List<WebElement> materialCarbonFactor;
 
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
@@ -88,6 +93,16 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
         pageUtils.waitForElementAndClick(stockPanel);
         return new StockPage(driver);
     }
+
+    /**
+     * verify if material carobn is presented on material utilization page
+     * @return true/false
+     */
+    public boolean isMaterialCarbonPresent() {
+        pageUtils.waitForElementsToAppear(materialCarbonFactor);
+        return materialCarbonFactor.size() == 2;
+    }
+
 
     /**
      * Closes current panel

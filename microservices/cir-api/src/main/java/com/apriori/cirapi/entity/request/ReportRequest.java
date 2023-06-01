@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,6 +20,7 @@ public class ReportRequest {
     }
 
     private String reportUnitUri;
+    private Integer reportContainerWidth;
     private Boolean async;
     private Boolean allowInlineScripts;
     private String markupType;

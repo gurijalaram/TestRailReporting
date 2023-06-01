@@ -63,7 +63,7 @@ public class CirUserGuidePage {
      */
     public String getReportsUserGuidePageHeading() {
         pageUtils.waitForElementToAppear(reportsUserGuideTitle);
-        return reportsUserGuideTitle.getAttribute("textContent").trim();
+        return reportsUserGuideTitle.getAttribute("textContent");
     }
 
     /**

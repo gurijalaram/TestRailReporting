@@ -45,12 +45,12 @@ public class CompareToolbar extends MainNavBar {
     }
 
     /**
-     * Create new scenario
+     * Copies a scenario
      *
      * @return new page object
      */
-    public ScenarioPage createScenario() {
-        return new ExploreToolbar(driver).createScenario();
+    public ScenarioPage copyScenario() {
+        return new ExploreToolbar(driver).copyScenario();
     }
 
     /**

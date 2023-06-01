@@ -18,6 +18,15 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
 
+    @FindBy(css = "input[name='j_username']")
+    private WebElement email;
+
+    @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
+    private WebElement adminHomePageWelcomeText;
+
+    @FindBy(xpath = "//div[contains(text(), 'Cost Insight | Admin')]")
+    private WebElement adminHomePageMainText;
+
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
 
@@ -41,6 +50,9 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
 
     @FindBy(id = "help.cost-insight_adm")
     private WebElement adminGuideButton;
+
+    @FindBy(id = "main_logOut_link")
+    private WebElement reportsLogoutOption;
 
     @FindBy(id = "help.scenario-expt")
     private WebElement scenarioExportButton;
@@ -71,7 +83,8 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.isElementDisplayed(adminHomePageWelcomeText);
+        pageUtils.isElementEnabled(adminHomePageWelcomeText);
     }
 
     /**

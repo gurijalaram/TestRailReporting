@@ -88,7 +88,7 @@ public class CIRIntegrationTests extends TestBase {
 
         //Create a Workflow
         MultipleComponentSummary pdfExpectedReportData = new TestDataService().getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
+        ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);
         softAssertions.assertThat(responseWrapper.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(responseWrapper.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);

@@ -21,7 +21,6 @@ import entity.response.AgentConnectionOptions;
 import entity.response.ConnectorInfo;
 import entity.response.NexusAgentItem;
 import entity.response.NexusAgentResponse;
-import enums.CICAgentType;
 import enums.NexusAPIEnum;
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
@@ -172,7 +171,7 @@ public class AgentService {
     public AgentService cleanUnInstall() {
         String executableFile = StringUtils.EMPTY;
         try {
-            channelSftp.cd(AgentConstants.REMOTE_WC_INSTALL_FOLDER);
+            channelSftp.cd(this.getInstallFolder());
             Vector<ChannelSftp.LsEntry> list = channelSftp.ls("*");
             try {
                 executableFile = list.stream()
@@ -184,9 +183,9 @@ public class AgentService {
                 log.warn("UNINSTALL EXECUTABLE FILE NOT FOUND!!!");
             }
             if (!executableFile.isEmpty()) {
-                execute(AgentConstants.REMOTE_WC_INSTALL_FOLDER + File.separator + executableFile + " -q");
+                execute(this.getInstallFolder() + File.separator + executableFile + " -q");
             }
-            if (recursiveFolderDelete(AgentConstants.REMOTE_WC_INSTALL_FOLDER)) {
+            if (recursiveFolderDelete(this.getInstallFolder())) {
                 log.info("AGENT UNINSTALLED AND DELETED THE FOLDER SUCCESSFULLY!!!!");
             }
         } catch (SftpException sftpException) {
@@ -203,24 +202,12 @@ public class AgentService {
     public AgentService searchNexusRepositoryByGroup() {
         Map<String, String> paramMap = new HashMap<>();
         NexusAgentResponse nexusAgentResponse = null;
-        String nexusRepository;
-        String nexusVersion;
         RequestEntity requestEntity;
-        try {
-            nexusRepository = PropertiesContext.get("nexus_repository");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            nexusRepository = PropertiesContext.get("ci-connect.nexus_repository");
-        }
-        try {
-            nexusVersion = PropertiesContext.get("nexus_version").replace("/", ".");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            nexusVersion = PropertiesContext.get("ci-connect.nexus_version");
-        }
-        String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + nexusVersion;
+        String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + PropertiesContext.get("ci-connect.nexus_version");
         String credential = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
         try {
             requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                .inlineVariables(nexusRepository, group)
+                .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                 .headers(new HashMap<String, String>() {
                     {
                         put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
@@ -230,13 +217,14 @@ public class AgentService {
             nexusAgentResponse = (NexusAgentResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
         } catch (NullPointerException nullPointerException) {
             log.error(nullPointerException.getMessage() + "REPOSITORY NOT FOUND IN NEXUS - " + group);
+            throw new IllegalArgumentException(nullPointerException);
         }
 
         try {
             while (nexusAgentResponse.getContinuationToken() != null) {
                 paramMap.put("continuationToken", nexusAgentResponse.getContinuationToken());
                 requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                    .inlineVariables(nexusRepository, group)
+                    .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                     .headers(new HashMap<String, String>() {
                         {
                             put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
@@ -265,7 +253,6 @@ public class AgentService {
      * @return current class object
      */
     public AgentService downloadAgentFile() {
-        Boolean customInstall;
         try {
             agentData.setBaseFolder(String.valueOf(FileResourceUtil.createTempDir(null)).toLowerCase());
             agentData.setAgentZipFolder(agentData.getBaseFolder() + File.separator + StringUtils.substringAfterLast(nexusAgentItem.getName(), "/"));
@@ -274,12 +261,7 @@ public class AgentService {
             log.error("PATH NOT FOUND!!");
         }
 
-        try {
-            customInstall = Boolean.valueOf(PropertiesContext.get("custom_install"));
-        } catch (IllegalArgumentException illegalArgumentException) {
-            customInstall = Boolean.valueOf(PropertiesContext.get("ci-connect.custom_install"));
-        }
-        if (customInstall) {
+        if (Boolean.valueOf(PropertiesContext.get("ci-connect.custom_install"))) {
             NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL.setEndpoint(nexusAgentItem.getAssets().get(0).getDownloadUrl());
             downloadAgent(NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL);
         } else {
@@ -350,12 +332,6 @@ public class AgentService {
                         case "installDirectory=":
                             stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("\n");
                             break;
-                        case "port=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
-                            break;
-                        case "auth-token=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
-                            break;
                         case "url=":
                             stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("\n");
                             break;
@@ -365,23 +341,42 @@ public class AgentService {
                         case "scanRate=":
                             stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("\n");
                             break;
-                        case "reconnectionInterval=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
-                            break;
                         case "agentId=":
                             stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("\n");
+                            break;
+                        case "port=":
+                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
                             break;
                         case "plmType=":
                             stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
                             break;
+                        case "auth-token=":
+                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
+                            break;
+                        case "reconnectionInterval=":
+                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
+                            break;
                         case "hostName=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append(StringUtils.capitalize(agentConnectionOptions.getPlmType())).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
                             break;
                         case "user=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
                             break;
                         case "password=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
+                            break;
+                        case "fscUrl=":
+                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("\n");
+                            break;
+                        case "rootFolderPath=":
+                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("\n");
                             break;
                         default:
                             stringBuilder.append(line).append("\n");
@@ -410,17 +405,17 @@ public class AgentService {
     public AgentService getConnector(String loginSession) {
         webLoginSession = loginSession;
         ConnectorRequest connectorRequestDataBuilder = null;
-        String connectorName;
+        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
         try {
-            connectorName = PropertiesContext.get("connector");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            connectorName = PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".connector");
+            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+        } catch (Exception e) {
+            log.info("CONNECTOR NOT FOUND WITH NAME - " + connectorName);
+            throw new IllegalArgumentException(e);
         }
-        connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
         if (null == connectorInfo) {
-            switch (PropertiesContext.get("agent_type")) {
+            switch (PropertiesContext.get("ci-connect.agent_type")) {
                 case "windchill":
-                    connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData(CICAgentType.WINDCHILL);
+                    connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
                     connectorRequestDataBuilder.setDisplayName(connectorName);
                     ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateConnector(connectorRequestDataBuilder, loginSession);
                     if (responseWrapper.getBody().contains("true")) {
@@ -440,31 +435,33 @@ public class AgentService {
      * @return current class object
      */
     public AgentService getConnectorOptions() {
-        AgentConnectionInfo agentConnectionInfo = null;
-        Integer portNumber;
-        try {
-            portNumber = Integer.valueOf(PropertiesContext.get("port"));
-        } catch (IllegalArgumentException illegalArgumentException) {
-            portNumber = Integer.valueOf(PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".port"));
-        }
-        switch (PropertiesContext.get("agent_type")) {
+        agentConnectionOptions = getBasicConnectorOptions();
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "windchill":
-                agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), webLoginSession);
-                agentConnectionOptions = AgentConnectionOptions.builder()
-                    .agentName(connectorInfo.getName())
-                    .appKey(agentConnectionInfo.getAppKey())
-                    .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
-                    .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
-                    .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
-                    .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
-                    .reconnectionInterval(3)
-                    .authToken("DogCatMonkey")
-                    .port(portNumber)
-                    .installDirectory("C:" + AgentConstants.REMOTE_WC_INSTALL_FOLDER)
-                    .plmUser(agentCredentials.getPlmUser())
-                    .plmPassword(agentCredentials.getPlmPassword())
-                    .hostName("https://consvwc02.apriori.com/")
-                    .build();
+                agentConnectionOptions.setReconnectionInterval(3);
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
+                agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
+                agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.windchill.host_name"));
+                break;
+            case "teamcenter":
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
+                agentConnectionOptions.setPlmUser(PropertiesContext.get("ci-connect.teamcenter.username"));
+                agentConnectionOptions.setPlmPassword(PropertiesContext.get("ci-connect.teamcenter.password"));
+                agentConnectionOptions.setFscUrl(PropertiesContext.get("ci-connect.teamcenter.fsc_url"));
+                agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
+                break;
+            case "filesystem":
+                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
+                agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("customer"))));
+                break;
         }
         return this;
     }
@@ -475,14 +472,47 @@ public class AgentService {
      * @return current class object
      */
     public AgentService installCertificates() {
-        String jreBinDirectory = AgentConstants.REMOTE_WC_INSTALL_FOLDER + File.separator + "jre/bin/";
+        String jreBinDirectory = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                jreBinDirectory = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+                break;
+            case "filesystem":
+                jreBinDirectory = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+                break;
+            default:
+                jreBinDirectory = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
+        }
         try {
             channelSftp.cd(jreBinDirectory);
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + AgentConstants.REMOTE_WC_INSTALL_FOLDER + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + AgentConstants.REMOTE_WC_INSTALL_FOLDER + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
         } catch (Exception e) {
             log.error("FAILED TO IMPORT CERTIFICATES");
+            throw new IllegalArgumentException(e);
         }
+        return this;
+    }
+
+    /**
+     * Restart Agent Service
+     *
+     * @return current class object
+     */
+    public AgentService executeAgentService() {
+        String agentService = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                agentService = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            case "filesystem":
+                agentService = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            default:
+                agentService = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+        }
+        runService(agentService, "stop");
+        runService(agentService, "start");
         return this;
     }
 
@@ -493,12 +523,7 @@ public class AgentService {
      */
     public ConnectorInfo getConnectorStatusInfo() {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(5);
-        String connectorName;
-        try {
-            connectorName = PropertiesContext.get("connector");
-        } catch (IllegalArgumentException illegalArgumentException) {
-            connectorName = PropertiesContext.get("ci-connect." + PropertiesContext.get("agent_type") + ".connector");
-        }
+        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
         ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
         try {
             while (!(connectorInfo.getConnectionStatus().equals("Connected to PLM"))) {
@@ -517,13 +542,41 @@ public class AgentService {
     }
 
     /**
+     * start agent service
+     *
+     * @param agentService   service Name
+     * @param serviceRunType (start, stop or restart)
+     */
+    private void runService(String agentService, String serviceRunType) {
+        try {
+            channelSftp.cd(agentService);
+            switch (serviceRunType) {
+                case "start":
+                    execute(agentService + File.separator + String.format("nssm start \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+                case "stop":
+                    execute(agentService + File.separator + String.format("nssm stop \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+                case "restart":
+                    execute(agentService + File.separator + String.format("nssm restart \"aPriori Agent - %s\"", StringUtils.substringAfterLast(agentService, "/")));
+                    break;
+            }
+        } catch (Exception e) {
+            log.error("FAILED TO RUN SERVICE!!");
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    /**
      * Execute coommand on remote VM machine using JSch open channel sftp connection
      *
      * @param command command to execute
      */
-    private void execute(String command) {
+    private String execute(String command) {
         int exitStatus = -1;
         StringBuilder stringBuilder = new StringBuilder();
+        String status = StringUtils.EMPTY;
+        byte[] buffer = new byte[1024];
         try {
             channel = (Channel) jSchSession.openChannel("exec");
             ((ChannelExec) channel).setCommand(command);
@@ -542,13 +595,15 @@ public class AgentService {
                     break;
                 }
             }
-            log.info(stringBuilder.toString());
+            status = (stringBuilder.toString().contains("\u0000")) ? stringBuilder.toString().replaceAll("\u0000", "") : stringBuilder.toString();
+            log.info("COMMAND EXECUTION STATUS : " + status);
             log.info(String.format("Exit status of the execution: %s ", (exitStatus == 0) ? exitStatus + "(FINISHED EXECUTION)" : exitStatus + "(EXECUTION FAILED)"));
         } catch (JSchException e) {
             log.error(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+        return status;
     }
 
     /**
@@ -719,5 +774,43 @@ public class AgentService {
                 "DESTINATION FOLDER (%s) ON REMOTE SERVER NOT FOUND!!",
                 destinationPath));
         }
+    }
+
+    /**
+     * Get installation folder for each customer and agent tpe
+     *
+     * @return installation path
+     */
+    private String getInstallFolder() {
+        String installFolder = StringUtils.EMPTY;
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "windchill":
+                installFolder = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            case "teamcenter":
+                installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+            case "filesystem":
+                installFolder = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                break;
+        }
+        return installFolder;
+    }
+
+    /**
+     * Get basic connector options from connector
+     *
+     * @return AgentConnectionOptions class object
+     */
+    private AgentConnectionOptions getBasicConnectorOptions() {
+        AgentConnectionInfo agentConnectionInfo = CicApiTestUtil.getAgentConnectorOptions(connectorInfo.getName(), webLoginSession);
+        return AgentConnectionOptions.builder()
+            .agentName(connectorInfo.getName())
+            .appKey(agentConnectionInfo.getAppKey())
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
+            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
+            .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
+            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
+            .build();
     }
 }

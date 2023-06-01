@@ -213,6 +213,9 @@
           },
           "processIdentity": {
             "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         },
         "optional": [
@@ -233,7 +236,8 @@
           "type",
           "gcds",
           "attributeCategory",
-          "processIdentity"
+          "processIdentity",
+          "description"
         ]
       }
     },

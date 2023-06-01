@@ -91,6 +91,7 @@ public class ScenarioItem {
     private Boolean iterationHasCustomImage;
     private Boolean iterationHasWebImage;
     private Boolean iterationIsCadConnected;
+    private ScenarioGcd scenarioGcd;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime iterationCreatedAt;
@@ -115,7 +116,6 @@ public class ScenarioItem {
     private List<Object> scenarioDesignInvestigations;
     private List<Object> scenarioDesignIssues;
     private List<Object> scenarioDesignNotices;
-    private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
     private List<Object> scenarioProcesses;
     private String scenarioStatus;
@@ -135,8 +135,6 @@ public class ScenarioItem {
     public static class PartNestingDiagram {
     }
 
-    public static class ScenarioGcd {
-    }
 
     public static class ScenarioMetadata {
     }

@@ -31,6 +31,9 @@
         },
         "filename": {
           "type": "string"
+        },
+        "configurationName": {
+          "type": "string"
         }
       },
       "required": [
@@ -44,7 +47,8 @@
       "optional": [
         "filename",
         "updatedAt",
-        "updatedBy"
+        "updatedBy",
+        "configurationName"
       ]
     }
   },

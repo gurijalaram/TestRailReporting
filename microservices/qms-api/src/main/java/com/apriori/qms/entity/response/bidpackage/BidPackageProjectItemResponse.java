@@ -11,5 +11,9 @@ import lombok.Data;
 @Schema(location = "BidPackageProjectItemResponseSchema.json")
 public class BidPackageProjectItemResponse {
     private String identity;
+    private String createdAt;
+    private String createdBy;
+    private String bidPackageIdentity;
+    private String projectIdentity;
     private BidPackageItem bidPackageItem;
 }

@@ -19,7 +19,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsSmokeTest;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -56,9 +56,9 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"7133"})
-    @Description("Validate report is available by search")
+    @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.COMPONENT_COST.getReportName());
@@ -112,7 +112,7 @@ public class ComponentCostReportTests extends TestBase {
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
         componentCostReportPage.selectComponent("TOP-LEVEL")
-                .clickOk(true, ComponentCostReportPage.class)
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectPartName("TOP-LEVEL");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("TOP-LEVEL")));
@@ -139,7 +139,7 @@ public class ComponentCostReportTests extends TestBase {
         componentSelectAsserts(true);
         componentSelectAsserts(false);
 
-        componentCostReportPage.clickOk(true, ComponentCostReportPage.class)
+        componentCostReportPage.clickOk(ComponentCostReportPage.class)
                 .waitForCorrectPartName("3538968");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
@@ -183,14 +183,14 @@ public class ComponentCostReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
                 .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, ComponentCostReportPage.class)
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
 
         componentCostReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, ComponentCostReportPage.class)
+                .clickOk(ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostGBP = componentCostReportPage.getLifetimeCost();
@@ -200,7 +200,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"3328"})
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {

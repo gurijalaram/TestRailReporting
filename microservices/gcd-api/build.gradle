@@ -1,0 +1,21 @@
+repositories {
+    mavenCentral()
+}
+
+//This block allow to copy resources from apibase into current module, so we have an access to them by .getResource();
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(':apibase').sourceSets.main.resources
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation project(':apibase')
+    implementation project(':utils')
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}

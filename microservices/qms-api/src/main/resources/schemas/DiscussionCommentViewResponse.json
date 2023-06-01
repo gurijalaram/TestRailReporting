@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "discussionIdentity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "publishedAt": {
+          "type": "string"
+        },
+        "commentView": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "participantIdentity": {
+                  "type": "string"
+                },
+                "userCustomerIdentity": {
+                  "type": "string"
+                },
+                "userIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "participantIdentity",
+                "userCustomerIdentity",
+                "userIdentity"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "participantIdentity": {
+                  "type": "string"
+                },
+                "userCustomerIdentity": {
+                  "type": "string"
+                },
+                "userIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "participantIdentity",
+                "userCustomerIdentity",
+                "userIdentity"
+              ]
+            }
+          ]
+        },
+        "mentionedUsers": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "content",
+        "discussionIdentity",
+        "status",
+        "publishedAt",
+        "commentView",
+        "mentionedUsers"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

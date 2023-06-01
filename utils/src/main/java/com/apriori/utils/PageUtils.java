@@ -1174,6 +1174,17 @@ public class PageUtils {
     }
 
     /**
+     * Get report link element
+     *
+     * @return WebElement
+     */
+    public WebElement getReportElement(String reportName) {
+        By reportLinkLocator = By.xpath(String.format("//a[contains(text(), '%s')]", reportName));
+        waitForElementToAppear(reportLinkLocator);
+        return driver.findElement(reportLinkLocator);
+    }
+
+    /**
      * Gets URL to assert against
      *
      * @return String

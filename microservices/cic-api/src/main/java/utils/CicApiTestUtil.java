@@ -1,7 +1,5 @@
 package utils;
 
-import com.apriori.utils.DateFormattingUtils;
-import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
@@ -38,7 +36,6 @@ import entity.response.PlmParts;
 import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
-import enums.CICAgentType;
 import enums.CICPartSelectionType;
 import enums.CICReportType;
 import enums.PlmPartsSearch;
@@ -55,6 +52,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -194,9 +192,14 @@ public class CicApiTestUtil extends TestBase {
      * @param workflowData - deserialized workflowdata
      * @return response of created work flow string
      */
-    public static ResponseWrapper<String> CreateWorkflow(String session, String workflowData) {
+    public static ResponseWrapper<String> createWorkflow(String session, String workflowData) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(initHeadersWithJSession(session))
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Accept", "*/*");
+                    put("cookie", String.format("JSESSIONID=%s", session));
+                }
+            })
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -209,9 +212,14 @@ public class CicApiTestUtil extends TestBase {
      * @param session                    - Login to CI-Connect GUI to get JSession
      * @return ResponseWrapper<String>
      */
-    public static ResponseWrapper<String> CreateWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
+    public static ResponseWrapper<String> createWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
-            .headers(initHeadersWithJSession(session))
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Accept", "*/*");
+                    put("cookie", String.format("JSESSIONID=%s", session));
+                }
+            })
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).post();
@@ -225,6 +233,9 @@ public class CicApiTestUtil extends TestBase {
      * @return response
      */
     public static ResponseWrapper<String> deleteWorkFlow(String session, JobDefinition jobDefinition) {
+        if (jobDefinition.getJobDefinition() == null) {
+            return null;
+        }
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
             .headers(initHeadersWithJSession(session))
             .body(jobDefinition)
@@ -254,7 +265,7 @@ public class CicApiTestUtil extends TestBase {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Accept", "application/json");
-        header.put("Authorization", PropertiesContext.get("${env}.ci-connect.agent_api_authorization_key"));
+        header.put("Authorization", PropertiesContext.get("ci-connect.authorization_key"));
         return header;
     }
 
@@ -286,7 +297,13 @@ public class CicApiTestUtil extends TestBase {
      * @return customer
      */
     public static String getAgent() {
-        return PropertiesContext.get("${customer}.ci-connect.plm_agent_id");
+        String agentName = StringUtils.EMPTY;
+        try {
+            agentName = PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.agent_name");
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        }
+        return agentName;
     }
 
     /**
@@ -400,11 +417,16 @@ public class CicApiTestUtil extends TestBase {
      * @return response class type
      */
     public static <T> T getCicAgentWorkflowJobPartsResult(String workFlowIdentity, String jobIdentity, String partIdentity, Class<T> responseClass, Integer httpStatus) {
+        T responseClassObject = null;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, responseClass)
             .inlineVariables(workFlowIdentity, jobIdentity, partIdentity)
             .expectedResponseCode(httpStatus);
         requestEntity.headers(setupHeader());
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        responseClassObject = (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        if (Objects.isNull(responseClassObject)) {
+            throw new RuntimeException(HTTPRequest.build(requestEntity).get().toString());
+        }
+        return responseClassObject;
     }
 
     /**
@@ -435,7 +457,7 @@ public class CicApiTestUtil extends TestBase {
         }
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_PLM_WC_SEARCH, PlmParts.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
             {
-                put("Authorization", "Basic " + PropertiesContext.get("${env}.ci-connect.plm_wc_api_token"));
+                put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
@@ -484,7 +506,7 @@ public class CicApiTestUtil extends TestBase {
                 .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
                 .build());
 
-            List<PartData> partDataList = PlmPartsUtil.getPlmPartsFromCloud(numOfParts);
+            List<PartData> partDataList = new PlmPartsUtil().getPlmPartsFromCloud(numOfParts);
             part = new ArrayList<>();
             for (int i = 0; i < numOfParts; i++) {
                 part.add(WorkflowPart.builder()
@@ -536,17 +558,18 @@ public class CicApiTestUtil extends TestBase {
     /**
      * Get Connector request base data based on CICAgentType (Windchill, Team_Center or File_system)
      *
-     * @param cicAgentType CICAgentType (Windchill, Team_Center or File_system)
      * @return ConnectorRequest java class object
      */
-    public static ConnectorRequest getConnectorBaseData(CICAgentType cicAgentType) {
+    public static ConnectorRequest getConnectorBaseData() {
         ConnectorRequest connectorRequestDataBuilder = null;
-        switch (cicAgentType.getAgentType()) {
-            default:
-                connectorRequestDataBuilder = new TestDataService().getTestData("CicCreateConnectorData.json", ConnectorRequest.class);
+        switch (PropertiesContext.get("ci-connect.agent_type")) {
+            case "teamcenter":
+                connectorRequestDataBuilder = new TestDataService().getTestData("ConnectorTeamCenterData.json", ConnectorRequest.class);
                 connectorRequestDataBuilder.setCustomer(getCustomerName());
-                connectorRequestDataBuilder.setDisplayName("WC-" + DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMdd));
-                connectorRequestDataBuilder.setAgentType(cicAgentType.getAgentType());
+                break;
+            default:
+                connectorRequestDataBuilder = new TestDataService().getTestData("ConnectorWindchillData.json", ConnectorRequest.class);
+                connectorRequestDataBuilder.setCustomer(getCustomerName());
         }
         return connectorRequestDataBuilder;
     }
@@ -651,6 +674,38 @@ public class CicApiTestUtil extends TestBase {
     }
 
     /**
+     * Get Workflow job part result with matching revision number
+     *
+     * @param agentWorkflowJobResults
+     * @param revisionNumber
+     * @return AgentWorkflowJobPartsResult
+     */
+    public static AgentWorkflowJobPartsResult getMatchedRevisionWorkflowPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String revisionNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with revision (%s)", revisionNumber));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getRevisionNumber().equals(revisionNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with revision " + revisionNumber));
+    }
+
+    /**
+     * @param agentWorkflowJobResults
+     * @param plmPartNumber
+     * @return
+     */
+    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String plmPartNumber) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with plm part number (%s)", plmPartNumber));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getPartNumber().equals(plmPartNumber))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
+    }
+
+    /**
      * set costing put data for workflow data request builder
      *
      * @param workflowRequestDataBuilder
@@ -686,7 +741,9 @@ public class CicApiTestUtil extends TestBase {
             {
                 put("Accept", "*/*");
                 put("cookie", String.format("JSESSIONID=%s", session));
+                put("Accept", "application/json");
             }
         };
     }
+
 }

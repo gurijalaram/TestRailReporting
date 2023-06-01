@@ -1,13 +1,14 @@
 package com.apriori.cis.tests;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cisapi.controller.CisBidPackageItemResources;
+import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
-import com.apriori.cisapi.utils.CisBidPackageResources;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
@@ -27,18 +28,17 @@ public class CisBidPackageItemTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
-    private static UserCredentials currentUser = UserUtil.getUser();
-    private static String bidPackageName;
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static ScenarioItem scenarioItem;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageItemResponse = CisBidPackageResources.createBidPackageItem(
-            CisBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+        bidPackageItemResponse = CisBidPackageItemResources.createBidPackageItem(
+            CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(),
             currentUser,
@@ -49,29 +49,24 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14599", "14604"})
     @Description("Create and delete Bid Package Item and verify bid package item is removed")
     public void testCreateBidPackageItemWithValidData() {
-        String bPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-
-        BidPackageResponse bidPackage = CisBidPackageResources.createBidPackage(bPackageName, currentUser);
-
-        BidPackageItemResponse bidPackageItem = CisBidPackageResources.createBidPackageItem(
-            CisBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        BidPackageResponse bidPackage = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
+        BidPackageItemResponse bidPackageItem = CisBidPackageItemResources.createBidPackageItem(
+            CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackage.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-
-        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageResources.getBidPackageItem(
+        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageItemResources.getBidPackageItem(
             bidPackage.getIdentity(),
             bidPackageItem.getIdentity(),
             currentUser,
             BidPackageItemResponse.class, HttpStatus.SC_OK);
-
         softAssertions.assertThat(updateBidPackageItemResponse.getBidPackageIdentity()).isEqualTo(bidPackage.getIdentity());
-
-        CisBidPackageResources.deleteBidPackageItem(bidPackage.getIdentity(),
+        CisBidPackageItemResources.deleteBidPackageItem(bidPackage.getIdentity(),
             bidPackageItem.getIdentity(), currentUser);
 
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.getBidPackageItem(
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.getBidPackageItem(
             bidPackage.getIdentity(),
             bidPackageItem.getIdentity(),
             currentUser,
@@ -94,7 +89,7 @@ public class CisBidPackageItemTest extends TestUtil {
                 .build())
             .build();
 
-        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageResources.updateBidPackageItem(
+        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageItemResources.updateBidPackageItem(
             bidPackageItemRequestBuilder,
             bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
@@ -113,7 +108,7 @@ public class CisBidPackageItemTest extends TestUtil {
                 .build())
             .build();
 
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.updateBidPackageItem(
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.updateBidPackageItem(
             bidPackageItemRequestBuilder,
             "Invalid bidPackageIdentity",
             "Invalid bidPackageItemIdentity",
@@ -128,10 +123,10 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14604"})
     @Description("Delete valid Bid Package Item")
     public void testDeleteBidPackageItem() {
-        CisBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
+        CisBidPackageItemResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(), currentUser);
 
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.getBidPackageItem(
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.getBidPackageItem(
             bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
             currentUser,
@@ -146,7 +141,7 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14605"})
     @Description("Delete Invalid Bid Package Item")
     public void testDeleteBidPackageItemWithInvalidData() {
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.deleteBidPackageItem(
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.deleteBidPackageItem(
             "Invalid bidPackageIdentity",
             "Invalid bidPackageItemIdentity",
             HttpStatus.SC_BAD_REQUEST, currentUser, CisErrorMessage.class);
@@ -158,7 +153,7 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14602"})
     @Description("Get Bid package Item With valid Data")
     public void testGetBidPackageItem() {
-        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageResources.getBidPackageItem(
+        BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageItemResources.getBidPackageItem(
             bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
             currentUser,
@@ -171,7 +166,7 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14603", "14607"})
     @Description("Get Bid Package Item with invalid identity")
     public void testGetBidPackageItemWithInvalidData() {
-        CisErrorMessage cisInvalidErrorMessage = CisBidPackageResources.getBidPackageItem(
+        CisErrorMessage cisInvalidErrorMessage = CisBidPackageItemResources.getBidPackageItem(
             "Invalid bidPackageIdentity",
             "Invalid bidPackageItemIdentity",
             currentUser,
@@ -186,7 +181,7 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14606"})
     @Description("Find list of  Bid Package Items and verify pagination")
     public void testGetBidPackageItems() {
-        BidPackageItemsResponse getBidPackageItemsResponse = CisBidPackageResources.getBidPackageItems(
+        BidPackageItemsResponse getBidPackageItemsResponse = CisBidPackageItemResources.getBidPackageItems(
             bidPackageResponse.getIdentity(),
             currentUser,
             BidPackageItemsResponse.class, HttpStatus.SC_OK);
@@ -199,7 +194,7 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13903"})
     @Description("Get Bid package Item with invalid data")
     public void testGetBidPackageItemsByInvalidData() {
-        CisErrorMessage cisInvalidErrorMessage = CisBidPackageResources.getBidPackageItems(
+        CisErrorMessage cisInvalidErrorMessage = CisBidPackageItemResources.getBidPackageItems(
             "Invalid bidPackageIdentity",
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
@@ -211,8 +206,8 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14597"})
     @Description("Create Bid Package Items with Invalid BidPackage ID")
     public void testCreateBidPackItemWithInvalidBidPackageIdentity() {
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.createBidPackageItem(
-            CisBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.createBidPackageItem(
+            CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             "INVALID",
             currentUser,
@@ -225,8 +220,8 @@ public class CisBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"14598"})
     @Description("Create Bid Package Items with Invalid Data")
     public void testCreateBidPackItemWithInvalidData() {
-        CisErrorMessage cisErrorMessage = CisBidPackageResources.createBidPackageItem(
-            CisBidPackageResources.bidPackageItemRequestBuilder("Invalid Component ID",
+        CisErrorMessage cisErrorMessage = CisBidPackageItemResources.createBidPackageItem(
+            CisBidPackageItemResources.bidPackageItemRequestBuilder("Invalid Component ID",
                 "Invalid Scenario ID", "Invalid Iteration ID"),
             bidPackageResponse.getIdentity(),
             currentUser,

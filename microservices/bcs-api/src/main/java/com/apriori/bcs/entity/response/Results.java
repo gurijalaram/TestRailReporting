@@ -43,10 +43,7 @@ public class Results {
     private Double height;
     private Double laborCost;
     private Double laborTime;
-
-
     private String lastCosted;
-
     private Double length;
     private Double lifetimeCost;
     private Double logisticsCost;

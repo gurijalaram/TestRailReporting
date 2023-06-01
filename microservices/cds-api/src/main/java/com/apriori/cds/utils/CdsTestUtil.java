@@ -13,6 +13,8 @@ import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.request.AccessAuthorizationRequest;
 import com.apriori.cds.objects.request.AccessControlRequest;
+import com.apriori.cds.objects.request.ActivateLicense;
+import com.apriori.cds.objects.request.ActivateLicenseRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.ApplicationInstallationRequest;
 import com.apriori.cds.objects.request.CASCustomerRequest;
@@ -364,7 +366,7 @@ public class CdsTestUtil extends TestUtil {
      * @param workOrderStatusUpdatesEnabled - boolean for feature
      * @return new object
      */
-    public ResponseWrapper<InstallationItems> addInstallationWithFeature(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity,boolean workOrderStatusUpdatesEnabled) {
+    public ResponseWrapper<InstallationItems> addInstallationWithFeature(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity, boolean workOrderStatusUpdatesEnabled) {
         InstallationItems installationItems = JsonManager.deserializeJsonFromInputStream(
             FileResourceUtil.getResourceFileStream("InstallationItems" + ".json"), InstallationItems.class);
         installationItems.setRealm(realmKey);
@@ -375,7 +377,7 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("installation",installationItems);
+            .body("installation", installationItems);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -385,9 +387,9 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> addFeature(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+    public ResponseWrapper<FeatureResponse> addFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                     .features(Features.builder()
@@ -403,9 +405,9 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return ErrorResponse
      */
-    public ErrorResponse addFeatureWrongResponse(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+    public ErrorResponse addFeatureWrongResponse(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
@@ -423,9 +425,9 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
@@ -441,9 +443,9 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return new ErrorResponse
      */
-    public ErrorResponse updateFeatureWrongResponse(String customerIdentity, String deploymentIdentity,String installationIdentity,boolean workOrderStatusUpdatesEnabled) {
+    public ErrorResponse updateFeatureWrongResponse(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity,installationIdentity)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
@@ -608,7 +610,7 @@ public class CdsTestUtil extends TestUtil {
                         .description("Test License")
                         .apVersion("2020 R1")
                         .createdBy("#SYSTEM00000")
-                        .active("true")
+                        .active("false")
                         .license(String.format(Constants.CDS_LICENSE, customerName, siteId, licenseId, subLicenseId))
                         .licenseTemplate(String.format(Constants.CDS_LICENSE_TEMPLATE, customerName))
                         .build())
@@ -616,6 +618,28 @@ public class CdsTestUtil extends TestUtil {
 
         return HTTPRequest.build(requestEntity).post();
 
+    }
+
+    /**
+     * Post request to activate license
+     *
+     * @param customerIdentity - the customer id
+     * @param siteIdentity - the site id
+     * @param licenseIdentity - the license identity
+     * @param userIdentity - the user identity
+     */
+    public void activateLicense(String customerIdentity, String siteIdentity, String licenseIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
+            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(ActivateLicenseRequest.builder()
+                .license(ActivateLicense.builder()
+                    .active(true)
+                    .updatedBy(userIdentity)
+                    .build())
+                .build());
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -845,7 +869,7 @@ public class CdsTestUtil extends TestUtil {
      * Uploads batch users file via CAS API
      *
      * @param customerIdentity - customerIdentity
-    //  * @param fileName         - name of file
+     * @param fileName         - name of file
      * @return new object
      */
     public ResponseWrapper<PostBatch> addInvalidBatchFile(String customerIdentity, String fileName) {
@@ -867,7 +891,7 @@ public class CdsTestUtil extends TestUtil {
      * @param userIdentity     - user identity
      * @return new object
      */
-    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity,String role) {
+    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity, String role) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -887,7 +911,7 @@ public class CdsTestUtil extends TestUtil {
      * @param userIdentity     - user identity
      * @return new object
      */
-    public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity,String role) {
+    public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity, String role) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("role",

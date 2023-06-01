@@ -20,4 +20,7 @@ public class UserProfile {
     private String createdBy;
     private String givenName;
     private String familyName;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
 }

@@ -15,6 +15,7 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
     BID_PACKAGE_PROJECT("bid-packages/%s/projects/%s"),
     BID_PACKAGE_PROJECT_USERS("bid-packages/%s/projects/%s/project-users"),
     BID_PACKAGE_PROJECT_USER("bid-packages/%s/projects/%s/project-users/%s"),
+    BID_PACKAGE_PROJECT_ITEM_USERS("projects/%s/project-items/%s/project-users"),
     BID_PACKAGE_PROJECT_ITEMS("bid-packages/%s/projects/%s/project-items"),
     BID_PACKAGE_PROJECT_ITEM("bid-packages/%s/projects/%s/project-items/%s"),
     BID_PACKAGE_ITEMS("bid-packages/%s/bid-package-items"),
@@ -39,7 +40,9 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
 
     USERS_CURRENT_EXTENDED_PREFERENCES("users/current/extended-preferences"),
 
-    USERS_EXTENDED_PREFERENCES("users/extended-preferences");
+    USERS_EXTENDED_PREFERENCES("users/extended-preferences"),
+
+    USER_ASSIGNED_COMPONENTS("components/already-assign-components");
 
     private final String endpoint;
 

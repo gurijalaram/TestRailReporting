@@ -46,10 +46,12 @@ public class CicAgentJobPartResultTest extends TestBase {
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
-        plmPartData = PlmPartsUtil.getPlmPartData();
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser())
+            .navigateToUserMenu()
+            .getWebSession();
+        plmPartData = new PlmPartsUtil().getPlmPartData();
         workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        createWorkflowResponse = CicApiTestUtil.CreateWorkflow(workflowRequestDataBuilder, loginSession);
+        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, loginSession);
 
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
     }
@@ -402,7 +404,7 @@ public class CicAgentJobPartResultTest extends TestBase {
     public void testGetPartResultWithDeletedWorkFlow() {
         JobDefinition jDData = CicApiTestUtil.getJobDefinitionData();
         WorkflowRequest wfrRestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        ResponseWrapper<String> createWfResponse = CicApiTestUtil.CreateWorkflow(wfrRestDataBuilder, loginSession);
+        ResponseWrapper<String> createWfResponse = CicApiTestUtil.createWorkflow(wfrRestDataBuilder, loginSession);
 
         softAssertions.assertThat(createWfResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWfResponse.getBody()).contains(">true<");
@@ -436,7 +438,7 @@ public class CicAgentJobPartResultTest extends TestBase {
     public void testGetWorkflowJobResultPartSelectionQuery() {
         JobDefinition jdData = CicApiTestUtil.getJobDefinitionData();
         WorkflowRequest wfrQueryDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.QUERY, false);
-        ResponseWrapper<String> cwfResponse = CicApiTestUtil.CreateWorkflow(wfrQueryDataBuilder, loginSession);
+        ResponseWrapper<String> cwfResponse = CicApiTestUtil.createWorkflow(wfrQueryDataBuilder, loginSession);
         softAssertions.assertThat(cwfResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(cwfResponse.getBody()).contains(">true<");
         AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());

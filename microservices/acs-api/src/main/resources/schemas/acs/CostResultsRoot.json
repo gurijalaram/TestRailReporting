@@ -4639,6 +4639,25 @@
                     "supportedSerializedType"
                   ]
                 },
+                "consumableProcessCarbon": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "unitTypeName": {
+                      "type": "string"
+                    },
+                    "supportedSerializedType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "unitTypeName",
+                    "supportedSerializedType"
+                  ]
+                },
                 "rentCost": {
                   "type": "object",
                   "properties": {
@@ -4943,6 +4962,7 @@
                 "numScrapParts",
                 "lossInsuranceFactor",
                 "dtcMessagesCount",
+                "consumableProcessCarbon",
                 "rentCost",
                 "toolingCostPerPart",
                 "installationCost",

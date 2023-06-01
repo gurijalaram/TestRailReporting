@@ -15,8 +15,10 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -82,6 +84,8 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isCommentContentDisplayed()).isEqualTo(true);
         softAssertions.assertThat(messagesPage.getCommentContent()).isNotEmpty();
 
+        messagesPage.clickOnRead();
+
         softAssertions.assertAll();
     }
 
@@ -126,15 +130,14 @@ public class MessagesTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
 
-        messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+        messagesPage = leftHandNavigationBar.clickMessages();
 
         partsAndAssembliesDetailsPage = messagesPage.clickOnReplies();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
 
-        messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+        messagesPage = leftHandNavigationBar.clickMessages();
+
 
         partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Attribute");
 
@@ -155,7 +158,8 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isFilterConditionTypeDisplayed()).isEqualTo(true);
         softAssertions.assertThat(messagesPage.isFilterValueDisplayed()).isEqualTo(true);
 
-        messagesPage.clickOnRemoveFilter();
+        messagesPage.clickOnRemoveFilter()
+                .clickOnRead();
 
         softAssertions.assertAll();
     }
@@ -199,12 +203,16 @@ public class MessagesTest extends TestBase {
                 .clickOnUnread()
                 .clickOnFilter()
                 .clickOnAddCondition()
-                .selectAssigneeToFilter("QA Automation Account 22")
+                .selectAssigneeToFilter("qa-automation-22@apriori.com")
                 .clickOnFilteredDiscussion();
 
         softAssertions.assertThat(messagesPage.getAssignedState()).contains("QA Automation Account 22");
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -244,6 +252,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -283,6 +295,10 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.getResolveStatus()).contains("resolved");
 
         softAssertions.assertAll();
+
+        messagesPage.clickOnActiveFilter()
+                .clickOnRemoveFilter()
+                .clickOnRead();
     }
 
     @Test
@@ -340,6 +356,60 @@ public class MessagesTest extends TestBase {
         messagesPage.selectAUserToAssign("QA Automation Account 23");
 
         softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).contains("QA Automation Account 23");
+
+        softAssertions.assertAll();
+
+        messagesPage.clickOnRead();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22677","22678","22679"})
+    @Description("Verify that user configured message view is saved")
+    public void testSaveConfiguredMessageView() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMessageIconOnCommentSection()
+                .clickOnAttribute()
+                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+                .addComment("This is a discussion with a mention user @2")
+                .selectMentionUser("qa-automation-22@apriori.com")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        messagesPage = leftHandNavigationBar.clickMessages()
+                .clickOnUnread()
+                .clickOnFilter()
+                .clickOnAddCondition()
+                .selectMentionedUserToFilter("QA Automation Account 22")
+                .clickOnFilteredDiscussion();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Subject");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+
+        messagesPage = leftHandNavigationBar.clickMessages();
+
+        softAssertions.assertThat(messagesPage.isAddedFilterDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
+
+        messagesPage.resetToDefaultConfiguration();
 
         softAssertions.assertAll();
     }

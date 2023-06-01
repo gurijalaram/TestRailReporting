@@ -21,7 +21,8 @@
       ],
       "optional": [
       "customerIdentity",
-      "siteIdentity"
+      "siteIdentity",
+      "updatedBy"
       ],
       "properties": {
         "identity": {

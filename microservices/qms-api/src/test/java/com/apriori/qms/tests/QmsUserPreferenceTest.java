@@ -19,14 +19,12 @@ import org.junit.Test;
 public class QmsUserPreferenceTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
-
-    UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
     }
-
 
     @Test
     @TestRail(testCaseId = {"16854"})
@@ -44,7 +42,6 @@ public class QmsUserPreferenceTest extends TestUtil {
         UserPreferenceRequest userPreferenceRequestBuilder = UserPreferenceRequest.builder()
             .userPreferences(UserPreferenceParameters.builder().avatarColor("#FF015").build())
             .build();
-
         UserPreferenceResponse userPreferenceResponse =
             QmsUserPreferenceResources.updateUserPreference(userPreferenceRequestBuilder, UserPreferenceResponse.class, currentUser, HttpStatus.SC_OK);
         softAssertions.assertThat(userPreferenceResponse.getAvatarColor())
@@ -55,8 +52,7 @@ public class QmsUserPreferenceTest extends TestUtil {
     @TestRail(testCaseId = {"16856"})
     @Description("Verify that user can delete user preference")
     public void verifyDeleteUserPreference() {
-        UserPreferenceResponse userPreferenceResponse =
-            QmsUserPreferenceResources.deleteUserPreference(null, currentUser, HttpStatus.SC_NO_CONTENT);
+        QmsUserPreferenceResources.deleteUserPreference(currentUser, HttpStatus.SC_NO_CONTENT);
     }
 
     @After

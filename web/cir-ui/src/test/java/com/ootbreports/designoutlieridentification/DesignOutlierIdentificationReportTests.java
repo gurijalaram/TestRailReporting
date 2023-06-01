@@ -18,6 +18,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
 import java.math.BigDecimal;
@@ -185,7 +186,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(testCaseId = {"2006"})
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {
@@ -195,10 +196,10 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
                 .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .clickOk(true, GenericReportPage.class);
+                .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
+                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3")
         );
         for (int i = 0; i < 2; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
@@ -207,6 +208,6 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 "FBC Value"
         );
 
-        assertThat(fbcValue.compareTo(new BigDecimal("9883.65")), is(equalTo(0)));
+        assertThat(fbcValue.compareTo(new BigDecimal("10429.19")), is(equalTo(0)));
     }
 }

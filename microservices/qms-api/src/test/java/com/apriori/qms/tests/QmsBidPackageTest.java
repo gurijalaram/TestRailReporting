@@ -10,8 +10,8 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackagesResponse;
-import com.apriori.qms.entity.response.bidpackage.QmsErrorMessage;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -36,11 +36,10 @@ public class QmsBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private static BidPackageItemResponse bidPackageItemResponse;
     private static ScenarioItem scenarioItem;
-    UserCredentials currentUser = UserUtil.getUser();
     private static String bidPackageName;
     private static String userContext;
+    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -60,10 +59,11 @@ public class QmsBidPackageTest extends TestUtil {
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
         QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),
-            QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(),
+            ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
+        softAssertions.assertThat(qmsErrorMessageResponse.getMessage())
+            .contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
     }
 
     @Test
@@ -72,16 +72,17 @@ public class QmsBidPackageTest extends TestUtil {
     public void createBidPackageNameMoreThan64() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
-                .description("descripton")
+                .description("description")
                 .name(RandomStringUtils.randomAlphabetic(70))
                 .status("NEW")
                 .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                 .build())
             .build();
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 64 characters");
+        softAssertions.assertThat(qmsErrorMessageResponse.getMessage())
+            .contains("should not be more than 64 characters");
     }
 
     @Test
@@ -90,14 +91,14 @@ public class QmsBidPackageTest extends TestUtil {
     public void createBidPackageEmptyName() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
-                .description("descripton")
+                .description("description")
                 .name("")
                 .status("NEW")
                 .assignedTo(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
                 .build())
             .build();
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'name' should not be null");
     }
@@ -121,9 +122,10 @@ public class QmsBidPackageTest extends TestUtil {
 
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
-        QmsErrorMessage bidPackageErrorResponse = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        ApwErrorMessage bidPackageErrorResponse = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
 
-        softAssertions.assertThat(bidPackageErrorResponse.getMessage()).contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity() + "'");
+        softAssertions.assertThat(bidPackageErrorResponse.getMessage())
+            .contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity() + "'");
     }
 
     @Test
@@ -160,9 +162,10 @@ public class QmsBidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("should not be more than 254 characters");
+        softAssertions.assertThat(qmsErrorMessageResponse.getMessage())
+            .contains("should not be more than 254 characters");
     }
 
     @Test
@@ -177,14 +180,15 @@ public class QmsBidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGES, QmsErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<QmsErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).post();
 
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'name' should not be null");
+        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage())
+            .contains("'name' should not be null");
     }
 
     @Test
@@ -199,7 +203,7 @@ public class QmsBidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'description' should not be null");
     }
@@ -216,7 +220,7 @@ public class QmsBidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, QmsErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.createBidPackage(bidPackageRequest, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("'status' should not be null");
     }
@@ -325,26 +329,29 @@ public class QmsBidPackageTest extends TestUtil {
     @Description("get bid package by identity from another user")
     public void getBidPackageFromOtherUser() {
         UserCredentials otherUser = QmsApiTestUtils.getCustomerUser();
-        QmsErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), QmsErrorMessage.class, HttpStatus.SC_NOT_FOUND, otherUser);
+        ApwErrorMessage qmsErrorMessageResponse = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, otherUser);
 
-        softAssertions.assertThat(qmsErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity()
-            + "' for customerIdentity '");
+        softAssertions.assertThat(qmsErrorMessageResponse.getMessage())
+            .contains("Can't find bidPackage with identity '" + bidPackageResponse.getIdentity()
+                + "' for customerIdentity '");
     }
 
     @Test
     @TestRail(testCaseId = {"13893"})
     @Description("Find bid package from other customer identity user")
     public void getBidPackagesFromAnotherCustomer() {
-        String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser().getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGES, BidPackagesResponse.class)
+        String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser()
+            .getEmail());
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
+            .inlineVariables(bidPackageResponse.getIdentity())
             .apUserContext(otherUserContext)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
 
-        ResponseWrapper<BidPackagesResponse> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
-
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getIsFirstPage()).isTrue();
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getPageNumber()).isEqualTo(1);
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getItems().size()).isEqualTo(0);
+        ResponseWrapper<ApwErrorMessage> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getMessage())
+            .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity", bidPackageResponse.getIdentity()));
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getStatus()).isEqualTo(404);
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getError()).isEqualTo("Not Found");
     }
 
     @Test
@@ -364,7 +371,7 @@ public class QmsBidPackageTest extends TestUtil {
         "5. Get Bid Package by Identity and verify bid project and package item")
     public void getBidPackageWithAddedPackageItem() {
         String bidProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        bidPackageItemResponse = BidPackageResources.createBidPackageItem(
+        BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(),
@@ -389,14 +396,15 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13370"})
     @Description("Get bid package with invalid identity")
     public void getBidPackageWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, QmsErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
             .inlineVariables("INVALID IDENTITY")
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
 
-        ResponseWrapper<QmsErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ApwErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
 
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage()).contains("'bidPackageIdentity' is not a valid identity");
+        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage())
+            .contains("'bidPackageIdentity' is not a valid identity");
     }
 
     @After

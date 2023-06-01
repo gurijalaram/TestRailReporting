@@ -30,6 +30,7 @@ public class ViewSearchResultsPage extends ReportsPageHeader {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        isLoaded();
     }
 
     /**

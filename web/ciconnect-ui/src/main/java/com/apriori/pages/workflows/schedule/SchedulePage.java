@@ -98,7 +98,7 @@ public class SchedulePage extends CICBasePage {
      * @return NewEditWorkflow page object
      */
     public WorkFlowFeatures clickNewWorkflowBtn() {
-        newWorkflowBtn.click();
+        pageUtils.waitForElementAndClick(newWorkflowBtn);
         return new WorkFlowFeatures(this.driver);
     }
 
@@ -108,7 +108,7 @@ public class SchedulePage extends CICBasePage {
      * @return DetailsPart page object
      */
     public DetailsPart clickNewButton() {
-        newWorkflowBtn.click();
+        pageUtils.waitForElementAndClick(newWorkflowBtn);
         return new DetailsPart(this.driver);
     }
 
@@ -134,6 +134,19 @@ public class SchedulePage extends CICBasePage {
         pageUtils.waitForElementAndClick(editWorkflowButton);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
         return new WorkFlowFeatures(this.driver);
+    }
+
+    /**
+     * Click Edit Workflow button
+     *
+     * @return DetailsPart page object
+     */
+    public DetailsPart clickEditWorkflowBtn() {
+        pageUtils.waitForElementAndClick(editWorkflowButton);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(workflowPopUpTitleElement);
+        pageUtils.waitForElementToAppear(getNameTextFieldElement());
+        return new DetailsPart(this.driver);
     }
 
 

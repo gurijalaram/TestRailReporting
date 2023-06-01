@@ -54,7 +54,7 @@ public class CicAgentTest extends TestBase {
     @Description("Get CIC Agent Workflows")
     public void testAgentWorkflows() {
         loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateWorkflow(loginSession, workflowData);
+        ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);
         assertThat(responseWrapper.getBody(), is(containsString("CreateJobDefinition")));
         assertThat(responseWrapper.getBody(), is(containsString(">true<")));
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
