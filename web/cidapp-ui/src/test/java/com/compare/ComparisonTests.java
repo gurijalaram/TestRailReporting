@@ -14,6 +14,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.pageobjects.pages.compare.CreateComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -1045,6 +1046,20 @@ public class ComparisonTests extends TestBase {
         softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
         softAssertions.assertThat(comparePage.isDeltaIcon(componentName5, scenarioName5, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
 
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "24358")
+    @Description("Verify that Compare button is enabled in Explore view when nothing selected")
+    public void testCompareButtonEnabledWithNoSelection() {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        CreateComparePage createComparePage = loginPage.login(currentUser)
+            .createComparison();
+
+        softAssertions.assertThat(createComparePage.manualComparisonButtonEnabled()).as("Create Comparison modal launched and manual is enabled")
+            .isTrue();
         softAssertions.assertAll();
     }
 }

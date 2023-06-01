@@ -13,7 +13,6 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
-import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -28,7 +27,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.google.common.collect.Ordering;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -40,14 +38,10 @@ import java.util.stream.Collectors;
 
 public class QuickComparisonTests  extends TestBase {
 
-    private final String notFoundMessage = "Oops! Looks like the component or scenario you were looking for could not be found.";
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private CreateComparePage createComparePage;
     private ComparePage comparePage;
-    private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
-    private ModifyComparisonPage modifyComparisonPage;
 
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -57,7 +51,7 @@ public class QuickComparisonTests  extends TestBase {
 
 
     @Test
-    @TestRail(testCaseId = "1283044")
+    @TestRail(testCaseId = "24296")
     @Description("Quick Compare option disabled if multiple scenarios selected in Explore view")
     public void validateQuickCompareDisabledForMultiSelect() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -86,17 +80,17 @@ public class QuickComparisonTests  extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         createComparePage = loginPage.login(currentUser)
-            .multiSelectScenarios(
-                part1.getComponentName() + "," + part1.getScenarioName(),
+            .multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(),
                 part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison();
 
         softAssertions.assertThat(createComparePage.quickComparisonButtonEnabled()).as("Verify that Quick comparison is disabled").isFalse();
+        softAssertions.assertThat(createComparePage.manualComparisonButtonEnabled()).as("Verify that Manual comparison is enabled").isTrue();
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"1283043"})
+    @TestRail(testCaseId = {"24294", "24299"})
     @Description("User can create a comparison by selection of a single scenario on Evaluate page")
     public void createQuickComparisonFromEvaluate() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -152,7 +146,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1283042"})
+    @TestRail(testCaseId = {"24293", "24298"})
     @Description("User can create a comparison by selection of a single scenario on Explore page")
     public void createQuickComparisonFromExplore() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -208,7 +202,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"1283054"})
+    @TestRail(testCaseId = {"24293", "24294", "24345"})
     @Description("Verify that Quick Compare displays most recently edited scenarios for comparison in order")
     public void testQuickCompareScenarioOrdering() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
