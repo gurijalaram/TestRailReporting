@@ -270,7 +270,7 @@ public class QuickComparisonTests  extends TestBase {
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName1);
 
         comparePage = comparePage.clickExplore()
-            .multiHighlightScenarios(scenario2.getComponentName() + "," + scenario2.getScenarioName())
+            .navigateToScenario(scenario2)
             .createComparison()
             .selectQuickComparison()
             .create();
