@@ -10,7 +10,6 @@ import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersDeleteResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
@@ -662,20 +661,49 @@ public class QmsBidPackageResources {
      * @param currentUser        the current user
      * @return the bid package project items post response
      */
-    public static BidPackageProjectItemsBulkResponse createBidPackageBulkProjectItems(String bidPackageIdentity, String projectIdentity, List<BidPackageProjectItem> bidPackageItemList, UserCredentials currentUser) {
+    public static <T> T createBidPackageBulkProjectItems(String bidPackageIdentity, String projectIdentity, List<BidPackageProjectItem> bidPackageItemList, Class<T> klass, UserCredentials currentUser) {
         BidPackageProjectItemsRequest bidPackageProjectItemsRequestBuilder = BidPackageProjectItemsRequest.builder()
             .projectItems(BidPackageProjectItems.builder()
                 .projectItem(bidPackageItemList)
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, BidPackageProjectItemsBulkResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, klass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectItemsRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<BidPackageProjectItemsBulkResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Delete bid package bulk project items bid package project items bulk response.
+     *
+     * @param <T>                                 the type parameter
+     * @param bidPackageIdentity                  the bid package identity
+     * @param projectIdentity                     the project identity
+     * @param bidPackageProjectItemIdentitiesList the bid package item list
+     * @param klass                               the klass
+     * @param httpStatus                          the http status
+     * @param currentUser                         the current user
+     * @return the bid package project items bulk response
+     */
+    public static <T> T deleteBidPackageBulkProjectItems(String bidPackageIdentity, String projectIdentity, List<BidPackageProjectItem> bidPackageProjectItemIdentitiesList, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
+        BidPackageProjectItemsRequest bidPackageProjectItemsRequestBuilder = BidPackageProjectItemsRequest.builder()
+            .projectItems(BidPackageProjectItems.builder()
+                .projectItem(bidPackageProjectItemIdentitiesList)
+                .build())
+            .build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS_DELETE, klass)
+            .inlineVariables(bidPackageIdentity, projectIdentity)
+            .body(bidPackageProjectItemsRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
     }
 }
