@@ -1,5 +1,6 @@
 package com.apriori.acs.entity.response.acs.materialsinfo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -46,7 +47,8 @@ public class PropertyValuesList {
     private Double roundBarCostPerUnit;
     private Double angleBarCostPerUnit;
     private String hexBarCostUnits;
-    private String tBeamCostUnits;
+    @JsonProperty("tBeamCostUnits")
+    private String teeBeamCostUnits;
     private Double baseRoundBarCostPerUnit;
     private Double baseHexBarCostPerUnit;
     private String rectangularBarCostUnits;
@@ -70,6 +72,8 @@ public class PropertyValuesList {
     private Double iBeamCostPerUnit;
     private String iBeamCostUnits;
     private Double rectangularTubeCostPerUnit;
+    @JsonProperty("iBeamCarbonEmissionsFactor")
+    private Double iIBeamCarbonEmissionsFactor;
     private Double roundTubeCostPerUnit;
     private String channelBarCostUnits;
     private String angleBarCostUnits;
@@ -81,6 +85,7 @@ public class PropertyValuesList {
     private Double sheetCostPerUnit;
     private Double channelBarCostPerUnit;
     private String roundBarCostUnits;
+    private String squareTubeCarbonEmissionsFactor;
     private Double squareTubeCostPerKG;
     private Double baseRoundTubeCostPerUnit;
     private Double hexBarCostPerKG;
