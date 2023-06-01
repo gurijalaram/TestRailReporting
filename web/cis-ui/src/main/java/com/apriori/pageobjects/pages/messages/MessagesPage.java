@@ -30,7 +30,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//div[contains(@data-testid,'comment-content')]")
     private WebElement commentContent;
 
-    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Unread']")
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
     private WebElement unreadFilterIcon;
 
     @FindBy(xpath = "//div[@data-testid='loader']")
@@ -39,7 +39,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//h4[contains(@data-testid,'replies')]//span[contains(text(),'View 1 reply')]")
     private WebElement repliesLink;
 
-    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Filter ']")
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Filter ']")
     private WebElement filtersOption;
 
     @FindBy(id = "popover-filter-control-messages")
@@ -96,8 +96,17 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//li[@data-testid='menu-item-UNASSIGN']")
     private WebElement unAssignToOption;
 
-    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']//p[@data-testid='toolbar-Filter (1)']")
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Filter (1)']")
     private WebElement addedFiltersOption;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Unread']")
+    private WebElement readFilterIcon;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p")
+    private WebElement activeFilter;
+
+    @FindBy(xpath = "//div[@id='user-discussion-msgs-container']//div[contains(@id,'discussion')][1]")
+    private WebElement firstMessagePageDiscussion;
 
     public MessagesPage(WebDriver driver) {
         this(driver, log);
@@ -353,7 +362,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     public MessagesPage clickOnFilteredDiscussion() {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         getPageUtils().waitForElementToAppear(allMessages);
-        getPageUtils().javaScriptClick(allMessages);
+        getPageUtils().javaScriptClick(firstMessagePageDiscussion);
         return this;
     }
 
@@ -363,7 +372,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return a String
      */
     public String getAssignedState() {
-        return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
+        return getPageUtils().waitForElementToAppear(firstMessagePageDiscussion).getAttribute("innerText");
     }
 
     /**
@@ -481,7 +490,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public String getDiscussionAssignedState() {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        return getPageUtils().waitForElementToAppear(allMessages).getAttribute("innerText");
+        return getPageUtils().waitForElementToAppear(firstMessagePageDiscussion).getAttribute("innerText");
     }
 
     /**
@@ -499,10 +508,31 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return current page object
      */
     public MessagesPage resetToDefaultConfiguration() {
-        getPageUtils().waitForElementAndClick(unreadFilterIcon);
+        getPageUtils().waitForElementAndClick(readFilterIcon);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        getPageUtils().waitForElementAndClick(addedFiltersOption);
+        getPageUtils().waitForElementAndClick(activeFilter);
         clickOnRemoveFilter();
+        return this;
+    }
+
+    /**
+     * clicks on read option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnRead() {
+        getPageUtils().waitForElementAndClick(readFilterIcon);
+        return this;
+    }
+
+    /**
+     * clicks on filter option
+     *
+     * @return true/false
+     */
+    public MessagesPage clickOnActiveFilter() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementAndClick(activeFilter);
         return this;
     }
 }
