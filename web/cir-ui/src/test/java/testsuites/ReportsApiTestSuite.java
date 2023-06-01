@@ -3,8 +3,18 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcComparisonReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcDetailsTests;
+import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcComparisonReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcDetailsReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
+import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsTests;
+import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -12,7 +22,17 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     CastingDtcReportTests.class,
-    CastingDtcDetailsReportTests.class
+    CastingDtcDetailsReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    MachiningDtcReportTests.class,
+    MachiningDtcDetailsTests.class,
+    MachiningDtcComparisonReportTests.class,
+    PlasticDtcReportTests.class,
+    PlasticDtcDetailsReportTests.class,
+    PlasticDtcComparisonReportTests.class,
+    SheetMetalDtcReportTests.class,
+    SheetMetalDtcDetailsTests.class,
+    SheetMetalDtcComparisonReportTests.class
 })
 public class ReportsApiTestSuite {
 }
