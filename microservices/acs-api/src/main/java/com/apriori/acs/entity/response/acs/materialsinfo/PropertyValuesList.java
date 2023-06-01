@@ -47,8 +47,8 @@ public class PropertyValuesList {
     private Double roundBarCostPerUnit;
     private Double angleBarCostPerUnit;
     private String hexBarCostUnits;
-    @JsonProperty("twoBeamCostUnits")
-    private String tBeamCostUnits;
+    @JsonProperty("tBeamCostUnits")
+    private String teeBeamCostUnits;
     private Double baseRoundBarCostPerUnit;
     private Double baseHexBarCostPerUnit;
     private String rectangularBarCostUnits;
@@ -57,7 +57,8 @@ public class PropertyValuesList {
     private Double baseTBeamCostPerUnit;
     private Double baseRectangularBarCostPerUnit;
     private Double baseSquareBarCostPerUnit;
-    private Double tBeamCostPerKG;
+    @JsonProperty("tBeamCostPerKG")
+    private Double teeBeamCostPerKG;
     private String roundTubeCostUnits;
     private Double baseSheetCostPerUnit;
     private Double squareBarCostPerKG;
@@ -69,16 +70,20 @@ public class PropertyValuesList {
     private String squareBarCostUnits;
     private Double sheetCostPerKG;
     private String sheetCostUnits;
-    private Double iBeamCostPerUnit;
-    private String iBeamCostUnits;
+    @JsonProperty("iBeamCostPerUnit")
+    private Double iiBeamCostPerUnit;
+    @JsonProperty("iBeamCostUnits")
+    private String iiBeamCostUnits;
     private Double rectangularTubeCostPerUnit;
     private Double roundTubeCostPerUnit;
     private String channelBarCostUnits;
     private String angleBarCostUnits;
     private Double baseChannelBarCostPerUnit;
-    private Double tBeamCostPerUnit;
+    @JsonProperty("tBeamCostPerUnit")
+    private Double teeBeamCostPerUnit;
     private Double channelBarCostPerKG;
-    private Double iBeamCostPerKG;
+    @JsonProperty("iBeamCostPerKG")
+    private Double iiBeamCostPerKG;
     private Double rectangularBarCostPerUnit;
     private Double sheetCostPerUnit;
     private Double channelBarCostPerUnit;
@@ -144,4 +149,15 @@ public class PropertyValuesList {
     private Double roundTubeCarbonEmissionsFactor;
     private Double rectangularBarCarbonEmissionsFactor;
     private Double hexBarCarbonEmissionsFactor;
+    @JsonProperty("iBeamCarbonEmissionsFactor")
+    private Double iiBeamCarbonEmissionsFactor;
+    private Double squareTubeCarbonEmissionsFactor;
+    private Double rectangularTubeCarbonEmissionsFactor;
+    private Double maximumExtrusionExitSpeed;
+    private Double minimumExtrusionExitSpeed;
+    private Double angleBarCarbonEmissionsFactor;
+    private Double sheetCarbonEmissionsFactor;
+    @JsonProperty("tBeamCarbonEmissionsFactor")
+    private Double teeBeamCarbonEmissionsFactor;
+    private Double channelBarCarbonEmissionsFactor;
 }

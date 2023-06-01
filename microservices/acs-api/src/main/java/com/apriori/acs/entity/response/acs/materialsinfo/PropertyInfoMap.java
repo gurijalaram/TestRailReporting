@@ -144,4 +144,13 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem roundTubeCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem rectangularBarCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem hexBarCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem iBeamCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem squareTubeCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem rectangularTubeCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem maximumExtrusionExitSpeed;
+    private GenericExtendedPropertyInfoItem minimumExtrusionExitSpeed;
+    private GenericExtendedPropertyInfoItem angleBarCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem sheetCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem tBeamCarbonEmissionsFactor;
+    private GenericExtendedPropertyInfoItem channelBarCarbonEmissionsFactor;
 }
