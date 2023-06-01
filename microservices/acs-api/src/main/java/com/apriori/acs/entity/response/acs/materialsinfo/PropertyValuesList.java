@@ -75,6 +75,8 @@ public class PropertyValuesList {
     @JsonProperty("iBeamCostUnits")
     private String iiBeamCostUnits;
     private Double rectangularTubeCostPerUnit;
+    @JsonProperty("iBeamCarbonEmissionsFactor")
+    private Double iIBeamCarbonEmissionsFactor;
     private Double roundTubeCostPerUnit;
     private String channelBarCostUnits;
     private String angleBarCostUnits;
@@ -88,6 +90,7 @@ public class PropertyValuesList {
     private Double sheetCostPerUnit;
     private Double channelBarCostPerUnit;
     private String roundBarCostUnits;
+    private String squareTubeCarbonEmissionsFactor;
     private Double squareTubeCostPerKG;
     private Double baseRoundTubeCostPerUnit;
     private Double hexBarCostPerKG;
