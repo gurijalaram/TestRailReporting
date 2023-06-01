@@ -98,6 +98,7 @@ import testsuites.suiteinterface.SmokeTests;
     SettingsTests.class,
     ToleranceTests.class,
     ComparisonTests.class,
+    QuickComparisonTests.class,
     ThreadTests.class,
     PartNestingTests.class,
     PsoEditTests.class,
