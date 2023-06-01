@@ -118,7 +118,7 @@ public class QuickComparisonTests  extends TestBase {
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
-        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<ComponentInfoBuilder>() ;
+        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<ComponentInfoBuilder>();
         comparePage.getScenariosInComparison().forEach(comparison -> {
             List<ScenarioItem> scenarioDetails = componentsUtil.getUnCostedComponent(comparison.split(" / ")[0], comparison.split(" / ")[1], currentUser);
             ComponentInfoBuilder scenario = ComponentInfoBuilder.builder()
@@ -174,7 +174,7 @@ public class QuickComparisonTests  extends TestBase {
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
-        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<ComponentInfoBuilder>() ;
+        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<ComponentInfoBuilder>();
         comparePage.getScenariosInComparison().forEach(comparison -> {
             List<ScenarioItem> scenarioDetails = componentsUtil.getUnCostedComponent(comparison.split(" / ")[0], comparison.split(" / ")[1], currentUser);
             ComponentInfoBuilder scenario = ComponentInfoBuilder.builder()
