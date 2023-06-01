@@ -65,7 +65,7 @@ public class MaterialsInfoTests {
 
         softAssertions.assertThat(materialsInfoBarAndTubeResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
-        GenericExtendedPropertyInfoItem tBeamCostPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTBeamCostPerKG();
+        GenericExtendedPropertyInfoItem tBeamCostPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTeeBeamCostPerKG();
 
         softAssertions.assertThat(tBeamCostPerKG.getName()).isEqualTo("tBeamCostPerKG");
         softAssertions.assertThat(tBeamCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");

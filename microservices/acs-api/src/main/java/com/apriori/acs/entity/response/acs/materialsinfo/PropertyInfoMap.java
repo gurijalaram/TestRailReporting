@@ -2,6 +2,7 @@ package com.apriori.acs.entity.response.acs.materialsinfo;
 
 import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -48,7 +49,8 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem roundBarCostPerUnit;
     private GenericExtendedPropertyInfoItem angleBarCostPerUnit;
     private GenericExtendedPropertyInfoItem hexBarCostUnits;
-    private GenericExtendedPropertyInfoItem tBeamCostUnits;
+    @JsonProperty("tBeamCostUnits")
+    private GenericExtendedPropertyInfoItem teeBeamCostUnits;
     private GenericExtendedPropertyInfoItem baseRoundBarCostPerUnit;
     private GenericExtendedPropertyInfoItem baseHexBarCostPerUnit;
     private GenericExtendedPropertyInfoItem rectangularBarCostUnits;
@@ -57,7 +59,8 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem baseTBeamCostPerUnit;
     private GenericExtendedPropertyInfoItem baseRectangularBarCostPerUnit;
     private GenericExtendedPropertyInfoItem baseSquareBarCostPerUnit;
-    private GenericExtendedPropertyInfoItem tBeamCostPerKG;
+    @JsonProperty("tBeamCostPerKG")
+    private GenericExtendedPropertyInfoItem teeBeamCostPerKG;
     private GenericExtendedPropertyInfoItem roundTubeCostUnits;
     private GenericExtendedPropertyInfoItem baseSheetCostPerUnit;
     private GenericExtendedPropertyInfoItem squareBarCostPerKG;
@@ -69,16 +72,20 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem squareBarCostUnits;
     private GenericExtendedPropertyInfoItem sheetCostPerKG;
     private GenericExtendedPropertyInfoItem sheetCostUnits;
-    private GenericExtendedPropertyInfoItem iBeamCostPerUnit;
-    private GenericExtendedPropertyInfoItem iBeamCostUnits;
+    @JsonProperty("iBeamCostPerUnit")
+    private GenericExtendedPropertyInfoItem iiBeamCostPerUnit;
+    @JsonProperty("iBeamCostUnits")
+    private GenericExtendedPropertyInfoItem iiBeamCostUnits;
     private GenericExtendedPropertyInfoItem rectangularTubeCostPerUnit;
     private GenericExtendedPropertyInfoItem roundTubeCostPerUnit;
     private GenericExtendedPropertyInfoItem channelBarCostUnits;
     private GenericExtendedPropertyInfoItem angleBarCostUnits;
     private GenericExtendedPropertyInfoItem baseChannelBarCostPerUnit;
-    private GenericExtendedPropertyInfoItem tBeamCostPerUnit;
+    @JsonProperty("tBeamCostPerUnit")
+    private GenericExtendedPropertyInfoItem teeBeamCostPerUnit;
     private GenericExtendedPropertyInfoItem channelBarCostPerKG;
-    private GenericExtendedPropertyInfoItem iBeamCostPerKG;
+    @JsonProperty("iBeamCostPerKG")
+    private GenericExtendedPropertyInfoItem iiBeamCostPerKG;
     private GenericExtendedPropertyInfoItem rectangularBarCostPerUnit;
     private GenericExtendedPropertyInfoItem sheetCostPerUnit;
     private GenericExtendedPropertyInfoItem channelBarCostPerUnit;
@@ -144,13 +151,15 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem roundTubeCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem rectangularBarCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem hexBarCarbonEmissionsFactor;
-    private GenericExtendedPropertyInfoItem iBeamCarbonEmissionsFactor;
+    @JsonProperty("iBeamCarbonEmissionsFactor")
+    private GenericExtendedPropertyInfoItem iiBeamCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem squareTubeCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem rectangularTubeCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem maximumExtrusionExitSpeed;
     private GenericExtendedPropertyInfoItem minimumExtrusionExitSpeed;
     private GenericExtendedPropertyInfoItem angleBarCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem sheetCarbonEmissionsFactor;
-    private GenericExtendedPropertyInfoItem tBeamCarbonEmissionsFactor;
+    @JsonProperty("tBeamCarbonEmissionsFactor")
+    private GenericExtendedPropertyInfoItem teeBeamCarbonEmissionsFactor;
     private GenericExtendedPropertyInfoItem channelBarCarbonEmissionsFactor;
 }

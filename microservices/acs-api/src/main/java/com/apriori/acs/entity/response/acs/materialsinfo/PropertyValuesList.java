@@ -154,7 +154,7 @@ public class PropertyValuesList {
     private Double hexBarCarbonEmissionsFactor;
     @JsonProperty("iBeamCarbonEmissionsFactor")
     private Double iiBeamCarbonEmissionsFactor;
-    private Double squareTubeCarbonEmissionsFactor;
+//    private Double squareTubeCarbonEmissionsFactor;
     private Double rectangularTubeCarbonEmissionsFactor;
     private Double maximumExtrusionExitSpeed;
     private Double minimumExtrusionExitSpeed;
