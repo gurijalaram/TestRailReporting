@@ -41,6 +41,9 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
     @FindBy(id = "preferences-submit-btn")
     private WebElement btnSubmit;
 
+    @FindBy(xpath = "//div[@data-testid='select-control-display.unitsGroup']")
+    private WebElement unitField;
+
     private PageUtils pageUtils;
 
     public UserPreferencePage(WebDriver driver) {
@@ -177,6 +180,17 @@ public class UserPreferencePage extends EagerPageComponent<UserPreferencePage> {
     public UserPreferencePage clickSubmitButton() {
         getPageUtils().waitForElementAndClick(btnSubmit);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='presentation']//p[text()='Preferences']"));
+        return this;
+    }
+
+    /**
+     * select Units
+     *
+     * @return list of string
+     */
+    public UserPreferencePage selectUnits(String unit) {
+        getPageUtils().waitForElementAndClick(unitField);
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//li[@role='option']//span[text()='%s']", unit)));
         return this;
     }
 }

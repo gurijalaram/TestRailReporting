@@ -22,7 +22,6 @@ public class ProjectsTest extends TestBase {
     private LeftHandNavigationBar leftHandNavigationBar;
     private ProjectsPage projectsPage;
 
-    @Ignore("Disabled until 1.2.0 release")
     @Test
     @TestRail(testCaseId = {"16841","16842","22685"})
     @Description("Verify user can navigate to the projects page")
@@ -42,7 +41,6 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled until 1.2.0 release")
     @Test
     @TestRail(testCaseId = {"22686","22687","22707"})
     @Description("Verify user can access create a new project page and verify page elements")
