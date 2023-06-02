@@ -301,10 +301,8 @@
     "bidPackageIdentity",
     "status",
     "type",
-    "description",
     "projectProfile",
-    "name",
-    "dueAt"
+    "name"
   ],
   "optional":[
     "items",
@@ -312,6 +310,8 @@
     "displayName",
     "ownerFullName",
     "users",
-    "organizationName"
+    "organizationName",
+    "description",
+    "dueAt"
   ]
 }

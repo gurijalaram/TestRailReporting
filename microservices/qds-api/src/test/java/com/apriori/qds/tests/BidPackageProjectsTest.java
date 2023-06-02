@@ -103,6 +103,20 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectResponse.getDueAt().toLocalTime()).isNotNull();
     }
 
+    @Test
+    @TestRail(testCaseId = {"24424", "24425"})
+    @Description("Verify DueAt & Description field is optional for Project creation")
+    public void createBidPackageProjectWithOptionalFields() {
+        HashMap<String, String> projectAttributes = new HashMap<>();
+        projectAttributes.put("projectDueAt","N/A");
+        projectAttributes.put("projectDescription","N/A");
+        BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(projectAttributes, bidPackageResponse.getIdentity(), currentUser);
+        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bppResponse.getDueAt()).isNull();
+        softAssertions.assertThat(bppResponse.getDescription()).isNull();
+        BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
+    }
+
     @After
     public void testCleanup() {
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(),
