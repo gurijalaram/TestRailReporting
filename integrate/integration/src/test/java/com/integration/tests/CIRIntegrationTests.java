@@ -104,21 +104,18 @@ public class CIRIntegrationTests extends TestBase {
         // Read the email and verify content and attached watch point report
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage.getBody().getContent()).contains(scenarioName);
-        PDFDocument pdfDocument = emailMessage.emailMessageAttachment().getFileAttachment();
-
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("aPriori Cost Insight Generate Notification");
+        softAssertions.assertThat(emailMessage.getBody().getContent()).contains("aPriori Cost Insight Generate Notification");
+        PDFDocument pdfDocument = (PDFDocument) emailMessage.emailMessageAttachment().getFileAttachment();
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("DFM Multiple Components Summary Report");
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(pdfExpectedReportData.getCostMetric());
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(scenarioName);
         emailMessage.deleteEmailMessage();
 
-        // Delete the workflow
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
     }
 
     @After
     public void cleanup() {
+        CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowName));
         softAssertions.assertAll();
     }
 }

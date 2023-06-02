@@ -243,6 +243,25 @@ public class CicApiTestUtil extends TestBase {
         return HTTPRequest.build(requestEntity).post();
     }
 
+
+    /**
+     * Submit CIC GUI Thingworx API to delete workflow
+     *
+     * @param session       JSESSIONID
+     * @param agentWorkflow AgentWorkflow class object
+     */
+    public static void deleteWorkFlow(String session, AgentWorkflow agentWorkflow) {
+        if (!Objects.isNull(agentWorkflow)) {
+            JobDefinition jobDefinition = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
+            jobDefinition.setJobDefinition(agentWorkflow.getId() + "_Job");
+            RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_DELETE_WORKFLOW, null)
+                .headers(initHeadersWithJSession(session))
+                .body(jobDefinition)
+                .expectedResponseCode(HttpStatus.SC_OK);
+            HTTPRequest.build(requestEntity).post();
+        }
+    }
+
     /**
      * Submit request to get all CIC agent workflows
      *
