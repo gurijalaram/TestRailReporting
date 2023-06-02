@@ -1,0 +1,110 @@
+{
+  "reportUnitUri": "/aPriori/reports/DTC Metrics/machining/machiningDTCDetails",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "useLatestExport",
+        "value": [
+          "Scenario"
+        ]
+      },
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2023-01-18T07:33:15"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-05-18T08:33:15"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "3"
+        ]
+      },
+      {
+        "name": "rollup",
+        "value": [
+          "65"
+        ]
+      },
+      {
+        "name": "costMetric",
+        "value": [
+          "Fully Burdened Cost"
+        ]
+      },
+      {
+        "name": "massMetric",
+        "value": [
+          "Finish Mass"
+        ]
+      },
+      {
+        "name": "sortOrder",
+        "value": [
+          "Manufacturing Issues"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      },
+      {
+        "name": "annualSpendMin",
+        "value": [
+          "0"
+        ]
+      },
+      {
+        "name": "processGroup",
+        "value": [
+          "Stock Machining",
+          "2-Model Machining"
+        ]
+      },
+      {
+        "name": "exportEventId",
+        "value": [
+          "3"
+        ]
+      },
+      {
+        "name": "metricStatistic",
+        "value": [
+          "1,d1=4,d2=0,d3=0,d4=1,d5=0,d6=0,d7=0,d8=0,d9=0,da=0,db=0,dc=0,dd=0"
+        ]
+      },
+      {
+        "name": "dtcScore",
+        "value": [
+          "High",
+          "Medium",
+          "Low"
+        ]
+      },
+      {
+        "name": "partsSelect",
+        "value": [
+          "~NOTHING~"
+        ]
+      }
+    ]
+  }
+}

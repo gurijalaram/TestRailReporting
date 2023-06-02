@@ -17,6 +17,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 @Slf4j
 @Data
@@ -62,22 +63,9 @@ public class EmailMessage {
      * @return EmailMessageAttachment
      */
     public EmailMessageAttachment emailMessageAttachment() {
-        EmailMessageAttachment emailMessageAttachment = null;
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
-            .inlineVariables(this.id)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
-                }
-            }).expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<EmailMessageAttachments> emailMessageAttachmentsResponse = HTTPRequest.build(requestEntity).get();
-
-        try {
-            emailMessageAttachment = emailMessageAttachmentsResponse.getResponseEntity().value.get(0);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            log.error("ATTACHMENT NOT FOUND IN THE EMAIL !!!");
+        EmailMessageAttachment emailMessageAttachment = emailMessageAttachments().value.get(0);
+        if (Objects.isNull(emailMessageAttachment)) {
+            throw new RuntimeException("ATTACHMENT NOT FOUND IN THE EMAIL !!!");
         }
         return emailMessageAttachment;
     }
@@ -95,5 +83,23 @@ public class EmailMessage {
             }).expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Get Email Message Attachments using Message
+     *
+     * @return EmailMessageAttachments
+     */
+    public EmailMessageAttachments emailMessageAttachments() {
+        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
+            .inlineVariables(this.id)
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<EmailMessageAttachments> emailMessageAttachmentsResponse = HTTPRequest.build(requestEntity).get();
+        return emailMessageAttachmentsResponse.getResponseEntity();
     }
 }
