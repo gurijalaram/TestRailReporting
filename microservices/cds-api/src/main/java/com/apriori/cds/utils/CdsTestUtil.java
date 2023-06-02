@@ -932,12 +932,12 @@ public class CdsTestUtil extends TestUtil {
      * @param  inlineVariables
      * @return object ResponseWrapper
      */
-    public ResponseWrapper<Roles> getRoles(String... inlineVariables) {
+    public Roles getRoles(String... inlineVariables) {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CDSAPIEnum.ROLES, Roles.class)
             .inlineVariables(inlineVariables)
             .queryParams(new QueryParams().use("pageSize", "20"))
             .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).get();
+        return (Roles)HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }

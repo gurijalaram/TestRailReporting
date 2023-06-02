@@ -23,10 +23,10 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3243","17159"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
-        ResponseWrapper<Roles> response = cdsTestUtil.getRoles();
+        Roles response = cdsTestUtil.getRoles();
 
-        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(12);
-        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList()))
+        soft.assertThat(response.getTotalItemCount()).isEqualTo(12);
+        soft.assertThat(response.getItems().stream().map(Role::getName).collect(Collectors.toList()))
             .contains("AP_ANALYST", "AP_AUTOMATION", "AP_CONNECT_USER", "AP_CONTRIBUTOR","AP_DESIGNER","AP_EDC","AP_EXPERT","AP_HIGH_MEM","AP_PREVIEW","AP_SANDBOX","AP_USER","AP_USER_ADMIN");
         soft.assertAll();
     }
@@ -35,13 +35,13 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3699"})
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
-        ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getRoles();
+        Roles responseWrapper = cdsTestUtil.getRoles();
 
-        String roleIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
+        String roleIdentity = responseWrapper.getItems().get(0).getIdentity();
 
-        ResponseWrapper<Roles> response = cdsTestUtil.getRoles(roleIdentity);
+        Roles response = cdsTestUtil.getRoles(roleIdentity);
 
-        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("AP_ANALYST");
+        soft.assertThat(response.getItems().get(0).getName()).isEqualTo("AP_ANALYST");
         soft.assertAll();
     }
 }
