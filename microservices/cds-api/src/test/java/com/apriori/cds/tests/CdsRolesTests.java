@@ -12,6 +12,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CdsRolesTests {
@@ -22,10 +23,11 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3243","17159"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
-        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, HttpStatus.SC_OK);
+        ResponseWrapper<Roles> response = cdsTestUtil.getRoles();
 
-        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(4);
-        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList())).contains("AP_USER", "AP_ADMIN", "AP_DESIGN_ENGINEER", "AP_DF_MANAGER");
+        soft.assertThat(response.getResponseEntity().getTotalItemCount()).isEqualTo(12);
+        soft.assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList()))
+            .contains("AP_ANALYST", "AP_AUTOMATION", "AP_CONNECT_USER", "AP_CONTRIBUTOR","AP_DESIGNER","AP_EDC","AP_EXPERT","AP_HIGH_MEM","AP_PREVIEW","AP_SANDBOX","AP_USER","AP_USER_ADMIN");
         soft.assertAll();
     }
 
@@ -33,13 +35,13 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3699"})
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
-        ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, HttpStatus.SC_OK);
+        ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getRoles();
 
         String roleIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class,HttpStatus.SC_OK,  roleIdentity);
+        ResponseWrapper<Roles> response = cdsTestUtil.getRoles(roleIdentity);
 
-        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("AP_ADMIN");
+        soft.assertThat(response.getResponseEntity().getItems().get(0).getName()).isEqualTo("AP_ANALYST");
         soft.assertAll();
     }
 }

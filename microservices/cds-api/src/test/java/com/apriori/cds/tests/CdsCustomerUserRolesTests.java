@@ -31,7 +31,7 @@ public class CdsCustomerUserRolesTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
-    private final String role = "AP_ADMIN";
+    private final String role = "AP_USER_ADMIN";
     private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
 
