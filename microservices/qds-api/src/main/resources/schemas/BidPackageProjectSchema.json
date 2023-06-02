@@ -1,0 +1,317 @@
+{
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "bidPackageIdentity": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "organizationName": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "dueAt": {
+      "type": "string"
+    },
+    "ownerFullName": {
+      "type": "string"
+    },
+    "projectProfile": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "emailReminder": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean"
+            },
+            "startDuration": {
+              "type": "string"
+            },
+            "frequencyValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "active",
+            "startDuration",
+            "frequencyValue"
+          ]
+        },
+        "commentReminder": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean"
+            },
+            "startDuration": {
+              "type": "string"
+            },
+            "frequencyValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "active",
+            "startDuration",
+            "frequencyValue"
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "emailReminder",
+        "commentReminder"
+      ]
+    },
+    "items": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "bidPackageIdentity": {
+              "type": "string"
+            },
+            "projectIdentity": {
+              "type": "string"
+            },
+            "bidPackageItem": {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "bidPackageIdentity": {
+                  "type": "string"
+                },
+                "componentIdentity": {
+                  "type": "string"
+                },
+                "iterationIdentity": {
+                  "type": "string"
+                },
+                "scenarioIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdAt",
+                "createdBy",
+                "bidPackageIdentity",
+                "componentIdentity",
+                "iterationIdentity",
+                "scenarioIdentity"
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "bidPackageIdentity",
+            "projectIdentity",
+            "bidPackageItem"
+          ]
+        }
+      ]
+    },
+    "users": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "projectIdentity": {
+              "type": "string"
+            },
+            "userIdentity": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "userEmail": {
+              "type": "string"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "isSystemUser": {
+                  "type": "boolean"
+                },
+                "identity": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "customerIdentity": {
+                  "type": "string"
+                },
+                "userProfile": {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    },
+                    "givenName": {
+                      "type": "string"
+                    },
+                    "familyName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity",
+                    "createdAt",
+                    "createdBy",
+                    "givenName",
+                    "familyName"
+                  ]
+                },
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "mfaRequired": {
+                  "type": "boolean"
+                },
+                "customAttributes": {
+                  "type": "object",
+                  "properties": {
+                    "workspaceId": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "workspaceId"
+                  ]
+                },
+                "userType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "isSystemUser",
+                "identity",
+                "createdAt",
+                "createdBy",
+                "customerIdentity",
+                "userProfile",
+                "email",
+                "username",
+                "active",
+                "mfaRequired",
+                "customAttributes",
+                "userType"
+              ],
+              "optional": [
+                "updatedAt"
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "projectIdentity",
+            "userIdentity",
+            "role",
+            "userEmail",
+            "user"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "identity",
+    "bidPackageIdentity",
+    "status",
+    "type",
+    "description",
+    "projectProfile",
+    "name",
+    "dueAt"
+  ],
+  "optional":[
+    "items",
+    "owner",
+    "displayName",
+    "ownerFullName",
+    "users",
+    "organizationName"
+  ]
+}

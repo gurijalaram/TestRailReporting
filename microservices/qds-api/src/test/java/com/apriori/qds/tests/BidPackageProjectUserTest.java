@@ -19,6 +19,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 public class BidPackageProjectUserTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
@@ -26,16 +28,13 @@ public class BidPackageProjectUserTest extends TestUtil {
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
     UserCredentials currentUser = UserUtil.getUser();
-    private static String bidPackageName;
-    private static String projectName;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
-        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), currentUser);
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
         bidPackageProjectUserResponse = BidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
     }
