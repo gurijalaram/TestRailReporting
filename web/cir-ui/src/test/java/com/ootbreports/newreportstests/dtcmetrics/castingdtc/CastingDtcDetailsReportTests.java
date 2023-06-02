@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
+    private final List<String> mostCommonPartNames = Arrays.asList(
+        JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+        JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
+        JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
+    );
 
     private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcDetailsReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
@@ -33,18 +38,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testCostMetricInputControlPpc() {
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            mostCommonPartNames,
+            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -52,18 +48,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7412")
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
-        List<String> miscData = Arrays.asList(
-            "Cost Metric",
-            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            mostCommonPartNames,
+            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -71,18 +58,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            mostCommonPartNames,
+            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -90,18 +68,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7411")
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
-        List<String> miscData = Arrays.asList(
-            "Mass Metric",
-            MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
-        List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
-            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
-            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
-        );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            mostCommonPartNames,
+            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -109,18 +78,14 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7510")
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Details Report")
     public void testDtcScoreLow() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.LOW.getDtcScoreName()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_40128483_MLDES_0001.getPartName(),
             JasperCirApiPartsEnum.P_40089252_MLDES_0004_REDRAW.getPartName(),
             JasperCirApiPartsEnum.DU100024720_G.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -128,18 +93,14 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7513")
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.MEDIUM.getDtcScoreName()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
             JasperCirApiPartsEnum.P_40116211_MLDES_0004.getPartName(),
             JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -147,18 +108,14 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7516")
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Details Report")
     public void testDtcScoreHigh() {
-        List<String> miscData = Arrays.asList(
-            "DTC Score",
-            DtcScoreEnum.HIGH.getDtcScoreName()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
             JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName(),
             JasperCirApiPartsEnum.BARCO_R8552931.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            miscData,
-            partNames
+            partNames,
+            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 
@@ -173,10 +130,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7629")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingCasting() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
             JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
@@ -184,12 +137,13 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         );
         List<String> assertFigures = Arrays.asList(
             "0.0",
+            "0.0",
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -197,10 +151,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7630")
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingMachining() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
@@ -211,9 +161,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -221,10 +171,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7631")
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Details Report")
     public void testSortOrderInputControlMaterialScrap() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.OBSTRUCTED_MACHINING.getPartName(),
             JasperCirApiPartsEnum.B2315.getPartName(),
@@ -235,9 +181,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
         );
     }
 
@@ -245,10 +191,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7632")
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.TOLERANCES.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
@@ -259,9 +201,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
 
@@ -269,10 +211,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7633")
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
     public void testSortOrderInputControlSlowOperations() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
@@ -283,9 +221,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
     }
 
@@ -293,10 +231,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7634")
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Details Report")
     public void testSortOrderInputControlSpecialTooling() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.DU600051458.getPartName(),
             JasperCirApiPartsEnum.DU200068073_B.getPartName(),
@@ -307,9 +241,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
         );
     }
 
@@ -331,9 +265,9 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "7,819,806.44"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
 
@@ -355,9 +289,10 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "0.0"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
-            miscData,
             partNames,
-            assertFigures
+            assertFigures,
+            "Sort Order",
+            SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
     }
 }
