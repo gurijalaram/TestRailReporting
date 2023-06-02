@@ -35,7 +35,7 @@ public class QmsUserPreferenceResources {
     }
 
     /**
-     * Update user preference t.
+     * Update user preference.
      *
      * @param <T>                          the type parameter
      * @param userPreferenceRequestBuilder the user preference request builder

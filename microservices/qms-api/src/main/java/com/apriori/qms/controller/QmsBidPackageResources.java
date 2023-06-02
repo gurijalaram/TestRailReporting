@@ -69,7 +69,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Create bid package t.
+     * Create bid package
      *
      * @param <T>                      the type parameter
      * @param bidPackageRequestBuilder the bid package request builder
@@ -128,7 +128,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Update bid package t.
+     * Update bid package
      *
      * @param <T>                      the type parameter
      * @param bidPackageIdentity       the bid package identity
@@ -150,7 +150,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Delete bid package t.
+     * Delete bid package
      *
      * @param <T>                the type parameter
      * @param bidPackageIdentity the bid package identity
@@ -171,7 +171,7 @@ public class QmsBidPackageResources {
 
 
     /**
-     * Create bid package project t.
+     * Create bid package project
      *
      * @param <T>                  the type parameter
      * @param projectAttributesMap the project attributes map
@@ -195,7 +195,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Create bid package project t.
+     * Create bid package project
      *
      * @param <T>                             the type parameter
      * @param bidPackageProjectRequestBuilder the bid package project request builder
@@ -235,7 +235,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Delete bid package project t.
+     * Delete bid package project
      *
      * @param <T>                       the type parameter
      * @param bidPackageIdentity        the bid package identity
@@ -256,7 +256,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Gets bid package project.
+     * Gets bid package project
      *
      * @param <T>                       the type parameter
      * @param bidPackageIdentity        the bid package identity
@@ -277,7 +277,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Update bid package project t.
+     * Update bid package project
      *
      * @param <T>                             the type parameter
      * @param bidPackageProjectRequestBuilder the bid package project request builder
@@ -332,7 +332,7 @@ public class QmsBidPackageResources {
     // BID PACKAGE ITEM RESOURCES
 
     /**
-     * Create bid package item t.
+     * Create bid package item
      *
      * @param <T>                          the type parameter
      * @param bidPackageItemRequestBuilder the bid package item request builder
@@ -354,7 +354,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Update bid package item t.
+     * Update bid package item
      *
      * @param <T>                          the type parameter
      * @param bidPackageItemRequestBuilder the bid package item request builder
@@ -550,7 +550,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Update bid package project user t.
+     * Update bid package project user
      *
      * @param <T>                 the type parameter
      * @param role                the role
@@ -583,7 +583,7 @@ public class QmsBidPackageResources {
     }
 
     /**
-     * Update bid package project user t.
+     * Update bid package project user
      *
      * @param <T>                 the type parameter
      * @param projectUserRequest  the project user request

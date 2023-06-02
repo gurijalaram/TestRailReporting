@@ -46,7 +46,7 @@ public class QmsProjectResources {
     }
 
     /**
-     * Create project t.
+     * Create project.
      *
      * @param <T>                the type parameter
      * @param projectName        the project name

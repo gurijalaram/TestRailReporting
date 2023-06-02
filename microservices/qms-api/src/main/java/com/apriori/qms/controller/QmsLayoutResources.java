@@ -19,7 +19,7 @@ import utils.QmsApiTestUtils;
 public class QmsLayoutResources {
 
     /**
-     * Create layout configuration t.
+     * Create layout configuration.
      *
      * @param <T>                        the type parameter
      * @param layoutConfigRequestBuilder the layout config request builder
@@ -42,7 +42,7 @@ public class QmsLayoutResources {
     }
 
     /**
-     * Update layout configuration t.
+     * Update layout configuration.
      *
      * @param <T>                         the type parameter
      * @param layoutConfigRequestBuilder  the layout config request builder
@@ -66,7 +66,7 @@ public class QmsLayoutResources {
     }
 
     /**
-     * Share layout configuration t.
+     * Share layout configuration.
      *
      * @param <T>                         the type parameter
      * @param layoutConfigRequestBuilder  the layout config request builder
@@ -90,7 +90,7 @@ public class QmsLayoutResources {
     }
 
     /**
-     * Delete layout configuration t.
+     * Delete layout configuration.
      *
      * @param <T>                         the type parameter
      * @param viewElementName             the view element name

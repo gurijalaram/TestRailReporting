@@ -270,7 +270,7 @@ public class QmsScenarioDiscussionResources {
     }
 
     /**
-     * Update discussion comment t.
+     * Update discussion comment.
      *
      * @param <T>                             the type parameter
      * @param scenarioDiscussionIdentity      the scenario discussion identity
