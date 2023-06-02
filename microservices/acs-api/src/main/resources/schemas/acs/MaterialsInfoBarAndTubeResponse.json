@@ -1,0 +1,1621 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "altName2": {
+              "type": "string"
+            },
+            "altName3": {
+              "type": "string"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "squareBarCostPerUnit": {
+              "type": "number"
+            },
+            "rectangularBarCostPerKG": {
+              "type": "number"
+            },
+            "roundBarCostPerUnit": {
+              "type": "number"
+            },
+            "angleBarCostPerUnit": {
+              "type": "number"
+            },
+            "hexBarCostUnits": {
+              "type": "string"
+            },
+            "tBeamCostUnits": {
+              "type": "string"
+            },
+            "baseRoundBarCostPerUnit": {
+              "type": "number"
+            },
+            "baseHexBarCostPerUnit": {
+              "type": "number"
+            },
+            "tensileYieldStrength": {
+              "type": "number"
+            },
+            "rectangularBarCostUnits": {
+              "type": "string"
+            },
+            "hexBarCostPerUnit": {
+              "type": "number"
+            },
+            "roundBarCostPerKG": {
+              "type": "number"
+            },
+            "baseTBeamCostPerUnit": {
+              "type": "number"
+            },
+            "scrapCostPercent": {
+              "type": "number"
+            },
+            "solidusTemp": {
+              "type": "number"
+            },
+            "baseRectangularBarCostPerUnit": {
+              "type": "number"
+            },
+            "baseSquareBarCostPerUnit": {
+              "type": "number"
+            },
+            "tBeamCostPerKG": {
+              "type": "number"
+            },
+            "roundTubeCostUnits": {
+              "type": "string"
+            },
+            "ultimateTensileStrength": {
+              "type": "number"
+            },
+            "baseSheetCostPerUnit": {
+              "type": "number"
+            },
+            "squareBarCostPerKG": {
+              "type": "number"
+            },
+            "rectangularTubeCostPerKG": {
+              "type": "number"
+            },
+            "maximumExtrusionExitSpeed": {
+              "type": "number"
+            },
+            "baseSquareTubeCostPerUnit": {
+              "type": "number"
+            },
+            "minimumExtrusionExitSpeed": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "roundTubeCostPerKG": {
+              "type": "number"
+            },
+            "angleBarCostPerKG": {
+              "type": "number"
+            },
+            "rectangularTubeCostUnits": {
+              "type": "string"
+            },
+            "squareBarCostUnits": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "sheetCostPerKG": {
+              "type": "number"
+            },
+            "sheetCostUnits": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "iBeamCostPerUnit": {
+              "type": "number"
+            },
+            "altName4": {
+              "type": "string"
+            },
+            "materialTypeName": {
+              "type": "string"
+            },
+            "altName5": {
+              "type": "string"
+            },
+            "iBeamCostUnits": {
+              "type": "string"
+            },
+            "rectangularTubeCostPerUnit": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "heatOfFusion": {
+              "type": "number"
+            },
+            "roundTubeCostPerUnit": {
+              "type": "number"
+            },
+            "channelBarCostUnits": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "angleBarCostUnits": {
+              "type": "string"
+            },
+            "baseChannelBarCostPerUnit": {
+              "type": "number"
+            },
+            "tBeamCostPerUnit": {
+              "type": "number"
+            },
+            "channelBarCostPerKG": {
+              "type": "number"
+            },
+            "iBeamCostPerKG": {
+              "type": "number"
+            },
+            "thermalConductivity": {
+              "type": "number"
+            },
+            "rectangularBarCostPerUnit": {
+              "type": "number"
+            },
+            "specificHeatRT": {
+              "type": "number"
+            },
+            "sheetCostPerUnit": {
+              "type": "number"
+            },
+            "density": {
+              "type": "number"
+            },
+            "channelBarCostPerUnit": {
+              "type": "number"
+            },
+            "roundBarCostUnits": {
+              "type": "string"
+            },
+            "squareTubeCostPerKG": {
+              "type": "number"
+            },
+            "baseRoundTubeCostPerUnit": {
+              "type": "number"
+            },
+            "shearStrength": {
+              "type": "number"
+            },
+            "hexBarCostPerKG": {
+              "type": "number"
+            },
+            "squareTubeCostUnits": {
+              "type": "string"
+            },
+            "baseRectangularTubeCostPerUnit": {
+              "type": "number"
+            },
+            "turningSpeed": {
+              "type": "number"
+            },
+            "materialCutCodeName": {
+              "type": "string"
+            },
+            "squareTubeCostPerUnit": {
+              "type": "number"
+            },
+            "baseIBeamCostPerUnit": {
+              "type": "number"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "baseAngleBarCostPerUnit": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "altName2",
+            "altName3",
+            "altName1",
+            "squareBarCostPerUnit",
+            "rectangularBarCostPerKG",
+            "roundBarCostPerUnit",
+            "angleBarCostPerUnit",
+            "hexBarCostUnits",
+            "tBeamCostUnits",
+            "baseRoundBarCostPerUnit",
+            "baseHexBarCostPerUnit",
+            "tensileYieldStrength",
+            "rectangularBarCostUnits",
+            "hexBarCostPerUnit",
+            "roundBarCostPerKG",
+            "baseTBeamCostPerUnit",
+            "scrapCostPercent",
+            "solidusTemp",
+            "baseRectangularBarCostPerUnit",
+            "baseSquareBarCostPerUnit",
+            "tBeamCostPerKG",
+            "roundTubeCostUnits",
+            "ultimateTensileStrength",
+            "baseSheetCostPerUnit",
+            "squareBarCostPerKG",
+            "rectangularTubeCostPerKG",
+            "maximumExtrusionExitSpeed",
+            "baseSquareTubeCostPerUnit",
+            "minimumExtrusionExitSpeed",
+            "hardness",
+            "roundTubeCostPerKG",
+            "angleBarCostPerKG",
+            "rectangularTubeCostUnits",
+            "squareBarCostUnits",
+            "name",
+            "sheetCostPerKG",
+            "sheetCostUnits",
+            "millingSpeed",
+            "dataSource",
+            "iBeamCostPerUnit",
+            "altName4",
+            "materialTypeName",
+            "altName5",
+            "iBeamCostUnits",
+            "rectangularTubeCostPerUnit",
+            "hardnessSystem",
+            "heatOfFusion",
+            "roundTubeCostPerUnit",
+            "channelBarCostUnits",
+            "description",
+            "angleBarCostUnits",
+            "baseChannelBarCostPerUnit",
+            "tBeamCostPerUnit",
+            "channelBarCostPerKG",
+            "iBeamCostPerKG",
+            "thermalConductivity",
+            "rectangularBarCostPerUnit",
+            "specificHeatRT",
+            "sheetCostPerUnit",
+            "density",
+            "channelBarCostPerUnit",
+            "roundBarCostUnits",
+            "squareTubeCostPerKG",
+            "baseRoundTubeCostPerUnit",
+            "shearStrength",
+            "hexBarCostPerKG",
+            "squareTubeCostUnits",
+            "baseRectangularTubeCostPerUnit",
+            "turningSpeed",
+            "materialCutCodeName",
+            "squareTubeCostPerUnit",
+            "baseIBeamCostPerUnit",
+            "sourceName",
+            "baseAngleBarCostPerUnit"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "altName2": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName3": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName1": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "angleBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRoundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "tBeamCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseHexBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "tensileYieldStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseTBeamCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "scrapCostPercent": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "solidusTemp": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "baseSquareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRectangularBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "tBeamCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "ultimateTensileStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseSheetCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularTubeCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "maximumExtrusionExitSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "baseSquareTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "minimumExtrusionExitSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "angleBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularTubeCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sheetCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "sheetCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName4": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "iBeamCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName5": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "iBeamCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "heatOfFusion": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "channelBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "angleBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseChannelBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "tBeamCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "thermalConductivity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "iBeamCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "channelBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "specificHeatRT": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sheetCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "channelBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareTubeCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRoundTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "shearStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "squareTubeCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRectangularTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "turningSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseIBeamCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseAngleBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "altName2",
+        "altName3",
+        "altName1",
+        "squareBarCostPerUnit",
+        "rectangularBarCostPerKG",
+        "roundBarCostPerUnit",
+        "angleBarCostPerUnit",
+        "hexBarCostUnits",
+        "baseRoundBarCostPerUnit",
+        "tBeamCostUnits",
+        "baseHexBarCostPerUnit",
+        "baseCostPerUnit",
+        "tensileYieldStrength",
+        "rectangularBarCostUnits",
+        "roundBarCostPerKG",
+        "hexBarCostPerUnit",
+        "baseTBeamCostPerUnit",
+        "scrapCostPercent",
+        "solidusTemp",
+        "baseSquareBarCostPerUnit",
+        "baseRectangularBarCostPerUnit",
+        "tBeamCostPerKG",
+        "ultimateTensileStrength",
+        "roundTubeCostUnits",
+        "baseSheetCostPerUnit",
+        "squareBarCostPerKG",
+        "rectangularTubeCostPerKG",
+        "maximumExtrusionExitSpeed",
+        "baseSquareTubeCostPerUnit",
+        "minimumExtrusionExitSpeed",
+        "hardness",
+        "roundTubeCostPerKG",
+        "angleBarCostPerKG",
+        "squareBarCostUnits",
+        "rectangularTubeCostUnits",
+        "name",
+        "sheetCostPerKG",
+        "sheetCostUnits",
+        "millingSpeed",
+        "dataSource",
+        "altName4",
+        "iBeamCostPerUnit",
+        "altName5",
+        "materialTypeName",
+        "rectangularTubeCostPerUnit",
+        "iBeamCostUnits",
+        "heatOfFusion",
+        "hardnessSystem",
+        "roundTubeCostPerUnit",
+        "channelBarCostUnits",
+        "description",
+        "angleBarCostUnits",
+        "baseChannelBarCostPerUnit",
+        "tBeamCostPerUnit",
+        "thermalConductivity",
+        "iBeamCostPerKG",
+        "channelBarCostPerKG",
+        "specificHeatRT",
+        "rectangularBarCostPerUnit",
+        "sheetCostPerUnit",
+        "density",
+        "channelBarCostPerUnit",
+        "roundBarCostUnits",
+        "squareTubeCostPerKG",
+        "baseRoundTubeCostPerUnit",
+        "shearStrength",
+        "hexBarCostPerKG",
+        "squareTubeCostUnits",
+        "baseRectangularTubeCostPerUnit",
+        "turningSpeed",
+        "materialCutCodeName",
+        "squareTubeCostPerUnit",
+        "baseIBeamCostPerUnit",
+        "sourceName",
+        "baseAngleBarCostPerUnit"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}
