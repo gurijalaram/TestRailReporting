@@ -50,7 +50,6 @@ public class MaterialsInfoTests {
     }
 
     @Test
-//    @Ignore
     @TestRail(testCaseId = "22691")
     @Description("Test Get Materials Info endpoint for Bar & Tube Fab")
     public void testGetMaterialsInfoBarAndTubeFab() {
