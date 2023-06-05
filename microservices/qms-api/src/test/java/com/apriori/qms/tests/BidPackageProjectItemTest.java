@@ -8,8 +8,12 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.utils.ApwErrorMessage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -121,6 +125,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -170,6 +175,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -203,6 +209,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             newBidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -234,6 +241,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -257,6 +265,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -282,6 +291,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -307,6 +317,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -337,6 +348,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -360,6 +372,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -385,6 +398,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -410,6 +424,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
             currentUser
         );
 
@@ -420,6 +435,295 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 fi.getError()
                     .contains("'identity' is not a valid identity")
             )).isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24032", "24025"})
+    @Description("Verify user is able to delete multiple/bulk project items and Verify user is not able to delete already deleted project items by API for bulk deleting functionality for project identity")
+    public void deleteBulkBidPackageProjectItems() {
+        List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
+        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageItemList.add(BidPackageProjectItem.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .scenarioIdentity(scenarioItem1.getScenarioIdentity())
+                .componentIdentity(scenarioItem1.getComponentIdentity())
+                .iterationIdentity(scenarioItem1.getIterationIdentity())
+                .build())
+            .build());
+
+        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageItemList.add(BidPackageProjectItem.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .scenarioIdentity(scenarioItem2.getScenarioIdentity())
+                .componentIdentity(scenarioItem2.getComponentIdentity())
+                .iterationIdentity(scenarioItem2.getIterationIdentity())
+                .build())
+            .build());
+
+        ScenarioItem scenarioItem3 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageItemList.add(BidPackageProjectItem.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .scenarioIdentity(scenarioItem3.getScenarioIdentity())
+                .componentIdentity(scenarioItem3.getComponentIdentity())
+                .iterationIdentity(scenarioItem3.getIterationIdentity())
+                .build())
+            .build());
+
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
+            currentUser
+        );
+
+        softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
+            .allMatch(pi -> pi.getBidPackageIdentity().equals(bidPackageResponse.getIdentity()))).isTrue();
+        softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
+            .allMatch(pi -> pi.getProjectIdentity().equals(bidPackageProjectResponse.getIdentity()))).isTrue();
+
+        //Delete project-items
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity())
+            .build());
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bulkBidPackageProjectItemsResponse.getProjectItem().get(1).getIdentity())
+            .build());
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bulkBidPackageProjectItemsResponse.getProjectItem().get(2).getIdentity())
+            .build());
+
+        BidPackageProjectItemsBulkResponse deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getProjectItem().stream()
+            .anyMatch(pi -> pi.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity()))).isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getProjectItem().stream()
+            .anyMatch(pi -> pi.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(1).getIdentity()))).isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getProjectItem().stream()
+            .anyMatch(pi -> pi.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(2).getIdentity()))).isTrue();
+
+        //C24025
+        deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity()) &&
+                fp.getError()
+                    .contains(String.format("Can't find ProjectItem for Project with identity '%s' and identity '%s",
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getProjectIdentity(),
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity())))).isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(1).getIdentity()) &&
+                fp.getError()
+                    .contains(String.format("Can't find ProjectItem for Project with identity '%s' and identity '%s",
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(1).getProjectIdentity(),
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(1).getIdentity())))).isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(2).getIdentity()) &&
+                fp.getError()
+                    .contains(String.format("Can't find ProjectItem for Project with identity '%s' and identity '%s",
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(2).getProjectIdentity(),
+                        bulkBidPackageProjectItemsResponse.getProjectItem().get(2).getIdentity())))).isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24021"})
+    @Description("Verify the error message when user tries to delete project items by  passing invalid, null or empty project-item identity")
+    public void deleteInvalidBulkBidPackageProjectItems() {
+        //null
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(null)
+            .build());
+
+        BidPackageProjectItemsBulkResponse deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getError().contains("Request method 'DELETE' not supported"))).isTrue();
+
+        //empty
+        prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity("")
+            .build());
+
+        deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getError().contains("Request method 'DELETE' not supported"))).isTrue();
+
+        //Invalid
+        prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity("1234567891234")
+            .build());
+
+        deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .anyMatch(fp -> fp.getIdentity().equals("1234567891234") &&
+                fp.getError().contains("'identity' is not a valid identity"))).isTrue();
+
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24416"})
+    @Description("Verify error message when either bidPackage or project identity is invalid while deleting bulk project items")
+    public void deleteBulkBidPackageProjectItemsWithInvalidBidPackageAndProject() {
+        //Invalid Bidpackage
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(null)
+            .build());
+
+        ApwErrorMessage deleteProjectItemsErrorResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            "INVALID_BP_ID",
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            ApwErrorMessage.class,
+            HttpStatus.SC_BAD_REQUEST,
+            currentUser
+        );
+        softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage())
+            .contains("'bidPackageIdentity' is not a valid identity");
+
+        //Invalid Project
+        prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(null)
+            .build());
+
+        deleteProjectItemsErrorResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            "INVALID_PRJ_ID",
+            prjItemIdentiesList,
+            ApwErrorMessage.class,
+            HttpStatus.SC_BAD_REQUEST,
+            currentUser
+        );
+        softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage())
+            .contains("projectIdentity' is not a valid identity");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24030"})
+    @Description("Verify error message when system is unable to find either bidPackage or project while deleting bulk project items")
+    public void deleteBulkBidPackageProjectItemsWithDeletedBidPackageAndProject() {
+        //Create & Delete Bidpackage/Project
+        BidPackageResponse deleteBidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageProjectResponse deleteBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), deleteBidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        QmsBidPackageResources.deleteBidPackage(deleteBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+
+        //Deleted Bidpackage
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(null)
+            .build());
+
+        ApwErrorMessage deleteProjectItemsErrorResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            deleteBidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            ApwErrorMessage.class,
+            HttpStatus.SC_NOT_FOUND,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
+            String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
+                deleteBidPackageResponse.getIdentity(), PropertiesContext.get("${env}.customer_identity")));
+
+        //Deleted Project
+        prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(null)
+            .build());
+
+        deleteProjectItemsErrorResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            deleteBidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            ApwErrorMessage.class,
+            HttpStatus.SC_NOT_FOUND,
+            currentUser
+        );
+        softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
+            String.format("Resource 'Project' with identity '%s' was not found", deleteBidPackageProjectResponse.getIdentity()));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24031"})
+    @Description("Verify duplicate project items gets discarded while performing bulk deletion of project-item identity")
+    public void deleteDuplicateBulkBidPackageProjectItems() {
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bidPackageProjectResponse.getItems().get(0).getIdentity())
+            .build());
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bidPackageProjectResponse.getItems().get(0).getIdentity())
+            .build());
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bidPackageProjectResponse.getItems().get(0).getIdentity())
+            .build());
+
+        BidPackageProjectItemsBulkResponse deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+        softAssertions.assertThat(deleteProjectItemsResponse.getProjectItem().stream()
+                .anyMatch(pi -> pi.getIdentity().equals(bidPackageProjectResponse.getItems().get(0).getIdentity())))
+            .isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().stream()
+            .allMatch(fpi -> fpi.getIdentity().equals(bidPackageProjectResponse.getItems().get(0).getIdentity()) &&
+                fpi.getError()
+                    .contains(String.format("Can't find ProjectItem for Project with identity '%s' and identity '%s'",
+                        bidPackageProjectResponse.getIdentity(), bidPackageProjectResponse.getItems().get(0)
+                            .getIdentity())))).isTrue();
     }
 }
 
