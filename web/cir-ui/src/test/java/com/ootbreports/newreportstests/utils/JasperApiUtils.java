@@ -78,6 +78,37 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
+     */
+    public void genericAssemblyCostCurrencyTest() {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetName);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
+        JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
+
+        String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
+        softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
+    }
+
+    /**
      * Generic test of currency code for use on a dtc report
      *
      * @param partName - String of partName which is to be used

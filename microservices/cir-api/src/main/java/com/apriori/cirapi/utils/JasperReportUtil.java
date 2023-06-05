@@ -85,11 +85,12 @@ public class JasperReportUtil {
 
         long initialTime = System.currentTimeMillis() / 1000;
 
+        String responseBodyText;
         do {
-            TimeUnit.SECONDS.sleep(5);
-
-        } while (!HTTPRequest.build(requestEntity).get().getBody().contains("ready")
-            || ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+            responseBodyText = HTTPRequest.build(requestEntity).get().getBody();
+        } while (!responseBodyText.contains("ready")
+            && !responseBodyText.contains("failed")
+            && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
     }
 
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
