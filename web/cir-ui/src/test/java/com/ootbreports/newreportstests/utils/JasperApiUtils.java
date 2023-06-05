@@ -392,9 +392,9 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        return Thread.currentThread().getStackTrace()[4].getFileName().contains("Assembly")
-            ? jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text()
-            : jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+        return indexOfReturnedItemsToUse == 3
+            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
+            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
