@@ -6,20 +6,23 @@ import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import utils.QmsApiTestUtils;
 
-@SuppressWarnings("unchecked")
+/**
+ * The type Qms user preference resources.
+ */
 public class QmsUserPreferenceResources {
     /**
-     * Get user preference
+     * Gets user preference.
      *
-     * @param responseClass expected response class
-     * @param currentUser   UserCredentials
-     * @param httpStatus    expected http status code
-     * @param <T>           response class type
-     * @return Response class object
+     * @param <T>           the type parameter
+     * @param responseClass the response class
+     * @param currentUser   the current user
+     * @param httpStatus    the http status
+     * @return the user preference
      */
     public static <T> T getUserPreference(Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
@@ -27,18 +30,19 @@ public class QmsUserPreferenceResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Update user preference
+     * Update user preference.
      *
-     * @param userPreferenceRequestBuilder user preference request builder
-     * @param responseClass                expected response class
-     * @param currentUser                  UserCredentials
-     * @param httpStatus                   expected http status code
-     * @param <T>                          response class type
-     * @return Response class object
+     * @param <T>                          the type parameter
+     * @param userPreferenceRequestBuilder the user preference request builder
+     * @param responseClass                the response class
+     * @param currentUser                  the current user
+     * @param httpStatus                   the http status
+     * @return the response entity
      */
     public static <T> T updateUserPreference(UserPreferenceRequest userPreferenceRequestBuilder, Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
@@ -46,20 +50,21 @@ public class QmsUserPreferenceResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Delete user preference
+     * Delete user preference.
      *
-     * @param currentUser   UserCredentials
-     * @param httpStatus    expected http status code
+     * @param currentUser the current user
+     * @param httpStatus  the http status
      */
     public static void deleteUserPreference(UserCredentials currentUser, Integer httpStatus) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, null)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        HTTPRequest.build(requestEntity).delete().getResponseEntity();
+        HTTPRequest.build(requestEntity).delete();
     }
 }

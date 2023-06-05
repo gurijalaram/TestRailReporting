@@ -16,4 +16,5 @@ public class BidPackageProjectUserParameters {
     private String userEmail;
     private String role;
     private String customerIdentity;
+    private String identity;
 }

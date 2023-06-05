@@ -22,6 +22,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.util.HashMap;
+
 public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
     private static SoftAssertions softAssertionsTestData;
@@ -53,7 +55,7 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
                         QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
                         bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
                     if (bidPackageItemResponse != null) {
-                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                         if (bidPackageProjectResponse != null) {
                             scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
                             if (scenarioDiscussionResponse != null) {

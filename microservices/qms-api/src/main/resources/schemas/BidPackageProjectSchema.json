@@ -32,6 +32,9 @@
     "dueAt": {
       "type": "string"
     },
+    "ownerFullName": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -303,12 +306,11 @@
     "projectProfile",
     "items",
     "users",
-    "name"
-  ],
-  "optional": [
+    "name",
     "organizationName",
     "owner",
     "displayName",
-    "dueAt"
+    "dueAt",
+    "ownerFullName"
   ]
 }

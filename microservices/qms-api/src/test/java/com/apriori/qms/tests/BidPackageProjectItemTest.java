@@ -8,7 +8,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
@@ -21,6 +20,7 @@ import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
@@ -197,8 +197,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             .build());
 
         //New project
-        String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
-        BidPackageProjectResponse newBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(newProjectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        BidPackageProjectResponse newBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
 
         BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),

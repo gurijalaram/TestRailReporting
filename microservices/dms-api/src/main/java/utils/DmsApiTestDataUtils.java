@@ -39,6 +39,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.File;
+import java.util.HashMap;
 
 public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
@@ -75,7 +76,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
                         QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
                         bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
                     if (bidPackageItemResponse != null) {
-                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                         if (bidPackageProjectResponse != null) {
                             qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
                             if (qmsScenarioDiscussionResponse != null) {
