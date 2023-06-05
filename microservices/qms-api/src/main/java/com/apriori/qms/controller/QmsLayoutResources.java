@@ -8,24 +8,27 @@ import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import utils.QmsApiTestUtils;
 
+/**
+ * The type Qms layout resources.
+ */
 public class QmsLayoutResources {
 
     /**
-     * create layout configuration for layout view element name
+     * Create layout configuration.
      *
-     * @param layoutConfigRequestBuilder - LayoutConfigRequest data builder
-     * @param viewElementName            View Element Name
-     * @param responseClass              expected Response class
-     * @param httpStatus                 expected http status code
-     * @param currentUser                UserCredentials
-     * @param <T>                        response class type
-     * @return Response class object
+     * @param <T>                        the type parameter
+     * @param layoutConfigRequestBuilder the layout config request builder
+     * @param viewElementName            the view element name
+     * @param responseClass              the response class
+     * @param httpStatus                 the http status
+     * @param currentUser                the current user
+     * @return the response entity
      */
-    @SuppressWarnings("unchecked")
     public static <T> T createLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
@@ -34,22 +37,22 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * update layout configuration for layout view element name
+     * Update layout configuration.
      *
-     * @param layoutConfigRequestBuilder  LayoutConfigRequest data builder
-     * @param layoutConfigurationIdentity Layout Configuration identity
-     * @param viewElementName             View Element Name
-     * @param responseClass               expected Response class
-     * @param httpStatus                  expected http status code
-     * @param currentUser                 UserCredentials
-     * @param <T>                         response class type
-     * @return Response class object
+     * @param <T>                         the type parameter
+     * @param layoutConfigRequestBuilder  the layout config request builder
+     * @param viewElementName             the view element name
+     * @param layoutConfigurationIdentity the layout configuration identity
+     * @param responseClass               the response class
+     * @param httpStatus                  the http status
+     * @param currentUser                 the current user
+     * @return the response entity
      */
-    @SuppressWarnings("unchecked")
     public static <T> T updateLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
@@ -58,22 +61,22 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Share layout configuration for layout view element name
+     * Share layout configuration.
      *
-     * @param layoutConfigRequestBuilder  LayoutConfigRequest data builder
-     * @param layoutConfigurationIdentity Layout Configuration identity
-     * @param viewElementName             View Element Name
-     * @param responseClass               expected Response class
-     * @param httpStatus                  expected http status code
-     * @param currentUser                 UserCredentials
-     * @param <T>                         response class type
-     * @return Response class object
+     * @param <T>                         the type parameter
+     * @param layoutConfigRequestBuilder  the layout config request builder
+     * @param viewElementName             the view element name
+     * @param layoutConfigurationIdentity the layout configuration identity
+     * @param responseClass               the response class
+     * @param httpStatus                  the http status
+     * @param currentUser                 the current user
+     * @return the response entity
      */
-    @SuppressWarnings("unchecked")
     public static <T> T shareLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
@@ -82,21 +85,21 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Delete layout configuration by identity
+     * Delete layout configuration.
      *
-     * @param layoutConfigurationIdentity Layout Configuration identity
-     * @param viewElementName             View Element Name
-     * @param responseClass               expected Response class
-     * @param httpStatus                  expected http status code
-     * @param currentUser                 UserCredentials
-     * @param <T>                         response class type
-     * @return Response class object
+     * @param <T>                         the type parameter
+     * @param viewElementName             the view element name
+     * @param layoutConfigurationIdentity the layout configuration identity
+     * @param responseClass               the response class
+     * @param httpStatus                  the http status
+     * @param currentUser                 the current user
+     * @return the response entity
      */
-    @SuppressWarnings("unchecked")
     public static <T> T deleteLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
@@ -104,20 +107,20 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).delete().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * get list of all layout configurations
+     * Gets layout configurations.
      *
-     * @param viewElementName View Element Name
-     * @param responseClass   expected Response class
-     * @param httpStatus      expected http status code
-     * @param currentUser     UserCredentials
-     * @param <T>             response class type
-     * @return Response class object
+     * @param <T>             the type parameter
+     * @param viewElementName the view element name
+     * @param responseClass   the response class
+     * @param httpStatus      the http status
+     * @param currentUser     the current user
+     * @return the layout configurations
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getLayoutConfigurations(String viewElementName, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
@@ -125,21 +128,21 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Get layout configuration by view element name and layout configuration identity
+     * Gets layout configuration.
      *
-     * @param viewElementName             view Element Name
-     * @param layoutConfigurationIdentity layout configuration identity
-     * @param responseClass               expected Response class
-     * @param httpStatus                  expected http status code
-     * @param currentUser                 UserCredentials
-     * @param <T>                         response class type
-     * @return Response class object
+     * @param <T>                         the type parameter
+     * @param viewElementName             the view element name
+     * @param layoutConfigurationIdentity the layout configuration identity
+     * @param responseClass               the response class
+     * @param httpStatus                  the http status
+     * @param currentUser                 the current user
+     * @return the layout configuration
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
@@ -147,17 +150,18 @@ public class QmsLayoutResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        return (T) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
-     * Build Layout configuration request data builder from json
+     * Gets layout configuration request builder.
      *
-     * @param layoutConfigName     unique layout configuration name
-     * @param deploymentIdentity   layout deployment identity captured from layout response api
-     * @param installationIdentity layout installation identity captured from layout response api
-     * @param isShareable          boolean true or false
-     * @return LayoutConfigurationRequest
+     * @param layoutConfigName     the layout config name
+     * @param deploymentIdentity   the deployment identity
+     * @param installationIdentity the installation identity
+     * @param isShareable          the is shareable
+     * @return the layout configuration request builder
      */
     public static LayoutConfigurationRequest getLayoutConfigurationRequestBuilder(String layoutConfigName, String deploymentIdentity, String installationIdentity, Boolean isShareable) {
         return LayoutConfigurationRequest.builder()
@@ -171,11 +175,6 @@ public class QmsLayoutResources {
             .build();
     }
 
-    /**
-     * returns deserialized layout configuration request json data file
-     *
-     * @return LayoutConfigurationRequest
-     */
     private static LayoutConfigurationRequest getLayoutConfigurationRequestData() {
         return new TestDataService().getTestData("LayoutConfigurationRequestData.json", LayoutConfigurationRequest.class);
     }

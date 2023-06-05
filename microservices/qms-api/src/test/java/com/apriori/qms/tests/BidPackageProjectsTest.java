@@ -284,7 +284,7 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project Name is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -295,7 +295,7 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -338,7 +338,7 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("displayName should not be null and have less than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -355,7 +355,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'status' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project Status is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -367,7 +367,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'status' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -409,7 +409,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
@@ -442,7 +442,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("User does not have rights to update the project attributes");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(403);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_FORBIDDEN);
     }
 
     @Test
@@ -459,7 +459,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("owner should not be null or empty");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project owner is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -471,7 +471,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("owner should not be null or empty");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project owner is invalid
         projectRequest = BidPackageProjectRequest.builder()
@@ -483,7 +483,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("Owner 'identity' is not a valid identity");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -513,7 +513,7 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'name' should not be more than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -610,7 +610,7 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'description' should not be more than 254 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -640,7 +640,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("displayName should not be null and have less than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -687,7 +687,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("User does not have rights to update the project attributes");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(403);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_FORBIDDEN);
     }
 
     @Test
@@ -701,7 +701,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
@@ -712,7 +712,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
@@ -723,7 +723,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(400);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Given dueAt is before than Current Time");
     }
