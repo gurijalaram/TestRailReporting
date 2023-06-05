@@ -30,13 +30,12 @@ public class BidPackageProjectsTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
-    private static String bidPackageName;
-    UserCredentials currentUser = UserUtil.getUser();
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         bidPackageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
     }
@@ -108,13 +107,44 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Verify DueAt & Description field is optional for Project creation")
     public void createBidPackageProjectWithOptionalFields() {
         HashMap<String, String> projectAttributes = new HashMap<>();
-        projectAttributes.put("projectDueAt","N/A");
-        projectAttributes.put("projectDescription","N/A");
+        projectAttributes.put("projectDueAt", "N/A");
+        projectAttributes.put("projectDescription", "N/A");
         BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(projectAttributes, bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         softAssertions.assertThat(bppResponse.getDueAt()).isNull();
         softAssertions.assertThat(bppResponse.getDescription()).isNull();
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24426"})
+    @Description("Verify for project status can be updated to OPEN or IN_PROGRESS")
+    public void updateBidPackageProjectValidStatus() {
+        //OPEN Status
+        String statusNew = "OPEN";
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status(statusNew)
+                .build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = BidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo(statusNew);
+
+        //IN_PROGRESS Status
+        statusNew = "IN_PROGRESS";
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status(statusNew)
+                .build())
+            .build();
+        getBidPackageProjectResponse = BidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
+            .isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo(statusNew);
     }
 
     @After
