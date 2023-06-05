@@ -2,6 +2,8 @@ package com.apriori.utils.email;
 
 import com.apriori.utils.KeyValueException;
 import com.apriori.utils.email.response.EmailMessage;
+import com.apriori.utils.email.response.EmailMessageAttachment;
+import com.apriori.utils.email.response.EmailMessageAttachments;
 import com.apriori.utils.email.response.EmailResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -18,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class GraphEmailService {
 
     private Credentials credentials = null;
+    private static final int POLL_TIME = 15;
 
     /**
      * Search email in connected email box that has attachments
@@ -83,21 +87,20 @@ public class GraphEmailService {
     }
 
     private static EmailMessage trackEmailMessage(RequestEntity requestEntity, String searchEmailText) {
-        EmailResponse emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
-        try {
-            while (!(emailResponse.getValue().size() > 0)) {
-                if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
-                    log.error("EMAIL NOT RECEIVED WITH SCENARIO NAME ---" + searchEmailText);
-                    return null;
+        do {
+            try {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+                EmailResponse emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+                if (emailResponse.getValue().size() > 0) {
+                    return emailResponse.getValue().get(0);
                 }
-                TimeUnit.SECONDS.sleep(30);
-                emailResponse = (EmailResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
             }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        } while (LocalTime.now().isAfter(expectedFileArrivalTime));
 
-        return emailResponse.getValue().get(0);
+        throw new RuntimeException(String.format("EMAIL NOT RECEIVED WITH SCENARIO NAME --- %s", searchEmailText));
     }
 }

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.FileNameUtils;
 
 import java.io.File;
+import java.util.Objects;
 
 @Slf4j
 @Data
@@ -34,27 +35,24 @@ public class EmailMessageAttachment {
     /**
      * Get Email File attachment from list of email message attachments
      *
-     * @param <T> Response file type (PDFDocument or ExcelService class type)
-     * @return PDFDocument or ExcelService depends on file type attached to the email
+     * @return DocumentType
      */
-    public <T> T getFileAttachment() {
+    public Object getFileAttachment() {
+        Object object = null;
         File downloadedFile = FileResourceUtil.copyIntoTempFile(getContentBytes().toString(), "reports", getName());
-        Object[] object = {null};
         switch (FileNameUtils.getExtension(String.valueOf(getName()))) {
             case "pdf":
-                object[0] = new PDFDocument(String.valueOf(downloadedFile));
+                object = new PDFDocument(String.valueOf(downloadedFile));
                 break;
             case "xlsx":
-                object[0] = new ExcelService(String.valueOf(downloadedFile));
+                object = new ExcelService(String.valueOf(downloadedFile));
                 break;
             default:
                 log.error(String.format("No attachments found !!"));
         }
-        try {
-            object = (Object[]) object[0];
-        } catch (Exception e) {
-            log.error("EMAIL ATTACHMENT NOT FOUND!!!");
+        if (Objects.isNull(object)) {
+            throw new RuntimeException("Attachments Not Found!!!");
         }
-        return (T) object;
+        return object;
     }
 }
