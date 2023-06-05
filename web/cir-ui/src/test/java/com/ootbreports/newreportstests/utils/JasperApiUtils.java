@@ -399,7 +399,7 @@ public class JasperApiUtils {
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
         String valueToReturn;
-        if (Thread.currentThread().getStackTrace()[3].getFileName().contains("Assembly")) {
+        if (reportsJsonFileName.contains("Assembly")) {
             valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
         } else if (partName.isEmpty()) {
             valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text();
