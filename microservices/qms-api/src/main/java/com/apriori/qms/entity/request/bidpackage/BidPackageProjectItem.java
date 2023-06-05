@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 @SuppressWarnings("unused")
 public class BidPackageProjectItem {
     private BidPackageItemParameters bidPackageItem;
+    @Builder.Default
     private String identity = "N/A";
 }

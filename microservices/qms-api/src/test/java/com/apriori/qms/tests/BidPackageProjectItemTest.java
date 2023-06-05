@@ -625,9 +625,6 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             HttpStatus.SC_BAD_REQUEST,
             currentUser
         );
-
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getStatus()).isEqualTo(400);
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage())
             .contains("'bidPackageIdentity' is not a valid identity");
 
@@ -645,9 +642,6 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             HttpStatus.SC_BAD_REQUEST,
             currentUser
         );
-
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getStatus()).isEqualTo(400);
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage())
             .contains("projectIdentity' is not a valid identity");
     }
@@ -675,8 +669,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             HttpStatus.SC_NOT_FOUND,
             currentUser
         );
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getStatus()).isEqualTo(404);
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getError()).isEqualTo("Not Found");
+
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
                 deleteBidPackageResponse.getIdentity(), PropertiesContext.get("${env}.customer_identity")));
@@ -695,8 +688,6 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
             HttpStatus.SC_NOT_FOUND,
             currentUser
         );
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getStatus()).isEqualTo(404);
-        softAssertions.assertThat(deleteProjectItemsErrorResponse.getError()).isEqualTo("Not Found");
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Resource 'Project' with identity '%s' was not found", deleteBidPackageProjectResponse.getIdentity()));
     }
