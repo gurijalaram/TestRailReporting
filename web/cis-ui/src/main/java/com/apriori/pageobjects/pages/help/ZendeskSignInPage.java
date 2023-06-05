@@ -20,6 +20,9 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
     @FindBy(xpath = "//div[@class='auth0-lock-header-bg auth0-lock-blur-support']")
     private WebElement aprioriSupportLogo;
 
+    @FindBy(xpath = "//div[@title='Zendesk']")
+    private WebElement zendeskLabel;
+
     private  WebDriver driver;
     private  PageUtils pageUtils;
 
@@ -69,5 +72,14 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
      */
     public String getCurrentUrl() {
         return pageUtils.getTabTwoUrl();
+    }
+
+    /**
+     * Checks if zendesk label displayed
+     *
+     * @return true/false
+     */
+    public boolean isZendeskLabelDisplayed() {
+        return pageUtils.waitForElementToAppear(zendeskLabel).isDisplayed();
     }
 }
