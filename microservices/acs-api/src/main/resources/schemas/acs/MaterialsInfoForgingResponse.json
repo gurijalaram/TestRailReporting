@@ -1,0 +1,681 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "altName2": {
+              "type": "string"
+            },
+            "altName3": {
+              "type": "string"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "squareBarCostPerUnit": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "roundBarCostPerUnit": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "baseRoundBarCostPerUnit": {
+              "type": "number"
+            },
+            "roundBarCostPerKG": {
+              "type": "number"
+            },
+            "scrapCostPercent": {
+              "type": "number"
+            },
+            "baseSquareBarCostPerUnit": {
+              "type": "number"
+            },
+            "density": {
+              "type": "number"
+            },
+            "squareBarCostPerKG": {
+              "type": "number"
+            },
+            "roundBarCostUnits": {
+              "type": "string"
+            },
+            "forgingTemperature": {
+              "type": "number"
+            },
+            "specificHeatCapacity": {
+              "type": "number"
+            },
+            "shearStrength": {
+              "type": "number"
+            },
+            "strengthCoefficient": {
+              "type": "number"
+            },
+            "turningSpeed": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "strainRateSensitivity": {
+              "type": "number"
+            },
+            "materialCutCodeName": {
+              "type": "string"
+            },
+            "squareBarCostUnits": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "altName4": {
+              "type": "string"
+            },
+            "materialTypeName": {
+              "type": "string"
+            },
+            "altName5": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "altName2",
+            "altName3",
+            "altName1",
+            "squareBarCostPerUnit",
+            "hardnessSystem",
+            "roundBarCostPerUnit",
+            "description",
+            "baseRoundBarCostPerUnit",
+            "roundBarCostPerKG",
+            "scrapCostPercent",
+            "baseSquareBarCostPerUnit",
+            "density",
+            "squareBarCostPerKG",
+            "roundBarCostUnits",
+            "forgingTemperature",
+            "specificHeatCapacity",
+            "shearStrength",
+            "strengthCoefficient",
+            "turningSpeed",
+            "hardness",
+            "strainRateSensitivity",
+            "materialCutCodeName",
+            "squareBarCostUnits",
+            "name",
+            "sourceName",
+            "millingSpeed",
+            "dataSource",
+            "altName4",
+            "materialTypeName",
+            "altName5"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "altName2": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName3": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName1": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRoundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "scrapCostPercent": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseSquareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "forgingTemperature": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "specificHeatCapacity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "shearStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "strengthCoefficient": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "turningSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "strainRateSensitivity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName4": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName5": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "altName2",
+        "altName3",
+        "altName1",
+        "squareBarCostPerUnit",
+        "hardnessSystem",
+        "roundBarCostPerUnit",
+        "description",
+        "baseRoundBarCostPerUnit",
+        "baseCostPerUnit",
+        "roundBarCostPerKG",
+        "scrapCostPercent",
+        "baseSquareBarCostPerUnit",
+        "density",
+        "squareBarCostPerKG",
+        "roundBarCostUnits",
+        "forgingTemperature",
+        "specificHeatCapacity",
+        "shearStrength",
+        "strengthCoefficient",
+        "turningSpeed",
+        "hardness",
+        "strainRateSensitivity",
+        "squareBarCostUnits",
+        "materialCutCodeName",
+        "name",
+        "sourceName",
+        "millingSpeed",
+        "dataSource",
+        "altName4",
+        "altName5",
+        "materialTypeName"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}
