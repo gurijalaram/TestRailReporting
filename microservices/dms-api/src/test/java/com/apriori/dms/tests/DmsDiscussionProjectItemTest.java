@@ -35,6 +35,4 @@ public class DmsDiscussionProjectItemTest extends DmsApiTestDataUtils {
         softAssertions.assertThat(discussionPrjItemDeleteErrorResponse.getStatus()).isEqualTo(404);
         softAssertions.assertThat(discussionPrjItemDeleteErrorResponse.getMessage()).matches("Resource 'Discussion' with identity .* was not found");
     }
-
-
 }
