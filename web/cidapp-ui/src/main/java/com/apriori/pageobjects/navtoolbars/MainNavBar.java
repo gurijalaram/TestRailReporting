@@ -28,7 +28,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(xpath = "//button[.='Evaluate']")
     private WebElement evaluateButton;
 
-    @FindBy(xpath = "//button[.='Compare']")
+    @FindBy(xpath = "//button[.='Comparisons']")
     private WebElement compareButton;
 
     @FindBy(css = "[id='qa-header-preferences-button'] button")
