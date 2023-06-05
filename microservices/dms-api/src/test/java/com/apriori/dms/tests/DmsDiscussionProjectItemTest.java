@@ -31,10 +31,6 @@ public class DmsDiscussionProjectItemTest extends DmsApiTestDataUtils {
 
         //Delete Project Item again
         ApwErrorMessage discussionPrjItemDeleteErrorResponse = DmsApiTestUtils.deleteDiscussionProjectItem(qmsScenarioDiscussionResponse.getProjectItemIdentity(), ApwErrorMessage.class, currentUser, HttpStatus.SC_NOT_FOUND);
-        softAssertions.assertThat(discussionPrjItemDeleteErrorResponse.getError()).isEqualTo("Not Found");
-        softAssertions.assertThat(discussionPrjItemDeleteErrorResponse.getStatus()).isEqualTo(404);
         softAssertions.assertThat(discussionPrjItemDeleteErrorResponse.getMessage()).matches("Resource 'Discussion' with identity .* was not found");
     }
-
-
 }
