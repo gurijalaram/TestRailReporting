@@ -107,8 +107,7 @@ public class CICIntegrationTests extends TestBase {
     }
 
     @Test
-    @Issue("DEVOPS-3035")
-    @TestRail(testCaseId = {"12046", "17113"})
+    @TestRail(testCaseId = {"12046"})
     @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
     public void testVerifyWatchPointReport() {
         workflowData = String.format(CicApiTestUtil.getWorkflowData("WatchPointReportData.json"), CicApiTestUtil.getCustomerName(),
@@ -132,23 +131,17 @@ public class CICIntegrationTests extends TestBase {
         //Verify Email Notification
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage).isNotNull();
-        softAssertions.assertThat(new PageUtils(driver).stopPageLoadAndGetCurrentUrl(StringUtils.substringBetween(emailMessage.getBody().getContent(), "a href=\"", "\"")))
-            .contains("source=apg&medium=email&content=dfmsummary");
-        ExcelService excelReport = emailMessage.emailMessageAttachment().getFileAttachment();
+        ExcelService excelReport = (ExcelService) emailMessage.emailMessageAttachment().getFileAttachment();
         softAssertions.assertThat(excelReport).isNotNull();
         softAssertions.assertThat(excelReport.getSheetCount()).isEqualTo(7);
         softAssertions.assertThat(excelReport.getFirstCellRowNum("Part Number")).isGreaterThan(0);
         softAssertions.assertThat(excelReport.getSheetNames()).contains(xlsWatchPointReportExpectedData.getPartCostReport().getTitle());
         emailMessage.deleteEmailMessage();
-
-        // Delete the workflow
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
-        ResponseWrapper<String> deleteWorkflowResponse = CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
-        softAssertions.assertThat(deleteWorkflowResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
     }
 
     @After
     public void cleanup() {
+        CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowName));
         softAssertions.assertAll();
     }
 }

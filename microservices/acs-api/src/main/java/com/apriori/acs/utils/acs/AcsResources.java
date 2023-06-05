@@ -124,6 +124,27 @@ public class AcsResources {
     }
 
     /**
+     * Gets All Material Stocks Info
+     *
+     * @param vpeName      - String
+     * @param processGroup - String
+     * @return instance of AllMaterialSocksInfoResponse
+     */
+    public <T> ResponseWrapper<T> getMaterialsInfo(String vpeName, String processGroup, Class<T> klass) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.MATERIALS_INFO, klass)
+            .headers(headers)
+            .inlineVariables(
+                vpeName,
+                processGroup)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
      * Gets Scenario Information by Scenario Iteration Key
      *
      * @return GetScenarioInfoByScenarioIterationKeyResponse instance

@@ -8,12 +8,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.UUID;
 
+/**
+ * The type Date util.
+ */
 public class DateUtil {
 
     /**
      * Returns a formatted date and time string
      *
-     * @return String
+     * @return String timestamp
      */
     public static String getTimestamp() {
         return new Timestamp(System.currentTimeMillis()).toString();
@@ -22,7 +25,7 @@ public class DateUtil {
     /**
      * Extracts current date to be used in various queries
      *
-     * @return String
+     * @return String string
      */
     public static String now() {
 
@@ -38,7 +41,7 @@ public class DateUtil {
      * Gets today's date
      *
      * @param dateFormat DateTimeFormatter
-     * @return today's date
+     * @return today 's date
      */
     public static String getCurrentDate(DateTimeFormatter dateFormat) {
         return dateFormat.format(LocalDateTime.now());
@@ -47,7 +50,7 @@ public class DateUtil {
     /**
      * Gets date from two months ago
      *
-     * @return String
+     * @return String date two months ago
      */
     public String getDateTwoMonthsAgo() {
         return getDateMonthsAgo(2);
@@ -57,5 +60,17 @@ public class DateUtil {
         LocalDateTime pastDate = LocalDateTime.now(ZoneOffset.UTC).minusMonths(monthsCount).withNano(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(pastDate);
+    }
+
+    /**
+     * Gets date days after.
+     *
+     * @param daysCount the days count
+     * @param formatter the formatter
+     * @return the date days after
+     */
+    public static String getDateDaysAfter(final int daysCount, DateTimeFormatter formatter) {
+        LocalDateTime afterDate = LocalDateTime.now(ZoneOffset.UTC).plusDays(daysCount).withNano(0);
+        return formatter.format(afterDate);
     }
 }

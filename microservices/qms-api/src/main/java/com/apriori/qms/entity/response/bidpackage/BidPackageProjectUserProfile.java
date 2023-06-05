@@ -21,6 +21,14 @@ public class BidPackageProjectUserProfile {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String createdBy;
+    private String updatedBy;
     private String givenName;
     private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String townCity;
+    private String timezone;
+    private String countryCode;
+    private String stateProvince;
 }

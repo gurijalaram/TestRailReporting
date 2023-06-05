@@ -31,6 +31,7 @@ public class PsoController {
      * @return current page object
      */
     public PsoController inputOverrideValue(WebElement override, WebElement input, String value) {
+        pageUtils.waitForElementToBeClickable(override);
         pageUtils.javaScriptClick(override);
         pageUtils.clearValueOfElement(input);
         input.sendKeys(value);

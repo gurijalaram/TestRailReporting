@@ -1,0 +1,921 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "altName2": {
+              "type": "string"
+            },
+            "altName3": {
+              "type": "string"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "squareBarCostPerUnit": {
+              "type": "number"
+            },
+            "rectangularBarCostPerKG": {
+              "type": "number"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "roundTubeCostPerUnit": {
+              "type": "number"
+            },
+            "roundBarCostPerUnit": {
+              "type": "number"
+            },
+            "basePlateCostPerUnit": {
+              "type": "number"
+            },
+            "hexBarCostUnits": {
+              "type": "string"
+            },
+            "baseRoundBarCostPerUnit": {
+              "type": "number"
+            },
+            "plateCostPerKG": {
+              "type": "number"
+            },
+            "baseHexBarCostPerUnit": {
+              "type": "number"
+            },
+            "rectangularBarCostUnits": {
+              "type": "string"
+            },
+            "roundBarCostPerKG": {
+              "type": "number"
+            },
+            "hexBarCostPerUnit": {
+              "type": "number"
+            },
+            "rectangularBarCostPerUnit": {
+              "type": "number"
+            },
+            "scrapCostPercent": {
+              "type": "number"
+            },
+            "baseRectangularBarCostPerUnit": {
+              "type": "number"
+            },
+            "baseSquareBarCostPerUnit": {
+              "type": "number"
+            },
+            "roundTubeCostUnits": {
+              "type": "string"
+            },
+            "density": {
+              "type": "number"
+            },
+            "squareBarCostPerKG": {
+              "type": "number"
+            },
+            "roundBarCostUnits": {
+              "type": "string"
+            },
+            "plateCostUnits": {
+              "type": "string"
+            },
+            "plateCostPerUnit": {
+              "type": "number"
+            },
+            "baseRoundTubeCostPerUnit": {
+              "type": "number"
+            },
+            "shearStrength": {
+              "type": "number"
+            },
+            "hexBarCostPerKG": {
+              "type": "number"
+            },
+            "turningSpeed": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "roundTubeCostPerKG": {
+              "type": "number"
+            },
+            "materialCutCodeName": {
+              "type": "string"
+            },
+            "squareBarCostUnits": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "altName4": {
+              "type": "string"
+            },
+            "materialTypeName": {
+              "type": "string"
+            },
+            "altName5": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "altName2",
+            "altName3",
+            "altName1",
+            "squareBarCostPerUnit",
+            "rectangularBarCostPerKG",
+            "hardnessSystem",
+            "roundTubeCostPerUnit",
+            "roundBarCostPerUnit",
+            "basePlateCostPerUnit",
+            "hexBarCostUnits",
+            "baseRoundBarCostPerUnit",
+            "plateCostPerKG",
+            "baseHexBarCostPerUnit",
+            "rectangularBarCostUnits",
+            "roundBarCostPerKG",
+            "hexBarCostPerUnit",
+            "rectangularBarCostPerUnit",
+            "scrapCostPercent",
+            "baseRectangularBarCostPerUnit",
+            "baseSquareBarCostPerUnit",
+            "roundTubeCostUnits",
+            "density",
+            "squareBarCostPerKG",
+            "roundBarCostUnits",
+            "plateCostUnits",
+            "plateCostPerUnit",
+            "baseRoundTubeCostPerUnit",
+            "shearStrength",
+            "hexBarCostPerKG",
+            "turningSpeed",
+            "hardness",
+            "roundTubeCostPerKG",
+            "materialCutCodeName",
+            "squareBarCostUnits",
+            "name",
+            "sourceName",
+            "millingSpeed",
+            "dataSource",
+            "altName4",
+            "materialTypeName",
+            "altName5"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "altName2": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName3": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName1": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "basePlateCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRoundBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseHexBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "plateCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "rectangularBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "scrapCostPercent": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseSquareBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRectangularBarCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roundBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "plateCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseRoundTubeCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "plateCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "shearStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hexBarCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "turningSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "roundTubeCostPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "squareBarCostUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName4": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName5": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "altName2",
+        "altName3",
+        "altName1",
+        "squareBarCostPerUnit",
+        "rectangularBarCostPerKG",
+        "hardnessSystem",
+        "roundTubeCostPerUnit",
+        "basePlateCostPerUnit",
+        "roundBarCostPerUnit",
+        "description",
+        "hexBarCostUnits",
+        "baseRoundBarCostPerUnit",
+        "baseHexBarCostPerUnit",
+        "plateCostPerKG",
+        "baseCostPerUnit",
+        "rectangularBarCostUnits",
+        "roundBarCostPerKG",
+        "hexBarCostPerUnit",
+        "rectangularBarCostPerUnit",
+        "scrapCostPercent",
+        "baseSquareBarCostPerUnit",
+        "baseRectangularBarCostPerUnit",
+        "roundTubeCostUnits",
+        "density",
+        "squareBarCostPerKG",
+        "roundBarCostUnits",
+        "plateCostUnits",
+        "baseRoundTubeCostPerUnit",
+        "plateCostPerUnit",
+        "shearStrength",
+        "hexBarCostPerKG",
+        "turningSpeed",
+        "hardness",
+        "roundTubeCostPerKG",
+        "squareBarCostUnits",
+        "materialCutCodeName",
+        "name",
+        "sourceName",
+        "millingSpeed",
+        "dataSource",
+        "altName4",
+        "altName5",
+        "materialTypeName"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}

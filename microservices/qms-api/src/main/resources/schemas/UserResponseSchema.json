@@ -29,6 +29,12 @@
         "createdBy": {
           "type": "string"
         },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
         "givenName": {
           "type": "string"
         },
@@ -36,6 +42,12 @@
           "type": "string"
         },
         "jobTitle": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "supervisor": {
           "type": "string"
         },
         "townCity": {
@@ -59,7 +71,11 @@
         "familyName"
       ],
       "optional": [
+        "updatedAt",
+        "updatedBy",
         "jobTitle",
+        "department",
+        "supervisor",
         "townCity",
         "stateProvince",
         "countryCode",
