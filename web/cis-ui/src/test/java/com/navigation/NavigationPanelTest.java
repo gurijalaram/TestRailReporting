@@ -120,6 +120,6 @@ public class NavigationPanelTest extends TestBase {
             .clickSupport()
             .switchTab();
 
-        assertThat(zendeskSignInPage.getCurrentUrl(), containsString("https://support.apriori.com/hc/en-us"));
+        assertThat(zendeskSignInPage.getCurrentUrl(), containsString("https://ap-cloud-prd-01.us.auth0.com"));
     }
 }
