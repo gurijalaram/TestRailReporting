@@ -371,10 +371,11 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24270", "24295"})
+    @TestRail(testCaseId = {"24270", "24295", "24427"})
     @Link("Defect - https://jira.apriori.com/browse/COL-1836")
     @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
     public void updateProjectStatuses() {
+        //C24270
         //Project Status is "COMPLETED"
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
@@ -402,6 +403,26 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("PURCHASED");
 
+        //C24427
+        //Project Status is "OPEN"
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("OPEN").build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("OPEN");
+
+        //Project Status is "IN_PROGRESS"
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("IN_PROGRESS").build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("IN_PROGRESS");
+
+        //C24295
         //Project Status is "ACTIVE"
         projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()

@@ -11,6 +11,8 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -28,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -374,6 +377,99 @@ public class QmsProjectsTest extends TestUtil {
                         .getAvatarColor()).isNotNull();
                 }
             }
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"21603"})
+    @Description("Verify that the User can filter project by dueAt(operator NL)")
+    public void getFilteredProjectsByDueAtWithOperatorNL() {
+        String[] params = {"dueAt[NL],null"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt() == null)).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"21604"})
+    @Description("Verify that the User can filter project by dueAt(operator GT)")
+    public void getFilteredProjectsByDueAtWithOperatorGT() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"21605"})
+    @Description("Verify that the User can filter project by dueAt(operator LT)")
+    public void getFilteredProjectsByDueAtWithOperatorLT() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()))).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24072"})
+    @Description("Verify that User can filter project by using range of dates")
+    public void getFilteredProjectsByDueAtRange() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ),
+            "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()) &&
+                    i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMdd);
+        params[1] = "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()) &&
+                    i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
         }
     }
 }

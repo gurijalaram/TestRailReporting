@@ -3,21 +3,29 @@ package com.apriori.qms.controller;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.KeyValueException;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The type Qms project resources.
@@ -149,5 +157,35 @@ public class QmsProjectResources {
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
         return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Gets filtered projects.
+     *
+     * @param currentUser     the current user
+     * @param paramKeysValues the param keys values
+     * @return the filtered projects
+     */
+    public static BidPackageProjectsResponse getFilteredProjects(UserCredentials currentUser, String... paramKeysValues) {
+        QueryParams queryParams = new QueryParams();
+
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(","))
+            .collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, BidPackageProjectsResponse.class)
+            .queryParams(queryParams.use(paramMap))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<BidPackageProjectsResponse> filteredProjectsResponse = HTTPRequest.build(requestEntity).get();
+        return filteredProjectsResponse.getResponseEntity();
     }
 }
