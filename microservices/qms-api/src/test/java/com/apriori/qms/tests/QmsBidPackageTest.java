@@ -32,6 +32,8 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
 
+import java.util.HashMap;
+
 public class QmsBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
@@ -370,7 +372,9 @@ public class QmsBidPackageTest extends TestUtil {
         "4. Create Bid Package Project" +
         "5. Get Bid Package by Identity and verify bid project and package item")
     public void getBidPackageWithAddedPackageItem() {
-        String bidProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectName", projectName);
         BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -383,8 +387,8 @@ public class QmsBidPackageTest extends TestUtil {
         softAssertions.assertThat(getBidPackageResp.getName()).isEqualTo(bidPackageName);
         softAssertions.assertThat(getBidPackageResp.getItems().size()).isGreaterThan(0);
 
-        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(bidProjectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        softAssertions.assertThat(bidPackageProjectResponse.getName()).isEqualTo(bidProjectName);
+        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectAttributesMap, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        softAssertions.assertThat(bidPackageProjectResponse.getName()).isEqualTo(projectName);
 
         BidPackageResponse getBidPackageProjectResp = QmsBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(getBidPackageProjectResp.getName()).isEqualTo(bidPackageName);

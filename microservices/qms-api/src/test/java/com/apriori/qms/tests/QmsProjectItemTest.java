@@ -5,6 +5,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Link;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -24,6 +25,7 @@ public class QmsProjectItemTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"13773", "14913"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1379")
     @Description("Find all project Items for particular project")
     public void getAllProjectItems() {
         BidPackageProjectItemsResponse bpPItemResponse = QmsProjectResources.getProjectItems(
@@ -38,6 +40,7 @@ public class QmsProjectItemTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"14914"})
+    @Link("Defect - https://jira.apriori.com/browse/COL-1379")
     @Description("Get project Item for particular project using project URL")
     public void getAllProjectItemByIdentity() {
         BidPackageProjectItemsResponse bpPItemResponse = QmsProjectResources.getProjectItem(

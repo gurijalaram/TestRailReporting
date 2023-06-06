@@ -1,0 +1,8 @@
+{
+  "type": "array",
+  "items": [
+    {
+      "$ref": "BidPackageProjectUserSchema.json"
+    }
+  ]
+}

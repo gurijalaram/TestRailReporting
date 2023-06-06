@@ -1,0 +1,621 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "altName2": {
+              "type": "string"
+            },
+            "altName3": {
+              "type": "string"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "hardnessSystem": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "tensileYieldStrength": {
+              "type": "number"
+            },
+            "scrapCostPercent": {
+              "type": "number"
+            },
+            "costPerKG": {
+              "type": "number"
+            },
+            "ultimateTensileStrength": {
+              "type": "number"
+            },
+            "density": {
+              "type": "number"
+            },
+            "k": {
+              "type": "number"
+            },
+            "shearStrength": {
+              "type": "number"
+            },
+            "youngModulus": {
+              "type": "number"
+            },
+            "n": {
+              "type": "number"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "possionRatio": {
+              "type": "number"
+            },
+            "r": {
+              "type": "number"
+            },
+            "materialCutCodeName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "altName4": {
+              "type": "string"
+            },
+            "materialTypeName": {
+              "type": "string"
+            },
+            "altName5": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "altName2",
+            "altName3",
+            "altName1",
+            "hardnessSystem",
+            "description",
+            "baseCostPerUnit",
+            "tensileYieldStrength",
+            "scrapCostPercent",
+            "costPerKG",
+            "ultimateTensileStrength",
+            "density",
+            "k",
+            "shearStrength",
+            "youngModulus",
+            "n",
+            "hardness",
+            "possionRatio",
+            "r",
+            "materialCutCodeName",
+            "name",
+            "costUnits",
+            "sourceName",
+            "millingSpeed",
+            "dataSource",
+            "costPerUnit",
+            "altName4",
+            "materialTypeName",
+            "altName5"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "altName2": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName3": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName1": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "tensileYieldStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "scrapCostPercent": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "ultimateTensileStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "k": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "shearStrength": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "youngModulus": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "n": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "possionRatio": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "r": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName4": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "altName5": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "altName2",
+        "altName3",
+        "altName1",
+        "hardnessSystem",
+        "description",
+        "baseCostPerUnit",
+        "tensileYieldStrength",
+        "scrapCostPercent",
+        "ultimateTensileStrength",
+        "costPerKG",
+        "density",
+        "k",
+        "shearStrength",
+        "youngModulus",
+        "n",
+        "possionRatio",
+        "hardness",
+        "r",
+        "materialCutCodeName",
+        "name",
+        "sourceName",
+        "costUnits",
+        "millingSpeed",
+        "dataSource",
+        "altName4",
+        "costPerUnit",
+        "altName5",
+        "materialTypeName"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}
