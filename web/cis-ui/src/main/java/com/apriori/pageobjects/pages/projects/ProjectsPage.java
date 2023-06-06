@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.projects;
 
+import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
+import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -49,6 +51,18 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
 
     @FindBy(xpath = "//button[@title='Previous month']")
     private WebElement previousMonthSelector;
+
+    @FindBy(xpath = "//p[@data-testid='toolbar-Unread']")
+    private WebElement btnUnread;
+
+    @FindBy(xpath = "//h3[@data-testid='displayName']")
+    private WebElement projectName;
+
+    @FindBy(xpath = "(//span[@data-testid='data-label-Due Date']//following::span)[1]")
+    private WebElement dueDate;
+
+    @FindBy(xpath = "(//span[@data-testid='data-label-Owner']//following::span)[1]")
+    private WebElement owner;
 
     private PageUtils pageUtils;
 
@@ -100,9 +114,9 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      *
      * @return current page object
      */
-    public ProjectsPage clickOnCreateNewProject() {
+    public CreateNewProjectsPage clickOnCreateNewProject() {
         getPageUtils().waitForElementAndClick(btnCreateNewProject);
-        return this;
+        return new CreateNewProjectsPage(getDriver());
     }
 
     /**
@@ -195,5 +209,65 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
     public ProjectsPage clickOnCancelProject() {
         getPageUtils().waitForElementAndClick(btnCancelProject);
         return this;
+    }
+
+    /**
+     * clicks on unread filter
+     *
+     * @return current page object
+     */
+    public ProjectsPage clickOnUnread() {
+        getPageUtils().waitForElementAndClick(btnUnread);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
+    }
+
+    /**
+     * Get created project name
+     *
+     * @return current page object
+     */
+    public String getProjectName() {
+        return getPageUtils().waitForElementToAppear(projectName).getText();
+
+    }
+
+    /**
+     * Get project Details
+     *
+     * @return current page object
+     */
+    public String getProjectDetails(String projectName) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//h3[contains(text(),'" + projectName + "')]//..//..//parent::div")).getAttribute("innerText");
+
+    }
+
+    /**
+     * Get project due date
+     *
+     * @return current page object
+     */
+    public String getDueDate() {
+        return getPageUtils().waitForElementToAppear(dueDate).getText();
+
+    }
+
+    /**
+     * Get create project button status
+     *
+     * @return current page object
+     */
+    public String getCreateProjectButtonStatus() {
+        return getPageUtils().waitForElementToAppear(btnProjectSubmit).getAttribute("class");
+    }
+
+    /**
+     * Get project owner
+     *
+     * @return current page object
+     */
+    public String getProjectOwner() {
+        return getPageUtils().waitForElementToAppear(owner).getText();
+
     }
 }
