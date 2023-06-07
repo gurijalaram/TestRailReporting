@@ -6,12 +6,17 @@ import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
-import com.apriori.utils.*;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
