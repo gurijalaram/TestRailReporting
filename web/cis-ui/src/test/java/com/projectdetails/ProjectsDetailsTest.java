@@ -69,9 +69,13 @@ public class ProjectsDetailsTest extends TestBase {
                 .clickOnUnread()
                 .clickOnCreatedProject();
 
+        softAssertions.assertThat(projectsDetailsPage.getProjectDetailsPageTitle()).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(projectsDetailsPage.isAllProjectsNavigationDisplayed()).isEqualTo(true);
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Details")).isEqualTo(true);
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Parts & Assemblies")).isEqualTo(true);
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Users")).isEqualTo(true);
+
+        projectsPage = projectsDetailsPage.clickOnAllProjects();
 
         softAssertions.assertAll();
     }
