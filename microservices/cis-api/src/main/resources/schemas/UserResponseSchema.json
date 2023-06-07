@@ -83,10 +83,18 @@
       "properties": {
         "workspaceId": {
           "type": "integer"
+        },
+        "department": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
         }
       },
       "required": [
-        "workspaceId"
+        "workspaceId",
+        "department",
+        "location"
       ]
     },
     "userType": {
