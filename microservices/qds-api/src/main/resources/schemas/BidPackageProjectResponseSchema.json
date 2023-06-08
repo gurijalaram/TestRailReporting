@@ -1,61 +1,11 @@
 {
   "type": "object",
-  "required": [
-    "response"
-  ],
   "properties": {
     "response": {
-      "type": "object",
-      "required": [
-        "identity",
-        "createdBy",
-        "createdAt",
-        "description",
-        "name",
-        "type",
-        "status",
-        "projectProfile",
-        "bidPackageIdentity"
-      ],
-      "optional": [
-        "updatedBy",
-        "updatedAt"
-      ],
-      "properties": {
-        "identity": {
-          "type": "string"
-        },
-        "createdBy": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "bidPackageIdentity": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        },
-        "projectProfile": {
-          "$ref": "BidPackageProjectProfile.json"
-        }
-      }
+      "$ref": "BidPackageProjectSchema.json"
     }
-  }
+  },
+  "required": [
+    "response"
+  ]
 }
