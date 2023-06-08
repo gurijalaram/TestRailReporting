@@ -78,6 +78,37 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
+     */
+    public void genericAssemblyCostCurrencyTest() {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetName);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
+        JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
+
+        String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
+        softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
+    }
+
+    /**
      * Generic test of currency code for use on a dtc report
      *
      * @param partName - String of partName which is to be used
@@ -361,12 +392,23 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+        return indexOfReturnedItemsToUse == 3
+            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
+            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
-        return partName.isEmpty()
-            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text()
-            : jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
+        if (reportsJsonFileName.contains("Assembly")) {
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
+        }
+
+        if (partName.isEmpty()) {
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValue("colspan", "4").get(9).text();
+        }
+
+        return jasperReportSummary.getFirstChartData()
+            .getChartDataPointByPartName(partName).getFullyBurdenedCost();
     }
 }
