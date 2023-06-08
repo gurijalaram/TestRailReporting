@@ -398,14 +398,17 @@ public class JasperApiUtils {
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
-        String valueToReturn;
         if (reportsJsonFileName.contains("Assembly")) {
-            valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
-        } else if (partName.isEmpty()) {
-            valueToReturn = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text();
-        } else {
-            valueToReturn = jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
         }
-        return valueToReturn;
+
+        if (partName.isEmpty()) {
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValue("colspan", "4").get(9).text();
+        }
+
+        return jasperReportSummary.getFirstChartData()
+            .getChartDataPointByPartName(partName).getFullyBurdenedCost();
     }
 }
