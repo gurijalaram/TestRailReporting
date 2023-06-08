@@ -4,6 +4,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectNotificationRequest;
@@ -13,6 +14,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectNotificationR
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -496,7 +498,7 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        String[] params = {"status[EQ],COMPLETED"};
+        String[] params = {"status[EQ],COMPLETED", "pageNumber,1"};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
@@ -655,6 +657,16 @@ public class QmsProjectsTest extends TestUtil {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .noneMatch(i -> i.getStatus().equals("COMPLETED"))).isTrue();
         }
+
+        //C24073
+        params[0] = "status[NE],IN_NEGOTIATION";
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getStatus().equals("IN_NEGOTIATION"))).isTrue();
+        }
     }
 
     @Test
@@ -685,16 +697,38 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23771"})
-    @Description("Verify that the User can filter projects by Members with operators IN")
+    @TestRail(testCaseId = {"23771", "23772", "23774"})
+    @Description("Verify that the User can filter projects by Members with operators IN, NI")
     public void getFilteredProjectsByMembers() {
-        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        String currentUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
-                .componentIdentity(scenarioItem.getComponentIdentity())
-                .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .componentIdentity(scenarioItem1.getComponentIdentity())
+                .scenarioIdentity(scenarioItem1.getScenarioIdentity())
+                .iterationIdentity(scenarioItem1.getIterationIdentity())
+                .build())
+            .build());
+
+        String displayName = new GenerateStringUtil().getRandomString();
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "COMPLETED");
+        projectAttributesMap.put("projectDisplayName", displayName);
+        QmsProjectResources.createProject(projectAttributesMap,
+            itemsList,
+            null,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem2.getComponentIdentity())
+                .scenarioIdentity(scenarioItem2.getScenarioIdentity())
+                .iterationIdentity(scenarioItem2.getIterationIdentity())
                 .build())
             .build());
 
@@ -713,8 +747,9 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "COMPLETED");
+        projectAttributesMap.put("projectDisplayName", displayName);
         QmsProjectResources.createProject(projectAttributesMap,
             itemsList,
             usersList,
@@ -723,7 +758,7 @@ public class QmsProjectsTest extends TestUtil {
             currentUser);
 
         //C23771
-        String[] params = {"pageNumber,1", "members[IN]," + newUserIdentity1};
+        String[] params = {"pageNumber,1", "members[IN]," + newUserIdentity1, "displayName[CN]," + displayName};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
@@ -743,7 +778,39 @@ public class QmsProjectsTest extends TestUtil {
                     .anyMatch(u -> u.getUserIdentity().equals(newUserIdentity1) ||
                         u.getUserIdentity().equals(newUserIdentity2)))).isTrue();
         }
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+
+        //C23772
+        params[1] = "members[NI]," + newUserIdentity1;
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .noneMatch(u -> u.getUserIdentity().equals(newUserIdentity1)))).isTrue();
+        }
+
+        params[1] = "members[NI]," + newUserIdentity1 + "|" + newUserIdentity2;
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .noneMatch(u -> u.getUserIdentity().equals(newUserIdentity1)))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .noneMatch(u -> u.getUserIdentity().equals(newUserIdentity2)))).isTrue();
+        }
+
+        //C23774
+        params[1] = "members[NI]," + currentUserIdentity;
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isZero();
+
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem1, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem2, currentUser);
     }
 
     @Test
@@ -789,5 +856,249 @@ public class QmsProjectsTest extends TestUtil {
             softAssertions.assertThat(notifyResponse.getNotificationsCount().stream()
                 .allMatch(n -> n.getUnreadNotificationsCount() == 0)).isTrue();
         }
+    }
+
+    @Test
+    @Issue("COL-1831")
+    @TestRail(testCaseId = {"24073", "24074", "24075", "24076", "24077", "24078", "24079", "24080", "24081", "24082", "24083", "24104", "24105", "24111", "24112"})
+    @Description("Verify that the User can filter project by status, owner, displayName, members, dueAt, read/unread messages")
+    public void getFilteredProjectsByMultipleFields() {
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        UserCredentials projectMemberUser = UserUtil.getUser();
+        String projectMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(projectMemberUser.getEmail());
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(projectMemberUserIdentity)
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        String displayName = new GenerateStringUtil().getRandomString();
+        String status = "IN_NEGOTIATION";
+        String owner = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        String dueAtLT = DateUtil.getDateDaysAfter(12, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        String dueAtGT = DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", status);
+        projectAttributesMap.put("projectDisplayName", displayName);
+        QmsProjectResources.createProject(projectAttributesMap,
+            itemsList,
+            usersList,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        //C24073
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+        }
+
+        //24074
+        String[] params1 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params1);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+        }
+
+        //24075
+        String[] params2 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params2);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream().allMatch(i -> i.getDueAt()
+                .isBefore(LocalDateTime.parse(dueAtLT, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)))).isTrue();
+        }
+
+        //24078
+        String[] params5 = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params5);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+        }
+
+        //24079
+        String[] params6 = {"pageNumber,1", "displayName[CN]," + displayName, "owner[IN]," + owner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params6);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+        }
+
+        //24080
+        String[] params7 = {"pageNumber,1", "status[NI],COMPLETED", "owner[IN]," + owner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params7);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getStatus().equals("COMPLETED"))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+        }
+
+        //24081
+        String newOwner = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
+        String[] params8 = {"pageNumber,1", "status[NI],COMPLETED", "owner[NI]," + newOwner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params8);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getStatus().equals("COMPLETED"))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getOwner().equals(newOwner))).isTrue();
+        }
+
+        //24082
+        String[] params9 = {"pageNumber,1", "status[NI],COMPLETED", "displayName[CN]," + displayName};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params9);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getStatus().equals("COMPLETED"))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+        }
+
+        //24083
+        String[] params10 = {"pageNumber,1", "displayName[CN]," + displayName, "owner[NI]," + newOwner};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params10);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .noneMatch(i -> i.getOwner().equals(newOwner))).isTrue();
+        }
+
+        //24104
+        String[] params11 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[GT]," + dueAtGT};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params11);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream().allMatch(i -> i.getDueAt()
+                .isAfter(LocalDateTime.parse(dueAtGT, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)))).isTrue();
+        }
+
+        //24111
+        String[] params13 = {"pageNumber,1", "status[IN]," + status, "members[IN]," + projectMemberUserIdentity};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params13);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .anyMatch(u -> u.getUserIdentity().equals(projectMemberUserIdentity)))).isTrue();
+        }
+
+        //24112
+        String[] params14 = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectMemberUserIdentity};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params14);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .noneMatch(u -> u.getUserIdentity().equals(projectMemberUserIdentity)))).isTrue();
+        }
+
+        //24076
+        String[] params3 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],no"};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params3);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream().allMatch(i -> i.getDueAt()
+                .isBefore(LocalDateTime.parse(dueAtLT, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)))).isTrue();
+        }
+
+        //24077
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), displayName, "ACTIVE", currentUser);
+        String[] params4 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],yes"};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params4);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream().allMatch(i -> i.getDueAt()
+                .isBefore(LocalDateTime.parse(dueAtLT, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)))).isTrue();
+        }
+
+        //24105
+        String[] params12 = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner, "hasUnreadMessages[EQ],yes"};
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params12);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getStatus().equals(status))).isTrue();
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getOwner().equals(owner))).isTrue();
+        }
+
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 }
