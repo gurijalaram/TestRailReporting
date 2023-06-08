@@ -141,6 +141,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(btnYear);
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
+        getPageUtils().scrollWithJavaScript(projectNameField,false);
         return this;
     }
 
