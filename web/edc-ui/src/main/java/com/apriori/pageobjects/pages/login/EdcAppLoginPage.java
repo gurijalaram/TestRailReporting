@@ -3,7 +3,7 @@ package com.apriori.pageobjects.pages.login;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +30,12 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
 
     public EdcAppLoginPage(WebDriver driver) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "edc");
+        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "edc");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -58,6 +58,6 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
      * @return new page object
      */
     public ElectronicsDataCollectionPage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, ElectronicsDataCollectionPage.class);
+        return aprioriLoginPage.performLogin(userCredentials, ElectronicsDataCollectionPage.class);
     }
 }

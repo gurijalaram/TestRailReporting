@@ -3,7 +3,7 @@ package utils;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CicLoginUtil extends TestBase {
 
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -23,7 +23,7 @@ public class CicLoginUtil extends TestBase {
 
     public CicLoginUtil(WebDriver webdriver) {
         this.driver = webdriver;
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "ci-connect");
+        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "ci-connect");
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,12 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
 
     public CasLoginPage(WebDriver driver) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "cas");
+        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "cas");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -48,6 +48,6 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @return new page object
      */
     public CustomerAdminPage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, CustomerAdminPage.class);
+        return aprioriLoginPage.performLogin(userCredentials, CustomerAdminPage.class);
     }
 }

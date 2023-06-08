@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
 import com.apriori.utils.login.ForgottenPasswordPage;
 import com.apriori.utils.login.PrivacyPolicyPage;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -20,7 +20,7 @@ public class AprioriLoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private ForgottenPasswordPage forgottenPasswordPage;
     //private CloudHomePage cloudHomePage;
@@ -31,7 +31,7 @@ public class AprioriLoginTests extends TestBase {
 
     @Before
     public void setup() {
-        aprioriLoginPage = new AprioriLoginPage(driver);
+        aprioriLoginPage = new CommonLoginPageImplementation(driver);
     }
 
     /*@Test
@@ -48,7 +48,7 @@ public class AprioriLoginTests extends TestBase {
     @TestRail(testCaseId = {"6646"})
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
-
+        aprioriLoginPage.failedLoginAs("", "");
         aprioriLoginPage.failedLoginAs(UserUtil.getUser().getEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(aprioriLoginPage.getLoginErrorMessage()));

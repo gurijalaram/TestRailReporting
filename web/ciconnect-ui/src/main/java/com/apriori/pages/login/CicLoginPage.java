@@ -4,23 +4,21 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.home.CIConnectHome;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import utils.TableUtils;
 
 import java.util.Objects;
 
 public class CicLoginPage extends CICBasePage {
 
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
 
     public CicLoginPage(WebDriver driver) {
         super(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "ci-connect");
+        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "ci-connect");
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -41,7 +39,7 @@ public class CicLoginPage extends CICBasePage {
      * @return new page object
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
-        CIConnectHome ciConnectHome = aprioriLoginPage.login(userCredentials, CIConnectHome.class);
+        CIConnectHome ciConnectHome = aprioriLoginPage.performLogin(userCredentials, CIConnectHome.class);
         if (Objects.isNull(ciConnectHome)) {
             throw new RuntimeException("Login failed!!");
         }

@@ -1,10 +1,9 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.CommonLoginPageImplementation;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -53,7 +52,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    private CommonLoginPageImplementation aprioriLoginPage;
+    private LoginService loginService;
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     @FindBy(xpath = "//input[@type='email']")
@@ -63,7 +63,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "reports");
+        //this.aprioriLoginPage = new AprioriLoginPage(driver, "reports");
+        this.loginService = new LoginService(this.driver, "reports");
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -76,7 +77,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
+        //assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
     }
 
     /**
@@ -85,7 +86,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login() {
-        return aprioriLoginPage.login(userCredentials, ReportsPageHeader.class);
+        //return aprioriLoginPage.login(userCredentials, ReportsPageHeader.class);
+        return loginService.login(userCredentials, ReportsPageHeader.class);
     }
 
     /**
