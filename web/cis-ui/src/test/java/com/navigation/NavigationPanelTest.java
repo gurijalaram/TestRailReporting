@@ -120,6 +120,10 @@ public class NavigationPanelTest extends TestBase {
             .clickSupport()
             .switchTab();
 
-        assertThat(zendeskSignInPage.getCurrentUrl(), containsString("https://support.apriori.com/hc/en-us"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(zendeskSignInPage.isZendeskLabelDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }
