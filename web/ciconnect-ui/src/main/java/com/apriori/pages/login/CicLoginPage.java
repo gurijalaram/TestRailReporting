@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.home.CIConnectHome;
-import com.apriori.utils.login.CommonLoginPageImplementation;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -14,11 +14,11 @@ import java.util.Objects;
 
 public class CicLoginPage extends CICBasePage {
 
-    private CommonLoginPageImplementation aprioriLoginPage;
+    private final LoginService aprioriLoginService;
 
     public CicLoginPage(WebDriver driver) {
         super(driver);
-        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "ci-connect");
+        this.aprioriLoginService = new LoginService(driver, "ci-connect");
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -29,7 +29,7 @@ public class CicLoginPage extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Connect"));
+        assertTrue("CIC login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Connect"));
     }
 
     /**
@@ -39,7 +39,7 @@ public class CicLoginPage extends CICBasePage {
      * @return new page object
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
-        CIConnectHome ciConnectHome = aprioriLoginPage.performLogin(userCredentials, CIConnectHome.class);
+        CIConnectHome ciConnectHome = aprioriLoginService.login(userCredentials, CIConnectHome.class);
         if (Objects.isNull(ciConnectHome)) {
             throw new RuntimeException("Login failed!!");
         }

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.CommonLoginPageImplementation;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,12 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private CommonLoginPageImplementation aprioriLoginPage;
+    private LoginService aprioriLoginService;
 
     public CasLoginPage(WebDriver driver) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "cas");
+        this.aprioriLoginService = new LoginService(driver, "cas");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -38,7 +38,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CAS login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Customer Admin"));
+        assertTrue("CAS login page was not displayed", aprioriLoginService.getLoginTitle().contains("Customer Admin"));
     }
 
     /**
@@ -48,6 +48,6 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @return new page object
      */
     public CustomerAdminPage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.performLogin(userCredentials, CustomerAdminPage.class);
+        return aprioriLoginService.login(userCredentials, CustomerAdminPage.class);
     }
 }

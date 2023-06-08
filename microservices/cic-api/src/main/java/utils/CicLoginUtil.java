@@ -3,7 +3,7 @@ package utils;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.CommonLoginPageImplementation;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CicLoginUtil extends TestBase {
 
-    private CommonLoginPageImplementation aprioriLoginPage;
+    private LoginService aprioriLoginService;
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -23,7 +23,7 @@ public class CicLoginUtil extends TestBase {
 
     public CicLoginUtil(WebDriver webdriver) {
         this.driver = webdriver;
-        this.aprioriLoginPage = new CommonLoginPageImplementation(driver, "ci-connect");
+        this.aprioriLoginService = new LoginService(driver, "ci-connect");
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }
@@ -33,12 +33,12 @@ public class CicLoginUtil extends TestBase {
      * @return new page object
      */
     public CicLoginUtil login(UserCredentials currentUser) {
-        aprioriLoginPage.executeLogin(currentUser.getEmail(), currentUser.getPassword());
+        aprioriLoginService.loginNoReturn(currentUser.getEmail(), currentUser.getPassword());
         return this;
     }
 
     public CicLoginUtil navigateToUserMenu() {
-        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Connect"));
+        assertTrue("CIC login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Connect"));
         pageUtils.waitForElementAndClick(usersMenuBtn);
         return this;
     }

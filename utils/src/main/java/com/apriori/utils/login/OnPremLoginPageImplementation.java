@@ -3,6 +3,7 @@ package com.apriori.utils.login;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +28,24 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
 
     @FindBy(css = "button[id='submitButton']")
     private WebElement loginButtonOnPremReports;
+
+    @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
+    private WebElement loginErrorMsg;
+
+    @FindBy(css = ".auth0-lock-header-logo")
+    private WebElement aprioriLogo;
+
+    @FindBy(css = "a[class='auth0-lock-alternative-link")
+    private WebElement forgotPassword;
+
+    @FindBy(css = ".welcome-message")
+    private WebElement welcomeText;
+
+    @FindBy(xpath = "//a[.='Privacy Policy']")
+    private WebElement privacyPolicy;
+
+    @FindBy(css = ".auth0-lock-name")
+    private WebElement cloudLoginTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -57,12 +76,6 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
     }
 
     @Override
-    public <T> T performLogin(final UserCredentials userCredentials, Class<T> klass) {
-        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
-        return PageFactory.initElements(driver, klass);
-    }
-
-    @Override
     protected void load() {
 
     }
@@ -73,15 +86,123 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
     }
 
     /**
+     * Generic login method
+     *
+     * @param userCredentials - users
+     * @param klass - class to return an instance of
+     * @param <T> - generic class to return an instance of
+     * @return instance of class
+     */
+    @Override
+    public <T> T performLogin(final UserCredentials userCredentials, Class<T> klass) {
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Generic login method
+     *
+     * @param username - username to login with
+     * @param password - password to login with
+     * @param klass - class to return an instance of
+     * @param <T> - generic class to return an instance of
+     * @return instance of class
+     */
+    @Override
+    public <T> T performLogin(String username, String password, Class<T> klass) {
+        executeLogin(username, password);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Generic login method
+     *
+     * @param username - username to login with
+     * @param password - password to login with
+     */
+    @Override
+    public void performLoginVoid(String username, String password) {
+        executeLogin(username, password);
+    }
+
+    /**
+     * Failed login with empty fields and no return
+     */
+    @Override
+    public void failedLoginEmptyFieldsNoReturn() {
+        executeLogin("", "");
+    }
+
+    /**
+     * Submits email but no password
+     *
+     * @param username - username to login with
+     * @param klass - class to return an instance of
+     * @param <T> - generic of class to return an instance of
+     * @return - instance of class
+     */
+    @Override
+    public <T> T submitEmailForgotPwd(String username, Class<T> klass) {
+        executeLogin(username, "");
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Gets login title
+     *
+     * @return String
+     */
+    @Override
+    public String getLoginTitle() {
+        pageUtils.waitForElementToAppear(cloudLoginTitle);
+        pageUtils.waitForElementToBeClickable(cloudLoginTitle);
+        return cloudLoginTitle.getText();
+    }
+
+    /**
+     * Clicks forgot password
+     *
+     * @param klass - class to return an instance of
+     * @param <T> - generic of class to return an instance of
+     * @return instance of class specified
+     */
+    @Override
+    public <T> T forgottenPassword(Class<T> klass) {
+        pageUtils.waitForElementAndClick(forgotPassword);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Gets welcome text
+     *
+     * @return string
+     */
+    @Override
+    public String getWelcomeText() {
+        return welcomeText.getText();
+    }
+
+    /**
+     * Selects privacy policy
+     *
+     * @return new page object
+     */
+    @Override
+    public <T> T privacyPolicy(Class<T> klass) {
+        pageUtils.waitForElementAndClick(privacyPolicy);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
      * Execute actions to login
      *
      * @param email    - the email
      * @param password - the password
      */
     public void executeLogin(String email, String password) {
-        boolean isReports = application.equals("admin");
-        WebElement emailInputToUse = isReports ? emailInputOnPremReports : emailInputOnPremAdmin;
-        WebElement loginButtonToUse = isReports ? loginButtonOnPremReports : loginButtonOnPremAdmin;
+        boolean isAdmin = application.equals("admin");
+        WebElement emailInputToUse = isAdmin ? emailInputOnPremAdmin : emailInputOnPremReports;
+        WebElement loginButtonToUse = isAdmin ? loginButtonOnPremAdmin : loginButtonOnPremReports;
         enterEmail(email, emailInputToUse);
         enterPassword(password, passwordInput);
         submitLogin(loginButtonToUse);
@@ -114,5 +235,23 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
      */
     private void submitLogin(WebElement webElementToUse) {
         pageUtils.waitForElementAndClick(webElementToUse);
+    }
+
+    /**
+     * Gets the login error message
+     *
+     * @return login error message
+     */
+    public String getLoginErrorMessage() {
+        return loginErrorMsg.getText();
+    }
+
+    /**
+     * Checks apriori logo is displayed
+     *
+     * @return true/false
+     */
+    public boolean isLogoDisplayed() {
+        return aprioriLogo.isDisplayed();
     }
 }

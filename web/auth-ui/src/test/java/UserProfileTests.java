@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.login.CloudHomePage;
-import com.apriori.utils.login.CommonLoginPageImplementation;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.login.UserProfilePage;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class UserProfileTests extends TestBase {
 
-    private CommonLoginPageImplementation aprioriLoginPage;
+    private LoginService aprioriLoginService;
     private UserCredentials currentUser;
 
     public UserProfileTests() {
@@ -28,7 +28,7 @@ public class UserProfileTests extends TestBase {
 
     @Before
     public void setup() {
-        aprioriLoginPage = new CommonLoginPageImplementation(driver);
+        aprioriLoginService = new LoginService(driver, "auth-ui");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class UserProfileTests extends TestBase {
         List<String> expectedResults = Arrays.asList("Username", "Email", "Given Name", "Family Name", "Name prefix", "Name suffix", "Job title", "Department", "Town or City",
             "County", "Country", "Time Zone", "Office Phone Country Code", "Office Phone Number");
         currentUser = UserUtil.getUser();
-        UserProfilePage userProfilePage = aprioriLoginPage.performLogin(currentUser, CloudHomePage.class)
+        UserProfilePage userProfilePage = aprioriLoginService.login(currentUser, CloudHomePage.class)
             .goToProfilePage();
         assertThat(userProfilePage.getAllInputFieldsName(), is(expectedResults));
     }
