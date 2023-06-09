@@ -25,7 +25,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Link;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -85,7 +85,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"14611", "14612", "15472", "16050"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1824")
+    @Issue("COL-1824")
     @Description("Verify that User can update Scenario discussion description and status (ACTIVE & RESOLVED")
     public void updateScenarioDiscussionDescriptionAndStatus() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -287,7 +287,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"16565"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1824")
+    @Issue("COL-1824")
     @Description("Verify that User cannot add comments to discussion with RESOLVED status")
     public void verifyCannotAddCommentsResolvedStatus() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -323,7 +323,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"16052", "16051"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1814")
+    @Issue("COL-1814")
     @Description("Verify that user can DELETE & UNDELETE discussion (Patch Method)")
     public void deleteDiscussionByPatchMethod() {
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
