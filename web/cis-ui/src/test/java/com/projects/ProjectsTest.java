@@ -88,7 +88,7 @@ public class ProjectsTest extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"22688","22708","24001","24002","17216","17218"})
-    @Description("Verify user can access create a new project page and verify page elements")
+    @Description("Verify user can save a new project")
     public void testSaveNewProject() {
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -120,6 +120,56 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertThat(projectsPage.getDueDate()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22749","22750","22751","22752","22753"})
+    @Description("Verify user can search project by project name")
+    public void testSearchProject() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User")
+                .clickOnAddNewButton()
+                .selectAPart(scenarioName,componentName)
+                .clickAdd()
+                .selectAUser("qa-automation-22@apriori.com")
+                .setDueDate("2028","15");
+
+        projectsPage = createNewProjectsPage.saveProject()
+                .clickOnUnread();
+
+        softAssertions.assertThat(projectsPage.isSearchProjectButtonDisplayed()).isEqualTo(true);
+
+        projectsPage.searchProject("Automation Project " + dateTime);
+
+        softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(projectsPage.getDueDate()).isNotBlank();
+        softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
+        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+        softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
+        softAssertions.assertThat(projectsPage.getProjectParticipants()).isNotBlank();
+
+        projectsPage.removeSearch();
+
+        softAssertions.assertThat(projectsPage.isSearchProjectButtonDisplayed()).isEqualTo(true);
+
+        projectsPage.clickOnUnread();
 
         softAssertions.assertAll();
     }
