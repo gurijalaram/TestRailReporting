@@ -58,6 +58,27 @@ public class QmsScenarioDiscussionResources {
     }
 
     /**
+     * Gets scenario discussion.
+     *
+     * @param <T>                              the type parameter
+     * @param scenarioDiscussionIdentity       the scenario discussion identity
+     * @param responseClass                    the response class
+     * @param httpStatus                       the http status
+     * @param currentUser                      the current user
+     * @return the scenario discussion
+     */
+    public static <T> T getScenarioDiscussion(String scenarioDiscussionIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, responseClass)
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Update scenario discussion by identity
      *
      * @param <T>                              - response class type

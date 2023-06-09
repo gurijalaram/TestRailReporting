@@ -23,7 +23,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import org.apache.http.HttpStatus;
@@ -59,14 +58,9 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"14610"})
     @Description("Get Scenario Discussion by identity")
     public void getScenarioDiscussion() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
-            .inlineVariables(scenarioDiscussionResponse.getIdentity())
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ScenarioDiscussionResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getIdentity())
+        ScenarioDiscussionResponse getScenarioDiscussionResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), ScenarioDiscussionResponse.class,
+            HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(getScenarioDiscussionResponse.getIdentity())
             .isEqualTo(scenarioDiscussionResponse.getIdentity());
     }
 
@@ -474,7 +468,8 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
             HttpStatus.SC_CREATED,
             assigneeUser);
         softAssertions.assertThat(commentViewResponse.getCommentView().stream()
-                .anyMatch(cv -> cv.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
+                .anyMatch(cv -> cv.getUserIdentity()
+                    .equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
             .isTrue();
     }
 }
