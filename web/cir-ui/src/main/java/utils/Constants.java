@@ -48,6 +48,7 @@ public class Constants {
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
     public static Map<String, String> INPUT_CONTROL_NAMES = new HashMap<String, String>() {{
+            put("Currency", "currencyCode");
             put("Cost Metric", "costMetric");
             put("Mass Metric", "massMetric");
             put("Process Group", "processGroup");
