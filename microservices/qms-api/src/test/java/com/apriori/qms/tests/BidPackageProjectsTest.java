@@ -18,7 +18,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Link;
+import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -300,15 +300,18 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24266"})
-    @Description("Verify project display name can be updated to empty")
+    @Description("Verify project display name cannot be updated to empty")
     public void updateEmptyProjectDisplayName() {
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
                 .displayName("").build())
             .build();
-        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEmpty();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("displayName should not be null and have less than 64 characters");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -372,7 +375,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24270", "24295", "24427"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1836")
+    @Issue("COL-1836")
     @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
     public void updateProjectStatuses() {
         //C24270
@@ -572,8 +575,8 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24281"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
-    @Description("Verify dueAt can be updated to null or empty")
+    @Issue("COL-1834")
+    @Description("Verify response should not contain the dueAt attribute, when dueAt attribute is having null or empty values in request")
     public void updateEmptyProjectDueAt() {
         //Project DueAt is Empty
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -596,8 +599,8 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24347"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
-    @Description("Verify description can be updated to null/empty")
+    @Issue("COL-1834")
+    @Description("Verify response should not contain the description attribute, when description  attribute is having null or empty values in request")
     public void updateEmptyProjectDescription() {
         //Project Description Name is empty
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -606,7 +609,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         BidPackageProjectResponse getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isEmpty();
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isNull();
 
         //Project Description Name is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -712,7 +715,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24313","24412"})
+    @TestRail(testCaseId = {"24313", "24412"})
     @Description("Verify dueAt can not be updated to invalid date or invalid datetime format")
     public void updateInvalidProjectDueAt() {
         //Invalid format #1
@@ -724,7 +727,8 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
         //Invalid format #2
         projectRequest = BidPackageProjectRequest.builder()
@@ -735,7 +739,8 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
         //Invalid format #3 [Back Date]
         projectRequest = BidPackageProjectRequest.builder()
@@ -746,7 +751,8 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Given dueAt is before than Current Time");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Given dueAt is before than Current Time");
     }
 
     @After
