@@ -136,12 +136,12 @@ public class QmsApiTestUtils {
     /**
      * Create and verify project with status scenario item.
      *
-     * @param currentUser    the current user
-     * @param softAssertions the soft assertions
-     * @param projectStatus  the project status
+     * @param currentUser          the current user
+     * @param softAssertions       the soft assertions
+     * @param projectAttributesMap the project attributes map
      * @return the scenario item
      */
-    public static ScenarioItem createAndVerifyProjectWithStatus(UserCredentials currentUser, SoftAssertions softAssertions, String projectStatus) {
+    public static ScenarioItem createAndVerifyProjectWithStatus(UserCredentials currentUser, SoftAssertions softAssertions, HashMap<String, String> projectAttributesMap) {
         ScenarioItem scenarioItem = createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
@@ -152,8 +152,6 @@ public class QmsApiTestUtils {
                 .build())
             .build());
 
-        HashMap<String, String> projectAttributesMap = new HashMap<>();
-        projectAttributesMap.put("projectStatus", projectStatus);
         QmsProjectResources.createProject(projectAttributesMap,
             itemsList,
             null,
@@ -161,8 +159,8 @@ public class QmsApiTestUtils {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[EQ]," + projectStatus);
-        verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", projectStatus);
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[EQ]," + projectAttributesMap.get("projectStatus"));
+        verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", projectAttributesMap.get("projectStatus"));
         return scenarioItem;
     }
 
