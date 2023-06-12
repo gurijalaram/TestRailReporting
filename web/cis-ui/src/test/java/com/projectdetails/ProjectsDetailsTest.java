@@ -134,4 +134,61 @@ public class ProjectsDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"24465","24466","24467"})
+    @Description("Verify the user can edit the project details")
+    public void testEditProjectDetails() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User")
+                .clickOnAddNewButton()
+                .selectAPart(scenarioName,componentName)
+                .clickAdd()
+                .selectAUser("qa-automation-22@apriori.com")
+                .setDueDate("2028","15");
+
+        projectsDetailsPage = createNewProjectsPage.saveProject()
+                .clickOnUnread()
+                .clickOnCreatedProject()
+                .clickDetailsPageTab("Details")
+                .clickEditDetails();
+
+        softAssertions.assertThat(projectsDetailsPage.isEditDetailsModalDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickCancel();
+
+        softAssertions.assertThat(projectsDetailsPage.isEditDetailsModalDisplayed()).isEqualTo(false);
+
+        projectsDetailsPage.clickEditDetails()
+                .editProjectName("Automation Project " + dateTime + " Edited")
+                .editProjectOwner("qa-automation-40@apriori.com")
+                .editDueDate("2029","20")
+                .editProjectDescription("This Project is edited by Automation User");
+
+        softAssertions.assertThat(projectsDetailsPage.getSaveButtonStatus()).doesNotContain("Mui-disabled");
+
+        projectsDetailsPage.clickSave();
+
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Owner")).contains("QA Automation Account 40");
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Due Date")).isNotEmpty();
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime + " Edited");
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Description")).contains("This Project is edited by Automation User");
+
+        softAssertions.assertAll();
+    }
 }
