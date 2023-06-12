@@ -287,4 +287,137 @@ public class ProjectsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"22909","22910","22911","22912","22913"})
+    @Description("Verify user can filter a project by name")
+    public void testFilterByProjectName() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User")
+                .clickOnAddNewButton()
+                .selectAPart(scenarioName,componentName)
+                .clickAdd()
+                .selectAUser("qa-automation-22@apriori.com")
+                .setDueDate("2028","15");
+
+        projectsPage = createNewProjectsPage.saveProject()
+                .clickOnUnread();
+
+        softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(projectsPage.isProjectFilterOptionDisplayed()).isEqualTo(true);
+
+        projectsPage.clickOnFilterOption();
+
+        softAssertions.assertThat(projectsPage.isFilterAddConditionDisplayed()).isEqualTo(true);
+
+        projectsPage.clickOnAddCondition();
+
+        softAssertions.assertThat(projectsPage.isFilterFiledDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isFilterConditionTypeDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsPage.isFilterValueDisplayed()).isEqualTo(true);
+
+        projectsPage.addProjectNameToFilter("Automation Project " + dateTime);
+
+        softAssertions.assertThat(projectsPage.getListOfProject("Automation Project " + dateTime)).isEqualTo(1);
+        softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22914","22915"})
+    @Description("Verify user can filter a project by status")
+    public void testFilterByStatus() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User")
+                .clickOnAddNewButton()
+                .selectAPart(scenarioName,componentName)
+                .clickAdd()
+                .selectAUser("qa-automation-22@apriori.com")
+                .setDueDate("2028","15");
+
+        projectsPage = createNewProjectsPage.saveProject()
+                .clickOnUnread();
+
+        softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
+
+        projectsPage.clickOnFilterOption()
+                .clickOnAddCondition()
+                .selectProjectStatus("In Negotiation");
+
+        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"23790","23791"})
+    @Description("Verify user can filter a project by due date")
+    public void testFilterByDueDate() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User")
+                .clickOnAddNewButton()
+                .selectAPart(scenarioName,componentName)
+                .clickAdd()
+                .selectAUser("qa-automation-22@apriori.com")
+                .setDueDate("2028","15");
+
+        projectsPage = createNewProjectsPage.saveProject()
+                .clickOnUnread();
+
+        softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
+
+        projectsPage.clickOnFilterOption()
+                .clickOnAddCondition()
+                .selectProjectDueDate("2028","15");
+
+        softAssertions.assertThat(projectsPage.getFilteredDueDate("Automation Project " + dateTime)).isNotEmpty();
+
+        softAssertions.assertAll();
+    }
 }
