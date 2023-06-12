@@ -732,21 +732,21 @@ public class BidPackageProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"24462"})
     @Description("Verify project deletion is deleting all associated projectItems, discussions and bidPackageItems")
     public void deleteBidPackageProjectAndVerifyAllEntitiesDeleted() {
-        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItemForFirstBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItemForSecondBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
 
-        BidPackageItemResponse bidPackageItemResponse1 = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem1.getComponentIdentity(), scenarioItem1.getScenarioIdentity(), scenarioItem1.getIterationIdentity()),
+        BidPackageItemResponse bidPackageItemResponseForFirstScenario = QmsBidPackageResources.createBidPackageItem(
+            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), scenarioItemForFirstBidPackageItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-        BidPackageItemResponse bidPackageItemResponse2 = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem2.getComponentIdentity(), scenarioItem2.getScenarioIdentity(), scenarioItem2.getIterationIdentity()),
+        BidPackageItemResponse bidPackageItemResponseSecondScenario = QmsBidPackageResources.createBidPackageItem(
+            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), scenarioItemForSecondBidPackageItem.getIterationIdentity()),
             bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
         BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionResponse1 = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem1.getComponentIdentity(), scenarioItem1.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionResponse2 = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem1.getComponentIdentity(), scenarioItem1.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionResponse3 = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem2.getComponentIdentity(), scenarioItem2.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionResponse4 = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem2.getComponentIdentity(), scenarioItem2.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFirstResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionSecondResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionThirdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFourthResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), currentUser);
 
         //Delete Project
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
@@ -757,8 +757,8 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains(String.format("Can't find project for bid package with identity '%s'", bidPackageResponse.getIdentity()));
 
-        //Verify Bid package items deletion
-        String[] bidPackageItemsIdsArr = new String[]{bidPackageItemResponse1.getIdentity(), bidPackageItemResponse2.getIdentity()};
+        //Verify Bid Package-items deletion
+        String[] bidPackageItemsIdsArr = new String[]{bidPackageItemResponseForFirstScenario.getIdentity(), bidPackageItemResponseSecondScenario.getIdentity()};
         for (String bidPackageItemId : bidPackageItemsIdsArr) {
             ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageItem(bidPackageResponse.getIdentity(),
                 bidPackageItemId,
@@ -780,8 +780,8 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(bpPItemsResponse.getItems().size()).isZero();
 
         //Verify Scenario Discussions deletion
-        String[] discussionIdsArr = new String[]{scenarioDiscussionResponse1.getIdentity(), scenarioDiscussionResponse2.getIdentity(),
-            scenarioDiscussionResponse3.getIdentity(), scenarioDiscussionResponse4.getIdentity()};
+        String[] discussionIdsArr = new String[]{scenarioDiscussionFirstResponse.getIdentity(), scenarioDiscussionSecondResponse.getIdentity(),
+            scenarioDiscussionThirdResponse.getIdentity(), scenarioDiscussionFourthResponse.getIdentity()};
         for (String discussionId : discussionIdsArr) {
             ApwErrorMessage discussionErrorResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(
                 discussionId,
@@ -793,8 +793,8 @@ public class BidPackageProjectsTest extends TestUtil {
         }
 
         //Delete Scenarios
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem1, currentUser);
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem2, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForFirstBidPackageItem, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForSecondBidPackageItem, currentUser);
     }
 
     @After
