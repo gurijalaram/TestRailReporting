@@ -743,10 +743,10 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
 
         BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionFirstResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionSecondResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionThirdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionFourthResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFirstResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionSecondResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionThirdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFourthResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
 
         //Delete Project
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
