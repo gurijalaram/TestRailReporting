@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.projects;
 
 import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
-import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -75,7 +74,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
     private WebElement searchRemoveIcon;
 
     @FindBy(xpath = "(//span[@data-testid='data-label-Organization']//following::span)[1]")
-    private WebElement Organization;
+    private WebElement organization;
 
     @FindBy(xpath = "(//div[starts-with(@class,'MuiAvatarGroup-root')])[1]")
     private WebElement participants;
@@ -302,7 +301,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      * @return a string
      */
     public String getProjectOrganization() {
-        return getPageUtils().waitForElementToAppear(Organization).getText();
+        return getPageUtils().waitForElementToAppear(organization).getText();
     }
 
     /**
