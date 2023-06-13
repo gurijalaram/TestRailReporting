@@ -11,6 +11,8 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
@@ -24,28 +26,36 @@ import io.qameta.allure.Link;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class QmsProjectsTest extends TestUtil {
-    private final UserCredentials currentUser = UserUtil.getUser();
     private SoftAssertions softAssertions;
     private ScenarioItem scenarioItem;
+
+    @AfterClass
+    public static void afterClass() {
+        for (ScenarioItem removeScenario : scenarioItemRemoveList) {
+            QmsApiTestUtils.deleteScenarioViaCidApp(removeScenario, currentUser);
+        }
+    }
 
     @Before
     public void beforeTest() {
         softAssertions = new SoftAssertions();
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        scenarioItemRemoveList.add(scenarioItem);
     }
 
     @After
     public void afterTest() {
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         softAssertions.assertAll();
     }
 
@@ -62,8 +72,7 @@ public class QmsProjectsTest extends TestUtil {
                 .build())
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
-            new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
             itemsList,
             null,
             BidPackageProjectResponse.class,
@@ -114,8 +123,7 @@ public class QmsProjectsTest extends TestUtil {
             projectUsersList.add(userIdentity);
         }
 
-        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
-            new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
             itemsList,
             usersList,
             BidPackageProjectResponse.class,
@@ -176,8 +184,7 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
-            new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
             itemsList,
             usersList,
             BidPackageProjectResponse.class,
@@ -231,8 +238,7 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
-            new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
             itemsList,
             usersList,
             BidPackageProjectResponse.class,
@@ -295,8 +301,7 @@ public class QmsProjectsTest extends TestUtil {
             .build());
         projectUsersList.add(userIdentity3);
 
-        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new GenerateStringUtil().getRandomNumbers(),
-            new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
             itemsList,
             usersList,
             BidPackageProjectResponse.class,
@@ -326,33 +331,29 @@ public class QmsProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"22956"})
     @Description("Verify user is able to retrieve avatarColor inside of a specific QMS project's user model")
     public void getProjectByIdentity() {
-        if (scenarioItem != null) {
-            BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
-            if (bidPackageResponse != null) {
-                BidPackageItemResponse bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
-                    QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
-                    bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-                if (bidPackageItemResponse != null) {
-                    BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-                    {
-                        BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(
-                            bidPackageProjectResponse.getIdentity(),
-                            BidPackageProjectResponse.class,
-                            HttpStatus.SC_OK,
-                            currentUser);
-                        softAssertions.assertThat(bppResponse.getUsers().size()).isGreaterThan(0);
-                        if (softAssertions.wasSuccess()) {
-                            for (int j = 0; j < bppResponse.getUsers().size(); j++) {
-                                softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor())
-                                    .isNotNull();
-                            }
+        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        if (bidPackageResponse != null) {
+            BidPackageItemResponse bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
+                QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+                bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+            if (bidPackageItemResponse != null) {
+                BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                {
+                    BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(
+                        bidPackageProjectResponse.getIdentity(),
+                        BidPackageProjectResponse.class,
+                        HttpStatus.SC_OK,
+                        currentUser);
+                    softAssertions.assertThat(bppResponse.getUsers().size()).isGreaterThan(0);
+                    if (softAssertions.wasSuccess()) {
+                        for (int j = 0; j < bppResponse.getUsers().size(); j++) {
+                            softAssertions.assertThat(bppResponse.getUsers().get(j).getUser().getAvatarColor())
+                                .isNotNull();
                         }
                     }
                 }
             }
-            if (bidPackageResponse != null) {
-                QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
-            }
+            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         }
     }
 
@@ -376,4 +377,232 @@ public class QmsProjectsTest extends TestUtil {
             }
         }
     }
+
+    @Test
+    @TestRail(testCaseId = {"21603"})
+    @Description("Verify that the User can filter project by dueAt(operator NL)")
+    public void getFilteredProjectsByDueAtWithOperatorNL() {
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "COMPLETED");
+        projectAttributesMap.put("projectDueAt", "");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        String[] params = {"dueAt[NL],null"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt() == null)).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"21604"})
+    @Description("Verify that the User can filter project by dueAt(operator GT)")
+    public void getFilteredProjectsByDueAtWithOperatorGT() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"21605"})
+    @Description("Verify that the User can filter project by dueAt(operator LT)")
+    public void getFilteredProjectsByDueAtWithOperatorLT() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()))).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24072"})
+    @Description("Verify that User can filter project by using range of dates")
+    public void getFilteredProjectsByDueAtRange() {
+        //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+        String[] params = {"dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ),
+            "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()) &&
+                    i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+
+        //DueAt format yyyy-MM-dd
+        params[0] = "dueAt[LT]," + DateUtil.getDateDaysBefore(0, DateFormattingUtils.dtf_yyyyMMdd);
+        params[1] = "dueAt[GT]," + DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMdd);
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getDueAt().isBefore(LocalDateTime.now()) &&
+                    i.getDueAt().isAfter(LocalDateTime.now().minusDays(30)))).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17221"})
+    @Description("Verify that the User can filter project by status (operator EQ (equal))")
+    public void getFilteredProjectsByStatusWithOperatorEQ() {
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "COMPLETED");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "IN_NEGOTIATION");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "PURCHASED");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "SENT_FOR_QUOTATION");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17222"})
+    @Description("Verify that the User can filter project by status (operator NI (is none of) )")
+    public void getFilteredProjectsByStatusWithOperatorNI() {
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NI],IN_NEGOTIATION");
+        QmsApiTestUtils.verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "NONE", "IN_NEGOTIATION");
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NI],IN_NEGOTIATION|COMPLETED");
+        QmsApiTestUtils.verifyMultipleStatusesForFilteredProjects(filteredProjectsResponse, softAssertions, "NONE", "IN_NEGOTIATION", "COMPLETED");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17223"})
+    @Description("Verify that the User can filter project by status (operator IN)")
+    public void getFilteredProjectsByStatusWithOperatorIN() {
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "IN_NEGOTIATION");
+        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[IN],IN_NEGOTIATION");
+        QmsApiTestUtils.verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", "IN_NEGOTIATION");
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[IN],IN_NEGOTIATION|COMPLETED");
+        QmsApiTestUtils.verifyMultipleStatusesForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", "IN_NEGOTIATION", "COMPLETED");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17224"})
+    @Description("Verify that the User can filter project by status (operator NE (not equal))")
+    public void getFilteredProjectsByStatusWithOperatorNE() {
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NE],IN_NEGOTIATION");
+        QmsApiTestUtils.verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "NONE", "IN_NEGOTIATION");
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NE],COMPLETED");
+        QmsApiTestUtils.verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "NONE", "COMPLETED");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22773"})
+    @Description("Verify that the User can filter project by owner with operators IN")
+    public void getFilteredProjectsByOwnerWithOperatorIN() {
+        String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "owner[IN]," + ownerIdentity);
+        QmsApiTestUtils.verifyOwnerForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", ownerIdentity);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22774"})
+    @Description("Verify that the User can filter project by owner with operators NI")
+    public void getFilteredProjectsByOwnerWithOperatorNI() {
+        String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "owner[NI]," + ownerIdentity);
+        QmsApiTestUtils.verifyOwnerForFilteredProjects(filteredProjectsResponse, softAssertions, "NONE", ownerIdentity);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"23771"})
+    @Description("Verify that the User can filter projects by Members with operators IN")
+    public void getFilteredProjectsByMembers() {
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        UserCredentials newUser1 = UserUtil.getUser();
+        String newUserIdentity1 = new AuthUserContextUtil().getAuthUserIdentity(newUser1.getEmail());
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(newUserIdentity1)
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        UserCredentials newUser2 = UserUtil.getUser();
+        String newUserIdentity2 = new AuthUserContextUtil().getAuthUserIdentity(newUser2.getEmail());
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(newUserIdentity2)
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
+        projectAttributesMap.put("projectStatus", "COMPLETED");
+        QmsProjectResources.createProject(projectAttributesMap,
+            itemsList,
+            usersList,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        String[] params = {"pageNumber,1", "members[IN]," + newUserIdentity1};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .anyMatch(u -> u.getUserIdentity().equals(newUserIdentity1)))).isTrue();
+        }
+
+        params[1] = "members[IN]," + newUserIdentity1 + "|" + newUserIdentity2;
+        filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
+                .allMatch(i -> i.getUsers().stream()
+                    .anyMatch(u -> u.getUserIdentity().equals(newUserIdentity1) ||
+                        u.getUserIdentity().equals(newUserIdentity2)))).isTrue();
+        }
+    }
+
+    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
 }
