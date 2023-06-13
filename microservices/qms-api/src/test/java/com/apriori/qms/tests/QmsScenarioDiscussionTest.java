@@ -35,7 +35,7 @@ import utils.QmsApiTestUtils;
 
 import java.util.Collections;
 
-public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
+public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
     @BeforeClass
     public static void beforeClass() {
         createTestData();
