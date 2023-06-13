@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserProfile {
     String familyName;
     String givenName;
+    String createdBy;
     String countryCode;
     String prefix;
     String suffix;
