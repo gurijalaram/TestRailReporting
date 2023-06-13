@@ -27,4 +27,11 @@ public class UserProfile {
     private String department;
     private String supervisor;
     private String townCity;
+    private String prefix;
+    private String suffix;
+    private String county;
+    private String officePhoneCountryCode;
+    private String officePhoneNumber;
+    private String timezone;
+
 }
