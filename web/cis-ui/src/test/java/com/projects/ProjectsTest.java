@@ -35,6 +35,8 @@ public class ProjectsTest extends TestBase {
     private CreateNewProjectsPage createNewProjectsPage;
     private File resourceFile;
     private UserCredentials currentUser;
+    private String projectParticipant;
+    private String secondProjectParticipant;
 
     @Test
     @TestRail(testCaseId = {"16841","16842","22685"})
@@ -97,6 +99,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -106,11 +109,11 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
@@ -136,6 +139,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -145,11 +149,11 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
@@ -187,6 +191,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -196,7 +201,7 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton();
 
         softAssertions.assertThat(createNewProjectsPage.isAddPartsModalDisplayed()).isEqualTo(true);
@@ -230,7 +235,7 @@ public class ProjectsTest extends TestBase {
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
@@ -252,6 +257,8 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
+        secondProjectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -261,22 +268,22 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd();
 
         softAssertions.assertThat(createNewProjectsPage.isInviteMembersOptionDisplayed()).isEqualTo(true);
 
-        createNewProjectsPage.selectAUser("qa-automation-22@apriori.com")
-                .selectAUser("qa-automation-23@apriori.com");
+        createNewProjectsPage.selectAUser(projectParticipant)
+                .selectAUser(secondProjectParticipant);
 
-        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed("QA Automation Account 22")).isEqualTo(true);
-        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed("QA Automation Account 23")).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed(projectParticipant)).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed(secondProjectParticipant)).isEqualTo(true);
 
         createNewProjectsPage.clickOnRemoveUser();
 
-        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed("QA Automation Account 22")).isEqualTo(false);
+        softAssertions.assertThat(createNewProjectsPage.isAddedUsersDisplayed(projectParticipant)).isEqualTo(false);
 
         createNewProjectsPage.setDueDate("2028","15");
 
@@ -299,6 +306,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -308,11 +316,11 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
@@ -350,6 +358,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -359,11 +368,11 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
@@ -391,6 +400,7 @@ public class ProjectsTest extends TestBase {
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -400,11 +410,11 @@ public class ProjectsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User")
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
                 .clickOnAddNewButton()
                 .selectAPart(scenarioName,componentName)
                 .clickAdd()
-                .selectAUser("qa-automation-22@apriori.com")
+                .selectAUser(projectParticipant)
                 .setDueDate("2028","15");
 
         projectsPage = createNewProjectsPage.saveProject()
