@@ -11,6 +11,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -34,10 +35,10 @@ public class Sustainability extends TestBase {
     @TestRail(testCaseId = {"24103","24100"})
     @Description("Verify if Sustainability tab is presented on Evaluate page and Material Carbon is presented in Material Utilization tab")
     public void materialUtilHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);

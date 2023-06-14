@@ -33,7 +33,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     private WebElement materialTab;
 
     @FindBy(xpath = "//span[contains(.,'Material Carbon Factor')]")
-    private List<WebElement> materialCarbonFactor;
+    private WebElement materialCarbonFactor;
 
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
@@ -95,12 +95,12 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     }
 
     /**
-     * verify if material carobn is presented on material utilization page
+     * verify if material carbon is presented on material utilization page
      * @return true/false
      */
     public boolean isMaterialCarbonPresent() {
-        pageUtils.waitForElementsToAppear(materialCarbonFactor);
-        return materialCarbonFactor.size() == 2;
+        pageUtils.waitForElementToAppear(materialCarbonFactor);
+        return pageUtils.isElementDisplayed(materialCarbonFactor);
     }
 
 
