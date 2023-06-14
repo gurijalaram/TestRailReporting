@@ -550,13 +550,13 @@ public class QmsProjectsTest extends TestUtil {
     @TestRail(testCaseId = {"23771"})
     @Description("Verify that the User can filter projects by Members (operator IN)")
     public void getFilteredProjectsByMembersWithOperatorIN() {
-        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
-                .componentIdentity(scenarioItem2.getComponentIdentity())
-                .scenarioIdentity(scenarioItem2.getScenarioIdentity())
-                .iterationIdentity(scenarioItem2.getIterationIdentity())
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
                 .build())
             .build());
 
