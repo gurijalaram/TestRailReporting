@@ -66,6 +66,11 @@ public class PageUtils {
      */
     public static final Duration DURATION_SLOW = Duration.ofSeconds(1);
     /**
+     * A duration that is meant to be used when you are expecting a page load that
+     * may take longer to render than a simple input.
+     */
+    public static final Duration DURATION_MEDIUM = Duration.ofSeconds(3);
+    /**
      * A duration that you should wait when you are waiting on a spinner.
      * <p>
      * If your component doesn't stabilize within this time frame, then it's time to consider that
@@ -1402,7 +1407,7 @@ public class PageUtils {
     public String stopPageLoadAndGetCurrentUrl(String url) {
         String currentUrl;
         try {
-            driver.manage().timeouts().pageLoadTimeout(DURATION_SLOW);
+            driver.manage().timeouts().pageLoadTimeout(DURATION_MEDIUM);
             driver.navigate().to(url);
             currentUrl = driver.getCurrentUrl();
         } catch (Exception interruptedException) {

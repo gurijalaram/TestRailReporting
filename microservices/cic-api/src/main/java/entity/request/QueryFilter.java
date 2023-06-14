@@ -14,5 +14,7 @@ import lombok.NoArgsConstructor;
 public class QueryFilter {
     private String fieldName;
     private String type;
-    private String value;
+    private Object value;
+    private Object from;
+    private Object to;
 }
