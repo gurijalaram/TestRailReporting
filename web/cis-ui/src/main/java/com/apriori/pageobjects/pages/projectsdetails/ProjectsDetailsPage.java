@@ -74,6 +74,30 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(xpath = "//li[contains(@id,edit-project-owner-input-option)]//div//span")
     private WebElement projectOwnerEmail;
 
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Show/Hide Fields']")
+    private WebElement btnShowHideOption;
+
+    @FindBy(xpath = "//div[@id='simple-popper']//input[@data-testid='show-hide-input']")
+    private WebElement showHideSearchField;
+
+    @FindBy(xpath = "//span[@data-testid='switch']")
+    private WebElement btnSwitchToggle;
+
+    @FindBy(id = "show-button")
+    private WebElement btnHideAll;
+
+    @FindBy(css = "div.MuiDataGrid-columnHeaders")
+    private WebElement tblHeaders;
+
+    @FindBy(id = "hide-button")
+    private WebElement btnShowAll;
+
+    @FindBy(xpath = "//h4[@data-testid='user-full-name']")
+    private WebElement ownerName;
+
+    @FindBy(xpath = "//h4[@data-testid='user-full-name']//..//div")
+    private WebElement ownerLabel;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -330,4 +354,83 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public String getSaveButtonStatus() {
         return getPageUtils().waitForElementAppear(btnSave).getAttribute("class");
     }
+
+    /**
+     * Checks if show/hide option displayed
+     *
+     * @return true/false
+     */
+    public boolean isDetailsShowHideOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(btnShowHideOption);
+    }
+
+    /**
+     * Hide user details
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage hideProjectUserDetails(String userDetails) {
+        getPageUtils().waitForElementAndClick(btnShowHideOption);
+        getPageUtils().waitForElementAppear(showHideSearchField).sendKeys(userDetails);
+        getPageUtils().waitForElementAndClick(btnSwitchToggle);
+        return this;
+    }
+
+    /**
+     * clicks on show all
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickShowAll() {
+        getPageUtils().waitForElementAndClick(btnShowAll);
+        return this;
+    }
+
+    /**
+     * clicks on hide all
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickHideAll() {
+        getPageUtils().waitForElementAndClick(btnHideAll);
+        return this;
+    }
+
+    /**
+     * Get save button status
+     *
+     * @return a String
+     */
+    public String getUserTableHeaders() {
+        return getPageUtils().waitForElementAppear(tblHeaders).getAttribute("innerText");
+    }
+
+    /**
+     * Checks if project owner's email is displayed
+     *
+     * @return true/false
+     */
+    public boolean isOwnerEmailDisplayed(String ownerEmail) {
+        getPageUtils().waitForElementsToAppear(tableRow);
+        return getPageUtils().isElementDisplayed(By.xpath("//h4[@data-testid='user-full-name']//..//..//following-sibling::div//span[text()='" + ownerEmail + "']"));
+    }
+
+    /**
+     * Get project owner's name
+     *
+     * @return a String
+     */
+    public String getProjectOwnerName(String ownerEmail) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//span[text()='" + ownerEmail + "']//..//..//h4[@data-testid='user-full-name']")).getText();
+    }
+
+    /**
+     * Checks if project owner label displayed
+     *
+     * @return true/false
+     */
+    public boolean isOwnerLabelDisplayed() {
+        return getPageUtils().isElementDisplayed(ownerLabel);
+    }
+
 }

@@ -9,6 +9,10 @@ import com.cic.tests.CostingPreferencesTests;
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
 import com.cic.tests.PlmIntegrationTests;
+import com.cic.tests.PlmQueryDefDateRuleTests;
+import com.cic.tests.PlmQueryDefIntRuleTests;
+import com.cic.tests.PlmQueryDefRealRuleTests;
+import com.cic.tests.PlmQueryDefStrEmailRuleTests;
 import com.cic.tests.PlmUdaTests;
 import com.cic.tests.PlmWorkflowRevisionTests;
 import com.cic.tests.PublishResultsTests;
@@ -36,7 +40,11 @@ import org.junit.runners.Suite;
     PlmIntegrationTests.class,
     CostingPreferencesTests.class,
     PlmUdaTests.class,
-    PlmWorkflowRevisionTests.class
+    PlmWorkflowRevisionTests.class,
+    PlmQueryDefDateRuleTests.class,
+    PlmQueryDefIntRuleTests.class,
+    PlmQueryDefRealRuleTests.class,
+    PlmQueryDefStrEmailRuleTests.class
 })
 
 public class CICRegressionTestSuite {
