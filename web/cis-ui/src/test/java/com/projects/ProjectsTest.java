@@ -104,19 +104,11 @@ public class ProjectsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
+        projectsPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsPage = createNewProjectsPage.saveProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
                 .clickOnUnread();
 
         softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
@@ -144,19 +136,11 @@ public class ProjectsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+        projectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsPage = createNewProjectsPage.saveProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
                 .clickOnUnread();
 
         softAssertions.assertThat(projectsPage.isSearchProjectButtonDisplayed()).isEqualTo(true);
@@ -311,19 +295,11 @@ public class ProjectsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
+        projectsPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsPage = createNewProjectsPage.saveProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
                 .clickOnUnread();
 
         softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
@@ -363,19 +339,11 @@ public class ProjectsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
+        projectsPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsPage = createNewProjectsPage.saveProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
                 .clickOnUnread();
 
         softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
@@ -405,19 +373,11 @@ public class ProjectsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
+        projectsPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsPage = createNewProjectsPage.saveProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
                 .clickOnUnread();
 
         softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
