@@ -520,11 +520,13 @@ public class ComparisonTests extends TestBase {
             .selectManualComparison()
             .create();
 
-        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result");
+        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
+            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Result");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
-        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly("Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Result");
+        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
+            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Result");
 
         softAssertions.assertAll();
     }
