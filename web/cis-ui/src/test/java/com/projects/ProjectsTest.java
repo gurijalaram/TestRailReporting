@@ -62,7 +62,7 @@ public class ProjectsTest extends TestBase {
     @Description("Verify user can access create a new project page and verify page elements")
     public void testCreateAProjectPageContent() {
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(UserUtil.getUser())
+        createNewProjectsPage = loginPage.cisLogin(UserUtil.getUser().setEmail("qa-automation-33@apriori.com"))
                 .clickProjects()
                 .clickOnCreateNewProject();
 
@@ -98,7 +98,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -130,7 +130,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -174,7 +174,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -240,7 +240,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
         secondProjectParticipant = UserUtil.getUser().getEmail();
 
@@ -289,7 +289,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -333,7 +333,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -367,7 +367,7 @@ public class ProjectsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser().setEmail("qa-automation-33@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
