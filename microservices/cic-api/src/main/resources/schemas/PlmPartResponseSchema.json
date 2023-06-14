@@ -1,0 +1,266 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "anyOf": [{
+    "type": "object",
+    "properties": {
+      "@odata.context": {
+        "type": ["null", "string"]
+      },
+      "CreatedOn": {
+        "type": ["null", "string"]
+      },
+      "ID": {
+        "type": ["null", "string"]
+      },
+      "LastModified": {
+        "type": ["null", "string"]
+      },
+      "AlternateNumber": {
+        "type": ["null", "integer"]
+      },
+      "AnnualVolume": {
+        "type": ["integer", "null"]
+      },
+      "ApCycleTime": {
+        "type": ["number","null"]
+      },
+      "ApDFMRating": {
+        "type": ["string","null"]
+      },
+      "ApDFMRiskScore": {
+        "type": ["number","integer","null"]
+      },
+      "ApFBC": {
+        "type": ["null", "number"]
+      },
+      "ApMaterial": {
+        "type": ["null", "string"]
+      },
+      "ApPG": {
+        "type": ["null", "string"]
+      },
+      "ApPLMPrimaryPlantLocation": {
+        "type": ["null", "string"]
+      },
+      "ApPPC": {
+        "type": ["null", "number"]
+      },
+      "AssemblyMode": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "BOMType": {
+        "type": ["null", "string"]
+      },
+      "BatchSize": {
+        "type": ["null", "integer"]
+      },
+      "Boolean1": {
+        "type": ["null", "boolean"]
+      },
+      "CIDLink": {
+        "type": ["null", "string"]
+      },
+      "CabinetName": {
+        "type": ["null", "string"]
+      },
+      "CalcReal1": {
+        "type": ["null", "number"]
+      },
+      "CapitalInvestment": {
+        "type": ["null", "number"]
+      },
+      "ChangeStatus": {
+        "type": ["null", "string"]
+      },
+      "CheckOutStatus": {
+        "type": ["null", "string"]
+      },
+      "CheckoutState": {
+        "type": ["null", "string"]
+      },
+      "ColourNumber": {
+        "type": ["null", "integer"]
+      },
+      "Comments": {
+        "type": ["null", "string"]
+      },
+      "ConfigurableModule": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "CostFbc": {
+        "type": ["null", "number"]
+      },
+      "CostPpc": {
+        "type": ["null", "number"]
+      },
+      "CreatedBy": {
+        "type": ["null", "string"]
+      },
+      "CurrencyCode": {
+        "type": ["null", "string"]
+      },
+      "Date2": {
+        "type": ["null", "string"]
+      },
+      "DateTime1": {
+        "type": ["null", "string"]
+      },
+      "DefaultTraceCode": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "DefaultUnit": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "Description": {
+        "type": ["null", "string"]
+      },
+      "EndItem": {
+        "type": ["null", "boolean"]
+      },
+      "FinishMass": {
+        "type": ["null", "number"]
+      },
+      "FolderLocation": {
+        "type": ["null", "string"]
+      },
+      "FolderName": {
+        "type": ["null", "string"]
+      },
+      "GatheringPart": {
+        "type": ["null", "boolean"]
+      },
+      "GeneralStatus": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "Identity": {
+        "type": ["null", "string"]
+      },
+      "Integer1": {
+        "type": ["null", "integer"]
+      },
+      "LaborTime": {
+        "type": ["null", "number"]
+      },
+      "Latest": {
+        "type": ["null", "boolean"]
+      },
+      "LegalValList": {
+        "type": ["null", "string"]
+      },
+      "LifeCycleTemplateName": {
+        "type": ["null", "string"]
+      },
+      "MaterialCost": {
+        "type": ["null", "number"]
+      },
+      "ModifiedBy": {
+        "type": ["null", "string"]
+      },
+      "MultiselectString": {
+        "type": ["null", "string"]
+      },
+      "Name": {
+        "type": ["null", "string"]
+      },
+      "Number": {
+        "type": ["null", "string"]
+      },
+      "ObjectType": {
+        "type": ["null", "string"]
+      },
+      "OrganizationReference": {
+        "type": ["null", "string"]
+      },
+      "PartSummaryReport": {
+        "type": ["null", "string"]
+      },
+      "PhantomManufacturingPart": {
+        "type": ["null", "boolean"]
+      },
+      "ProductionLife": {
+        "type": ["null", "number"]
+      },
+      "ProjectNumber": {
+        "type": ["null", "object"]
+      },
+      "ProjectType": {
+        "type": ["null", "object"]
+      },
+      "RadButtonString": {
+        "type": ["null", "object"]
+      },
+      "Real3": {
+        "type": ["null", "number"]
+      },
+      "Real4": {
+        "type": ["null", "number"]
+      },
+      "RealNumber1": {
+        "type": ["null", "number"]
+      },
+      "RealNumber2": {
+        "type": ["null", "number"]
+      },
+      "RealNumberUnits1": {
+        "type": ["null", "number"]
+      },
+      "RealUnits2": {
+        "type": ["null", "number"]
+      },
+      "Reference1": {
+        "type": ["null", "number"]
+      },
+      "Revision": {
+        "type": ["null", "string"]
+      },
+      "RoughMass": {
+        "type": ["null", "number"]
+      },
+      "ScenarioName": {
+        "type": ["null", "string"]
+      },
+      "ShareStatus": {
+        "type": ["null", "string"]
+      },
+      "Source": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "State": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "StrEmail2": {
+        "type": ["null", "string"]
+      },
+      "String1": {
+        "type": ["null", "string"]
+      },
+      "String4": {
+        "type": ["null", "object"]
+      },
+      "Supersedes": {
+        "type": ["null", "object"]
+      },
+      "TypeIcon": {
+        "$ref": "PlmPartAttributeSchema.json"
+      },
+      "URL1": {
+        "type": ["null", "string"]
+      },
+      "Utilization": {
+        "type": ["null", "number"]
+      },
+      "VPE": {
+        "type": ["null", "string"]
+      },
+      "Version": {
+        "type": ["null", "string"]
+      },
+      "VersionID": {
+        "type": ["null", "string"]
+      },
+      "View": {
+        "type": ["null", "string"]
+      }
+    }
+  }]
+}
