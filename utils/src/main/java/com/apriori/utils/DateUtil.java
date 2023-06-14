@@ -73,4 +73,16 @@ public class DateUtil {
         LocalDateTime afterDate = LocalDateTime.now(ZoneOffset.UTC).plusDays(daysCount).withNano(0);
         return formatter.format(afterDate);
     }
+
+    /**
+     * Gets date days before.
+     *
+     * @param daysCount the days count
+     * @param formatter the formatter
+     * @return the date days before
+     */
+    public static String getDateDaysBefore(final int daysCount, DateTimeFormatter formatter) {
+        LocalDateTime afterDate = LocalDateTime.now(ZoneOffset.UTC).minusDays(daysCount).withNano(0);
+        return formatter.format(afterDate);
+    }
 }
