@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.projects;
 
 import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
-import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
+import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -63,6 +63,21 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
 
     @FindBy(xpath = "(//span[@data-testid='data-label-Owner']//following::span)[1]")
     private WebElement owner;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Search']")
+    private WebElement btnSearch;
+
+    @FindBy(xpath = "//div[@data-testid='search-control-input']//input[@placeholder='Search by name...']")
+    private WebElement searchField;
+
+    @FindBy(xpath = "//div[@data-testid='search-control-input']//button//*[local-name()='svg']")
+    private WebElement searchRemoveIcon;
+
+    @FindBy(xpath = "(//span[@data-testid='data-label-Organization']//following::span)[1]")
+    private WebElement organization;
+
+    @FindBy(xpath = "(//div[starts-with(@class,'MuiAvatarGroup-root')])[1]")
+    private WebElement participants;
 
     private PageUtils pageUtils;
 
@@ -268,6 +283,65 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      */
     public String getProjectOwner() {
         return getPageUtils().waitForElementToAppear(owner).getText();
+    }
 
+    /**
+     * clicks on created project name
+     *
+     * @return new page object
+     */
+    public ProjectsDetailsPage clickOnCreatedProject() {
+        getPageUtils().waitForElementAndClick(projectName);
+        return new ProjectsDetailsPage(driver);
+    }
+
+    /**
+     * Get project organization
+     *
+     * @return a string
+     */
+    public String getProjectOrganization() {
+        return getPageUtils().waitForElementToAppear(organization).getText();
+    }
+
+    /**
+     * Get project participants
+     *
+     * @return a string
+     */
+    public String getProjectParticipants() {
+        return getPageUtils().waitForElementToAppear(participants).getText();
+    }
+
+    /**
+     * Checks if search project button displayed
+     *
+     * @return true/false
+     */
+    public boolean isSearchProjectButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnSearch);
+    }
+
+    /**
+     * Search project by name
+     *
+     * @return current page object
+     */
+    public ProjectsPage searchProject(String projectName) {
+        getPageUtils().waitForElementAndClick(btnSearch);
+        getPageUtils().waitForElementToAppear(searchField).sendKeys(projectName);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
+    }
+
+    /**
+     * Remove search
+     *
+     * @return current page object
+     */
+    public ProjectsPage removeSearch() {
+        getPageUtils().waitForElementAndClick(searchRemoveIcon);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
     }
 }

@@ -2,15 +2,19 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "id": {
+    "@odata.context": {
       "type": "string"
     },
-    "typeId": {
+    "NonceKey": {
+      "type": "string"
+    },
+    "NonceValue": {
       "type": "string"
     }
   },
   "required": [
-    "id",
-    "typeId"
+    "@odata.context",
+    "NonceKey",
+    "NonceValue"
   ]
 }
