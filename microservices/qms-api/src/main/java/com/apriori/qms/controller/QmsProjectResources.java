@@ -1,6 +1,7 @@
 package com.apriori.qms.controller;
 
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
+import com.apriori.qms.entity.request.bidpackage.BidPackageProjectNotificationRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
@@ -196,5 +197,26 @@ public class QmsProjectResources {
 
         ResponseWrapper<BidPackageProjectsResponse> filteredProjectsResponse = HTTPRequest.build(requestEntity).get();
         return filteredProjectsResponse.getResponseEntity();
+    }
+
+    /**
+     * Retrieve project notifications.
+     *
+     * @param <T>                 the type parameter
+     * @param notificationRequest the notification request
+     * @param responseClass       the response class
+     * @param httpStatus          the http status
+     * @param currentUser         the current user
+     * @return the response entity
+     */
+    public static <T> T retrieveProjectNotifications(BidPackageProjectNotificationRequest notificationRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECT_NOTIFICATION_COUNT, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .body(notificationRequest)
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
     }
 }
