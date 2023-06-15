@@ -124,8 +124,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24074"})
     @Description("Search by Status[IN] + Display Name[CN] + Owner[IN]")
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerIN() {
-        String[] params1 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params1);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -142,8 +142,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24075"})
     @Description("Search by Status[IN] + Display Name[CN] + Owner[IN] + DueAt[LT]")
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerINDueAtLT() {
-        String[] params2 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params2);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -162,8 +162,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24078"})
     @Description("Search by Status[IN] + Owner[IN]")
     public void getFilteredProjectsByStatusINOwnerIN() {
-        String[] params5 = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params5);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -178,8 +178,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24079"})
     @Description("Search by Display Name[CN] + Owner[IN]")
     public void getFilteredProjectsByDisplayNameCNOwnerIN() {
-        String[] params6 = {"pageNumber,1", "displayName[CN]," + displayName, "owner[IN]," + owner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params6);
+        String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "owner[IN]," + owner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -194,8 +194,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24080"})
     @Description("Search by Status[NI] + Owner[IN]")
     public void getFilteredProjectsByStatusNIOwnerIN() {
-        String[] params7 = {"pageNumber,1", "status[NI],COMPLETED", "owner[IN]," + owner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params7);
+        String[] params = {"pageNumber,1", "status[NI],COMPLETED", "owner[IN]," + owner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -210,8 +210,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24081"})
     @Description("Search by Status[NI] + Owner[NI]")
     public void getFilteredProjectsByStatusNIOwnerNI() {
-        String[] params8 = {"pageNumber,1", "status[NI],COMPLETED", "owner[NI]," + newOwner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params8);
+        String[] params = {"pageNumber,1", "status[NI],COMPLETED", "owner[NI]," + newOwner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -226,8 +226,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24082"})
     @Description("Search by Status[NI] + Display Name[CN]")
     public void getFilteredProjectsByStatusNIDisplayNameCN() {
-        String[] params9 = {"pageNumber,1", "status[NI],COMPLETED", "displayName[CN]," + displayName};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params9);
+        String[] params = {"pageNumber,1", "status[NI],COMPLETED", "displayName[CN]," + displayName};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -242,8 +242,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24083"})
     @Description("Search by Display Name[CN] + Owner[NI]")
     public void getFilteredProjectsByDisplayNameCNOwnerNI() {
-        String[] params10 = {"pageNumber,1", "displayName[CN]," + displayName, "owner[NI]," + newOwner};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params10);
+        String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "owner[NI]," + newOwner};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -258,8 +258,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24104"})
     @Description("Search by Status[IN] + Display Name[CN] + Owner[IN] + DueAt[GT]")
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerINDueAtGT() {
-        String[] params11 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[GT]," + dueAtGT};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params11);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[GT]," + dueAtGT};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -278,8 +278,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24111"})
     @Description("VSearch by Status[IN] + Members[IN]")
     public void getFilteredProjectsByStatusINMembersIN() {
-        String[] params13 = {"pageNumber,1", "status[IN]," + status, "members[IN]," + projectMemberUserIdentity};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params13);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "members[IN]," + projectMemberUserIdentity};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -295,8 +295,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24112"})
     @Description("Search by Display Name[CN] + Members[NI]")
     public void getFilteredProjectsByDisplayNameCNMembersNI() {
-        String[] params14 = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectMemberUserIdentity};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params14);
+        String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectMemberUserIdentity};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -312,8 +312,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24076"})
     @Description("Search by Status[IN] + Display Name[CN] + Owner[IN] + DueAt[LT] + AllMessages[unread=no]")
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerINDueAtLTUnReadNo() {
-        String[] params3 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],no"};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params3);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],no"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -334,8 +334,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerINDueAtLTUnReadYes() {
         ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
         QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), displayName, "ACTIVE", currentUser);
-        String[] params4 = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],yes"};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params4);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "displayName[CN]," + displayName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],yes"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
@@ -355,8 +355,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @Issue("COL-1831")
     @Description("Search by Status[IN] + Owner[IN]+Unread Messages[unread=yes]")
     public void getFilteredProjectsByStatusINOwnerINUnReadYes() {
-        String[] params12 = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner, "hasUnreadMessages[EQ],yes"};
-        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params12);
+        String[] params = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner, "hasUnreadMessages[EQ],yes"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
