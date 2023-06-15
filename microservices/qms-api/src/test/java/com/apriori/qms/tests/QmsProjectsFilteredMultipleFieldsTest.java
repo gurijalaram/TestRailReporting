@@ -45,6 +45,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     private static ScenarioItem scenarioItem;
     private static String newOwner;
     private static String projectMemberUserIdentity;
+    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
     private SoftAssertions softAssertions;
 
     @BeforeClass
@@ -364,7 +366,4 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
                 .allMatch(i -> i.getOwner().equals(owner))).isTrue();
         }
     }
-
-    private static final UserCredentials currentUser = UserUtil.getUser();
-    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
 }
