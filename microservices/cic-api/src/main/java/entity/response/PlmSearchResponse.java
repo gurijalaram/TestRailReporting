@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 @Schema(location = "PlmPartsSchema.json")
-public class PlmParts {
-    private List<PlmPart> items;
+public class PlmSearchResponse {
+    private List<PlmSearchPart> items;
 }

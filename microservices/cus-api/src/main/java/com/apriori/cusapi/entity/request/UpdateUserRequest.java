@@ -15,5 +15,7 @@ public class UpdateUserRequest {
     private UserProfile userProfile;
     private String username;
     private String email;
-
+    private String identity;
+    private String createdBy;
+    private Boolean active;
 }
