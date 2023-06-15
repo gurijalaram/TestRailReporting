@@ -11,6 +11,8 @@ import entity.request.WorkflowRow;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
+import enums.QueryDefinitionFieldType;
+import enums.QueryDefinitionFields;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +60,47 @@ public class WorkflowDataUtil {
      * @param fieldValue (value of part number)
      * @return current class object
      */
-    public WorkflowDataUtil setQueryFilter(String fieldName, String fieldType, String fieldValue) {
+    public WorkflowDataUtil setQueryFilter(String fieldName, String fieldType, Object fieldValue) {
         queryFilters.add(QueryFilter.builder()
             .fieldName(fieldName)
             .type(fieldType)
             .value(fieldValue)
+            .build());
+        return this;
+    }
+
+    /**
+     * Set query filter during query definition fields with values
+     *
+     * @param fieldName  QueryDefinitionFields enum
+     * @param fieldType  QueryDefinitionFieldType enum
+     * @param fieldValue string
+     * @return current class object
+     */
+    public WorkflowDataUtil setQueryFilter(QueryDefinitionFields fieldName, QueryDefinitionFieldType fieldType, Object fieldValue) {
+        queryFilters.add(QueryFilter.builder()
+            .fieldName(fieldName.getQueryDefinitionField())
+            .type(fieldType.getQueryDefinitionFieldType())
+            .value(fieldValue)
+            .build());
+        return this;
+    }
+
+    /**
+     * Set query filter during query definition fields with values
+     *
+     * @param fieldName QueryDefinitionFields enum
+     * @param fieldType QueryDefinitionFieldType enum
+     * @param from      Integer value when QueryDefinitionFieldType is BETWEEN or NOTBETWEEN
+     * @param to        Integer value when QueryDefinitionFieldType is BETWEEN or NOTBETWEEN
+     * @return WorkflowDataUtil
+     */
+    public WorkflowDataUtil setQueryFilter(QueryDefinitionFields fieldName, QueryDefinitionFieldType fieldType, Object from, Object to) {
+        queryFilters.add(QueryFilter.builder()
+            .fieldName(fieldName.getQueryDefinitionField())
+            .type(fieldType.getQueryDefinitionFieldType())
+            .from(from)
+            .to(to)
             .build());
         return this;
     }
