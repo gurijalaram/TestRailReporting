@@ -1,19 +1,25 @@
 package com.apriori.qms.tests;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
+import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -25,6 +31,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.QmsApiTestUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +43,7 @@ public class BidPackageProjectsTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -282,9 +290,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project Name is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -293,9 +299,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -338,7 +342,6 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("displayName should not be null and have less than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -352,10 +355,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'status' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project Status is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -364,10 +365,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'status' should not be null");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -430,8 +429,6 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
     }
@@ -460,10 +457,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), nonAdminProjectUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("User does not have rights to update the project attributes");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_FORBIDDEN);
     }
 
     @Test
@@ -477,10 +472,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("owner should not be null or empty");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project owner is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -489,10 +482,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("owner should not be null or empty");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
 
         //Project owner is invalid
         projectRequest = BidPackageProjectRequest.builder()
@@ -501,10 +492,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("Owner 'identity' is not a valid identity");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -534,7 +523,6 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'name' should not be more than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -631,7 +619,6 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("'description' should not be more than 254 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -658,10 +645,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("displayName should not be null and have less than 64 characters");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -705,14 +690,12 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Forbidden");
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("User does not have rights to update the project attributes");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_FORBIDDEN);
     }
 
     @Test
-    @TestRail(testCaseId = {"24313","24412"})
+    @TestRail(testCaseId = {"24313", "24412"})
     @Description("Verify dueAt can not be updated to invalid date or invalid datetime format")
     public void updateInvalidProjectDueAt() {
         //Invalid format #1
@@ -722,9 +705,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
         //Invalid format #2
         projectRequest = BidPackageProjectRequest.builder()
@@ -733,9 +715,8 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
 
         //Invalid format #3 [Back Date]
         projectRequest = BidPackageProjectRequest.builder()
@@ -744,9 +725,77 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getStatus()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getError()).isEqualTo("Bad Request");
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("Given dueAt is before than Current Time");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Given dueAt is before than Current Time");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24462"})
+    @Description("Verify project deletion is deleting all associated projectItems, discussions and bidPackageItems")
+    public void deleteBidPackageProjectAndVerifyAllEntitiesDeleted() {
+        ScenarioItem scenarioItemForFirstBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItemForSecondBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+
+        BidPackageItemResponse bidPackageItemResponseForFirstScenario = QmsBidPackageResources.createBidPackageItem(
+            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), scenarioItemForFirstBidPackageItem.getIterationIdentity()),
+            bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+        BidPackageItemResponse bidPackageItemResponseSecondScenario = QmsBidPackageResources.createBidPackageItem(
+            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), scenarioItemForSecondBidPackageItem.getIterationIdentity()),
+            bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+
+        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFirstResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionSecondResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionThirdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionFourthResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
+
+        //Delete Project
+        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+
+        //Verify Project Deletion
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains(String.format("Can't find project for bid package with identity '%s'", bidPackageResponse.getIdentity()));
+
+        //Verify Bid Package-items deletion
+        String[] bidPackageItemsIdsArr = new String[]{bidPackageItemResponseForFirstScenario.getIdentity(), bidPackageItemResponseSecondScenario.getIdentity()};
+        for (String bidPackageItemId : bidPackageItemsIdsArr) {
+            ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageItem(bidPackageResponse.getIdentity(),
+                bidPackageItemId,
+                currentUser,
+                ApwErrorMessage.class,
+                HttpStatus.SC_NOT_FOUND);
+            softAssertions.assertThat(qmsErrorMessage.getMessage())
+                .contains(String.format("Can't find bidPackageItem for bid package with identity '%s' and identity '%s'",
+                    bidPackageResponse.getIdentity(), bidPackageItemId));
+        }
+
+        //Verify Project-items deletion
+        BidPackageProjectItemsResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            currentUser,
+            BidPackageProjectItemsResponse.class,
+            HttpStatus.SC_OK);
+        softAssertions.assertThat(bpPItemsResponse.getItems().size()).isZero();
+
+        //Verify Scenario Discussions deletion
+        String[] discussionIdsArr = new String[]{scenarioDiscussionFirstResponse.getIdentity(), scenarioDiscussionSecondResponse.getIdentity(),
+            scenarioDiscussionThirdResponse.getIdentity(), scenarioDiscussionFourthResponse.getIdentity()};
+        for (String discussionId : discussionIdsArr) {
+            ApwErrorMessage discussionErrorResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(
+                discussionId,
+                ApwErrorMessage.class,
+                HttpStatus.SC_NOT_FOUND,
+                currentUser);
+            softAssertions.assertThat(discussionErrorResponse.getMessage())
+                .contains(String.format("Can't find scenario discussion for project with identity '%s'", bidPackageProjectResponse.getIdentity()));
+        }
+
+        //Delete Scenarios
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForFirstBidPackageItem, currentUser);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForSecondBidPackageItem, currentUser);
     }
 
     @After
@@ -754,6 +803,4 @@ public class BidPackageProjectsTest extends TestUtil {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
-
-    private static final UserCredentials currentUser = UserUtil.getUser();
 }
