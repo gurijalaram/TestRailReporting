@@ -8,6 +8,7 @@ import com.apriori.qms.tests.QmsBidPackageItemTest;
 import com.apriori.qms.tests.QmsBidPackageTest;
 import com.apriori.qms.tests.QmsComponentTest;
 import com.apriori.qms.tests.QmsProjectItemTest;
+import com.apriori.qms.tests.QmsProjectsFilteredMultipleFieldsTest;
 import com.apriori.qms.tests.QmsProjectsTest;
 import com.apriori.qms.tests.QmsScenarioDiscussionFilteredTest;
 import com.apriori.qms.tests.QmsScenarioDiscussionTest;
@@ -31,6 +32,7 @@ import org.junit.runners.Suite;
     QmsComponentTest.class,
     QmsProjectItemTest.class,
     QmsProjectsTest.class,
+    QmsProjectsFilteredMultipleFieldsTest.class,
     QmsScenarioSharingTest.class,
     QmsUserPreferenceTest.class,
     QmsScenarioDiscussionTest.class,
