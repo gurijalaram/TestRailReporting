@@ -43,6 +43,7 @@ public class BidPackageProjectsTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
+    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -802,6 +803,4 @@ public class BidPackageProjectsTest extends TestUtil {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
-
-    private static final UserCredentials currentUser = UserUtil.getUser();
 }
