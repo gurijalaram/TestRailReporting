@@ -1,11 +1,15 @@
 package com.apriori.utils;
 
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -84,5 +88,36 @@ public class DateUtil {
     public static String getDateDaysBefore(final int daysCount, DateTimeFormatter formatter) {
         LocalDateTime afterDate = LocalDateTime.now(ZoneOffset.UTC).minusDays(daysCount).withNano(0);
         return formatter.format(afterDate);
+    }
+
+    /**
+     * Get custom date in milliseconds
+     *
+     * @param customDate
+     * @return
+     */
+    @SneakyThrows
+    public static Long getDateInMilliSeconds(String customDate) {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        return format.parse(customDate).getTime();
+    }
+
+    /**
+     * Utility function to convert java Date to TimeZone format
+     *
+     * @param customDate date in mm/dd/yyyy format
+     * @param timeZone   - PST or EST
+     * @return Date in milliseconds
+     */
+    @SneakyThrows
+    public static Long getDateInMilliSeconds(String customDate, String timeZone) {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        if (StringUtils.isEmpty(timeZone)) {
+            timeZone = Calendar.getInstance().getTimeZone().getID();
+        }
+        // set timezone to SimpleDateFormat
+        format.setTimeZone(TimeZone.getTimeZone(timeZone));
+        // return Date in required format with timezone as String
+        return format.parse(customDate).getTime();
     }
 }

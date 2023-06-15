@@ -4,7 +4,6 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
-import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectNotificationRequest;
@@ -14,7 +13,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectNotificationR
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -550,38 +548,16 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23771", "23772", "23774"})
-    @Description("Verify that the User can filter projects by Members with operators IN, NI")
+    @TestRail(testCaseId = {"23771"})
+    @Description("Verify that the User can filter projects by Members with operators IN")
     public void getFilteredProjectsByMembers() {
-        String currentUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
-                .componentIdentity(scenarioItem1.getComponentIdentity())
-                .scenarioIdentity(scenarioItem1.getScenarioIdentity())
-                .iterationIdentity(scenarioItem1.getIterationIdentity())
-                .build())
-            .build());
-
-        String displayName = new GenerateStringUtil().getRandomString();
-        HashMap<String, String> projectAttributesMap = new HashMap<>();
-        projectAttributesMap.put("projectStatus", "COMPLETED");
-        projectAttributesMap.put("projectDisplayName", displayName);
-        QmsProjectResources.createProject(projectAttributesMap,
-            itemsList,
-            null,
-            BidPackageProjectResponse.class,
-            HttpStatus.SC_CREATED,
-            currentUser);
-
-        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        itemsList = new ArrayList<>();
-        itemsList.add(BidPackageItemRequest.builder()
-            .bidPackageItem(BidPackageItemParameters.builder()
-                .componentIdentity(scenarioItem2.getComponentIdentity())
-                .scenarioIdentity(scenarioItem2.getScenarioIdentity())
-                .iterationIdentity(scenarioItem2.getIterationIdentity())
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
                 .build())
             .build());
 
@@ -600,9 +576,8 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        projectAttributesMap = new HashMap<>();
+        HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "COMPLETED");
-        projectAttributesMap.put("projectDisplayName", displayName);
         QmsProjectResources.createProject(projectAttributesMap,
             itemsList,
             usersList,
@@ -610,7 +585,6 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        //C23771
         String[] params = {"pageNumber,1", "members[IN]," + newUserIdentity1};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
@@ -631,7 +605,51 @@ public class QmsProjectsTest extends TestUtil {
                     .anyMatch(u -> u.getUserIdentity().equals(newUserIdentity1) ||
                         u.getUserIdentity().equals(newUserIdentity2)))).isTrue();
         }
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22775"})
+    @Issue("COL-1831")
+    @Description("Verify that the User can filter projects by Unread messages(yes)")
+    public void getFilteredProjectsByUnReadMessagesYes() {
+        String[] params = {"pageNumber,1", "hasUnreadMessages[EQ],yes"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            List<String> projectIdsList = new ArrayList<>();
+            filteredProjectsResponse.getItems()
+                .stream().iterator()
+                .forEachRemaining(i -> projectIdsList.add(i.getIdentity()));
+            BidPackageProjectNotificationRequest notifyRequest = BidPackageProjectNotificationRequest.builder()
+                .projectIdentities(projectIdsList)
+                .build();
+            BidPackageProjectNotificationResponse notifyResponse = QmsProjectResources.retrieveProjectNotifications(notifyRequest,
+                BidPackageProjectNotificationResponse.class, HttpStatus.SC_CREATED, currentUser);
+            softAssertions.assertThat(notifyResponse.getNotificationsCount().stream()
+                .allMatch(n -> n.getUnreadNotificationsCount() > 0)).isTrue();
+        }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22776"})
+    @Description("Verify that the User can filter projects by Unread messages(no)")
+    public void getFilteredProjectsByUnReadMessagesNo() {
+        String[] params = {"pageNumber,1", "hasUnreadMessages[EQ],no"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            List<String> projectIdsList = new ArrayList<>();
+            filteredProjectsResponse.getItems()
+                .stream().iterator()
+                .forEachRemaining(i -> projectIdsList.add(i.getIdentity()));
+            BidPackageProjectNotificationRequest notifyRequest = BidPackageProjectNotificationRequest.builder()
+                .projectIdentities(projectIdsList)
+                .build();
+            BidPackageProjectNotificationResponse notifyResponse = QmsProjectResources.retrieveProjectNotifications(notifyRequest,
+                BidPackageProjectNotificationResponse.class, HttpStatus.SC_CREATED, currentUser);
+            softAssertions.assertThat(notifyResponse.getNotificationsCount().stream()
+                .allMatch(n -> n.getUnreadNotificationsCount() == 0)).isTrue();
+        }
     }
 
     private static final UserCredentials currentUser = UserUtil.getUser();
