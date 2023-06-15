@@ -121,8 +121,8 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
 
     @Before
     public void beforeTest() {
-        checkAllureTestDataError();
         softAssertions = new SoftAssertions();
+        checkAllureTestDataError();
     }
 
     @After
