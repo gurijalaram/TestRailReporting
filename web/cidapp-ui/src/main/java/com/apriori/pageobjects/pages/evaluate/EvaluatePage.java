@@ -474,6 +474,17 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets processes result as string - result is returned with special characters parsed
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getProcessesResultText(String label) {
+        By processResult = By.xpath(String.format("//div[@class='process-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        return pageUtils.waitForElementToAppear(processResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Checks the value of specified process
      *
      * @param label - the label
@@ -494,6 +505,16 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public double getCostResults(String label) {
         return Double.parseDouble(getCostResultsString(label).replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Gets cost result - result is returned as a string with special characters parsed
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getCostResultsText(String label) {
+        return getCostResultsString(label).replaceAll("-", "0").replaceAll("[^0-9?!\\.]", "");
     }
 
     /**

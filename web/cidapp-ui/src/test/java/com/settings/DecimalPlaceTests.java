@@ -85,27 +85,19 @@ public class DecimalPlaceTests extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-//        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.309458), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.163688), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.400000), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.87099), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(23.940479), Offset.offset(20.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.940479), Offset.offset(20.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
-
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
             .as("Utilization shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getProcessesResult("Total Cycle Time")).split(".")[1].length())
+        softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
             .as("Total Cycle Time shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
             .as("Material Cost shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
             .as("Piece Part Cost shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Total Capital Investment")).split(".")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 6 decimal places").isEqualTo(6);
 
 
@@ -113,96 +105,129 @@ public class DecimalPlaceTests extends TestBase {
                 .selectDecimalPlaces(DecimalPlaceEnum.ONE)
                 .submit(EvaluatePage.class);
 
-//        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.3), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.1), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.8), Offset.offset(15.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(23.9), Offset.offset(20.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.9), Offset.offset(20.0));
-//        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
-
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
             .as("Utilization shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getProcessesResult("Total Cycle Time")).split(".")[1].length())
+        softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
             .as("Total Cycle Time shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
             .as("Material Cost shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
             .as("Piece Part Cost shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split(".")[1].length())
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 1 decimal place").isEqualTo(1);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Total Capital Investment")).split(".")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 1 decimal place").isEqualTo(1);
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Piece Part Cost")).isCloseTo(Double.valueOf(23.9), Offset.offset(20.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.9), Offset.offset(20.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Total Capital Investment")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Cycle Time")).split("\\.")[1].length())
+            .as("Cycle Time shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Fully Burdened Cost")).split("\\.")[1].length())
+            .as("Fully Burdened Cost shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Total Capital Investment")).split("\\.")[1].length())
+            .as("Total Capital Investment shown to 1 decimal place").isEqualTo(1);
+
 
         costDetailsPage = evaluatePage.openCostDetails()
                 .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Total Variable Cost")).isCloseTo(Double.valueOf(21.4), Offset.offset(20.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead")).isCloseTo(Double.valueOf(0.3), Offset.offset(15.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("SG&A")).isCloseTo(Double.valueOf(4.6), Offset.offset(5.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Margin")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Piece Part Cost")).isCloseTo(Double.valueOf(23.9), Offset.offset(20.0));
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost")).split("\\.")[1].length())
+            .as("Total Variable Cost shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("Indirect Overhead")).split("\\.")[1].length())
+            .as("Indirect Overhead shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("SG&A")).split("\\.")[1].length())
+            .as("SG&A shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("Margin")).split("\\.")[1].length())
+            .as("Margin shown to 1 decimal place").isEqualTo(1);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 1 decimal place").isEqualTo(1);
 
         evaluatePage.openSettings()
                 .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
                 .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.309458), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.163688), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4000), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.871), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(23.9405), Offset.offset(20.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.9405), Offset.offset(20.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+            .as("Finish Mass shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+            .as("Utilization shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
+            .as("Total Cycle Time shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
+            .as("Material Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+            .as("Fully Burdened Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
+            .as("Total Capital Investment shown to 4 decimal places").isEqualTo(4);
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(109.4000), Offset.offset(15.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Piece Part Cost")).isCloseTo(Double.valueOf(23.9405), Offset.offset(20.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.9405), Offset.offset(20.0));
-        softAssertions.assertThat(materialProcessPage.getTotalResult("Total Capital Investment")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResultText("Cycle Time").split("\\.")[1].length())
+            .as("Cycle Time shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Fully Burdened Cost")).split("\\.")[1].length())
+            .as("Fully Burdened Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(materialProcessPage.getTotalResultText("Total Capital Investment").split("\\.")[1].length())
+            .as("Total Capital Investment shown to 4 decimal places").isEqualTo(4);
 
         costDetailsPage = evaluatePage.openCostDetails()
                 .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Total Variable Cost")).isCloseTo(Double.valueOf(21.3564), Offset.offset(20.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead")).isCloseTo(Double.valueOf(0.3179), Offset.offset(15.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("SG&A")).isCloseTo(Double.valueOf(4.5720), Offset.offset(15.0));
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Margin")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
-        softAssertions.assertThat(costDetailsPage.getCostSumValue("Piece Part Cost")).isCloseTo(Double.valueOf(23.9405), Offset.offset(20.0));
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost")).split("\\.")[1].length())
+            .as("Total Variable Cost shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("Indirect Overhead")).split("\\.")[1].length())
+            .as("Indirect Overhead shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("SG&A")).split("\\.")[1].length())
+            .as("SG&A shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(costDetailsPage.getCostContributionValueText("Margin").split("\\.")[1].length())
+            .as("Margin shown to 4 decimal places").isEqualTo(4);
+        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 4 decimal places").isEqualTo(4);
+
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
                 .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
                 .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.87099), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(23.94048), Offset.offset(20.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(23.94048), Offset.offset(20.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.00000), Offset.offset(15.0));
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+            .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+            .as("Utilization shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
+            .as("Total Cycle Time shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
+            .as("Material Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+            .as("Fully Burdened Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
+            .as("Total Capital Investment shown to 5 decimal places").isEqualTo(5);
 
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
                 .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(21.91453), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(00.00000), Offset.offset(15.0));
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+            .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+            .as("Utilization shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
+            .as("Total Cycle Time shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Material Cost").split("\\.")[1].length())
+            .as("Material Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+            .as("Piece Part Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+            .as("Fully Burdened Cost shown to 5 decimal places").isEqualTo(5);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
+            .as("Total Capital Investment shown to 5 decimal places").isEqualTo(5);
 
         softAssertions.assertAll();
     }
