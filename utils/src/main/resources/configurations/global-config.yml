@@ -5,7 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: qa-test
+env: sandbox
 deployment: production
 customer: ap-int
 
@@ -107,6 +107,8 @@ default:
     agent_type: windchill
     windchill:
       host_name: https://consvwc02.fbc.com/Windchill
+      username: wcadmin
+      password: test123#
       host_token: d2NhZG1pbjp0ZXN0MTIzIw==
     teamcenter:
       host_name: https://consvtc12-01.apriori.com:8443/tc

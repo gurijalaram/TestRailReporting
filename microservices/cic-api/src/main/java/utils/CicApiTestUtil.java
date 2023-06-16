@@ -31,13 +31,14 @@ import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
 import entity.response.ConnectorsResponse;
-import entity.response.PlmPart;
-import entity.response.PlmParts;
+import entity.response.PlmSearchPart;
+import entity.response.PlmSearchResponse;
 import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
 import enums.CICReportType;
+import enums.PlmApiEnum;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import enums.ReportsEnum;
@@ -464,8 +465,8 @@ public class CicApiTestUtil extends TestBase {
      * @param searchFilter SearchFilter ( created sample tests for usage)
      * @return PlmParts Response object
      */
-    public static PlmParts searchPlmWindChillParts(SearchFilter searchFilter) {
-        PlmPart plmPart = null;
+    public static PlmSearchResponse searchPlmWindChillParts(SearchFilter searchFilter) {
+        PlmSearchPart plmPart = null;
         QueryParams queryParams = new QueryParams();
         List<String[]> paramKeyValue = Arrays.stream(searchFilter.getQueryParams()).map(o -> o.split(":")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
@@ -474,13 +475,13 @@ public class CicApiTestUtil extends TestBase {
         } catch (ArrayIndexOutOfBoundsException ae) {
             throw new KeyValueException(ae.getMessage(), paramKeyValue);
         }
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_PLM_WC_SEARCH, PlmParts.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_SEARCH, PlmSearchResponse.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
             {
                 put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
-        return (PlmParts) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (PlmSearchResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
     }
 
@@ -491,9 +492,9 @@ public class CicApiTestUtil extends TestBase {
      * @return PlmPart response class
      */
     @SneakyThrows
-    public static PlmPart getPlmPart(SearchFilter searchFilter) {
-        PlmParts plmParts = searchPlmWindChillParts(searchFilter);
-        PlmPart plmPart;
+    public static PlmSearchPart getPlmPart(SearchFilter searchFilter) {
+        PlmSearchResponse plmParts = searchPlmWindChillParts(searchFilter);
+        PlmSearchPart plmPart;
         try {
             if (plmParts.getItems().size() > 1) {
                 plmPart = plmParts
@@ -516,7 +517,7 @@ public class CicApiTestUtil extends TestBase {
      * @return WorkflowParts data builder class
      */
     public static WorkflowParts getWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
-        PlmParts plmParts;
+        PlmSearchResponse plmParts;
         ArrayList<WorkflowPart> part = null;
         try {
             plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
