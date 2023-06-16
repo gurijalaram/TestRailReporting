@@ -96,8 +96,9 @@ public class WorkflowTestUtil {
 
     /**
      * Create workflow and get job results after processing the workflow
+     *
      * @param workflowRequestData workflowRequestData
-     * @param sessionID JSESSIONID
+     * @param sessionID           JSESSIONID
      * @return AgentWorkflowJobResults
      */
     public AgentWorkflowJobResults createWorkflowAndGetJobResult(WorkflowRequest workflowRequestData, String sessionID) {

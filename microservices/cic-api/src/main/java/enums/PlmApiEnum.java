@@ -7,7 +7,9 @@ public enum PlmApiEnum implements ExternalEndpointEnum {
 
     PLM_WC_SEARCH("/servlet/rest/search/objects"),
     PLM_WC_CSRF_TOKEN("/servlet/odata/PTC/GetCSRFToken"),
-    PLM_WC_PROD_MGMT_PARTS("/servlet/odata/ProdMgmt/Parts('%s')");
+    PLM_WC_PROD_MGMT_PARTS("/servlet/odata/ProdMgmt/Parts('%s')"),
+    PLM_WC_PROD_MGMT_PART_CHECKOUT("/servlet/odata/ProdMgmt/Parts('%s')/PTC.ProdMgmt.CheckOut"),
+    PLM_WC_PROD_MGMT_PART_CHECKIN("/servlet/odata/ProdMgmt/Parts('%s')/PTC.ProdMgmt.CheckIn");
 
     private final String endpoint;
 
