@@ -375,4 +375,29 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(removeUserIcon);
         return this;
     }
+
+    /**
+     * create a new project
+     *
+     * @return a new page object
+     */
+    public ProjectsPage createANewProject(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date) {
+        getPageUtils().waitForElementToAppear(projectNameField).sendKeys(projectName);
+        getPageUtils().waitForElementToAppear(projectDescriptionField).sendKeys(projectDescription);
+        getPageUtils().waitForElementAndClick(btnAddPartsAndAssemblies);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
+        getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
+        getPageUtils().waitForElementAndClick(inviteTeammatesField);
+        getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
+        getPageUtils().scrollWithJavaScript(dueDateField,true);
+        getPageUtils().waitForElementAndClick(dueDateField);
+        getPageUtils().waitForElementAndClick(btnYear);
+        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
+        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
+        getPageUtils().scrollWithJavaScript(projectNameField,false);
+        getPageUtils().waitForElementAndClick(btnProjectSubmit);
+        return new ProjectsPage(getDriver());
+    }
 }

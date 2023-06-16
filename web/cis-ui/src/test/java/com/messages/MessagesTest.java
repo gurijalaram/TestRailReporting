@@ -384,7 +384,7 @@ public class MessagesTest extends TestBase {
                 .clickMessageIconOnCommentSection()
                 .clickOnAttribute()
                 .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("This is a discussion with a mention user @2")
+                .addComment("This is a discussion with a mention user @22")
                 .selectMentionUser("qa-automation-22@apriori.com")
                 .clickComment()
                 .selectCreatedDiscussion();
