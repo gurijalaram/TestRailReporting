@@ -550,7 +550,6 @@ public class SettingsTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .selectManualComparison()
-            .create()
             .openSettings()
             .selectUnits(UnitsEnum.CUSTOM)
             .selectMass(MassEnum.GRAM)
