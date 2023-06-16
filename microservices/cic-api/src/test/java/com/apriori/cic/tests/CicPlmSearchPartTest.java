@@ -1,6 +1,6 @@
 package com.apriori.cic.tests;
 
-import entity.response.PlmCsrfToken;
+import entity.request.PlmFieldDefinitions;
 import entity.response.PlmPartResponse;
 import entity.response.PlmSearchPart;
 import entity.response.PlmSearchResponse;
@@ -54,9 +54,16 @@ public class CicPlmSearchPartTest {
 
     @Test
     public void testPlmGetPart() {
-        PlmCsrfToken plmCsrfToken = PlmApiTestUtil.getPlmCsrfToken();
+        SearchFilter searchFilter = new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), "0000001040"))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build();
+        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
 
-        PlmPartResponse plmPartResponse = PlmApiTestUtil.getPlmPart("OR:wt.part.WTPart:17573188", plmCsrfToken.getNonceValue());
+        PlmFieldDefinitions plmFieldDefinitions = new PlmFieldDefinitions();
+        plmFieldDefinitions.setBatchSize(10);
+
+        PlmPartResponse plmPartResponse = new PlmApiTestUtil().updatePartInfoToPlm(plmPart.getId(), plmFieldDefinitions, "Updated batch size");
 
         softAssertions.assertThat(plmPartResponse).isNotNull();
     }
