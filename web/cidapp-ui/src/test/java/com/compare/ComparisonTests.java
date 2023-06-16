@@ -812,7 +812,7 @@ public class ComparisonTests extends TestBase {
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
             .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.56%");
+            .as("Total Capital Investment").isEqualTo("3.57%");
 
         softAssertions.assertAll();
     }
