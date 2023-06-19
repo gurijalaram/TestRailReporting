@@ -35,6 +35,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//span[contains(.,'Material Carbon Factor')]")
     private List<WebElement> materialCarbonFactor;
 
+
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
 
@@ -100,9 +101,8 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
      */
     public boolean isMaterialCarbonPresent() {
         pageUtils.waitForElementsToAppear(materialCarbonFactor);
-        return materialCarbonFactor.size() == 2;
+        return materialCarbonFactor.size() == 1;
     }
-
 
     /**
      * Closes current panel
