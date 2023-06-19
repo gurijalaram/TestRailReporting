@@ -41,7 +41,7 @@ import java.util.List;
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
-    private SoftAssertions softAssertions;
+    private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
 
     @AfterClass
