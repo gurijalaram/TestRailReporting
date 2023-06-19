@@ -302,7 +302,6 @@
     "bidPackageIdentity",
     "status",
     "type",
-    "description",
     "projectProfile",
     "items",
     "users",
@@ -310,7 +309,10 @@
     "organizationName",
     "owner",
     "displayName",
-    "dueAt",
     "ownerFullName"
+  ],
+  "optional": [
+    "dueAt",
+    "description"
   ]
 }

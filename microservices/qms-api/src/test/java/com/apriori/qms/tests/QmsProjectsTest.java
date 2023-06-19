@@ -39,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class QmsProjectsTest extends TestUtil {
+    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
     private SoftAssertions softAssertions;
     private ScenarioItem scenarioItem;
 
@@ -386,7 +388,7 @@ public class QmsProjectsTest extends TestUtil {
     public void getFilteredProjectsByDueAtWithOperatorNL() {
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "COMPLETED");
-        projectAttributesMap.put("projectDueAt", "");
+        projectAttributesMap.put("projectDueAt", "N/A");
         scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
         String[] params = {"dueAt[NL],null"};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
@@ -551,6 +553,7 @@ public class QmsProjectsTest extends TestUtil {
     @Description("Verify that the User can filter projects by Members (operator IN)")
     public void getFilteredProjectsByMembersWithOperatorIN() {
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        scenarioItemRemoveList.add(scenarioItem);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
@@ -708,7 +711,4 @@ public class QmsProjectsTest extends TestUtil {
                 .allMatch(n -> n.getUnreadNotificationsCount() == 0)).isTrue();
         }
     }
-
-    private static final UserCredentials currentUser = UserUtil.getUser();
-    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
 }

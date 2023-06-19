@@ -295,7 +295,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24112"})
     @Description("Search by Display Name[CN] + Members[NI]")
     public void getFilteredProjectsByDisplayNameCNMembersNI() {
-        String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectMemberUserIdentity};
+        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
+        String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectNonMemberUserIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
@@ -304,7 +305,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
                 .allMatch(i -> i.getDisplayName().contains(displayName))).isTrue();
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getUsers().stream()
-                    .noneMatch(u -> u.getUserIdentity().equals(projectMemberUserIdentity)))).isTrue();
+                    .noneMatch(u -> u.getUserIdentity().equals(projectNonMemberUserIdentity)))).isTrue();
         }
     }
 
@@ -330,6 +331,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24077"})
+    @Issue("COL-1831")
     @Description("Search by Status[IN] + Display Name[CN] + Owner[IN] + DueAt[LT] + Unread Messages[unread=yes]")
     public void getFilteredProjectsByStatusINDisplayNameCNOwnerINDueAtLTUnReadYes() {
         ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);

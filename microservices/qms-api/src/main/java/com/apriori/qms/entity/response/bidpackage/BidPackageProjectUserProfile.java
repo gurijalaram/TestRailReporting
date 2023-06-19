@@ -31,4 +31,9 @@ public class BidPackageProjectUserProfile {
     private String timezone;
     private String countryCode;
     private String stateProvince;
+    private String prefix;
+    private String suffix;
+    private String county;
+    private String officePhoneCountryCode;
+    private String officePhoneNumber;
 }
