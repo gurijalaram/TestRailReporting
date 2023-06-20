@@ -12,6 +12,7 @@ import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStoc
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
+import com.apriori.acs.entity.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -142,6 +143,29 @@ public class AcsResources {
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Gets All Material Stocks Info
+     *
+     * @param scenarioIterationKey      - scenario to get Design Guidance for
+     * @return instance of DesignGuidanceResponse
+     */
+    public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return (DesignGuidanceResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
