@@ -3,6 +3,6 @@
   "default": [],
   "type": "array",
   "items": {
-    "$ref": "ScenarioProjectUserResponseSchema.json"
+    "$ref": "UserResponseSchema.json"
   }
 }

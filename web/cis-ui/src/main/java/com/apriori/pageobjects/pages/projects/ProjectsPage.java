@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.projects;
 
 import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
-import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -75,10 +74,58 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
     private WebElement searchRemoveIcon;
 
     @FindBy(xpath = "(//span[@data-testid='data-label-Organization']//following::span)[1]")
-    private WebElement Organization;
+    private WebElement organization;
 
     @FindBy(xpath = "(//div[starts-with(@class,'MuiAvatarGroup-root')])[1]")
     private WebElement participants;
+
+    @FindBy(id = "filter-control-projects")
+    private WebElement projectFilterOption;
+
+    @FindBy(id = "add-condition-button-filter-control-projects")
+    private WebElement addCondition;
+
+    @FindBy(xpath = "//div[contains(@id,'filter-field-select')]")
+    private WebElement filterField;
+
+    @FindBy(xpath = "//div[contains(@id,'filter-condition-type')]")
+    private WebElement filterConditionType;
+
+    @FindBy(xpath = "//input[contains(@id,'filter-value')]")
+    private WebElement filterValue;
+
+    @FindBy(xpath = "//li[@data-value='displayName']")
+    private WebElement projectNameFilterFiled;
+
+    @FindBy(xpath = "//li[@data-value='[CN]']")
+    private WebElement containsFilterType;
+
+    @FindBy(xpath = "popover-filter-control-projects")
+    private WebElement filterModal;
+
+    @FindBy(xpath = "//li[@data-value='status']")
+    private WebElement projectStatusFilterFiled;
+
+    @FindBy(xpath = "//li[@data-value='[IN]']")
+    private WebElement isAnyOfFilterType;
+
+    @FindBy(xpath = "//li[@data-value='dueAt']")
+    private WebElement projectDueDateFilterFiled;
+
+    @FindBy(xpath = "//li[@data-value='[LT]']")
+    private WebElement isBeforeFilterType;
+
+    @FindBy(xpath = "//div[@aria-live='polite']")
+    private WebElement btnYear;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Filter (1)']")
+    private WebElement addedFilterOption;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]")
+    private WebElement datePickerFilterValue;
+
+    @FindBy(xpath = "//li[contains(@id,'filter-value')]/div/span/span")
+    private WebElement inNegotiationOption;
 
     private PageUtils pageUtils;
 
@@ -302,7 +349,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      * @return a string
      */
     public String getProjectOrganization() {
-        return getPageUtils().waitForElementToAppear(Organization).getText();
+        return getPageUtils().waitForElementToAppear(organization).getText();
     }
 
     /**
@@ -344,5 +391,139 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
         getPageUtils().waitForElementAndClick(searchRemoveIcon);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return this;
+    }
+
+
+    /**
+     * Checks if project filter option displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectFilterOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(projectFilterOption);
+    }
+
+    /**
+     * clicks on filter option
+     *
+     * @return true/false
+     */
+    public ProjectsPage clickOnFilterOption() {
+        getPageUtils().waitForElementAndClick(projectFilterOption);
+        return this;
+    }
+
+    /**
+     * Checks if project filter add condition displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterAddConditionDisplayed() {
+        return getPageUtils().isElementDisplayed(addCondition);
+    }
+
+    /**
+     * clicks on add condition link
+     *
+     * @return true/false
+     */
+    public ProjectsPage clickOnAddCondition() {
+        getPageUtils().waitForElementAndClick(addCondition);
+        return this;
+    }
+
+    /**
+     * Checks if filter field selector displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterFiledDisplayed() {
+        return getPageUtils().waitForElementAppear(filterField).isDisplayed();
+    }
+
+    /**
+     * Checks if filter type selector displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterConditionTypeDisplayed() {
+        return getPageUtils().waitForElementAppear(filterConditionType).isDisplayed();
+    }
+
+    /**
+     * Checks if filter value field displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterValueDisplayed() {
+        return getPageUtils().waitForElementAppear(filterValue).isDisplayed();
+    }
+
+    /**
+     * add project name to filter
+     *
+     * @return current page object
+     */
+    public ProjectsPage addProjectNameToFilter(String projectDisplayName) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(projectNameFilterFiled);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(containsFilterType);
+        getPageUtils().waitForElementAndClick(filterValue);
+        getPageUtils().waitForElementToAppear(filterValue).sendKeys(projectDisplayName);
+        getPageUtils().waitForElementToAppear(addedFilterOption);
+        getPageUtils().waitForElementToAppear(projectName);
+        return this;
+    }
+
+    /**
+     * Checks if the component is present on the page by size == 0 or > 0
+     *
+     * @return size of the element as int
+     */
+    public int getListOfProject(String projectName) {
+        return getPageUtils().waitForElementsToAppear(By.xpath("//h3[contains(text(),'" + projectName + "')]")).size();
+    }
+
+    /**
+     * select status to filter
+     *
+     * @return current page object
+     */
+    public ProjectsPage selectProjectStatus(String status) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(projectStatusFilterFiled);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(isAnyOfFilterType);
+        getPageUtils().waitForElementAndClick(filterValue);
+        getPageUtils().waitForElementToAppear(filterValue).sendKeys(status);
+        getPageUtils().waitForElementAndClick(inNegotiationOption);
+        return this;
+    }
+
+    /**
+     * select a due-date to filter
+     *
+     * @return current page object
+     */
+    public ProjectsPage selectProjectDueDate(String year, String date) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(projectDueDateFilterFiled);
+        getPageUtils().waitForElementAndClick(filterConditionType);
+        getPageUtils().waitForElementAndClick(isBeforeFilterType);
+        getPageUtils().waitForElementAndClick(datePickerFilterValue);
+        getPageUtils().waitForElementAndClick(btnYear);
+        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
+        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
+        return this;
+    }
+
+    /**
+     * Get filtered project due date
+     *
+     * @return a String
+     */
+    public String getFilteredDueDate(String projectName) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//h3[contains(text(),'" + projectName + "')]//following::span[contains(@data-testid,'data-label-Due Date')]//following::span")).getText();
     }
 }
