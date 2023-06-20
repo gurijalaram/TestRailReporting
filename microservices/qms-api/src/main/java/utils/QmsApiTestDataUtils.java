@@ -26,7 +26,6 @@ import java.util.HashMap;
 
 public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
-    private static SoftAssertions softAssertionsTestData;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -37,6 +36,7 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static DiscussionCommentResponse discussionCommentResponse;
     protected static ScenarioItem scenarioItem;
     protected static UserCredentials currentUser = UserUtil.getUser();
+    private static SoftAssertions softAssertionsTestData;
 
     /**
      * Create test data.
@@ -120,13 +120,13 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     }
 
     @Before
-    public void beforeTest() {
+    public void setupTest() {
         softAssertions = new SoftAssertions();
         checkAllureTestDataError();
     }
 
     @After
-    public void afterTest() {
+    public void tearTest() {
         softAssertions.assertAll();
     }
 

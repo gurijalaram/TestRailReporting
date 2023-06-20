@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
@@ -11,7 +12,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -30,15 +30,16 @@ public class Sustainability extends TestBase {
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private MaterialUtilizationPage materialUtilizationPage;
+    private MaterialProcessPage materialProcessPage;
 
     @Test
-    @TestRail(testCaseId = {"24103","24100"})
-    @Description("Verify if Sustainability tab is presented on Evaluate page and Material Carbon is presented in Material Utilization tab")
-    public void materialUtilHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+    @TestRail(testCaseId = {"24103","24100","24360"})
+    @Description("Verify if Sustainability tab is presented on Evaluate page, and Material Carbon, Energy Carbon properties are visible")
+    public void sustainabilityPropertiesTest() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String componentName = "PowderMetalShaft";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -49,11 +50,15 @@ public class Sustainability extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue();
 
-        materialUtilizationPage =
-        evaluatePage.openMaterialProcess()
-                .openMaterialUtilizationTab();
-
+        materialProcessPage = evaluatePage.openMaterialProcess();
+        materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
         softAssertions.assertThat(materialUtilizationPage.isMaterialCarbonPresent()).isTrue();
+
+        materialProcessPage
+            .selectProcessesTab()
+            .selectBarChart("Compaction Pressing")
+            .selectProcessTab();
+        softAssertions.assertThat(materialProcessPage.isEnergyCarbonPresent()).isTrue();
         softAssertions.assertAll();
     }
 }
