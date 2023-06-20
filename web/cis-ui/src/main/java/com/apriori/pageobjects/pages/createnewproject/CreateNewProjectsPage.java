@@ -87,6 +87,12 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     @FindBy(id = "create-project-delete-team-member")
     private WebElement removeUserIcon;
 
+    @FindBy(id = "create-project-cancel-btn")
+    private WebElement btnCancelProject;
+
+    @FindBy(xpath = "//p[@data-testid='input-field-helper-text']")
+    private WebElement projectNameFieldValidation;
+
     private PageUtils pageUtils;
 
     public CreateNewProjectsPage(WebDriver driver) {
@@ -399,5 +405,135 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().scrollWithJavaScript(projectNameField,false);
         getPageUtils().waitForElementAndClick(btnProjectSubmit);
         return new ProjectsPage(getDriver());
+    }
+
+    /**
+     * Checks if project name field displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectNameFieldDisplayed() {
+        return getPageUtils().isElementDisplayed(projectNameField);
+    }
+
+    /**
+     * Checks if project description field displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectDescriptionFieldDisplayed() {
+        return getPageUtils().isElementDisplayed(projectDescriptionField);
+    }
+
+    /**
+     * Checks if add parts and assemblies displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddPartsAndAssembliesOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(btnAddPartsAndAssemblies);
+    }
+
+    /**
+     * Checks if invite members list displayed
+     *
+     * @return true/false
+     */
+    public boolean isInviteTeamMembersFieldDisplayed() {
+        return getPageUtils().isElementDisplayed(inviteTeammatesField);
+    }
+
+    /**
+     * Checks if due date field displayed
+     *
+     * @return true/false
+     */
+    public boolean isDueDateFieldDisplayed() {
+        return getPageUtils().isElementDisplayed(dueDateField);
+    }
+
+    /**
+     * Checks if create project button displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreateProjectButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnProjectSubmit);
+    }
+
+    /**
+     * Checks if cancel project button displayed
+     *
+     * @return true/false
+     */
+    public boolean isCancelProjectCreationDisplayed() {
+        return getPageUtils().isElementDisplayed(btnCancelProject);
+    }
+
+    /**
+     * clicks on due date field
+     *
+     * @return current page object
+     */
+    public CreateNewProjectsPage clickOnDueDatePicker() {
+        getPageUtils().waitForElementAndClick(dueDateField);
+        return this;
+    }
+
+    /**
+     * gets previous month status
+     *
+     * @return a String
+     */
+    public String getMonthSelectorStatus(String month) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//button[@title='" + month + "']")).getAttribute("class");
+    }
+
+    /**
+     * clicks on cancel project
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickOnCancelProject() {
+        getPageUtils().waitForElementAndClick(btnCancelProject);
+        return new ProjectsPage(driver);
+    }
+
+    /**
+     * Get create project button status
+     *
+     * @return a string
+     */
+    public String getProjectCreateStatus() {
+        return getPageUtils().waitForElementToAppear(btnProjectSubmit).getAttribute("class");
+    }
+
+    /**
+     * Clear project name
+     *
+     * @return current page object
+     */
+    public CreateNewProjectsPage clearProjectName() {
+        getPageUtils().waitForElementAndClick(projectNameField);
+        getPageUtils().clearValueOfElement(projectNameField);
+        return this;
+    }
+
+    /**
+     * Checks if project name validation displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectNameRequiredValidationDisplayed() {
+        return getPageUtils().isElementDisplayed(projectNameFieldValidation);
+    }
+
+    /**
+     * get component checkbox status
+     *
+     * @return a string
+     */
+    public String getComponentStatus(String scenarioName, String componentName) {
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span")).getAttribute("class");
     }
 }

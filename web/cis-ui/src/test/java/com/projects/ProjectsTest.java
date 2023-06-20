@@ -16,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
@@ -68,20 +69,20 @@ public class ProjectsTest extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(projectsPage.isProjectNameFieldDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isProjectDescriptionFieldDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isAddPartsAndAssembliesOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isInviteTeamMembersFieldDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isDueDateFieldDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isCreateProjectButtonDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsPage.isCancelProjectCreationDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isProjectNameFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isProjectDescriptionFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isAddPartsAndAssembliesOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isInviteTeamMembersFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isDueDateFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isCreateProjectButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(createNewProjectsPage.isCancelProjectCreationDisplayed()).isEqualTo(true);
 
-        projectsPage.clickOnDueDatePicker();
+        createNewProjectsPage.clickOnDueDatePicker();
 
-        softAssertions.assertThat(projectsPage.getMonthSelectorStatus("Previous month")).contains("Mui-disabled");
-        softAssertions.assertThat(projectsPage.getMonthSelectorStatus("Next month")).doesNotContain("Mui-disabled");
+        softAssertions.assertThat(createNewProjectsPage.getMonthSelectorStatus("Previous month")).contains("Mui-disabled");
+        softAssertions.assertThat(createNewProjectsPage.getMonthSelectorStatus("Next month")).doesNotContain("Mui-disabled");
 
-        projectsPage.clickOnCancelProject();
+        projectsPage = createNewProjectsPage.clickOnCancelProject();
 
         softAssertions.assertThat(projectsPage.isCreateNewProjectsOptionDisplayed()).isEqualTo(true);
 
@@ -89,7 +90,7 @@ public class ProjectsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"22688","22708","24001","24002","17216","17218"})
+    @TestRail(testCaseId = {"22688","22708","24002","17216","17218"})
     @Description("Verify user can save a new project")
     public void testSaveNewProject() {
 
@@ -387,6 +388,90 @@ public class ProjectsTest extends TestBase {
                 .selectProjectDueDate("2028","15");
 
         softAssertions.assertThat(projectsPage.getFilteredDueDate("Automation Project " + dateTime)).isNotEmpty();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"22688","24001"})
+    @Description("Verify create new project page validations")
+    public void testCreateProjectValidations() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser().setEmail("qa-automation-36@apriori.com");
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        createNewProjectsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject();
+
+        softAssertions.assertThat(createNewProjectsPage.getProjectCreateStatus()).contains("Mui-disabled");
+
+        createNewProjectsPage.typeProjectName("Automation Project " + dateTime)
+                .clearProjectName();
+
+        softAssertions.assertThat(createNewProjectsPage.isProjectNameRequiredValidationDisplayed()).isEqualTo(true);
+
+        createNewProjectsPage.typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
+                .clickOnAddNewButton().selectAPart(scenarioName, componentName)
+                .clickAdd();
+
+        softAssertions.assertThat(createNewProjectsPage.getProjectCreateStatus()).contains("Mui-disabled");
+
+        createNewProjectsPage.selectAUser(projectParticipant)
+                .setDueDate("2028","15");
+
+        softAssertions.assertThat(createNewProjectsPage.getProjectCreateStatus()).doesNotContain("Mui-disabled");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"23611"})
+    @Description("Verify existing project components are disabled for parts selection")
+    public void testPartsAddingValidationForANewProject()  {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser().setEmail("qa-automation-36@apriori.com");
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(currentUser);
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMessageIconOnCommentSection()
+                .clickOnAttribute()
+                .selectAttribute(CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName())
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        createNewProjectsPage = leftHandNavigationBar.clickProjects()
+                .clickOnCreateNewProject()
+                .typeProjectName("Automation Project " + dateTime)
+                .typeProjectDescription("This Project is created by Automation User" + currentUser.getEmail())
+                .clickOnAddNewButton();
+
+        softAssertions.assertThat(createNewProjectsPage.getComponentStatus(scenarioName, componentName)).contains("Mui-disabled");
 
         softAssertions.assertAll();
     }
