@@ -4,6 +4,7 @@ import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
@@ -260,9 +261,12 @@ public class DecimalPlaceTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .openPreviewPanel();
 
-        softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
-        softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
-        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).as("Total Capital Investment").isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
+        softAssertions.assertThat(previewPage.getMaterialResultText("Piece Part Cost").split("\\.")[1].length())
+            .as("Piece Part Cost to 6 decimal places").isEqualTo(6);
+        softAssertions.assertThat(previewPage.getMaterialResultText("Fully Burdened Cost").split("\\.")[1].length())
+            .as("Fully Burdened Cost to 6 decimal places").isEqualTo(6);
+        softAssertions.assertThat(previewPage.getMaterialResultText("Total Capital Investment").split("\\.")[1].length())
+            .as("Total Capital Investment to 6 decimal places").isEqualTo(6);
 
         softAssertions.assertAll();
     }
@@ -292,6 +296,10 @@ public class DecimalPlaceTests extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
@@ -301,11 +309,16 @@ public class DecimalPlaceTests extends TestBase {
             .submit(ExplorePage.class)
             .openScenario(assemblyName, scenarioName);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Assembly Process Cost")).isCloseTo(Double.valueOf(1.439584), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Cost")).isCloseTo(Double.valueOf(25.392278), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getCostResults("Total Investments")).isCloseTo(Double.valueOf(1065.994403), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(2.456686), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Assembly Time")).isCloseTo(Double.valueOf(110.000000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Assembly Process Cost").split("\\.")[1].length())
+            .as("Verify Assembly Process Cost displayed to 6 decimal places").isEqualTo(6);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Cost").split("\\.")[1].length())
+            .as("Verify Total Cost displayed to 6 decimal places").isEqualTo(6);
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Total Investments").split("\\.")[1].length())
+            .as("Verify Total Investments displayed to 6 decimal places").isEqualTo(6);;
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
+            .as("Verify Finish Mass displayed to 6 decimal places").isEqualTo(6);;
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Assembly Time").split("\\.")[1].length())
+            .as("Verify Assembly Time displayed to 6 decimal places").isEqualTo(6);;
 
         softAssertions.assertAll();
     }

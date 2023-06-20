@@ -428,6 +428,18 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets material details - result is returned as a String with special characters parsed
+     *
+     * @param label - the label
+     * @return double
+     */
+    public String getMaterialResultText(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        pageUtils.waitForElementToAppear(result);
+        return driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Checks the value of specified material
      *
      * @param label - the label
