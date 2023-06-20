@@ -84,17 +84,17 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
     /**
      * Select the Quick Comparison Option
      */
-    public CreateComparePage selectQuickComparison() {
+    public ComparePage selectQuickComparison() {
         pageUtils.waitForElementAndClick(quickComparisonButton);
-        return this;
+        return new ComparePage(driver);
     }
 
     /**
      * Select the Manual Comparison Option
      */
-    public CreateComparePage selectManualComparison() {
+    public ComparePage selectManualComparison() {
         pageUtils.waitForElementAndClick(manualComparisonButton);
-        return this;
+        return new ComparePage(driver);
     }
 
     /**
@@ -106,13 +106,4 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
         return modalDialogController.cancel(klass);
     }
 
-    /**
-     * Selects the Create button
-     *
-     * @return new page object
-     */
-    public ComparePage create() {
-        pageUtils.waitForElementAndClick(createButton);
-        return new ComparePage(driver);
-    }
 }
