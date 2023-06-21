@@ -85,7 +85,6 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login() {
-        //return aprioriLoginPage.login(userCredentials, ReportsPageHeader.class);
         return loginService.login(userCredentials, ReportsPageHeader.class);
     }
 
