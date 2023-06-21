@@ -28,9 +28,8 @@ public class AuthorizationUtil {
     private String username = PropertiesContext.get("ats.token_username");
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    //    private String subject = PropertiesContext.get("ap-int.common.token_subject");
     private String subject = PropertiesContext.get("${customer}.${${customer}.environment_type}.token_subject");
+
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
         this.email = userCredentials.getEmail();
