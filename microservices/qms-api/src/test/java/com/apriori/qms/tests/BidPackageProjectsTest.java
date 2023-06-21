@@ -340,7 +340,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("displayName should not be null and have less than 64 characters");
+            .contains("displayName should not be null or empty and can have maximum 64 characters");
     }
 
     @Test
