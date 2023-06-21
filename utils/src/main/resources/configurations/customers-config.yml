@@ -11,13 +11,10 @@
 ######################################################## AP-INT ########################################################
 ap-int:
   aws_account_type: dev
-
   dev:
     token_subject: 4127
   staging:
-    token_subject: 4127
-#  production:
-#    token_subject: 4127
+    token_subject: 2b68
 
   ci-connect:
     customer_identity: 6C1F8C1D4D75
@@ -39,21 +36,20 @@ ap-int:
       connector: EN-consvwc02
 
 
-
-#################################################### AP-INT-STAGING ####################################################
-ap-int-staging:
-  token_subject: 2b68
-
 ######################################################## GADGETS #######################################################
 gadgets:
-  token_subject: 247f
+  aws_account_type: dev
+  dev:
+    token_subject: 247f
 
 ########################################################################################################################
 
 
 ######################################################## WIDGETS #######################################################
 widgets:
-  token_subject: 739e
+  aws_account_type: dev
+  dev:
+    token_subject: 739e
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
@@ -68,7 +64,9 @@ widgets:
 
 ####################################################### SPROCKETS ######################################################
 sprockets:
-  token_subject: c8fc
+  aws_account_type: dev
+  dev:
+    token_subject: c8fc
 
 ########################################################################################################################
 

@@ -52,7 +52,7 @@ default:
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
-    token_subject: ${${customer}.token_subject}
+    token_subject: ${customer}.${${customer}.environment_type}.token_subject
     auth_application: CID
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
