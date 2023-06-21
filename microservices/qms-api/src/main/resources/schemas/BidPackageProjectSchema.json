@@ -32,6 +32,9 @@
     "dueAt": {
       "type": "string"
     },
+    "ownerFullName": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -299,16 +302,17 @@
     "bidPackageIdentity",
     "status",
     "type",
-    "description",
     "projectProfile",
     "items",
     "users",
-    "name"
-  ],
-  "optional": [
+    "name",
     "organizationName",
     "owner",
     "displayName",
-    "dueAt"
+    "ownerFullName"
+  ],
+  "optional": [
+    "dueAt",
+    "description"
   ]
 }

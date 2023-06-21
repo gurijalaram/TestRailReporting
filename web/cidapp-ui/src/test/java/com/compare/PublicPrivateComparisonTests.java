@@ -120,6 +120,7 @@ public class PublicPrivateComparisonTests extends TestBase {
             .selectFilter("Recent")
             .multiSelectScenarios("" + assemblyName1 + ", " + assemblyScenarioName1 + "", "" + assemblyName2 + ", " + assemblyScenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
             .modify()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)

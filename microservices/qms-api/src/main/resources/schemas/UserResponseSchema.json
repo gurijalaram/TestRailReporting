@@ -14,6 +14,12 @@
     "createdBy": {
       "type": "string"
     },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
     "customerIdentity": {
       "type": "string"
     },
@@ -29,6 +35,12 @@
         "createdBy": {
           "type": "string"
         },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
         "givenName": {
           "type": "string"
         },
@@ -36,6 +48,12 @@
           "type": "string"
         },
         "jobTitle": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "supervisor": {
           "type": "string"
         },
         "townCity": {
@@ -49,6 +67,15 @@
         },
         "timeZone": {
           "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "officePhoneCountryCode": {
+          "type": "string"
+        },
+        "officePhoneNumber": {
+          "type": "string"
         }
       },
       "required": [
@@ -59,11 +86,18 @@
         "familyName"
       ],
       "optional": [
+        "updatedAt",
+        "updatedBy",
         "jobTitle",
+        "department",
+        "supervisor",
         "townCity",
         "stateProvince",
         "countryCode",
-        "timeZone"
+        "timeZone",
+        "county",
+        "officePhoneCountryCode",
+        "officePhoneNumber"
       ]
     },
     "email": {
@@ -110,5 +144,9 @@
     "customAttributes",
     "userType",
     "avatarColor"
+  ],
+  "optional": [
+    "updatedAt",
+    "updatedBy"
   ]
 }

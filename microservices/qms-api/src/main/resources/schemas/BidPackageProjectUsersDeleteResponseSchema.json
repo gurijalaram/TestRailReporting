@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "projectUsers": {
+          "type": "object",
+          "properties": {
+            "successes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity"
+                  ]
+                }
+              ]
+            },
+            "failures": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "identity",
+                    "error"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "successes",
+            "failures"
+          ]
+        }
+      },
+      "required": [
+        "projectUsers"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

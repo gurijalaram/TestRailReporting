@@ -9,6 +9,7 @@ import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
+import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
 import com.google.common.base.Stopwatch;
 import lombok.Data;
@@ -18,6 +19,7 @@ import utils.Constants;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -76,6 +78,37 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
+     */
+    public void genericAssemblyCostCurrencyTest() {
+        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetName);
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
+        JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
+
+        String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
+        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+
+        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
+        softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
+    }
+
+    /**
      * Generic test of currency code for use on a dtc report
      *
      * @param partName - String of partName which is to be used
@@ -109,30 +142,22 @@ public class JasperApiUtils {
     /**
      * Generic test to be used on any dtc report
      *
-     * @param miscData - List of Strings of data required for the test
      * @param partNames - List of Strings of part names for use in the test
-     * @param areBubblesPresent - boolean which determines the report type
+     * @param miscData - String array of data to be used in the test
      */
-    public void genericDtcTest(List<String> miscData, List<String> partNames, boolean areBubblesPresent) {
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+    public void genericDtcTest(List<String> partNames, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        if (areBubblesPresent) {
-            int i = 0;
-            for (String partName : partNames) {
-                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-                i++;
-            }
-        } else {
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 3; j++) {
-                    softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
-                }
-            }
+        int i = 0;
+        for (String partName : partNames) {
+            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
+            i++;
         }
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(1).toString().contains(miscData.get(1))).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(1).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -140,11 +165,12 @@ public class JasperApiUtils {
     /**
      * Generic test for any dtc details report
      *
-     * @param miscData - List of Strings containing data for the test
      * @param partNames - list of Strings containing the parts to use
+     * @param miscData - String array of data to be used in the test
      */
-    public void genericDtcDetailsTest(List<String> miscData, List<String> partNames) {
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+    public void genericDtcDetailsTest(List<String> partNames, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
 
@@ -152,13 +178,13 @@ public class JasperApiUtils {
         for (String partName : partNames) {
             String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
             softAssertions.assertThat(partNumberElements.get(i).toString().contains(assertPartName)).isEqualTo(true);
-            i++;
+            i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
         }
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        int itemIndex = miscData.get(0).equals("DTC Score") ? 2 : 1;
-        softAssertions.assertThat(tdResultElements.get(itemIndex).parent().children().toString().contains(miscData.get(1))).isEqualTo(true);
+        int itemIndex = miscDataList.get(0).equals("DTC Score") ? 2 : 1;
+        softAssertions.assertThat(tdResultElements.get(itemIndex).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -166,14 +192,15 @@ public class JasperApiUtils {
     /**
      * Generic test for dtc score
      *
-     * @param miscData - List of Strings of data to be used in the test
-     * @param partNames - List of Strings of part names
      * @param areBubblesPresent - boolean which specifies what report type is being used
+     * @param partNames - List of Strings of part names
+     * @param miscData - String array of data to be used in the test
      */
-    public void genericDtcScoreTest(List<String> miscData, List<String> partNames, boolean areBubblesPresent) {
-        String assertValue = miscData.get(1).isEmpty() ? DtcScoreEnum.ALL.getDtcScoreName() : miscData.get(1);
+    public void genericDtcScoreTest(boolean areBubblesPresent, List<String> partNames, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        String assertValue = miscDataList.get(1).isEmpty() ? DtcScoreEnum.ALL.getDtcScoreName() : miscDataList.get(1);
 
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         if (areBubblesPresent) {
             int i = 0;
@@ -189,7 +216,7 @@ public class JasperApiUtils {
             }
         }
 
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0)).get(6)
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0)).get(6)
             .parent().children().get(11).text()).isEqualTo(assertValue);
 
         softAssertions.assertAll();
@@ -198,25 +225,26 @@ public class JasperApiUtils {
     /**
      * Generic test of process group input control on any dtc report
      *
-     * @param miscData - List of Strings of data for the test
      * @param partNames - List of Strings of part names for the test
+     * @param miscData - String array of data to be used in the test
      */
-    public void genericProcessGroupDtcTest(List<String> miscData, List<String> partNames) {
-        String pgToSet = miscData.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            || miscData.get(1).equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            ? miscData.get(1) : "";
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), pgToSet);
+    public void genericProcessGroupDtcTest(List<String> partNames, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        String pgToSet = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
+            || miscDataList.get(1).equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            ? miscDataList.get(1) : "";
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), pgToSet);
 
         int i = 0;
         for (String partName : partNames) {
-            partName = miscData.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
+            partName = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
             softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
             i++;
         }
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscData.get(1))).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -224,12 +252,13 @@ public class JasperApiUtils {
     /**
      * Generic test for process group on a dtc details report
      *
-     * @param miscData - List of Strings of data for the test
      * @param partNames - List of Strings of part names for the test
+     * @param miscData - String array of data to be used in the test
      */
 
-    public void genericProcessGroupDtcDetailsTest(List<String> miscData, List<String> partNames) {
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+    public void genericProcessGroupDtcDetailsTest(List<String> partNames, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
         int i = 6;
@@ -241,7 +270,7 @@ public class JasperApiUtils {
         }
 
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process Group").get(6)
-            .siblingElements().get(10).toString().contains(miscData.get(1))).isEqualTo(true);
+            .siblingElements().get(10).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -289,8 +318,9 @@ public class JasperApiUtils {
      * @param partNames - List of Strings of part names for the test
      * @param assertFigures - List of Doubles for the assertion of Annual Spend values
      */
-    public void genericSortOrderDtcTest(List<String> miscData, List<String> partNames, List<Double> assertFigures) {
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+    public void genericSortOrderDtcTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getPartName()).isEqualTo(partNames.get(0));
         softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(1).getPartName()).isEqualTo(partNames.get(1));
@@ -300,7 +330,7 @@ public class JasperApiUtils {
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscData.get(1))).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -308,12 +338,13 @@ public class JasperApiUtils {
     /**
      * Generic test for sort order input control on a dtc report
      *
-     * @param miscData - List of Strings of data for the test
      * @param partNames - List of Strings of part names for the test
      * @param assertValues - List of Strings for the assertion of Annual Spend values
+     * @param miscData - String array of data to be used in the test
      */
-    public void genericSortOrderDtcDetailsTest(List<String> miscData, List<String> partNames, List<String> assertValues) {
-        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+    public void genericSortOrderDtcDetailsTest(List<String> partNames, List<String> assertValues, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
         int i = 6;
@@ -335,7 +366,7 @@ public class JasperApiUtils {
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscData.get(1))).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -361,12 +392,23 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+        return indexOfReturnedItemsToUse == 3
+            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
+            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
-        return partName.isEmpty()
-            ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text()
-            : jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName).getFullyBurdenedCost();
+        if (reportsJsonFileName.contains("Assembly")) {
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValueContaining("style", "font-size: 10px;").get(73).text();
+        }
+
+        if (partName.isEmpty()) {
+            return jasperReportSummary.getReportHtmlPart()
+                .getElementsByAttributeValue("colspan", "4").get(9).text();
+        }
+
+        return jasperReportSummary.getFirstChartData()
+            .getChartDataPointByPartName(partName).getFullyBurdenedCost();
     }
 }

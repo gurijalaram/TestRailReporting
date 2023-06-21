@@ -8,6 +8,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     // PROJECTS
     PROJECTS("projects"),
     PROJECT("projects/%s"),
+    PROJECT_NOTIFICATION_COUNT("projects/notifications-count"),
 
     // PROJECTS
     PROJECT_ITEMS("projects/%s/project-items"),
@@ -23,7 +24,9 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     BID_PACKAGE_PROJECT("bid-packages/%s/projects/%s"),
     BID_PACKAGE_PROJECT_USERS("bid-packages/%s/projects/%s/project-users"),
     BID_PACKAGE_PROJECT_USER("bid-packages/%s/projects/%s/project-users/%s"),
+    BID_PACKAGE_PROJECT_USERS_DELETE("bid-packages/%s/projects/%s/project-users/delete"),
     BID_PACKAGE_PROJECT_ITEMS("bid-packages/%s/projects/%s/project-items"),
+    BID_PACKAGE_PROJECT_ITEMS_DELETE("bid-packages/%s/projects/%s/project-items/delete"),
     BID_PACKAGE_PROJECT_ITEM("bid-packages/%s/projects/%s/project-items/%s"),
     BID_PACKAGE_ITEMS("bid-packages/%s/bid-package-items"),
     BID_PACKAGE_ITEM("bid-packages/%s/bid-package-items/%s"),
@@ -42,7 +45,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     SCENARIO_DISCUSSION("scenario-discussions/%s"),
     SCENARIO_DISCUSSION_COMMENTS("scenario-discussions/%s/comments"),
     SCENARIO_DISCUSSION_COMMENT("scenario-discussions/%s/comments/%s"),
-    SCENARIO_DISCUSSION_COMMENT_VIEW_STATUS("scenario-discussions/%s/comments/%s/view-status"),
+    SCENARIO_DISCUSSION_COMMENT_VIEW_STATUS("discussions/%s/comments/%s/view-status"),
 
     //ITERATIONS
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID("components/%s/scenarios/%s/iterations/latest"),

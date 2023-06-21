@@ -39,10 +39,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.File;
+import java.util.HashMap;
 
 public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
-    private static SoftAssertions softAssertionsTestData;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -55,6 +55,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static DmsCommentViewResponse dmsCommentViewResponse;
     protected static ScenarioItem scenarioItem;
     protected static UserCredentials currentUser = UserUtil.getUser();
+    private static SoftAssertions softAssertionsTestData;
 
     /**
      * Create test data.
@@ -75,7 +76,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
                         QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
                         bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
                     if (bidPackageItemResponse != null) {
-                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                         if (bidPackageProjectResponse != null) {
                             qmsScenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
                             if (qmsScenarioDiscussionResponse != null) {
@@ -117,6 +118,8 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             }
         } catch (Exception e) {
             softAssertionsTestData.fail(e.getMessage());
+        } finally {
+            checkAllureTestDataError();
         }
     }
 
@@ -176,6 +179,12 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
     }
 
+    private static void checkAllureTestDataError() {
+        if (!softAssertionsTestData.wasSuccess()) {
+            Assert.fail(softAssertionsTestData.errorsCollected().toString());
+        }
+    }
+
     private static void clearEntities() {
         scenarioItem = null;
         bidPackageResponse = null;
@@ -185,10 +194,8 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
 
     @Before
     public void beforeTest() {
-        if (!softAssertionsTestData.wasSuccess()) {
-            Assert.fail(softAssertionsTestData.errorsCollected().toString());
-        }
         softAssertions = new SoftAssertions();
+        checkAllureTestDataError();
     }
 
     @After

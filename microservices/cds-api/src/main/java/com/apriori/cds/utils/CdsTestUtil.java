@@ -35,6 +35,7 @@ import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.FeatureResponse;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.LicensedApplication;
+import com.apriori.cds.objects.response.Roles;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
@@ -48,6 +49,7 @@ import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
@@ -923,5 +925,19 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
 
         return errorResponse.getResponseEntity();
+    }
+
+    /**
+     *  call the endpoint /roles with param pageSize=20 - to get all roles
+     * @param  inlineVariables
+     * @return object ResponseWrapper
+     */
+    public Roles getRoles(String... inlineVariables) {
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(CDSAPIEnum.ROLES, Roles.class)
+            .inlineVariables(inlineVariables)
+            .queryParams(new QueryParams().use("pageSize", "20"))
+            .expectedResponseCode(HttpStatus.SC_OK);
+        return (Roles)HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }

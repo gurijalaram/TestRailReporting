@@ -1,0 +1,577 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValuesList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "altName2": {
+              "type": "string"
+            },
+            "meltingTemp": {
+              "type": "number"
+            },
+            "ejectDeflectionTemp": {
+              "type": "number"
+            },
+            "altName1": {
+              "type": "string"
+            },
+            "clampingMNPerSqM": {
+              "type": "number"
+            },
+            "flowLengthRatio": {
+              "type": "number"
+            },
+            "baseCostPerUnit": {
+              "type": "number"
+            },
+            "thermalConductivity": {
+              "type": "number"
+            },
+            "canRotationalMold": {
+              "type": "boolean"
+            },
+            "costPerKG": {
+              "type": "number"
+            },
+            "density": {
+              "type": "number"
+            },
+            "densityMelt": {
+              "type": "number"
+            },
+            "moldTemp": {
+              "type": "number"
+            },
+            "specificHeat": {
+              "type": "number"
+            },
+            "canBlowMold": {
+              "type": "boolean"
+            },
+            "hardness": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "costUnits": {
+              "type": "string"
+            },
+            "sourceName": {
+              "type": "string"
+            },
+            "millingSpeed": {
+              "type": "number"
+            },
+            "dataSource": {
+              "type": "string"
+            },
+            "costPerUnit": {
+              "type": "number"
+            },
+            "materialTypeName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "altName2",
+            "meltingTemp",
+            "ejectDeflectionTemp",
+            "altName1",
+            "clampingMNPerSqM",
+            "flowLengthRatio",
+            "baseCostPerUnit",
+            "thermalConductivity",
+            "canRotationalMold",
+            "costPerKG",
+            "density",
+            "densityMelt",
+            "moldTemp",
+            "specificHeat",
+            "canBlowMold",
+            "hardness",
+            "name",
+            "costUnits",
+            "sourceName",
+            "millingSpeed",
+            "dataSource",
+            "costPerUnit",
+            "materialTypeName"
+          ]
+        }
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "altName2": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "meltingTemp": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "ejectDeflectionTemp": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "altName1": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardnessSystem": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "clampingMNPerSqM": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "description": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "flowLengthRatio": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "baseCostPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "thermalConductivity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "canRotationalMold": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerKG": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "densityMelt": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "density": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "moldTemp": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "specificHeat": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "canBlowMold": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "hardness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialCutCodeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "sourceName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costUnits": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "millingSpeed": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "dataSource": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "costPerUnit": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "materialTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "altName2",
+        "meltingTemp",
+        "ejectDeflectionTemp",
+        "altName1",
+        "hardnessSystem",
+        "clampingMNPerSqM",
+        "description",
+        "flowLengthRatio",
+        "baseCostPerUnit",
+        "thermalConductivity",
+        "canRotationalMold",
+        "costPerKG",
+        "densityMelt",
+        "density",
+        "moldTemp",
+        "specificHeat",
+        "canBlowMold",
+        "hardness",
+        "materialCutCodeName",
+        "name",
+        "sourceName",
+        "costUnits",
+        "millingSpeed",
+        "dataSource",
+        "costPerUnit",
+        "materialTypeName"
+      ]
+    }
+  },
+  "required": [
+    "propertyValuesList",
+    "propertyInfoMap"
+  ]
+}

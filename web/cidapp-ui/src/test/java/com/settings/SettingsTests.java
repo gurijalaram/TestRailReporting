@@ -549,6 +549,7 @@ public class SettingsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
+            .selectManualComparison()
             .openSettings()
             .selectUnits(UnitsEnum.CUSTOM)
             .selectMass(MassEnum.GRAM)

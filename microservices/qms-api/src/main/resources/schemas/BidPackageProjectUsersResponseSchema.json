@@ -13,7 +13,7 @@
       "items": {
         "type": "array",
         "items": {
-          "$ref": "BidPackageProjectUserResponseSchema.json"
+          "$ref": "BidPackageProjectUserSchema.json"
         }
       }
     }

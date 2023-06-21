@@ -22,9 +22,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.util.HashMap;
+
 public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
-    private static SoftAssertions softAssertionsTestData;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -35,6 +36,7 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     protected static DiscussionCommentResponse discussionCommentResponse;
     protected static ScenarioItem scenarioItem;
     protected static UserCredentials currentUser = UserUtil.getUser();
+    private static SoftAssertions softAssertionsTestData;
 
     /**
      * Create test data.
@@ -53,7 +55,7 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
                         QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
                         bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
                     if (bidPackageItemResponse != null) {
-                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+                        bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
                         if (bidPackageProjectResponse != null) {
                             scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
                             if (scenarioDiscussionResponse != null) {
@@ -118,13 +120,13 @@ public abstract class QmsApiTestDataUtils extends TestUtil {
     }
 
     @Before
-    public void beforeTest() {
-        checkAllureTestDataError();
+    public void setupTest() {
         softAssertions = new SoftAssertions();
+        checkAllureTestDataError();
     }
 
     @After
-    public void afterTest() {
+    public void tearTest() {
         softAssertions.assertAll();
     }
 
