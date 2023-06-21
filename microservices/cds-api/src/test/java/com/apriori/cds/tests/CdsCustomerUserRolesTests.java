@@ -75,7 +75,7 @@ public class CdsCustomerUserRolesTests {
     @TestRail(testCaseId = {"13415", "13417", "13422","17166"})
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
-        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity,role);
+        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, role);
         String roleId = newRole.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
