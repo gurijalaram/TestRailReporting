@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "IdentityProviderSchema.json")
+@Schema(location = "IdentityProviderCasSchema.json")
 @JsonRootName("response")
 @Data
 public class IdentityProvider {
