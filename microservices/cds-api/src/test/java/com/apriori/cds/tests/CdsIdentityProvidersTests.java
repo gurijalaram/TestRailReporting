@@ -130,7 +130,7 @@ public class CdsIdentityProvidersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {" "})
+    @TestRail(testCaseId = {"5961"})
     @Description("Deletes identity provider")
     public void deleteCustomerIdentityProvider() {
         String userName = generateStringUtil.generateUserName();
