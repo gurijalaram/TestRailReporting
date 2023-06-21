@@ -16,18 +16,18 @@ public class DesignGuidanceTests {
 
     @Test
     @TestRail(testCaseId = "")
-    @Description("Test Get Design Guidance for Sheet Metal")
-    public void testGetDesignGuidanceSheetMetal() {
+    @Description("Test Get Design Guidance for Casting - Die")
+    public void testGetDesignGuidanceCastingDie() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "bracket_basic.prt",
+            "DTCCastingIssues.catpart",
             processGroup
         );
 
@@ -37,7 +37,8 @@ public class DesignGuidanceTests {
         );
 
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(
-            fileUploadOutputs.getScenarioIterationKey()
+            fileUploadOutputs.getScenarioIterationKey(),
+            "DTC_MESSAGES"
         );
     }
 }

@@ -151,7 +151,7 @@ public class AcsResources {
      * @param scenarioIterationKey      - scenario to get Design Guidance for
      * @return instance of DesignGuidanceResponse
      */
-    public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey) {
+    public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
@@ -162,8 +162,8 @@ public class AcsResources {
                 scenarioIterationKey.getScenarioKey().getTypeName(),
                 scenarioIterationKey.getScenarioKey().getMasterName(),
                 scenarioIterationKey.getScenarioKey().getStateName(),
-                scenarioIterationKey.getIteration().toString()
-            );
+                scenarioIterationKey.getIteration().toString())
+            .queryParams(new QueryParams().use("guidanceTopics", guidanceTopics));
 
         return (DesignGuidanceResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
