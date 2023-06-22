@@ -1,11 +1,14 @@
 package com.apriori.qms.tests;
 
 
+import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentViewResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
@@ -16,6 +19,7 @@ import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
@@ -26,24 +30,53 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
 import java.util.Collections;
 
-public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
+public class QmsScenarioDiscussionTest extends TestUtil {
+    private static SoftAssertions softAssertions = new SoftAssertions();
+    private static BidPackageResponse bidPackageResponse;
+    private static ScenarioDiscussionResponse scenarioDiscussionResponse;
+    private static DiscussionCommentResponse discussionCommentResponse;
+    private static ScenarioItem scenarioItem;
+    private static final UserCredentials currentUser = UserUtil.getUser();
+
     @BeforeClass
     public static void beforeClass() {
-        createTestData();
+        scenarioItem = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
+        QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
+        QmsApiTestUtils.createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);
+        scenarioDiscussionResponse = QmsApiTestUtils
+            .createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
+        discussionCommentResponse = QmsApiTestUtils
+            .createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
     @AfterClass
     public static void afterClass() {
-        deleteTestDataAndClearEntities();
+        QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
+        softAssertions.assertAll();
+    }
+
+    @Before
+    public void beforeTest() {
+        softAssertions = new SoftAssertions();
+    }
+
+    @After
+    public void afterTest() {
+        softAssertions.assertAll();
     }
 
     @Test
@@ -188,7 +221,8 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
     public void verifyScenarioDiscussionNo409ErrorWith2Users() {
         UserCredentials assignedUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
-        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
+        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
+            .getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
@@ -249,7 +283,8 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
     public void assignUnAssignDiscussion() {
         UserCredentials assigneeUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
-        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(currentUser, scenarioItem, description);
+        ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
+            .getScenarioDiscussionRequest(currentUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
@@ -296,7 +331,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
             HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("RESOLVED");
 
-        ApwErrorMessage addCommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(csdResponse.getIdentity(), contentDesc, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
+        ApwErrorMessage addCommentError = QmsScenarioDiscussionResources.addCommentToDiscussion(csdResponse.getIdentity(), RandomStringUtils.randomAlphabetic(12), ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentUser);
         softAssertions.assertThat(addCommentError.getStatus()).isEqualTo(HttpStatus.SC_CONFLICT);
         softAssertions.assertThat(addCommentError.getMessage()).contains("User can not update resolved discussion");
 

@@ -24,7 +24,6 @@ import org.junit.Test;
 
 
 public class QmsBidPackageItemTest extends TestUtil {
-
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;

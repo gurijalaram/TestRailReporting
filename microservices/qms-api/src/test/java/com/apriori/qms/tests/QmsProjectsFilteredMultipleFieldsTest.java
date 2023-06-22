@@ -47,7 +47,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     private static String projectMemberUserIdentity;
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
-    private SoftAssertions softAssertions;
+    private static SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeClass
     public static void beforeClass() {
@@ -295,7 +295,8 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24112"})
     @Description("Search by Display Name[CN] + Members[NI]")
     public void getFilteredProjectsByDisplayNameCNMembersNI() {
-        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
+        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser()
+            .getEmail());
         String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectNonMemberUserIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
