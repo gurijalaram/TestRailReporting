@@ -1,13 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "identityProvider"
   ],
   "properties": {
     "identityProvider": {
-      "$id": "#/properties/identityProvider",
       "type": "object",
       "required": [
         "contact",
@@ -26,80 +23,63 @@
         "signRequestAlgorithmDigest",
         "protocolBinding",
         "attributeMappings",
-        "createdBy"
+        "createdBy",
+        "authenticationType"
       ],
       "properties": {
         "contact": {
-          "$id": "#/properties/identityProvider/properties/contact",
           "type": "string"
         },
         "identityProviderType": {
-          "$id": "#/properties/identityProvider/properties/identityProviderType",
           "type": "string"
         },
         "identityProviderPlatform": {
-          "$id": "#/properties/identityProvider/properties/identityProviderPlatform",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/identityProvider/properties/active",
           "type": "boolean"
         },
         "name": {
-          "$id": "#/properties/identityProvider/properties/name",
           "type": "string"
         },
         "displayName": {
-          "$id": "#/properties/identityProvider/properties/displayName",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/identityProvider/properties/description",
           "type": "string"
         },
         "idpDomains": {
-          "$id": "#/properties/identityProvider/properties/idpDomains",
           "type": "array",
           "items": {
-            "$id": "#/properties/identityProvider/properties/idpDomains/items",
             "anyOf": [
               {
-                "$id": "#/properties/identityProvider/properties/idpDomains/items/anyOf/0",
                 "type": "string"
               }
             ]
           }
         },
         "signInUrl": {
-          "$id": "#/properties/identityProvider/properties/signInUrl",
           "type": "string"
         },
         "signingCertificate": {
-          "$id": "#/properties/identityProvider/properties/signingCertificate",
           "type": "string"
         },
         "signingCertificateExpiresAt": {
-          "$id": "#/properties/identityProvider/properties/signingCertificateExpiresAt",
           "type": "string"
         },
         "signRequest": {
-          "$id": "#/properties/identityProvider/properties/signRequest",
           "type": "boolean"
         },
         "signRequestAlgorithm": {
-          "$id": "#/properties/identityProvider/properties/signRequestAlgorithm",
           "type": "string"
         },
         "signRequestAlgorithmDigest": {
-          "$id": "#/properties/identityProvider/properties/signRequestAlgorithmDigest",
           "type": "string"
         },
         "protocolBinding": {
-          "$id": "#/properties/identityProvider/properties/protocolBinding",
           "type": "string"
         },
         "attributeMappings": {
-          "$id": "#/properties/identityProvider/properties/attributeMappings",
           "type": "object",
           "required": [
             "user_id",
@@ -110,29 +90,26 @@
           ],
           "properties": {
             "user_id": {
-              "$id": "#/properties/identityProvider/properties/attributeMappings/properties/user_id",
               "type": "string"
             },
             "email": {
-              "$id": "#/properties/identityProvider/properties/attributeMappings/properties/email",
               "type": "string"
             },
             "name": {
-              "$id": "#/properties/identityProvider/properties/attributeMappings/properties/name",
               "type": "string"
             },
             "given_name": {
-              "$id": "#/properties/identityProvider/properties/attributeMappings/properties/given_name",
               "type": "string"
             },
             "family_name": {
-              "$id": "#/properties/identityProvider/properties/attributeMappings/properties/family_name",
               "type": "string"
             }
           }
         },
         "createdBy": {
-          "$id": "#/properties/identityProvider/properties/createdBy",
+          "type": "string"
+        },
+        "authenticationType": {
           "type": "string"
         }
       }

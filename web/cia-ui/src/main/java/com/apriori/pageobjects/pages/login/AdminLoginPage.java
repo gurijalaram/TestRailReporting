@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -19,14 +19,14 @@ public class AdminLoginPage extends AdminHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    private LoginService aprioriLoginService;
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "admin");
+        this.aprioriLoginService = new LoginService(driver, "admin");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -39,7 +39,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIA login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.admin.welcome_page_text")));
+        assertThat("CIA login page was not displayed", aprioriLoginService.getLoginTitle().contains(PropertiesContext.get("${env}.admin.welcome_page_text")));
     }
 
     /**
@@ -48,6 +48,6 @@ public class AdminLoginPage extends AdminHeader {
      * @return new page object
      */
     public AdminHomePage login() {
-        return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
+        return aprioriLoginService.login(userCredentials, AdminHomePage.class);
     }
 }

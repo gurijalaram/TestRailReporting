@@ -118,6 +118,18 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     }
 
     /**
+     * Gets material details - result is returned as a String with special characters parsed
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getMaterialResultText(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        pageUtils.waitForElementToAppear(result);
+        return driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Opens scenario from preview page
      *
      * @return new page object

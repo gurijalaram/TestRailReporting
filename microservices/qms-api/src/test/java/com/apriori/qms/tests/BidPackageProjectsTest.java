@@ -24,7 +24,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Link;
+import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -371,7 +371,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24270", "24295", "24427"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1836")
+    @Issue("COL-1836")
     @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
     public void updateProjectStatuses() {
         //C24270
@@ -560,7 +560,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24281"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
+    @Issue("COL-1834")
     @Description("Verify dueAt can be updated to null or empty")
     public void updateEmptyProjectDueAt() {
         //Project DueAt is Empty
@@ -584,7 +584,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24347"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1834")
+    @Issue("COL-1834")
     @Description("Verify description can be updated to null/empty")
     public void updateEmptyProjectDescription() {
         //Project Description Name is empty
