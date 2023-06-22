@@ -80,4 +80,14 @@ public class PropertiesContextTest {
         PropertiesContext.get("NOT.EXISTING.PROPERTY");
     }
 
+    @Test
+    public void testToValidatePropertyReferences() {
+        final String referenceToValidateValue = PropertiesContext.get("${customer}.${${customer}.aws_account_type}.token_subject");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(referenceToValidateValue).isNotEmpty();
+        softAssertions.assertAll();
+
+        log.info("Property value: {}", referenceToValidateValue);
+    }
 }
