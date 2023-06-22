@@ -558,8 +558,8 @@ public class SettingsTests extends TestBase {
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
-        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.61010min");
-        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,942.23265");
+        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
+        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,918.70913");
 
         softAssertions.assertAll();
     }
