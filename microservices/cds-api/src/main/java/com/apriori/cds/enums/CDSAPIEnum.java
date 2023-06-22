@@ -65,6 +65,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     DELETE_USER_WRONG_ID("customers/%s/users/L2H992829CFB"),
     USER_BY_CUSTOMER_USER_IDS("customers/%s/users/%s"),
     USERS_LICENSES("customers/%s/users/%s/licensing"),
+    REQUIRED_USER_PROPERTIES("customers/%s/users/%s/required-properties"),
 
     //DEPLOYMENTS
     DEPLOYMENTS_BY_CUSTOMER_ID("customers/%s/deployments"),
