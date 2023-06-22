@@ -485,18 +485,17 @@ public class QmsBidPackageResources {
      * @param userIdList          the user id list
      * @param bidPackageIdentity  the bid package identity
      * @param projectIdentity     the project identity
-     * @param projectUserIdentity the project user identity
-     * @param currentUser         the current user
+      * @param currentUser         the current user
      * @return the bid package project users delete response
      */
-    public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
+    public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
         BidPackageProjectUserRequest deleteRequest = BidPackageProjectUserRequest.builder()
             .projectUsers(userIdList)
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
+            .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(deleteRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);

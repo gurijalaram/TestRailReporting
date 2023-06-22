@@ -60,7 +60,6 @@ public class BidPackageProjectUserTest extends TestUtil {
                         .getIdentity()).build()),
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageDefaultProjectUserResponse.get(0).getIdentity(),
             defaultUser);
 
         softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
@@ -84,7 +83,6 @@ public class BidPackageProjectUserTest extends TestUtil {
                         .getIdentity()).build()),
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageAdminProjectUserResponse.get(0).getIdentity(),
             adminUser);
 
         softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
@@ -149,11 +147,9 @@ public class BidPackageProjectUserTest extends TestUtil {
     public void testCleanup() {
         BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(
                 BidPackageProjectUserParameters.builder()
-                    .identity(bidPackageProjectUserResponse.get(0)
-                        .getIdentity()).build()),
+                    .identity(bidPackageProjectUserResponse.get(0).getIdentity()).build()),
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
-            bidPackageProjectUserResponse.get(0).getIdentity(),
             currentUser);
 
         softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
