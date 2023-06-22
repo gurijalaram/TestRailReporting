@@ -93,6 +93,9 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     @FindBy(xpath = "//p[@data-testid='input-field-helper-text']")
     private WebElement projectNameFieldValidation;
 
+    @FindBy(xpath = "//ul[@role='listbox']")
+    private WebElement memberList;
+
     private PageUtils pageUtils;
 
     public CreateNewProjectsPage(WebDriver driver) {
@@ -171,6 +174,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      */
     public CreateNewProjectsPage selectAUser(String teamMember) {
         getPageUtils().waitForElementAndClick(inviteTeammatesField);
+        getPageUtils().waitForElementToAppear(memberList);
         getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
         return this;
@@ -395,6 +399,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
         getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
         getPageUtils().waitForElementAndClick(inviteTeammatesField);
+        getPageUtils().waitForElementToAppear(memberList);
         getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
         getPageUtils().scrollWithJavaScript(dueDateField,true);
