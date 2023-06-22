@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +21,12 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    private LoginService aprioriLoginService;
 
     public CidAppLoginPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "cidapp");
+        this.aprioriLoginService = new LoginService(driver, "cidapp");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -38,7 +38,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CID login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Design"));
+        assertTrue("CID login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Design"));
     }
 
     /**
@@ -48,7 +48,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @return new page object
      */
     public ExplorePage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, ExplorePage.class);
+        return aprioriLoginService.login(userCredentials, ExplorePage.class);
     }
 }
 

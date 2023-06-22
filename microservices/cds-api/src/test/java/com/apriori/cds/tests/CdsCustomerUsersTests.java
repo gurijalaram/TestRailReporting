@@ -3,6 +3,7 @@ package com.apriori.cds.tests;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.UserProperties;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -146,6 +147,22 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<CredentialsItems> updatedCredentials = cdsTestUtil.updateUserCredentials(customerIdentity, userIdentity, currentHashPassword, currentPasswordSalt);
 
         soft.assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0)).isEqualTo(currentHashPassword);
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24489"})
+    @Description("GET Required User Properties")
+    public void getUserProperties() {
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);
+        userIdentity = user.getResponseEntity().getIdentity();
+        cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, "AP_DESIGNER");
+
+        ResponseWrapper<UserProperties> requiredUserProperties = cdsTestUtil.getCommonRequest(CDSAPIEnum.REQUIRED_USER_PROPERTIES, UserProperties.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
+
+        soft.assertThat(requiredUserProperties.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(requiredUserProperties.getResponseEntity().getItems().get(0).getName()).isNotEmpty();
+        soft.assertThat(requiredUserProperties.getResponseEntity().getItems().get(0).getSource()).isNotEmpty();
         soft.assertAll();
     }
 }
