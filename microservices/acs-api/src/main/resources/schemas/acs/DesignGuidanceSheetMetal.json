@@ -14,6 +14,28 @@
                 "@type": {
                   "type": "string"
                 },
+                "suggested": {
+                  "type": "string"
+                },
+                "suggested": {
+                  "type": "object",
+                  "properties": {
+                    "minInclusive": {
+                      "type": "boolean"
+                    },
+                    "maxValue": {
+                      "type": "string"
+                    },
+                    "maxInclusive": {
+                      "type": "boolean"
+                    }
+                    },
+                    "required": [
+                      "minInclusive",
+                      "maxValue",
+                      "maxInclusive"
+                    ]
+                },
                 "suggestedMin": {
                   "type": "string"
                 },

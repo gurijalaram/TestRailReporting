@@ -21,6 +21,6 @@ public class DesignGuidanceTests {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
 
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "DTCCastingIssues.catpart", workorderAPITests.setupProductionInfoInputs());
-        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES","FAILED_GCDS");
+        DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
     }
 }

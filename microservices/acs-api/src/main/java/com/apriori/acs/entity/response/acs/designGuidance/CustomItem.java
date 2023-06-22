@@ -7,4 +7,5 @@ public class CustomItem {
     private String tableType;
     private String panelOutput;
     private String utilizationProcessName;
+    private ProcessItem processName;
 }
