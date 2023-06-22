@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -833,6 +834,10 @@ public class UploadAssembliesTests extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .build()));
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);

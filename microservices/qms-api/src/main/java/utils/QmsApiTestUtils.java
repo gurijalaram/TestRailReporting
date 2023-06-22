@@ -165,11 +165,14 @@ public class QmsApiTestUtils {
      * @return the bid package item response
      */
     public static BidPackageItemResponse createTestDataBidPackageItem(ScenarioItem scenarioItem, BidPackageResponse bidPackageResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
-        BidPackageItemResponse bidPackageItemResponse = null;
-        if (bidPackageResponse != null && scenarioItem != null) {
-            bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()), bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+        if (bidPackageResponse == null || scenarioItem == null) {
+            softAssertions.fail("Bid Package Item can not be created. Parameter is null .");
+            return null;
         }
+
+        BidPackageItemResponse bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()), bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+
         if (bidPackageItemResponse == null) {
             softAssertions.fail("Bid Package Item Creation FAILED.");
         }
@@ -185,13 +188,16 @@ public class QmsApiTestUtils {
      * @return the bid package project response
      */
     public static BidPackageProjectResponse createTestDataBidPackageProject(BidPackageResponse bidPackageResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
-        BidPackageProjectResponse bidPackageProjectResponse = null;
-        if (bidPackageResponse != null) {
-            bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class,
-                HttpStatus.SC_CREATED, currentUser);
-            if (bidPackageProjectResponse == null) {
-                softAssertions.fail("Bid Package Project Creation FAILED.");
-            }
+        if (bidPackageResponse == null) {
+            softAssertions.fail("Bid Package Project can not be created. Parameter is null .");
+            return null;
+        }
+
+        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED, currentUser);
+
+        if (bidPackageProjectResponse == null) {
+            softAssertions.fail("Bid Package Project Creation FAILED.");
         }
         return bidPackageProjectResponse;
     }
@@ -205,13 +211,16 @@ public class QmsApiTestUtils {
      * @return the scenario discussion response
      */
     public static ScenarioDiscussionResponse createTestDataScenarioDiscussion(ScenarioItem scenarioItem, UserCredentials currentUser, SoftAssertions softAssertions) {
-        ScenarioDiscussionResponse scenarioDiscussionResponse = null;
-        if (scenarioItem != null) {
-            scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
-            if (scenarioDiscussionResponse == null) {
-                softAssertions.fail("Scenario Discussion Creation FAILED.");
-            }
+        if (scenarioItem == null) {
+            softAssertions.fail("Scenario discussion can not be created. Parameter is null .");
+            return null;
         }
+
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        if (scenarioDiscussionResponse == null) {
+            softAssertions.fail("Scenario Discussion Creation FAILED.");
+        }
+
         return scenarioDiscussionResponse;
     }
 
@@ -224,13 +233,16 @@ public class QmsApiTestUtils {
      * @return the discussion comment response
      */
     public static DiscussionCommentResponse createTestDataAddCommentToDiscussion(ScenarioDiscussionResponse scenarioDiscussionResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
-        DiscussionCommentResponse discussionCommentResponse = null;
-        if (scenarioDiscussionResponse != null) {
-            discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser);
-            if (discussionCommentResponse == null) {
-                softAssertions.fail("Add Comment to Discussion FAILED.");
-            }
+        if (scenarioDiscussionResponse == null) {
+            softAssertions.fail("Comment can not be added to the discussion. Parameter is null .");
+            return null;
         }
+
+        DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser);
+        if (discussionCommentResponse == null) {
+            softAssertions.fail("Add Comment to Discussion FAILED.");
+        }
+
         return discussionCommentResponse;
     }
 

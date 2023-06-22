@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnalysisOfScenario {
     private String identity;
+    private String analysisType;
     private Double additionalAmortizedInvestment;
     private Double additionalDirectCosts;
     private Double amortizedInvestment;
