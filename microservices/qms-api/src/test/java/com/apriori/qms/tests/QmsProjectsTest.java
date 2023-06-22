@@ -24,7 +24,6 @@ import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
@@ -35,26 +34,18 @@ import java.util.List;
 
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
-    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
     private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
-
-    @AfterClass
-    public static void afterClass() {
-        for (ScenarioItem removeScenario : scenarioItemRemoveList) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(removeScenario, currentUser);
-        }
-    }
 
     @Before
     public void beforeTest() {
         softAssertions = new SoftAssertions();
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        scenarioItemRemoveList.add(scenarioItem);
     }
 
     @After
     public void afterTest() {
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         softAssertions.assertAll();
     }
 
