@@ -140,10 +140,7 @@
             }
           ]
         }
-      },
-      "required": [
-        "DTC_MESSAGES"
-      ]
+      }
     },
     "costingFailed": {
       "type": "boolean"

@@ -4,11 +4,9 @@ import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Schema(location = "acs/DesignGuidanceSheetMetal.json")
 public class DesignGuidanceResponse {
-    private List<InfosByTopics> infosByTopics;
+    private InfosByTopics infosByTopics;
     private Boolean costingFailed;
 }
