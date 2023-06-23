@@ -219,7 +219,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"22256"})
     @Description("Verify that User will not get 409 error on valid actions after getting this error on invalid action")
     public void verifyScenarioDiscussionNo409ErrorWith2Users() {
-        UserCredentials assignedUser = UserUtil.getUser();
+        UserCredentials assignedUser = QmsApiTestUtils.getNextUser(currentUser);
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
             .getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
@@ -281,7 +281,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"15448"})
     @Description("Verify that user can Assign / Un-assign scenario discussion")
     public void assignUnAssignDiscussion() {
-        UserCredentials assigneeUser = UserUtil.getUser();
+        UserCredentials assigneeUser = QmsApiTestUtils.getNextUser(currentUser);
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
             .getScenarioDiscussionRequest(currentUser, scenarioItem, description);
@@ -446,7 +446,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"14686"})
     @Description("Verify that mentioned User in the comment will be added as participant")
     public void verifyCommentMentionedUserAsParticipant() {
-        UserCredentials mentionedUser = UserUtil.getUser();
+        UserCredentials mentionedUser = QmsApiTestUtils.getNextUser(currentUser);
         String commentContent = new GenerateStringUtil().generateNotes();
         DiscussionCommentRequest discussionCommentRequest = DiscussionCommentRequest.builder()
             .comment(DiscussionCommentParameters.builder()
@@ -483,7 +483,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"16564"})
     @Description("Verify that comment-view will be created for participant who read the comment")
     public void verifyCommentViewCreatedForParticipant() {
-        UserCredentials assigneeUser = UserUtil.getUser();
+        UserCredentials assigneeUser = QmsApiTestUtils.getNextUser(currentUser);
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .assigneeEmail(assigneeUser.getEmail()).build()).build();

@@ -415,7 +415,7 @@ public class BidPackageProjectsTest extends TestUtil {
         }
 
         //Update project with non-admin project user
-        UserCredentials nonAdminProjectUser = UserUtil.getUser();
+        UserCredentials nonAdminProjectUser = QmsApiTestUtils.getNextUser(currentUser);
         String projectDescriptionNew = new GenerateStringUtil().getRandomString();
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
@@ -621,7 +621,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Description("Verify updated owner/admin users can update the project attributes")
     public void updateProjectWithNewOwner() {
         //Update the project to new owner
-        UserCredentials newOwner = UserUtil.getUser();
+        UserCredentials newOwner = QmsApiTestUtils.getNextUser(currentUser);
         String newOwnerUserContext = new AuthUserContextUtil().getAuthUserIdentity(newOwner.getEmail());
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()

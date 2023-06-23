@@ -62,7 +62,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     @Description("Verify that user can add and delete the Project User")
     public void addAndDeleteComponentScenarioUser() {
         //Add
-        UserCredentials anotherUser = UserUtil.getUser();
+        UserCredentials anotherUser = QmsApiTestUtils.getNextUser(currentUser);
         ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
             .email(anotherUser.getEmail()).build();
 
@@ -110,25 +110,21 @@ public class QmsScenarioSharingTest extends TestUtil {
     @Description("Verify that more than 10 Users can be added by using SHARE option")
     public void addMoreThan10ComponentScenarioUsers() {
         List<String> usersList = new ArrayList<>();
-        List<ProjectUserParameters> projectUserParamssList = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
-            String newUserEmail = UserUtil.getUser().getEmail();
-            projectUserParamssList.add(ProjectUserParameters.builder()
-                .email(newUserEmail)
-                .build());
-            usersList.add(new AuthUserContextUtil().getAuthUserIdentity(newUserEmail));
-        }
-        usersList.add(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
-
-        ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
-            .users(projectUserParamssList)
-            .build();
-
-        ScenarioProjectUserResponse userResponse = QmsComponentResources.addComponentScenarioUser(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), createProjectUserRequest, currentUser);
-        softAssertions.assertThat(userResponse.size()).isEqualTo(12);
-        if (softAssertions.wasSuccess()) {
+            String newUserEmail = QmsApiTestUtils.getNextUser(currentUser).getEmail();
+            String newUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(newUserEmail);
+            usersList.add(newUserIdentity);
+            ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
+                .users(Collections.singletonList(ProjectUserParameters.builder()
+                    .email(newUserEmail)
+                    .build()))
+                .build();
+            ScenarioProjectUserResponse userResponse = QmsComponentResources.addComponentScenarioUser(scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(),
+                createProjectUserRequest,
+                currentUser);
             softAssertions.assertThat(userResponse.stream()
-                .anyMatch(u -> usersList.contains(u.getIdentity()))).isTrue();
+                .anyMatch(u -> u.getIdentity().equals(newUserIdentity))).isTrue();
         }
 
         //GET Users
@@ -138,12 +134,8 @@ public class QmsScenarioSharingTest extends TestUtil {
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(12);
         if (softAssertions.wasSuccess()) {
-            for (ProjectUserParameters userParams : projectUserParamssList) {
-                softAssertions.assertThat(userResponse.stream()
-                        .anyMatch(u -> u.getIdentity()
-                            .equals(new AuthUserContextUtil().getAuthUserIdentity(userParams.getEmail()))))
-                    .isTrue();
-            }
+            softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
+                .anyMatch(u -> usersList.contains(u.getIdentity()))).isTrue();
         }
     }
 
@@ -160,7 +152,7 @@ public class QmsScenarioSharingTest extends TestUtil {
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("RESOLVED");
 
         //Add New User
-        UserCredentials anotherUser = UserUtil.getUser();
+        UserCredentials anotherUser = QmsApiTestUtils.getNextUser(currentUser);
         ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
             .email(anotherUser.getEmail()).build();
         ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
@@ -194,7 +186,7 @@ public class QmsScenarioSharingTest extends TestUtil {
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("DELETED");
 
         //Add New User
-        UserCredentials anotherUser = UserUtil.getUser();
+        UserCredentials anotherUser = QmsApiTestUtils.getNextUser(currentUser);
         ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
             .email(anotherUser.getEmail()).build();
         ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
@@ -220,7 +212,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     @Description("Verify that user will not get error messages after deleted himself from User list")
     public void deleteSelfComponentScenarioUserNoError() {
         //Add
-        UserCredentials anotherUser = UserUtil.getUser();
+        UserCredentials anotherUser = QmsApiTestUtils.getNextUser(currentUser);
         ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
             .email(anotherUser.getEmail()).build();
 

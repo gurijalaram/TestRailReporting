@@ -30,6 +30,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
@@ -365,6 +366,20 @@ public class QmsApiTestUtils {
                         i.getStatus().equals(projectStatus2))).isTrue();
             }
         }
+    }
+
+    /**
+     * Gets next user.
+     *
+     * @param currentUser the current user
+     * @return the next user
+     */
+    public static UserCredentials getNextUser(UserCredentials currentUser) {
+        UserCredentials nextUser = UserUtil.getUser();
+        if (nextUser.getEmail().equals(currentUser.getEmail())) {
+            nextUser = UserUtil.getUser();
+        }
+        return nextUser;
     }
 }
 

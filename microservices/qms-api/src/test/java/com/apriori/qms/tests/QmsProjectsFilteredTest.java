@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
+public class QmsProjectsFilteredTest extends TestUtil {
     private static String displayName;
     private static String status;
     private static String owner;
@@ -67,14 +67,14 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
             .build());
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        UserCredentials newUserFirst = UserUtil.getUser();
+        UserCredentials newUserFirst = QmsApiTestUtils.getNextUser(currentUser);
         newUserIdentityFirst = new AuthUserContextUtil().getAuthUserIdentity(newUserFirst.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(newUserIdentityFirst)
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        UserCredentials newUserSecond = UserUtil.getUser();
+        UserCredentials newUserSecond = QmsApiTestUtils.getNextUser(currentUser);
         newUserIdentitySecond = new AuthUserContextUtil().getAuthUserIdentity(newUserSecond.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(newUserIdentitySecond)
@@ -86,7 +86,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
         owner = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         dueAtLT = DateUtil.getDateDaysAfter(12, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         dueAtGT = DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
-        newOwner = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
+        newOwner = new AuthUserContextUtil().getAuthUserIdentity(QmsApiTestUtils.getNextUser(currentUser).getEmail());
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", status);
         projectAttributesMap.put("projectDisplayName", displayName);
@@ -319,8 +319,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
     @TestRail(testCaseId = {"24112"})
     @Description("Search by Display Name[CN] + Members[NI]")
     public void getFilteredProjectsByDisplayNameCNMembersNI() {
-        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser()
-            .getEmail());
+        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(QmsApiTestUtils.getNextUser(currentUser).getEmail());
         String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectNonMemberUserIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
@@ -564,7 +563,7 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getUsers().stream()
-                    .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityFirst)))).isTrue();
+                    .anyMatch(u -> u.getIdentity().equals(newUserIdentityFirst)))).isTrue();
         }
 
         params[1] = "members[IN]," + newUserIdentityFirst + "|" + newUserIdentitySecond;
@@ -574,10 +573,10 @@ public class QmsProjectsFilteredMultipleFieldsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getUsers().stream()
-                    .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityFirst)))).isTrue();
+                    .anyMatch(u -> u.getIdentity().equals(newUserIdentityFirst)))).isTrue();
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getUsers().stream()
-                    .anyMatch(u -> u.getUserIdentity().equals(newUserIdentitySecond)))).isTrue();
+                    .anyMatch(u -> u.getIdentity().equals(newUserIdentitySecond)))).isTrue();
         }
     }
 

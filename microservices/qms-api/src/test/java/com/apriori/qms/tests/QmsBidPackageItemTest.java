@@ -21,6 +21,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.QmsApiTestUtils;
 
 
 public class QmsBidPackageItemTest extends TestUtil {
@@ -108,7 +109,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13902"})
     @Description("update Bid Package Item another user under same customer")
     public void updateBidPackageItemByOtherUser() {
-        UserCredentials otherUser = UserUtil.getUser();
+        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
         BidPackageItemRequest bidPackageItemRequestBuilder = BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .iterationIdentity(scenarioItem.getIterationIdentity())
@@ -149,7 +150,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13905"})
     @Description("Delete Bid Package Item By Other user under same customer")
     public void deleteBidPackageItemByOtherUser() {
-        UserCredentials otherUser = UserUtil.getUser();
+        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
         QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(), otherUser);
     }
@@ -172,7 +173,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13904"})
     @Description("Get Bid Package Item By Other user under same customer")
     public void getBidPackageItemByOtherUser() {
-        UserCredentials otherUser = UserUtil.getUser();
+        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
         BidPackageItemResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItem(
             bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
@@ -213,7 +214,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13903"})
     @Description("Find list of  Bid Package Items by other user under same customer")
     public void getBidPackageItemsByOther() {
-        UserCredentials otherUser = UserUtil.getUser();
+        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
         BidPackageItemsResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItems(
             bidPackageResponse.getIdentity(),
             otherUser,
