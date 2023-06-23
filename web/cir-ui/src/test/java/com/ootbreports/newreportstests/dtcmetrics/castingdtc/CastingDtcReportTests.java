@@ -37,6 +37,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Category(JasperApiTest.class)
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
