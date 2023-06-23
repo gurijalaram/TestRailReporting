@@ -58,9 +58,9 @@ public class CmpSaveComparisonTests {
             .objects(compObjs)
             .build();
 
-        ResponseWrapper<PostComparisonResponse> savedComparison = comparisonUtils.createComparison(comparison, currentUser);
+        PostComparisonResponse savedComparison = comparisonUtils.createComparison(comparison, currentUser);
 
-        softAssertions.assertThat(savedComparison.getStatusCode()).as("Ensure a 201 response received").isEqualTo(201);
+        softAssertions.assertThat(savedComparison.getComparisonName()).as("Ensure same comparison name reurned").isEqualTo(comparisonName);
         softAssertions.assertAll();
 
     }
