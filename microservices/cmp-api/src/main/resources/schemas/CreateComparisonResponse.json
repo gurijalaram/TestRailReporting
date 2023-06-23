@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+          "identity": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "customerIdentity": {
+            "type": "string"
+          },
+          "comparisonName": {
+            "type": "string"
+          },
+          "comparisonType": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "string"
+          },
+          "comparisonObjects": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }

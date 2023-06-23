@@ -148,7 +148,7 @@ default:
     api_url: https://gcd.${deployment_url_template}
 
   cmp:
-    api-url: https://cmp.${deployment_url_template}
+    api_url: https://cmp.${deployment_url_template}
 
   reports:
     ui_url: https://${deployment_url_template}jasperserver-pro/
