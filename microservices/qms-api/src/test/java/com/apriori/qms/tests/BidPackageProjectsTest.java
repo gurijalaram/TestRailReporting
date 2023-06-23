@@ -370,11 +370,9 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24270", "24295", "24427"})
-    @Issue("COL-1836")
-    @Description("Verify project status can be updated to only following status 'IN_NEGOTIATION' ,'COMPLETED'  & 'PURCHASED'")
+    @TestRail(testCaseId = {"24270"})
+    @Description("Verify project status can be updated to only following status IN_NEGOTIATION ,COMPLETED  & PURCHASED")
     public void updateProjectStatuses() {
-        //C24270
         //Project Status is "COMPLETED"
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
@@ -401,36 +399,6 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("PURCHASED");
-
-        //C24427
-        //Project Status is "OPEN"
-        projectRequest = BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .status("OPEN").build())
-            .build();
-        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("OPEN");
-
-        //Project Status is "IN_PROGRESS"
-        projectRequest = BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .status("IN_PROGRESS").build())
-            .build();
-        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("IN_PROGRESS");
-
-        //C24295
-        //Project Status is "ACTIVE"
-        projectRequest = BidPackageProjectRequest.builder()
-            .project(BidPackageProjectParameters.builder()
-                .status("ACTIVE").build())
-            .build();
-        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
     }
 
     @Test
@@ -796,6 +764,71 @@ public class BidPackageProjectsTest extends TestUtil {
         //Delete Scenarios
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForFirstBidPackageItem, currentUser);
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForSecondBidPackageItem, currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24295"})
+    @Issue("COL-1836")
+    @Description("Verify project status can not be updated to any other status other than following status IN_NEGOTIATION ,COMPLETED & PURCHASED")
+    public void updateProjectStatusToActive() {
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("ACTIVE").build())
+            .build();
+        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
+            .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24427"})
+    @Description("For Bidpackage/project? endpoint  || Verify for project status can be updated to OPEN or IN_PROGRESS")
+    public void updateProjectStatusToOpenAndInProgress() {
+        //OPEN
+        BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("OPEN").build())
+            .build();
+        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("OPEN");
+
+        //IN_PROGRESS
+        projectRequest = BidPackageProjectRequest.builder()
+            .project(BidPackageProjectParameters.builder()
+                .status("IN_PROGRESS").build())
+            .build();
+        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo("IN_PROGRESS");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24481"})
+    @Description("Verify new project can be created with OPEN or IN_PROGRESS Status")
+    public void createProjectWithStatusOpenAndInProgress() {
+        //OPEN
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectStatus", "OPEN");
+        BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(),
+            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("OPEN");
+        }
+        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+
+        //IN_PROGRESS
+        prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectStatus", "IN_PROGRESS");
+        bppResponse = QmsBidPackageResources.createBidPackageProject(prjAttributesMap, bidPackageResponse.getIdentity(),
+            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
+        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("IN_PROGRESS");
+        }
+        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @After
