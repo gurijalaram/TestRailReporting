@@ -503,7 +503,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
         while (!getSortOrder(column).equals(order.getOrder())) {
-            pageUtils.clickOnOffScreenElement(driver.findElement(By.xpath(String.format("//div[.='%s']//span", column.getColumns()))));
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[.='%s']//span", column.getColumns())));
         }
         return this;
     }

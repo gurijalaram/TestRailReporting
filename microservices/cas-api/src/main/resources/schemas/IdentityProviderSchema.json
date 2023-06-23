@@ -90,7 +90,11 @@
         "idpDomains": {
           "type": "array",
           "items": {
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
           }
         },
         "signInUrl": {
@@ -115,7 +119,7 @@
             "email"
           ],
           "properties": {
-            "givenName": {
+            "givenNama": {
               "type": "string"
             },
             "familyName": {
@@ -135,13 +139,13 @@
         "createdByName": {
           "type": "string"
         },
+        "protocolBinding": {
+          "type": "string"
+        },
         "signRequestAlgorithm": {
           "type": "string"
         },
         "signRequestAlgorithmDigest": {
-          "type": "string"
-        },
-        "protocolBinding": {
           "type": "string"
         }
       }

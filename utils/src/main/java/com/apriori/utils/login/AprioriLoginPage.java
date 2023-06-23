@@ -213,6 +213,17 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     }
 
     /**
+     * Gets both username and password
+     *
+     * @return current page object
+     */
+    private AprioriLoginPage getUsernameAndPassword() {
+        getEmailInputCloud();
+        getPasswordCloud();
+        return this;
+    }
+
+    /**
      * Selects forgotten password
      *
      * @return new page object
