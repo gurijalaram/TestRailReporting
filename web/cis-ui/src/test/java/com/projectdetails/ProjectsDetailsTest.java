@@ -18,6 +18,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
+import com.utils.CisProjectStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
@@ -246,6 +247,62 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsDetailsPage.clickHideAll();
         softAssertions.assertThat(projectsDetailsPage.getUserTableHeaders()).doesNotContain("Full Name","Job title");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"25826","25827"})
+    @Description("Verify the user can change the project status")
+    public void testProjectStatus() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser().setEmail("qa-automation-38@apriori.com");
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
+                .clickOnUnread()
+                .clickOnCreatedProject()
+                .clickDetailsPageTab("Details");
+
+        softAssertions.assertThat(projectsDetailsPage.isProjectStatusDroDownDisplayed()).isEqualTo(true);
+
+        projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.IN_PROGRESS.getStatus())
+                .navigateToAllProjects()
+                .navigateAndSearchProject("Automation Project " + dateTime);
+
+        softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.IN_PROGRESS.getStatus());
+
+        projectsDetailsPage = projectsPage.clickOnCreatedProject()
+                .clickDetailsPageTab("Details");
+
+        projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.COMPLETED.getStatus())
+                .navigateToAllProjects()
+                .navigateAndSearchProject("Automation Project " + dateTime);
+
+        softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.COMPLETED.getStatus());
+
+        projectsDetailsPage = projectsPage.clickOnCreatedProject()
+                .clickDetailsPageTab("Details");
+
+        projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.OPEN.getStatus())
+                .navigateToAllProjects()
+                .navigateAndSearchProject("Automation Project " + dateTime);
+
+        softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.OPEN.getStatus());
+
+        projectsPage.clickOnRead();
 
         softAssertions.assertAll();
     }

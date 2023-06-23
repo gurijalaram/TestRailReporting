@@ -98,6 +98,9 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(xpath = "//h4[@data-testid='user-full-name']//..//div")
     private WebElement ownerLabel;
 
+    @FindBy(id = "project-status")
+    private WebElement projectStatusDropDown;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -433,4 +436,34 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
         return getPageUtils().isElementDisplayed(ownerLabel);
     }
 
+    /**
+     * Checks if project status dropdown displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectStatusDroDownDisplayed() {
+        return getPageUtils().isElementDisplayed(projectStatusDropDown);
+    }
+
+    /**
+     * Change project status
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage changeProjectStatus(String projectStatus) {
+        getPageUtils().waitForElementAndClick(projectStatusDropDown);
+        getPageUtils().waitForElementToAppear(By.xpath("//span[text()='" + projectStatus + "']")).click();
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
+    }
+
+    /**
+     * Navigate to project page
+     *
+     * @return new page object
+     */
+    public ProjectsPage navigateToAllProjects() {
+        getPageUtils().waitForElementAndClick(btnAllProjects);
+        return new ProjectsPage(driver);
+    }
 }
