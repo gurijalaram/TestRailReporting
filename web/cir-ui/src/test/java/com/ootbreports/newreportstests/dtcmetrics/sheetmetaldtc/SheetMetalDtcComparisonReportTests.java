@@ -35,7 +35,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, JasperApiTest.class})
     @TestRail(testCaseId = {"7419"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
