@@ -90,7 +90,7 @@ public class ProjectsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"22688","22708","24002","17216","17218"})
+    @TestRail(testCaseId = {"22688","22708","24002","17216","17218","25957"})
     @Description("Verify user can save a new project")
     public void testSaveNewProject() {
 
