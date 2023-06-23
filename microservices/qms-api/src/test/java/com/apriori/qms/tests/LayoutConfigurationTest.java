@@ -25,7 +25,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LayoutConfigurationTest extends TestUtil {
-
     private static SoftAssertions softAssertions;
     private static LayoutResponse layoutResponse;
     private static LayoutConfigurationResponse layoutConfigurationResponse;

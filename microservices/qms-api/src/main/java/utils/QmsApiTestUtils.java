@@ -9,14 +9,20 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -25,6 +31,7 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 
@@ -131,6 +138,128 @@ public class QmsApiTestUtils {
      */
     public static void deleteScenarioViaCidApp(ScenarioItem scenarioItem, UserCredentials currentUser) {
         new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+    }
+
+    /**
+     * Create test data bid package response.
+     *
+     * @param currentUser    the current user
+     * @param softAssertions the soft assertions
+     * @return the bid package response
+     */
+    public static BidPackageResponse createTestDataBidPackage(UserCredentials currentUser, SoftAssertions softAssertions) {
+        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomNumbers(), currentUser);
+        if (bidPackageResponse == null) {
+            softAssertions.fail("Bid Package Creation FAILED.");
+        }
+        return bidPackageResponse;
+    }
+
+    /**
+     * Create test data bid package item response.
+     *
+     * @param scenarioItem       the scenario item
+     * @param bidPackageResponse the bid package response
+     * @param currentUser        the current user
+     * @param softAssertions     the soft assertions
+     * @return the bid package item response
+     */
+    public static BidPackageItemResponse createTestDataBidPackageItem(ScenarioItem scenarioItem, BidPackageResponse bidPackageResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
+        if (bidPackageResponse == null || scenarioItem == null) {
+            softAssertions.fail("Bid Package Item can not be created. Parameter is null .");
+            return null;
+        }
+
+        BidPackageItemResponse bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()), bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+
+        if (bidPackageItemResponse == null) {
+            softAssertions.fail("Bid Package Item Creation FAILED.");
+        }
+        return bidPackageItemResponse;
+    }
+
+    /**
+     * Create test data bid package project response.
+     *
+     * @param bidPackageResponse the bid package response
+     * @param currentUser        the current user
+     * @param softAssertions     the soft assertions
+     * @return the bid package project response
+     */
+    public static BidPackageProjectResponse createTestDataBidPackageProject(BidPackageResponse bidPackageResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
+        if (bidPackageResponse == null) {
+            softAssertions.fail("Bid Package Project can not be created. Parameter is null .");
+            return null;
+        }
+
+        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED, currentUser);
+
+        if (bidPackageProjectResponse == null) {
+            softAssertions.fail("Bid Package Project Creation FAILED.");
+        }
+        return bidPackageProjectResponse;
+    }
+
+    /**
+     * Create test data scenario discussion response.
+     *
+     * @param scenarioItem   the scenario item
+     * @param currentUser    the current user
+     * @param softAssertions the soft assertions
+     * @return the scenario discussion response
+     */
+    public static ScenarioDiscussionResponse createTestDataScenarioDiscussion(ScenarioItem scenarioItem, UserCredentials currentUser, SoftAssertions softAssertions) {
+        if (scenarioItem == null) {
+            softAssertions.fail("Scenario discussion can not be created. Parameter is null .");
+            return null;
+        }
+
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        if (scenarioDiscussionResponse == null) {
+            softAssertions.fail("Scenario Discussion Creation FAILED.");
+        }
+
+        return scenarioDiscussionResponse;
+    }
+
+    /**
+     * Create test data add comment to discussion response.
+     *
+     * @param scenarioDiscussionResponse the scenario discussion response
+     * @param currentUser                the current user
+     * @param softAssertions             the soft assertions
+     * @return the discussion comment response
+     */
+    public static DiscussionCommentResponse createTestDataAddCommentToDiscussion(ScenarioDiscussionResponse scenarioDiscussionResponse, UserCredentials currentUser, SoftAssertions softAssertions) {
+        if (scenarioDiscussionResponse == null) {
+            softAssertions.fail("Comment can not be added to the discussion. Parameter is null .");
+            return null;
+        }
+
+        DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser);
+        if (discussionCommentResponse == null) {
+            softAssertions.fail("Add Comment to Discussion FAILED.");
+        }
+
+        return discussionCommentResponse;
+    }
+
+    /**
+     * Delete test data.
+     *
+     * @param scenarioItem       the scenario item
+     * @param bidPackageResponse the bid package response
+     * @param currentUser        the current user
+     */
+    public static void deleteTestData(ScenarioItem scenarioItem, BidPackageResponse bidPackageResponse, UserCredentials currentUser) {
+        if (bidPackageResponse != null) {
+            QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        }
+        if (scenarioItem != null) {
+            QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+        }
     }
 
     /**

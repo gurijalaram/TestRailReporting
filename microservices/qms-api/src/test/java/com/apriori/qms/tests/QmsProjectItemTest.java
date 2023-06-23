@@ -1,26 +1,61 @@
 package com.apriori.qms.tests;
 
+import com.apriori.apibase.utils.TestUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.QmsApiTestDataUtils;
+import utils.QmsApiTestUtils;
 
-public class QmsProjectItemTest extends QmsApiTestDataUtils {
+public class QmsProjectItemTest extends TestUtil {
+    private static SoftAssertions softAssertions = new SoftAssertions();
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageItemResponse bidPackageItemResponse;
+    private static BidPackageProjectResponse bidPackageProjectResponse;
+    private static ScenarioItem scenarioItem;
+    private static final UserCredentials currentUser = UserUtil.getUser();
+
     @BeforeClass
     public static void beforeClass() {
-        createTestData();
+        scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
+        bidPackageItemResponse = QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
+        bidPackageProjectResponse = QmsApiTestUtils.createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsApiTestUtils.createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
+        QmsApiTestUtils.createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
     @AfterClass
     public static void afterClass() {
-        deleteTestDataAndClearEntities();
+        QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
+        softAssertions.assertAll();
+    }
+
+    @Before
+    public void beforeTest() {
+        softAssertions = new SoftAssertions();
+    }
+
+    @After
+    public void afterTest() {
+        softAssertions.assertAll();
     }
 
     @Test

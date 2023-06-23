@@ -90,6 +90,16 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     }
 
     /**
+     * Gets the cost contribution value as a String
+     *
+     * @param label - cost contribution
+     * @return String
+     */
+    public String getCostContributionValueText(String label) {
+        return getCostContribution(label).replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Get the cost contribution as displayed
      *
      * @param label - the label

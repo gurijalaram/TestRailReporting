@@ -199,6 +199,17 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
+     * Gets total result as a string
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getTotalResultText(String label) {
+        By costResult = getBy(label);
+        return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Selects the process tab
      *
      * @return current page object
