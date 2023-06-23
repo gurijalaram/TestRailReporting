@@ -39,7 +39,7 @@ default:
 
 ###########################
 #  Core services
-  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}

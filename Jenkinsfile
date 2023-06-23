@@ -224,8 +224,6 @@ Those marked with a * are required or the job will not run
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/*.csv', allowEmptyArchive: true, fingerprint: true
-            archiveArtifacts artifacts: 'target/*.txt', allowEmptyArchive: true, fingerprint: true
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"

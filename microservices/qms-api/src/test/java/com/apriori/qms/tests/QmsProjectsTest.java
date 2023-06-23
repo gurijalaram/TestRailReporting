@@ -4,6 +4,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
+import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectNotificationRequest;
@@ -13,6 +14,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectNotificationR
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -28,7 +30,6 @@ import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
@@ -40,26 +41,18 @@ import java.util.List;
 
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
-    private static final List<ScenarioItem> scenarioItemRemoveList = new ArrayList<>();
-    private SoftAssertions softAssertions;
+    private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
-
-    @AfterClass
-    public static void afterClass() {
-        for (ScenarioItem removeScenario : scenarioItemRemoveList) {
-            QmsApiTestUtils.deleteScenarioViaCidApp(removeScenario, currentUser);
-        }
-    }
 
     @Before
     public void beforeTest() {
         softAssertions = new SoftAssertions();
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        scenarioItemRemoveList.add(scenarioItem);
     }
 
     @After
     public void afterTest() {
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         softAssertions.assertAll();
     }
 
@@ -389,7 +382,7 @@ public class QmsProjectsTest extends TestUtil {
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "COMPLETED");
         projectAttributesMap.put("projectDueAt", "N/A");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
         String[] params = {"dueAt[NL],null"};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
@@ -398,6 +391,7 @@ public class QmsProjectsTest extends TestUtil {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getDueAt() == null)).isTrue();
         }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test
@@ -485,16 +479,20 @@ public class QmsProjectsTest extends TestUtil {
     public void getFilteredProjectsByStatusWithOperatorEQ() {
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "COMPLETED");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "IN_NEGOTIATION");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "PURCHASED");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "SENT_FOR_QUOTATION");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test
@@ -513,11 +511,12 @@ public class QmsProjectsTest extends TestUtil {
     public void getFilteredProjectsByStatusWithOperatorIN() {
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", "IN_NEGOTIATION");
-        scenarioItemRemoveList.add(QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap));
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[IN],IN_NEGOTIATION");
         QmsApiTestUtils.verifyStatusForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", "IN_NEGOTIATION");
         filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[IN],IN_NEGOTIATION|COMPLETED");
         QmsApiTestUtils.verifyMultipleStatusesForFilteredProjects(filteredProjectsResponse, softAssertions, "ALL", "IN_NEGOTIATION", "COMPLETED");
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test
@@ -553,7 +552,6 @@ public class QmsProjectsTest extends TestUtil {
     @Description("Verify that the User can filter projects by Members (operator IN)")
     public void getFilteredProjectsByMembersWithOperatorIN() {
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        scenarioItemRemoveList.add(scenarioItem);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
@@ -605,6 +603,7 @@ public class QmsProjectsTest extends TestUtil {
                     .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityFirst) ||
                         u.getUserIdentity().equals(newUserIdentitySecond)))).isTrue();
         }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test
@@ -612,7 +611,6 @@ public class QmsProjectsTest extends TestUtil {
     @Description("Verify that the User can filter projects by Members (operator NI)")
     public void getFilteredProjectsByMembersWithOperatorNI() {
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        scenarioItemRemoveList.add(scenarioItem);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
@@ -654,6 +652,7 @@ public class QmsProjectsTest extends TestUtil {
                 .allMatch(i -> i.getUsers().stream()
                     .noneMatch(u -> u.getUserIdentity().equals(newUserIdentitySecond)))).isTrue();
         }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test
@@ -710,5 +709,77 @@ public class QmsProjectsTest extends TestUtil {
             softAssertions.assertThat(notifyResponse.getNotificationsCount().stream()
                 .allMatch(n -> n.getUnreadNotificationsCount() == 0)).isTrue();
         }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24482"})
+    @Description("For /project? endpoint || Verify project can be created with OPEN or IN_PROGRESS status)")
+    public void createProjectWithStatusOpenAndInProgress() {
+        //OPEN
+        ScenarioItem scenarioItemOpen = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItemOpen.getComponentIdentity())
+                .scenarioIdentity(scenarioItemOpen.getScenarioIdentity())
+                .iterationIdentity(scenarioItemOpen.getIterationIdentity())
+                .build())
+            .build());
+
+        HashMap<String, String> prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectStatus", "OPEN");
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(prjAttributesMap,
+            itemsList,
+            null,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("OPEN");
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+
+        //IN_PROGRESS
+        ScenarioItem scenarioItemInProgress = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItemInProgress.getComponentIdentity())
+                .scenarioIdentity(scenarioItemInProgress.getScenarioIdentity())
+                .iterationIdentity(scenarioItemInProgress.getIterationIdentity())
+                .build())
+            .build());
+
+        prjAttributesMap = new HashMap<>();
+        prjAttributesMap.put("projectStatus", "IN_PROGRESS");
+        bppResponse = QmsProjectResources.createProject(prjAttributesMap,
+            itemsList,
+            null,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("IN_PROGRESS");
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24483"})
+    @Description("Verify the default project created in the background during scenarios discussion creation  will have status as OPEN")
+    public void verifyDefaultProjectStatusToBeOpen() {
+        //Create default project via scenario discussion
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        softAssertions.assertThat(scenarioDiscussionResponse.getIdentity()).isNotNull();
+
+        //Get Project
+        BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(
+            scenarioDiscussionResponse.projectIdentity,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_OK,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("OPEN");
+
+        //Delete Discussion
+        QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), currentUser);
     }
 }
