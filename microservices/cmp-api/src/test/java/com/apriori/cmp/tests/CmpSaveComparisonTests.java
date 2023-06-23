@@ -2,8 +2,8 @@ package com.apriori.cmp.tests;
 
 import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
 import com.apriori.cmp.entity.request.CreateComparison;
-import com.apriori.cmp.utils.ComparisonUtils;
 import com.apriori.cmp.entity.response.PostComparisonResponse;
+import com.apriori.cmp.utils.ComparisonUtils;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
