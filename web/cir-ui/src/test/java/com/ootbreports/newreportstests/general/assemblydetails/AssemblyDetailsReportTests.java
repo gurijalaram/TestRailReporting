@@ -7,6 +7,8 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.JasperApiTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
@@ -21,6 +23,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Category(JasperApiTest.class)
     @TestRail(testCaseId = {"1922"})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {

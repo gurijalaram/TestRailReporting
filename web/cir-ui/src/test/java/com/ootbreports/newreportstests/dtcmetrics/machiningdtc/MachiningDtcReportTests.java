@@ -35,7 +35,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, JasperApiTest.class})
     @TestRail(testCaseId = {"3023"})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
