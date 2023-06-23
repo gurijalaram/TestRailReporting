@@ -6,6 +6,8 @@ import lombok.Data;
 public class CustomItem {
     private String tableType;
     private String panelOutput;
+    private String holeDiameter;
+    private String holeLength;
     private String utilizationProcessName;
     private ProcessItem processName;
 }

@@ -15,7 +15,7 @@
                   "type": "string"
                 },
                 "suggested": {
-                  "type": "string"
+                  "type": "object"
                 },
                 "suggested": {
                   "type": "object",

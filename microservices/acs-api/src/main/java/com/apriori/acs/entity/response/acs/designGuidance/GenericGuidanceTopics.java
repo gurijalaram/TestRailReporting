@@ -27,7 +27,5 @@ public class GenericGuidanceTopics {
     private Integer priority;
     private String unitType;
     private String suggestedMax;
-    private String suggested;
-    @JsonProperty("suggested")
-    private SuggestedItem suggestedObject;
+    private Object suggested;
 }
