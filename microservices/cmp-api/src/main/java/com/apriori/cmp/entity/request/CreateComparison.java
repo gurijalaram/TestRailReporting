@@ -4,6 +4,7 @@ package com.apriori.cmp.entity.request;
 import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,8 @@ import java.util.List;
 public class CreateComparison {
     private String comparisonName;
     private String comparisonType;
-    private String objectType;
-    private List<ComparisonObjectBuilder> objects;
+    @JsonProperty("objectType")
+    private String comparisonObjectType;
+    @JsonProperty("objects")
+    private List<ComparisonObjectBuilder> objectsToCompare;
 }

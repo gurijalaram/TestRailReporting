@@ -54,8 +54,8 @@ public class CmpSaveComparisonTests {
         CreateComparison comparison = CreateComparison.builder()
             .comparisonName(comparisonName)
             .comparisonType("BASIS")
-            .objectType("SCENARIO")
-            .objects(comparisonObjectsList)
+            .comparisonObjectType("SCENARIO")
+            .objectsToCompare(comparisonObjectsList)
             .build();
 
         PostComparisonResponse savedComparison = comparisonUtils.createComparison(comparison, currentUser);
