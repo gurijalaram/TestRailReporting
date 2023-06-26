@@ -23,14 +23,4 @@ public class UserProfile {
     private String createdBy;
     private String givenName;
     private String familyName;
-    private String countryCode;
-    private String prefix;
-    private String suffix;
-    private String jobTitle;
-    private String department;
-    private String townCity;
-    private String county;
-    private String officePhoneCountryCode;
-    private String officePhoneNumber;
-    private String timezone;
 }

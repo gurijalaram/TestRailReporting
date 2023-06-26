@@ -43,6 +43,7 @@ import java.util.HashMap;
 
 public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static SoftAssertions softAssertions;
+    private static SoftAssertions softAssertionsTestData;
     protected static String bidPackageName;
     protected static String projectName;
     protected static String contentDesc = StringUtils.EMPTY;
@@ -55,7 +56,6 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static DmsCommentViewResponse dmsCommentViewResponse;
     protected static ScenarioItem scenarioItem;
     protected static UserCredentials currentUser = UserUtil.getUser();
-    private static SoftAssertions softAssertionsTestData;
 
     /**
      * Create test data.
@@ -118,8 +118,6 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             }
         } catch (Exception e) {
             softAssertionsTestData.fail(e.getMessage());
-        } finally {
-            checkAllureTestDataError();
         }
     }
 
@@ -179,12 +177,6 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
     }
 
-    private static void checkAllureTestDataError() {
-        if (!softAssertionsTestData.wasSuccess()) {
-            Assert.fail(softAssertionsTestData.errorsCollected().toString());
-        }
-    }
-
     private static void clearEntities() {
         scenarioItem = null;
         bidPackageResponse = null;
@@ -194,8 +186,10 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
 
     @Before
     public void beforeTest() {
+        if (!softAssertionsTestData.wasSuccess()) {
+            Assert.fail(softAssertionsTestData.errorsCollected().toString());
+        }
         softAssertions = new SoftAssertions();
-        checkAllureTestDataError();
     }
 
     @After

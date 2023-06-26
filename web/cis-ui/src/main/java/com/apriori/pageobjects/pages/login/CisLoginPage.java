@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.LoginService;
+import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +23,12 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private LoginService aprioriLoginService;
+    private AprioriLoginPage aprioriLoginPage;
 
     public CisLoginPage(WebDriver driver) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginService = new LoginService(driver, "cis");
+        this.aprioriLoginPage = new AprioriLoginPage(driver, "cis");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -41,7 +41,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIS login page was not displayed", aprioriLoginService.getLoginTitle().contains("aP Workspace"));
+        assertTrue("CIS login page was not displayed", aprioriLoginPage.getLoginTitle().contains("aP Workspace"));
     }
 
     /**
@@ -51,7 +51,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @return new page object
      */
     public ExplorePage login(UserCredentials userCredentials) {
-        return aprioriLoginService.login(userCredentials, ExplorePage.class);
+        return aprioriLoginPage.login(userCredentials, ExplorePage.class);
     }
 
     /**
@@ -61,7 +61,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @return new page object
      */
     public LeftHandNavigationBar cisLogin(UserCredentials userCredentials) {
-        return aprioriLoginService.login(userCredentials, LeftHandNavigationBar.class);
+        return aprioriLoginPage.login(userCredentials, LeftHandNavigationBar.class);
     }
 
     /**

@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(location = "PlmSearchSchema.json")
-public class PlmSearchResponse {
-    private List<PlmSearchPart> items;
+@Schema(location = "PlmPartsSchema.json")
+public class PlmParts {
+    private List<PlmPart> items;
 }

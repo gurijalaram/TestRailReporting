@@ -276,6 +276,9 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
         tolerancesPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab();
 

@@ -35,12 +35,13 @@ import utils.QmsApiTestUtils;
 import java.util.HashMap;
 
 public class QmsBidPackageTest extends TestUtil {
+
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static ScenarioItem scenarioItem;
     private static String bidPackageName;
     private static String userContext;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {

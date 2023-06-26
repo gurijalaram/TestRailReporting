@@ -1,8 +1,5 @@
 package com.apriori.pageobjects.pages.createnewproject;
 
-import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
-import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
-import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.utils.PageUtils;
@@ -51,50 +48,6 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     @FindBy(xpath = "//div[@aria-live='polite']")
     private WebElement btnYear;
 
-    @FindBy(id = "create-project-add-part-and-assembly-modal")
-    private WebElement addPartsModal;
-
-    @FindBy(xpath = "//p[@data-testid='toolbar-Show/Hide Fields']")
-    private WebElement showHideFieldsOption;
-
-    @FindBy(id = "filter-control")
-    private WebElement filterTableOption;
-
-    @FindBy(xpath = "//div[@data-testid='search-control']")
-    private WebElement searchTableOption;
-
-    @FindBy(xpath = "//div[@role='grid']")
-    private WebElement partsAndAssembliesTable;
-
-    @FindBy(xpath = "//p[@data-testid ='toolbar-Search']")
-    private WebElement btnSearch;
-
-    @FindBy(xpath = "//div[@data-testid ='search-control-input']")
-    private WebElement fieldSearch;
-
-    @FindBy(xpath = "//div[@data-testid='search-control-input']//input")
-    private WebElement searchInputField;
-
-    @FindBy(xpath = "//div[@class='MuiDataGrid-row']")
-    private WebElement filterRecords;
-
-    @FindBy(xpath = "//div[@data-testid='search-control-popper']//button//*[local-name()='svg']")
-    private WebElement btnClear;
-
-    @FindBy(xpath = "//*[local-name()='svg' and @data-icon='times-circle']")
-    private WebElement removePartIcon;
-
-    @FindBy(id = "create-project-delete-team-member")
-    private WebElement removeUserIcon;
-
-    @FindBy(id = "create-project-cancel-btn")
-    private WebElement btnCancelProject;
-
-    @FindBy(xpath = "//p[@data-testid='input-field-helper-text']")
-    private WebElement projectNameFieldValidation;
-
-    @FindBy(xpath = "//ul[@role='listbox']")
-    private WebElement memberList;
 
     private PageUtils pageUtils;
 
@@ -103,12 +56,10 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     }
 
     private WebDriver driver;
-    private ProjectPartsAndAssemblyTableController projectPartsAndAssemblyTableController;
 
     public CreateNewProjectsPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        this.projectPartsAndAssemblyTableController = new ProjectPartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -174,7 +125,6 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      */
     public CreateNewProjectsPage selectAUser(String teamMember) {
         getPageUtils().waitForElementAndClick(inviteTeammatesField);
-        getPageUtils().waitForElementToAppear(memberList);
         getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
         return this;
@@ -191,7 +141,6 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(btnYear);
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
-        getPageUtils().scrollWithJavaScript(projectNameField,false);
         return this;
     }
 
@@ -203,342 +152,5 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     public ProjectsPage saveProject() {
         getPageUtils().waitForElementAndClick(btnProjectSubmit);
         return new ProjectsPage(getDriver());
-    }
-
-    /**
-     * Checks if add parts modal displayed
-     *
-     * @return true/false
-     */
-    public boolean isAddPartsModalDisplayed() {
-        return getPageUtils().isElementDisplayed(addPartsModal);
-    }
-
-    /**
-     * Checks if show/hide fields option displayed
-     *
-     * @return true/false
-     */
-    public boolean isShowHideFieldOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(showHideFieldsOption);
-    }
-
-    /**
-     * Checks if filter table option displayed
-     *
-     * @return true/false
-     */
-    public boolean isFilterTableOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(filterTableOption);
-    }
-
-    /**
-     * Checks if search table option displayed
-     *
-     * @return true/false
-     */
-    public boolean isSearchTableOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(searchTableOption);
-    }
-
-    /**
-     * Checks if parts & assemblies table displayed
-     *
-     * @return true/false
-     */
-    public boolean isPartsAndAssembliesTableDisplayed() {
-        return getPageUtils().isElementDisplayed(partsAndAssembliesTable);
-    }
-
-    /**
-     * Click on search button
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickSearch() {
-        getPageUtils().waitForElementAndClick(btnSearch);
-        return this;
-    }
-
-    /**
-     * Checks if search field displayed
-     *
-     * @return true/false
-     */
-    public boolean isSearchFieldDisplayed() {
-        return getPageUtils().isElementDisplayed(fieldSearch);
-    }
-
-    /**
-     * Click on search box
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickOnSearchField() {
-        getPageUtils().waitForElementAndClick(fieldSearch);
-        return this;
-    }
-
-    /**
-     * Enter component name on search field
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage enterAComponentName(String componentName) {
-        getPageUtils().waitForElementToAppear(searchInputField).sendKeys(componentName);
-        getPageUtils().waitForElementToAppear(filterRecords);
-        return this;
-    }
-
-    /**
-     * Get the added component Name
-     *
-     * @return a String
-     */
-    public String getAddedComponentName() {
-        return getPageUtils().waitForElementToAppear(searchInputField).getAttribute("value");
-    }
-
-    /**
-     * Gets the number of elements present on the page
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return size of the element as int
-     */
-    public int getListOfScenarios(String componentName, String scenarioName) {
-        return projectPartsAndAssemblyTableController.getListOfScenarios(componentName, scenarioName);
-    }
-
-    /**
-     * Click on clear icon on search field
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickClearOption() {
-        getPageUtils().waitForElementAndClick(btnClear);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']"));
-        return this;
-    }
-
-    /**
-     * Checks if component/scenario names displayed
-     *
-     * @return true/false
-     */
-    public boolean isAddedPartComponentAndScenarioNamesDisplayed(String partName) {
-        return getPageUtils().isElementDisplayed(By.xpath("//p[text()='" + partName + "']"));
-    }
-
-    /**
-     * Checks if remove part icon displayed
-     *
-     * @return true/false
-     */
-    public boolean isRemovePartIconDisplayed() {
-        return getPageUtils().isElementDisplayed(removePartIcon);
-    }
-
-    /**
-     * Click on remove part
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickOnRemovePart() {
-        getPageUtils().waitForElementAndClick(removePartIcon);
-        return this;
-    }
-
-    /**
-     * Checks if invite members option displayed
-     *
-     * @return true/false
-     */
-    public boolean isInviteMembersOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(inviteTeammatesField);
-    }
-
-    /**
-     * Checks if invite members search field displayed
-     *
-     * @return true/false
-     */
-    public boolean isInviteMembersSearchDisplayed() {
-        return getPageUtils().isElementDisplayed(inviteTeammatesSearchField);
-    }
-
-    /**
-     * Checks if selected users displayed
-     *
-     * @return true/false
-     */
-    public boolean isAddedUsersDisplayed(String user) {
-        return getPageUtils().isElementDisplayed(By.xpath("//p[text()='" + user + "']"));
-    }
-
-    /**
-     * Click to remove a selected user
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickOnRemoveUser() {
-        getPageUtils().waitForElementAndClick(removeUserIcon);
-        return this;
-    }
-
-    /**
-     * create a new project
-     *
-     * @return a new page object
-     */
-    public ProjectsPage createANewProject(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date) {
-        getPageUtils().waitForElementToAppear(projectNameField).sendKeys(projectName);
-        getPageUtils().waitForElementToAppear(projectDescriptionField).sendKeys(projectDescription);
-        getPageUtils().waitForElementAndClick(btnAddPartsAndAssemblies);
-        getPageUtils().waitForElementsToAppear(tableRow);
-        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
-        getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
-        getPageUtils().waitForElementAndClick(inviteTeammatesField);
-        getPageUtils().waitForElementToAppear(memberList);
-        getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
-        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
-        getPageUtils().scrollWithJavaScript(dueDateField,true);
-        getPageUtils().waitForElementAndClick(dueDateField);
-        getPageUtils().waitForElementAndClick(btnYear);
-        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
-        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
-        getPageUtils().scrollWithJavaScript(projectNameField,false);
-        getPageUtils().waitForElementAndClick(btnProjectSubmit);
-        return new ProjectsPage(getDriver());
-    }
-
-    /**
-     * Checks if project name field displayed
-     *
-     * @return true/false
-     */
-    public boolean isProjectNameFieldDisplayed() {
-        return getPageUtils().isElementDisplayed(projectNameField);
-    }
-
-    /**
-     * Checks if project description field displayed
-     *
-     * @return true/false
-     */
-    public boolean isProjectDescriptionFieldDisplayed() {
-        return getPageUtils().isElementDisplayed(projectDescriptionField);
-    }
-
-    /**
-     * Checks if add parts and assemblies displayed
-     *
-     * @return true/false
-     */
-    public boolean isAddPartsAndAssembliesOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(btnAddPartsAndAssemblies);
-    }
-
-    /**
-     * Checks if invite members list displayed
-     *
-     * @return true/false
-     */
-    public boolean isInviteTeamMembersFieldDisplayed() {
-        return getPageUtils().isElementDisplayed(inviteTeammatesField);
-    }
-
-    /**
-     * Checks if due date field displayed
-     *
-     * @return true/false
-     */
-    public boolean isDueDateFieldDisplayed() {
-        return getPageUtils().isElementDisplayed(dueDateField);
-    }
-
-    /**
-     * Checks if create project button displayed
-     *
-     * @return true/false
-     */
-    public boolean isCreateProjectButtonDisplayed() {
-        return getPageUtils().isElementDisplayed(btnProjectSubmit);
-    }
-
-    /**
-     * Checks if cancel project button displayed
-     *
-     * @return true/false
-     */
-    public boolean isCancelProjectCreationDisplayed() {
-        return getPageUtils().isElementDisplayed(btnCancelProject);
-    }
-
-    /**
-     * clicks on due date field
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clickOnDueDatePicker() {
-        getPageUtils().waitForElementAndClick(dueDateField);
-        return this;
-    }
-
-    /**
-     * gets previous month status
-     *
-     * @return a String
-     */
-    public String getMonthSelectorStatus(String month) {
-        return getPageUtils().waitForElementToAppear(By.xpath("//button[@title='" + month + "']")).getAttribute("class");
-    }
-
-    /**
-     * clicks on cancel project
-     *
-     * @return new page object
-     */
-    public ProjectsPage clickOnCancelProject() {
-        getPageUtils().waitForElementAndClick(btnCancelProject);
-        return new ProjectsPage(driver);
-    }
-
-    /**
-     * Get create project button status
-     *
-     * @return a string
-     */
-    public String getProjectCreateStatus() {
-        return getPageUtils().waitForElementToAppear(btnProjectSubmit).getAttribute("class");
-    }
-
-    /**
-     * Clear project name
-     *
-     * @return current page object
-     */
-    public CreateNewProjectsPage clearProjectName() {
-        getPageUtils().waitForElementAndClick(projectNameField);
-        getPageUtils().clearValueOfElement(projectNameField);
-        return this;
-    }
-
-    /**
-     * Checks if project name validation displayed
-     *
-     * @return true/false
-     */
-    public boolean isProjectNameRequiredValidationDisplayed() {
-        return getPageUtils().isElementDisplayed(projectNameFieldValidation);
-    }
-
-    /**
-     * get component checkbox status
-     *
-     * @return a string
-     */
-    public String getComponentStatus(String scenarioName, String componentName) {
-        return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span")).getAttribute("class");
     }
 }

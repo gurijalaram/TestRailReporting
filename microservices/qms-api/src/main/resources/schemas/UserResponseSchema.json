@@ -14,12 +14,6 @@
     "createdBy": {
       "type": "string"
     },
-    "updatedAt": {
-      "type": "string"
-    },
-    "updatedBy": {
-      "type": "string"
-    },
     "customerIdentity": {
       "type": "string"
     },
@@ -67,15 +61,6 @@
         },
         "timeZone": {
           "type": "string"
-        },
-        "county": {
-          "type": "string"
-        },
-        "officePhoneCountryCode": {
-          "type": "string"
-        },
-        "officePhoneNumber": {
-          "type": "string"
         }
       },
       "required": [
@@ -94,10 +79,7 @@
         "townCity",
         "stateProvince",
         "countryCode",
-        "timeZone",
-        "county",
-        "officePhoneCountryCode",
-        "officePhoneNumber"
+        "timeZone"
       ]
     },
     "email": {
@@ -144,9 +126,5 @@
     "customAttributes",
     "userType",
     "avatarColor"
-  ],
-  "optional": [
-    "updatedAt",
-    "updatedBy"
   ]
 }

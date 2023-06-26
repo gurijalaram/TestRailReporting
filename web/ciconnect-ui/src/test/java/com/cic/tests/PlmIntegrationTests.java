@@ -18,7 +18,7 @@ import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobRun;
-import entity.response.PlmSearchPart;
+import entity.response.PlmPart;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
@@ -78,7 +78,7 @@ public class PlmIntegrationTests extends TestBase {
                 workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
@@ -129,7 +129,7 @@ public class PlmIntegrationTests extends TestBase {
                 workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
@@ -180,7 +180,7 @@ public class PlmIntegrationTests extends TestBase {
                 workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
@@ -230,7 +230,7 @@ public class PlmIntegrationTests extends TestBase {
                 workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
@@ -302,7 +302,7 @@ public class PlmIntegrationTests extends TestBase {
                 workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
 
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");

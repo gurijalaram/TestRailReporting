@@ -31,6 +31,4 @@ public class BidPackageProjectResponse {
     public List<BidPackageProjectUserResponse> users;
     private String organizationName;
     private String owner;
-    private String displayName;
-    private String ownerFullName;
 }

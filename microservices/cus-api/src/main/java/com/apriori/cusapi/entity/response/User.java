@@ -46,7 +46,5 @@ public class User {
     @Data
     public static class CustomAttributes {
         private Integer workspaceId;
-        private String location;
-        private String department;
     }
 }

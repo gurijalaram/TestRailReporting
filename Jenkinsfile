@@ -7,7 +7,7 @@ def threadCount
 def browser
 def customer
 def testSuite
-def users_csv_file
+def global_users_csv_file
 def default_aws_region
 def folder
 def addlJavaOpts
@@ -105,9 +105,9 @@ Those marked with a * are required or the job will not run
                         testSuite = params.OTHER_TEST
                     }
 
-                    users_csv_file = params.CSV_FILE
-                    if (users_csv_file && users_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dusers_csv_file=${params.CSV_FILE}"
+                    global_users_csv_file = params.CSV_FILE
+                    if (global_users_csv_file && global_users_csv_file != "none") {
+                        javaOpts = javaOpts + " -Dglobal_users_csv_file=${params.CSV_FILE}"
                     }
 
                     customer = params.CUSTOMER
@@ -224,6 +224,8 @@ Those marked with a * are required or the job will not run
 
     post {
         always {
+            archiveArtifacts artifacts: 'target/*.csv', allowEmptyArchive: true, fingerprint: true
+            archiveArtifacts artifacts: 'target/*.txt', allowEmptyArchive: true, fingerprint: true
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"

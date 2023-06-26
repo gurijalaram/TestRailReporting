@@ -105,4 +105,7 @@ public class QueryDefinitionTests extends TestBase {
         Assert.assertFalse("Add Group button is not displayed for teamcenter", queryDefinitions.isGroupButtonDisplayed());
 
     }
+
+
+
 }
