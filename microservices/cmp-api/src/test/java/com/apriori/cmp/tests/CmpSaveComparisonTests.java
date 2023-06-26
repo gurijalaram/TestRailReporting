@@ -37,30 +37,30 @@ public class CmpSaveComparisonTests {
             .position(1)
             .basis(true)
             .build();
-        ComparisonObjectBuilder comp1 = ComparisonObjectBuilder.builder()
+        ComparisonObjectBuilder comparisonScenario1 = ComparisonObjectBuilder.builder()
             .externalIdentity("987654321")
             .position(2)
             .build();
-        ComparisonObjectBuilder comp2 = ComparisonObjectBuilder.builder()
+        ComparisonObjectBuilder comparisonScenario2 = ComparisonObjectBuilder.builder()
             .externalIdentity("147258369")
             .position(3)
             .build();
 
-        List<ComparisonObjectBuilder> compObjs = new ArrayList<ComparisonObjectBuilder>();
-        compObjs.add(baseScenario);
-        compObjs.add(comp1);
-        compObjs.add(comp2);
+        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<ComparisonObjectBuilder>();
+        comparisonObjectsList.add(baseScenario);
+        comparisonObjectsList.add(comparisonScenario1);
+        comparisonObjectsList.add(comparisonScenario2);
 
         CreateComparison comparison = CreateComparison.builder()
             .comparisonName(comparisonName)
             .comparisonType("BASIS")
             .objectType("SCENARIO")
-            .objects(compObjs)
+            .objects(comparisonObjectsList)
             .build();
 
         PostComparisonResponse savedComparison = comparisonUtils.createComparison(comparison, currentUser);
 
-        softAssertions.assertThat(savedComparison.getComparisonName()).as("Ensure same comparison name reurned").isEqualTo(comparisonName);
+        softAssertions.assertThat(savedComparison.getComparisonName()).as("Ensure same comparison name returned").isEqualTo(comparisonName);
         softAssertions.assertAll();
 
     }
