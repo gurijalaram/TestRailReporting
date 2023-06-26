@@ -25,7 +25,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,7 +35,7 @@ import utils.QmsApiTestUtils;
 
 import java.util.Collections;
 
-public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
+public class ScenarioDiscussionTest extends QmsApiTestDataUtils {
     @BeforeClass
     public static void beforeClass() {
         createTestData();
@@ -59,9 +59,14 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
     @TestRail(testCaseId = {"14610"})
     @Description("Get Scenario Discussion by identity")
     public void getScenarioDiscussion() {
-        ScenarioDiscussionResponse getScenarioDiscussionResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), ScenarioDiscussionResponse.class,
-            HttpStatus.SC_OK, currentUser);
-        softAssertions.assertThat(getScenarioDiscussionResponse.getIdentity())
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
+            .inlineVariables(scenarioDiscussionResponse.getIdentity())
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<ScenarioDiscussionResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getIdentity())
             .isEqualTo(scenarioDiscussionResponse.getIdentity());
     }
 
@@ -80,7 +85,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"14611", "14612", "15472", "16050"})
-    @Issue("COL-1824")
+    @Link("Defect - https://jira.apriori.com/browse/COL-1824")
     @Description("Verify that User can update Scenario discussion description and status (ACTIVE & RESOLVED")
     public void updateScenarioDiscussionDescriptionAndStatus() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -282,7 +287,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"16565"})
-    @Issue("COL-1824")
+    @Link("Defect - https://jira.apriori.com/browse/COL-1824")
     @Description("Verify that User cannot add comments to discussion with RESOLVED status")
     public void verifyCannotAddCommentsResolvedStatus() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -318,7 +323,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"16052", "16051"})
-    @Issue("COL-1814")
+    @Link("Defect - https://jira.apriori.com/browse/COL-1814")
     @Description("Verify that user can DELETE & UNDELETE discussion (Patch Method)")
     public void deleteDiscussionByPatchMethod() {
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
@@ -469,8 +474,7 @@ public class QmsScenarioDiscussionTest extends QmsApiTestDataUtils {
             HttpStatus.SC_CREATED,
             assigneeUser);
         softAssertions.assertThat(commentViewResponse.getCommentView().stream()
-                .anyMatch(cv -> cv.getUserIdentity()
-                    .equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
+                .anyMatch(cv -> cv.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(assigneeUser.getEmail()))))
             .isTrue();
     }
 }

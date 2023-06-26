@@ -23,13 +23,4 @@ public class UserProfile {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String prefix;
-    private String suffix;
-    private String jobTitle;
-    private String department;
-    private String townCity;
-    private String county;
-    private String timezone;
-    private String officePhoneCountryCode;
-    private String officePhoneNumber;
 }

@@ -201,7 +201,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='Assembly Tree View']")
     private WebElement assemblyTreeView;
 
-    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']")
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']")
     private WebElement showHideIcon;
 
     @FindBy(id = "show-hide-field-input")

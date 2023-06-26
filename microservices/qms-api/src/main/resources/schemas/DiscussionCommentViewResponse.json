@@ -145,11 +145,9 @@
                     }
                   },
                   "required": [
-                    "workspaceId"
-                  ],
-                  "optional": [
                     "location",
-                    "department"
+                    "department",
+                    "workspaceId"
                   ]
                 },
                 "userType": {
