@@ -11,7 +11,6 @@ import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.JasperApiTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -35,7 +34,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category({ReportsTest.class, JasperApiTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7419"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
@@ -68,7 +67,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category({ReportsTest.class, JasperApiTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7400"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {

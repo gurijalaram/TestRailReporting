@@ -11,7 +11,6 @@ import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.JasperApiTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -31,7 +30,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category({ReportsTest.class, JasperApiTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7406"})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {

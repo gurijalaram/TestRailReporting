@@ -7,9 +7,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.JasperApiTest;
-import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
@@ -24,7 +21,6 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(JasperApiTest.class)
     @TestRail(testCaseId = {"13712"})
     @Description("Input controls - Currency code")
     public void testCurrency() {

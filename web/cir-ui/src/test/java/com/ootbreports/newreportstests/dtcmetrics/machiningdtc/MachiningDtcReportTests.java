@@ -11,7 +11,6 @@ import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.JasperApiTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -35,7 +34,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category({ReportsTest.class, JasperApiTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3023"})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -57,7 +56,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category({ReportsTest.class, JasperApiTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3024"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
     public void testMassMetricInputControlFinishMass() {
