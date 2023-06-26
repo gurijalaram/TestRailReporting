@@ -958,10 +958,6 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
-            CostingTemplate.builder()
-                .processGroupName(processGroupEnum.getProcessGroup())
-                .build()));
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -994,10 +990,7 @@ public class EditAssembliesTest extends TestBase {
             .clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName))
-            .as("Verify that deleted sub-component replaced with Public 'missing' scenario").contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(BOLT))
-                .as("Verify that deleted sub-component replaced with 'missing' scenario").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }

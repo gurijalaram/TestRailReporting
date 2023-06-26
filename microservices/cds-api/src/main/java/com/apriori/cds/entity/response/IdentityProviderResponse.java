@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "IdentityProviderSchema.json")
+@Schema(location = "IdentityProviderResponseSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,7 +45,6 @@ public class IdentityProviderResponse {
     private String signingCertificateExpiresAt;
     private Boolean signRequest;
     private AttributeMappings attributeMappings;
-    private String authenticationType;
     private String customerIdentity;
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;

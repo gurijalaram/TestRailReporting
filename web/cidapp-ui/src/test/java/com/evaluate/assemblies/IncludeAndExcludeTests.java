@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.entity.response.ScenarioItem;
@@ -351,10 +350,6 @@ public class IncludeAndExcludeTests extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
-            CostingTemplate.builder()
-                .processGroupName(processGroupEnum.getProcessGroup())
-                .build()));
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
@@ -415,10 +410,6 @@ public class IncludeAndExcludeTests extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
-            CostingTemplate.builder()
-                .processGroupName(processGroupEnum.getProcessGroup())
-                .build()));
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 

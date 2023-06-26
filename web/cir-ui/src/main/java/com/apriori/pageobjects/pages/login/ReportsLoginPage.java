@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.LoginService;
+import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -53,7 +53,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private LoginService loginService;
+    private AprioriLoginPage aprioriLoginPage;
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     @FindBy(xpath = "//input[@type='email']")
@@ -63,7 +63,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
         super(driver);
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.loginService = new LoginService(this.driver, "reports");
+        this.aprioriLoginPage = new AprioriLoginPage(driver, "reports");
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -76,7 +76,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIR login page was not displayed", loginService.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
+        assertThat("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
     }
 
     /**
@@ -85,7 +85,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login() {
-        return loginService.login(userCredentials, ReportsPageHeader.class);
+        return aprioriLoginPage.login(userCredentials, ReportsPageHeader.class);
     }
 
     /**
@@ -97,11 +97,12 @@ public class ReportsLoginPage extends ReportsPageHeader {
      */
     public ReportsLoginPage failedLogin(UserCredentials user, String password) {
         String username = PropertiesContext.get("${env}").equals("onprem") ? user.getUsername() : user.getEmail();
-        return loginService.loginUsernamePassword(username, password, ReportsLoginPage.class);
+        aprioriLoginPage.executeLogin(username, password);
+        return this;
     }
 
     public ReportsLoginPage invalidEmailFailedLogin(String email, String password) {
-        loginService.loginNoReturn(email, password);
+        aprioriLoginPage.executeLogin(email, password);
         pageUtils.waitForElementToAppear(By.xpath("//div[@class='auth0-lock-error-invalid-hint']"));
         pageUtils.waitForElementToBeClickable(By.xpath("//div[@class='auth0-lock-error-invalid-hint']"));
         return new ReportsLoginPage(driver);
@@ -113,7 +114,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return instance of ReportsLoginPage
      */
     public ReportsLoginPage failedLoginEmptyFields() {
-        loginService.failedLoginEmptyFields();
+        aprioriLoginPage.executeLogin("", "");
         return this;
     }
 
@@ -159,7 +160,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @param email - user email
      */
     public ReportsLoginPage submitEmail(String email) {
-        return loginService.submitEmailForgotPwd(email, ReportsLoginPage.class);
+        aprioriLoginPage.submitEmailForgotPwd(email);
+        return new ReportsLoginPage(driver);
     }
 
     /**

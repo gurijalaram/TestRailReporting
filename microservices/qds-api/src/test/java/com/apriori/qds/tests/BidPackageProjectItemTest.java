@@ -29,8 +29,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 public class BidPackageProjectItemTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
@@ -38,18 +36,21 @@ public class BidPackageProjectItemTest extends TestUtil {
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
     private static BidPackageProjectItemResponse bidPackageProjectItemResponse;
+    UserCredentials currentUser = UserUtil.getUser();
+    private static String bidPackageName;
+    private static String bidPackageProjectName;
     private static String userContext;
     private static ScenarioItem scenarioItem;
-    UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
-        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
+        bidPackageProjectResponse = BidPackageResources.createBidPackageProject(bidPackageProjectName, bidPackageResponse.getIdentity(), currentUser);
         bidPackageItemResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -81,8 +82,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageItemResponse.getIdentity(),
             currentUser, BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED);
 
-        softAssertions.assertThat(bidPackageProjectItemResponse.getBidPackageItemIdentity())
-            .isEqualTo(bidPackageItemResponse.identity);
+        softAssertions.assertThat(bidPackageProjectItemResponse.getBidPackageItemIdentity()).isEqualTo(bidPackageItemResponse.identity);
     }
 
     @Test
@@ -95,8 +95,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectItemResponse.getIdentity(),
             currentUser, BidPackageProjectItemResponse.class, HttpStatus.SC_OK);
 
-        softAssertions.assertThat(getBidPackageProjectItemResponse.getProjectIdentity())
-            .isEqualTo(bidPackageProjectResponse.getIdentity());
+        softAssertions.assertThat(getBidPackageProjectItemResponse.getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
     }
 
     @Test
@@ -116,7 +115,8 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(testCaseId = {"13412"})
     @Description("Create  Bid Package Project Item with out project")
     public void createProjectItemWithoutProject() {
-        BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
+        String bppName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(bppName, bidPackageResponse.getIdentity(), currentUser);
 
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
 
@@ -126,9 +126,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageItemResponse.getIdentity(),
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bppiResponse.getMessage())
-            .contains("Can't find Project for bid package with identity '" + bppResponse.getBidPackageIdentity()
-                + "' and identity '" + bppResponse.getIdentity());
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find Project for bid package with identity '" + bppResponse.getBidPackageIdentity()
+            + "' and identity '" + bppResponse.getIdentity());
     }
 
     @Test
@@ -141,10 +140,9 @@ public class BidPackageProjectItemTest extends TestUtil {
             "",
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bppiResponse.getMessage())
-            .contains("Can't find bidPackageItem for bid package with identity '"
-                + bidPackageProjectResponse.getBidPackageIdentity()
-                + "' and identity 'null'");
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackageItem for bid package with identity '"
+            + bidPackageProjectResponse.getBidPackageIdentity()
+            + "' and identity 'null'");
     }
 
     @Test
@@ -152,8 +150,10 @@ public class BidPackageProjectItemTest extends TestUtil {
     @Description("Create  Bid Package Project Item with out bid Package")
     public void createProjectItemWithoutBidPackage() {
         String bpName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bppName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+
         BidPackageResponse bpResponse = BidPackageResources.createBidPackage(bpName, userContext);
-        BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bpResponse.getIdentity(), currentUser);
+        BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(bppName, bpResponse.getIdentity(), currentUser);
         BidPackageItemResponse bpiResponse = BidPackageResources.createBidPackageItem(
             BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -169,8 +169,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bpiResponse.getIdentity(),
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(bppiResponse.getMessage())
-            .contains("Can't find bidPackage with identity '" + bppResponse.getBidPackageIdentity() + "'");
+        softAssertions.assertThat(bppiResponse.getMessage()).contains("Can't find bidPackage with identity '" + bppResponse.getBidPackageIdentity() + "'");
     }
 
     @Test
@@ -192,9 +191,8 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
 
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage())
-            .contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
-                + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
+            + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
 
         ErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
@@ -202,9 +200,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectItemResponse.getIdentity(),
             currentUser, ErrorMessage.class, HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(getErrorResponse.getMessage())
-            .contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
-                + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
+        softAssertions.assertThat(getErrorResponse.getMessage()).contains("Can't find ProjectItem for Project with identity '" + bidPackageProjectResponse.getIdentity()
+            + "' and identity '" + bidPackageProjectItemResponse.getIdentity());
 
         bidPackageProjectItemResponse = BidPackageResources.createBidPackageProjectItem(
             bidPackageResponse.getIdentity(),
@@ -241,8 +238,7 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
 
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage())
-            .contains("'projectIdentity' is not a valid identity");
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).contains("'projectIdentity' is not a valid identity");
     }
 
     @After

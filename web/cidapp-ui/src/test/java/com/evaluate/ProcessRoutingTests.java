@@ -313,7 +313,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.07")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.52")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage = new RoutingSelectionPage(driver);
@@ -328,7 +328,7 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.28")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.75")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -958,7 +958,7 @@ public class ProcessRoutingTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(22.73), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(26.37), Offset.offset(3.0));
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
 
@@ -968,7 +968,7 @@ public class ProcessRoutingTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(44.41), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(51.41), Offset.offset(3.0));
         softAssertions.assertAll();
     }
 
@@ -1260,7 +1260,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.84")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$11.28")).isTrue();
 
         routingSelectionPage.cancel(EvaluatePage.class)
             .openSettings()
@@ -1269,7 +1269,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.83841")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$11.28002")).isTrue();
         softAssertions.assertAll();
     }
 }

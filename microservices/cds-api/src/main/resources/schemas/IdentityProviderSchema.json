@@ -21,27 +21,25 @@
         "signingCertificateExpiresAt",
         "signRequest",
         "attributeMappings",
-        "authenticationType",
-        "customerIdentity",
         "signRequestAlgorithm",
         "signRequestAlgorithmDigest",
         "protocolBinding"
       ],
-      "optional": [
-        "updatedBy",
-        "updatedAt"
-      ],
       "properties": {
         "identity": {
+          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "createdBy": {
+          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "identityProviderPlatform": {
+          "$id": "#/properties/response/properties/identityProviderPlatform",
           "type": "object",
           "required": [
             "identity",
@@ -54,104 +52,123 @@
           ],
           "properties": {
             "identity": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/identity",
               "type": "string"
             },
             "createdBy": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/createdBy",
               "type": "string"
             },
             "createdAt": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/createdAt",
               "type": "string"
             },
             "description": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/description",
               "type": "string"
             },
             "name": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/name",
               "type": "string"
             },
             "vendor": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/vendor",
               "type": "string"
             },
             "identityProviderProtocol": {
+              "$id": "#/properties/response/properties/identityProviderPlatform/properties/identityProviderProtocol",
               "type": "string"
             }
           }
         },
         "active": {
+          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "name": {
+          "$id": "#/properties/response/properties/name",
           "type": "string"
         },
         "displayName": {
+          "$id": "#/properties/response/properties/displayName",
           "type": "string"
         },
         "description": {
+          "$id": "#/properties/response/properties/description",
           "type": "string"
         },
         "idpDomains": {
+          "$id": "#/properties/response/properties/idpDomains",
           "type": "array",
           "items": {
-            "type": "string"
+            "$id": "#/properties/response/properties/idpDomains/items",
+            "anyOf": [
+              {
+                "$id": "#/properties/response/properties/idpDomains/items/anyOf/0",
+                "type": "string"
+              }
+            ]
           }
         },
         "signInUrl": {
+          "$id": "#/properties/response/properties/signInUrl",
           "type": "string"
         },
         "signingCertificate": {
+          "$id": "#/properties/response/properties/signingCertificate",
           "type": "string"
         },
         "signingCertificateExpiresAt": {
+          "$id": "#/properties/response/properties/signingCertificateExpiresAt",
           "type": "string"
         },
         "signRequest": {
+          "$id": "#/properties/response/properties/signRequest",
           "type": "boolean"
         },
         "attributeMappings": {
+          "$id": "#/properties/response/properties/attributeMappings",
           "type": "object",
           "required": [
-            "givenName",
-            "familyName",
             "name",
-            "userId",
-            "email"
+            "email",
+            "user_id",
+            "given_name",
+            "family_name"
           ],
           "properties": {
-            "givenName": {
-              "type": "string"
-            },
-            "familyName": {
-              "type": "string"
-            },
             "name": {
-              "type": "string"
-            },
-            "userId": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/name",
               "type": "string"
             },
             "email": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/email",
+              "type": "string"
+            },
+            "user_id": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/user_id",
+              "type": "string"
+            },
+            "given_name": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/given_name",
+              "type": "string"
+            },
+            "family_name": {
+              "$id": "#/properties/response/properties/attributeMappings/properties/family_name",
               "type": "string"
             }
           }
         },
-        "authenticationType": {
-          "type": "string"
-        },
-        "customerIdentity": {
-          "type": "string"
-        },
         "signRequestAlgorithm": {
+          "$id": "#/properties/response/properties/signRequestAlgorithm",
           "type": "string"
         },
         "signRequestAlgorithmDigest": {
+          "$id": "#/properties/response/properties/signRequestAlgorithmDigest",
           "type": "string"
         },
         "protocolBinding": {
-          "type": "string"
-        },
-        "updatedBy": {
-          "type": "string"
-        },
-        "updatedAt": {
+          "$id": "#/properties/response/properties/protocolBinding",
           "type": "string"
         }
       }

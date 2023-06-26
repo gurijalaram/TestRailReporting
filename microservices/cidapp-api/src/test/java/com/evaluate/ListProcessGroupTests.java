@@ -34,6 +34,7 @@ public class ListProcessGroupTests {
         ResponseWrapper<Customizations> customizations = new CustomizationUtil().getCustomizations(user);
 
         List<String> ignoredProcessGroups = Arrays.asList(
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
             ProcessGroupEnum.ROLL_UP.getProcessGroup(),
             ProcessGroupEnum.COMPOSITES.getProcessGroup(),
             ProcessGroupEnum.WITHOUT_PG.getProcessGroup(),
@@ -41,7 +42,7 @@ public class ListProcessGroupTests {
 
         List<String> processGroupResponse = customizations.getResponseEntity().getItems().stream()
             .map(x -> x.getProcessGroups().stream()
-                .map(pg -> pg.getCidSupported() ? pg.getDescription() : null))
+                .map(ProcessGroups::getDescription))
             .findAny()
             .orElseThrow(AssertionError::new)
             .collect(Collectors.toList());

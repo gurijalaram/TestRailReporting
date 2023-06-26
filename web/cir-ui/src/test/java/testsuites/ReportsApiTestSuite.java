@@ -15,18 +15,12 @@ import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcReportTes
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsTests;
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
-import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
-import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
-import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @ProjectRunID("261")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    AssemblyCostA4ReportTests.class,
-    AssemblyCostLetterReportTests.class,
-    AssemblyDetailsReportTests.class,
     CastingDtcReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,

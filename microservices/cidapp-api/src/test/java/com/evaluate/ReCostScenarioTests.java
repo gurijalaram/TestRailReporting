@@ -167,9 +167,6 @@ public class ReCostScenarioTests {
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
-                .costingTemplate(CostingTemplate.builder()
-                    .processGroupName(processGroupEnum.getProcessGroup())
-                    .build())
                 .componentName(componentName)
                 .scenarioName(scenarioName)
                 .componentIdentity(componentResponse.getComponentIdentity())
