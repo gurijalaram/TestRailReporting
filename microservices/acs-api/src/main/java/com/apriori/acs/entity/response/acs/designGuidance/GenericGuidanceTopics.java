@@ -10,6 +10,7 @@ public class GenericGuidanceTopics {
     private String suggestedMin;
     private String vpe;
     private GcdItem gcd;
+    private GcdItem secondaryGcd;
     private String attributeText;
     private Integer decimalPlaces;
     private String current;

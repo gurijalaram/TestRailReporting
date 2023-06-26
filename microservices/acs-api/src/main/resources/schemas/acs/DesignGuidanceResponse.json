@@ -15,7 +15,7 @@
                   "type": "string"
                 },
                 "suggested": {
-                  "type": "object"
+                  "type": "string"
                 },
                 "suggested": {
                   "type": "object",
@@ -35,6 +35,25 @@
                       "maxValue",
                       "maxInclusive"
                     ]
+                },
+                "secondaryGcd": {
+                  "type": "object",
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "sequenceNumber": {
+                      "type": "integer"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "artifactTypeName",
+                    "sequenceNumber",
+                    "displayName"
+                  ]
                 },
                 "suggestedMin": {
                   "type": "string"
@@ -70,6 +89,9 @@
                 "current": {
                   "type": "string"
                 },
+                "current": {
+                  "type": "number"
+                },
                 "custom": {
                   "type": "object",
                   "properties": {
@@ -84,7 +106,6 @@
                     }
                   },
                   "required": [
-                    "tableType",
                     "panelOutput"
                   ]
                 },
