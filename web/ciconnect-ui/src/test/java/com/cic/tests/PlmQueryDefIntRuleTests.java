@@ -53,6 +53,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer Equal, verify AND operator and data type")
     public void testWorkflowQueryDefIntegerEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.EQUAL, 1)
             .setQueryFilters("AND")
@@ -72,6 +74,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer NOT Equal")
     public void testWorkflowQueryDefIntegerNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.NOT_EQUAL, 1)
             .setQueryFilters("AND")
@@ -95,6 +99,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer Greater Than")
     public void testWorkflowQueryDefIntegerGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.GREATER_THAN, 4)
             .setQueryFilters("AND")
@@ -112,6 +118,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer Greater Than or Equal")
     public void testWorkflowQueryDefIntegerGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.GREATER_THAN_EQUAL, 4)
             .setQueryFilters("AND")
@@ -131,6 +139,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer between")
     public void testWorkflowQueryDefIntegerBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.BETWEEN, 2,3)
             .setQueryFilters("AND")
@@ -150,6 +160,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer Not between")
     public void testWorkflowQueryDefIntegerNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.NOT_BETWEEN, 2,4)
             .setQueryFilters("AND")
@@ -169,6 +181,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer less than")
     public void testWorkflowQueryDefIntegerLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.LESS_THAN, 2)
             .setQueryFilters("AND")
@@ -186,6 +200,8 @@ public class PlmQueryDefIntRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Integer less than or equal")
     public void testWorkflowQueryDefIntegerLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.LESS_THAN_EQUAL, 2)
             .setQueryFilters("AND")

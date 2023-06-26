@@ -50,8 +50,8 @@ public class CicAgentJobResultsTest extends TestBase {
             .getWebSession();;
         plmPartData = new PlmPartsUtil().getPlmPartData();
         workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
+        workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(loginSession));
         createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, loginSession);
-
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
     }
 

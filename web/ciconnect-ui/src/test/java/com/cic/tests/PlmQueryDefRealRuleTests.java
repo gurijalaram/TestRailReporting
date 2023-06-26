@@ -48,6 +48,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Equal and verify data type")
     public void testWorkflowQueryDefRealEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.EQUAL, 1.1)
             .setQueryFilters("AND")
@@ -65,6 +67,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Not Equal")
     public void testWorkflowQueryDefRealNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.1)
             .setQueryFilters("AND")
@@ -88,6 +92,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Greater Than")
     public void testWorkflowQueryDefRealGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
             .setQueryFilters("AND")
@@ -105,6 +111,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Greater Than or Equal")
     public void testWorkflowQueryDefRealGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
             .setQueryFilters("AND")
@@ -124,6 +132,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real between")
     public void testWorkflowQueryDefRealBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.BETWEEN, 1.2,1.3)
             .setQueryFilters("AND")
@@ -143,6 +153,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real NOT between")
     public void testWorkflowQueryDefRealNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_BETWEEN, 1.2,1.4)
             .setQueryFilters("AND")
@@ -162,6 +174,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Less Than")
     public void testWorkflowQueryDefRealLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.LESS_THAN, 1.2)
             .setQueryFilters("AND")
@@ -179,6 +193,8 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Less Than or Equal")
     public void testWorkflowQueryDefRealLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.LESS_THAN_EQUAL, 1.2)
             .setQueryFilters("AND")
