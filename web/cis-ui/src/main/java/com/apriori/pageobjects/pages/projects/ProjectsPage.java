@@ -430,18 +430,4 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return this;
     }
-
-    /**
-     * Navigate and search project
-     *
-     * @return new page object
-     */
-    public ProjectsPage navigateAndSearchProject(String createdProjectName) {
-        getPageUtils().waitForElementAndClick(btnUnread);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        getPageUtils().waitForElementAndClick(btnSearch);
-        getPageUtils().waitForElementToAppear(searchField).sendKeys(createdProjectName);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        return new ProjectsPage(driver);
-    }
 }

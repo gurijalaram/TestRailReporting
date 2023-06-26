@@ -280,7 +280,8 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.IN_PROGRESS.getStatus())
                 .navigateToAllProjects()
-                .navigateAndSearchProject("Automation Project " + dateTime);
+                .clickOnUnread()
+                .searchProject("Automation Project " + dateTime);
 
         softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.IN_PROGRESS.getStatus());
 
@@ -289,7 +290,8 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.COMPLETED.getStatus())
                 .navigateToAllProjects()
-                .navigateAndSearchProject("Automation Project " + dateTime);
+                .clickOnUnread()
+                .searchProject("Automation Project " + dateTime);
 
         softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.COMPLETED.getStatus());
 
@@ -298,7 +300,8 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsPage = projectsDetailsPage.changeProjectStatus(CisProjectStatusEnum.OPEN.getStatus())
                 .navigateToAllProjects()
-                .navigateAndSearchProject("Automation Project " + dateTime);
+                .clickOnUnread()
+                .searchProject("Automation Project " + dateTime);
 
         softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.OPEN.getStatus());
 
