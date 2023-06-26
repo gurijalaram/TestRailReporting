@@ -10,11 +10,11 @@
 
 ######################################################## AP-INT ########################################################
 ap-int:
-  aws_account_type: dev
+  # depends on customer_aws_account_type property from environment in environments-config.yml file, or default section in global-config.yml file
   dev:
     token_subject: 4127
   staging:
-    token_subject: 2b68
+    token_subject: e63c
 
   ci-connect:
     customer_identity: 6C1F8C1D4D75

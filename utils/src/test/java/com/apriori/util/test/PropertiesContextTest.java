@@ -81,13 +81,16 @@ public class PropertiesContextTest {
     }
 
     @Test
-    public void testToValidatePropertyReferences() {
-        final String referenceToValidateValue = PropertiesContext.get("${customer}.${${customer}.aws_account_type}.token_subject");
+    public void testToValidatePropertyReferencesForSpecificEnvironment() {
+        final String environmentName = "qa-test";
+        System.setProperty("env", environmentName);
+
+        final String referenceToValidateValue = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(referenceToValidateValue).isNotEmpty();
         softAssertions.assertAll();
 
-        log.info("Property value: {}", referenceToValidateValue);
+        System.out.println("Property value: " + referenceToValidateValue);
     }
 }
