@@ -101,6 +101,9 @@ staging:
     automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
 
+  reports:
+    login_title_locator: //*[@class='auth0-lock-name']
+
 ########################################################################################################################
 
 
@@ -228,12 +231,5 @@ development:
     automation_user_identity02: 4N8BBMII4MM4
     automation_user_identity03: 4N8BIL9AC4DH
     identity_role: 67J517C9L763
-
-  reports:
-    login_title_locator: //*[@class='auth0-lock-name']
-    username_locator: //input[@type='email']
-
-  admin:
-    login_locator: //button[@id='1-submit']
 
 ########################################################################################################################

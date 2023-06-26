@@ -14,11 +14,7 @@ public enum PlmPartDataType {
     PLM_INVALID_UDA_VALUE("InvalidUdaValue"),
     PLM_MULTI_REVISION_PARTS("MultiRevWithParts"),
     PLM_MULTI_REVISION_NO_PARTS("MultiRevWithNoParts"),
-    PLM_MULTI_REVISION("MultiSpecificRevision"),
-    PLM_PART_WITH_DATE("PartWithDate34"),
-    PLM_PART_WITH_INTEGER("PartWithInt35"),
-    PLM_PART_WITH_REAL("PartWithReal36"),
-    PLM_PART_WITH_STRING("PartWithStr37");
+    PLM_MULTI_REVISION("MultiSpecificRevision");
 
     private final String plmPartType;
 

@@ -48,11 +48,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//button[.='Process']")
     private WebElement processResultTab;
 
-    @FindBy(xpath = "//span[.='Energy Carbon Factor']")
-    private WebElement energyCarbonFactor;
-    @FindBy(xpath = "//button[.='Processes']")
-    private WebElement processesResultTab;
-
     @FindBy(xpath = "//button[.='Options']")
     private WebElement optionsTab;
 
@@ -179,15 +174,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * verify if material carobn is presented on material utilization page
-     * @return true/false
-     */
-    public boolean isEnergyCarbonPresent() {
-        pageUtils.waitForElementToAppear(energyCarbonFactor);
-        return energyCarbonFactor.isDisplayed();
-    }
-
-    /**
      * Gets total result
      *
      * @param label - the label
@@ -205,16 +191,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage selectProcessTab() {
         pageUtils.waitForElementAndClick(processResultTab);
-        return this;
-    }
-
-    /**
-     * Selects the processes tab
-     *
-     * @return current page object
-     */
-    public MaterialProcessPage selectProcessesTab() {
-        pageUtils.waitForElementAndClick(processesResultTab);
         return this;
     }
 

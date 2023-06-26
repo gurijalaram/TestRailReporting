@@ -23,9 +23,6 @@
     "organizationName": {
       "type": "string"
     },
-    "ownerFullName": {
-      "type": "string"
-    },
     "owner": {
       "type": "string"
     },
@@ -158,12 +155,6 @@
                     "createdBy": {
                       "type": "string"
                     },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "updatedBy": {
-                      "type": "string"
-                    },
                     "givenName": {
                       "type": "string"
                     },
@@ -177,10 +168,6 @@
                     "createdBy",
                     "givenName",
                     "familyName"
-                  ],
-                  "optional": [
-                    "updatedAt",
-                    "updatedBy"
                   ]
                 },
                 "email": {
@@ -265,7 +252,6 @@
     "organizationName",
     "owner",
     "displayName",
-    "dueAt",
-    "ownerFullName"
+    "dueAt"
   ]
 }

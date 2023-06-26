@@ -8,7 +8,6 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
     // PROJECTS
     PROJECTS("projects"),
     PROJECT("projects/%s"),
-    PROJECT_NOTIFICATION_COUNT("projects/notifications-count"),
 
     // PROJECTS
     PROJECT_ITEMS("projects/%s/project-items"),

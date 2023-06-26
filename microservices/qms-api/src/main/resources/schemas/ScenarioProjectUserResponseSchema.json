@@ -14,6 +14,12 @@
     "createdBy": {
       "type": "string"
     },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
     "customerIdentity": {
       "type": "string"
     },
@@ -34,21 +40,6 @@
         },
         "familyName": {
           "type": "string"
-        },
-        "jobTitle": {
-          "type": "string"
-        },
-        "townCity": {
-          "type": "string"
-        },
-        "stateProvince": {
-          "type": "string"
-        },
-        "countryCode": {
-          "type": "string"
-        },
-        "timeZone": {
-          "type": "string"
         }
       },
       "required": [
@@ -57,13 +48,6 @@
         "createdBy",
         "givenName",
         "familyName"
-      ],
-      "optional": [
-        "jobTitle",
-        "townCity",
-        "stateProvince",
-        "countryCode",
-        "timeZone"
       ]
     },
     "email": {
@@ -78,6 +62,9 @@
     "mfaRequired": {
       "type": "boolean"
     },
+    "avatarColor": {
+      "type": "string"
+    },
     "customAttributes": {
       "type": "object",
       "properties": {
@@ -90,9 +77,6 @@
       ]
     },
     "userType": {
-      "type": "string"
-    },
-    "avatarColor": {
       "type": "string"
     }
   },
@@ -110,5 +94,9 @@
     "customAttributes",
     "userType",
     "avatarColor"
+  ],
+  "optional": [
+    "updatedAt",
+    "updatedBy"
   ]
 }

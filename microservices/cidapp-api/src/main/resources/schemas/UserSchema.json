@@ -53,17 +53,6 @@
             "givenName",
             "familyName"
           ],
-          "optional": [
-            "prefix",
-            "suffix",
-            "jobTitle",
-            "department",
-            "townCity",
-            "county",
-            "timezone",
-            "officePhoneCountryCode",
-            "officePhoneNumber"
-          ],
           "properties": {
             "identity": {
               "type": "string"
@@ -78,33 +67,6 @@
               "type": "string"
             },
             "familyName": {
-              "type": "string"
-            },
-            "prefix": {
-              "type": "string"
-            },
-            "suffix": {
-              "type": "string"
-            },
-            "jobTitle": {
-              "type": "string"
-            },
-            "department": {
-              "type": "string"
-            },
-            "townCity": {
-              "type": "string"
-            },
-            "county": {
-              "type": "string"
-            },
-            "timezone": {
-              "type": "string"
-            },
-            "officePhoneCountryCode": {
-              "type": "string"
-            },
-            "officePhoneNumber": {
               "type": "string"
             }
           }

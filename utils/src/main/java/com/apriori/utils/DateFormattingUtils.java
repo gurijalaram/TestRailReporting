@@ -20,5 +20,4 @@ public class DateFormattingUtils {
     public static final DateTimeFormatter dtf_yyyyMMddTHHmmssZ = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static final DateTimeFormatter dtf_yyyyMMddTHHmmZ = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm'Z'");
     public static final DateTimeFormatter dtf_yyyyMMddTHHmmssSSSZ = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    public static final DateTimeFormatter dtf_MMddyyyyHHmmss_slash = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 }
