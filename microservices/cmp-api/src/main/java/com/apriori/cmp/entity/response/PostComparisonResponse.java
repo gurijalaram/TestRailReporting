@@ -4,7 +4,7 @@ package com.apriori.cmp.entity.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -32,8 +32,10 @@ public class PostComparisonResponse {
     private String customerIdentity;
     private String comparisonName;
     private String comparisonType;
-    private String objectType;
-    private List<ComparisonObjects> comparisonObjects;
+    @JsonProperty("objectType")
+    private String comparisonObjectType;
+    @JsonProperty("comparisonObjects")
+    private List<ComparisonObjects> objectsToCompare;
 
 }
 
