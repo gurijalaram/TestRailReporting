@@ -147,6 +147,9 @@ default:
   gcd:
     api_url: https://gcd.${deployment_url_template}
 
+  cmp:
+    api_url: https://cmp.${deployment_url_template}
+
   reports:
     ui_url: https://${deployment_url_template}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
