@@ -21,6 +21,7 @@ public class UserPreferencesTests {
 
     private static UserCredentials currentUser;
     SoftAssertions softAssertions = new SoftAssertions();
+    private final PeopleUtil peopleUtil = new PeopleUtil();
 
     @Before
     public void setupUser() {
@@ -32,7 +33,7 @@ public class UserPreferencesTests {
     @Description("Verify GET user preferences endpoint test")
     public void verifyUserPrefTest() {
 
-        PreferenceItemsResponse userPreferencesResponse = new PeopleUtil().getCurrentUserPref(currentUser);
+        PreferenceItemsResponse userPreferencesResponse = peopleUtil.getCurrentUserPref(currentUser);
 
         softAssertions.assertThat(userPreferencesResponse.getItems()).isNotEmpty();
         softAssertions.assertThat(userPreferencesResponse.getPageSize()).isEqualTo(10);
@@ -43,7 +44,6 @@ public class UserPreferencesTests {
     @TestRail(testCaseId = "16828")
     @Description("Verify PATCH(update) user preferences endpoint test")
     public void verifyUpdateUserPrefTest() {
-        PeopleUtil peopleUtil = new PeopleUtil();
         PreferenceItemsResponse userPreferencesResponse = peopleUtil
             .getCurrentUserPrefParams(currentUser,"pageSize", "100");
         String identity = getItem(userPreferencesResponse,"display.decimalPlaces")

@@ -1,7 +1,5 @@
 package entity.response;
 
-import com.apriori.utils.http.enums.Schema;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlmPart {
+public class PlmSearchPart {
     private String id;
     private String typeId;
 }

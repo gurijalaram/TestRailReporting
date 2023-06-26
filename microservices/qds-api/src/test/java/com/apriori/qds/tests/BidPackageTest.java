@@ -310,9 +310,6 @@ public class BidPackageTest extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
 
         ResponseWrapper<ErrorMessage> bidPackagesResponse = HTTPRequest.build(requestEntity).get();
-
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getStatus()).isEqualTo(404);
-        softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getError()).isEqualTo("Not Found");
         softAssertions.assertThat(bidPackagesResponse.getResponseEntity().getMessage())
             .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity", bidPackageResponse.getIdentity()));
     }

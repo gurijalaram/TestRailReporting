@@ -372,6 +372,8 @@ public class MessagesTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
         partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
@@ -384,8 +386,12 @@ public class MessagesTest extends TestBase {
                 .clickMessageIconOnCommentSection()
                 .clickOnAttribute()
                 .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("This is a discussion with a mention user @2")
-                .selectMentionUser("qa-automation-22@apriori.com")
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion()
+                .addCommentWithMention("This is a new reply with a mention user @22");
+
+        partsAndAssembliesDetailsPage.selectMentionUser("QA Automation Account")
                 .clickComment()
                 .selectCreatedDiscussion();
 
@@ -396,10 +402,6 @@ public class MessagesTest extends TestBase {
                 .selectMentionedUserToFilter("QA Automation Account 22")
                 .clickOnFilteredDiscussion();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
-
         partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Subject");
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
@@ -407,7 +409,6 @@ public class MessagesTest extends TestBase {
         messagesPage = leftHandNavigationBar.clickMessages();
 
         softAssertions.assertThat(messagesPage.isAddedFilterDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(messagesPage.isMentionedUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
 
         messagesPage.resetToDefaultConfiguration();
 

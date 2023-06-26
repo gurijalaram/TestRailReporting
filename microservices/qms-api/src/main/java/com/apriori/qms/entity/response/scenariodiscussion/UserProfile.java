@@ -21,6 +21,7 @@ public class UserProfile {
     private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String givenName;
     private String familyName;
     private String jobTitle;
@@ -31,4 +32,8 @@ public class UserProfile {
     private String stateProvince;
     private String countryCode;
     private String supervisor;
+    private String prefix;
+    private String suffix;
+    private String officePhoneCountryCode;
+    private String officePhoneNumber;
 }
