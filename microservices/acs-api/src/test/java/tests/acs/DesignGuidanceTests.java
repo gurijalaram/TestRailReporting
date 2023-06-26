@@ -1,7 +1,6 @@
 package tests.acs;
 
 import com.apriori.acs.entity.response.acs.designGuidance.DesignGuidanceResponse;
-import com.apriori.acs.entity.response.acs.designGuidance.InfosByTopics;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
@@ -20,20 +19,8 @@ public class DesignGuidanceTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        InfosByTopics infosByTopics = designGuidanceResponse.getInfosByTopics();
-//        ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
-//        ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
-//        PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
-
-        softAssertions.assertThat(designGuidanceResponse.getInfosByTopics()).isNotNull();
         softAssertions.assertThat(designGuidanceResponse.getCostingFailed()).isEqualTo(false);
-//        softAssertions.assertThat(infosByTopics.getDTC_MESSAGES()).isEqualTo(guidanceTopics);
-
         softAssertions.assertThat(designGuidanceResponse.getInfosByTopics()).toString().contains(guidanceTopics);
-
-//        softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
-//        softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
-//        softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
         softAssertions.assertAll();
     }
 
