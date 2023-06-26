@@ -20,7 +20,7 @@ public class DesignGuidanceTests {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(designGuidanceResponse.getCostingFailed()).isEqualTo(false);
-        softAssertions.assertThat(designGuidanceResponse.getInfosByTopics()).toString().contains(guidanceTopics);
+        softAssertions.assertThat(designGuidanceResponse.getInfosByTopics().toString().contains(guidanceTopics)).isEqualTo(true);
         softAssertions.assertAll();
     }
 
