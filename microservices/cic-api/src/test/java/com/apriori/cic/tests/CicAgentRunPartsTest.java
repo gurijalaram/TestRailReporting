@@ -17,7 +17,7 @@ import entity.response.AgentWorkflowJob;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;
-import entity.response.PlmSearchResponse;
+import entity.response.PlmParts;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
 import enums.PlmPartsSearch;
@@ -166,7 +166,7 @@ public class CicAgentRunPartsTest extends TestBase {
         softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
 
-        PlmSearchResponse plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
+        PlmParts plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
             .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), plmPartData.getPlmPartNumber()))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
             .build());

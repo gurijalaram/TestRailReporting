@@ -39,7 +39,7 @@ default:
 
 ###########################
 #  Core services
-  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
+  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}
@@ -107,8 +107,6 @@ default:
     agent_type: windchill
     windchill:
       host_name: https://consvwc02.fbc.com/Windchill
-      username: wcadmin
-      password: test123#
       host_token: d2NhZG1pbjp0ZXN0MTIzIw==
     teamcenter:
       host_name: https://consvtc12-01.apriori.com:8443/tc

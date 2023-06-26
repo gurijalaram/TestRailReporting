@@ -103,9 +103,6 @@
                     "updatedAt": {
                       "type": "string"
                     },
-                    "updatedBy": {
-                      "type": "string"
-                    },
                     "givenName": {
                       "type": "string"
                     },
@@ -117,12 +114,9 @@
                     "identity",
                     "createdAt",
                     "createdBy",
+                    "updatedAt",
                     "givenName",
                     "familyName"
-                  ],
-                  "optional": [
-                    "updatedAt",
-                    "updatedBy"
                   ]
                 },
                 "email": {
@@ -151,11 +145,9 @@
                     }
                   },
                   "required": [
-                    "workspaceId"
-                  ],
-                  "optional": [
                     "location",
-                    "department"
+                    "department",
+                    "workspaceId"
                   ]
                 },
                 "userType": {

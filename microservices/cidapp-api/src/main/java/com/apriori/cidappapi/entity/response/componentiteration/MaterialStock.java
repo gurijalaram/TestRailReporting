@@ -46,5 +46,4 @@ public class MaterialStock {
     private Boolean virtual;
     private Double width;
     private Double thickness;
-    private MaterialSustainabilityInfo sustainabilityInfo;
 }

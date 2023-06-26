@@ -554,7 +554,6 @@ public class CdsTestUtil extends TestUtil {
                     .signRequestAlgorithm("RSA_SHA256")
                     .signRequestAlgorithmDigest("SHA256")
                     .protocolBinding("HTTP_POST")
-                    .authenticationType("IDENTITY_PROVIDER_INITIATED_SSO")
                     .attributeMappings(AttributeMappings.builder()
                         .userId(Constants.SAML_ATTRIBUTE_NAME_IDENTIFIER)
                         .email(Constants.SAML_ATTRIBUTE_NAME_EMAIL)

@@ -18,7 +18,6 @@ import tests.acs.EnabledCurrencyRateVersionsTests;
 import tests.acs.GcdPropertiesTests;
 import tests.acs.GcdTypesTests;
 import tests.acs.LoadCadFileTests;
-import tests.acs.MaterialsInfoTests;
 import tests.acs.PartPrimaryProcessGroupsTests;
 import tests.acs.ProductionDefaultsTests;
 import tests.acs.ProductionInfoTests;
@@ -46,7 +45,6 @@ import tests.acs.UserPreferencesTests;
     GcdTypesTests.class,
     GcdPropertiesTests.class,
     LoadCadFileTests.class,
-    MaterialsInfoTests.class,
     PartPrimaryProcessGroupsTests.class,
     ProductionDefaultsTests.class,
     ProductionInfoTests.class,

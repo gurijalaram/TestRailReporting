@@ -15,7 +15,7 @@
       "type": "string"
     },
     "timestamp": {
-      "type": "string"
+      "type": "integer"
     }
   },
   "required": [

@@ -112,7 +112,8 @@ public class QuickComparisonTests  extends TestBase {
         comparePage = loginPage.login(currentUser)
             .navigateToScenario(basePart)
             .createComparison()
-            .selectQuickComparison();
+            .selectQuickComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
@@ -167,7 +168,8 @@ public class QuickComparisonTests  extends TestBase {
         comparePage = loginPage.login(currentUser)
             .multiSelectScenarios(basePart.getComponentName() + "," + basePart.getScenarioName())
             .createComparison()
-            .selectQuickComparison();
+            .selectQuickComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
@@ -249,7 +251,8 @@ public class QuickComparisonTests  extends TestBase {
         comparePage = loginPage.login(currentUser)
             .multiSelectScenarios(basePart.getComponentName() + "," + basePart.getScenarioName())
             .createComparison()
-            .selectQuickComparison();
+            .selectQuickComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + baseScenarioName);
@@ -263,7 +266,8 @@ public class QuickComparisonTests  extends TestBase {
         comparePage = comparePage.clickExplore()
             .navigateToScenario(scenario2)
             .createComparison()
-            .selectQuickComparison();
+            .selectQuickComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName2);
@@ -284,7 +288,8 @@ public class QuickComparisonTests  extends TestBase {
         comparePage = comparePage.clickExplore()
             .multiHighlightScenarios(basePart.getComponentName() + "," + basePart.getScenarioName())
             .createComparison()
-            .selectQuickComparison();
+            .selectQuickComparison()
+            .create();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + baseScenarioName);

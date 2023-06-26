@@ -35,5 +35,4 @@ public class IdentityProviderRequest {
     private String protocolBinding;
     private AttributeMappings attributeMappings;
     private String createdBy;
-    private String authenticationType;
 }
