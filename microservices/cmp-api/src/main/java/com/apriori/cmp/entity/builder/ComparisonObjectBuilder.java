@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class ComparisonObjectBuilder {
     private String externalIdentity;
-    private int position;
-    private boolean basis;
+    private Integer position;
+    private Boolean basis;
 }

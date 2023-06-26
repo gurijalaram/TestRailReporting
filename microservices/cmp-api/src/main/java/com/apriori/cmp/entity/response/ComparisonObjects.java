@@ -23,6 +23,6 @@ public class ComparisonObjects {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String externalIdentity;
-    private int position;
-    private boolean basis;
+    private Integer position;
+    private Boolean basis;
 }
