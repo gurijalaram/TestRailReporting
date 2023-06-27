@@ -482,90 +482,6 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     }
 
     /**
-     * project page validations
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectDetails(String dateTime) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.getProjectDetailsPageTitle()).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(this.isAllProjectsNavigationDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Details")).isEqualTo(true);
-        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Parts & Assemblies")).isEqualTo(true);
-        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Users")).isEqualTo(true);
-        softAssertions.assertAll();
-        return this;
-    }
-
-    /**
-     * project details tab validations
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectDetailsTabDetails(String dateTime, UserCredentials currentUser) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
-        softAssertions.assertThat(this.getProjectDetailsTabTitle()).contains("Details");
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Description")).contains("This Project is created by Automation User " + currentUser.getEmail());
-        softAssertions.assertAll();
-        return this;
-    }
-
-    /**
-     * project parts and assemblies tab validations
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectPartsAndAssembliesTabDetails(String componentName, String scenarioName) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.isShowHideOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.isSearchOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.isFilterOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
-                CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
-                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns());
-
-        softAssertions.assertThat(this.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
-        softAssertions.assertThat(this.getPinnedTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns());
-        softAssertions.assertAll();
-        return this;
-    }
-
-    /**
-     * project users tab validations
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectUserTabDetails(UserCredentials currentUser) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.isDetailsShowHideOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.getUserTableHeaders()).contains("Full Name","Job title");
-        softAssertions.assertThat(this.isOwnerEmailDisplayed(currentUser.getEmail())).isEqualTo(true);
-        softAssertions.assertThat(this.getProjectOwnerName(currentUser.getEmail())).contains("QA Automation Account");
-        softAssertions.assertThat(this.isOwnerLabelDisplayed()).isEqualTo(true);
-        softAssertions.assertAll();
-        return this;
-    }
-
-    /**
-     * project details tab validations after edit
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectDetailsAfterEdit(String dateTime, UserCredentials currentUser) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
-        softAssertions.assertThat(this.getProjectDetailsTabTitle()).contains("Details");
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(this.isProjectDetailsDisplays("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
-        softAssertions.assertAll();
-        return this;
-    }
-
-    /**
      * Checks if project delete button displayed
      *
      * @return true/false
@@ -638,20 +554,5 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsPage clickModalDeleteProject() {
         getPageUtils().waitForElementAndClick(btnModalDelete);
         return new ProjectsPage(driver);
-    }
-
-    /**
-     * project delete modal validations
-     *
-     * @return current page object
-     */
-    public ProjectsDetailsPage validateProjectDeleteModalDetails() {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(this.isDeleteModalDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.getDeleteConfirmation()).contains("This will permanently delete this Project and all data.");
-        softAssertions.assertThat(this.isModalDeleteButtonDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(this.isModalCancelButtonDisplayed()).isEqualTo(true);
-        softAssertions.assertAll();
-        return this;
     }
 }
