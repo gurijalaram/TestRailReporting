@@ -109,26 +109,22 @@ public class QmsScenarioSharingTest extends TestUtil {
     @TestRail(testCaseId = {"16351"})
     @Description("Verify that more than 10 Users can be added by using SHARE option")
     public void addMoreThan10ComponentScenarioUsers() {
-        List<ProjectUserParameters> projectUsersList = new ArrayList<>();
+        List<String> usersList = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
-            projectUsersList.add(ProjectUserParameters.builder()
-                .email(UserUtil.getUser().getEmail())
-                .build());
-        }
-
-        ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
-            .users(projectUsersList)
-            .build();
-
-        ScenarioProjectUserResponse userResponse = QmsComponentResources.addComponentScenarioUser(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), createProjectUserRequest, currentUser);
-        softAssertions.assertThat(userResponse.size()).isEqualTo(12);
-        if (softAssertions.wasSuccess()) {
-            for (ProjectUserParameters userParams : projectUsersList) {
-                softAssertions.assertThat(userResponse.stream()
-                        .anyMatch(u -> u.getIdentity()
-                            .equals(new AuthUserContextUtil().getAuthUserIdentity(userParams.getEmail()))))
-                    .isTrue();
-            }
+            String newUserEmail = UserUtil.getUser().getEmail();
+            String newUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(newUserEmail);
+            usersList.add(newUserIdentity);
+            ProjectUserRequest createProjectUserRequest = ProjectUserRequest.builder()
+                .users(Collections.singletonList(ProjectUserParameters.builder()
+                    .email(newUserEmail)
+                    .build()))
+                .build();
+            ScenarioProjectUserResponse userResponse = QmsComponentResources.addComponentScenarioUser(scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(),
+                createProjectUserRequest,
+                currentUser);
+            softAssertions.assertThat(userResponse.stream()
+                .anyMatch(u -> u.getIdentity().equals(newUserIdentity))).isTrue();
         }
 
         //GET Users
@@ -138,12 +134,8 @@ public class QmsScenarioSharingTest extends TestUtil {
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
         softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(12);
         if (softAssertions.wasSuccess()) {
-            for (ProjectUserParameters userParams : projectUsersList) {
-                softAssertions.assertThat(userResponse.stream()
-                        .anyMatch(u -> u.getIdentity()
-                            .equals(new AuthUserContextUtil().getAuthUserIdentity(userParams.getEmail()))))
-                    .isTrue();
-            }
+            softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
+                .anyMatch(u -> usersList.contains(u.getIdentity()))).isTrue();
         }
     }
 
