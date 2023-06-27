@@ -23,11 +23,9 @@ ap-int:
     windchill:
       port: 8811
       connector: WC-consvwc02
-      agent_name: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
     teamcenter:
       port: 8810
       connector: TC-consvtc12
-      agent_name: c3101e82-4cfc-4a3b-a341-ee53c3f05f55_Agent
     filesystem:
       port: 8809
       connector: FS-conqcic01
