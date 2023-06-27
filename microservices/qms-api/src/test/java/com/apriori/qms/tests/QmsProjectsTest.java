@@ -106,7 +106,7 @@ public class QmsProjectsTest extends TestUtil {
         projectUsersList.add(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
-            UserCredentials user = QmsApiTestUtils.getNextUser(currentUser);
+            UserCredentials user = UserUtil.getUser();
             String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(user.getEmail());
             usersList.add(BidPackageProjectUserParameters.builder()
                 .userIdentity(userIdentity)
@@ -152,7 +152,7 @@ public class QmsProjectsTest extends TestUtil {
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        UserCredentials duplicateUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials duplicateUser = UserUtil.getUser();
         String duplicateUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(duplicateUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(duplicateUserIdentity)
@@ -259,14 +259,14 @@ public class QmsProjectsTest extends TestUtil {
 
         projectUsersList.add(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        UserCredentials user1 = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials user1 = UserUtil.getUser();
         String userIdentity1 = new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail()))
             .build());
         projectUsersList.add(userIdentity1);
 
-        UserCredentials user2 = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials user2 = UserUtil.getUser();
         String userIdentity2 = new AuthUserContextUtil().getAuthUserIdentity(user2.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user2.getEmail()))
@@ -274,7 +274,7 @@ public class QmsProjectsTest extends TestUtil {
             .build());
         projectUsersList.add(userIdentity2);
 
-        UserCredentials user3 = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials user3 = UserUtil.getUser();
         String userIdentity3 = new AuthUserContextUtil().getAuthUserIdentity(user3.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user3.getEmail()))

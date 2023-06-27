@@ -40,7 +40,7 @@ public class BidPackageProjectUserTest extends TestUtil {
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        UserCredentials newUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials newUser = UserUtil.getUser();
         bidPackageProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newUser);
     }
@@ -49,7 +49,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"15485", "13789"})
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
-        UserCredentials defaultUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials defaultUser = UserUtil.getUser();
         BidPackageProjectUsersPostResponse bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
         softAssertions.assertThat(bidPackageDefaultProjectUserResponse.get(0).getProjectIdentity())
@@ -71,7 +71,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"13782", "13788"})
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
-        UserCredentials adminUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials adminUser = UserUtil.getUser();
         BidPackageProjectUsersPostResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN",
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 

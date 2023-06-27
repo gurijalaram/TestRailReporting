@@ -67,14 +67,14 @@ public class QmsProjectsFilteredTest extends TestUtil {
             .build());
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        UserCredentials newUserFirst = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials newUserFirst = UserUtil.getUser();
         newUserIdentityFirst = new AuthUserContextUtil().getAuthUserIdentity(newUserFirst.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(newUserIdentityFirst)
             .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
-        UserCredentials newUserSecond = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials newUserSecond = UserUtil.getUser();
         newUserIdentitySecond = new AuthUserContextUtil().getAuthUserIdentity(newUserSecond.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(newUserIdentitySecond)
@@ -86,7 +86,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         owner = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         dueAtLT = DateUtil.getDateDaysAfter(12, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         dueAtGT = DateUtil.getDateDaysBefore(30, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
-        newOwner = new AuthUserContextUtil().getAuthUserIdentity(QmsApiTestUtils.getNextUser(currentUser).getEmail());
+        newOwner = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectStatus", status);
         projectAttributesMap.put("projectDisplayName", displayName);
@@ -319,7 +319,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     @TestRail(testCaseId = {"24112"})
     @Description("Search by Display Name[CN] + Members[NI]")
     public void getFilteredProjectsByDisplayNameCNMembersNI() {
-        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(QmsApiTestUtils.getNextUser(currentUser).getEmail());
+        String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
         String[] params = {"pageNumber,1", "displayName[CN]," + displayName, "members[NI]," + projectNonMemberUserIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();

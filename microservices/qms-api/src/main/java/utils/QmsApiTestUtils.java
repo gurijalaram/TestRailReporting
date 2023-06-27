@@ -367,19 +367,5 @@ public class QmsApiTestUtils {
             }
         }
     }
-
-    /**
-     * Gets next user.
-     *
-     * @param currentUser the current user
-     * @return the next user
-     */
-    public static UserCredentials getNextUser(UserCredentials currentUser) {
-        UserCredentials nextUser = UserUtil.getUser();
-        if (nextUser.getEmail().equals(currentUser.getEmail())) {
-            nextUser = UserUtil.getUser();
-        }
-        return nextUser;
-    }
 }
 

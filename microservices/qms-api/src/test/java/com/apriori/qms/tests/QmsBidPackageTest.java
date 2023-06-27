@@ -320,7 +320,7 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(testCaseId = {"13368"})
     @Description("Find List of bid packages from another user")
     public void getBidPackagesFromOtherUser() {
-        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials otherUser = UserUtil.getUser();
         BidPackagesResponse bidPackagesResponse = QmsBidPackageResources.getBidPackages(BidPackagesResponse.class, HttpStatus.SC_OK, otherUser);
         softAssertions.assertThat(bidPackagesResponse.getItems().size()).isGreaterThan(0);
     }
