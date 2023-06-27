@@ -1,10 +1,6 @@
 package com.apriori.pageobjects.pages.createnewproject;
 
 import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
-import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
-import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
-import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
-import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
 import com.apriori.utils.PageUtils;
