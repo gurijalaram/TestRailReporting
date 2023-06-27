@@ -69,6 +69,8 @@ public class PlmUdaTests extends TestBase {
         "Test reading UDA of all data types with mapping rule 'Mapped from PLM' with value set in PLM")
     public void testMultiSelectUdaMapSetInPlm() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED).getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -127,6 +129,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaMapNotInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -184,6 +188,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaMapDefaultSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -246,6 +252,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaNotMappedInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -307,6 +315,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaWithInvalidVpe() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_VPE);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.SCENARIO_NAME, MappingRule.MAPPED_FROM_PLM, "")
@@ -343,6 +353,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaWithInvalidProcessGroup() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_PG);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -389,6 +401,8 @@ public class PlmUdaTests extends TestBase {
         PartData plmInvalidUdaValueData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_UDA_VALUE);
 
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmInvalidUdaFormatData.getPlmPartNumber())
             .setQueryFilter("partNumber", "EQ", plmInvalidUdaValueData.getPlmPartNumber())
             .setQueryFilters("OR")
@@ -449,6 +463,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaWithInvalidMaterial() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_MATERIAL);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -494,6 +510,8 @@ public class PlmUdaTests extends TestBase {
     public void testMultiSelectUdaConstantMappedRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_UDA_VALUE);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())

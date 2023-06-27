@@ -194,6 +194,7 @@ public class CicApiTestUtil extends TestBase {
      * @return response of created work flow string
      */
     public static ResponseWrapper<String> createWorkflow(String session, String workflowData) {
+        ResponseWrapper<String> workflowResponse;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -203,7 +204,11 @@ public class CicApiTestUtil extends TestBase {
             })
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).post();
+        workflowResponse = HTTPRequest.build(requestEntity).post();
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowData));
+        }
+        return workflowResponse;
     }
 
     /**
@@ -214,6 +219,7 @@ public class CicApiTestUtil extends TestBase {
      * @return ResponseWrapper<String>
      */
     public static ResponseWrapper<String> createWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
+        ResponseWrapper<String> workflowResponse;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -223,7 +229,11 @@ public class CicApiTestUtil extends TestBase {
             })
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).post();
+        workflowResponse = HTTPRequest.build(requestEntity).post();
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestDataBuilder.getName()));
+        }
+        return workflowResponse;
     }
 
     /**
@@ -314,16 +324,15 @@ public class CicApiTestUtil extends TestBase {
     /**
      * get the customer id based on customer environment name (ant, widgets)
      *
+     * @param jSessionId
      * @return customer
      */
-    public static String getAgent() {
-        String agentName = StringUtils.EMPTY;
-        try {
-            agentName = PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.agent_name");
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+    public static String getAgent(String jSessionId) {
+        ConnectorInfo connectorInfo = getMatchedConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"), jSessionId);
+        if (connectorInfo == null) {
+            throw new IllegalArgumentException("Connector not found!!");
         }
-        return agentName;
+        return connectorInfo.getName();
     }
 
     /**
@@ -744,7 +753,6 @@ public class CicApiTestUtil extends TestBase {
             workflowRequestDataBuilder.setDefaultValues(defaultValues);
         }
         workflowRequestDataBuilder.setCustomer(getCustomerName());
-        workflowRequestDataBuilder.setPlmSystem(getAgent());
         workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
         workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
         return workflowRequestDataBuilder;
