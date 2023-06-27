@@ -109,7 +109,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13902"})
     @Description("update Bid Package Item another user under same customer")
     public void updateBidPackageItemByOtherUser() {
-        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials otherUser = UserUtil.getUser();
         BidPackageItemRequest bidPackageItemRequestBuilder = BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .iterationIdentity(scenarioItem.getIterationIdentity())
@@ -150,7 +150,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13905"})
     @Description("Delete Bid Package Item By Other user under same customer")
     public void deleteBidPackageItemByOtherUser() {
-        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials otherUser = UserUtil.getUser();
         QmsBidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(), otherUser);
     }
@@ -173,7 +173,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13904"})
     @Description("Get Bid Package Item By Other user under same customer")
     public void getBidPackageItemByOtherUser() {
-        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials otherUser = UserUtil.getUser();
         BidPackageItemResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItem(
             bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(),
@@ -214,7 +214,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @TestRail(testCaseId = {"13903"})
     @Description("Find list of  Bid Package Items by other user under same customer")
     public void getBidPackageItemsByOther() {
-        UserCredentials otherUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials otherUser = UserUtil.getUser();
         BidPackageItemsResponse updateBidPackageItemResponse = QmsBidPackageResources.getBidPackageItems(
             bidPackageResponse.getIdentity(),
             otherUser,

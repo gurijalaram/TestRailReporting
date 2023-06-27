@@ -479,13 +479,37 @@ public class QmsBidPackageResources {
         return responseWrapper.getResponseEntity();
     }
 
+
+    /**
+     * Create bid package project user.
+     *
+     * @param <T>                                 the type parameter
+     * @param bidPackageProjectUserRequestBuilder the bid package project user request builder
+     * @param bidPackageIdentity                  the bid package identity
+     * @param projectIdentity                     the project identity
+     * @param responseClass                       the response class
+     * @param currentUser                         the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T createBidPackageProjectUser(BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .inlineVariables(bidPackageIdentity, projectIdentity)
+            .body(bidPackageProjectUserRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
     /**
      * Delete bid package project user bid package project users delete response.
      *
-     * @param userIdList          the user id list
-     * @param bidPackageIdentity  the bid package identity
-     * @param projectIdentity     the project identity
-      * @param currentUser         the current user
+     * @param userIdList         the user id list
+     * @param bidPackageIdentity the bid package identity
+     * @param projectIdentity    the project identity
+     * @param currentUser        the current user
      * @return the bid package project users delete response
      */
     public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {

@@ -60,7 +60,7 @@ public class QmsScenarioDiscussionFilteredTest extends TestUtil {
     @TestRail(testCaseId = {"16057", "14672"})
     @Description("Create, get scenario discussion with assignee user and useridentity")
     public void getFilteredScenarioDiscussionsByUserIdentity() {
-        UserCredentials assignedUser = QmsApiTestUtils.getNextUser(currentUser);
+        UserCredentials assignedUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
