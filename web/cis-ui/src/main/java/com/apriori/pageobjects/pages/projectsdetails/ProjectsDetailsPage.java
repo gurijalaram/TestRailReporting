@@ -131,7 +131,6 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsDetailsPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        //this.waitForProjectsPageLoad();
         this.projectsPartsAndAssemblyTableController = new ProjectsPartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
     }
