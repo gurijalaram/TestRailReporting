@@ -59,6 +59,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowRevisionWhenReturnOnlyEnabled() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -97,6 +99,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowMapSetRevisionDisabled() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -136,6 +140,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowMapSetSpecificRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilter(QueryDefinitionFields.REVISION_NUMBER.getQueryDefinitionField(), "EQ", "B")
             .setQueryFilters("AND")
@@ -174,6 +180,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowNoPartWithMultiRev() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -213,6 +221,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
         PartData plmPartWithNoParts = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS);
 
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartWithParts.getPlmPartNumber())
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartWithNoParts.getPlmPartNumber())
             .setQueryFilters("OR")
@@ -257,6 +267,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     @Description("Verify no errors are displayed when 'Return Latest Revision' is enabled and job contains no parts")
     public void testWorkflowVerifyRevisionWithInValidPart() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", "invalid")
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -290,6 +302,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowEditDisabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -343,6 +357,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowEditEnabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -397,6 +413,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowEditEnabledPreserveRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())

@@ -1,6 +1,9 @@
 package com.apriori.pageobjects.pages.createnewproject;
 
 import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
+import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
+import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
+import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
@@ -49,6 +52,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
 
     @FindBy(xpath = "//div[@aria-live='polite']")
     private WebElement btnYear;
+
     @FindBy(id = "create-project-add-part-and-assembly-modal")
     private WebElement addPartsModal;
 
@@ -184,6 +188,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      */
     public CreateNewProjectsPage selectAUser(String teamMember) {
         getPageUtils().waitForElementAndClick(inviteTeammatesField);
+        getPageUtils().waitForElementToAppear(memberList);
         getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
         getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
         return this;
@@ -200,6 +205,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(btnYear);
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
         getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
+        getPageUtils().scrollWithJavaScript(projectNameField,false);
         return this;
     }
 

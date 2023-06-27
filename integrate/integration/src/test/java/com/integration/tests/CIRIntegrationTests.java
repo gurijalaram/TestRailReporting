@@ -81,16 +81,14 @@ public class CIRIntegrationTests extends TestBase {
     public void testVerifyCIRReport() {
         loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
-        workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(),
+        workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(loginSession),
             workflowName, scenarioName,
             CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY).getValue(),
             CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue());
 
         //Create a Workflow
         MultipleComponentSummary pdfExpectedReportData = new TestDataService().getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);
-        softAssertions.assertThat(responseWrapper.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(responseWrapper.getBody()).contains(">true<");
+        CicApiTestUtil.createWorkflow(loginSession, workflowData);
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
         softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
 

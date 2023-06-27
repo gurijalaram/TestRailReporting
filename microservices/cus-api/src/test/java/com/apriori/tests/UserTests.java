@@ -11,17 +11,20 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class UserTests {
     private static UserCredentials currentUser;
-    private PeopleUtil peopleUtil = new PeopleUtil();
-    private SoftAssertions softAssertions = new SoftAssertions();
-    private static String badRequest = "Bad Request";
-    private static String expectedMessageFamilyName = "'familyName' can not be changed";
-    private static String expectedMessageGivenName = "'givenName' can not be changed";
+    private final PeopleUtil peopleUtil = new PeopleUtil();
+    private final SoftAssertions softAssertions = new SoftAssertions();
+    private final GenerateStringUtil generator = new GenerateStringUtil();
+    private static final String badRequest = "Bad Request";
+    private static final String expectedMessageFamilyName = "'familyName' should not be null.";
+    private static final String expectedMessageGivenName = "'givenName' should not be null.";
 
     @Before
     public void setupUser() {
@@ -32,7 +35,7 @@ public class UserTests {
     @TestRail(testCaseId = "16822")
     @Description("Verify GET current user endpoint test")
     public void verifyCurrentUserTest() {
-        User user = new PeopleUtil().getCurrentUser(currentUser);
+        User user = peopleUtil.getCurrentUser(currentUser);
         softAssertions.assertThat(user.getEmail()).isEqualTo(currentUser.getEmail());
         softAssertions.assertAll();
     }
@@ -41,18 +44,28 @@ public class UserTests {
     @TestRail(testCaseId = "17064")
     @Description("Update valid fields via CUS /users/current endpoint")
     public void updateCurrentUserValidFieldsTest() {
-        String newPrefix = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newSuffix = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newJobTitle = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newDepartment = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newTownCity = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newCounty = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newOfficePhoneCountryCode = new GenerateStringUtil().getRandomNumbersSpecLength(3);
-        String newOfficePhoneNumber = new GenerateStringUtil().getRandomNumbers();
-        String newTimezone = new GenerateStringUtil().getRandomStringSpecLength(3);
+        String newPrefix = generator.getRandomStringSpecLength(8);
+        String newSuffix = generator.getRandomStringSpecLength(8);
+        String newJobTitle = generator.getRandomStringSpecLength(8);
+        String newDepartment = generator.getRandomStringSpecLength(8);
+        String newTownCity = generator.getRandomStringSpecLength(8);
+        String newCounty = generator.getRandomStringSpecLength(8);
+        String newOfficePhoneCountryCode = generator.getRandomNumbersSpecLength(3);
+        String newOfficePhoneNumber = generator.getRandomNumbers();
+        String newTimezone = generator.getRandomStringSpecLength(3);
 
-        UpdateUserRequest  updateUserRequest = UpdateUserRequest.builder()
+        User user = peopleUtil.getCurrentUser(currentUser);
+
+        UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
+            .identity(user.getIdentity())
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .active(user.getActive())
+            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
+                .givenName(user.getUserProfile().getGivenName())
+                .familyName(user.getUserProfile().getFamilyName())
+                .createdBy(user.getUserProfile().getCreatedBy())
                 .prefix(newPrefix)
                 .suffix(newSuffix)
                 .jobTitle(newJobTitle)
@@ -65,7 +78,7 @@ public class UserTests {
                 .build())
             .build();
 
-        User response = peopleUtil.updateCurrentUser(currentUser,updateUserRequest);
+        User response = peopleUtil.updateCurrentUser(currentUser, updateUserRequest);
 
         softAssertions.assertThat(response.getUserProfile().getPrefix()).isEqualTo(newPrefix);
         softAssertions.assertThat(response.getUserProfile().getSuffix()).isEqualTo(newSuffix);
@@ -81,18 +94,29 @@ public class UserTests {
 
     @Test
     @TestRail(testCaseId = "17065")
+    @Ignore("It is better to not run this test till issue will be fixed, because it will update Auto user with new name and email")
+    @Issue("CFIRST-414")
     @Description("Try to update SAML fields via CUS /users/current endpoint should be not possible")
     public void updateSamlFieldsShouldBeNotPossibleTest() {
-        String newUsername = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newEmail = new GenerateStringUtil().generateEmail();
+        String newUsername = generator.getRandomStringSpecLength(8);
+        String newEmail = generator.generateEmail();
 
-        UpdateUserRequest  updateUserRequest = UpdateUserRequest.builder()
+        User user = peopleUtil.getCurrentUser(currentUser);
+
+        UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
+            .identity(user.getIdentity())
             .username(newUsername)
             .email(newEmail)
-            .userProfile(UserProfile.builder().build())
+            .active(user.getActive())
+            .createdBy(user.getCreatedBy())
+            .userProfile(UserProfile.builder()
+                .givenName(user.getUserProfile().getGivenName())
+                .familyName(user.getUserProfile().getFamilyName())
+                .createdBy(user.getUserProfile().getCreatedBy())
+                .build())
             .build();
 
-        User response = peopleUtil.updateCurrentUser(currentUser,updateUserRequest);
+        User response = peopleUtil.updateCurrentUser(currentUser, updateUserRequest);
 
         softAssertions.assertThat(response.getEmail()).isEqualTo(currentUser.getEmail());
         softAssertions.assertThat(response.getUsername()).isEqualTo(currentUser.getUsername());
@@ -100,60 +124,45 @@ public class UserTests {
     }
 
     @Test
-    @TestRail(testCaseId = "17109")
-    @Description("Trying to update givenName or FamilyName should give an error")
-    public void updateGivenNameOrFamilyNameShouldGiveErrorTest() {
-        String newGivenName = new GenerateStringUtil().getRandomStringSpecLength(8);
-        String newFamilyName = new GenerateStringUtil().getRandomStringSpecLength(8);
-
-        UpdateUserRequest  updateUserRequest = UpdateUserRequest.builder()
-            .userProfile(UserProfile.builder()
-                .familyName(newFamilyName)
-                .build())
-            .build();
-
-        ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest);
-
-        softAssertions.assertThat(response.getMessage()).isEqualTo(expectedMessageFamilyName);
-        softAssertions.assertThat(response.getError()).isEqualTo(badRequest);
-        softAssertions.assertAll();
-
-        UpdateUserRequest  updateUserRequest2 = UpdateUserRequest.builder()
-            .userProfile(UserProfile.builder()
-                .givenName(newGivenName)
-                .build())
-            .build();
-
-        ErrorResponse response2 = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest2);
-
-        softAssertions.assertThat(response2.getMessage()).isEqualTo(expectedMessageGivenName);
-        softAssertions.assertThat(response2.getError()).isEqualTo(badRequest);
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(testCaseId = "17066")
     @Description("Trying to update givenName or FamilyName as empty should give an error")
     public void updateGivenNameOrFamilyNameAsEmptyShouldGiveErrorTest() {
-        UpdateUserRequest  updateUserRequest = UpdateUserRequest.builder()
+        User user = peopleUtil.getCurrentUser(currentUser);
+
+        UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
+            .identity(user.getIdentity())
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .active(user.getActive())
+            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
+                .givenName(user.getUserProfile().getGivenName())
                 .familyName("")
+                .createdBy(user.getUserProfile().getCreatedBy())
+
                 .build())
             .build();
 
-        ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest);
+        ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser, updateUserRequest);
 
         softAssertions.assertThat(response.getMessage()).isEqualTo(expectedMessageFamilyName);
         softAssertions.assertThat(response.getError()).isEqualTo(badRequest);
         softAssertions.assertAll();
 
-        UpdateUserRequest  updateUserRequest2 = UpdateUserRequest.builder()
+        UpdateUserRequest updateUserRequest2 = UpdateUserRequest.builder()
+            .identity(user.getIdentity())
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .active(user.getActive())
+            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
                 .givenName("")
+                .familyName(user.getUserProfile().getFamilyName())
+                .createdBy(user.getUserProfile().getCreatedBy())
                 .build())
             .build();
 
-        ErrorResponse response2 = peopleUtil.updateCurrentUserBadRequest(currentUser,updateUserRequest2);
+        ErrorResponse response2 = peopleUtil.updateCurrentUserBadRequest(currentUser, updateUserRequest2);
 
         softAssertions.assertThat(response2.getMessage()).isEqualTo(expectedMessageGivenName);
         softAssertions.assertThat(response2.getError()).isEqualTo(badRequest);

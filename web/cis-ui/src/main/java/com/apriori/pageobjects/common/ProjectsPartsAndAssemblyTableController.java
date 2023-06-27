@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class ProjectsPartsAndAssemblyTableController extends EagerPageComponent<ProjectsPartsAndAssemblyTableController> {
+
     @FindBy(css = "div.MuiDataGrid-columnHeaders.css-qw65j7")
     private WebElement tableHeaders;
 

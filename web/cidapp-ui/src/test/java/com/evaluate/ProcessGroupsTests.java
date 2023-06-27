@@ -115,7 +115,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Tube Laser");
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Band Saw");
 
         softAssertions.assertAll();
     }

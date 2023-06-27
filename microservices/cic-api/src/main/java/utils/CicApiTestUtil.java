@@ -31,13 +31,14 @@ import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowReportTemplates;
 import entity.response.ConnectorInfo;
 import entity.response.ConnectorsResponse;
-import entity.response.PlmPart;
-import entity.response.PlmParts;
+import entity.response.PlmSearchPart;
+import entity.response.PlmSearchResponse;
 import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
 import enums.CICReportType;
+import enums.PlmApiEnum;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import enums.ReportsEnum;
@@ -193,6 +194,7 @@ public class CicApiTestUtil extends TestBase {
      * @return response of created work flow string
      */
     public static ResponseWrapper<String> createWorkflow(String session, String workflowData) {
+        ResponseWrapper<String> workflowResponse;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -202,7 +204,11 @@ public class CicApiTestUtil extends TestBase {
             })
             .customBody(workflowData)
             .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).post();
+        workflowResponse = HTTPRequest.build(requestEntity).post();
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowData));
+        }
+        return workflowResponse;
     }
 
     /**
@@ -213,6 +219,7 @@ public class CicApiTestUtil extends TestBase {
      * @return ResponseWrapper<String>
      */
     public static ResponseWrapper<String> createWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
+        ResponseWrapper<String> workflowResponse;
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_UI_CREATE_WORKFLOW, null)
             .headers(new HashMap<String, String>() {
                 {
@@ -222,7 +229,11 @@ public class CicApiTestUtil extends TestBase {
             })
             .body(workflowRequestDataBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).post();
+        workflowResponse = HTTPRequest.build(requestEntity).post();
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestDataBuilder.getName()));
+        }
+        return workflowResponse;
     }
 
     /**
@@ -313,16 +324,15 @@ public class CicApiTestUtil extends TestBase {
     /**
      * get the customer id based on customer environment name (ant, widgets)
      *
+     * @param jSessionId
      * @return customer
      */
-    public static String getAgent() {
-        String agentName = StringUtils.EMPTY;
-        try {
-            agentName = PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.agent_name");
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+    public static String getAgent(String jSessionId) {
+        ConnectorInfo connectorInfo = getMatchedConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"), jSessionId);
+        if (connectorInfo == null) {
+            throw new IllegalArgumentException("Connector not found!!");
         }
-        return agentName;
+        return connectorInfo.getName();
     }
 
     /**
@@ -464,8 +474,8 @@ public class CicApiTestUtil extends TestBase {
      * @param searchFilter SearchFilter ( created sample tests for usage)
      * @return PlmParts Response object
      */
-    public static PlmParts searchPlmWindChillParts(SearchFilter searchFilter) {
-        PlmPart plmPart = null;
+    public static PlmSearchResponse searchPlmWindChillParts(SearchFilter searchFilter) {
+        PlmSearchPart plmPart = null;
         QueryParams queryParams = new QueryParams();
         List<String[]> paramKeyValue = Arrays.stream(searchFilter.getQueryParams()).map(o -> o.split(":")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
@@ -474,13 +484,13 @@ public class CicApiTestUtil extends TestBase {
         } catch (ArrayIndexOutOfBoundsException ae) {
             throw new KeyValueException(ae.getMessage(), paramKeyValue);
         }
-        RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_PLM_WC_SEARCH, PlmParts.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_SEARCH, PlmSearchResponse.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
             {
                 put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
-        return (PlmParts) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (PlmSearchResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
     }
 
@@ -491,9 +501,9 @@ public class CicApiTestUtil extends TestBase {
      * @return PlmPart response class
      */
     @SneakyThrows
-    public static PlmPart getPlmPart(SearchFilter searchFilter) {
-        PlmParts plmParts = searchPlmWindChillParts(searchFilter);
-        PlmPart plmPart;
+    public static PlmSearchPart getPlmPart(SearchFilter searchFilter) {
+        PlmSearchResponse plmParts = searchPlmWindChillParts(searchFilter);
+        PlmSearchPart plmPart;
         try {
             if (plmParts.getItems().size() > 1) {
                 plmPart = plmParts
@@ -516,7 +526,7 @@ public class CicApiTestUtil extends TestBase {
      * @return WorkflowParts data builder class
      */
     public static WorkflowParts getWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
-        PlmParts plmParts;
+        PlmSearchResponse plmParts;
         ArrayList<WorkflowPart> part = null;
         try {
             plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
@@ -743,7 +753,6 @@ public class CicApiTestUtil extends TestBase {
             workflowRequestDataBuilder.setDefaultValues(defaultValues);
         }
         workflowRequestDataBuilder.setCustomer(getCustomerName());
-        workflowRequestDataBuilder.setPlmSystem(getAgent());
         workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
         workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
         return workflowRequestDataBuilder;

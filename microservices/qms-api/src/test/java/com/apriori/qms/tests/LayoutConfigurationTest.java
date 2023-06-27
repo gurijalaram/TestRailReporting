@@ -16,7 +16,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Link;
+import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -25,7 +25,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LayoutConfigurationTest extends TestUtil {
-
     private static SoftAssertions softAssertions;
     private static LayoutResponse layoutResponse;
     private static LayoutConfigurationResponse layoutConfigurationResponse;
@@ -151,7 +150,7 @@ public class LayoutConfigurationTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"12539"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1710")
+    @Issue("COL-1710")
     @Description("Create layout configuration with name that already exists")
     public void createLayoutConfigurationWithSameName() {
         ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
@@ -166,7 +165,7 @@ public class LayoutConfigurationTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"12541"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1710")
+    @Issue("COL-1710")
     @Description("Create layout configuration with blank name")
     public void createLayoutConfigurationWithEmptyName() {
         ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
@@ -181,7 +180,7 @@ public class LayoutConfigurationTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"12881"})
-    @Link("Defect - https://jira.apriori.com/browse/COL-1710")
+    @Issue("COL-1710")
     @Description("Create layout configuration name more than 64 characters")
     public void createLayoutConfigurationNameMoreThan64() {
         ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(

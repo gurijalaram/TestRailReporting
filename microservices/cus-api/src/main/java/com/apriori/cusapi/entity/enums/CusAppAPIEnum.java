@@ -9,7 +9,7 @@ public enum CusAppAPIEnum implements ExternalEndpointEnum {
     PREFERENCES("users/current/preferences"),
 
     //USER
-    CURRENT_USER("users/current");
+    CURRENT_USER("user/current");
 
     private final String endpoint;
 
@@ -24,7 +24,7 @@ public enum CusAppAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format((PropertiesContext.get("cus.api_url")).concat("%s"), String.format(getEndpointString(), variables));
+        return PropertiesContext.get("cus.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
     }
 }
 

@@ -641,6 +641,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2610")
     @TestRail(testCaseId = "6532")
     @Description("User can perform complex searches and be able to find the desired assembly scenario")
     public void advancedFilterTest() {

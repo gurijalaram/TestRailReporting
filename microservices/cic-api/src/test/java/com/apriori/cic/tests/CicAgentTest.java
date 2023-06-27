@@ -25,7 +25,9 @@ import enums.CICAPIEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.CicApiTestUtil;
@@ -34,18 +36,22 @@ import utils.CicLoginUtil;
 public class CicAgentTest extends TestBase {
 
     private static String loginSession;
-    UserCredentials currentUser = UserUtil.getUser();
     private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
     private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
     private static String workflowName = StringUtils.EMPTY;
     private static String workflowData;
 
-    @BeforeClass
-    public static void testSetup() {
+    @Before
+    public void testSetup() {
         workflowName = "CIC_AGENT" + System.currentTimeMillis();
         String scenarioName = "SN" + System.currentTimeMillis();
-        workflowData = String.format(CicApiTestUtil.getWorkflowData("CicGuiCreateQueryWorkFlowData.json"), CicApiTestUtil.getCustomerName(),CicApiTestUtil.getAgent(),workflowName, scenarioName);
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser())
+            .navigateToUserMenu()
+            .getWebSession();
+        workflowData = String.format(CicApiTestUtil.getWorkflowData("CicGuiCreateQueryWorkFlowData.json"), CicApiTestUtil.getCustomerName(),CicApiTestUtil.getAgent(loginSession),workflowName, scenarioName);
+        CicApiTestUtil.createWorkflow(loginSession, workflowData);
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
     }
 
@@ -53,23 +59,9 @@ public class CicAgentTest extends TestBase {
     @TestRail(testCaseId = {"5579"})
     @Description("Get CIC Agent Workflows")
     public void testAgentWorkflows() {
-        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
-        ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);
-        assertThat(responseWrapper.getBody(), is(containsString("CreateJobDefinition")));
-        assertThat(responseWrapper.getBody(), is(containsString(">true<")));
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
-
         ResponseWrapper<String> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
         AgentWorkflow[] agentWorkflows = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflow[].class);
         assertThat(agentWorkflows.length, greaterThan((0)));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"5585"})
-    @Description("Initiate the execution of Workflow")
-    public void testCAgentWorkflowJobRun() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);;
-        assertNotNull(agentWorkflowJobRunResponse.getJobId());
     }
 
     @Test
@@ -89,12 +81,19 @@ public class CicAgentTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5581"})
-    @Description("Get CIC Agent Workflow Jobs")
+    @TestRail(testCaseId = {"5581", "5585", "7618"})
+    @Description("Get CIC Agent Workflow Jobs, " +
+        "Initiate the execution of Workflow, Get Workflow using workflow id and job ID" +
+        "Cancel workflow using workflowId and jobId")
     public void testFCAgentWorkflowJobs() {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
+        assertNotNull(agentWorkflowJobRunResponse.getJobId());
         ResponseWrapper<String> response = CicApiTestUtil.getCicAgentWorkflowJobs(agentWorkflowResponse.getId());
         AgentWorkflowJob[] agentWorkflowJobs = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflowJob[].class);
         assertThat(agentWorkflowJobs.length, greaterThan((0)));
+        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
+        assertThat(agentWorkflowJobResponse.getIdentity(), is(equalTo(agentWorkflowJobResponse.getIdentity())));
+        CicApiTestUtil.cancelWorkflow(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
     }
 
     @Test
@@ -105,23 +104,8 @@ public class CicAgentTest extends TestBase {
         assertThat(agentWorkflow.getName(), is(equalTo(workflowName)));
     }
 
-    @Test
-    @TestRail(testCaseId = {"5582"})
-    @Description("Get Workflow using workflow id and job ID")
-    public void testHCAgentWorkflowJob() {
-        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
-        assertThat(agentWorkflowJobResponse.getIdentity(), is(equalTo(agentWorkflowJobResponse.getIdentity())));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"7618"})
-    @Description("Cancel workflow using workflowId and jobId")
-    public void testICCancelWorkflowJob() {
-        CicApiTestUtil.cancelWorkflow(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
-    }
-
-    @AfterClass
-    public static void cleanup() {
+    @After
+    public void cleanup() {
         jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowName).getId() + "_Job");
         CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
     }

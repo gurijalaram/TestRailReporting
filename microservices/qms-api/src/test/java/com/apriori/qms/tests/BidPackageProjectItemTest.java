@@ -1,9 +1,11 @@
 package com.apriori.qms.tests;
 
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItem;
+import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
@@ -14,28 +16,57 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.QmsApiTestDataUtils;
 import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
+public class BidPackageProjectItemTest extends TestUtil {
+    private static SoftAssertions softAssertions = new SoftAssertions();
+    private static BidPackageResponse bidPackageResponse;
+    private static BidPackageItemResponse bidPackageItemResponse;
+    private static BidPackageProjectResponse bidPackageProjectResponse;
+    private static ScenarioItem scenarioItem;
+    private static final UserCredentials currentUser = UserUtil.getUser();
+
     @BeforeClass
     public static void beforeClass() {
-        createTestData();
+        scenarioItem = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
+        bidPackageItemResponse = QmsApiTestUtils
+            .createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
+        bidPackageProjectResponse = QmsApiTestUtils
+            .createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);
     }
 
     @AfterClass
     public static void afterClass() {
-        deleteTestDataAndClearEntities();
+        QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
+        softAssertions.assertAll();
+    }
+
+    @Before
+    public void setupTest() {
+        softAssertions = new SoftAssertions();
+    }
+
+    @After
+    public void tearTest() {
+        softAssertions.assertAll();
     }
 
     @Test
@@ -94,7 +125,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
     @Description("Verify user is able to create bulk project items by using project-items creation API")
     public void createBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
-        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem1 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem1.getScenarioIdentity())
@@ -103,7 +135,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem2 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem2.getScenarioIdentity())
@@ -112,7 +145,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        ScenarioItem scenarioItem3 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem3 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem3.getScenarioIdentity())
@@ -160,17 +194,28 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"24003"})
-    @Description("Verify user is not able to create  project items by using project-items creation API, when BidPackageItem for scenario identity already exists inside the bid package")
+    @Description("Verify user is not able to create project items by using project-items creation API, with duplicate (already used) BidPackageItem")
     public void createBidPackageDuplicateProjectItemsForSameProject() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
+        ScenarioItem scenarioItemDuplicate = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
-                .scenarioIdentity(scenarioItem.getScenarioIdentity())
-                .componentIdentity(scenarioItem.getComponentIdentity())
-                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .scenarioIdentity(scenarioItemDuplicate.getScenarioIdentity())
+                .componentIdentity(scenarioItemDuplicate.getComponentIdentity())
+                .iterationIdentity(scenarioItemDuplicate.getIterationIdentity())
                 .build())
             .build());
 
+        QmsBidPackageResources.createBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
+            currentUser
+        );
+
+        //Reuse BidPackage Item
         BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
             bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),
@@ -181,12 +226,13 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
             .anyMatch(fi -> fi.getIdentity()
-                .contains(String.format("scenarioIdentity: %s componentIdentity: %s iterationIdentity:%s", scenarioItem.getScenarioIdentity(),
-                    scenarioItem.getComponentIdentity(), scenarioItem.getIterationIdentity())) &&
+                .contains(String.format("scenarioIdentity: %s componentIdentity: %s iterationIdentity:%s", scenarioItemDuplicate.getScenarioIdentity(),
+                    scenarioItemDuplicate.getComponentIdentity(), scenarioItemDuplicate.getIterationIdentity())) &&
                 fi.getError()
-                    .contains(String.format("BidPackageItem for scenario with identity '%s' already exists for bid package with identity '%s'", scenarioItem.getScenarioIdentity(),
+                    .contains(String.format("BidPackageItem for scenario with identity '%s' already exists for bid package with identity '%s'", scenarioItemDuplicate.getScenarioIdentity(),
                         bidPackageResponse.getIdentity()))
             )).isTrue();
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemDuplicate, currentUser);
     }
 
     @Test
@@ -442,7 +488,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
     @Description("Verify user is able to delete multiple/bulk project items and Verify user is not able to delete already deleted project items by API for bulk deleting functionality for project identity")
     public void deleteBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
-        ScenarioItem scenarioItem1 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem1 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem1.getScenarioIdentity())
@@ -451,7 +498,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        ScenarioItem scenarioItem2 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem2 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem2.getScenarioIdentity())
@@ -460,7 +508,8 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
                 .build())
             .build());
 
-        ScenarioItem scenarioItem3 = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioItem scenarioItem3 = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageItemList.add(BidPackageProjectItem.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .scenarioIdentity(scenarioItem3.getScenarioIdentity())
@@ -548,6 +597,7 @@ public class BidPackageProjectItemTest extends QmsApiTestDataUtils {
 
     @Test
     @TestRail(testCaseId = {"24021"})
+    @Issue("COL-1858")
     @Description("Verify the error message when user tries to delete project items by  passing invalid, null or empty project-item identity")
     public void deleteInvalidBulkBidPackageProjectItems() {
         //null

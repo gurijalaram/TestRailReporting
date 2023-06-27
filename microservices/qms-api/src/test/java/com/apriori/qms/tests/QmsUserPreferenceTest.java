@@ -17,8 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class QmsUserPreferenceTest extends TestUtil {
-
-    private static SoftAssertions softAssertions;
+    private static SoftAssertions softAssertions = new SoftAssertions();
     private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before

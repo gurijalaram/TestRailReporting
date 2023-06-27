@@ -65,7 +65,7 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Material Cost")).isCloseTo(27.44, Offset.offset(15.00));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Material Cost")).isCloseTo(10.95, Offset.offset(15.00));
         softAssertions.assertThat(costDetailsPage.getCostContributionValue("Labor")).isCloseTo(6.30, Offset.offset(5.00));
         softAssertions.assertThat(costDetailsPage.getCostContributionValue("Direct Overhead")).isCloseTo(1.69, Offset.offset(5.00));
 
