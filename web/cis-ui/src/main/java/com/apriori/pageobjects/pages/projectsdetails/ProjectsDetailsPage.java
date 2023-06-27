@@ -4,9 +4,12 @@ import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.common.ProjectsPartsAndAssemblyTableController;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.components.EagerPageComponent;
 
+import com.utils.CisColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -101,6 +104,18 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(id = "project-status")
     private WebElement projectStatusDropDown;
 
+    @FindBy(id = "delete-btn-project")
+    private WebElement btnProjectDelete;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-delete-project-modal']")
+    private WebElement deleteModal;
+
+    @FindBy(id = "primary-delete-project-modal")
+    private WebElement btnModalDelete;
+
+    @FindBy(id = "secondary-delete-project-modal")
+    private WebElement btnModalCancel;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -113,7 +128,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsDetailsPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        this.waitForProjectsPageLoad();
+        //this.waitForProjectsPageLoad();
         this.projectsPartsAndAssemblyTableController = new ProjectsPartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
     }
@@ -465,5 +480,179 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsPage navigateToAllProjects() {
         getPageUtils().waitForElementAndClick(btnAllProjects);
         return new ProjectsPage(driver);
+    }
+
+    /**
+     * project page validations
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectDetailsValidations(String dateTime) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.getProjectDetailsPageTitle()).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(this.isAllProjectsNavigationDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Details")).isEqualTo(true);
+        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Parts & Assemblies")).isEqualTo(true);
+        softAssertions.assertThat(this.isProjectDetailsPageTabsDisplayed("Users")).isEqualTo(true);
+        softAssertions.assertAll();
+        return this;
+    }
+
+    /**
+     * project details tab validations
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectDetailsTabValidations(String dateTime, UserCredentials currentUser) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
+        softAssertions.assertThat(this.getProjectDetailsTabTitle()).contains("Details");
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Description")).contains("This Project is created by Automation User " + currentUser.getEmail());
+        softAssertions.assertAll();
+        return this;
+    }
+
+    /**
+     * project parts and assemblies tab validations
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectPartsAndAssembliesTabValidations(String componentName, String scenarioName) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.isShowHideOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.isSearchOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.isFilterOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
+                CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns());
+
+        softAssertions.assertThat(this.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(this.getPinnedTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns());
+        softAssertions.assertAll();
+        return this;
+    }
+
+    /**
+     * project users tab validations
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectUserTabValidations(UserCredentials currentUser) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.isDetailsShowHideOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.getUserTableHeaders()).contains("Full Name","Job title");
+        softAssertions.assertThat(this.isOwnerEmailDisplayed(currentUser.getEmail())).isEqualTo(true);
+        softAssertions.assertThat(this.getProjectOwnerName(currentUser.getEmail())).contains("QA Automation Account");
+        softAssertions.assertThat(this.isOwnerLabelDisplayed()).isEqualTo(true);
+        softAssertions.assertAll();
+        return this;
+    }
+
+    /**
+     * project details tab validations after edit
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectDetailsTabValidationsAfterEdit(String dateTime, UserCredentials currentUser) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
+        softAssertions.assertThat(this.getProjectDetailsTabTitle()).contains("Details");
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(this.isProjectDetailsDisplays("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
+        softAssertions.assertAll();
+        return this;
+    }
+
+    /**
+     * Checks if project delete button displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnProjectDelete);
+    }
+
+    /**
+     * clicks on delete button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickDeleteProject() {
+        getPageUtils().waitForElementAndClick(btnProjectDelete);
+        return this;
+    }
+
+    /**
+     * Checks if delete modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteModalDisplayed() {
+        return getPageUtils().isElementDisplayed(deleteModal);
+    }
+
+    /**
+     * get delete confirmation text
+     *
+     * @return a String
+     */
+    public String getDeleteConfirmation() {
+        return getPageUtils().waitForElementAppear(deleteModal).getText();
+    }
+
+    /**
+     * Checks if modal delete button displayed
+     *
+     * @return true/false
+     */
+    public boolean isModalDeleteButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnModalDelete);
+    }
+
+    /**
+     * Checks if modal cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isModalCancelButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnModalCancel);
+    }
+
+    /**
+     * clicks on modal cancel button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickModalCancelProject() {
+        getPageUtils().waitForElementAndClick(btnModalCancel);
+        return new ProjectsPage(driver);
+    }
+
+    /**
+     * clicks on modal delete button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickModalDeleteProject() {
+        getPageUtils().waitForElementAndClick(btnModalDelete);
+        return new ProjectsPage(driver);
+    }
+
+    /**
+     * project delete modal validations
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage projectDeleteModalValidations() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(this.isDeleteModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.getDeleteConfirmation()).contains("This will permanently delete this Project and all data.");
+        softAssertions.assertThat(this.isModalDeleteButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(this.isModalCancelButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertAll();
+        return this;
     }
 }

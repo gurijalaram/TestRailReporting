@@ -17,7 +17,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.CisColumnsEnum;
 import com.utils.CisProjectStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -26,10 +25,6 @@ import org.junit.Test;
 import java.io.File;
 
 public class ProjectsDetailsTest extends TestBase {
-
-    public ProjectsDetailsTest() {
-        super();
-    }
 
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
@@ -41,6 +36,10 @@ public class ProjectsDetailsTest extends TestBase {
     private UserCredentials currentUser;
     private String projectParticipant;
     private String updatedProjectParticipant;
+
+    public ProjectsDetailsTest() {
+        super();
+    }
 
     @Test
     @TestRail(testCaseId = {"23727","23728","23729","23730"})
@@ -58,31 +57,14 @@ public class ProjectsDetailsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User " + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsDetailsPage = createNewProjectsPage.saveProject()
-                .clickOnUnread()
-                .clickOnCreatedProject();
-
-        softAssertions.assertThat(projectsDetailsPage.getProjectDetailsPageTitle()).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(projectsDetailsPage.isAllProjectsNavigationDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Details")).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Parts & Assemblies")).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsPageTabsDisplayed("Users")).isEqualTo(true);
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details")
+                .projectDetailsValidations(dateTime);
 
         projectsPage = projectsDetailsPage.clickOnAllProjects();
-
-        softAssertions.assertAll();
     }
 
     @Test
@@ -98,45 +80,15 @@ public class ProjectsDetailsTest extends TestBase {
         currentUser = UserUtil.getUser().setEmail("qa-automation-32@apriori.com");
         projectParticipant = UserUtil.getUser().getEmail();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User " + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsDetailsPage = createNewProjectsPage.saveProject()
-                .clickOnUnread()
-                .clickOnCreatedProject()
-                .clickDetailsPageTab("Details");
-
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Owner")).isNotEmpty();
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Due Date")).isNotEmpty();
-        softAssertions.assertThat(projectsDetailsPage.getProjectDetailsTabTitle()).contains("Details");
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Description")).contains("This Project is created by Automation User " + currentUser.getEmail());
-
-        projectsDetailsPage.clickDetailsPageTab("Parts & Assemblies");
-
-        softAssertions.assertThat(projectsDetailsPage.isShowHideOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.isSearchOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.isFilterOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
-                CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
-                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns());
-
-        softAssertions.assertThat(projectsDetailsPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
-        softAssertions.assertThat(projectsDetailsPage.getPinnedTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns());
-
-        softAssertions.assertAll();
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details")
+                .projectDetailsTabValidations(dateTime,currentUser)
+                .clickDetailsPageTab("Parts & Assemblies")
+                .projectPartsAndAssembliesTabValidations(componentName,scenarioName);
     }
 
     @Test
@@ -157,22 +109,11 @@ public class ProjectsDetailsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User " + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsDetailsPage = createNewProjectsPage.saveProject()
-                .clickOnUnread()
-                .clickOnCreatedProject()
-                .clickDetailsPageTab("Details")
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details")
                 .clickEditDetails();
 
         softAssertions.assertThat(projectsDetailsPage.isEditDetailsModalDisplayed()).isEqualTo(true);
@@ -189,12 +130,8 @@ public class ProjectsDetailsTest extends TestBase {
 
         softAssertions.assertThat(projectsDetailsPage.getSaveButtonStatus()).doesNotContain("Mui-disabled");
 
-        projectsDetailsPage.clickSave();
-
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Owner")).contains("QA Automation Account");
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Due Date")).isNotEmpty();
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime + " Edited");
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
+        projectsDetailsPage.clickSave()
+                        .projectDetailsTabValidationsAfterEdit(dateTime,currentUser);
 
         softAssertions.assertAll();
     }
@@ -215,28 +152,12 @@ public class ProjectsDetailsTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
-        createNewProjectsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_BRAZIL)
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .typeProjectName("Automation Project " + dateTime)
-                .typeProjectDescription("This Project is created by Automation User " + currentUser.getEmail())
-                .clickOnAddNewButton()
-                .selectAPart(scenarioName,componentName)
-                .clickAdd()
-                .selectAUser(projectParticipant)
-                .setDueDate("2028","15");
-
-        projectsDetailsPage = createNewProjectsPage.saveProject()
-                .clickOnUnread()
-                .clickOnCreatedProject()
-                .clickDetailsPageTab("Users");
-
-        softAssertions.assertThat(projectsDetailsPage.isDetailsShowHideOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.getUserTableHeaders()).contains("Full Name","Job title");
-        softAssertions.assertThat(projectsDetailsPage.isOwnerEmailDisplayed(currentUser.getEmail())).isEqualTo(true);
-        softAssertions.assertThat(projectsDetailsPage.getProjectOwnerName(currentUser.getEmail())).contains("QA Automation Account");
-        softAssertions.assertThat(projectsDetailsPage.isOwnerLabelDisplayed()).isEqualTo(true);
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Users")
+                .projectUserTabValidations(currentUser);
 
         projectsDetailsPage.hideProjectUserDetails("Full Name");
 
@@ -271,10 +192,7 @@ public class ProjectsDetailsTest extends TestBase {
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickProjects()
                 .clickOnCreateNewProject()
-                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
-                .clickOnUnread()
-                .clickOnCreatedProject()
-                .clickDetailsPageTab("Details");
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details");
 
         softAssertions.assertThat(projectsDetailsPage.isProjectStatusDroDownDisplayed()).isEqualTo(true);
 
@@ -304,6 +222,46 @@ public class ProjectsDetailsTest extends TestBase {
                 .searchProject("Automation Project " + dateTime);
 
         softAssertions.assertThat(projectsPage.getProjectStatus()).contains(CisProjectStatusEnum.OPEN.getStatus());
+
+        projectsPage.clickOnRead();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"25925","25926"})
+    @Description("Verify the user can delete the project")
+    public void testDeleteProject() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser().setEmail("qa-automation-38@apriori.com");
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details");
+
+        softAssertions.assertThat(projectsDetailsPage.isDeleteButtonDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickDeleteProject()
+                .projectDeleteModalValidations();
+
+        projectsPage = projectsDetailsPage.clickModalCancelProject();
+
+        softAssertions.assertThat(projectsDetailsPage.isDeleteModalDisplayed()).isEqualTo(false);
+
+        projectsPage = projectsDetailsPage.clickModalDeleteProject();
+
+        softAssertions.assertThat(projectsPage.getPageTitle().contains("Projects"));
 
         projectsPage.clickOnRead();
 
