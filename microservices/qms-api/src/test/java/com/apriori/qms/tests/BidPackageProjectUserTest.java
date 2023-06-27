@@ -21,7 +21,6 @@ import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -43,13 +42,11 @@ public class BidPackageProjectUserTest extends TestUtil {
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static BidPackageProjectUsersPostResponse bidPackageProjectUserResponse;
     private static ScenarioItem scenarioItem;
-    private static UserCredentials firstUser;
+    private static final UserCredentials firstUser = UserUtil.getUser();
     private static final UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeClass
     public static void beforeClass() {
-        softAssertions = new SoftAssertions();
-        firstUser = UserUtil.getUser();
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
         QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
