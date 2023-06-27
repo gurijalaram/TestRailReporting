@@ -558,27 +558,28 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      * @return a new page object
      */
     public ProjectsDetailsPage createANewProjectAndOpen(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date, String tabName) {
-        getPageUtils().waitForElementAndClick(btnProjects);
-        getPageUtils().waitForElementAndClick(btnCreateNewProject);
-        getPageUtils().waitForElementToAppear(projectNameField).sendKeys(projectName);
-        getPageUtils().waitForElementToAppear(projectDescriptionField).sendKeys(projectDescription);
-        getPageUtils().waitForElementAndClick(btnAddPartsAndAssemblies);
-        getPageUtils().waitForElementsToAppear(tableRow);
-        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
-        getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
-        getPageUtils().waitForElementAndClick(inviteTeammatesField);
-        getPageUtils().waitForElementToAppear(memberList);
-        getPageUtils().waitForElementToAppear(inviteTeammatesSearchField).sendKeys(teamMember);
-        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + teamMember + "')]"));
-        getPageUtils().scrollWithJavaScript(dueDateField,true);
-        getPageUtils().waitForElementAndClick(dueDateField);
-        getPageUtils().waitForElementAndClick(btnYear);
-        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + year + "')]"));
-        getPageUtils().waitForElementAndClick(By.xpath("//button[contains(text(),'" + date + "')]"));
-        getPageUtils().scrollWithJavaScript(projectNameField,false);
-        getPageUtils().waitForElementAndClick(btnProjectSubmit);
+        this.createANewProject(projectName, projectDescription, scenarioName, componentName, teamMember, year, date);
+        this.clickOnUnreadButton();
+        this.openTheProject(tabName);
+        return new ProjectsDetailsPage(getDriver());
+    }
+
+    /**
+     * clicks on unread button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickOnUnreadButton() {
         getPageUtils().waitForElementAndClick(btnUnread);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return new ProjectsPage(getDriver());
+    }
+
+    /**
+     * open the project
+     *
+     * @return new page object
+     */
+    public ProjectsDetailsPage openTheProject(String tabName) {
         getPageUtils().javaScriptClick(projectNameLink);
         getPageUtils().waitForElementAndClick(By.xpath("//div[@role='tablist']//button[contains(text(),'" + tabName + "')]"));
         return new ProjectsDetailsPage(getDriver());

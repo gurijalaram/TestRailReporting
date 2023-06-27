@@ -62,7 +62,7 @@ public class ProjectsDetailsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details")
-                .projectDetailsValidations(dateTime);
+                .validateProjectDetails(dateTime);
 
         projectsPage = projectsDetailsPage.clickOnAllProjects();
     }
@@ -86,9 +86,9 @@ public class ProjectsDetailsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Details")
-                .projectDetailsTabValidations(dateTime,currentUser)
+                .validateProjectDetailsTabDetails(dateTime,currentUser)
                 .clickDetailsPageTab("Parts & Assemblies")
-                .projectPartsAndAssembliesTabValidations(componentName,scenarioName);
+                .validateProjectPartsAndAssembliesTabDetails(componentName,scenarioName);
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ProjectsDetailsTest extends TestBase {
         softAssertions.assertThat(projectsDetailsPage.getSaveButtonStatus()).doesNotContain("Mui-disabled");
 
         projectsDetailsPage.clickSave()
-                        .projectDetailsTabValidationsAfterEdit(dateTime,currentUser);
+                        .validateProjectDetailsAfterEdit(dateTime,currentUser);
 
         softAssertions.assertAll();
     }
@@ -157,7 +157,7 @@ public class ProjectsDetailsTest extends TestBase {
                 .clickProjects()
                 .clickOnCreateNewProject()
                 .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15","Users")
-                .projectUserTabValidations(currentUser);
+                .validateProjectUserTabDetails(currentUser);
 
         projectsDetailsPage.hideProjectUserDetails("Full Name");
 
@@ -253,7 +253,7 @@ public class ProjectsDetailsTest extends TestBase {
         softAssertions.assertThat(projectsDetailsPage.isDeleteButtonDisplayed()).isEqualTo(true);
 
         projectsDetailsPage.clickDeleteProject()
-                .projectDeleteModalValidations();
+                .validateProjectDeleteModalDetails();
 
         projectsPage = projectsDetailsPage.clickModalCancelProject();
 

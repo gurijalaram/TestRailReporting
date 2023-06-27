@@ -486,7 +486,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectDetailsValidations(String dateTime) {
+    public ProjectsDetailsPage validateProjectDetails(String dateTime) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.getProjectDetailsPageTitle()).contains("Automation Project " + dateTime);
         softAssertions.assertThat(this.isAllProjectsNavigationDisplayed()).isEqualTo(true);
@@ -502,7 +502,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectDetailsTabValidations(String dateTime, UserCredentials currentUser) {
+    public ProjectsDetailsPage validateProjectDetailsTabDetails(String dateTime, UserCredentials currentUser) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
         softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
@@ -518,7 +518,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectPartsAndAssembliesTabValidations(String componentName, String scenarioName) {
+    public ProjectsDetailsPage validateProjectPartsAndAssembliesTabDetails(String componentName, String scenarioName) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.isShowHideOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(this.isSearchOptionDisplayed()).isEqualTo(true);
@@ -538,7 +538,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectUserTabValidations(UserCredentials currentUser) {
+    public ProjectsDetailsPage validateProjectUserTabDetails(UserCredentials currentUser) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.isDetailsShowHideOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(this.getUserTableHeaders()).contains("Full Name","Job title");
@@ -554,7 +554,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectDetailsTabValidationsAfterEdit(String dateTime, UserCredentials currentUser) {
+    public ProjectsDetailsPage validateProjectDetailsAfterEdit(String dateTime, UserCredentials currentUser) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.isProjectDetailsDisplays("Owner")).isNotEmpty();
         softAssertions.assertThat(this.isProjectDetailsDisplays("Due Date")).isNotEmpty();
@@ -645,7 +645,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return current page object
      */
-    public ProjectsDetailsPage projectDeleteModalValidations() {
+    public ProjectsDetailsPage validateProjectDeleteModalDetails() {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.isDeleteModalDisplayed()).isEqualTo(true);
         softAssertions.assertThat(this.getDeleteConfirmation()).contains("This will permanently delete this Project and all data.");
