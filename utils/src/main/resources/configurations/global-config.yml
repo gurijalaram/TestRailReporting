@@ -79,7 +79,6 @@ default:
 ###########################
 #  Deployment URL
   deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
-  deployment_url_template_reports: ${default.aws_region}-install.apriori-internal.${env}.apriori.net/
 
   admin:
     ui_url: https://${deployment_url_template}apriori/login
@@ -153,7 +152,7 @@ default:
     api_url: https://cmp.${deployment_url_template}
 
   reports:
-    ui_url: https://${deployment_url_template_reports}jasperserver-pro/
+    ui_url: https://${aws_region}-install.apriori-internal.${env}.apriori.net/jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 ###########################
 
