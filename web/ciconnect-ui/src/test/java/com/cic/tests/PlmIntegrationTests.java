@@ -61,6 +61,8 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -112,6 +114,8 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapNoPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -163,6 +167,8 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapSameAsSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -213,6 +219,8 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapWithConstantPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
@@ -285,6 +293,8 @@ public class PlmIntegrationTests extends TestBase {
 
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")

@@ -28,8 +28,6 @@ public class WorkflowDataUtil {
     public WorkflowDataUtil(CICPartSelectionType partSelectionType) {
         if (partSelectionType.getPartSelectionType().equals("QUERY")) {
             workflowRequestData = new TestDataService().getTestData("WorkflowQueryData.json", WorkflowRequest.class);
-            workflowRequestData.setCustomer(CicApiTestUtil.getCustomerName());
-            workflowRequestData.setPlmSystem(CicApiTestUtil.getAgent());
             workflowRequestData.setName("CIC" + System.currentTimeMillis());
             costingInputRows = workflowRequestData.getDefaultValues();
             queryFilters = new ArrayList<>();
@@ -149,4 +147,27 @@ public class WorkflowDataUtil {
         workflowRequestData.setUseLatestRevision(latestRevisionFlag);
         return this;
     }
+
+    /**
+     * set the customer like widgets or ap-int
+     *
+     * @param customerName
+     * @return current class object
+     */
+    public WorkflowDataUtil setCustomer(String customerName) {
+        workflowRequestData.setCustomer(customerName);
+        return this;
+    }
+
+    /**
+     * Set the agent id
+     *
+     * @param connectorId
+     * @return current class object
+     */
+    public WorkflowDataUtil setAgent(String connectorId) {
+        workflowRequestData.setPlmSystem(connectorId);
+        return this;
+    }
+
 }
