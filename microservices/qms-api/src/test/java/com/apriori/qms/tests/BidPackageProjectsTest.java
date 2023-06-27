@@ -7,8 +7,6 @@ import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
@@ -304,15 +302,16 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"24266"})
-    @Description("Verify project display name can be updated to empty")
+    @Description("Verify display name cannot be updated to empty")
     public void updateEmptyProjectDisplayName() {
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
                 .displayName("").build())
             .build();
-        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
-            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEmpty();
+        ApwErrorMessage errorProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+            bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(errorProjectResponse.getMessage())
+            .contains("displayName should not be null or empty and can have maximum 64 characters");
     }
 
     @Test
@@ -341,7 +340,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("displayName should not be null and have less than 64 characters");
+            .contains("displayName should not be null or empty and can have maximum 64 characters");
     }
 
     @Test
@@ -529,7 +528,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"24281"})
     @Issue("COL-1834")
-    @Description("Verify dueAt can be updated to null or empty")
+    @Description("Verify response should not contain the dueAt attribute, when dueAt attribute is having null or empty values in request")
     public void updateEmptyProjectDueAt() {
         //Project DueAt is Empty
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -553,7 +552,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"24347"})
     @Issue("COL-1834")
-    @Description("Verify description can be updated to null/empty")
+    @Description("Verify response should not contain the description attribute, when description attribute is having null or empty values in request")
     public void updateEmptyProjectDescription() {
         //Project Description Name is empty
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -562,7 +561,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         BidPackageProjectResponse getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isEmpty();
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getDescription()).isNull();
 
         //Project Description Name is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -614,7 +613,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("displayName should not be null and have less than 64 characters");
+            .contains("displayName should not be null or empty and can have maximum 64 characters");
     }
 
     @Test
@@ -698,72 +697,58 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24462"})
-    @Description("Verify project deletion is deleting all associated projectItems, discussions and bidPackageItems")
-    public void deleteBidPackageProjectAndVerifyAllEntitiesDeleted() {
-        ScenarioItem scenarioItemForFirstBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        ScenarioItem scenarioItemForSecondBidPackageItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-
-        BidPackageItemResponse bidPackageItemResponseForFirstScenario = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForFirstBidPackageItem.getComponentIdentity(), scenarioItemForFirstBidPackageItem.getScenarioIdentity(), scenarioItemForFirstBidPackageItem.getIterationIdentity()),
-            bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-        BidPackageItemResponse bidPackageItemResponseSecondScenario = QmsBidPackageResources.createBidPackageItem(
-            QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItemForSecondBidPackageItem.getComponentIdentity(), scenarioItemForSecondBidPackageItem.getScenarioIdentity(), scenarioItemForSecondBidPackageItem.getIterationIdentity()),
-            bidPackageResponse.getIdentity(), currentUser, BidPackageItemResponse.class, HttpStatus.SC_CREATED);
-
-        BidPackageProjectResponse bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionFirstResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionSecondResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseForFirstScenario.getComponentIdentity(), bidPackageItemResponseForFirstScenario.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionThirdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
-        ScenarioDiscussionResponse scenarioDiscussionFourthResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(bidPackageItemResponseSecondScenario.getComponentIdentity(), bidPackageItemResponseSecondScenario.getScenarioIdentity(), currentUser);
+    @TestRail(testCaseId = {"25922"})
+    @Description("Verify deletion of bid package project created automatically while creating QMS scenario-discussions is deleting all associated items like projectItems, discussions and bidPackageItems")
+    public void deleteBidPackageProjectAndVerifyAllAssociatedEntitiesDeleted() {
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionResponseOne = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse scenarioDiscussionResponseTwo = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        BidPackageProjectResponse getProjectResponse = QmsProjectResources.getProject(scenarioDiscussionResponseOne.getProjectIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
 
         //Delete Project
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        QmsBidPackageResources.deleteBidPackageProject(getProjectResponse.getBidPackageIdentity(), getProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
         //Verify Project Deletion
-        ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
-            bidPackageProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains(String.format("Can't find project for bid package with identity '%s'", bidPackageResponse.getIdentity()));
+        ApwErrorMessage getProjectErrorResponse = QmsProjectResources.getProject(getProjectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, currentUser);
+        softAssertions.assertThat(getProjectErrorResponse.getMessage())
+            .contains(String.format("Resource 'Project' with identity '%s' was not found", getProjectResponse.getIdentity()));
 
         //Verify Bid Package-items deletion
-        String[] bidPackageItemsIdsArr = new String[]{bidPackageItemResponseForFirstScenario.getIdentity(), bidPackageItemResponseSecondScenario.getIdentity()};
-        for (String bidPackageItemId : bidPackageItemsIdsArr) {
-            ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageItem(bidPackageResponse.getIdentity(),
-                bidPackageItemId,
-                currentUser,
-                ApwErrorMessage.class,
-                HttpStatus.SC_NOT_FOUND);
-            softAssertions.assertThat(qmsErrorMessage.getMessage())
-                .contains(String.format("Can't find bidPackageItem for bid package with identity '%s' and identity '%s'",
-                    bidPackageResponse.getIdentity(), bidPackageItemId));
-        }
+        ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageItem(getProjectResponse.getBidPackageIdentity(),
+            getProjectResponse.getItems().get(0).getIdentity(),
+            currentUser,
+            ApwErrorMessage.class,
+            HttpStatus.SC_NOT_FOUND);
+
+        softAssertions.assertThat(qmsErrorMessage.getMessage())
+            .contains(String.format("Can't find bidPackageItem for bid package with identity '%s' and identity '%s'",
+                getProjectResponse.getBidPackageIdentity(), getProjectResponse.getItems().get(0).getIdentity()));
 
         //Verify Project-items deletion
-        BidPackageProjectItemsResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
-            bidPackageResponse.getIdentity(),
-            bidPackageProjectResponse.getIdentity(),
+        ApwErrorMessage bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
+            getProjectResponse.getBidPackageIdentity(),
+            getProjectResponse.getIdentity(),
             currentUser,
-            BidPackageProjectItemsResponse.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(bpPItemsResponse.getItems().size()).isZero();
+            ApwErrorMessage.class,
+            HttpStatus.SC_NOT_FOUND);
+
+        softAssertions.assertThat(bpPItemsResponse.getMessage())
+            .contains(String.format("Can't find Project for bid package with identity '%s' and identity '%s'",
+                getProjectResponse.getBidPackageIdentity(), getProjectResponse.getIdentity()));
 
         //Verify Scenario Discussions deletion
-        String[] discussionIdsArr = new String[]{scenarioDiscussionFirstResponse.getIdentity(), scenarioDiscussionSecondResponse.getIdentity(),
-            scenarioDiscussionThirdResponse.getIdentity(), scenarioDiscussionFourthResponse.getIdentity()};
+        String[] discussionIdsArr = new String[]{scenarioDiscussionResponseOne.getIdentity(), scenarioDiscussionResponseTwo.getIdentity()};
         for (String discussionId : discussionIdsArr) {
             ApwErrorMessage discussionErrorResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(
                 discussionId,
                 ApwErrorMessage.class,
                 HttpStatus.SC_NOT_FOUND,
                 currentUser);
-            softAssertions.assertThat(discussionErrorResponse.getMessage())
-                .contains(String.format("Can't find scenario discussion for project with identity '%s'", bidPackageProjectResponse.getIdentity()));
-        }
 
-        //Delete Scenarios
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForFirstBidPackageItem, currentUser);
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemForSecondBidPackageItem, currentUser);
+            softAssertions.assertThat(discussionErrorResponse.getMessage())
+                .contains(String.format("Discussion with identity %s was not found", discussionId));
+        }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 
     @Test

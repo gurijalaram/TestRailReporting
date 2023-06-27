@@ -21,6 +21,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.QmsApiTestUtils;
 
 
 public class QmsBidPackageItemTest extends TestUtil {
