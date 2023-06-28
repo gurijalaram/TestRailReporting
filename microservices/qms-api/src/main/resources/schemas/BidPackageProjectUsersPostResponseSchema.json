@@ -1,8 +1,51 @@
 {
-  "type": "array",
-  "items": [
-    {
-      "$ref": "BidPackageProjectUserSchema.json"
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "projectUsers": {
+          "type": "object",
+          "properties": {
+            "successes": {
+              "type": "array",
+              "items": {
+                "$ref": "BidPackageProjectUserSchema.json"
+              }
+            },
+            "failures": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "userEmail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "userEmail"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "successes",
+            "failures"
+          ]
+        }
+      },
+      "required": [
+        "projectUsers"
+      ]
     }
+  },
+  "required": [
+    "response"
   ]
 }
