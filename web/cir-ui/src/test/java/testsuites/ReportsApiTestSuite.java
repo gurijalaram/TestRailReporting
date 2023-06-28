@@ -3,6 +3,10 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
+import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
+import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
+import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
@@ -30,6 +34,10 @@ import org.junit.runners.Suite;
     CastingDtcReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
+    ComponentCostReportTests.class,
+    CostOutlierIdentificationTests.class,
+    CostOutlierIdentificationDetailsTests.class,
+    DesignOutlierIdentificationReportTests.class,
     MachiningDtcReportTests.class,
     MachiningDtcDetailsTests.class,
     MachiningDtcComparisonReportTests.class,

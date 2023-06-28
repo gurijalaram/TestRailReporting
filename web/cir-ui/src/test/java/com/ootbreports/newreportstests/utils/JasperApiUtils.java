@@ -116,13 +116,13 @@ public class JasperApiUtils {
      */
     public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
 
         String currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Component Cost Currency", currencyAssertValue);
 
         currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
@@ -133,6 +133,27 @@ public class JasperApiUtils {
         String gbpCurrencyValue = areBubblesPresent
             ? getCurrencyValueFromChart(jasperReportSummaryGbp, partName)
             : getCurrencyValueFromChart(jasperReportSummaryGbp, "");
+
+        softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+
+        softAssertions.assertAll();
+    }
+
+    public void genericComponentCostCurrencyTest(String partName, boolean areBubblesPresent) {
+        String currencyAssertValue = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
+
+        String currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryUsd).substring(10);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        currencyAssertValue = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Component Cost Currency", currencyAssertValue);
+
+        currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryGbp).substring(10);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        String usdCurrencyValue = getCurrencyValueFromChartComponentCost(jasperReportSummaryUsd);
+        String gbpCurrencyValue = getCurrencyValueFromChartComponentCost(jasperReportSummaryGbp);
 
         softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
 
@@ -158,6 +179,35 @@ public class JasperApiUtils {
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         softAssertions.assertThat(tdResultElements.get(1).toString().contains(miscDataList.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    public void genericCostMetricCostOutlierTest(List<String> miscData) {
+        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(4).toString().contains(miscData.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    public void genericCostMetricCostOutlierDetailsTest(List<String> partList, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
+
+        int i = 0;
+        List<Element> partElementsFromPage = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution");
+        for (String partName : partList) {
+            softAssertions.assertThat(partElementsFromPage.get(i).child(0).text()).isEqualTo(partName);
+            i++;
+        }
+        jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution").get(0).children();
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(5).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -406,9 +456,19 @@ public class JasperApiUtils {
         if (partName.isEmpty()) {
             return jasperReportSummary.getReportHtmlPart()
                 .getElementsByAttributeValue("colspan", "4").get(9).text();
+            // get by usd or gbp then number 7, find a better way for component cost report?
+            //jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5)
         }
 
         return jasperReportSummary.getFirstChartData()
             .getChartDataPointByPartName(partName).getFullyBurdenedCost();
+    }
+
+    private String getCurrencyValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Lifetime Cost").get(5).child(2).text();
+    }
+
+    private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
     }
 }

@@ -82,6 +82,7 @@ staging:
   name: staging
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
+  base_server_platform_url: https://na-1-install.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   customer_aws_account_type: staging
   secret_key: K6JWVF8KV884
@@ -96,6 +97,11 @@ staging:
     automation_user_identity02: 6AHL3EHF264K
     automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
+
+  reports:
+    ui_url: ${base_server_platform_url}jasperserver-pro/
+    welcome_page_text: CI-Admin aPriori Internal
+    failed_login_message: WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.
 
 ########################################################################################################################
 
