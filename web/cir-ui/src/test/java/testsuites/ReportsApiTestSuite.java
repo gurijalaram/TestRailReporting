@@ -6,6 +6,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
+import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
@@ -32,12 +33,13 @@ import org.junit.runners.Suite;
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,
+    CastingDtcReportTests.class,
     ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
     CostOutlierIdentificationDetailsTests.class,
     DesignOutlierIdentificationReportTests.class,
-    MachiningDtcReportTests.class,
-    MachiningDtcDetailsTests.class,
+    DesignOutlierIdentificationDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,
     MachiningDtcDetailsTests.class,
     MachiningDtcReportTests.class,

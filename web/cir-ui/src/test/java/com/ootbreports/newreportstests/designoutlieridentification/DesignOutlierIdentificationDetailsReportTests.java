@@ -15,7 +15,7 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
+public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuthenticationUtil {
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_257280C.getPartName(),
         JasperCirApiPartsEnum.P_40137441_MLDES_0002_WITHOUT_INITIAL.getPartName()
@@ -30,8 +30,8 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(testCaseId = {"1997"})
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
+    @TestRail(testCaseId = {"7387"})
+    @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
@@ -40,8 +40,8 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(testCaseId = {"7385"})
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
+    @TestRail(testCaseId = {"7386"})
+    @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
