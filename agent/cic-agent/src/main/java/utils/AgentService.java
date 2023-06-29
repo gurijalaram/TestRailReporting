@@ -1,7 +1,7 @@
 package utils;
 
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.AwsParametersStoreUtil;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
