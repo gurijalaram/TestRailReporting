@@ -12,6 +12,7 @@ public class AwsUtil {
 
     /**
      * Connect to AWS S3 client
+     * Use AWS authorization type based on running environment
      *
      * @return S3Client instance
      */
