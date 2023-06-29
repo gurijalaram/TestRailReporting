@@ -75,7 +75,7 @@ public class QmsProjectItemTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"14914"})
-    @Issue("OL-1379")
+    @Issue("COL-1379")
     @Description("Get project Item for particular project using project URL")
     public void getAllProjectItemByIdentity() {
         BidPackageProjectItemsResponse bpPItemResponse = QmsProjectResources.getProjectItem(
