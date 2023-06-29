@@ -27,9 +27,6 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = {"3329"})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
-        jasperApiUtils.genericComponentCostCurrencyTest(
-            ExportSetEnum.TOP_LEVEL.getExportSetName(),
-            false
-        );
+        jasperApiUtils.genericComponentCostCurrencyTest();
     }
 }

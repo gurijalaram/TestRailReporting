@@ -139,7 +139,10 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
-    public void genericComponentCostCurrencyTest(String partName, boolean areBubblesPresent) {
+    /**
+     * Generic test for Currency within Component Cost Report
+     */
+    public void genericComponentCostCurrencyTest() {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
 
@@ -183,6 +186,11 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for Cost Metric within Cost Outlier Report
+     *
+     * @param miscData - List of Strings of relevant data to use in the test
+     */
     public void genericCostMetricCostOutlierTest(List<String> miscData) {
         JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
 
@@ -193,6 +201,11 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for Cost Metric within Cost Outlier Details Report
+     *
+     * @param miscData - List of Strings of relevant data to use in the test
+     */
     public void genericCostMetricCostOutlierDetailsTest(List<String> partList, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
@@ -456,8 +469,6 @@ public class JasperApiUtils {
         if (partName.isEmpty()) {
             return jasperReportSummary.getReportHtmlPart()
                 .getElementsByAttributeValue("colspan", "4").get(9).text();
-            // get by usd or gbp then number 7, find a better way for component cost report?
-            //jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5)
         }
 
         return jasperReportSummary.getFirstChartData()
