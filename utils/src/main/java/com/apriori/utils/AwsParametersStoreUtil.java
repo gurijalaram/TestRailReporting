@@ -18,26 +18,14 @@ public class AwsParametersStoreUtil extends AwsUtil {
      * @return Parameter value
      */
     public static String getSystemParameter(String parameterName) {
-        String parameterValue = "";
-        SsmClient ssmClient = SsmClient.builder()
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create())
-            .region(S3_REGION_NAME)
+        GetParameterRequest parameterRequest = GetParameterRequest.builder()
+            .name(parameterName)
+            .withDecryption(true)
             .build();
 
-        try {
-            GetParameterRequest parameterRequest = GetParameterRequest.builder()
-                .name(parameterName)
-                .withDecryption(true)
-                .build();
+        GetParameterResponse parameterResponse = getSmmClientInstance()
+            .getParameter(parameterRequest);
 
-            GetParameterResponse parameterResponse = ssmClient.getParameter(parameterRequest);
-            parameterValue = parameterResponse.parameter().value();
-
-        } catch (SsmException e) {
-            log.error(e.getMessage());
-        }
-        return parameterValue;
+        return parameterResponse.parameter().value();
     }
 }
