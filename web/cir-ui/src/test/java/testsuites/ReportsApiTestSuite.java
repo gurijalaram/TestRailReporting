@@ -31,8 +31,6 @@ import org.junit.runners.Suite;
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
-    CastingDtcReportTests.class,
-    CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
     ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
@@ -41,12 +39,14 @@ import org.junit.runners.Suite;
     MachiningDtcReportTests.class,
     MachiningDtcDetailsTests.class,
     MachiningDtcComparisonReportTests.class,
-    PlasticDtcReportTests.class,
-    PlasticDtcDetailsReportTests.class,
+    MachiningDtcDetailsTests.class,
+    MachiningDtcReportTests.class,
     PlasticDtcComparisonReportTests.class,
-    SheetMetalDtcReportTests.class,
+    PlasticDtcDetailsReportTests.class,
+    PlasticDtcReportTests.class,
+    SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,
-    SheetMetalDtcComparisonReportTests.class
+    SheetMetalDtcReportTests.class
 })
 public class ReportsApiTestSuite {
 }

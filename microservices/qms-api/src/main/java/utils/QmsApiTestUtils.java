@@ -30,7 +30,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;

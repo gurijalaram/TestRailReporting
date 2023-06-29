@@ -51,21 +51,37 @@ public class BidPackageProjectsTest extends TestUtil {
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
 
+
     @Test
-    @TestRail(testCaseId = {"13742", "13752", "22955", "14738"})
+    @TestRail(testCaseId = {"13742", "13752", "22955", "14738", "25962"})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
+        String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(),
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
+        softAssertions.assertThat(bppResponse.getItems().size()).isZero();
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bppResponse.getOwner()).isEqualTo(ownerIdentity);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(bppResponse.getUsers().stream()
-                .allMatch(u -> u.getUser().getAvatarColor() != null)).isTrue();
+                    .allMatch(u -> u.getUser().getAvatarColor() != null))
+                .isTrue();
+            softAssertions.assertThat(bppResponse.getUsers().stream()
+                    .anyMatch(u -> u.getRole().equals("ADMIN") &&
+                        u.getUserIdentity().equals(ownerIdentity)))
+                .isTrue();
+
+            bppResponse.getUsers().stream()
+                .filter(u -> u.getUserIdentity().equals(ownerIdentity))
+                .findFirst()
+                .ifPresent(bidPackageProjectUserResponse ->
+                    softAssertions.assertThat(bppResponse.getOwnerFullName())
+                        .isEqualTo(bidPackageProjectUserResponse.getUser().getUserProfile().getGivenName().concat(" ")
+                            .concat(bidPackageProjectUserResponse.getUser().getUserProfile().getFamilyName())));
         }
-        softAssertions.assertThat(bppResponse.getItems().size()).isZero();
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
@@ -617,8 +633,9 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24351"})
-    @Description("Verify updated owner/admin users can update the project attributes")
+    @TestRail(testCaseId = {"24351", "25959"})
+    @Description("Verify updated owner/admin users can update the project attributes." +
+        "Verify updating Project Owner's identity will change ownerFullName accordingly")
     public void updateProjectWithNewOwner() {
         //Update the project to new owner
         UserCredentials newOwner = UserUtil.getUser();
@@ -628,14 +645,24 @@ public class BidPackageProjectsTest extends TestUtil {
                 .owner(newOwnerUserContext).build())
             .build();
 
-        BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+        BidPackageProjectResponse bppResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getOwner()).isEqualTo(newOwnerUserContext);
+        softAssertions.assertThat(bppResponse.getOwner()).isEqualTo(newOwnerUserContext);
         if (softAssertions.wasSuccess()) {
-            softAssertions.assertThat(getBidPackageProjectResponse.getUsers().stream()
+            softAssertions.assertThat(bppResponse.getUsers().stream()
                     .anyMatch(u -> u.getRole().equals("ADMIN") &&
                         u.getUserIdentity().equals(newOwnerUserContext)))
                 .isTrue();
+
+            softAssertions.assertThat(bppResponse.getOwner()).isEqualTo(newOwnerUserContext);
+            BidPackageProjectResponse finalBppResponse = bppResponse;
+            bppResponse.getUsers().stream()
+                .filter(u -> u.getUserIdentity().equals(newOwnerUserContext))
+                .findFirst()
+                .ifPresent(bidPackageProjectUserResponse ->
+                    softAssertions.assertThat(finalBppResponse.getOwnerFullName())
+                        .isEqualTo(bidPackageProjectUserResponse.getUser().getUserProfile().getGivenName().concat(" ")
+                            .concat(bidPackageProjectUserResponse.getUser().getUserProfile().getFamilyName())));
         }
 
         //Update the project description with new owner
@@ -645,9 +672,9 @@ public class BidPackageProjectsTest extends TestUtil {
                 .description(projectDescriptionNew)
                 .build())
             .build();
-        getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
+        bppResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), newOwner, BidPackageProjectResponse.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(getBidPackageProjectResponse.getDescription()).isEqualTo(projectDescriptionNew);
+        softAssertions.assertThat(bppResponse.getDescription()).isEqualTo(projectDescriptionNew);
 
         //Update the project description with old owner
         projectRequest = BidPackageProjectRequest.builder()
