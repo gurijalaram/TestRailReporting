@@ -44,7 +44,7 @@ public class ProjectsDetailsTest extends TestBase {
 
     public void validateProjectDetailsTabDetails(String dateTime, UserCredentials currentUser, ProjectsDetailsPage projectsDetailsPage) {
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Owner")).isNotEmpty();
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Owner")).isNotEmpty();
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Due Date")).isNotEmpty();
         softAssertions.assertThat(projectsDetailsPage.getProjectDetailsTabTitle()).contains("Details");
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
