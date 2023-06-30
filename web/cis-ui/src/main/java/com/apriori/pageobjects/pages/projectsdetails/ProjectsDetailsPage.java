@@ -205,7 +205,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return a String
      */
-    public String isProjectDetailsDisplays(String section) {
+    public String isProjectDetailsDisplayed(String section) {
         return getPageUtils().waitForElementToAppear(By.xpath("//h3[text()='" + section + "']//..")).getText();
     }
 

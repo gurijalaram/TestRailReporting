@@ -45,10 +45,10 @@ public class ProjectsDetailsTest extends TestBase {
     public void validateProjectDetailsTabDetails(String dateTime, UserCredentials currentUser, ProjectsDetailsPage projectsDetailsPage) {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Owner")).isNotEmpty();
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Due Date")).isNotEmpty();
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Due Date")).isNotEmpty();
         softAssertions.assertThat(projectsDetailsPage.getProjectDetailsTabTitle()).contains("Details");
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Name")).contains("Automation Project " + dateTime);
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Description")).contains("This Project is created by Automation User " + currentUser.getEmail());
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Name")).contains("Automation Project " + dateTime);
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Description")).contains("This Project is created by Automation User " + currentUser.getEmail());
         softAssertions.assertAll();
     }
 
@@ -167,7 +167,7 @@ public class ProjectsDetailsTest extends TestBase {
 
         this.validateProjectDetailsTabDetails(dateTime,currentUser,projectsDetailsPage);
 
-        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplays("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
 
         softAssertions.assertAll();
     }
