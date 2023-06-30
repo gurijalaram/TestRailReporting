@@ -25,6 +25,7 @@ public class AwsUtil {
             .region(S3_REGION_NAME)
             .build();
     }
+
     /**
      * Configure instance for AWS S3
      * Use AWS authorization type based on running environment
