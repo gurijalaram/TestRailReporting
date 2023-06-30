@@ -1,15 +1,11 @@
 package com.apriori.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
-import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
 import software.amazon.awssdk.services.ssm.model.GetParameterResponse;
-import software.amazon.awssdk.services.ssm.model.SsmException;
 
 @Slf4j
-public class AwsParametersStoreUtil extends AwsUtil {
+public class AwsParameterStoreUtil extends AwsUtil {
 
     /**
      * Get the parameter value from AWS systems manager -> parameter store
