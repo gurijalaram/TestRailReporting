@@ -15,6 +15,7 @@ import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -35,7 +36,8 @@ public class UserPreferencesUtil {
      * @return response object
      */
     public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -107,7 +109,8 @@ public class UserPreferencesUtil {
      * @return List of preferences
      */
     public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -226,7 +229,8 @@ public class UserPreferencesUtil {
      * @return Hashmap of preference names and associated identities
      */
     private Map<String, String> getPreferenceIdentities(String token) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(token);
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
