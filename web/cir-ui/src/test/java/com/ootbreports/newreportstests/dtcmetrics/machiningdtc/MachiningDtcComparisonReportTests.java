@@ -24,7 +24,7 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/machiningdtc/MachiningDtcComparisonReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/machiningdtc/MachiningDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

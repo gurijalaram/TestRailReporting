@@ -24,7 +24,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/sheetmetaldtc/SheetMetalDtcComparisonReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/sheetmetaldtc/SheetMetalDtcComparisonReportRequest");
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

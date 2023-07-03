@@ -25,7 +25,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.CASE_08.getPartName()
     );
 
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/castingdtc/CastingDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

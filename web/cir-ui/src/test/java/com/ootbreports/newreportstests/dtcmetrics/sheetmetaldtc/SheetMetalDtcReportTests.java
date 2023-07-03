@@ -27,7 +27,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName(),
         JasperCirApiPartsEnum.DS73_F04604_PIA1.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/sheetmetaldtc/SheetMetalDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/sheetmetaldtc/SheetMetalDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

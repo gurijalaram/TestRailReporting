@@ -1,0 +1,35 @@
+{
+  "reportUnitUri": "/aPriori/reports/solutions/designToCost/cycleTime/cycleTimeValueTracking",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "projectRollup",
+        "value": [
+          "173"
+        ]
+      },
+      {
+        "name": "exportDate",
+        "value": [
+          "2023-06-23T07:11:36"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      }
+    ]
+  }
+}

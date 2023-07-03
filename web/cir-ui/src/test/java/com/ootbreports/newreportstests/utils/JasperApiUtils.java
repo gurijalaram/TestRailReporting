@@ -56,18 +56,16 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
-        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls();
-        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        /*String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());*/
 
         reportRequest = !valueToSet.isEmpty()
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet) :
             reportRequest;
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        /*reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);*/
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -191,6 +189,16 @@ public class JasperApiUtils {
         }
 
         softAssertions.assertAll();
+    }
+
+    public void cycleTimeValueTrackingCurrencyTest() {
+        String gbpCurrency = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGBP = genericTestCore("Currency", gbpCurrency);
+
+        String usdCurrency = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUSD = genericTestCore("Currency", usdCurrency);
+
+        softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
     }
 
     /**

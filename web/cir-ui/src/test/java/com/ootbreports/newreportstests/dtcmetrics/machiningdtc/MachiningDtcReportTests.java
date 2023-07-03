@@ -24,7 +24,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.P_3572871_INITIAL.getPartName(),
         JasperCirApiPartsEnum.P_3572871_ABC.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/machiningdtc/MachiningDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/machiningdtc/MachiningDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

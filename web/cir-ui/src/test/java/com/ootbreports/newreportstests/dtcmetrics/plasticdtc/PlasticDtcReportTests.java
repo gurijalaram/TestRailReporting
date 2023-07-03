@@ -20,7 +20,7 @@ import java.util.List;
 
 public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/plasticdtc/PlasticDtcReportRequest");
+    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/plasticdtc/PlasticDtcReportRequest");
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
