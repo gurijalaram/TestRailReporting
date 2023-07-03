@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
+import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
 
@@ -19,6 +21,9 @@ public class CompareToolbar extends MainNavBar {
 
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
+
+    @FindBy(id = "qa-sub-header-save-as-button")
+    private WebElement saveButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -61,5 +66,37 @@ public class CompareToolbar extends MainNavBar {
     public ModifyComparisonPage modify() {
         pageUtils.waitForElementAndClick(modifyButton);
         return new ModifyComparisonPage(driver);
+    }
+
+    /**
+     * Save new Comparison
+     * To be used when the comparison is new and will require input of a unique name
+     *
+     * @return Save Comparison Page Object
+     */
+    public SaveComparisonPage saveNew() {
+        pageUtils.waitForElementAndClick(saveButton);
+        return new SaveComparisonPage(driver);
+    }
+
+    /**
+     * Save changes to Comparison
+     * To be used when the comparison already exists
+     *
+     * @return Compare Page Object
+     */
+    public ComparePage saveChanges() {
+        pageUtils.waitForElementAndClick(saveButton);
+        pageUtils.waitForElementToBeClickable(modifyButton);
+        return new ComparePage(driver);
+    }
+
+    /**
+     * Check enabled state of Save button
+     *
+     * @return Boolean
+     */
+    public Boolean saveButtonEnabled() {
+        return pageUtils.isElementEnabled(saveButton);
     }
 }

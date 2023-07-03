@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
@@ -68,6 +69,7 @@ public class ComparisonTests extends TestBase {
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     public ComparisonTests() {
         super();
@@ -1042,6 +1044,50 @@ public class ComparisonTests extends TestBase {
 
         softAssertions.assertThat(createComparePage.manualComparisonButtonEnabled()).as("Create Comparison modal launched and manual is enabled")
             .isTrue();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "24358")
+    @Description("Verify that Compare button is enabled in Explore view when nothing selected")
+    public void testSaveComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save();
+
+        softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after save").isFalse();
         softAssertions.assertAll();
     }
 }
