@@ -1,19 +1,16 @@
 package utils;
 
-import com.apriori.pages.home.CIConnectHome;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
 
-import entity.request.JobDefinition;
+import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflow;
+import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 
-import java.util.Objects;
 
 @Slf4j
 public class WorkflowTestUtil {
@@ -47,6 +44,9 @@ public class WorkflowTestUtil {
      */
     public WorkflowTestUtil getWorkflowId(String workflowName) {
         agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
+        if (agentWorkflowResponse == null) {
+            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
+        }
         return this;
     }
 
@@ -60,6 +60,21 @@ public class WorkflowTestUtil {
         if (agentWorkflowJobRunResponse == null) {
             throw new RuntimeException("FAILED TO INVOKE WORKFLOW!!!");
         }
+        return this;
+    }
+
+    /**
+     * Invoke Workflow of Part Selection Type REST with number of parts as parameter
+     *
+     * @param workflowParts WorkflowParts
+     * @return WorkflowTestUtil
+     */
+    public WorkflowTestUtil invokeRestWorkflow(WorkflowParts workflowParts) {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
+            agentWorkflowResponse.getId(),
+            workflowParts,
+            AgentWorkflowJobRun.class,
+            HttpStatus.SC_OK);
         return this;
     }
 
@@ -85,13 +100,28 @@ public class WorkflowTestUtil {
             agentWorkflowJobRunResponse.getJobId(),
             AgentWorkflowJobResults.class,
             HttpStatus.SC_OK);
-        if (agentWorkflowJobResults == null) {
-            throw new RuntimeException(CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-                agentWorkflowJobRunResponse.getJobId(),
-                null,
-                HttpStatus.SC_OK).toString());
+        if (agentWorkflowJobResults.get(0).getInput() == null) {
+            throw new RuntimeException(agentWorkflowJobResults.get(0).getErrorMessage());
         }
         return agentWorkflowJobResults;
+    }
+
+    /**
+     * get workflow job part results
+     *
+     * @return Current class object
+     */
+    public AgentWorkflowJobPartsResult getJobPartResult(String partId) {
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
+            agentWorkflowJobRunResponse.getJobId(),
+            partId,
+            AgentWorkflowJobPartsResult.class,
+            HttpStatus.SC_OK);
+
+        if (agentWorkflowJobPartsResult.getInput() == null) {
+            throw new RuntimeException(agentWorkflowJobPartsResult.getErrorMessage());
+        }
+        return agentWorkflowJobPartsResult;
     }
 
     /**
@@ -107,5 +137,29 @@ public class WorkflowTestUtil {
             .invoke()
             .track()
             .getJobResult();
+    }
+
+    /**
+     * Create workflow and get job part results after processing the workflow
+     *
+     * @param workflowRequestData - Data to create the workflow
+     * @param workflowParts       - Number of parts added to workflow
+     * @param sessionID           - JSESSIONID
+     * @return AgentWorkflowJobPartsResult
+     */
+    public AgentWorkflowJobPartsResult createWorkflowAndGetJobPartResult(WorkflowRequest workflowRequestData, WorkflowParts workflowParts, String sessionID) {
+        return create(workflowRequestData, sessionID)
+            .getWorkflowId(workflowRequestData.getName())
+            .invokeRestWorkflow(workflowParts)
+            .track()
+            .getJobPartResult(workflowParts.getParts().get(0).getId());
+    }
+
+    public AgentWorkflow getAgentWorkflowResponse() {
+        return agentWorkflowResponse;
+    }
+
+    public AgentWorkflowJobRun getAgentWorkflowJobRunResponse() {
+        return agentWorkflowJobRunResponse;
     }
 }

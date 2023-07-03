@@ -22,22 +22,22 @@ import org.slf4j.LoggerFactory;
 public class CIConnectHome extends CICBasePage {
     private static final Logger logger = LoggerFactory.getLogger(CIConnectHome.class);
 
-    @FindBy(css = "div#root_button-33 > button")
+    @FindBy(xpath = "//button/span[contains(text(), 'Settings  ')]")
     private WebElement settingsBtn;
 
-    @FindBy(css = "div#root_button-29 > button")
+    @FindBy(xpath = "//button/span[contains(text(), 'Help')]")
     private WebElement helpBtn;
 
     @FindBy(css = "div#root_button-30 > button")
     private WebElement userInfoDropdown;
 
-    @FindBy(css = "ul#root_menu-19 > li:nth-of-type(1)")
+    @FindBy(css = "span[title='Workflows']")
     private WebElement workflowsMenuBtn;
 
-    @FindBy(css = "ul#root_menu-19 > li:nth-of-type(2)")
+    @FindBy(css = "span[title='Users']")
     private WebElement usersMenuBtn;
 
-    @FindBy(css = "ul#root_menu-19 > li:nth-of-type(3)")
+    @FindBy(css = "span[title='Connectors']")
     private WebElement connectorsMenuBtn;
 
     @FindBy(css = "div#root_pagemashupcontainer-1_label-18-bounding-box span")
@@ -61,7 +61,7 @@ public class CIConnectHome extends CICBasePage {
     @FindBy(css = "div.logo-wrapper a")
     private WebElement pageTitle;
 
-    @FindBy(xpath = "//span[text() = 'About Cost Insight Connect']")
+    @FindBy(xpath = "//span[text() = 'About aP Connect']")
     private WebElement aboutAPrioriLink;
 
     @FindBy(xpath = "//span[contains(text(), 'Cost Insight Connect |')]")

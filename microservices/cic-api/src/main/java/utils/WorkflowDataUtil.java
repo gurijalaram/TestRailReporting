@@ -28,10 +28,12 @@ public class WorkflowDataUtil {
     public WorkflowDataUtil(CICPartSelectionType partSelectionType) {
         if (partSelectionType.getPartSelectionType().equals("QUERY")) {
             workflowRequestData = new TestDataService().getTestData("WorkflowQueryData.json", WorkflowRequest.class);
-            workflowRequestData.setName("CIC" + System.currentTimeMillis());
-            costingInputRows = workflowRequestData.getDefaultValues();
             queryFilters = new ArrayList<>();
+        } else {
+            workflowRequestData = new TestDataService().getTestData("WorkflowRestData.json", WorkflowRequest.class);
         }
+        workflowRequestData.setName("CIC" + System.currentTimeMillis());
+        costingInputRows = workflowRequestData.getDefaultValues();
     }
 
     /**
@@ -167,6 +169,27 @@ public class WorkflowDataUtil {
      */
     public WorkflowDataUtil setAgent(String connectorId) {
         workflowRequestData.setPlmSystem(connectorId);
+        return this;
+    }
+
+    /**
+     * workflow data with no costing input fields
+     *
+     * @return current class object
+     */
+    public WorkflowDataUtil emptyCostingInputRow() {
+        workflowRequestData.setDefaultValues(null);
+        return this;
+    }
+
+    /**
+     * Set the agent id
+     *
+     * @param workflowDesc
+     * @return current class object
+     */
+    public WorkflowDataUtil setWorkflowDescription(String workflowDesc) {
+        workflowRequestData.setDescription(workflowDesc);
         return this;
     }
 
