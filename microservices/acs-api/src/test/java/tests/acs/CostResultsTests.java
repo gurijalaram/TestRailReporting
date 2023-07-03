@@ -189,7 +189,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsStockMachining() {
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Machining-DTC_Issue_SideMillingLengthDia.SLDPRT", workorderAPITests.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Stock Machining");

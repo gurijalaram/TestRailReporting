@@ -35,6 +35,7 @@ global:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
+  customer_aws_account_type: dev
   users_csv_file: common-users.csv
 
 ###########################
@@ -52,7 +53,7 @@ default:
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
-    token_subject: ${${customer}.token_subject}
+    token_subject: ${customer}.${customer_aws_account_type}.token_subject
     auth_application: CID
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
@@ -151,7 +152,7 @@ default:
     api_url: https://cmp.${deployment_url_template}
 
   reports:
-    ui_url: https://${deployment_url_template}jasperserver-pro/
+    ui_url: https://${aws_region}-install.apriori-internal.${env}.apriori.net/jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 ###########################
 

@@ -83,6 +83,7 @@ staging:
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
+  customer_aws_account_type: staging
   secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
 
@@ -96,17 +97,22 @@ staging:
     automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
 
+  reports:
+    welcome_page_text: CI-Admin aPriori Internal
+    failed_login_message: WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.
+
 ########################################################################################################################
 
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: walqbaci01/
+  base_url: https://walqbaci01/
   name: onprem
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
 
   reports:
+    ui_url: ${base_url}jasperserver-pro/
     welcome_page_text: Cost Insight Report
     failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
 
