@@ -2,7 +2,7 @@
   "customer": "%s",
   "plmSystem": "%s",
   "name": "%s",
-  "description": "%s",
+  "description": "description",
   "schedule": "0 0 0 1/1 * ? *",
   "selectedEmailTemplate": "none",
   "isEmailTemplateSelected": false,
@@ -164,64 +164,7 @@
         }
       }
     },
-    "rows": [
-      {
-        "identifier": "f8dc364c-556b-4c2f-8b76-7f2f6f4b09b9",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Scenario Name",
-        "value": "%s",
-        "_isSelected": false
-      },
-      {
-        "identifier": "fbf646af-a8f9-4dff-91a7-5b4111549220",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Process Group",
-        "value": "Sheet Metal",
-        "_isSelected": false
-      },
-      {
-        "identifier": "4d2445cc-e96d-4e85-b744-df85df04f761",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Material",
-        "value": "Steel, Cold Worked, AISI 1020",
-        "_isSelected": false
-      },
-      {
-        "identifier": "dca97769-48e3-46ad-bb51-346b4ea349d3",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Digital Factory",
-        "value": "aPriori Brazil",
-        "_isSelected": false
-      },
-      {
-        "identifier": "9f5544cc-8a30-418f-8b9a-759cb03a3bc3",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Description",
-        "value": "test api",
-        "_isSelected": false
-      },
-      {
-        "identifier": "f04edf6d-6647-4dbb-8240-09bdd74adb2d",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Annual Volume",
-        "value": "1000",
-        "_isSelected": false
-      },
-      {
-        "identifier": "1fe0cbea-1d5f-4db3-bedf-f4924e7e4ebc",
-        "isValid": true,
-        "mappingRule": "Constant",
-        "twxAttributeName": "Batch Size",
-        "value": "50",
-        "_isSelected": false
-      }
-    ],
+    "rows": [],
     "name": "",
     "description": ""
   },

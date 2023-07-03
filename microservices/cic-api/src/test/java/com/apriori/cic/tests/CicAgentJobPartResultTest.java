@@ -1,6 +1,11 @@
 package com.apriori.cic.tests;
 
+import com.apriori.utils.DateFormattingUtils;
+import com.apriori.utils.DateUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -20,6 +25,11 @@ import entity.response.AgentWorkflowJobRun;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
 import enums.CICPartSelectionType;
+import enums.CostingInputFields;
+import enums.MappingRule;
+import enums.PlmPartDataType;
+import enums.QueryDefinitionFieldType;
+import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -29,18 +39,19 @@ import org.junit.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 import utils.PlmPartsUtil;
+import utils.WorkflowDataUtil;
+import utils.WorkflowTestUtil;
 
 import java.util.HashMap;
 
 public class CicAgentJobPartResultTest extends TestBase {
 
     private static String loginSession;
-    private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
-    private static ResponseWrapper<String> createWorkflowResponse;
     private static WorkflowRequest workflowRequestDataBuilder;
     private static WorkflowParts workflowPartsRequestDataBuilder;
     private static PartData plmPartData;
+    private static WorkflowTestUtil workflowTestUtil;
     private static SoftAssertions softAssertions;
 
     @Before
@@ -49,11 +60,8 @@ public class CicAgentJobPartResultTest extends TestBase {
         loginSession = new CicLoginUtil(driver).login(UserUtil.getUser())
             .navigateToUserMenu()
             .getWebSession();
+        workflowTestUtil = new WorkflowTestUtil();
         plmPartData = new PlmPartsUtil().getPlmPartData();
-        workflowRequestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(loginSession));
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, loginSession);
-
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
     }
 
@@ -61,25 +69,13 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16318", "16324", "16325"})
     @Description("Get request with valid workflow, job, part identity, verify response body and data")
     public void testGetWorkflowJobPartResult() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.createWorkflowAndGetJobPartResult(workflowRequestDataBuilder, workflowPartsRequestDataBuilder, loginSession);
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getMaterialName());
@@ -94,25 +90,19 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16335"})
     @Description("Get Part Results for parts re-costed with different costing inputs")
     public void testGetPartResultWithReCostedParts() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
 
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder)
+            .track();
 
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.getJobPartResult(workflowPartsRequestDataBuilder.getParts().get(0).getId());
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getMaterialName());
@@ -128,19 +118,9 @@ public class CicAgentJobPartResultTest extends TestBase {
         workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().setAnnualVolume(5000);
         workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().setBatchSize(50);
 
-        AgentWorkflowJobRun reCostedJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(reCostedJobRunResponse.getJobId()).isNotNull();
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), reCostedJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult reCostedJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            reCostedJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult reCostedJobPartsResult = workflowTestUtil.invokeRestWorkflow(workflowPartsRequestDataBuilder)
+            .track()
+            .getJobPartResult(workflowPartsRequestDataBuilder.getParts().get(0).getId());
 
         softAssertions.assertThat(reCostedJobPartsResult.getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
         softAssertions.assertThat(reCostedJobPartsResult.getInput().getMaterialName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getMaterialName());
@@ -154,28 +134,15 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16330"})
     @Description("Get part results with errored Part identity")
     public void testGetPartResultWithErroredPart() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
         workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().setProcessGroupName("Plastic");
-
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
-
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.createWorkflowAndGetJobPartResult(workflowRequestDataBuilder, workflowPartsRequestDataBuilder, loginSession);
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getErrorMessage()).contains("Unable to find process group with name 'Plastic'");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getCicStatus()).isEqualTo("ERRORED");
     }
 
@@ -183,27 +150,13 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16332", "16338"})
     @Description("get Part Results for part selection type REST and windchill agent")
     public void testGetPartResultWithRestForWC() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.createWorkflowAndGetJobPartResult(workflowRequestDataBuilder, workflowPartsRequestDataBuilder, loginSession);
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
     }
@@ -212,28 +165,14 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16328"})
     @Description("Get part results with fields that have no value")
     public void testGetPartResultWithNoFields() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .setWorkflowDescription("")
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJob agentWorkflowJob = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId());
-        softAssertions.assertThat(agentWorkflowJob.getStatus()).isEqualTo("Finished");
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.createWorkflowAndGetJobPartResult(workflowRequestDataBuilder, workflowPartsRequestDataBuilder, loginSession);
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isNull();
@@ -243,150 +182,134 @@ public class CicAgentJobPartResultTest extends TestBase {
     @TestRail(testCaseId = {"16321"})
     @Description("Get Part results with invalid workflow Identity")
     public void testGetPartResultWithInvalidWorkFlow() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder)
+            .track();
 
         AgentErrorMessage aJobPartsResultError = CicApiTestUtil.getCicAgentWorkflowJobPartsResult("INVALID",
-            agentWorkflowJobRunResponse.getJobId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
             workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_NOT_FOUND);
 
-
-        softAssertions.assertThat(aJobPartsResultError.getMessage()).contains(String.format("Job '%s' in workflow 'INVALID' not found", agentWorkflowJobRunResponse.getJobId()));
+        softAssertions.assertThat(aJobPartsResultError.getMessage()).contains(String.format("Job '%s' in workflow 'INVALID' not found", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId()));
     }
 
     @Test
     @TestRail(testCaseId = {"16322"})
     @Description("Get Part results with valid workflow Identity and invalid job identity")
     public void testGetPartResultWithInvalidJobIdentity() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder)
+            .track();
+        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
             "INVALID",
             workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("Job 'INVALID' in workflow '%s' not found", agentWorkflowResponse.getId()));
+        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("Job 'INVALID' in workflow '%s' not found", workflowTestUtil.getAgentWorkflowResponse().getId()));
     }
 
     @Test
     @TestRail(testCaseId = {"16341"})
     @Description("Get Part results with valid workflow, job identity and invalid part identity")
     public void testGetPartResultWithInvalidPartIdentity() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        workflowTestUtil =  workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder)
+            .track();
 
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
+        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
             "INVALID",
             AgentErrorMessage.class,
             HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("Part 'INVALID' for job '%s' in workflow '%s' not found", agentWorkflowJobRunResponse.getJobId(), agentWorkflowResponse.getId()));
+        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("Part 'INVALID' for job '%s' in workflow '%s' not found", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), workflowTestUtil.getAgentWorkflowResponse().getId()));
     }
 
     @Test
     @TestRail(testCaseId = {"16287"})
     @Description("Get Job results during processing with different status")
     public void testGetWorkflowJobInProgress() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder);
 
-        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), CICAgentStatus.QUERY_IN_PROGRESS)).isTrue();
+        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), CICAgentStatus.QUERY_IN_PROGRESS)).isTrue();
 
-        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
+        AgentErrorMessage agentPartErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
             workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_CONFLICT);
 
-        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", agentWorkflowJobRunResponse.getJobId()));
+        softAssertions.assertThat(agentPartErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId()));
 
-        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), CICAgentStatus.COSTING)).isTrue();
+        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), CICAgentStatus.COSTING)).isTrue();
 
-        AgentErrorMessage agentCostingErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
+        AgentErrorMessage agentCostingErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
             workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_CONFLICT);
 
-        softAssertions.assertThat(agentCostingErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", agentWorkflowJobRunResponse.getJobId()));
+        softAssertions.assertThat(agentCostingErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId()));
 
-        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), CICAgentStatus.PLM_WRITE_ACTION)).isTrue();
+        softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), CICAgentStatus.PLM_WRITE_ACTION)).isTrue();
 
-        AgentErrorMessage agentPlmWriteErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
+        AgentErrorMessage agentPlmWriteErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
             workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_CONFLICT);
 
-        softAssertions.assertThat(agentPlmWriteErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", agentWorkflowJobRunResponse.getJobId()));
+        softAssertions.assertThat(agentPlmWriteErrorMessage.getMessage()).contains(String.format("The job '%s' is not in a terminal state", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId()));
     }
 
     @Test
     @TestRail(testCaseId = {"16320"})
     @Description("get Part Results for part selection type REST and windchill agent")
     public void testGetPartResultInvalidAuthenticationKey() {
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder);
 
         AgentErrorMessage agentErrorMessage = (AgentErrorMessage) HTTPRequest.build(RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_PART_RESULT, AgentErrorMessage.class)
-            .inlineVariables(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), workflowPartsRequestDataBuilder.getParts().get(0).getId())
+            .inlineVariables(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), workflowPartsRequestDataBuilder.getParts().get(0).getId())
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
             .headers(new HashMap<String, String>() {
                 {
@@ -404,76 +327,57 @@ public class CicAgentJobPartResultTest extends TestBase {
     @Description("Get part results with deleted workflow Identity")
     public void testGetPartResultWithDeletedWorkFlow() {
         JobDefinition jDData = CicApiTestUtil.getJobDefinitionData();
-        WorkflowRequest wfrRestDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.REST, false);
-        ResponseWrapper<String> createWfResponse = CicApiTestUtil.createWorkflow(wfrRestDataBuilder, loginSession);
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .emptyCostingInputRow()
+            .build();
+        workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
+        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invokeRestWorkflow(workflowPartsRequestDataBuilder);
 
-        softAssertions.assertThat(createWfResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWfResponse.getBody()).contains(">true<");
-        AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrRestDataBuilder.getName());
-
-        WorkflowParts wfPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(plmPartData, 1);
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            awfResponse.getId(),
-            wfPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(awfResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        jDData.setJobDefinition(awfResponse.getId() + "_Job");
+        jDData.setJobDefinition(workflowTestUtil.getAgentWorkflowResponse().getId() + "_Job");
         CicApiTestUtil.deleteWorkFlow(loginSession, jDData);
 
-        AgentErrorMessage agentErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(awfResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            wfPartsRequestDataBuilder.getParts().get(0).getId(),
+        AgentErrorMessage agentErrorMessage = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(workflowTestUtil.getAgentWorkflowResponse().getId(),
+            workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(),
+            workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(agentErrorMessage.getMessage()).contains(String.format("Job '%s' in workflow '%s' not found", agentWorkflowJobRunResponse.getJobId(), awfResponse.getId()));
+        softAssertions.assertThat(agentErrorMessage.getMessage()).contains(String.format("Job '%s' in workflow '%s' not found", workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId(), workflowTestUtil.getAgentWorkflowResponse().getId()));
     }
 
     @Test
     @TestRail(testCaseId = {"16331"})
     @Description("Get Part results with workflow created using part selection type query")
     public void testGetWorkflowJobResultPartSelectionQuery() {
-        JobDefinition jdData = CicApiTestUtil.getJobDefinitionData();
-        WorkflowRequest wfrQueryDataBuilder = CicApiTestUtil.getWorkflowBaseData(CICPartSelectionType.QUERY, false);
-        ResponseWrapper<String> cwfResponse = CicApiTestUtil.createWorkflow(wfrQueryDataBuilder, loginSession);
-        softAssertions.assertThat(cwfResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(cwfResponse.getBody()).contains(">true<");
-        AgentWorkflow awfResponse = CicApiTestUtil.getMatchedWorkflowId(wfrQueryDataBuilder.getName());
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setCustomer(CicApiTestUtil.getCustomerName())
+            .setAgent(CicApiTestUtil.getAgent(loginSession))
+            .setQueryFilter("partNumber", "EQ", new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED).getPlmPartNumber())
+            .setQueryFilters("AND")
+            .build();
 
-        AgentWorkflowJobRun agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(awfResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);;
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(awfResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(awfResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult  = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
+            .getWorkflowId(workflowRequestDataBuilder.getName())
+            .invoke()
+            .track()
+            .getJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isGreaterThan(0);
-        softAssertions.assertThat(agentWorkflowJobResult.get(0).getPartNumber()).isEqualTo(wfrQueryDataBuilder.getQuery().getFilters().getFilters().get(0).getValue());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getPartNumber()).isEqualTo(workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue());
 
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(awfResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            agentWorkflowJobResult.get(0).getPartId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = workflowTestUtil.getJobPartResult(agentWorkflowJobResult.get(0).getPartId());
 
-        softAssertions.assertThat(agentWorkflowJobPartsResult.getPartNumber()).isEqualTo(wfrQueryDataBuilder.getQuery().getFilters().getFilters().get(0).getValue());
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getPartNumber()).isEqualTo(workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isNull();
-
-        jdData.setJobDefinition(awfResponse.getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(loginSession, jdData);
     }
 
     @After
     public void cleanup() {
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(loginSession, jobDefinitionData);
+        CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()));
         softAssertions.assertAll();
     }
 }
