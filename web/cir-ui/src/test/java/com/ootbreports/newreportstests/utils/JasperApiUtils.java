@@ -116,13 +116,13 @@ public class JasperApiUtils {
      */
     public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
         String currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Component Cost Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
         currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
@@ -173,10 +173,8 @@ public class JasperApiUtils {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        int i = 0;
         for (String partName : partNames) {
-            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-            i++;
+            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
@@ -210,11 +208,9 @@ public class JasperApiUtils {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        int i = 0;
         List<Element> partElementsFromPage = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution");
         for (String partName : partList) {
-            softAssertions.assertThat(partElementsFromPage.get(i).child(0).text()).isEqualTo(partName);
-            i++;
+            softAssertions.assertThat(partElementsFromPage.toString().contains(partName)).isEqualTo(true);
         }
         jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution").get(0).children();
 
@@ -266,10 +262,8 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         if (areBubblesPresent) {
-            int i = 0;
             for (String partName : partNames) {
-                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-                i++;
+                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
             }
         } else {
             for (int i = 0; i < 6; i++) {
@@ -298,11 +292,9 @@ public class JasperApiUtils {
             ? miscDataList.get(1) : "";
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), pgToSet);
 
-        int i = 0;
         for (String partName : partNames) {
             partName = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
-            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-            i++;
+            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);

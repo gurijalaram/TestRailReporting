@@ -3,6 +3,7 @@ package com.ootbreports.newreportstests.componentcost;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/componentcost/ComponentCostReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

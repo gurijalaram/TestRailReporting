@@ -68,9 +68,6 @@ int-core:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
-  reports:
-    ui_url: ${qa-test.base_url}jasperserver-pro/
-
 ########################################################################################################################
 
 
@@ -99,7 +96,6 @@ staging:
     identity_role: 7G0JGBE2N2GE
 
   reports:
-    ui_url: ${base_server_platform_url}jasperserver-pro/
     welcome_page_text: CI-Admin aPriori Internal
     failed_login_message: WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.
 

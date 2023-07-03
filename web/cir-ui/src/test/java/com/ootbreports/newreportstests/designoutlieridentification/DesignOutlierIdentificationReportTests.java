@@ -5,6 +5,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
         JasperCirApiPartsEnum.P_257280C.getPartName(),
         JasperCirApiPartsEnum.P_40137441_MLDES_0002_WITHOUT_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/designoutlieridentification/DesignOutlierIdentificationReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

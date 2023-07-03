@@ -4,6 +4,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -14,7 +15,7 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 
 public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/costoutlieridentification/CostOutlierIdentificationReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint();
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

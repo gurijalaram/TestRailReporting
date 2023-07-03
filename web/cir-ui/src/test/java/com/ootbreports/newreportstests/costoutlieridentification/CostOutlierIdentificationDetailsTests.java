@@ -5,6 +5,7 @@ import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -20,7 +21,7 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
         JasperCirApiPartsEnum.SM_CLEVIS_2207240161.getPartName(),
         JasperCirApiPartsEnum.P_18_1.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/costoutlieridentification/CostOutlierIdentificationDetailsReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
