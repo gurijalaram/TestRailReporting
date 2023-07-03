@@ -1,5 +1,6 @@
 package utils;
 
+import com.apriori.utils.AwsParameterStoreUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -93,7 +94,7 @@ public class AgentService {
         try {
             agentData.setPrivateKeyFile(agentData.getBaseFolder() + File.separator + "key" + File.separator +
                 StringUtils.substringAfterLast(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY, "/"));
-            String privateKey = FileResourceUtil.getAwsSystemParameter(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY);
+            String privateKey = AwsParameterStoreUtil.getSystemParameter(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY);
             log.info("########## PRIVATE KEY RETRIEVED FROM AWS SUCCESSFULLY. ########  " + agentData.getPrivateKeyFile());
             FileUtils.writeStringToFile(new File(agentData.getPrivateKeyFile()), privateKey, StandardCharsets.UTF_8);
             jSch.addIdentity(agentData.getPrivateKeyFile(), agentCredentials.getPassword());
