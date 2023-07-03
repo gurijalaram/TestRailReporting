@@ -22,11 +22,11 @@ public class AutomationUsersTests {
     @Test
     @Description("Resets automation users preferences")
     public void resetAutomationsUsersPreferences() {
-        UserUtil.getUsers().forEach(user -> new UserPreferencesUtil().resetSettings(user));
-
         SoftAssertions softAssertions = new SoftAssertions();
 
         UserUtil.getUsers().forEach(user -> {
+                new UserPreferencesUtil().resetSettings(user);
+
                 List<PreferenceResponse> userPreferencesUtilList = new UserPreferencesUtil().getPreferences(user);
                 softAssertions.assertThat(userPreferencesUtilList.stream()
                         .map(PreferenceResponse::getValue)
