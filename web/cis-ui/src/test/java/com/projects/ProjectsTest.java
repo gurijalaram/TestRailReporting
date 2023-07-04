@@ -90,7 +90,7 @@ public class ProjectsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"22688","22708","24002","17216","17218"})
+    @TestRail(testCaseId = {"22688","22708","24002","17216","17218","25957"})
     @Description("Verify user can save a new project")
     public void testSaveNewProject() {
 
@@ -116,7 +116,7 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertThat(projectsPage.getDueDate()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectOrganization()).contains("aPriori Internal");
-        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("Open");
 
         softAssertions.assertAll();
     }
@@ -151,7 +151,7 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertThat(projectsPage.getProjectName()).contains("Automation Project " + dateTime);
         softAssertions.assertThat(projectsPage.getDueDate()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
-        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("Open");
         softAssertions.assertThat(projectsPage.getProjectOrganization()).contains("aPriori Internal");
         softAssertions.assertThat(projectsPage.getProjectOwner()).isNotBlank();
         softAssertions.assertThat(projectsPage.getProjectParticipants()).isNotBlank();
@@ -351,9 +351,9 @@ public class ProjectsTest extends TestBase {
 
         projectsPage.clickOnFilterOption()
                 .clickOnAddCondition()
-                .selectProjectStatus("In Negotiation");
+                .selectProjectStatus("Open");
 
-        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("In Negotiation");
+        softAssertions.assertThat(projectsPage.getProjectDetails("Automation Project " + dateTime)).contains("Open");
 
         softAssertions.assertAll();
     }
