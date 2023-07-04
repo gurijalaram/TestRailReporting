@@ -35,6 +35,9 @@
     "ownerFullName": {
       "type": "string"
     },
+    "ownerUserIdentity": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -313,7 +316,8 @@
     "organizationName",
     "owner",
     "displayName",
-    "ownerFullName"
+    "ownerFullName",
+    "ownerUserIdentity"
   ],
   "optional": [
     "dueAt",
