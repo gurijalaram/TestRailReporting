@@ -31,7 +31,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
     @FindBy(xpath = "//button[@title='Previous month']")
     private WebElement previousMonthSelector;
 
-    @FindBy(xpath = "//p[@data-testid='toolbar-Unread']")
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
     private WebElement btnUnread;
 
     @FindBy(xpath = "//h3[@data-testid='displayName']")
@@ -105,6 +105,12 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
 
     @FindBy(xpath = "//li[contains(@id,'filter-value')]/div/span/span")
     private WebElement inNegotiationOption;
+
+    @FindBy(xpath = "//span[@data-testid='data-label-Status']/following-sibling::span")
+    private WebElement projectStatus;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Unread']")
+    private WebElement btnRead;
 
     private PageUtils pageUtils;
 
@@ -217,7 +223,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      * @return new page object
      */
     public ProjectsDetailsPage clickOnCreatedProject() {
-        getPageUtils().waitForElementAndClick(projectName);
+        getPageUtils().javaScriptClick(projectName);
         return new ProjectsDetailsPage(driver);
     }
 
@@ -403,5 +409,25 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      */
     public String getFilteredDueDate(String projectName) {
         return getPageUtils().waitForElementToAppear(By.xpath("//h3[contains(text(),'" + projectName + "')]//following::span[contains(@data-testid,'data-label-Due Date')]//following::span")).getText();
+    }
+
+    /**
+     * Get project status
+     *
+     * @return a String
+     */
+    public String getProjectStatus() {
+        return getPageUtils().waitForElementToAppear(projectStatus).getText();
+    }
+
+    /**
+     * clicks on read filter
+     *
+     * @return current page object
+     */
+    public ProjectsPage clickOnRead() {
+        getPageUtils().waitForElementAndClick(btnRead);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
     }
 }

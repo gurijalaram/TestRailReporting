@@ -4,9 +4,12 @@ import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.common.ProjectsPartsAndAssemblyTableController;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.components.EagerPageComponent;
 
+import com.utils.CisColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,6 +101,21 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(xpath = "//h4[@data-testid='user-full-name']//..//div")
     private WebElement ownerLabel;
 
+    @FindBy(id = "project-status")
+    private WebElement projectStatusDropDown;
+
+    @FindBy(id = "delete-btn-project")
+    private WebElement btnProjectDelete;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-delete-project-modal']")
+    private WebElement deleteModal;
+
+    @FindBy(id = "primary-delete-project-modal")
+    private WebElement btnModalDelete;
+
+    @FindBy(id = "secondary-delete-project-modal")
+    private WebElement btnModalCancel;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -110,7 +128,6 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsDetailsPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        this.waitForProjectsPageLoad();
         this.projectsPartsAndAssemblyTableController = new ProjectsPartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
     }
@@ -188,7 +205,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      *
      * @return a String
      */
-    public String isProjectDetailsDisplays(String section) {
+    public String isProjectDetailsDisplayed(String section) {
         return getPageUtils().waitForElementToAppear(By.xpath("//h3[text()='" + section + "']//..")).getText();
     }
 
@@ -433,4 +450,109 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
         return getPageUtils().isElementDisplayed(ownerLabel);
     }
 
+    /**
+     * Checks if project status dropdown displayed
+     *
+     * @return true/false
+     */
+    public boolean isProjectStatusDroDownDisplayed() {
+        return getPageUtils().isElementDisplayed(projectStatusDropDown);
+    }
+
+    /**
+     * Change project status
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage changeProjectStatus(String projectStatus) {
+        getPageUtils().waitForElementAndClick(projectStatusDropDown);
+        getPageUtils().waitForElementToAppear(By.xpath("//span[text()='" + projectStatus + "']")).click();
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return this;
+    }
+
+    /**
+     * Navigate to project page
+     *
+     * @return new page object
+     */
+    public ProjectsPage navigateToAllProjects() {
+        getPageUtils().waitForElementAndClick(btnAllProjects);
+        return new ProjectsPage(driver);
+    }
+
+    /**
+     * Checks if project delete button displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnProjectDelete);
+    }
+
+    /**
+     * clicks on delete button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickDeleteProject() {
+        getPageUtils().waitForElementAndClick(btnProjectDelete);
+        return this;
+    }
+
+    /**
+     * Checks if delete modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteModalDisplayed() {
+        return getPageUtils().isElementDisplayed(deleteModal);
+    }
+
+    /**
+     * get delete confirmation text
+     *
+     * @return a String
+     */
+    public String getDeleteConfirmation() {
+        return getPageUtils().waitForElementAppear(deleteModal).getText();
+    }
+
+    /**
+     * Checks if modal delete button displayed
+     *
+     * @return true/false
+     */
+    public boolean isModalDeleteButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnModalDelete);
+    }
+
+    /**
+     * Checks if modal cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isModalCancelButtonDisplayed() {
+        return getPageUtils().isElementDisplayed(btnModalCancel);
+    }
+
+    /**
+     * clicks on modal cancel button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickModalCancelProject() {
+        getPageUtils().waitForElementAndClick(btnModalCancel);
+        return new ProjectsPage(driver);
+    }
+
+    /**
+     * clicks on modal delete button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickModalDeleteProject() {
+        getPageUtils().waitForElementAndClick(btnModalDelete);
+        return new ProjectsPage(driver);
+    }
 }
