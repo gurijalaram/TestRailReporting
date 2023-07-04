@@ -17,6 +17,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
+import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -1048,8 +1049,8 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "24358")
-    @Description("Verify that Compare button is enabled in Explore view when nothing selected")
+    @TestRail(testCaseId = {"25983", "25984", "25986"})
+    @Description("Verify that Save button is present and enabled for initial save and can only be clicked when changes made")
     public void testSaveComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -1071,10 +1072,10 @@ public class ComparisonTests extends TestBase {
             .build());
 
         ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
+            .componentName(componentName2)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
+            .resourceFile(resourceFile2)
             .user(currentUser)
             .build());
 
@@ -1088,6 +1089,70 @@ public class ComparisonTests extends TestBase {
             .save();
 
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after save").isFalse();
+
+        comparePage.dragDropToBasis(panel.getComponentName(), panel.getScenarioName());
+        softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify Save button enabled after change").isTrue();
+
+        comparePage.saveChanges();
+        softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after changes saved").isFalse();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "25985")
+    @Description("Verify that a Comparison cannot be saved using a name that already exists")
+    public void testSaveComparisonWithExistingName() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        SaveComparisonPage saveComparePage = loginPage.login(currentUser)
+            .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save()
+            .clickExplore()
+            .multiSelectScenarios(panel.getComponentName() + "," + panel.getScenarioName(), bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .saveExpectingError();
+
+        softAssertions.assertThat(saveComparePage.getToastifyError()).as("Verify error message displayed")
+            .isEqualTo("HTTP 409: A comparison with the name '" + comparisonName + "' already exists for user '" + currentUser.getUsername() + "'");
+
+        comparePage = saveComparePage.inputName(comparisonName2)
+            .save();
+
         softAssertions.assertAll();
     }
 }

@@ -22,7 +22,7 @@ public class CompareToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
 
-    @FindBy(id = "qa-sub-header-save-as-button")
+    @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
     private WebElement saveButton;
 
     private WebDriver driver;
@@ -87,6 +87,8 @@ public class CompareToolbar extends MainNavBar {
      */
     public ComparePage saveChanges() {
         pageUtils.waitForElementAndClick(saveButton);
+        SaveComparisonPage saveModal = new SaveComparisonPage(driver);
+        saveModal.waitForSavingSpinner();
         pageUtils.waitForElementToBeClickable(modifyButton);
         return new ComparePage(driver);
     }

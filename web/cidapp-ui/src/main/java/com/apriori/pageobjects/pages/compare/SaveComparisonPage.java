@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,21 +58,64 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
         assertEquals("Save Comparison page was not displayed", "Save Comparison", pageUtils.waitForElementToAppear(saveComparisonLabel).getAttribute("textContent"));
     }
 
+    /**
+     * Input given name to Comparison Name textbox
+     *
+     * @param comparisonName - The comparison name to be used
+     * @return
+     */
     public SaveComparisonPage inputName(String comparisonName) {
         pageUtils.clearValueOfElement(comparisonNameInput);
         comparisonNameInput.sendKeys(comparisonName);
         return this;
     }
 
+    /**
+     * Click the Cancel button
+     *
+     * @return new Compare Page Object
+     */
     public ComparePage cancel() {
         pageUtils.waitForElementAndClick(cancel);
         return new ComparePage(driver);
     }
 
+    /**
+     * Click the Save button
+     *
+     * @return new Compare Page Object
+     */
     public ComparePage save() {
         pageUtils.waitForElementAndClick(save);
-        pageUtils.waitForElementNotDisplayed(saveSpinner, 1);
+        pageUtils.waitForElementNotVisible(saveSpinner, 1);
         return new ComparePage(driver);
     }
 
+    /**
+     * Click the Save button expecting an error
+     *
+     * @return new Compare Page Object
+     */
+    public SaveComparisonPage saveExpectingError() {
+        pageUtils.waitForElementAndClick(save);
+        pageUtils.waitForElementNotVisible(saveSpinner, 1);
+        return this;
+    }
+
+    /**
+     * Waits for the Saving Spinner to complete and disappear
+     *
+     */
+    public void waitForSavingSpinner() {
+        pageUtils.waitForElementNotVisible(saveSpinner, 1);
+    }
+
+    /**
+     * Get Toastify Error.
+     *
+     * @return Toastify error object
+     */
+    public String getToastifyError() {
+        return pageUtils.waitForElementToAppear(By.className("Toastify__toast-body")).getText();
+    }
 }
