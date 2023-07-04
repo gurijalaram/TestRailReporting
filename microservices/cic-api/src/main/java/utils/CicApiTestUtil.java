@@ -78,30 +78,6 @@ public class CicApiTestUtil extends TestBase {
     }
 
     /**
-     * De-serialize base workflow requests test data from json file
-     *
-     * @param cicPartSelectionType Enum CICPartSelectionType (REST or QUERY)
-     * @param isCostingInputData   boolean
-     * @return WorkFlowRequest builder object
-     */
-    public static WorkflowRequest getWorkflowBaseData(CICPartSelectionType cicPartSelectionType, Boolean isCostingInputData) {
-        WorkflowRequest workflowRequestDataBuilder;
-        switch (cicPartSelectionType.getPartSelectionType()) {
-            case "REST":
-                workflowRequestDataBuilder = (isCostingInputData)
-                    ? new TestDataService().getTestData("AgentRestWorkFlowWithCostInputsData.json", WorkflowRequest.class) :
-                    new TestDataService().getTestData("AgentRestWorkFlowWithEmptyCostInputData.json", WorkflowRequest.class);
-
-                workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
-                break;
-            default:
-                workflowRequestDataBuilder = new TestDataService().getTestData("CicGuiCreateQueryWorkFlowData.json", WorkflowRequest.class);
-                workflowRequestDataBuilder = setCostingInputData(workflowRequestDataBuilder);
-        }
-        return workflowRequestDataBuilder;
-    }
-
-    /**
      * De-serialize base Job Definition from json file
      *
      * @return JobDefinition
