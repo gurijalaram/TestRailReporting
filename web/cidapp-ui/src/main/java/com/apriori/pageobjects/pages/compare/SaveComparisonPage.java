@@ -31,7 +31,7 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
     @FindBy(css = "button[data-testid='primary-button']")
     private WebElement save;
 
-    @FindBy(css="div[role='status']")
+    @FindBy(css = "div[role='status']")
     private WebElement saveSpinner;
 
     private PageUtils pageUtils;
