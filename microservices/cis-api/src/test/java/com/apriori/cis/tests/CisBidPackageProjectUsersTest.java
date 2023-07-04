@@ -82,6 +82,4 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(secondUserIdentity).build());
         CisBidPackageProjectResources.deleteBidPackageProjectUser(userIdentityList, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
     }
-
-
 }
