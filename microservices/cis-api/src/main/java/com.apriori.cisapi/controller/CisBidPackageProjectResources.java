@@ -43,7 +43,7 @@ public class CisBidPackageProjectResources {
     }
 
     /**
-     * BidPackageProjectRequestBuilder
+     * Get Bidpackage project request builder
      *
      * @param projectName        -project name
      * @param projectDescription - project description
@@ -163,7 +163,7 @@ public class CisBidPackageProjectResources {
     }
 
     /**
-     * Delete bid package project user bid package project users delete response.
+     * Delete bid package project users.
      *
      * @param userIdList         the user id list
      * @param bidPackageIdentity the bid package identity
