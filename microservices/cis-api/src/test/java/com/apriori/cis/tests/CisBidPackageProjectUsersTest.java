@@ -53,14 +53,14 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
     @TestRail(testCaseId = {"24361"})
     @Description("Add Multiple Users to the Project")
     public void createBidPackageDefaultProjectUser() {
-        UserCredentials newUserOne = UserUtil.getUser();
-        UserCredentials newUserTwo = UserUtil.getUser();
-        String newUserIdentityOne = new AuthUserContextUtil().getAuthUserIdentity(newUserOne.getEmail());
-        String newUserIdentityTwo = new AuthUserContextUtil().getAuthUserIdentity(newUserTwo.getEmail());
+        String firstUserEmail = UserUtil.getUser().getEmail();
+        String secondUserEmail = UserUtil.getUser().getEmail();
+        String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);
+        String secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUserEmail);
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT").build());
-        usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("GUEST").build());
+        usersList.add(BidPackageProjectUserParameters.builder().userEmail(firstUserEmail).role("DEFAULT").build());
+        usersList.add(BidPackageProjectUserParameters.builder().userEmail(secondUserEmail).role("GUEST").build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
             .projectUsers(usersList).build();
@@ -69,17 +69,17 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(firstUserIdentity))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(secondUserIdentity))).isTrue();
 
         //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().size()).isZero();
 
         //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
-        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(newUserIdentityOne).build());
-        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(newUserIdentityTwo).build());
+        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(firstUserIdentity).build());
+        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(secondUserIdentity).build());
         CisBidPackageProjectResources.deleteBidPackageProjectUser(userIdentityList, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
     }
 
