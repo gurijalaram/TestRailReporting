@@ -45,7 +45,7 @@ public class ComparisonUtils {
      */
     public <T> T updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
                 .inlineVariables(comparisonID)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)

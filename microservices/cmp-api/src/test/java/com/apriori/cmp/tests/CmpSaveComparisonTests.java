@@ -271,4 +271,120 @@ public class CmpSaveComparisonTests {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = {"25943", "25945", "25946", "25947", "25948", "25949", "25950"})
+    @Description("Test Request Validation for Create Comparison Endpoint")
+    public void testUpdateComparisonValidation() {
+        comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        ComparisonObjectBuilder baseScenario = ComparisonObjectBuilder.builder()
+            .externalIdentity(component1.getScenarioIdentity())
+            .position(1)
+            .basis(true)
+            .build();
+        ComparisonObjectBuilder comparisonScenario1 = ComparisonObjectBuilder.builder()
+            .externalIdentity(component2.getScenarioIdentity())
+            .position(2)
+            .build();
+        ComparisonObjectBuilder comparisonScenario2 = ComparisonObjectBuilder.builder()
+            .externalIdentity(component3.getScenarioIdentity())
+            .position(3)
+            .build();
+
+        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<ComparisonObjectBuilder>();
+        comparisonObjectsList.add(baseScenario);
+        comparisonObjectsList.add(comparisonScenario1);
+        comparisonObjectsList.add(comparisonScenario2);
+
+        CreateComparison comparison = CreateComparison.builder()
+            .comparisonName(comparisonName)
+            .comparisonType("BASIS")
+            .comparisonObjectType("SCENARIO")
+            .objectsToCompare(comparisonObjectsList)
+            .build();
+
+        PostComparisonResponse savedComparisonResponse = comparisonUtils.createComparison(comparison, currentUser, PostComparisonResponse.class, HttpStatus.SC_CREATED);
+
+        UpdateComparison comparisonUpdates = UpdateComparison.builder()
+            .comparisonName("Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur adipisci velit")
+            .objectsToCompare(comparisonObjectsList)
+            .build();
+
+        ErrorResponse updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned for over-length comparison name")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for over-length comparison name")
+            .isEqualTo("'comparisonName' should not be more than 64 characters.");
+
+        comparisonUpdates.setComparisonName(comparisonName);
+        comparisonUpdates.getObjectsToCompare().get(0).setBasis(null);
+        comparisonUpdates.getObjectsToCompare().get(1).setBasis(null);
+        comparisonUpdates.getObjectsToCompare().get(2).setBasis(null);
+
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when no basis set")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for no basis set")
+            .isEqualTo("'Contains a single basis' should be true.");
+
+        comparisonUpdates.getObjectsToCompare().get(0).setBasis(true);
+        comparisonUpdates.getObjectsToCompare().get(1).setBasis(true);
+        comparisonUpdates.getObjectsToCompare().get(2).setBasis(true);
+
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when all objects set as basis")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for all objects set as basis")
+            .isEqualTo("'Contains a single basis' should be true.");
+
+        comparisonUpdates.getObjectsToCompare().get(0).setBasis(false);
+        comparisonUpdates.getObjectsToCompare().get(1).setBasis(false);
+        comparisonUpdates.getObjectsToCompare().get(2).setBasis(false);
+
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when all objects set as not basis")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for all objects set as not basis")
+            .isEqualTo("'Contains a single basis' should be true.");
+
+        comparisonUpdates.getObjectsToCompare().get(0).setBasis(true);
+        comparisonUpdates.getObjectsToCompare().get(1).setBasis(false);
+        comparisonUpdates.getObjectsToCompare().get(2).setBasis(false);
+
+        comparisonUpdates.getObjectsToCompare().get(1).setPosition(1);
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when duplicate positions provided")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for duplicate positions provided")
+            .isEqualTo("'Has consecutive, unique object positions' should be true.");
+
+        comparisonUpdates.getObjectsToCompare().get(0).setPosition(0);
+        comparisonUpdates.getObjectsToCompare().get(1).setPosition(1);
+        comparisonUpdates.getObjectsToCompare().get(2).setPosition(2);
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 0-indexed positions used")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 0-indexed positions used")
+            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+
+        comparisonUpdates.getObjectsToCompare().get(0).setPosition(2);
+        comparisonUpdates.getObjectsToCompare().get(1).setPosition(3);
+        comparisonUpdates.getObjectsToCompare().get(2).setPosition(4);
+        updatedComparison = comparisonUtils.updateComparison(
+            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 2-indexed positions used")
+            .isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 2-indexed positions used")
+            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+
+        softAssertions.assertAll();
+    }
+
 }
