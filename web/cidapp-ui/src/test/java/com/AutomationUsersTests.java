@@ -25,17 +25,20 @@ public class AutomationUsersTests {
         SoftAssertions softAssertions = new SoftAssertions();
 
         UserUtil.getUsers().forEach(user -> {
-                new UserPreferencesUtil().resetSettings(user);
+            new UserPreferencesUtil().resetSettings(user);
 
-                List<PreferenceResponse> userPreferencesUtilList = new UserPreferencesUtil().getPreferences(user);
-                softAssertions.assertThat(userPreferencesUtilList.stream()
-                        .map(PreferenceResponse::getValue)
-                        .collect(Collectors.toList()))
-                    .containsAll(Arrays.asList(CurrencyEnum.USD.getCurrency(), UnitsEnum.MMKS.getUnits(), LengthEnum.MILLIMETER.getLength(), MassEnum.KILOGRAM.getMass(),
-                        TimeEnum.SECOND.getTime(), DecimalPlaceEnum.TWO.getDecimalPlaces()));
+            List<PreferenceResponse> userPreferencesUtilList = new UserPreferencesUtil().getPreferences(user);
+            softAssertions.assertThat(userPreferencesUtilList.stream()
+                    .map(PreferenceResponse::getValue)
+                    .collect(Collectors.toList()))
+                .containsAll(Arrays.asList(CurrencyEnum.USD.getCurrency(),
+                    UnitsEnum.MMKS.getUnits(),
+                    LengthEnum.MILLIMETER.getLength(),
+                    MassEnum.KILOGRAM.getMass(),
+                    TimeEnum.SECOND.getTime(),
+                    DecimalPlaceEnum.TWO.getDecimalPlaces()));
 
-                softAssertions.assertAll();
-            }
-        );
+            softAssertions.assertAll();
+        });
     }
 }
