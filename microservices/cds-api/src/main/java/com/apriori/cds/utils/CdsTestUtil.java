@@ -1,7 +1,6 @@
 package com.apriori.cds.utils;
 
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.AttributeMappings;
