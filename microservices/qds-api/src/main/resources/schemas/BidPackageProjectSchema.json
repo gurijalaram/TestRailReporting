@@ -34,6 +34,9 @@
     "ownerFullName": {
       "type": "string"
     },
+    "ownerUserIdentity": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -302,7 +305,8 @@
     "status",
     "type",
     "projectProfile",
-    "name"
+    "name",
+    "ownerUserIdentity"
   ],
   "optional":[
     "items",
