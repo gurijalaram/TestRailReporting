@@ -19,35 +19,19 @@ public class ComparisonUtils {
      *
      * @param comparison - Create Comparison object
      * @param currentUser - UserCredentials object
+     * @param klass - The desired return class
+     * @param expectedResponse - The expected HTTP response code
      *
      * @return PostComparisonResponse
      */
-    public PostComparisonResponse createComparison(CreateComparison comparison, UserCredentials currentUser) {
+    public <T> T createComparison(CreateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON, PostComparisonResponse.class)
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISON, klass)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
-                .expectedResponseCode(201);
+                .expectedResponseCode(expectedResponse);
 
-        return (PostComparisonResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
-    }
-
-    /**
-     * Post to the Create Comparison endpoint expecting an error response
-     *
-     * @param comparison - Create Comparison object
-     * @param currentUser - UserCredentials object
-     *
-     * @return PostComparisonResponse
-     */
-    public ErrorResponse createComparisonExpectingError(CreateComparison comparison, UserCredentials currentUser) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON, ErrorResponse.class)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .body("comparison", comparison)
-                .expectedResponseCode(400);
-
-        return (ErrorResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -59,15 +43,15 @@ public class ComparisonUtils {
      *
      * @return GetComparisonResponse
      */
-    public GetComparisonResponse updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser) {
+    public <T> T updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
                 .inlineVariables(comparisonID)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
-                .expectedResponseCode(200);
+                .expectedResponseCode(expectedResponse);
 
-        return (GetComparisonResponse) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
     }
 
     /**
