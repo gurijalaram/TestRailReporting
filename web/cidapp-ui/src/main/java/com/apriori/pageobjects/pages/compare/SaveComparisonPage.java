@@ -6,18 +6,18 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+
+@Slf4j
 public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(CreateComparePage.class);
 
     @FindBy(css = ".MuiPaper-root h2")
     private WebElement saveComparisonLabel;
@@ -44,7 +44,7 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
         this.driver = driver;
         this.statusIcon = new StatusIcon(driver);
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(saveComparisonLabel);
     }
