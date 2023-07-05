@@ -1086,7 +1086,7 @@ public class ComparisonTests extends TestBase {
             .selectManualComparison()
             .saveNew()
             .inputName(comparisonName)
-            .save();
+            .save(ComparePage.class);
 
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after save").isFalse();
 
@@ -1139,20 +1139,22 @@ public class ComparisonTests extends TestBase {
             .selectManualComparison()
             .saveNew()
             .inputName(comparisonName)
-            .save()
+            .save(ComparePage.class)
             .clickExplore()
             .multiSelectScenarios(panel.getComponentName() + "," + panel.getScenarioName(), bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
             .inputName(comparisonName)
-            .saveExpectingError();
+            .save(SaveComparisonPage.class);
 
         softAssertions.assertThat(saveComparePage.getToastifyError()).as("Verify error message displayed")
             .isEqualTo("HTTP 409: A comparison with the name '" + comparisonName + "' already exists for user '" + currentUser.getUsername() + "'");
 
         comparePage = saveComparePage.inputName(comparisonName2)
-            .save();
+            .save(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after save with new name").isFalse();
 
         softAssertions.assertAll();
     }

@@ -85,21 +85,10 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
      *
      * @return new Compare Page Object
      */
-    public ComparePage save() {
+    public <T> T save(Class<T> klass) {
         pageUtils.waitForElementAndClick(save);
         pageUtils.waitForElementNotVisible(saveSpinner, 1);
-        return new ComparePage(driver);
-    }
-
-    /**
-     * Click the Save button expecting an error
-     *
-     * @return new Compare Page Object
-     */
-    public SaveComparisonPage saveExpectingError() {
-        pageUtils.waitForElementAndClick(save);
-        pageUtils.waitForElementNotVisible(saveSpinner, 1);
-        return this;
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
