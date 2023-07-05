@@ -24,4 +24,16 @@ public class BidPackageProjectUserProfile {
     private String updatedBy;
     private String givenName;
     private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String townCity;
+    private String timezone;
+    private String countryCode;
+    private String stateProvince;
+    private String prefix;
+    private String suffix;
+    private String county;
+    private String officePhoneCountryCode;
+    private String officePhoneNumber;
 }

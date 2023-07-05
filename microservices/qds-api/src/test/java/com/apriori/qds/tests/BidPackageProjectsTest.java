@@ -47,6 +47,7 @@ public class BidPackageProjectsTest extends TestUtil {
         BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         softAssertions.assertThat(bppResponse.getDueAt().toLocalTime()).isNotNull();
+        softAssertions.assertThat(bppResponse.getOwnerUserIdentity()).isNotNull();
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
     }
 
@@ -60,6 +61,8 @@ public class BidPackageProjectsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(projectsResponse.getItems().stream()
                 .allMatch(p -> p.getDueAt().toLocalTime() != null)).isTrue();
+            softAssertions.assertThat(projectsResponse.getItems().stream()
+                .allMatch(p -> p.getOwnerUserIdentity() != null)).isTrue();
         }
     }
 
@@ -72,6 +75,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
             .isEqualTo(bidPackageResponse.getIdentity());
         softAssertions.assertThat(getBidPackageProjectResponse.getDueAt().toLocalTime()).isNotNull();
+        softAssertions.assertThat(getBidPackageProjectResponse.getOwnerUserIdentity()).isNotNull();
     }
 
     @Test
@@ -100,6 +104,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectResponse.getDueAt())
             .isEqualTo(LocalDateTime.parse(dueAtNew, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
         softAssertions.assertThat(getBidPackageProjectResponse.getDueAt().toLocalTime()).isNotNull();
+        softAssertions.assertThat(getBidPackageProjectResponse.getOwnerUserIdentity()).isNotNull();
     }
 
     @Test
@@ -113,6 +118,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
         softAssertions.assertThat(bppResponse.getDueAt()).isNull();
         softAssertions.assertThat(bppResponse.getDescription()).isNull();
+        softAssertions.assertThat(bppResponse.getOwnerUserIdentity()).isNotNull();
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), currentUser);
     }
 
