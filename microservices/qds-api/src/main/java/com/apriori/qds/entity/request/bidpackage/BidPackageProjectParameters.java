@@ -30,4 +30,5 @@ public class BidPackageProjectParameters {
     private String dueAt = "N/A";
     private List<BidPackageItemRequest> items;
     private List<BidPackageProjectUserParameters> users;
+    private String ownerUserIdentity;
 }
