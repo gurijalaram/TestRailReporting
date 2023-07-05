@@ -6,6 +6,7 @@ import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,9 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+@Slf4j
 public class CompareToolbar extends MainNavBar {
-
-    private static final Logger logger = LoggerFactory.getLogger(CompareToolbar.class);
 
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
@@ -32,7 +32,7 @@ public class CompareToolbar extends MainNavBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(modifyButton);
     }
@@ -85,12 +85,9 @@ public class CompareToolbar extends MainNavBar {
      *
      * @return Compare Page Object
      */
-    public ComparePage saveChanges() {
+    public SaveComparisonPage saveChanges() {
         pageUtils.waitForElementAndClick(saveButton);
-        SaveComparisonPage saveModal = new SaveComparisonPage(driver);
-        saveModal.waitForSavingSpinner();
-        pageUtils.waitForElementToBeClickable(modifyButton);
-        return new ComparePage(driver);
+        return new SaveComparisonPage(driver);
     }
 
     /**

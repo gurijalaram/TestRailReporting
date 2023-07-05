@@ -106,8 +106,9 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
      * Waits for the Saving Spinner to complete and disappear
      *
      */
-    public void waitForSavingSpinner() {
+    public ComparePage waitForSavingSpinner() {
         pageUtils.waitForElementNotVisible(saveSpinner, 1);
+        return new ComparePage(driver);
     }
 
     /**

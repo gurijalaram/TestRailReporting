@@ -1093,7 +1093,8 @@ public class ComparisonTests extends TestBase {
         comparePage.dragDropToBasis(panel.getComponentName(), panel.getScenarioName());
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify Save button enabled after change").isTrue();
 
-        comparePage.saveChanges();
+        comparePage = comparePage.saveChanges()
+            .waitForSavingSpinner();
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after changes saved").isFalse();
 
         softAssertions.assertAll();
