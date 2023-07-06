@@ -1,5 +1,6 @@
-package com.apriori.cds.objects.response;
+package com.apriori.utils.common.customer.response;
 
+import com.apriori.utils.common.objects.Paged;
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
@@ -12,14 +13,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "SitesSchema.json")
+@Schema(location = "CustomersSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Sites extends Pagination {
-    private List<Site> items;
+public class Customers extends Pagination implements Paged<Customer> {
+    private List<Customer> items;
 }
-

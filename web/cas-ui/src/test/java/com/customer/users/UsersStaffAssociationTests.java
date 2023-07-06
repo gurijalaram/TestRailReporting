@@ -1,8 +1,8 @@
 package com.customer.users;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Customers;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;

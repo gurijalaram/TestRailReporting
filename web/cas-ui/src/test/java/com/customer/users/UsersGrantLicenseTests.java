@@ -2,8 +2,8 @@ package com.customer.users;
 
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Site;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.users.UsersListPage;

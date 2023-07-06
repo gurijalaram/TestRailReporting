@@ -1,9 +1,9 @@
 package com.apriori.cds.tests;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Site;
-import com.apriori.cds.objects.response.Sites;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Site;
+import com.apriori.utils.common.customer.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;

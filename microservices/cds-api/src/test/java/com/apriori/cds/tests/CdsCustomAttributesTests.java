@@ -4,7 +4,7 @@ import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.CustomAttribute;
 import com.apriori.cds.objects.response.CustomAttributesResponse;
-import com.apriori.cds.objects.response.Customer;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;

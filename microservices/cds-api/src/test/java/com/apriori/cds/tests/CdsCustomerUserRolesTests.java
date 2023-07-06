@@ -2,7 +2,7 @@ package com.apriori.cds.tests;
 
 import com.apriori.cds.entity.response.ErrorResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserRole;
 import com.apriori.cds.objects.response.UserRoles;

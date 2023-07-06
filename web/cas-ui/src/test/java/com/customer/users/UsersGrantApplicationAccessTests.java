@@ -2,11 +2,11 @@ package com.customer.users;
 
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Deployment;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
-import com.apriori.cds.objects.response.LicensedApplication;
-import com.apriori.cds.objects.response.Site;
+import com.apriori.utils.common.customer.response.LicensedApplication;
+import com.apriori.utils.common.customer.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;

@@ -1,6 +1,6 @@
 package com.customer;
 
-import com.apriori.cds.objects.response.Customer;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;

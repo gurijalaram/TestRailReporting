@@ -2,7 +2,7 @@ package com.apriori.tests;
 
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
-import com.apriori.cds.objects.response.Customer;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.Deployment;
 import com.apriori.entity.response.Deployments;

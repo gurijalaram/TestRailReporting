@@ -3,7 +3,7 @@ package com.apriori.cds.tests;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
-import com.apriori.cds.objects.response.Customers;
+import com.apriori.utils.common.customer.response.Customers;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;

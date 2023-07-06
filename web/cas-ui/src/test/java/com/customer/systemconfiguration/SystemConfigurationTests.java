@@ -5,8 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.objects.response.Sites;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.login.CasLoginPage;
