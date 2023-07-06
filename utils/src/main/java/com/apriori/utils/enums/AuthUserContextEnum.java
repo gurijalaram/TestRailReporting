@@ -21,6 +21,8 @@ public enum AuthUserContextEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("cds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("cds.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+
     }
 }
