@@ -1,7 +1,6 @@
 package com.customer.users;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -14,6 +13,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.CheckboxComponent;
 import com.apriori.utils.web.components.PaginatorComponent;

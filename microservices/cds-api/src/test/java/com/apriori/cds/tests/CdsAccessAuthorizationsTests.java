@@ -6,12 +6,12 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessAuthorization;
 import com.apriori.cds.objects.response.AccessAuthorizations;
 import com.apriori.cds.objects.response.AssociationUserItems;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.StatusAccessAuthorizations;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 

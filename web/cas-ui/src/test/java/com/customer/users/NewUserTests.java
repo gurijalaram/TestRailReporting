@@ -1,7 +1,6 @@
 package com.customer.users;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
@@ -11,6 +10,7 @@ import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;

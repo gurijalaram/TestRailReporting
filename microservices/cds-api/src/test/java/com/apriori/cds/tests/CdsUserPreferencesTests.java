@@ -2,7 +2,6 @@ package com.apriori.cds.tests;
 
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserPreferences;
@@ -10,6 +9,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;

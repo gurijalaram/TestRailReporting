@@ -7,9 +7,7 @@ import com.apriori.cds.entity.response.SubLicenses;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.ActiveLicenseModules;
 import com.apriori.cds.objects.response.CdsErrorResponse;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
-import com.apriori.utils.common.customer.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
@@ -18,6 +16,8 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Site;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
