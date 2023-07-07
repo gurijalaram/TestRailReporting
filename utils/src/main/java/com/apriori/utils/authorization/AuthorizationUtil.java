@@ -4,6 +4,10 @@ import com.apriori.utils.ApplicationItem;
 import com.apriori.utils.DeploymentItem;
 import com.apriori.utils.GetDeploymentsResponse;
 import com.apriori.utils.InstallationItem;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Customers;
+import com.apriori.utils.common.customer.response.Sites;
+import com.apriori.utils.enums.CustomersApiEnum;
 import com.apriori.utils.enums.DeploymentsAPIEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -28,7 +32,11 @@ public class AuthorizationUtil {
     private String username = PropertiesContext.get("ats.token_username");
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
-    private String subject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+    private static String tokenSubject;
+//        = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+
+    // TODO z: do we need a thread safe for this. (One customer per one build)
+//    private String tokenSubject;
 
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
@@ -50,7 +58,7 @@ public class AuthorizationUtil {
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(issuer)
-                    .subject(subject)
+                    .subject(getTokenSubjectForCustomer())
                     .claims(Claims.builder()
                         .name(username)
                         .email(email)
@@ -60,6 +68,65 @@ public class AuthorizationUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    private static synchronized String getTokenSubjectForCustomer() {
+        if (tokenSubject != null) {
+            return tokenSubject;
+        }
+
+        try {
+            tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+
+        } catch (IllegalArgumentException e) {
+            tokenSubject = generateTokenSubject();
+        }
+
+        return tokenSubject;
+    }
+
+    private static String generateTokenSubject() {
+        final Customer customerToProcess = getCurrentCustomerData();
+        final String customerSiteId = getCustomerSiteIdByCustomer(customerToProcess);
+
+        if (StringUtils.isBlank(customerSiteId)) {
+            log.error("Customer site id is empty. Customer: {}", customerToProcess.getCloudReference());
+        }
+
+        return customerSiteId.substring(customerSiteId.length() - 4);
+    }
+
+    private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
+        RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
+            .inlineVariables(customerToProcess.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();
+
+        return sitesResponseWrapper.getResponseEntity()
+            .getItems()
+            .get(0)
+            .getSiteId();
+    }
+
+    private static Customer getCurrentCustomerData() {
+        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
+
+        String customerName = PropertiesContext.get("customer");
+
+        // TODO z: should be updated with ticket BA-3133
+        final String customerNameToFind = customerName.equals("ap-int")
+            ? "apriori-internal"
+            : customerName;
+
+        return customersResponseWrapper.getResponseEntity().getItems()
+            .stream()
+            .filter(customer -> customer.getCloudReference().equals(customerNameToFind))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     /**

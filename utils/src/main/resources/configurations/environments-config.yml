@@ -10,7 +10,7 @@ qa-test:
   base_server_platform_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   name: qa-test
-  secret_key: PG9E795ML3P4
+#  secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   admin:
