@@ -4,6 +4,10 @@
     "description": "35546961",
     "status": "COMPLETED",
     "type": "INTERNAL",
+    "displayName": "56455886",
+    "dueAt": "2023-02-02T23:59:59.999Z",
+    "owner": "4N630F61FGNG",
+    "ownerUserIdentity": "4N630F61FGNG",
     "projectProfile": {
       "emailReminder": {
         "active": true,
@@ -16,8 +20,6 @@
         "frequencyValue": "R/P4H"
       }
     },
-    "displayName": "56455886",
-    "dueAt": "2023-02-02T23:59:59.999Z",
     "items": [
       {
         "bidPackageItem": {

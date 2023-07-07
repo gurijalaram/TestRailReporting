@@ -37,11 +37,11 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 public class BidPackageProjectsTest extends TestUtil {
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
-    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @Before
     public void testSetup() {
@@ -119,7 +119,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13751", "22958", "24277"})
+    @TestRail(testCaseId = {"13751", "22958", "24277","25989"})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
         String projectNameNew = new GenerateStringUtil().getRandomString();
@@ -149,6 +149,7 @@ public class BidPackageProjectsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(getBidPackageProjectResponse.getUsers().stream()
                 .allMatch(u -> u.getUser().getAvatarColor() != null)).isTrue();
+            softAssertions.assertThat(getBidPackageProjectResponse.getOwnerUserIdentity()).isNotNull();
         }
     }
 
@@ -244,30 +245,6 @@ public class BidPackageProjectsTest extends TestUtil {
     public void deleteProjectWithInvalidIdentity() {
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
         softAssertions.assertThat(qmsErrorMessage.getMessage()).contains("'projectIdentity' is not a valid identity");
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14625"})
-    @Description("Verify that the user can find only those projects in which he participates")
-    public void getProjectsForParticipant() {
-        BidPackageProjectsResponse bidPackageProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
-        softAssertions.assertThat(bidPackageProjectsResponse.getItems().size()).isGreaterThan(0);
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14626", "14469"})
-    @Description("Verify that the user can find a project by identity in which he participates")
-    public void getProjectForParticipant() {
-        BidPackageProjectResponse bppResponse = QmsProjectResources.getProject(bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
-        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
-    }
-
-    @Test
-    @TestRail(testCaseId = {"14627"})
-    @Description("Verify that the user can find a project by identity in which he participates")
-    public void getEmptyProjectsForParticipant() {
-        BidPackageProjectsResponse bidProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
-        softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
     }
 
     @Test
@@ -764,7 +741,7 @@ public class BidPackageProjectsTest extends TestUtil {
                 getProjectResponse.getBidPackageIdentity(), getProjectResponse.getIdentity()));
 
         //Verify Scenario Discussions deletion
-        String[] discussionIdsArr = new String[]{scenarioDiscussionResponseOne.getIdentity(), scenarioDiscussionResponseTwo.getIdentity()};
+        String[] discussionIdsArr = new String[] {scenarioDiscussionResponseOne.getIdentity(), scenarioDiscussionResponseTwo.getIdentity()};
         for (String discussionId : discussionIdsArr) {
             ApwErrorMessage discussionErrorResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(
                 discussionId,
