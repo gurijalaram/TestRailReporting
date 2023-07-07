@@ -92,7 +92,9 @@
         }
       },
       "required": [
-        "workspaceId",
+        "workspaceId"
+      ],
+      "optional": [
         "department",
         "location"
       ]

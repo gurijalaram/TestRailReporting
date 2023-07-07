@@ -43,7 +43,4 @@ public class UserUtilTest {
 
         Assert.assertNotEquals("Users should be different", userCredentials, userCredentialsToCompare);
     }
-
-
-
 }

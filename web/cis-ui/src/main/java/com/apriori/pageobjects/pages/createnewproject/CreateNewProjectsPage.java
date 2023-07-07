@@ -1,10 +1,8 @@
 package com.apriori.pageobjects.pages.createnewproject;
 
-import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.common.ProjectPartsAndAssemblyTableController;
-import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
-import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
+import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -95,6 +93,18 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
 
     @FindBy(xpath = "//ul[@role='listbox']")
     private WebElement memberList;
+
+    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.projects']")
+    private WebElement btnProjects;
+
+    @FindBy(id = "create-new-button")
+    private WebElement btnCreateNewProject;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
+    private WebElement btnUnread;
+
+    @FindBy(xpath = "//h3[@data-testid='displayName']")
+    private WebElement projectNameLink;
 
     private PageUtils pageUtils;
 
@@ -540,5 +550,38 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      */
     public String getComponentStatus(String scenarioName, String componentName) {
         return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span")).getAttribute("class");
+    }
+
+    /**
+     * create a new project and open
+     *
+     * @return a new page object
+     */
+    public ProjectsDetailsPage createANewProjectAndOpen(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date, String tabName) {
+        this.createANewProject(projectName, projectDescription, scenarioName, componentName, teamMember, year, date);
+        this.clickOnUnreadButton();
+        this.openTheProject(tabName);
+        return new ProjectsDetailsPage(getDriver());
+    }
+
+    /**
+     * clicks on unread button
+     *
+     * @return new page object
+     */
+    public ProjectsPage clickOnUnreadButton() {
+        getPageUtils().waitForElementAndClick(btnUnread);
+        return new ProjectsPage(getDriver());
+    }
+
+    /**
+     * open the project
+     *
+     * @return new page object
+     */
+    public ProjectsDetailsPage openTheProject(String tabName) {
+        getPageUtils().javaScriptClick(projectNameLink);
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@role='tablist']//button[contains(text(),'" + tabName + "')]"));
+        return new ProjectsDetailsPage(getDriver());
     }
 }

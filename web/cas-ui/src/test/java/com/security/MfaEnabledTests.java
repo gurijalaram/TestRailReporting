@@ -1,12 +1,12 @@
 package com.security;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.login.CasLoginPage;
 import com.apriori.security.SecurityPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
