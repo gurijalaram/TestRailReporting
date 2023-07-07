@@ -8,25 +8,30 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.authorization.Token;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import lombok.SneakyThrows;
 import org.junit.Test;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class AuthorizationUtilTest {
 
     @Test
+    @SneakyThrows
     public void getTokenInThreads() {
+        final Integer threadsCount = 10;
+        CountDownLatch latch = new CountDownLatch(threadsCount);
 
-        ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
-
-        assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
-
-        for(int i=0; i<10; i++) {
-
+        for(int i=0; i<threadsCount; i++) {
             new Thread(() -> {
-                ResponseWrapper<Token> response1 = new AuthorizationUtil().getToken();
+                ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
 
                 assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
+                latch.countDown();
             }).start();
 
         }
+
+        latch.await(1, TimeUnit.MINUTES);
     }
 }

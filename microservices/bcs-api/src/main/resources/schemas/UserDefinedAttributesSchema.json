@@ -10,7 +10,7 @@
       "required": [
         "items"
       ],
-      "$ref": "PaginationSchema.json",
+      "$ref": "common/PaginationSchema.json",
       "properties": {
         "items": {
           "type": "array",
