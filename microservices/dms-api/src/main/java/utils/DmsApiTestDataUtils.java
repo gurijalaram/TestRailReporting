@@ -116,7 +116,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             } else {
                 softAssertionsTestData.fail("Create & Publish Scenario via cid-app failed");
             }
-        } catch (Exception | AssertionError e) {
+        } catch (Exception e) {
             softAssertionsTestData.fail(e.getMessage());
         }
     }

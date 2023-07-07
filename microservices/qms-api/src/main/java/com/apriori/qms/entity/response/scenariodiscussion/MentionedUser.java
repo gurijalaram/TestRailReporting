@@ -32,5 +32,5 @@ public class MentionedUser {
     private UserProfile userProfile;
     private String userType;
     private String username;
-
+    private boolean hasCompleteProfile;
 }
