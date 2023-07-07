@@ -9,13 +9,13 @@ import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V2.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/sheetmetaldtc/SheetMetalDtcDetailsReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

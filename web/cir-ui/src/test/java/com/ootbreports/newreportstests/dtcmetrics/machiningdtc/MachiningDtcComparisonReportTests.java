@@ -6,6 +6,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/dtcmetrics/machiningdtc/MachiningDtcComparisonReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
