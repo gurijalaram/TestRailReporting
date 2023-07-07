@@ -1,6 +1,5 @@
 package com.customer;
 
-import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
@@ -8,6 +7,7 @@ import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.CardsViewComponent;
 import com.apriori.utils.web.components.PaginatorComponent;

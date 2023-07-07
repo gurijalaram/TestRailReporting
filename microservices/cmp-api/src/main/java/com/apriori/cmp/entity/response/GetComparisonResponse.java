@@ -1,10 +1,10 @@
-package com.apriori.cds.objects.response;
+package com.apriori.cmp.entity.response;
+
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -17,29 +17,28 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "SiteSchema.json")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "GetComparisonResponse.json")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Site {
+public class GetComparisonResponse {
     private String identity;
     private String createdBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime createdAt;
     private String updatedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String name;
-    private String description;
-    private Boolean active;
-    private String siteId;
     private String customerIdentity;
-    private List<Deployment> deployments;
-    private List<LicensedApplication> licensedApplications = null;
+    private String comparisonName;
+    private String comparisonType;
+    @JsonProperty("objectType")
+    private String comparisonObjectType;
+    @JsonProperty("comparisonObjects")
+    private List<ComparisonObjects> objectsToCompare;
+
 }

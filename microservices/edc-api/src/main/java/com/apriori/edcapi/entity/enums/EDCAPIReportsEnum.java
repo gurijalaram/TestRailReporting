@@ -21,6 +21,7 @@ public enum EDCAPIReportsEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("edc.api_url") + String.format(getEndpointString(), variables)
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

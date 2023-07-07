@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.utils.common.objects;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 

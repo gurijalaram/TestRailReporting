@@ -24,18 +24,7 @@ public enum NTSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("nts.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+        return PropertiesContext.get("nts.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol + "key=" + PropertiesContext.get("secret_key");
-
-    }
-
 }
