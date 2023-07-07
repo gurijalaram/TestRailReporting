@@ -76,6 +76,13 @@ public class JasperApiUtils {
         return jasperReportSummary;
     }
 
+    /**
+     * Generic method for testing currency where export set is not relevant
+     *
+     * @param currencyKey - currency key to use
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
@@ -154,6 +161,9 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic method that tests currency functionality in the Scenario Comparison report
+     */
     public void scenarioComparisonCurrencyTest() {
         String currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
@@ -207,6 +217,9 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic top level method for Cycle Time Value Tracking currency test
+     */
     public void cycleTimeValueTrackingCurrencyTest() {
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGBP = genericTestCoreCurrencyOnly("Currency", gbpCurrency);
