@@ -18,7 +18,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
 
-
     @FindBy(css = ".MuiPaper-root h2")
     private WebElement saveComparisonLabel;
 
