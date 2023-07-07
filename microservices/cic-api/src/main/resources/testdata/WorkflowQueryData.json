@@ -6,7 +6,7 @@
   },
   "plmSystem": "%s",
   "name": "%s",
-  "description": "4328 description",
+  "description": "testDesc",
   "schedule": "0 0 0 1/1 * ? *",
   "selectedEmailTemplate": "none",
   "isEmailTemplateSelected": false,

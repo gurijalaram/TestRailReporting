@@ -7,6 +7,7 @@ import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +19,7 @@ public class CicLoginUtil extends TestBase {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    @FindBy(css = "ul#root_menu-19 > li:nth-of-type(2)")
+    @FindBy(css = "span[title='Users']")
     private WebElement usersMenuBtn;
 
     public CicLoginUtil(WebDriver webdriver) {
@@ -38,7 +39,7 @@ public class CicLoginUtil extends TestBase {
     }
 
     public CicLoginUtil navigateToUserMenu() {
-        assertTrue("CIC login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Connect"));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForElementAndClick(usersMenuBtn);
         return this;
     }
