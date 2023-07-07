@@ -8,6 +8,7 @@ import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
@@ -17,11 +18,10 @@ public class ComparisonUtils {
     /**
      * Post to the Create Comparison endpoint
      *
-     * @param comparison - Create Comparison object
-     * @param currentUser - UserCredentials object
-     * @param klass - The desired return class
+     * @param comparison       - Create Comparison object
+     * @param currentUser      - UserCredentials object
+     * @param klass            - The desired return class
      * @param expectedResponse - The expected HTTP response code
-     *
      * @return PostComparisonResponse
      */
     public <T> T createComparison(CreateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
@@ -31,16 +31,17 @@ public class ComparisonUtils {
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
 
-        return (T) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+
+        return responseWrapper.getResponseEntity();
     }
 
     /**
      * Update Comparison details given a Comparison ID
      *
      * @param comparisonID - String of the requested Comparison ID
-     * @param comparison - Update Comparison Object
-     * @param currentUser - UserCredentials object
-     *
+     * @param comparison   - Update Comparison Object
+     * @param currentUser  - UserCredentials object
      * @return GetComparisonResponse
      */
     public <T> T updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
@@ -51,15 +52,16 @@ public class ComparisonUtils {
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
 
-        return (T) HTTPRequest.build(requestEntity).patch().getResponseEntity();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
+
+        return responseWrapper.getResponseEntity();
     }
 
     /**
      * Get Comparison details given a Comparison ID
      *
      * @param comparisonID - String of the requested Comparison ID
-     * @param currentUser - UserCredentials object
-     *
+     * @param currentUser  - UserCredentials object
      * @return GetComparisonResponse
      */
     public GetComparisonResponse getComparison(String comparisonID, UserCredentials currentUser) {
@@ -69,6 +71,8 @@ public class ComparisonUtils {
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
-        return (GetComparisonResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        ResponseWrapper<GetComparisonResponse> responseWrapper = HTTPRequest.build(requestEntity).patch();
+
+        return responseWrapper.getResponseEntity();
     }
 }
