@@ -4,7 +4,7 @@
   "properties": {
     "response": {
       "type": "object",
-      "$ref": "common/PaginationSchema.json",
+      "$ref": "PaginationSchema.json",
       "properties": {
         "items": {
           "type": "array",

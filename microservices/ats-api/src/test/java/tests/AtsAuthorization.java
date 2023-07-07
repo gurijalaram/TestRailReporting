@@ -35,16 +35,9 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = {"3581"})
     @Description("Generate a JWT from the ATS Token endpoint")
     public void generateTokenTest() {
+        ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
 
-        for(int i=0 ; i<10; i++) {
-            new Thread(() -> {
-                ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
-
-                assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
-            }).start();
-        }
-
-
+        assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
     }
 
     @Test

@@ -33,10 +33,6 @@ public class AuthorizationUtil {
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
     private static String tokenSubject;
-//        = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
-
-    // TODO z: do we need a thread safe for this. (One customer per one build)
-//    private String tokenSubject;
 
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
@@ -76,6 +72,7 @@ public class AuthorizationUtil {
         }
 
         try {
+            // TODO z: should be removed when AWS data will be avaliable for staging too
             tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
 
         } catch (IllegalArgumentException e) {

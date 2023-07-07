@@ -6,7 +6,7 @@
   ],
   "properties": {
     "response": {
-      "$ref": "common/PaginationSchema.json",
+      "$ref": "PaginationSchema.json",
       "required": [
         "items"
       ],
