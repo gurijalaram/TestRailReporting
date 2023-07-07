@@ -2,8 +2,8 @@ package com.apriori.apibase.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.apibase.services.common.objects.Paged;
 import com.apriori.utils.TestHelper;
+import com.apriori.utils.common.objects.Paged;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.EndpointEnum;

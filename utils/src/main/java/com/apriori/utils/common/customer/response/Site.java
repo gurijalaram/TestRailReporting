@@ -1,4 +1,4 @@
-package com.apriori.cds.objects.response;
+package com.apriori.utils.common.customer.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "CustomerSchema.json")
+@Schema(location = "SiteSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,30 +25,21 @@ import java.util.List;
 @Builder
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Customer {
+public class Site {
     private String identity;
+    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String createdBy;
-    private String deletedBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime deletedAt;
+    private String updatedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String updatedBy;
     private String name;
     private String description;
-    private List<String> emailRegexPatterns;
     private Boolean active;
-    private Integer maxCadFileRetentionDays;
-    private Integer maxCadFileSize;
-    private Boolean useExternalIdentityProvider;
-    private Boolean mfaRequired;
-    private List<Object> oneTimePasswordApplications;
-    private String customerType;
-    private String cloudReference;
-    private String salesforceId;
+    private String siteId;
+    private String customerIdentity;
+    private List<Deployment> deployments;
+    private List<LicensedApplication> licensedApplications = null;
 }

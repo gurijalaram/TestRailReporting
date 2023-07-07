@@ -83,8 +83,7 @@ public class AuthorizationUtil {
             .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("customer_identity"),
-                PropertiesContext.get("secret_key")
+                PropertiesContext.get("customer_identity")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
