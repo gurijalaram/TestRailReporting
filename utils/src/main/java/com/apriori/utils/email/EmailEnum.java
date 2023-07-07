@@ -25,14 +25,4 @@ public enum EmailEnum implements ExternalEndpointEnum {
     public String getEndpoint(Object... variables) {
         return String.format(getEndpointString(), variables);
     }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol;
-    }
 }
