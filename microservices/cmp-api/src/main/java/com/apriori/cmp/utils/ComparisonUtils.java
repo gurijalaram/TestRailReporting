@@ -3,14 +3,14 @@ package com.apriori.cmp.utils;
 import com.apriori.cmp.entity.enums.CMPAPIEnum;
 import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.request.UpdateComparison;
-import com.apriori.cmp.entity.response.ErrorResponse;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
-import com.apriori.cmp.entity.response.PostComparisonResponse;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserCredentials;
+
+import org.apache.http.HttpStatus;
 
 public class ComparisonUtils {
 
@@ -67,7 +67,7 @@ public class ComparisonUtils {
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
                 .inlineVariables(comparisonID)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-                .expectedResponseCode(200);
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         return (GetComparisonResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
