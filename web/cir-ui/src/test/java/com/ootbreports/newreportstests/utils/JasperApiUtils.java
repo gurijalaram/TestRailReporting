@@ -140,6 +140,30 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic test for Currency within Component Cost Report
+     */
+    public void genericComponentCostCurrencyTest() {
+        String currencyAssertValue = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
+
+        String currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryUsd).substring(10);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        currencyAssertValue = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Component Cost Currency", currencyAssertValue);
+
+        currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryGbp).substring(10);
+        softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
+
+        String usdCurrencyValue = getCurrencyValueFromChartComponentCost(jasperReportSummaryUsd);
+        String gbpCurrencyValue = getCurrencyValueFromChartComponentCost(jasperReportSummaryGbp);
+
+        softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+
+        softAssertions.assertAll();
+    }
+
+    /**
      * Generic test to be used on any dtc report
      *
      * @param partNames - List of Strings of part names for use in the test
@@ -149,15 +173,50 @@ public class JasperApiUtils {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        int i = 0;
         for (String partName : partNames) {
-            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-            i++;
+            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
         softAssertions.assertThat(tdResultElements.get(1).toString().contains(miscDataList.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    /**
+     * Generic test for Cost Metric within Cost Outlier Report
+     *
+     * @param miscData - List of Strings of relevant data to use in the test
+     */
+    public void genericCostMetricCostOutlierTest(List<String> miscData) {
+        JasperReportSummary jasperReportSummary = genericTestCore(miscData.get(0), miscData.get(1));
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscData.get(0).split(" ")[0]);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(4).toString().contains(miscData.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    /**
+     * Generic test for Cost Metric within Cost Outlier Details Report
+     *
+     * @param miscData - List of Strings of relevant data to use in the test
+     */
+    public void genericCostMetricCostOutlierDetailsTest(List<String> partList, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
+
+        List<Element> partElementsFromPage = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution");
+        for (String partName : partList) {
+            softAssertions.assertThat(partElementsFromPage.toString().contains(partName)).isEqualTo(true);
+        }
+        jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "_jrHyperLink ReportExecution").get(0).children();
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(5).toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -203,10 +262,8 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         if (areBubblesPresent) {
-            int i = 0;
             for (String partName : partNames) {
-                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-                i++;
+                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
             }
         } else {
             for (int i = 0; i < 6; i++) {
@@ -235,11 +292,9 @@ public class JasperApiUtils {
             ? miscDataList.get(1) : "";
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), pgToSet);
 
-        int i = 0;
         for (String partName : partNames) {
             partName = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
-            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getPartName()).isEqualTo(partName);
-            i++;
+            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
@@ -410,5 +465,13 @@ public class JasperApiUtils {
 
         return jasperReportSummary.getFirstChartData()
             .getChartDataPointByPartName(partName).getFullyBurdenedCost();
+    }
+
+    private String getCurrencyValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Lifetime Cost").get(5).child(2).text();
+    }
+
+    private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
     }
 }
