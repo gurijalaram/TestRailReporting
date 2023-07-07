@@ -58,14 +58,30 @@ public class JasperApiUtils {
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls();
-        /*String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());*/
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         reportRequest = !valueToSet.isEmpty()
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet) :
             reportRequest;
-        /*reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);*/
+        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        reportRequest = !currencyToSet.isEmpty()
+            ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
+            reportRequest;
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -193,10 +209,10 @@ public class JasperApiUtils {
 
     public void cycleTimeValueTrackingCurrencyTest() {
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGBP = genericTestCore("Currency", gbpCurrency);
+        JasperReportSummary jasperReportSummaryGBP = genericTestCoreCurrencyOnly("Currency", gbpCurrency);
 
         String usdCurrency = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUSD = genericTestCore("Currency", usdCurrency);
+        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly("Currency", usdCurrency);
 
         softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
     }
