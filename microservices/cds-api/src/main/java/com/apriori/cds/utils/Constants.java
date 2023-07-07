@@ -52,6 +52,7 @@ public class Constants {
      *
      * @return string
      */
+    // TODO z: should be updated to a new approach without secret_key property
     public static String getServiceUrl() {
         return PropertiesContext.get("cds.api_url").concat("%s?key=").concat(PropertiesContext.get("secret_key"));
     }

@@ -30,17 +30,7 @@ public enum DMSApiEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
 
-        return PropertiesContext.get("dms.api_url") + "customers/" +
-            String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
-    }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol + "key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("dms.api_url") + "customers/"
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }
