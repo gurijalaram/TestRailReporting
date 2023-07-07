@@ -1,4 +1,4 @@
-package com.apriori.cds.objects.response;
+package com.apriori.utils.common.customer.response;
 
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -9,10 +9,10 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "LicensedApplicationSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "DeploymentsSchema.json")
 @Data
 @JsonRootName("response")
-public class LicensedApplications extends Pagination {
-    private List<LicensedApplication> items;
+public class Deployments extends Pagination {
+    private List<Deployment> items;
 }
