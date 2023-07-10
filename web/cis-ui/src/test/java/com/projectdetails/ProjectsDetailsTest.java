@@ -37,6 +37,7 @@ public class ProjectsDetailsTest extends TestBase {
     private UserCredentials currentUser;
     private String projectParticipant;
     private String updatedProjectParticipant;
+    private String secondProjectParticipant;
 
     public ProjectsDetailsTest() {
         super();
@@ -309,6 +310,91 @@ public class ProjectsDetailsTest extends TestBase {
         softAssertions.assertThat(projectsPage.getPageTitle().contains("Projects"));
 
         projectsPage.clickOnRead();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"25823","25824","25825"})
+    @Description("Verify that new users can be added to the project")
+    public void testAddNewProjectUsers() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
+        secondProjectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
+                .clickOnUnread()
+                .clickOnCreatedProject()
+                .clickDetailsPageTab("Users");
+
+        softAssertions.assertThat(projectsDetailsPage.isInviteUsersOptionDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickInviteUsersOption();
+
+        softAssertions.assertThat(projectsDetailsPage.isInviteUsersModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.isUsersDropDownDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.isInviteButtonDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.selectAUser(secondProjectParticipant);
+
+        softAssertions.assertThat(projectsDetailsPage.getSelectedProjectUserName()).contains("QA Automation Account");
+
+        projectsDetailsPage.clickOnInvite();
+
+        softAssertions.assertThat(projectsDetailsPage.isAddedProjectUserDisplayed(secondProjectParticipant)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"25804","25805","25821"})
+    @Description("Verify that users can be removed from the project")
+    public void testRemoveProjectUsers() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
+        secondProjectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProject("Automation Project " + dateTime,"This Project is created by Automation User" + currentUser.getEmail(), scenarioName,componentName, projectParticipant, "2028","15")
+                .clickOnUnread()
+                .clickOnCreatedProject()
+                .clickDetailsPageTab("Users")
+                .selectAProjectUser(projectParticipant);
+
+        softAssertions.assertThat(projectsDetailsPage.isRemoveFromProjectOptionDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickOnRemoveFromProjectOption();
+
+        softAssertions.assertThat(projectsDetailsPage.isOwnerEmailDisplayed(currentUser.getEmail())).isEqualTo(true);
+
+        projectsDetailsPage.selectAProjectUser(currentUser.getEmail());
+
+        softAssertions.assertThat(projectsDetailsPage.getRemoveUserFromProjectOptionStatus()).contains("Mui-disabled");
 
         softAssertions.assertAll();
     }
