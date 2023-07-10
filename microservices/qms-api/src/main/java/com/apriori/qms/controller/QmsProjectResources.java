@@ -50,6 +50,7 @@ public class QmsProjectResources {
         String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
+        String projectOwnerUserIdentity = projectAttributesMap.getOrDefault("projectOwnerUserIdentity", "N/A");
         String projectDueAt = projectAttributesMap.getOrDefault("projectDueAt", DateUtil.getDateDaysAfter(10, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
         BidPackageProjectRequest projectRequest = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/QmsProjectRequest.json"), BidPackageProjectRequest.class);
@@ -59,6 +60,7 @@ public class QmsProjectResources {
         project.setDescription(projectDescription);
         project.setDueAt(projectDueAt);
         project.setOwner(projectOwner);
+        project.setOwnerUserIdentity(projectOwnerUserIdentity);
         project.setStatus(projectStatus);
         project.setItems(projectItemsList);
         project.setUsers(projectUsersList);

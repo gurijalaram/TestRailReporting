@@ -214,6 +214,7 @@ public class BidPackageResources {
         String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", "N/A");
+        String projectOwnerUserIdentity = projectAttributesMap.getOrDefault("projectOwnerUserIdentity", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         String projectDueAt = projectAttributesMap.getOrDefault("projectDueAt", DateUtil.getDateDaysAfter(10, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
         BidPackageProjectRequest projectRequest = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/QdsProjectRequest.json"), BidPackageProjectRequest.class);
@@ -224,6 +225,7 @@ public class BidPackageResources {
         project.setDueAt(projectDueAt);
         project.setOwner(projectOwner);
         project.setStatus(projectStatus);
+        project.setOwnerUserIdentity(projectOwnerUserIdentity);
         project.setItems(null);
         project.setUsers(null);
         return projectRequest;

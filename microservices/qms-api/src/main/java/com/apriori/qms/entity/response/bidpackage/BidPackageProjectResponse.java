@@ -35,4 +35,5 @@ public class BidPackageProjectResponse {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime dueAt;
     private String ownerFullName;
+    private String ownerUserIdentity;
 }

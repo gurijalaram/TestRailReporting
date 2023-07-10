@@ -1,7 +1,7 @@
 package com.apriori.ach.entity.response;
 
-import com.apriori.apibase.services.common.objects.Paged;
 import com.apriori.utils.Pagination;
+import com.apriori.utils.common.objects.Paged;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

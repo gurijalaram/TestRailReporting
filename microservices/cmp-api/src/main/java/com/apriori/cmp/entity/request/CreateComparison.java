@@ -22,6 +22,6 @@ public class CreateComparison {
     private String comparisonType;
     @JsonProperty("objectType")
     private String comparisonObjectType;
-    @JsonProperty("objects")
+    @JsonProperty("comparisonObjects")
     private List<ComparisonObjectBuilder> objectsToCompare;
 }
