@@ -11,6 +11,8 @@ import entity.request.WorkflowRow;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
+import enums.PlmTypeAttributes;
+import enums.PublishResultsWriteRule;
 import enums.QueryDefinitionFieldType;
 import enums.QueryDefinitionFields;
 
@@ -24,10 +26,12 @@ public class WorkflowDataUtil {
     private List<WorkflowRow> workflowRows;
     private WorkflowRequest workflowRequestData;
     private DefaultValues costingInputRows;
+    private DefaultValues publishResultsWriteFieldRows;
 
     public WorkflowDataUtil(CICPartSelectionType partSelectionType) {
         if (partSelectionType.getPartSelectionType().equals("QUERY")) {
             workflowRequestData = new TestDataService().getTestData("WorkflowQueryData.json", WorkflowRequest.class);
+            publishResultsWriteFieldRows = workflowRequestData.getPlmWriteConfiguration();
             queryFilters = new ArrayList<>();
         } else {
             workflowRequestData = new TestDataService().getTestData("WorkflowRestData.json", WorkflowRequest.class);
@@ -135,6 +139,30 @@ public class WorkflowDataUtil {
 
         costingInputRows.setRows(workflowRows);
         workflowRequestData.setDefaultValues(costingInputRows);
+        return this;
+    }
+
+    /**
+     * Add publish results write field rows during workflow creation request
+     *
+     * @param queryDefinitionFields - CostingInputFields enum
+     * @param writingRule           - MappingRule enum
+     * @param connectFieldValue     - value
+     * @return current class object
+     */
+    public WorkflowDataUtil addPublishResultsWriteFieldsRow(PlmTypeAttributes plmTypeAttributes, PublishResultsWriteRule writingRule, String connectFieldValue) {
+        workflowRows = publishResultsWriteFieldRows.getRows();
+        workflowRows.add(WorkflowRow.builder()
+            .identifier(UUID.randomUUID().toString())
+            .isValid(true)
+            .key(plmTypeAttributes.getKey())
+            .value((writingRule.getWritingRule() == "CONSTANT") ? connectFieldValue : plmTypeAttributes.getValue())
+            .writingRule(writingRule.getWritingRule())
+            ._isSelected(false)
+            .build());
+
+        publishResultsWriteFieldRows.setRows(workflowRows);
+        workflowRequestData.setPlmWriteConfiguration(publishResultsWriteFieldRows);
         return this;
     }
 

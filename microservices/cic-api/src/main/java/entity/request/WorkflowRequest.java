@@ -29,6 +29,7 @@ public class WorkflowRequest {
     private String selectedEmailReportName;
     private EmailConfiguration emailReportConfiguration;
     private EmailConfiguration plmWriteReportConfiguration;
+    private DefaultValues plmWriteConfiguration;
     private Boolean isPlmWriteReportNameSelected;
     private String selectedPlmWriteReportName;
     private EmailPartFilter emailPartFilter;

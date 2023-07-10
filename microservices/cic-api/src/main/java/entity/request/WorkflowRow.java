@@ -28,4 +28,5 @@ public class WorkflowRow {
     private Boolean readOnly;
     private String usageType;
     private String errorMessage;
+    private String writingRule;
 }
