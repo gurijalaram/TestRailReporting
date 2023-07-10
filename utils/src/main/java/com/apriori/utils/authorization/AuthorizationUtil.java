@@ -19,7 +19,6 @@ import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -33,6 +32,8 @@ public class AuthorizationUtil {
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
     private static String tokenSubject;
+    private static Customer currentCustomer;
+
 
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
@@ -74,7 +75,6 @@ public class AuthorizationUtil {
         try {
             // TODO z: should be removed when AWS data will be avaliable for staging too
             tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
-
         } catch (IllegalArgumentException e) {
             tokenSubject = generateTokenSubject();
         }
@@ -93,6 +93,32 @@ public class AuthorizationUtil {
         return customerSiteId.substring(customerSiteId.length() - 4);
     }
 
+    /**
+     * Get current customer data
+     * By cloud reference name filter all customers to find user used for the environment
+     * @return filtered customer
+     */
+    public static Customer getCurrentCustomerData() {
+
+        if (currentCustomer != null) {
+            return currentCustomer;
+        }
+
+        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
+
+        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
+            .stream()
+            .filter(customer -> customer.getCloudReference()
+                .equals(PropertiesContext.get("${customer}.cloud_reference_name")
+                )
+            )
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
         RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
             .inlineVariables(customerToProcess.getIdentity())
@@ -104,26 +130,6 @@ public class AuthorizationUtil {
             .getItems()
             .get(0)
             .getSiteId();
-    }
-
-    private static Customer getCurrentCustomerData() {
-        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
-
-        String customerName = PropertiesContext.get("customer");
-
-        // TODO z: should be updated with ticket BA-3133
-        final String customerNameToFind = customerName.equals("ap-int")
-            ? "apriori-internal"
-            : customerName;
-
-        return customersResponseWrapper.getResponseEntity().getItems()
-            .stream()
-            .filter(customer -> customer.getCloudReference().equals(customerNameToFind))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
     }
 
     /**

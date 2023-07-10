@@ -4,12 +4,13 @@
 # if the value in the file is missing or does not match the required one, add it to the current file
 ######################################################## QA-TEST #######################################################
 qa-test:
+  name: qa-test
+  aws_parameter_store_name: qa-test
   application_name: cid
   base_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   installation_name: core-na-1 - Production
   base_server_platform_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
-  name: qa-test
   user_identity: AK8JJH37GM54
 
   admin:
@@ -36,12 +37,12 @@ qa-test:
 
 ######################################################## INT-CORE ######################################################
 int-core:
+  name: int-core
+  aws_parameter_store_name: int-blue
   application_name: cid
   customer_identity: H337GKD0LA0M
   base_url: https://cost.apriori-internal.int.apriori.net/
   installation_name: Core Services
-  name: int-core
-  secret_key: 65J1ID2B6LDG
   user_identity: 8GFDIG229629
 
 
@@ -75,10 +76,11 @@ int-core:
 
 ######################################################## STAGING #######################################################
 staging:
+  name: staging
+  aws_parameter_store_name: stage
   deployment_name: Production
   installation_name: Production na-1
   application_name: CID
-  name: staging
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
@@ -105,8 +107,8 @@ staging:
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: https://walqbaci01/
   name: onprem
+  base_url: https://walqbaci01/
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
 
@@ -124,8 +126,8 @@ onprem:
 ######################################################## MIGRATION #####################################################
 migration:
   name: migration
+  aws_parameter_store_name: mig-21-1
   customer_identity: 3KED5H5BKN85
-  secret_key: X0V4XXK2SF87
 
 ########################################################################################################################
 
@@ -133,14 +135,14 @@ migration:
 ######################################################## MIGRATION-PREVIEW #############################################
 migration-preview:
   name: migration-preview
-  secret_key: X0V4XXK2SF87
+  aws_parameter_store_name: mig-21-1
 
 ########################################################################################################################
 
 
 ######################################################## DEV-CFIRST ####################################################
 dev-cfirst:
-  secret_key: 9FRTP0TSZO5W
+  aws_parameter_store_name: dev-cfirst
 
 ########################################################################################################################
 
@@ -205,13 +207,13 @@ local:
 
 ######################################################## DEVELOPMENT ###################################################
 development:
+  name: development
+  aws_parameter_store_name: development
   application_name: cid
   base_url: https://cloud.na-1.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
   installation_name: core-na-1 - v22 Production
-  name: development
-  secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
   cds:
