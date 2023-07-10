@@ -2,15 +2,15 @@ package com.ootbreports.newreportstests.cycletimevaluetracking;
 
 import com.apriori.utils.TestRail;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/cycletimevaluetracking/CycleTimeValueTrackingReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
     // Export Set is not relevant for this report
     private static final String exportSetName = "";
     private static JasperApiUtils jasperApiUtils;
