@@ -99,14 +99,12 @@ public class AuthorizationUtil {
      * @return filtered customer
      */
     public static Customer getCurrentCustomerData() {
-
         if (currentCustomer != null) {
             return currentCustomer;
         }
 
         RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
             .expectedResponseCode(HttpStatus.SC_OK);
-
         ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
 
         return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
@@ -123,7 +121,6 @@ public class AuthorizationUtil {
         RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
             .inlineVariables(customerToProcess.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
-
         ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();
 
         return sitesResponseWrapper.getResponseEntity()
