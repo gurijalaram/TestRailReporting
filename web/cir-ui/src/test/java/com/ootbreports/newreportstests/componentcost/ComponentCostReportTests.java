@@ -1,4 +1,4 @@
-package com.ootbreports.newreportstests.general.assemblydetails;
+package com.ootbreports.newreportstests.componentcost;
 
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -8,11 +8,13 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
-public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
+public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
@@ -22,12 +24,10 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"1922"})
-    @Description("Verifies that the currency code works properly")
-    public void testCurrencyCodeWorks() {
-        jasperApiUtils.genericDtcCurrencyTest(
-            ExportSetEnum.TOP_LEVEL.getExportSetName(),
-            false
-        );
+    @Category(ReportsTest.class)
+    @TestRail(testCaseId = {"3329"})
+    @Description("Verify Currency Code input control is working correctly")
+    public void testCurrencyCode() {
+        jasperApiUtils.genericComponentCostCurrencyTest();
     }
 }

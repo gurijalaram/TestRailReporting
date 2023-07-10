@@ -27,6 +27,8 @@ public class BidPackageProjectParameters {
     @Builder.Default
     private String owner = "N/A";
     @Builder.Default
+    private String ownerUserIdentity = "N/A";
+    @Builder.Default
     private String dueAt = "N/A";
     private List<BidPackageItemRequest> items;
     private List<BidPackageProjectUserParameters> users;

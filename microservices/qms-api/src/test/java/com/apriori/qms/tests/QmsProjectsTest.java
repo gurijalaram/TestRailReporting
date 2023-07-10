@@ -259,25 +259,25 @@ public class QmsProjectsTest extends TestUtil {
 
         projectUsersList.add(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
-        UserCredentials user1 = UserUtil.getUser();
-        String userIdentity1 = new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail());
+        String firstUserEmail = UserUtil.getUser().getEmail();
+        String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);
         usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user1.getEmail()))
+            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail))
             .build());
-        projectUsersList.add(userIdentity1);
+        projectUsersList.add(firstUserIdentity);
 
-        UserCredentials user2 = UserUtil.getUser();
-        String userIdentity2 = new AuthUserContextUtil().getAuthUserIdentity(user2.getEmail());
+        String secondUserEmail = UserUtil.getUser().getEmail();
+        String secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUserEmail);
         usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user2.getEmail()))
+            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(secondUserEmail))
             .customerIdentity("123456789012")
             .build());
-        projectUsersList.add(userIdentity2);
+        projectUsersList.add(secondUserIdentity);
 
-        UserCredentials user3 = UserUtil.getUser();
-        String userIdentity3 = new AuthUserContextUtil().getAuthUserIdentity(user3.getEmail());
+        String thirdUserEmail = UserUtil.getUser().getEmail();
+        String userIdentity3 = new AuthUserContextUtil().getAuthUserIdentity(thirdUserEmail);
         usersList.add(BidPackageProjectUserParameters.builder()
-            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(user3.getEmail()))
+            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(thirdUserEmail))
             .customerIdentity("")
             .build());
         projectUsersList.add(userIdentity3);
@@ -417,5 +417,103 @@ public class QmsProjectsTest extends TestUtil {
 
         //Delete Discussion
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14625"})
+    @Description("Verify that the user can find only those projects in which he participates")
+    public void getProjectsForParticipant() {
+        BidPackageProjectsResponse bidPackageProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(bidPackageProjectsResponse.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(bidPackageProjectsResponse.getItems().stream()
+            .allMatch(i -> i.getOwnerUserIdentity() != null)).isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14626", "14669"})
+    @Description("Verify that the user can find a project by identity in which he participates")
+    public void getProjectForParticipant() {
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
+            itemsList,
+            null,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+        BidPackageProjectResponse getBppResponse = QmsProjectResources.getProject(bppResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(getBppResponse.getItems().stream()
+            .anyMatch(i -> i.getProjectIdentity().equals(bppResponse.getIdentity()))).isTrue();
+        softAssertions.assertThat(getBppResponse.getUsers().stream()
+            .anyMatch(u -> u.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail())))).isTrue();
+        softAssertions.assertThat(getBppResponse.getOwnerUserIdentity()).isNotNull();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14627"})
+    @Description("Verify that the user can find a project by identity in which he participates")
+    public void getEmptyProjectsForParticipant() {
+        BidPackageProjectsResponse bidProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(bidProjectsResponse.getItems().size()).isGreaterThan(0);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"17102", "17103"})
+    @Description("Verifying Project creation with bid package items in request. Verify that User can create project using /project URL")
+    public void createProjectWithBidPackageItemsAndValidUserIdentity() {
+        ScenarioItem secondScenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(secondScenarioItem.getComponentIdentity())
+                .scenarioIdentity(secondScenarioItem.getScenarioIdentity())
+                .iterationIdentity(secondScenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        String firstUserEmail = UserUtil.getUser().getEmail();
+        String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail))
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
+            itemsList,
+            usersList,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getUsers().stream()
+            .anyMatch(u -> u.getUserIdentity().equals(firstUserIdentity))).isTrue();
+        softAssertions.assertThat(bppResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(bppResponse.getItems().stream()
+                .anyMatch(i -> i.getBidPackageItem().getScenarioIdentity().equals(scenarioItem.getScenarioIdentity()) &&
+                    i.getBidPackageItem().getComponentIdentity().equals(scenarioItem.getComponentIdentity()) &&
+                    i.getBidPackageItem().getIterationIdentity().equals(scenarioItem.getIterationIdentity()))).isTrue();
+            softAssertions.assertThat(bppResponse.getItems().stream()
+                .anyMatch(i -> i.getBidPackageItem().getScenarioIdentity().equals(secondScenarioItem.getScenarioIdentity()) &&
+                    i.getBidPackageItem().getComponentIdentity().equals(secondScenarioItem.getComponentIdentity()) &&
+                    i.getBidPackageItem().getIterationIdentity().equals(secondScenarioItem.getIterationIdentity()))).isTrue();
+        }
+        softAssertions.assertThat(bppResponse.getOwnerUserIdentity()).isNotNull();
+        QmsApiTestUtils.deleteScenarioViaCidApp(secondScenarioItem, currentUser);
     }
 }

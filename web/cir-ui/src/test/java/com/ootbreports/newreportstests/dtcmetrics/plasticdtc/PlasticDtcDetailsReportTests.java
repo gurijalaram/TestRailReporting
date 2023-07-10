@@ -6,6 +6,7 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/plasticdtc/PlasticDtcDetailsReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 

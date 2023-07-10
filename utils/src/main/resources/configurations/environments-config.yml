@@ -68,9 +68,6 @@ int-core:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
-  reports:
-    ui_url: ${qa-test.base_url}jasperserver-pro/
-
 ########################################################################################################################
 
 
@@ -83,6 +80,7 @@ staging:
   application_name: CID
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
+  base_server_platform_url: https://na-1-install.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   customer_aws_account_type: staging
   secret_key: K6JWVF8KV884

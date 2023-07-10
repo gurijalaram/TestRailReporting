@@ -17,11 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateComparison {
+public class UpdateComparison {
     private String comparisonName;
-    private String comparisonType;
-    @JsonProperty("objectType")
-    private String comparisonObjectType;
     @JsonProperty("comparisonObjects")
     private List<ComparisonObjectBuilder> objectsToCompare;
 }
