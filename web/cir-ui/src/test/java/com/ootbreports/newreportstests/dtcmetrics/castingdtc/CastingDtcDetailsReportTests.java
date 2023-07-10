@@ -8,6 +8,7 @@ import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
 
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
 
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/castingdtc/CastingDtcDetailsReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
