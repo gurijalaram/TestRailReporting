@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.authorization.Token;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import lombok.SneakyThrows;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class AuthorizationUtilTest {
         final Integer threadsCount = 10;
         CountDownLatch latch = new CountDownLatch(threadsCount);
 
-        for(int i=0; i<threadsCount; i++) {
+        for (int i = 0; i < threadsCount; i++) {
             new Thread(() -> {
                 ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
 
