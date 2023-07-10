@@ -116,6 +116,24 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(id = "secondary-delete-project-modal")
     private WebElement btnModalCancel;
 
+    @FindBy(id = "invite-user-btn")
+    private WebElement btnInviteUsers;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-invite-project-users-modal']")
+    private WebElement inviteUsersModal;
+
+    @FindBy(id = "project-user-share-chip-dropdown")
+    private WebElement usersDropdownOption;
+
+    @FindBy(id = "invite-button")
+    private WebElement btnInvite;
+
+    @FindBy(xpath = "//div[contains(@id,'project-user-share-chip-dropdown')]")
+    private WebElement selectedProjectUserToAdd;
+
+    @FindBy(xpath = "//button[contains(@id,'bulk-action-btn')]")
+    private WebElement btnRemoveFromProject;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -554,5 +572,133 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsPage clickModalDeleteProject() {
         getPageUtils().waitForElementAndClick(btnModalDelete);
         return new ProjectsPage(driver);
+    }
+
+    /**
+     * Checks if invite users button displayed
+     *
+     * @return true/false
+     */
+    public boolean isInviteUsersOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(btnInviteUsers);
+    }
+
+    /**
+     * clicks on invite users button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickInviteUsersOption() {
+        getPageUtils().waitForElementAndClick(btnInviteUsers);
+        return this;
+    }
+
+    /**
+     * Checks if invite users modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isInviteUsersModalDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        return getPageUtils().isElementDisplayed(inviteUsersModal);
+    }
+
+    /**
+     * Checks if users drop down is displayed
+     *
+     * @return true/false
+     */
+    public boolean isUsersDropDownDisplayed() {
+        return getPageUtils().waitForElementAppear(usersDropdownOption).isDisplayed();
+    }
+
+    /**
+     * Checks if invite button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isInviteButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnInvite).isDisplayed();
+    }
+
+    /**
+     * select a user from drop-down
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage selectAUser(String user) {
+        getPageUtils().waitForElementAndClick(usersDropdownOption);
+        getPageUtils().waitForElementToAppear(usersDropdownOption).sendKeys(user);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(text(),'" + user + "')]"));
+        return this;
+    }
+
+    /**
+     * get selected user name
+     *
+     * @return a String
+     */
+    public String getSelectedProjectUserName() {
+        return getPageUtils().waitForElementToAppear(selectedProjectUserToAdd).getAttribute("innerText");
+    }
+
+    /**
+     * clicks on Invite button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickOnInvite() {
+        getPageUtils().waitForElementToAppear(btnInvite);
+        getPageUtils().moveAndClick(btnInvite);
+        return this;
+    }
+
+    /**
+     * Checks if newly added user is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddedProjectUserDisplayed(String addedUserEmail) {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        return getPageUtils().isElementDisplayed(By.xpath("//h4[@data-testid='user-full-name']//..//..//following-sibling::div//span[text()='" + addedUserEmail + "']"));
+    }
+
+    /**
+     * clicks on project user checkbox
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage selectAProjectUser(String projectUser) {
+        getPageUtils().waitForElementAndClick(By.xpath("//h4[@data-testid='user-full-name']//..//..//following-sibling::div//span[text()='" + projectUser + "']/ancestor::div[@role='row']//div[@role='cell']"));
+        return this;
+    }
+
+    /**
+     * Checks if remove from project button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveFromProjectOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(btnRemoveFromProject).isDisplayed();
+    }
+
+    /**
+     * clicks on remove from project button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickOnRemoveFromProjectOption() {
+        getPageUtils().waitForElementAndClick(btnRemoveFromProject);
+        return this;
+    }
+
+    /**
+     * get user remove option status
+     *
+     * @return a String
+     */
+    public String getRemoveUserFromProjectOptionStatus() {
+        return getPageUtils().waitForElementToAppear(btnRemoveFromProject).getAttribute("class");
     }
 }
