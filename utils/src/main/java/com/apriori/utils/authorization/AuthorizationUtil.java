@@ -95,7 +95,7 @@ public class AuthorizationUtil {
 
     /**
      * Get current customer data
-     * By cloud reference name filter all customers to find user used for the environment
+     * By a cloud reference name filter all customers to find a user used for the environment
      * @return filtered customer
      */
     public static Customer getCurrentCustomerData() {
