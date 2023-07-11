@@ -38,7 +38,7 @@ public class User {
     private CustomProperties customProperties;
     private String userType;
     private List<String> resourcesAllowedToCreate;
-    private boolean hasCompleteProfile;
+    private Boolean hasCompleteProfile;
     private UserEnablements userEnablements;
 
     public static class CustomProperties {
@@ -55,10 +55,10 @@ public class User {
 
     @Data
     public static class UserEnablements {
-        private boolean connectAdminEnabled;
-        private boolean highMemEnabled;
-        private boolean previewEnabled;
-        private boolean sandboxEnabled;
-        private boolean userAdminEnabled;
+        private Boolean connectAdminEnabled;
+        private Boolean highMemEnabled;
+        private Boolean previewEnabled;
+        private Boolean sandboxEnabled;
+        private Boolean userAdminEnabled;
     }
 }

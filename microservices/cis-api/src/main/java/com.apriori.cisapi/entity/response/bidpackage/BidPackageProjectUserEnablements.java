@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BidPackageProjectUserEnablements {
-    private boolean connectAdminEnabled;
-    private boolean highMemEnabled;
-    private boolean previewEnabled;
-    private boolean sandboxEnabled;
-    private boolean userAdminEnabled;
+    private Boolean connectAdminEnabled;
+    private Boolean highMemEnabled;
+    private Boolean previewEnabled;
+    private Boolean sandboxEnabled;
+    private Boolean userAdminEnabled;
 }

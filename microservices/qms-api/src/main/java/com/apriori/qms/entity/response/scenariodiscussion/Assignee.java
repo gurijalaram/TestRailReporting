@@ -28,11 +28,11 @@ public class Assignee {
     public UserProfile userProfile;
     public String email;
     public String username;
-    public boolean active;
-    public boolean mfaRequired;
+    public Boolean active;
+    public Boolean mfaRequired;
     public CustomAttributes customAttributes;
     public String userType;
     public String avatarColor;
-    public boolean hasCompleteProfile;
+    public Boolean hasCompleteProfile;
     private BidPackageProjectUserEnablements userEnablements;
 }
