@@ -23,6 +23,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ComponentIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -32,6 +33,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
+import com.utils.EvaluateDfmIconEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -132,13 +134,13 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3.0);
         softAssertions.assertThat(evaluatePage.getComponentResults("Uncosted Unique")).isEqualTo(0.0);
 
-        softAssertions.assertAll();
+        componentsTreePage = evaluatePage.openComponents();
 
-        //TODO uncomment when BA-2155 is complete
-        /*componentsListPage = evaluatePage.openComponents();
-        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));*/
+        softAssertions.assertThat(componentsTreePage.getRowDetails("Small Ring", "Initial").contains("$1.92", "Casting - Die", StatusIconEnum.CUBE, ScenarioStateEnum.COST_COMPLETE, EvaluateDfmIconEnum.HIGH()));
+        softAssertions.assertThat(componentsTreePage.getRowDetails("Big Ring", "Initial").contains("$2.19", "Casting - Die", StatusIconEnum.CUBE, ScenarioStateEnum.COST_COMPLETE, EvaluateDfmIconEnum.HIGH()));
+        softAssertions.assertThat(componentsTreePage.getRowDetails("Pin", "Initial").contains("$1.97", "Casting - Die", StatusIconEnum.CUBE, ScenarioStateEnum.COST_COMPLETE, EvaluateDfmIconEnum.Hi()));
+
+        softAssertions.assertAll();
     }
 
     @Test
