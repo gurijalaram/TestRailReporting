@@ -14,9 +14,9 @@ import org.apache.http.HttpStatus;
 
 @Slf4j
 public class WorkflowTestUtil {
-    private static AgentWorkflow agentWorkflowResponse;
-    private static ResponseWrapper<String> workflowResponse;
-    private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
+    private AgentWorkflow agentWorkflowResponse;
+    private ResponseWrapper<String> workflowResponse;
+    private AgentWorkflowJobRun agentWorkflowJobRunResponse;
 
     /**
      * Create workflow
