@@ -107,6 +107,33 @@
     },
     "hasCompleteProfile": {
       "type": "boolean"
+    },
+    "userEnablements": {
+      "type": "object",
+      "properties": {
+        "connectAdminEnabled": {
+          "type": "boolean"
+        },
+        "highMemEnabled": {
+          "type": "boolean"
+        },
+        "previewEnabled": {
+          "type": "boolean"
+        },
+        "sandboxEnabled": {
+          "type": "boolean"
+        },
+        "userAdminEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "connectAdminEnabled",
+        "highMemEnabled",
+        "previewEnabled",
+        "sandboxEnabled",
+        "userAdminEnabled"
+      ]
     }
   },
   "required": [
@@ -123,6 +150,7 @@
     "customAttributes",
     "userType",
     "avatarColor",
-    "hasCompleteProfile"
+    "hasCompleteProfile",
+    "userEnablements"
   ]
 }
