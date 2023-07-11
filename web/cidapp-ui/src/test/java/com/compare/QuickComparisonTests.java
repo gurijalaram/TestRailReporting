@@ -1,10 +1,5 @@
 package com.compare;
 
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -13,7 +8,6 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -25,8 +19,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.google.common.collect.Ordering;
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -42,12 +39,28 @@ public class QuickComparisonTests  extends TestBase {
     private CidAppLoginPage loginPage;
     private CreateComparePage createComparePage;
     private ComparePage comparePage;
+    private ComponentInfoBuilder cidComponentItemA;
+    private ComponentInfoBuilder cidComponentItemB;
 
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+
+    @After
+    public void deleteScenarios() {
+
+        if (cidComponentItemA != null) {
+            scenarioUtil.deleteScenario(cidComponentItemA.getComponentIdentity(), cidComponentItemA.getScenarioIdentity(), currentUser);
+            cidComponentItemA = null;
+
+            if (cidComponentItemB != null) {
+                scenarioUtil.deleteScenario(cidComponentItemB.getComponentIdentity(), cidComponentItemB.getScenarioIdentity(), currentUser);
+                cidComponentItemB = null;
+            }
+        }
+    }
 
 
     @Test
@@ -297,4 +310,45 @@ public class QuickComparisonTests  extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"26147"})
+    @Description("Validate scenarios can be deleted from quick comparison via modify comparison")
+    public void testDeleteQuickComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "auto pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItemA = loginPage.login(currentUser).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        new ExplorePage(driver).logout();
+
+        cidComponentItemB = loginPage.login(currentUser).uploadComponent(componentName, scenarioName2, resourceFile, currentUser);
+
+        comparePage = new ExplorePage(driver)
+            .selectFilter("Recent")
+            .multiSelectScenarios("" + componentName + ", " + scenarioName)
+            .createComparison()
+            .selectQuickComparison();
+
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName.toUpperCase() + "  / " + scenarioName);
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(componentName, scenarioName)
+            .clickScenarioCheckbox(componentName, scenarioName2)
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
 }
+
+

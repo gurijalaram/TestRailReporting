@@ -317,7 +317,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5783", "6200"})
+    @TestRail(testCaseId = {"5783", "6200", "26148"})
     @Issue("APD-1663")
     @Description("User can add scenarios to the currently open comparison via UI within current comparison")
     public void addScenarioToComparison() {
@@ -371,6 +371,17 @@ public class ComparisonTests extends TestBase {
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName4.toUpperCase() + "  / " + scenarioName4);
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(componentName, scenarioName)
+            .clickScenarioCheckbox(componentName2, scenarioName2)
+            .clickScenarioCheckbox(componentName3, scenarioName3)
+            .clickScenarioCheckbox(componentName4, scenarioName4)
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
 
         softAssertions.assertAll();
     }
@@ -1155,6 +1166,61 @@ public class ComparisonTests extends TestBase {
             .save(ComparePage.class);
 
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after save with new name").isFalse();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "26149")
+    @Description("Validate scenarios can be deleted from a new manual comparison via modify comparison")
+    public void testDeleteNewManualComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .createComparison()
+            .selectManualComparison();
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(componentName, scenarioName)
+            .clickScenarioCheckbox(componentName2, scenarioName)
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(1);
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(componentName, scenarioName)
+            .clickScenarioCheckbox(componentName2, scenarioName)
+            .submit(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
 
         softAssertions.assertAll();
     }

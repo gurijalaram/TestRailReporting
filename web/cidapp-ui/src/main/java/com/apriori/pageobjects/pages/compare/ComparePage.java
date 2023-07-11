@@ -233,6 +233,10 @@ public class ComparePage extends CompareToolbar {
         return pageUtils.waitForElementToAppear(basisColumnHeader).getAttribute("textContent");
     }
 
+    public int getListOfBasis() {
+        return pageUtils.waitForElementsToAppear(By.cssSelector(".comparison-basis-column")).size();
+    }
+
     /**
      * Opens evaluate page of basis scenario
      *
