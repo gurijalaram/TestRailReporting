@@ -19,6 +19,7 @@ import utils.Constants;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -55,8 +56,6 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
-        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls();
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
@@ -65,8 +64,31 @@ public class JasperApiUtils {
         reportRequest = !valueToSet.isEmpty()
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet) :
             reportRequest;
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
+        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency where export set is not relevant
+     *
+     * @param currencyKey - currency key to use
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        reportRequest = !currencyToSet.isEmpty()
+            ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
+            reportRequest;
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -137,6 +159,75 @@ public class JasperApiUtils {
         softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
 
         softAssertions.assertAll();
+    }
+
+    /**
+     * Generic method that tests currency functionality in the Scenario Comparison report
+     */
+    public void scenarioComparisonCurrencyTest() {
+        String currencyAssertValue = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
+
+        List<Element> currencyGBPSettingElementList = jasperReportSummaryGbp.getReportHtmlPart()
+            .getElementsContainingText("Currency").get(6).parent().children();
+        List<String> currencySettingGBP = Arrays.asList(
+            currencyGBPSettingElementList.get(3).text(),
+            currencyGBPSettingElementList.get(4).text(),
+            currencyGBPSettingElementList.get(5).text()
+        );
+
+        List<Element> currencyValueGBPElementList = jasperReportSummaryGbp.getReportHtmlPart()
+            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
+        List<String> currencyValuesFbcGBP = Arrays.asList(
+            currencyValueGBPElementList.get(3).text(),
+            currencyValueGBPElementList.get(4).text(),
+            currencyValueGBPElementList.get(5).text()
+        );
+        currencyAssertValue = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
+
+        List<Element> currencySettingUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
+            .getElementsContainingText("Currency").get(6).parent().children();
+        List<String> currencySettingUSD = Arrays.asList(
+            currencySettingUSDElementList.get(3).text(),
+            currencySettingUSDElementList.get(4).text(),
+            currencySettingUSDElementList.get(5).text()
+        );
+
+        List<Element> currencyValueUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
+            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
+        List<String> currencyValuesFbcUSD = Arrays.asList(
+            currencyValueUSDElementList.get(3).text(),
+            currencyValueUSDElementList.get(4).text(),
+            currencyValueUSDElementList.get(5).text()
+        );
+
+        int i = 0;
+        for (String currentCurrencySettingGBP : currencySettingGBP) {
+            softAssertions.assertThat(currentCurrencySettingGBP).isNotEqualTo(currencySettingUSD.get(i));
+            i++;
+        }
+
+        int j = 0;
+        for (String currencyCurrencyValueGBP : currencyValuesFbcGBP) {
+            softAssertions.assertThat(currencyCurrencyValueGBP).isNotEqualTo(currencyValuesFbcUSD.get(j));
+            j++;
+        }
+
+        softAssertions.assertAll();
+    }
+
+    /**
+     * Generic top level method for Cycle Time Value Tracking currency test
+     */
+    public void cycleTimeValueTrackingCurrencyTest() {
+        String gbpCurrency = CurrencyEnum.GBP.getCurrency();
+        JasperReportSummary jasperReportSummaryGBP = genericTestCoreCurrencyOnly("Currency", gbpCurrency);
+
+        String usdCurrency = CurrencyEnum.USD.getCurrency();
+        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly("Currency", usdCurrency);
+
+        softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
     }
 
     /**

@@ -284,6 +284,7 @@ public class CicApiTestUtil extends TestBase {
      */
     public static AgentWorkflow getMatchedWorkflowId(String workFlowName) {
         AgentWorkflow agentWorkflow = null;
+
         ResponseWrapper<String> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
         AgentWorkflow[] agentWorkflows = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflow[].class);
         try {
@@ -749,5 +750,4 @@ public class CicApiTestUtil extends TestBase {
             }
         };
     }
-
 }
