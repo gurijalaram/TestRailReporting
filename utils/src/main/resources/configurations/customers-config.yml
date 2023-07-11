@@ -10,9 +10,8 @@
 
 ######################################################## AP-INT ########################################################
 ap-int:
+  cloud_reference_name: apriori-internal
   # depends on customer_aws_account_type property from environment in environments-config.yml file, or default section in global-config.yml file
-  dev:
-    token_subject: 4127
   staging:
     token_subject: e63c
 
@@ -36,18 +35,14 @@ ap-int:
 
 ######################################################## GADGETS #######################################################
 gadgets:
-  aws_account_type: dev
-  dev:
-    token_subject: 247f
-
+  cloud_reference_name: gadgets
 ########################################################################################################################
 
 
 ######################################################## WIDGETS #######################################################
 widgets:
-  aws_account_type: dev
-  dev:
-    token_subject: 739e
+  cloud_reference_name: widgets
+
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
@@ -62,9 +57,6 @@ widgets:
 
 ####################################################### SPROCKETS ######################################################
 sprockets:
-  aws_account_type: dev
-  dev:
-    token_subject: c8fc
 
 ########################################################################################################################
 

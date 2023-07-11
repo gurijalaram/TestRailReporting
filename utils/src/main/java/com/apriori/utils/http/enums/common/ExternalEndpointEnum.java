@@ -1,5 +1,6 @@
 package com.apriori.utils.http.enums.common;
 
+import com.apriori.utils.AwsParameterStoreUtil;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
@@ -19,6 +20,15 @@ public interface ExternalEndpointEnum extends EndpointEnum {
             querySymbol = "&";
         }
 
-        return querySymbol + "key=" + PropertiesContext.get("secret_key");
+        String secretKey;
+
+        try {
+            //TODO z: should be removed from config file when work with staging
+            secretKey = PropertiesContext.get("secret_key");
+        } catch (IllegalArgumentException e) {
+            secretKey = AwsParameterStoreUtil.getSystemParameter("/" + PropertiesContext.get("aws_parameter_store_name") + "/shared/environment-secret-key");
+        }
+
+        return querySymbol + "key=" + secretKey;
     }
 }

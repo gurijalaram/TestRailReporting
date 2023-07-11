@@ -9,6 +9,8 @@ public enum JasperApiEnum {
     COMPONENT_COST("/componentcost/ComponentCostReportRequest"),
     COST_OUTLIER_IDENTIFICATION("/costoutlieridentification/CostOutlierIdentificationReportRequest"),
     COST_OUTLIER_IDENTIFICATION_DETAILS("/costoutlieridentification/CostOutlierIdentificationDetailsReportRequest"),
+    CYCLE_TIME_VALUE_TRACKING("/cycletimevaluetracking/CycleTimeValueTrackingReportRequest"),
+    CYCLE_TIME_VALUE_TRACKING_DETAILS("/cycletimevaluetracking/CycleTimeValueTrackingDetailsReportRequest"),
     DESIGN_OUTLIER_IDENTIFICATION("/designoutlieridentification/DesignOutlierIdentificationReportRequest"),
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS("/designoutlieridentification/DesignOutlierIdentificationDetailsReportRequest"),
     CASTING_DTC_COMPARISON("/castingdtc/CastingDtcComparisonReportRequest"),
@@ -20,6 +22,7 @@ public enum JasperApiEnum {
     PLASTIC_DTC_COMPARISON("/plasticdtc/PlasticDtcComparisonReportRequest"),
     PLASTIC_DTC_DETAILS("/plasticdtc/PlasticDtcDetailsReportRequest"),
     PLASTIC_DTC("/plasticdtc/PlasticDtcReportRequest"),
+    SCENARIO_COMPARISON("/scenariocomparison/ScenarioComparisonReportRequest"),
     SHEET_METAL_DTC_COMPARISON("/sheetmetaldtc/SheetMetalDtcComparisonReportRequest"),
     SHEET_METAL_DTC_DETAILS("/sheetmetaldtc/SheetMetalDtcDetailsReportRequest"),
     SHEET_METAL_DTC("/sheetmetaldtc/SheetMetalDtcReportRequest");

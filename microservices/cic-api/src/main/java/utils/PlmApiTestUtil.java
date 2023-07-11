@@ -8,13 +8,19 @@ import com.apriori.utils.properties.PropertiesContext;
 import entity.request.PlmFieldDefinitions;
 import entity.response.PlmCsrfToken;
 import entity.response.PlmPartResponse;
+import entity.response.PlmSearchPart;
+import entity.response.PlmSearchResponse;
 import enums.PlmApiEnum;
+import enums.PlmPartsSearch;
+import enums.PlmWCType;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 public class PlmApiTestUtil {
@@ -81,7 +87,7 @@ public class PlmApiTestUtil {
      *
      * @return PlmApiTestUtil class object
      */
-    private PlmApiTestUtil plmCsrfToken() {
+    public PlmApiTestUtil plmCsrfToken() {
         RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_CSRF_TOKEN, PlmCsrfToken.class)
             .headers(new HashMap<String, String>() {
                 {
@@ -93,6 +99,30 @@ public class PlmApiTestUtil {
             throw new NullPointerException("FAILED TO GET CSRF NONCE TOKEN!!");
         }
         return this;
+    }
+
+    /**
+     * search and return single Plm Windchill Part
+     *
+     * @param plmPartNumber
+     * @return PlmPart response class
+     */
+    @SneakyThrows
+    public static PlmSearchPart getPlmPartByPartNumber(String plmPartNumber) {
+        SearchFilter searchFilter = new SearchFilter()
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), plmPartNumber))
+            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+            .build();
+        PlmSearchResponse plmParts = CicApiTestUtil.searchPlmWindChillParts(searchFilter);
+        PlmSearchPart plmPart;
+        if (plmParts.getItems().size() > 1) {
+            plmPart = plmParts
+                .getItems()
+                .get(new Random().nextInt(plmParts.getItems().size()));
+        } else {
+            plmPart = plmParts.getItems().get(0);
+        }
+        return plmPart;
     }
 
     /**

@@ -4,6 +4,8 @@ import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 
+import entity.request.DiscussionsRequest;
+import entity.request.DiscussionsRequestParameters;
 import entity.response.DmsDiscussionResponse;
 import entity.response.DmsDiscussionsResponse;
 import io.qameta.allure.Description;
@@ -24,14 +26,41 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13054", "14217"})
-    @Description("update a valid discussion")
-    public void updateValidDiscussion() {
+    @TestRail(testCaseId = {"14217"})
+    @Description("Verify that user can Update description of Discussion")
+    public void updateValidDiscussionDescription() {
         String description = new GenerateStringUtil().generateNotes();
-        DmsDiscussionResponse discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(description, "ACTIVE", dmsScenarioDiscussionResponse.getItems()
+        DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
+            .discussion(DiscussionsRequestParameters.builder()
+                .description(description)
+                .build())
+            .build();
+        DmsDiscussionResponse discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionsRequest, dmsScenarioDiscussionResponse.getItems()
+            .get(0).getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(discussionUpdateResponse.getDescription()).isEqualTo(description);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13054"})
+    @Description("Verify that user can Update status of Discussion")
+    public void updateValidDiscussionStatus() {
+        DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
+            .discussion(DiscussionsRequestParameters.builder()
+                .status("RESOLVED")
+                .build())
+            .build();
+        DmsDiscussionResponse discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionsRequest, dmsScenarioDiscussionResponse.getItems()
+            .get(0).getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
+        softAssertions.assertThat(discussionUpdateResponse.getStatus()).isEqualTo("RESOLVED");
+
+        discussionsRequest = DiscussionsRequest.builder()
+            .discussion(DiscussionsRequestParameters.builder()
+                .status("ACTIVE")
+                .build())
+            .build();
+        discussionUpdateResponse = DmsApiTestUtils.updateDiscussion(discussionsRequest, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), currentUser, DmsDiscussionResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(discussionUpdateResponse.getStatus()).isEqualTo("ACTIVE");
-        softAssertions.assertThat(discussionUpdateResponse.getDescription()).isEqualTo(description);
     }
 
     @Test
