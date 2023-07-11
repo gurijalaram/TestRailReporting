@@ -2,6 +2,7 @@ package com.apriori.utils;
 
 import io.qameta.allure.Attachment;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -311,5 +312,14 @@ public class GenerateStringUtil {
             .limit(max)
             .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
             .toString();
+    }
+
+    /**
+     * Generates a random double with 2 decimals
+     *
+     * @return Double
+     */
+    public Double getRandomDoubleWithTwoDecimals() {
+        return Double.valueOf(String.format("%.2f", 1 + (new Random().nextDouble() * (999 - 1))));
     }
 }

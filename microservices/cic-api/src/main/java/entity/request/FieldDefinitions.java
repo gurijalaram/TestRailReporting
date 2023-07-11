@@ -20,4 +20,6 @@ public class FieldDefinitions {
     public FieldDefinitionKey twxAttributeName;
     public FieldDefinitionKey usageType;
     public FieldDefinitionKey _isSelected;
+    public FieldDefinitionKey writingRule;
+    public FieldDefinitionKey isDefault;
 }
