@@ -32,4 +32,5 @@ public class Assignee {
     public CustomAttributes customAttributes;
     public String userType;
     public String avatarColor;
+    public boolean hasCompleteProfile;
 }

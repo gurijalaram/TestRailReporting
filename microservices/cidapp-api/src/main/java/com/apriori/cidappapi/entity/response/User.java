@@ -38,6 +38,7 @@ public class User {
     private CustomProperties customProperties;
     private String userType;
     private List<String> resourcesAllowedToCreate;
+    private boolean hasCompleteProfile;
 
     public static class CustomProperties {
     }

@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Builder
 
 public class MentionedUser {
-
     private Boolean active;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
@@ -32,5 +31,5 @@ public class MentionedUser {
     private UserProfile userProfile;
     private String userType;
     private String username;
-
+    private boolean hasCompleteProfile;
 }

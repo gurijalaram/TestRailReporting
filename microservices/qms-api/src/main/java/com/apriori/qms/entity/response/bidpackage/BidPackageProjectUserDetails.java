@@ -32,4 +32,5 @@ public class BidPackageProjectUserDetails {
     private CustomAttributes customAttributes;
     private String userType;
     private String avatarColor;
+    private boolean hasCompleteProfile;
 }

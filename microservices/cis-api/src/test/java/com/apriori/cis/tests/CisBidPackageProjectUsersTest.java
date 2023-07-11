@@ -52,7 +52,7 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"24361"})
     @Description("Add Multiple Users to the Project")
-    public void createBidPackageDefaultProjectUser() {
+    public void testCreateBidPackageDefaultProjectUser() {
         String firstUserEmail = UserUtil.getUser().getEmail();
         String secondUserEmail = UserUtil.getUser().getEmail();
         String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);

@@ -309,7 +309,9 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage errorProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(errorProjectResponse.getMessage())
-            .contains("displayName should not be null or empty and can have maximum 64 characters");
+            .contains("2 validation failures were found:\n" +
+                "* 'displayName' should not be empty.\n" +
+                "* 'displayName' should not be blank");
     }
 
     @Test
@@ -338,7 +340,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("displayName should not be null or empty and can have maximum 64 characters");
+            .contains("'displayName' should not be more than 64 characters");
     }
 
     @Test
@@ -438,7 +440,10 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("owner should not be null or empty");
+            .contains("3 validation failures were found:\n" +
+                "* 'owner' should not be empty.\n" +
+                "* 'owner' should not be blank.\n" +
+                "* 'owner' is not a valid identity.");
 
         //Project owner is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -448,7 +453,7 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("owner should not be null or empty");
+            .contains("'owner' should not be null");
 
         //Project owner is invalid
         projectRequest = BidPackageProjectRequest.builder()
@@ -458,7 +463,7 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("Owner 'identity' is not a valid identity");
+            .contains("'owner' is not a valid identity");
     }
 
     @Test
@@ -611,7 +616,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("displayName should not be null or empty and can have maximum 64 characters");
+            .contains("'displayName' should not be null");
     }
 
     @Test
@@ -682,7 +687,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+            .contains("The value of dueAt is not meeting the expected criteria defined for dueAt");
 
         //Invalid format #2
         projectRequest = BidPackageProjectRequest.builder()
@@ -692,7 +697,7 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("Incorrect date format it should be (yyyy-MM-dd Or yyyy-MM-dd'T'HH:mm:ss.SSS'Z')");
+            .contains("The value of dueAt is not meeting the expected criteria defined for dueAt");
 
         //Invalid format #3 [Back Date]
         projectRequest = BidPackageProjectRequest.builder()

@@ -33,4 +33,5 @@ public class BidPackageProjectResponse {
     private String owner;
     private String displayName;
     private String ownerFullName;
+    private String ownerUserIdentity;
 }

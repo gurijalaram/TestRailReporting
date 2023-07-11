@@ -19,7 +19,8 @@
         "active",
         "mfaRequired",
         "customAttributes",
-        "userType"
+        "userType",
+        "hasCompleteProfile"
       ],
       "optional": [
         "customProperties",
