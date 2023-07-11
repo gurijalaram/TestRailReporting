@@ -1,5 +1,6 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserEnablements;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserProfile;
 import com.apriori.qms.entity.response.bidpackage.CustomAttributes;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
@@ -29,10 +30,11 @@ public class ScenarioProjectUserInformation {
     private BidPackageProjectUserProfile userProfile;
     private String email;
     private String username;
-    private boolean active;
-    private boolean mfaRequired;
+    private Boolean active;
+    private Boolean mfaRequired;
     private CustomAttributes customAttributes;
     private String userType;
     private String avatarColor;
-    private boolean hasCompleteProfile;
+    private Boolean hasCompleteProfile;
+    private BidPackageProjectUserEnablements userEnablements;
 }

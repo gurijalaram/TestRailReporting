@@ -1,5 +1,6 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserEnablements;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -31,5 +32,6 @@ public class MentionedUser {
     private UserProfile userProfile;
     private String userType;
     private String username;
-    private boolean hasCompleteProfile;
+    private Boolean hasCompleteProfile;
+    private BidPackageProjectUserEnablements userEnablements;
 }

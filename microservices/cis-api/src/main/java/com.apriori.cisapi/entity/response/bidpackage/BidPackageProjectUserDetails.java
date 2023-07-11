@@ -27,10 +27,11 @@ public class BidPackageProjectUserDetails {
     private BidPackageProjectUserProfile userProfile;
     private String email;
     private String username;
-    private boolean active;
-    private boolean mfaRequired;
+    private Boolean active;
+    private Boolean mfaRequired;
     private CustomAttributes customAttributes;
     private String userType;
     private String avatarColor;
-    private boolean hasCompleteProfile;
+    private Boolean hasCompleteProfile;
+    private BidPackageProjectUserEnablements userEnablements;
 }
