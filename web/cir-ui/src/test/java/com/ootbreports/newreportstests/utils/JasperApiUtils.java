@@ -22,7 +22,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -221,13 +223,32 @@ public class JasperApiUtils {
      * Generic top level method for Cycle Time Value Tracking currency test
      */
     public void cycleTimeValueTrackingCurrencyTest() {
-        String gbpCurrency = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGBP = genericTestCoreCurrencyOnly("Currency", gbpCurrency);
-
-        String usdCurrency = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly("Currency", usdCurrency);
+        JasperReportSummary jasperReportSummaryGBP = generateAndReturnReportCurrencyOnly(CurrencyEnum.GBP.getCurrency());
+        JasperReportSummary jasperReportSummaryUSD = generateAndReturnReportCurrencyOnly(CurrencyEnum.USD.getCurrency());
 
         softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
+        softAssertions.assertAll();
+    }
+
+    /**
+     * Target Quoted Cost currency test
+     */
+    public void targetQuotedCostCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 23, 33);
+    }
+
+    /**
+     * Target Quoted Cost Trend Value Tracking currency test
+     */
+    public void targetQuotedCostTrendValueTrackingTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 68, 74);
+    }
+
+    /**
+     * Target Quoted Cost Trend Value Tracking Details currency test
+     */
+    public void targetQuotedCostTrendValueTrackingDetailsTest() {
+        targetQuotedCostTrendGenericCurrencyTest(20, 93, 121);
     }
 
     /**
@@ -529,6 +550,44 @@ public class JasperApiUtils {
         reportRequest.getParameters().getReportParameterByName(valueToGet)
             .setValue(Collections.singletonList(valueToSet));
         return reportRequest;
+    }
+
+    private void targetQuotedCostTrendGenericCurrencyTest(int keyOne, int keyTwo, int keyThree) {
+        String tableId = "JR_PAGE_ANCHOR_0_1";
+        String attributeNameId = "id";
+        String tagName = "span";
+
+        List<Element> gbpSpanElements = generateAndReturnReportCurrencyOnly(
+            CurrencyEnum.GBP.getCurrency()).getReportHtmlPart()
+            .getElementsByAttributeValue(attributeNameId, tableId).get(0)
+            .getElementsByTag(tagName);
+
+        List<Element> usdSpanElements = generateAndReturnReportCurrencyOnly(
+            CurrencyEnum.USD.getCurrency()).getReportHtmlPart()
+            .getElementsByAttributeValue(attributeNameId, tableId).get(0)
+            .getElementsByTag(tagName);
+
+        ArrayList<String> gbpCostValues = new ArrayList<>();
+        gbpCostValues.add(gbpSpanElements.get(keyOne).text());
+        gbpCostValues.add(gbpSpanElements.get(keyTwo).text());
+        gbpCostValues.add(gbpSpanElements.get(keyThree).text());
+
+        ArrayList<String> usdCostValues = new ArrayList<>();
+        usdCostValues.add(usdSpanElements.get(keyOne).text());
+        usdCostValues.add(usdSpanElements.get(keyTwo).text());
+        usdCostValues.add(usdSpanElements.get(keyThree).text());
+
+        softAssertions.assertThat(gbpCostValues.get(0)).isEqualTo("GBP");
+        softAssertions.assertThat(usdCostValues.get(0)).isEqualTo("USD");
+        softAssertions.assertThat(gbpCostValues.get(0)).isNotEqualTo(usdCostValues.get(0));
+        softAssertions.assertThat(gbpCostValues.get(1)).isNotEqualTo(usdCostValues.get(1));
+        softAssertions.assertThat(gbpCostValues.get(2)).isNotEqualTo(usdCostValues.get(2));
+
+        softAssertions.assertAll();
+    }
+
+    private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
+        return genericTestCoreCurrencyOnly("Currency", currency);
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

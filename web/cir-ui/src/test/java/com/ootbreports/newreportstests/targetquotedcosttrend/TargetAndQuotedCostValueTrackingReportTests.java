@@ -1,4 +1,4 @@
-package com.ootbreports.newreportstests.cycletimevaluetracking;
+package com.ootbreports.newreportstests.targetquotedcosttrend;
 
 import com.apriori.utils.TestRail;
 
@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.JasperApiAuthenticationUtil;
 
-public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING.getEndpoint();
-    // Export Set is not relevant for this report
+public class TargetAndQuotedCostValueTrackingReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.TARGET_QUOTED_COST_VALUE_TRACKING.getEndpoint();
+    // Export set is not relevant for this report
     private static final String exportSetName = "";
     private static JasperApiUtils jasperApiUtils;
 
@@ -21,9 +21,9 @@ public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUt
     }
 
     @Test
-    @TestRail(testCaseId = {"25987"})
-    @Description("Verify Currency Code input control is working correctly")
-    public void testCurrencyCode() {
-        jasperApiUtils.cycleTimeValueTrackingCurrencyTest();
+    @TestRail(testCaseId = {"3365"})
+    @Description("Validate Currency Code Input Control Functionality")
+    public void testCurrencyCodeInputControl() {
+        jasperApiUtils.targetQuotedCostTrendValueTrackingTest();
     }
 }
