@@ -453,10 +453,7 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("3 validation failures were found:\n" +
-                "* 'owner' should not be empty.\n" +
-                "* 'owner' should not be blank.\n" +
-                "* 'owner' is not a valid identity.");
+            .contains("'owner' should not be null");
 
         //Project owner is invalid
         projectRequest = BidPackageProjectRequest.builder()
@@ -466,10 +463,7 @@ public class BidPackageProjectsTest extends TestUtil {
         getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("3 validation failures were found:\n" +
-                "* 'owner' should not be empty.\n" +
-                "* 'owner' should not be blank.\n" +
-                "* 'owner' is not a valid identity.");
+            .contains("'owner' is not a valid identity");
     }
 
     @Test

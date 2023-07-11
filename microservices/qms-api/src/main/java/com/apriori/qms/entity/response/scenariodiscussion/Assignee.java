@@ -1,5 +1,6 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
+import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserEnablements;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -33,4 +34,5 @@ public class Assignee {
     public String userType;
     public String avatarColor;
     public boolean hasCompleteProfile;
+    private BidPackageProjectUserEnablements userEnablements;
 }
