@@ -350,5 +350,3 @@ public class QuickComparisonTests  extends TestBase {
         softAssertions.assertAll();
     }
 }
-
-
