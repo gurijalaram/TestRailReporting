@@ -74,8 +74,14 @@ public class PlmPartsUtil {
      * @return PartData
      */
     public List<PartData> getPlmPartData(PlmPartDataType plmPartDataType, Integer numOfParts) {
-        return IntStream.range(0, numOfParts)
+        List<PartData> partDataList;
+        partDataList =  IntStream.range(0, numOfParts)
             .mapToObj(i -> getPlmPartData(plmPartDataType))
             .collect(Collectors.toList());
+
+        if (partDataList == null) {
+            throw new IllegalArgumentException("FAILED TO RETRIEVE THE DATA FROM AWS");
+        }
+        return partDataList;
     }
 }

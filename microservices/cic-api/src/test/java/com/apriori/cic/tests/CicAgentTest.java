@@ -3,52 +3,36 @@ package com.apriori.cic.tests;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
 import entity.response.AgentConfiguration;
 import entity.response.AgentStatus;
 import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJob;
 import enums.CICAPIEnum;
 import enums.CICPartSelectionType;
-import enums.PlmPartDataType;
 import io.qameta.allure.Description;
-import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
-import utils.CicLoginUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
-public class CicAgentTest extends TestBase {
+public class CicAgentTest extends WorkflowTestUtil {
 
-    private static String loginSession;
-    private static AgentWorkflow agentWorkflowResponse;
-    private static JobDefinition jobDefinitionData;
-    private static WorkflowRequest workflowRequestDataBuilder;
-    private static PartData plmPartData;
-    private static WorkflowTestUtil workflowTestUtil;
-    private static String workflowName = StringUtils.EMPTY;
-    private static String workflowData;
-    private static SoftAssertions softAssertions;
+    private JobDefinition jobDefinitionData;
+    private SoftAssertions softAssertions;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
         plmPartData = new PlmPartsUtil().getPlmPartData();
-        workflowTestUtil = new WorkflowTestUtil();
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
-        loginSession = new CicLoginUtil(getDriver()).login(UserUtil.getUser())
-            .navigateToUserMenu()
-            .getWebSession();
+        currentUser = UserUtil.getUser();
     }
 
     @Test
@@ -84,29 +68,29 @@ public class CicAgentTest extends TestBase {
         "Get CIC Agent Workflow with workflow id")
     public void testFCAgentWorkflowJobs() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(loginSession))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .build();
 
-        workflowTestUtil = workflowTestUtil.create(workflowRequestDataBuilder, loginSession)
-            .getWorkflowId(workflowRequestDataBuilder.getName())
-            .invoke();
-        softAssertions.assertThat(workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId()).isNotNull();
-        ResponseWrapper<String> response = CicApiTestUtil.getCicAgentWorkflowJobs(workflowTestUtil.getAgentWorkflowResponse().getId());
+        this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow();
+        softAssertions.assertThat(this.agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        ResponseWrapper<String> response = CicApiTestUtil.getCicAgentWorkflowJobs(this.agentWorkflowResponse.getId());
         AgentWorkflowJob[] agentWorkflowJobs = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflowJob[].class);
         softAssertions.assertThat(agentWorkflowJobs.length).isGreaterThan(0);
-        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId());
+        AgentWorkflowJob agentWorkflowJobResponse = CicApiTestUtil.getCicAgentWorkflowJobStatus(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId());
         softAssertions.assertThat(agentWorkflowJobResponse.getIdentity()).isEqualTo(agentWorkflowJobResponse.getIdentity());
-        AgentWorkflow agentWorkflow = CicApiTestUtil.getCicAgentWorkflow(workflowTestUtil.getAgentWorkflowResponse().getId());
-        softAssertions.assertThat(agentWorkflow.getName()).isEqualTo(workflowRequestDataBuilder.getName());
-        CicApiTestUtil.cancelWorkflow(workflowTestUtil.getAgentWorkflowResponse().getId(), workflowTestUtil.getAgentWorkflowJobRunResponse().getJobId());
-        CicApiTestUtil.deleteWorkFlow(loginSession, workflowTestUtil.getAgentWorkflowResponse());
+        AgentWorkflow agentWorkflow = CicApiTestUtil.getCicAgentWorkflow(this.agentWorkflowResponse.getId());
+        softAssertions.assertThat(agentWorkflow.getName()).isEqualTo(this.workflowRequestDataBuilder.getName());
+        CicApiTestUtil.cancelWorkflow(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId());
+        this.deleteWorkflow();
     }
 
     @After
     public void cleanup() {
         softAssertions.assertAll();
+        this.close();
     }
 }
