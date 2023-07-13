@@ -4,6 +4,7 @@ import com.apriori.cmp.entity.enums.CMPAPIEnum;
 import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.request.UpdateComparison;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
+import com.apriori.cmp.entity.response.GetComparisonsResponse;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -12,6 +13,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
+
+import java.util.List;
 
 public class ComparisonUtils {
 
@@ -26,7 +29,7 @@ public class ComparisonUtils {
      */
     public <T> T createComparison(CreateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON, klass)
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, klass)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
@@ -74,5 +77,22 @@ public class ComparisonUtils {
         ResponseWrapper<GetComparisonResponse> responseWrapper = HTTPRequest.build(requestEntity).patch();
 
         return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Calls and an api with GET verb
+     *
+     * @param currentUser - the user credentials
+     * @return response object
+     */
+    public List<GetComparisonResponse> getComparisons(UserCredentials currentUser) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        return responseWrapper.getResponseEntity().getItems();
     }
 }
