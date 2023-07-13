@@ -357,9 +357,9 @@ public class MessagesTest extends TestBase {
 
         softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).contains("QA Automation Account 23");
 
-        softAssertions.assertAll();
-
         messagesPage.clickOnRead();
+
+        softAssertions.assertAll();
     }
 
     @Test
