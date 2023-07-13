@@ -21,8 +21,8 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends JasperAp
     }
 
     @Test
-    @TestRail(testCaseId = {"3365"})
-    @Description("Validate Currency Code Input Control Functionality")
+    @TestRail(testCaseId = {"26437"})
+    @Description("Validate Currency Code Input Control - Target and Quoted Cost Value Tracking Details Report")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.targetQuotedCostTrendValueTrackingDetailsTest();
     }
