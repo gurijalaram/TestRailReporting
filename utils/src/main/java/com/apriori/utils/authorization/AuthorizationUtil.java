@@ -4,6 +4,10 @@ import com.apriori.utils.ApplicationItem;
 import com.apriori.utils.DeploymentItem;
 import com.apriori.utils.GetDeploymentsResponse;
 import com.apriori.utils.InstallationItem;
+import com.apriori.utils.common.customer.response.Customer;
+import com.apriori.utils.common.customer.response.Customers;
+import com.apriori.utils.common.customer.response.Sites;
+import com.apriori.utils.enums.CustomersApiEnum;
 import com.apriori.utils.enums.DeploymentsAPIEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -15,7 +19,6 @@ import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
@@ -28,7 +31,9 @@ public class AuthorizationUtil {
     private String username = PropertiesContext.get("ats.token_username");
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
-    private String subject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+    private static String tokenSubject;
+    private static Customer currentCustomer;
+
 
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
@@ -50,7 +55,7 @@ public class AuthorizationUtil {
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(issuer)
-                    .subject(subject)
+                    .subject(getTokenSubjectForCustomer())
                     .claims(Claims.builder()
                         .name(username)
                         .email(email)
@@ -60,6 +65,68 @@ public class AuthorizationUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    private static synchronized String getTokenSubjectForCustomer() {
+        if (tokenSubject != null) {
+            return tokenSubject;
+        }
+
+        try {
+            // TODO z: should be removed when AWS data will be avaliable for staging too
+            tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+        } catch (IllegalArgumentException e) {
+            tokenSubject = generateTokenSubject();
+        }
+
+        return tokenSubject;
+    }
+
+    private static String generateTokenSubject() {
+        final Customer customerToProcess = getCurrentCustomerData();
+        final String customerSiteId = getCustomerSiteIdByCustomer(customerToProcess);
+
+        if (StringUtils.isBlank(customerSiteId)) {
+            log.error("Customer site id is empty. Customer: {}", customerToProcess.getCloudReference());
+        }
+
+        return customerSiteId.substring(customerSiteId.length() - 4);
+    }
+
+    /**
+     * Get current customer data
+     * By a cloud reference name filter all customers to find a user used for the environment
+     * @return filtered customer
+     */
+    public static Customer getCurrentCustomerData() {
+        if (currentCustomer != null) {
+            return currentCustomer;
+        }
+
+        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
+
+        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
+            .stream()
+            .filter(customer -> customer.getCloudReference()
+                .equals(PropertiesContext.get("${customer}.cloud_reference_name")
+                )
+            )
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
+        RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
+            .inlineVariables(customerToProcess.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();
+
+        return sitesResponseWrapper.getResponseEntity()
+            .getItems()
+            .get(0)
+            .getSiteId();
     }
 
     /**

@@ -1,7 +1,6 @@
 package utils;
 
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.KeyValueException;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -12,16 +11,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.ConnectorRequest;
 import entity.request.CostingInputs;
-import entity.request.DefaultValues;
 import entity.request.JobDefinition;
 import entity.request.WorkflowPart;
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
-import entity.request.WorkflowRow;
 import entity.response.AgentConnectionInfo;
 import entity.response.AgentConnectionsInfo;
 import entity.response.AgentWorkflow;
@@ -36,11 +32,9 @@ import entity.response.PlmSearchResponse;
 import entity.response.ReportTemplatesRow;
 import enums.CICAPIEnum;
 import enums.CICAgentStatus;
-import enums.CICPartSelectionType;
 import enums.CICReportType;
 import enums.PlmApiEnum;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
+import enums.PlmPartDataType;
 import enums.ReportsEnum;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +53,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CicApiTestUtil extends TestBase {
+public class CicApiTestUtil {
+
+    private static final int WAIT_TIME = 30;
 
     /**
      * Deserialize workflow data from json file to string.
@@ -192,7 +188,7 @@ public class CicApiTestUtil extends TestBase {
      *
      * @param workflowRequestDataBuilder De-serialized worflow base json data file to WorkflowRequest Builder class
      * @param session                    - Login to CI-Connect GUI to get JSession
-     * @return ResponseWrapper<String>
+     * @return ResponseWrapper
      */
     public static ResponseWrapper<String> createWorkflow(WorkflowRequest workflowRequestDataBuilder, String session) {
         ResponseWrapper<String> workflowResponse;
@@ -252,14 +248,13 @@ public class CicApiTestUtil extends TestBase {
     /**
      * Submit request to get all CIC agent workflows
      *
-     * @return response
      */
-    public static ResponseWrapper<String> cancelWorkflow(String workFlowID, String workflowJobID) {
+    public static void cancelWorkflow(String workFlowID, String workflowJobID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_CANCEL, null)
             .inlineVariables(workFlowID, workflowJobID)
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
         requestEntity.headers(setupHeader());
-        return HTTPRequest.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -301,11 +296,11 @@ public class CicApiTestUtil extends TestBase {
     /**
      * get the customer id based on customer environment name (ant, widgets)
      *
-     * @param jSessionId
+     * @param sessionId - JSESSIONID
      * @return customer
      */
-    public static String getAgent(String jSessionId) {
-        ConnectorInfo connectorInfo = getMatchedConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"), jSessionId);
+    public static String getAgent(String sessionId) {
+        ConnectorInfo connectorInfo = getMatchedConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"), sessionId);
         if (connectorInfo == null) {
             throw new IllegalArgumentException("Connector not found!!");
         }
@@ -319,6 +314,7 @@ public class CicApiTestUtil extends TestBase {
      * @param jobID      - job id to track status with
      * @return boolean - true or false (true - Job is in finished state)
      */
+    @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
@@ -328,14 +324,34 @@ public class CicApiTestUtil extends TestBase {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }
-            try {
-                TimeUnit.SECONDS.sleep(30);
-                finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
-                logger.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-                Thread.currentThread().interrupt();
+            TimeUnit.SECONDS.sleep(WAIT_TIME);
+            finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+        }
+        return true;
+    }
+
+    /**
+     * Track the job status by workflow
+     *
+     * @param workflowID - workflow id to track status with
+     * @param jobID      - job id to track status with
+     * @return boolean - true or false (true - Job is in finished state)
+     */
+    @SneakyThrows
+    public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
+        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        String finalJobStatus;
+        finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+        while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                return false;
             }
+            TimeUnit.SECONDS.sleep(WAIT_TIME);
+            finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+            cicLoginUtil.refreshBrowser();
+            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
         }
         return true;
     }
@@ -348,6 +364,7 @@ public class CicApiTestUtil extends TestBase {
      * @param cicAgentStatus expected agent status
      * @return boolean true or false
      */
+    @SneakyThrows
     public static Boolean waitUntilExpectedJobStatusMatched(String workflowID, String jobID, CICAgentStatus cicAgentStatus) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(2);
         String finalJobStatus;
@@ -356,14 +373,9 @@ public class CicApiTestUtil extends TestBase {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
             }
-            try {
-                TimeUnit.SECONDS.sleep(30);
-                finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
-                logger.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
+            TimeUnit.SECONDS.sleep(WAIT_TIME);
+            finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
         }
         return true;
     }
@@ -498,40 +510,26 @@ public class CicApiTestUtil extends TestBase {
     /**
      * Build workflow run parts request data builder
      *
-     * @param partData   PartData class
      * @param numOfParts - number of parts to build
      * @return WorkflowParts data builder class
      */
-    public static WorkflowParts getWorkflowPartDataBuilder(PartData partData, Integer numOfParts) {
-        PlmSearchResponse plmParts;
+    public static WorkflowParts getWorkflowPartDataBuilder(Integer numOfParts) {
         ArrayList<WorkflowPart> part = null;
-        try {
-            plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
-                .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() +
-                    (numOfParts > 5 ? String.format(PlmPartsSearch.PLM_WC_PART_NAME_ENDS_WITH.getFilterKey(), "prt") : String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), partData.getPlmPartNumber())))
-                .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
+        List<PartData> partDataList = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PARTIAL, numOfParts);
+        part = new ArrayList<>();
+        for (int i = 0; i < numOfParts; i++) {
+            part.add(WorkflowPart.builder()
+                .id(PlmApiTestUtil.getPlmPartByPartNumber(partDataList.get(i).getPlmPartNumber()).getId())
+                .costingInputs(CostingInputs.builder()
+                    .processGroupName(partDataList.get(i).getProcessGroup())
+                    .materialName(partDataList.get(i).getMaterial())
+                    .vpeName(partDataList.get(i).getDigitalFactory())
+                    .scenarioName("SN" + System.currentTimeMillis())
+                    .annualVolume(partDataList.get(i).getAnnualVolume())
+                    .batchSize(partDataList.get(i).getBatchSize())
+                    .build())
                 .build());
-
-            List<PartData> partDataList = new PlmPartsUtil().getPlmPartsFromCloud(numOfParts);
-            part = new ArrayList<>();
-            for (int i = 0; i < numOfParts; i++) {
-                part.add(WorkflowPart.builder()
-                    .id(plmParts.getItems().get(i).getId())
-                    .costingInputs(CostingInputs.builder()
-                        .processGroupName(partDataList.get(i).getProcessGroup())
-                        .materialName(partDataList.get(i).getMaterial())
-                        .vpeName(partDataList.get(i).getDigitalFactory())
-                        .scenarioName("SN" + System.currentTimeMillis())
-                        .annualVolume(partDataList.get(i).getAnnualVolume())
-                        .batchSize(partDataList.get(i).getBatchSize())
-                        .build())
-                    .build());
-            }
-        } catch (Exception e) {
-            logger.error("PARTS NOT FOUND IN PLM SYSTEM WITH PART NUMBER --- " + partData.getPlmPartNumber());
-            throw new IllegalArgumentException(e);
         }
-
         return WorkflowParts.builder()
             .parts(part)
             .build();
@@ -544,7 +542,8 @@ public class CicApiTestUtil extends TestBase {
      * @param errorMessage            expected message
      * @return boolean
      */
-    public static Boolean verifyAgentErrorMessage(AgentWorkflowJobResults agentWorkflowJobResults, String errorMessage) {
+    public static Boolean verifyAgentErrorMessage(AgentWorkflowJobResults agentWorkflowJobResults, String
+        errorMessage) {
         Boolean isTextMatched = false;
         try {
             for (AgentWorkflowJobPartsResult result : agentWorkflowJobResults) {
@@ -587,7 +586,8 @@ public class CicApiTestUtil extends TestBase {
      * @param session                     - Login session
      * @return ResponseWrapper of String
      */
-    public static ResponseWrapper<String> CreateConnector(ConnectorRequest connectorRequestDataBuilder, String session) {
+    public static ResponseWrapper<String> CreateConnector(ConnectorRequest connectorRequestDataBuilder, String
+        session) {
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "*/*");
         header.put("Content-Type", "application/json");
@@ -666,7 +666,8 @@ public class CicApiTestUtil extends TestBase {
      * @param reportName                   expected report name
      * @return ReportTemplatesRow single template object
      */
-    public static ReportTemplatesRow getAgentReportTemplate(AgentWorkflowReportTemplates agentWorkflowReportTemplates, ReportsEnum reportName) {
+    public static ReportTemplatesRow getAgentReportTemplate(AgentWorkflowReportTemplates
+                                                                agentWorkflowReportTemplates, ReportsEnum reportName) {
         ReportTemplatesRow reportTemplate = null;
         try {
             reportTemplate = agentWorkflowReportTemplates.getRows().stream()
@@ -686,7 +687,8 @@ public class CicApiTestUtil extends TestBase {
      * @param revisionNumber
      * @return AgentWorkflowJobPartsResult
      */
-    public static AgentWorkflowJobPartsResult getMatchedRevisionWorkflowPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String revisionNumber) {
+    public static AgentWorkflowJobPartsResult getMatchedRevisionWorkflowPartResult(AgentWorkflowJobResults
+                                                                                       agentWorkflowJobResults, String revisionNumber) {
         if (Objects.isNull(agentWorkflowJobResults)) {
             throw new RuntimeException(String.format("Could not find matching workflow with revision (%s)", revisionNumber));
         }
@@ -697,11 +699,14 @@ public class CicApiTestUtil extends TestBase {
     }
 
     /**
-     * @param agentWorkflowJobResults
-     * @param plmPartNumber
-     * @return
+     * Get Matching plm part number from list of workflow job results
+     *
+     * @param agentWorkflowJobResults - AgentWorkflowJobResults
+     * @param plmPartNumber           - plm part number
+     * @return AgentWorkflowJobPartsResult
      */
-    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults agentWorkflowJobResults, String plmPartNumber) {
+    public static AgentWorkflowJobPartsResult getMatchedPlmPartResult(AgentWorkflowJobResults
+                                                                          agentWorkflowJobResults, String plmPartNumber) {
         if (Objects.isNull(agentWorkflowJobResults)) {
             throw new RuntimeException(String.format("Could not find matching workflow with plm part number (%s)", plmPartNumber));
         }
@@ -712,33 +717,9 @@ public class CicApiTestUtil extends TestBase {
     }
 
     /**
-     * set costing put data for workflow data request builder
-     *
-     * @param workflowRequestDataBuilder
-     * @return WorkflowRequest
-     */
-    private static WorkflowRequest setCostingInputData(WorkflowRequest workflowRequestDataBuilder) {
-        DefaultValues defaultValues = workflowRequestDataBuilder.getDefaultValues();
-        if (null != defaultValues) {
-            List<WorkflowRow> rows = defaultValues.getRows();
-            rows.stream().forEach(row -> {
-                if (row.getTwxAttributeName().equals("Scenario Name")) {
-                    row.setValue("SN" + System.currentTimeMillis());
-                }
-            });
-            defaultValues.setRows(rows);
-            workflowRequestDataBuilder.setDefaultValues(defaultValues);
-        }
-        workflowRequestDataBuilder.setCustomer(getCustomerName());
-        workflowRequestDataBuilder.setName("CIC" + System.currentTimeMillis());
-        workflowRequestDataBuilder.setDescription(new GenerateStringUtil().getRandomString());
-        return workflowRequestDataBuilder;
-    }
-
-    /**
      * setup header information for CIC Agent API Cookie
      *
-     * @param session
+     * @param session - JSESSION
      * @return Map
      */
     private static Map<String, String> initHeadersWithJSession(String session) {

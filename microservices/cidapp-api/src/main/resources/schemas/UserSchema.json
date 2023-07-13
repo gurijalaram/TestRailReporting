@@ -19,7 +19,9 @@
         "active",
         "mfaRequired",
         "customAttributes",
-        "userType"
+        "userType",
+        "hasCompleteProfile",
+        "userEnablements"
       ],
       "optional": [
         "customProperties",
@@ -138,6 +140,33 @@
         },
         "userType": {
           "type": "string"
+        },
+        "userEnablements": {
+          "type": "object",
+          "properties": {
+            "connectAdminEnabled": {
+              "type": "boolean"
+            },
+            "highMemEnabled": {
+              "type": "boolean"
+            },
+            "previewEnabled": {
+              "type": "boolean"
+            },
+            "sandboxEnabled": {
+              "type": "boolean"
+            },
+            "userAdminEnabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled"
+          ]
         }
       }
     }

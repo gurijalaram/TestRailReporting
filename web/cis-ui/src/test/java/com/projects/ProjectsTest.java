@@ -160,7 +160,7 @@ public class ProjectsTest extends TestBase {
 
         softAssertions.assertThat(projectsPage.isSearchProjectButtonDisplayed()).isEqualTo(true);
 
-        projectsPage.clickOnUnread();
+        projectsPage.clickOnRead();
 
         softAssertions.assertAll();
     }
@@ -207,7 +207,7 @@ public class ProjectsTest extends TestBase {
 
         createNewProjectsPage.clickClearOption();
 
-        softAssertions.assertThat(createNewProjectsPage.getListOfScenarios(componentName,scenarioName)).isNotEqualTo(1);
+        softAssertions.assertThat(createNewProjectsPage.getTableRecordsCount()).isNotEqualTo(1);
 
         createNewProjectsPage.selectAPart(scenarioName,componentName)
                 .clickAdd();
