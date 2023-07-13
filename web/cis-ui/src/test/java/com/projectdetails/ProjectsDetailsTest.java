@@ -166,8 +166,7 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsDetailsPage.clickSave();
 
-        this.validateProjectDetailsTabDetails(dateTime,currentUser,projectsDetailsPage);
-
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Name")).contains("Automation Project " + dateTime + " Edited");
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
 
         softAssertions.assertAll();
@@ -301,15 +300,14 @@ public class ProjectsDetailsTest extends TestBase {
         softAssertions.assertThat(projectsDetailsPage.isModalDeleteButtonDisplayed()).isEqualTo(true);
         softAssertions.assertThat(projectsDetailsPage.isModalCancelButtonDisplayed()).isEqualTo(true);
 
-        projectsPage = projectsDetailsPage.clickModalCancelProject();
+        projectsDetailsPage.clickModalCancelProject();
 
         softAssertions.assertThat(projectsDetailsPage.isDeleteModalDisplayed()).isEqualTo(false);
 
-        projectsPage = projectsDetailsPage.clickModalDeleteProject();
+        projectsPage = projectsDetailsPage.clickDeleteProject()
+                .clickModalDeleteProject();
 
         softAssertions.assertThat(projectsPage.getPageTitle().contains("Projects"));
-
-        projectsPage.clickOnRead();
 
         softAssertions.assertAll();
     }

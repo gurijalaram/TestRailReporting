@@ -122,6 +122,9 @@ public class PlmApiTestUtil {
         } else {
             plmPart = plmParts.getItems().get(0);
         }
+        if (plmPart == null) {
+            throw new IllegalArgumentException(String.format("PARTS NOT FOUND IN PLM SYSTEM WITH PART NUMBER >>%s<<", plmPartNumber));
+        }
         return plmPart;
     }
 
