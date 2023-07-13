@@ -19,6 +19,8 @@ public class CicLoginUtil extends TestBase {
     private WebDriver driver;
     private PageUtils pageUtils;
 
+    private String sessionId;
+
     @FindBy(css = "span[title='Users']")
     private WebElement usersMenuBtn;
 
@@ -31,20 +33,34 @@ public class CicLoginUtil extends TestBase {
 
     /**
      * Login to cid
+     *
      * @return new page object
      */
     public CicLoginUtil login(UserCredentials currentUser) {
         aprioriLoginService.loginNoReturn(currentUser.getEmail(), currentUser.getPassword());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToBeClickable(usersMenuBtn);
+        this.sessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();
         return this;
     }
 
-    public CicLoginUtil navigateToUserMenu() {
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
-        pageUtils.waitForElementAndClick(usersMenuBtn);
-        return this;
+    public String getSessionId() {
+        return sessionId;
     }
 
     public String getWebSession() {
-        return driver.manage().getCookieNamed("JSESSIONID").getValue();
+        return this.sessionId;
+    }
+
+    public void refreshBrowser() {
+        driver.navigate().refresh();
+    }
+
+    public void endSession() {
+        driver.quit();
+    }
+
+    public CicLoginUtil navigateToUserMenu() {
+        return this;
     }
 }

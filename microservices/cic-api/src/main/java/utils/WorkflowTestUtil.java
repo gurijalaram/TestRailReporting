@@ -1,6 +1,9 @@
 package utils;
 
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
@@ -11,12 +14,16 @@ import entity.response.AgentWorkflowJobRun;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-
 @Slf4j
-public class WorkflowTestUtil {
-    private AgentWorkflow agentWorkflowResponse;
-    private ResponseWrapper<String> workflowResponse;
-    private AgentWorkflowJobRun agentWorkflowJobRunResponse;
+public class WorkflowTestUtil extends TestBase {
+    protected AgentWorkflow agentWorkflowResponse;
+    protected ResponseWrapper<String> workflowResponse;
+    protected AgentWorkflowJobRun agentWorkflowJobRunResponse;
+    protected WorkflowRequest workflowRequestDataBuilder;
+    protected WorkflowParts workflowPartsRequestDataBuilder;
+    protected CicLoginUtil cicLoginUtil;
+    protected PartData plmPartData;
+    protected UserCredentials currentUser;
 
     /**
      * Create workflow
@@ -55,7 +62,7 @@ public class WorkflowTestUtil {
      *
      * @return Current class object
      */
-    public WorkflowTestUtil invoke() {
+    public WorkflowTestUtil invokeQueryWorkflow() {
         agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         if (agentWorkflowJobRunResponse == null) {
             throw new RuntimeException("FAILED TO INVOKE WORKFLOW!!!");
@@ -84,7 +91,7 @@ public class WorkflowTestUtil {
      * @return Current class object
      */
     public WorkflowTestUtil track() {
-        if (!CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())) {
+        if (!CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId(), cicLoginUtil)) {
             throw new RuntimeException("FAILED TO FINISH WORKFLOW TO A TERMINAL STATE!!!");
         }
         return this;
@@ -134,25 +141,127 @@ public class WorkflowTestUtil {
     public AgentWorkflowJobResults createWorkflowAndGetJobResult(WorkflowRequest workflowRequestData, String sessionID) {
         return create(workflowRequestData, sessionID)
             .getWorkflowId(workflowRequestData.getName())
-            .invoke()
+            .invokeQueryWorkflow()
             .track()
             .getJobResult();
     }
 
     /**
-     * Create workflow and get job part results after processing the workflow
+     * login CIC Login
      *
-     * @param workflowRequestData - Data to create the workflow
-     * @param workflowParts       - Number of parts added to workflow
-     * @param sessionID           - JSESSIONID
+     * @return current class object
+     */
+    public WorkflowTestUtil cicLogin() {
+        this.cicLoginUtil = new CicLoginUtil(this.driver).login(currentUser);
+        return this;
+    }
+
+    /**
+     * Create workflow
+     *
+     * @return current class object
+     */
+    public WorkflowTestUtil create() {
+        this.workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
+        this.workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(this.cicLoginUtil.getSessionId()));
+        workflowResponse = CicApiTestUtil.createWorkflow(this.workflowRequestDataBuilder, cicLoginUtil.getSessionId());
+        if (workflowResponse == null) {
+            throw new RuntimeException("Workflow creation failed!!");
+        }
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
+        }
+        return this;
+    }
+
+    /**
+     * Get matching workflow from list of returned workflows
+     *
+     * @return Current class object
+     */
+    public WorkflowTestUtil getWorkflowId() {
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
+        if (agentWorkflowResponse == null) {
+            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
+        }
+        return this;
+    }
+
+    /**
+     * delete workflow
+     *
+     * @return current class object
+     */
+    public WorkflowTestUtil deleteWorkflow() {
+        CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
+        return this;
+    }
+
+    /**
+     * Invoke Workflow of Part Selection Type REST with number of parts
+     *
+     * @return WorkflowTestUtil
+     */
+    public WorkflowTestUtil invokeRestWorkflow() {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
+            agentWorkflowResponse.getId(),
+            this.workflowPartsRequestDataBuilder,
+            AgentWorkflowJobRun.class,
+            HttpStatus.SC_OK);
+        return this;
+    }
+
+    /**
+     * Create workflow of Query Definition type 'REST', process and get job result
+     *
+     * @return AgentWorkflowJobResults
+     */
+    public AgentWorkflowJobResults createRestWorkflowAndGetJobResult() {
+        return this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeRestWorkflow()
+            .track()
+            .getJobResult();
+    }
+
+    /**
+     * Create workflow of Query Definition type 'QUERY', process and get job result
+     *
+     * @return AgentWorkflowJobResults
+     */
+    public AgentWorkflowJobResults createQueryWorkflowAndGetJobResult() {
+        return this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobResult();
+    }
+
+    /**
+     * Create workflow of Query Definition type 'REST', Process workflow and get job part results
+     *
      * @return AgentWorkflowJobPartsResult
      */
-    public AgentWorkflowJobPartsResult createWorkflowAndGetJobPartResult(WorkflowRequest workflowRequestData, WorkflowParts workflowParts, String sessionID) {
-        return create(workflowRequestData, sessionID)
-            .getWorkflowId(workflowRequestData.getName())
-            .invokeRestWorkflow(workflowParts)
+    public AgentWorkflowJobPartsResult createRestWorkflowAndGetJobPartResult() {
+        return this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeRestWorkflow()
             .track()
-            .getJobPartResult(workflowParts.getParts().get(0).getId());
+            .getJobPartResult(this.workflowPartsRequestDataBuilder.getParts().get(0).getId());
+    }
+
+    /**
+     * Close response objects part of clean up ofter completion of test execution
+     */
+    public void close() {
+        this.agentWorkflowResponse = null;
+        this.workflowResponse = null;
+        this.agentWorkflowJobRunResponse = null;
+        this.workflowRequestDataBuilder = null;
+        this.workflowPartsRequestDataBuilder = null;
     }
 
     public AgentWorkflow getAgentWorkflowResponse() {
