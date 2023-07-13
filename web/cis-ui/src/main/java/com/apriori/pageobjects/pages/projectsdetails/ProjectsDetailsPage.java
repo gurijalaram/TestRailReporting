@@ -557,11 +557,11 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     /**
      * clicks on modal cancel button
      *
-     * @return new page object
+     * @return current page object
      */
-    public ProjectsPage clickModalCancelProject() {
+    public ProjectsDetailsPage clickModalCancelProject() {
         getPageUtils().waitForElementAndClick(btnModalCancel);
-        return new ProjectsPage(driver);
+        return this;
     }
 
     /**
@@ -570,7 +570,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      * @return new page object
      */
     public ProjectsPage clickModalDeleteProject() {
-        getPageUtils().waitForElementAndClick(btnModalDelete);
+        getPageUtils().javaScriptClick(btnModalDelete);
         return new ProjectsPage(driver);
     }
 
