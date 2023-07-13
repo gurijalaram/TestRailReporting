@@ -213,6 +213,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public MessagesPage clickOnUnread() {
         getPageUtils().waitForElementAndClick(unreadFilterIcon);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return this;
     }
 
