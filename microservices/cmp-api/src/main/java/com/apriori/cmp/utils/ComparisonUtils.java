@@ -14,7 +14,10 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ComparisonUtils {
 
@@ -42,15 +45,15 @@ public class ComparisonUtils {
     /**
      * Update Comparison details given a Comparison ID
      *
-     * @param comparisonID - String of the requested Comparison ID
-     * @param comparison   - Update Comparison Object
-     * @param currentUser  - UserCredentials object
+     * @param inlineVariables - inline variables
+     * @param comparison      - Update Comparison Object
+     * @param currentUser     - UserCredentials object
      * @return GetComparisonResponse
      */
-    public <T> T updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
+    public <T> T updateComparison(UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse, String inlineVariables) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
-                .inlineVariables(comparisonID)
+                .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
@@ -63,14 +66,14 @@ public class ComparisonUtils {
     /**
      * Get Comparison details given a Comparison ID
      *
-     * @param comparisonID - String of the requested Comparison ID
-     * @param currentUser  - UserCredentials object
+     * @param inlineVariables - inline variables
+     * @param currentUser     - UserCredentials object
      * @return GetComparisonResponse
      */
-    public GetComparisonResponse getComparison(String comparisonID, UserCredentials currentUser) {
+    public GetComparisonResponse getComparison(UserCredentials currentUser, String... inlineVariables) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
-                .inlineVariables(comparisonID)
+                .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 

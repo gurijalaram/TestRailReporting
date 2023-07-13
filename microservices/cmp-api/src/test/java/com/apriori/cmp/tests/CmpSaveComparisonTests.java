@@ -28,24 +28,21 @@ import java.util.List;
 
 public class CmpSaveComparisonTests {
 
-    private ComparisonUtils comparisonUtils = new ComparisonUtils();
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static UserCredentials currentUser;
-    private String comparisonName;
     private static String componentName1 = "big ring";
     private static String componentName2 = "small ring";
     private static String componentName3 = "Pin";
     private static String componentExt = ".SLDPRT";
-
     private static File resourceFile1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName1 + componentExt);
     private static File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName2 + componentExt);
     private static File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName3 + componentExt);
-
     private static ComponentInfoBuilder component1;
     private static ComponentInfoBuilder component2;
     private static ComponentInfoBuilder component3;
     private static String scenarioName;
-
+    private ComparisonUtils comparisonUtils = new ComparisonUtils();
+    private String comparisonName;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeClass
@@ -117,7 +114,7 @@ public class CmpSaveComparisonTests {
 
         softAssertions.assertThat(savedComparisonResponse.getComparisonName()).as("Ensure same comparison name returned").isEqualTo(comparisonName);
 
-        GetComparisonResponse getComparisonDetails = comparisonUtils.getComparison(savedComparisonResponse.getIdentity(), currentUser);
+        GetComparisonResponse getComparisonDetails = comparisonUtils.getComparison(currentUser, savedComparisonResponse.getIdentity());
 
         softAssertions.assertThat(getComparisonDetails.getObjectsToCompare().size()).as("Verify number of Comparison Objects")
             .isEqualTo(3);
@@ -140,7 +137,7 @@ public class CmpSaveComparisonTests {
             .build();
 
         GetComparisonResponse updatedComparison = comparisonUtils.updateComparison(
-            getComparisonDetails.getIdentity(), updateComparison, currentUser, GetComparisonResponse.class, HttpStatus.SC_OK);
+            updateComparison, currentUser, GetComparisonResponse.class, HttpStatus.SC_OK, getComparisonDetails.getIdentity());
 
         softAssertions.assertThat(updatedComparison.getComparisonName()).as("Ensure same comparison name returned")
             .isEqualTo(updatedComparisonName);
@@ -310,7 +307,7 @@ public class CmpSaveComparisonTests {
             .build();
 
         ErrorResponse updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+            comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
 
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned for over-length comparison name")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
@@ -322,8 +319,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(1).setBasis(null);
         comparisonUpdates.getObjectsToCompare().get(2).setBasis(null);
 
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when no basis set")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for no basis set")
@@ -333,8 +329,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(1).setBasis(true);
         comparisonUpdates.getObjectsToCompare().get(2).setBasis(true);
 
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when all objects set as basis")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for all objects set as basis")
@@ -344,8 +339,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(1).setBasis(false);
         comparisonUpdates.getObjectsToCompare().get(2).setBasis(false);
 
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when all objects set as not basis")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for all objects set as not basis")
@@ -356,8 +350,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(2).setBasis(false);
 
         comparisonUpdates.getObjectsToCompare().get(1).setPosition(1);
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when duplicate positions provided")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for duplicate positions provided")
@@ -366,8 +359,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(0).setPosition(0);
         comparisonUpdates.getObjectsToCompare().get(1).setPosition(1);
         comparisonUpdates.getObjectsToCompare().get(2).setPosition(2);
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 0-indexed positions used")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 0-indexed positions used")
@@ -376,8 +368,7 @@ public class CmpSaveComparisonTests {
         comparisonUpdates.getObjectsToCompare().get(0).setPosition(2);
         comparisonUpdates.getObjectsToCompare().get(1).setPosition(3);
         comparisonUpdates.getObjectsToCompare().get(2).setPosition(4);
-        updatedComparison = comparisonUtils.updateComparison(
-            savedComparisonResponse.getIdentity(), comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST);
+        updatedComparison = comparisonUtils.updateComparison(comparisonUpdates, currentUser, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, savedComparisonResponse.getIdentity());
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 2-indexed positions used")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 2-indexed positions used")
