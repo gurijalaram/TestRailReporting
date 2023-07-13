@@ -19,7 +19,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -102,7 +101,7 @@ public class CmpSaveComparisonTests {
             .position(3)
             .build();
 
-        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<ComparisonObjectBuilder>();
+        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<>();
         comparisonObjectsList.add(baseScenario);
         comparisonObjectsList.add(comparisonScenario1);
         comparisonObjectsList.add(comparisonScenario2);
@@ -176,7 +175,7 @@ public class CmpSaveComparisonTests {
             .position(3)
             .build();
 
-        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<ComparisonObjectBuilder>();
+        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<>();
         comparisonObjectsList.add(baseScenario);
         comparisonObjectsList.add(comparisonScenario1);
         comparisonObjectsList.add(comparisonScenario2);
@@ -291,7 +290,7 @@ public class CmpSaveComparisonTests {
             .position(3)
             .build();
 
-        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<ComparisonObjectBuilder>();
+        List<ComparisonObjectBuilder> comparisonObjectsList = new ArrayList<>();
         comparisonObjectsList.add(baseScenario);
         comparisonObjectsList.add(comparisonScenario1);
         comparisonObjectsList.add(comparisonScenario2);
