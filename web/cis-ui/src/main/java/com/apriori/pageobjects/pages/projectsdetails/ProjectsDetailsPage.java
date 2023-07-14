@@ -134,6 +134,15 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     @FindBy(xpath = "//button[contains(@id,'bulk-action-btn')]")
     private WebElement btnRemoveFromProject;
 
+    @FindBy(id = "add-part-btn")
+    private WebElement btnAddParts;
+
+    @FindBy(id = "add-part-and-assembly-modal")
+    private WebElement addPartsModal;
+
+    @FindBy(id = "add-part-and-assembly-add-btn")
+    private WebElement btnAddPartsAndAssembliesToProject;
+
     private PageUtils pageUtils;
 
     public ProjectsDetailsPage(WebDriver driver) {
@@ -700,5 +709,54 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      */
     public String getRemoveUserFromProjectOptionStatus() {
         return getPageUtils().waitForElementToAppear(btnRemoveFromProject).getAttribute("class");
+    }
+
+    /**
+     * Checks if add part button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddPartsOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(btnAddParts).isDisplayed();
+    }
+
+    /**
+     * clicks on add parts button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickOnAddParts() {
+        getPageUtils().waitForElementAndClick(btnAddParts);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        return this;
+    }
+
+    /**
+     * Checks if add parts modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isAddPartsModalDisplayed() {
+        return getPageUtils().isElementDisplayed(addPartsModal);
+    }
+
+    /**
+     * Select a part
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage selectAPart(String scenarioName, String componentName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
+        return this;
+    }
+
+    /**
+     * Click on add button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickAdd() {
+        getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
+        return this;
     }
 }
