@@ -412,7 +412,7 @@ public class ProjectsDetailsTest extends TestBase {
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        currentUser = UserUtil.getUser().setEmail("qa-automation-38@apriori.com");
+        currentUser = UserUtil.getUser();
         projectParticipant = UserUtil.getUser().getEmail();
 
         SoftAssertions softAssertions = new SoftAssertions();
