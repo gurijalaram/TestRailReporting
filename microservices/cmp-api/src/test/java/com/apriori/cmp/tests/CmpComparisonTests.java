@@ -56,7 +56,7 @@ public class CmpComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = "26184")
+    @TestRail(testCaseId = {"26184", "26183"})
     @Description("Verify get only shows comparison for a given user")
     public void verifyComparisonForGivenUser() {
         currentUser = UserUtil.getUser();
@@ -122,6 +122,11 @@ public class CmpComparisonTests {
             + savedComparisonResponse.getCreatedBy());
 
         comparisonsResponse.forEach(comparisonResponse -> softAssertions.assertThat(comparisonResponse.getCreatedBy()).isEqualTo(savedComparisonResponse.getCreatedBy()));
+
+        List<GetComparisonResponse> paginationResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 2000", "createdBy[EQ],"
+            + savedComparisonResponse.getCreatedBy());
+
+        softAssertions.assertThat(paginationResponse.size()).isEqualTo(0);
 
         softAssertions.assertAll();
     }
