@@ -31,7 +31,6 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 
@@ -239,7 +238,8 @@ public class QmsApiTestUtils {
         }
 
         DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
-            RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser);
+            new GenerateStringUtil().getRandomStringSpecLength(12), "ACTIVE", currentUser);
+
         if (discussionCommentResponse == null) {
             softAssertions.fail("Add Comment to Discussion FAILED.");
         }
@@ -264,7 +264,7 @@ public class QmsApiTestUtils {
         }
 
         DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
-            RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser, mentionedUser);
+            new GenerateStringUtil().getRandomStringSpecLength(12), "ACTIVE", currentUser, mentionedUser);
         if (discussionCommentResponse == null) {
             softAssertions.fail("Add Comment to Discussion FAILED.");
         }
