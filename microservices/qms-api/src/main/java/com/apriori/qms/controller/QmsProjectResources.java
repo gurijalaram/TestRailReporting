@@ -197,6 +197,8 @@ public class QmsProjectResources {
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
+        requestEntity.connectionTimeout(600000);
+        requestEntity.socketTimeout(600000);
         ResponseWrapper<BidPackageProjectsResponse> filteredProjectsResponse = HTTPRequest.build(requestEntity).get();
         return filteredProjectsResponse.getResponseEntity();
     }
