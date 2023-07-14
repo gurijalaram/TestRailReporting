@@ -15,9 +15,11 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import org.apache.http.HttpStatus;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ComparisonUtils {
 
@@ -83,7 +85,7 @@ public class ComparisonUtils {
     }
 
     /**
-     * Calls and an api with GET verb
+     * Calls an api with GET verb
      *
      * @param currentUser - the user credentials
      * @return response object
@@ -92,6 +94,29 @@ public class ComparisonUtils {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        return responseWrapper.getResponseEntity().getItems();
+    }
+
+    /**
+     * Calls an api and queries with GET verb
+     * @param currentUser - the user credentials
+     * @param urlParams - parameters for url
+     * @return response object
+     */
+    public List<GetComparisonResponse> queryComparison(UserCredentials currentUser, String... urlParams) {
+        Map<String, String> searchCriteria = new HashMap<>();
+        List<String[]> uriParams = Arrays.stream(urlParams).map(o -> o.split(",")).collect(Collectors.toList());
+
+        uriParams.forEach(uriParam -> searchCriteria.put(uriParam[0].trim(), uriParam[1].trim()));
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .urlParams(Collections.singletonList(searchCriteria))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
