@@ -24,7 +24,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CmpComparisonTests {
 
@@ -122,8 +121,7 @@ public class CmpComparisonTests {
         List<GetComparisonResponse> comparisonsResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
             + savedComparisonResponse.getCreatedBy());
 
-        comparisonsResponse.stream().map(GetComparisonResponse::getCreatedBy).collect(Collectors.toList())
-            .forEach(comparisonResponse -> softAssertions.assertThat(comparisonResponse.equals(savedComparisonResponse.getCreatedBy())).isTrue());
+        comparisonsResponse.forEach(comparisonResponse -> softAssertions.assertThat(comparisonResponse.getCreatedBy()).isEqualTo(savedComparisonResponse.getCreatedBy()));
 
         softAssertions.assertAll();
     }
