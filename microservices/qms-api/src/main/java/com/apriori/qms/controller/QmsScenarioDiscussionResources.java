@@ -60,11 +60,11 @@ public class QmsScenarioDiscussionResources {
     /**
      * Gets scenario discussion.
      *
-     * @param <T>                              the type parameter
-     * @param scenarioDiscussionIdentity       the scenario discussion identity
-     * @param responseClass                    the response class
-     * @param httpStatus                       the http status
-     * @param currentUser                      the current user
+     * @param <T>                        the type parameter
+     * @param scenarioDiscussionIdentity the scenario discussion identity
+     * @param responseClass              the response class
+     * @param httpStatus                 the http status
+     * @param currentUser                the current user
      * @return the scenario discussion
      */
     public static <T> T getScenarioDiscussion(String scenarioDiscussionIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
@@ -116,6 +116,36 @@ public class QmsScenarioDiscussionResources {
                 .content(commentContent)
                 .status(commentStatus)
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
+                .build())
+            .build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentResponse.class)
+            .inlineVariables(scenarioDiscussionIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(discussionCommentRequestBuilder)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<DiscussionCommentResponse> discussionCommentResponse = HTTPRequest.build(requestEntity).post();
+        return discussionCommentResponse.getResponseEntity();
+    }
+
+    /**
+     * Add comment to discussion discussion comment response.
+     *
+     * @param scenarioDiscussionIdentity the scenario discussion identity
+     * @param commentContent             the comment content
+     * @param commentStatus              the comment status
+     * @param currentUser                the current user
+     * @param mentionedUser              the mentioned user
+     * @return the discussion comment response
+     */
+    public static DiscussionCommentResponse addCommentToDiscussion(String scenarioDiscussionIdentity, String commentContent, String commentStatus, UserCredentials currentUser, UserCredentials mentionedUser) {
+        DiscussionCommentRequest discussionCommentRequestBuilder = DiscussionCommentRequest.builder()
+            .comment(DiscussionCommentParameters.builder()
+                .content(commentContent)
+                .status(commentStatus)
+                .mentionedUserEmails(Collections.singletonList(mentionedUser.getEmail()))
                 .build())
             .build();
 
