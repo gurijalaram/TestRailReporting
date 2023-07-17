@@ -216,6 +216,15 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
+     * Gets list of comparisons
+     *
+     * @return string
+     */
+    public int getListOfComparisons() {
+        return pageUtils.waitForElementsToAppear(By.cssSelector(".comparison-column.draggable")).size();
+    }
+
+    /**
      * Gets list of scenarios included to comparison
      *
      * @return list of scenarios
