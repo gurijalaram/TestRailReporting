@@ -13,12 +13,14 @@ import static org.hamcrest.Matchers.containsInRelativeOrder;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -71,6 +73,7 @@ public class ComparisonTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     public ComparisonTests() {
         super();
@@ -1171,7 +1174,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "26149")
+    @TestRail(testCaseId = {"26149", "26176"})
     @Description("Validate scenarios can be deleted from a new manual comparison via modify comparison")
     public void testDeleteNewManualComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1221,6 +1224,171 @@ public class ComparisonTests extends TestBase {
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26173", "26174"})
+    @Description("Verify that deleted Private scenarios are removed from saved comparison")
+    public void testDeletePrivateScenarioInComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "Part0004";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
+            .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "")
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .selectFilter("Private")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save(ComparePage.class)
+            .openScenario(componentName2, scenarioName2)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(panel)
+            .clickCompare();
+
+        softAssertions.assertThat(comparePage.getListOfComparisons()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26171", "26172"})
+    @Description("Verify that deleted Public scenarios are removed from saved comparison")
+    public void testDeletePublicScenarioInComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "Part0004";
+        String componentName2 = "700-33770-01_A0";
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        scenariosUtil.postAndPublishComponent(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .extension(".ipt")
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder panel = scenariosUtil.postAndPublishComponent(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .extension(".stp")
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
+            .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "")
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Public")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save(ComparePage.class)
+            .openScenario(componentName2, scenarioName2)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(panel)
+            .clickCompare();
+
+        softAssertions.assertThat(comparePage.getListOfComparisons()).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26175"})
+    @Description("Verify that scenario in position 2 will replace basis, if it is deleted")
+    public void testDeleteReplacesBasis() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "Part0004";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        ComponentInfoBuilder part = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
+            .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
+
+        comparePage.openScenario(componentName, scenarioName)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(part)
+            .clickCompare();
+
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
+            .isEqualTo(componentName2.toUpperCase() + "  / " + scenarioName2);
 
         softAssertions.assertAll();
     }
