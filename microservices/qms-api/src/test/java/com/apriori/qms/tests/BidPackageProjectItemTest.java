@@ -11,6 +11,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResp
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.utils.ApwErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -35,12 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BidPackageProjectItemTest extends TestUtil {
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions = new SoftAssertions();
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static ScenarioItem scenarioItem;
-    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeClass
     public static void beforeClass() {
@@ -774,6 +775,68 @@ public class BidPackageProjectItemTest extends TestUtil {
                     .contains(String.format("Can't find ProjectItem for Project with identity '%s' and identity '%s'",
                         bidPackageProjectResponse.getIdentity(), bidPackageProjectResponse.getItems().get(0)
                             .getIdentity())))).isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26293"})
+    @Description("Delete Project Item without discussions inside of it")
+    public void deleteBulkBidPackageProjectItemWithNoDiscussion() {
+        List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
+        ScenarioItem firstScenarioItemNoDiscussions = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageItemList.add(BidPackageProjectItem.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .scenarioIdentity(firstScenarioItemNoDiscussions.getScenarioIdentity())
+                .componentIdentity(firstScenarioItemNoDiscussions.getComponentIdentity())
+                .iterationIdentity(firstScenarioItemNoDiscussions.getIterationIdentity())
+                .build())
+            .build());
+
+        ScenarioItem secondScenarioItemWithDiscussions = QmsApiTestUtils
+            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        bidPackageItemList.add(BidPackageProjectItem.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .scenarioIdentity(secondScenarioItemWithDiscussions.getScenarioIdentity())
+                .componentIdentity(secondScenarioItemWithDiscussions.getComponentIdentity())
+                .iterationIdentity(secondScenarioItemWithDiscussions.getIterationIdentity())
+                .build())
+            .build());
+
+        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsApiTestUtils.createTestDataScenarioDiscussion(secondScenarioItemWithDiscussions, currentUser, softAssertions);
+        QmsApiTestUtils.createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
+
+        BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            bidPackageItemList,
+            BidPackageProjectItemsBulkResponse.class,
+            currentUser
+        );
+
+        softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
+            .allMatch(pi -> pi.getBidPackageIdentity().equals(bidPackageResponse.getIdentity()))).isTrue();
+        softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
+            .allMatch(pi -> pi.getProjectIdentity().equals(bidPackageProjectResponse.getIdentity()))).isTrue();
+
+        //Delete project-items
+        List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
+        prjItemIdentiesList.add(BidPackageProjectItem.builder()
+            .identity(bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity())
+            .build());
+
+        BidPackageProjectItemsBulkResponse deleteProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
+            bidPackageResponse.getIdentity(),
+            bidPackageProjectResponse.getIdentity(),
+            prjItemIdentiesList,
+            BidPackageProjectItemsBulkResponse.class,
+            HttpStatus.SC_OK,
+            currentUser
+        );
+
+        softAssertions.assertThat(deleteProjectItemsResponse.getProjectItem().stream()
+            .anyMatch(pi -> pi.getIdentity()
+                .equals(bulkBidPackageProjectItemsResponse.getProjectItem().get(0).getIdentity()))).isTrue();
+        softAssertions.assertThat(deleteProjectItemsResponse.getFailedProjectItem().size()).isZero();
     }
 }
 

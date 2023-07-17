@@ -25,7 +25,10 @@ public enum JasperApiEnum {
     SCENARIO_COMPARISON("/scenariocomparison/ScenarioComparisonReportRequest"),
     SHEET_METAL_DTC_COMPARISON("/sheetmetaldtc/SheetMetalDtcComparisonReportRequest"),
     SHEET_METAL_DTC_DETAILS("/sheetmetaldtc/SheetMetalDtcDetailsReportRequest"),
-    SHEET_METAL_DTC("/sheetmetaldtc/SheetMetalDtcReportRequest");
+    SHEET_METAL_DTC("/sheetmetaldtc/SheetMetalDtcReportRequest"),
+    TARGET_QUOTED_COST_TREND("/targetquotedcosttrend/TargetAndQuotedCostTrendReportRequest"),
+    TARGET_QUOTED_COST_VALUE_TRACKING("/targetquotedcosttrend/TargetAndQuotedCostValueTrackingReportRequest"),
+    TARGET_QUOTED_COST_VALUE_TRACKING_DETAILS("/targetquotedcosttrend/TargetAndQuotedCostValueTrackingDetailsReportRequest");
 
     private final String endpoint;
 

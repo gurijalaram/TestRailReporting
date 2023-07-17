@@ -6,6 +6,8 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
+import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingDetailsReportTests;
+import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
@@ -23,6 +25,10 @@ import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcRep
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
 import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -38,6 +44,8 @@ import org.junit.runners.Suite;
     ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
     CostOutlierIdentificationDetailsTests.class,
+    CycleTimeValueTrackingReportTests.class,
+    CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
     DesignOutlierIdentificationDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,
@@ -46,9 +54,13 @@ import org.junit.runners.Suite;
     PlasticDtcComparisonReportTests.class,
     PlasticDtcDetailsReportTests.class,
     PlasticDtcReportTests.class,
+    ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,
-    SheetMetalDtcReportTests.class
+    SheetMetalDtcReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class,
+    TargetAndQuotedCostValueTrackingReportTests.class,
+    TargetAndQuotedCostValueTrackingDetailsReportTests.class
 })
 public class ReportsApiTestSuite {
 }
