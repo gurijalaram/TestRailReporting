@@ -31,7 +31,6 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 
@@ -238,7 +237,34 @@ public class QmsApiTestUtils {
             return null;
         }
 
-        DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(), RandomStringUtils.randomAlphabetic(12), "ACTIVE", currentUser);
+        DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
+            new GenerateStringUtil().getRandomStringSpecLength(12), "ACTIVE", currentUser);
+
+        if (discussionCommentResponse == null) {
+            softAssertions.fail("Add Comment to Discussion FAILED.");
+        }
+
+        return discussionCommentResponse;
+    }
+
+    /**
+     * Create test data add comment to discussion discussion comment response.
+     *
+     * @param scenarioDiscussionResponse the scenario discussion response
+     * @param currentUser                the current user
+     * @param mentionedUser              the mentioned user
+     * @param softAssertions             the soft assertions
+     * @return the discussion comment response
+     */
+    public static DiscussionCommentResponse createTestDataAddCommentToDiscussion(ScenarioDiscussionResponse scenarioDiscussionResponse, UserCredentials currentUser,
+                                                                                 UserCredentials mentionedUser, SoftAssertions softAssertions) {
+        if (scenarioDiscussionResponse == null) {
+            softAssertions.fail("Comment can not be added to the discussion. Parameter is null .");
+            return null;
+        }
+
+        DiscussionCommentResponse discussionCommentResponse = QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionResponse.getIdentity(),
+            new GenerateStringUtil().getRandomStringSpecLength(12), "ACTIVE", currentUser, mentionedUser);
         if (discussionCommentResponse == null) {
             softAssertions.fail("Add Comment to Discussion FAILED.");
         }
