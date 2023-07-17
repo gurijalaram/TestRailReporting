@@ -81,6 +81,7 @@ public class ComparisonUtils {
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
+        // TODO: 17/07/2023 is this really a patch or should it be a get?
         ResponseWrapper<GetComparisonResponse> responseWrapper = HTTPRequest.build(requestEntity).patch();
 
         return responseWrapper.getResponseEntity();
