@@ -547,6 +547,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"22774"})
+    @Issue("COL-1975")
     @Description("Verify that the User can filter project by owner with operators NI")
     public void getFilteredProjectsByOwnerWithOperatorNI() {
         String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -582,6 +583,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"23772"})
+    @Issue("COL-1975")
     @Description("Verify that the User can filter projects by Members (operator NI)")
     public void getFilteredProjectsByMembersWithOperatorNI() {
         String[] params = {"pageNumber,1", "members[NI]," + firstUserIdentity};
@@ -608,6 +610,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"23774"})
+    @Issue("COL-1975")
     @Description("Verify that the User will receive an empty list if he used 'NI='current user identity'' (members NI)")
     public void getFilteredProjectsByMembersCurrentUserWithOperatorNI() {
         String currentUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -642,6 +645,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"22776"})
+    @Issue("COL-1975")
     @Description("Verify that the User can filter projects by Unread messages(no)")
     public void getFilteredProjectsByUnReadMessagesNo() {
         String[] params = {"pageNumber,1", "hasUnreadMessages[EQ],no"};
