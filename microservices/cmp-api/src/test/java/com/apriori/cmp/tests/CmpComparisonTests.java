@@ -4,7 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
+import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
+import com.apriori.cmp.entity.response.PostComparisonResponse;
 import com.apriori.cmp.utils.ComparisonUtils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -13,12 +16,17 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CmpComparisonTests {
 
@@ -51,7 +59,7 @@ public class CmpComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"26184", "26183", "26185"})
+    @TestRail(testCaseId = {"26183", "26184", "26185", "26186", "26187"})
     @Description("Verify get only shows comparison for a given user")
     public void verifyComparisonForGivenUser() {
         currentUser = UserUtil.getUser();
@@ -121,9 +129,14 @@ public class CmpComparisonTests {
         List<GetComparisonResponse> sortResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 2000", "sortBy[DESC],"
             + "createdAt");
 
-        //if first date is greater than last date ie. descending order then we expect/assert '1'
-        softAssertions.assertThat(sortResponse.stream().findFirst().get().getCreatedAt()
-            .compareTo(sortResponse.get(sortResponse.size() - 1).getCreatedAt())).isEqualTo(1);
+        softAssertions.assertThat(Comparators.isInOrder(sortResponse.stream().map(GetComparisonResponse::getCreatedAt).collect(Collectors.toList()), Comparator.reverseOrder())).isTrue();
+
+        final String secondUser = comparisonUtils.getCurrentPerson(UserUtil.getUser()).getIdentity();
+
+        List<GetComparisonResponse> secondUserResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
+            + secondUser);
+
+        secondUserResponse.forEach(userResponse -> softAssertions.assertThat(userResponse.getCreatedBy()).isNotEqualTo(savedComparisonResponse.getCreatedBy()));
 
         softAssertions.assertAll();
     }

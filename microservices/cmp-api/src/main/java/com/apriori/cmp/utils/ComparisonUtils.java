@@ -1,5 +1,7 @@
 package com.apriori.cmp.utils;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cmp.entity.enums.CMPAPIEnum;
 import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.request.UpdateComparison;
@@ -122,5 +124,15 @@ public class ComparisonUtils {
         ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
 
         return responseWrapper.getResponseEntity().getItems();
+    }
+
+    /**
+     * GET current person
+     *
+     * @param userCredentials - the user credentials
+     * @return person object
+     */
+    public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
+        return new PeopleUtil().getCurrentPerson(userCredentials);
     }
 }
