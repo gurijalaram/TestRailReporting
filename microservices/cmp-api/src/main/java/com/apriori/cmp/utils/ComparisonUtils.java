@@ -54,7 +54,7 @@ public class ComparisonUtils {
      * @param currentUser     - UserCredentials object
      * @return GetComparisonResponse
      */
-    public <T> T updateComparison(UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse, String inlineVariables) {
+    public <T> T updateComparison(UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse, String... inlineVariables) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
                 .inlineVariables(inlineVariables)
