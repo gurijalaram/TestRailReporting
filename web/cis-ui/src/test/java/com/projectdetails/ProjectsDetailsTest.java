@@ -24,6 +24,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class ProjectsDetailsTest extends TestBase {
 
@@ -166,8 +168,7 @@ public class ProjectsDetailsTest extends TestBase {
 
         projectsDetailsPage.clickSave();
 
-        this.validateProjectDetailsTabDetails(dateTime,currentUser,projectsDetailsPage);
-
+        softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Name")).contains("Automation Project " + dateTime + " Edited");
         softAssertions.assertThat(projectsDetailsPage.isProjectDetailsDisplayed("Description")).contains("This Project is edited by Automation User " + currentUser.getEmail());
 
         softAssertions.assertAll();
@@ -301,15 +302,14 @@ public class ProjectsDetailsTest extends TestBase {
         softAssertions.assertThat(projectsDetailsPage.isModalDeleteButtonDisplayed()).isEqualTo(true);
         softAssertions.assertThat(projectsDetailsPage.isModalCancelButtonDisplayed()).isEqualTo(true);
 
-        projectsPage = projectsDetailsPage.clickModalCancelProject();
+        projectsDetailsPage.clickModalCancelProject();
 
         softAssertions.assertThat(projectsDetailsPage.isDeleteModalDisplayed()).isEqualTo(false);
 
-        projectsPage = projectsDetailsPage.clickModalDeleteProject();
+        projectsPage = projectsDetailsPage.clickDeleteProject()
+                .clickModalDeleteProject();
 
         softAssertions.assertThat(projectsPage.getPageTitle().contains("Projects"));
-
-        projectsPage.clickOnRead();
 
         softAssertions.assertAll();
     }
@@ -395,6 +395,62 @@ public class ProjectsDetailsTest extends TestBase {
         projectsDetailsPage.selectAProjectUser(currentUser.getEmail());
 
         softAssertions.assertThat(projectsDetailsPage.getRemoveUserFromProjectOptionStatus()).contains("Mui-disabled");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26123","26124","26125","26126","26128"})
+    @Description("Verify that user can add new parts & assemblies after a project creation")
+    public void testAddNewPartsAndAssembliesAfterCreation() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        currentUser = UserUtil.getUser();
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostAssembly(assemblyName,
+                        assemblyExtension,
+                        assemblyProcessGroup,
+                        subComponentNames,
+                        subComponentExtension,
+                        subComponentProcessGroup,
+                        scenarioName,
+                        currentUser)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,assemblyName, projectParticipant, "2028","15","Details");
+
+        this.validateProjectDetailsTabDetails(dateTime,currentUser,projectsDetailsPage);
+
+        projectsDetailsPage.clickDetailsPageTab("Parts & Assemblies");
+
+        softAssertions.assertThat(projectsDetailsPage.isAddPartsOptionDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickOnAddParts();
+
+        softAssertions.assertThat(projectsDetailsPage.isAddPartsModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.isShowHideOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.isSearchOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.isFilterOptionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
+                CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns());
+
+        projectsDetailsPage.selectAPart(scenarioName,subComponentNames.get(0))
+                .clickAdd();
+
+        softAssertions.assertThat(projectsDetailsPage.getListOfScenarios(subComponentNames.get(0), scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }

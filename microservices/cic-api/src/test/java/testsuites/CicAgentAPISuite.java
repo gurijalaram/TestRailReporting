@@ -13,10 +13,10 @@ import org.junit.runners.Suite;
 @ProjectRunID("1283")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-    CicAgentTest.class,
-    CicAgentRunPartsTest.class,
     CicAgentJobResultsTest.class,
-    CicAgentJobPartResultTest.class
+    CicAgentJobPartResultTest.class,
+    CicAgentRunPartsTest.class,
+    CicAgentTest.class
 })
 public class CicAgentAPISuite {
 }

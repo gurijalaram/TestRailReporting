@@ -584,4 +584,13 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
         getPageUtils().waitForElementAndClick(By.xpath("//div[@role='tablist']//button[contains(text(),'" + tabName + "')]"));
         return new ProjectsDetailsPage(getDriver());
     }
+
+    /**
+     * Get the table records count
+     *
+     * @return int
+     */
+    public int getTableRecordsCount() {
+        return getPageUtils().waitForElementsToAppear(tableRow).size();
+    }
 }
