@@ -133,10 +133,10 @@ public class CmpComparisonTests {
 
         final String secondUser = comparisonUtils.getCurrentPerson(UserUtil.getUser()).getIdentity();
 
-        List<GetComparisonResponse> secondUserResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
+        List<GetComparisonResponse> secondUserQuery = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
             + secondUser);
 
-        secondUserResponse.forEach(userResponse -> softAssertions.assertThat(userResponse.getCreatedBy()).isNotEqualTo(savedComparisonResponse.getCreatedBy()));
+        secondUserQuery.forEach(userQuery -> softAssertions.assertThat(userQuery.getCreatedBy()).isNotEqualTo(savedComparisonResponse.getCreatedBy()));
 
         softAssertions.assertAll();
     }
