@@ -3,7 +3,10 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
+import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
+import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
+import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
@@ -19,10 +22,12 @@ import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResp
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -34,6 +39,7 @@ import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class BidPackageProjectUserTest extends TestUtil {
@@ -80,16 +86,16 @@ public class BidPackageProjectUserTest extends TestUtil {
         UserCredentials defaultUser = UserUtil.getUser();
         BidPackageProjectUsersPostResponse bidPackageDefaultProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("DEFAULT", bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
         softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getProjectUsers().getSuccesses().get(0)
-                .getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
+            .getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
         BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(BidPackageProjectUserParameters.builder()
-                .identity(bidPackageDefaultProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())
-                .build()), bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
+            .identity(bidPackageDefaultProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())
+            .build()), bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), defaultUser);
 
         softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
-                        .anyMatch(i -> i.getIdentity()
-                                .equals(bidPackageDefaultProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())))
-                .isTrue();
+                .anyMatch(i -> i.getIdentity()
+                    .equals(bidPackageDefaultProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())))
+            .isTrue();
     }
 
     @Test
@@ -100,16 +106,16 @@ public class BidPackageProjectUserTest extends TestUtil {
         BidPackageProjectUsersPostResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN", bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 
         softAssertions.assertThat(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0)
-                .getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
+            .getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
 
         BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(BidPackageProjectUserParameters.builder()
-                .identity(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())
-                .build()), bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
+            .identity(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())
+            .build()), bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
 
         softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
-                        .anyMatch(i -> i.getIdentity()
-                                .equals(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())))
-                .isTrue();
+                .anyMatch(i -> i.getIdentity()
+                    .equals(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity())))
+            .isTrue();
     }
 
     @Test
@@ -117,10 +123,10 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
         BidPackageProjectUserResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectUserResponse.getProjectUsers()
-                .getSuccesses().get(0).getIdentity(), currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
+            .getSuccesses().get(0).getIdentity(), currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(getBidPackageProjectUserResponse.getProjectIdentity())
-                .isEqualTo(bidPackageProjectResponse.getIdentity());
+            .isEqualTo(bidPackageProjectResponse.getIdentity());
     }
 
     @Test
@@ -137,10 +143,10 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUser(BidPackageProjectUserParameters.builder().role("ADMIN").build()).build();
+            .projectUser(BidPackageProjectUserParameters.builder().role("ADMIN").build()).build();
 
         BidPackageProjectUserResponse updateBidPackageProjectUserResponse = QmsBidPackageResources.updateBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectUserResponse.getProjectUsers()
-                .getSuccesses().get(0).getIdentity(), currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
+            .getSuccesses().get(0).getIdentity(), currentUser, BidPackageProjectUserResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(updateBidPackageProjectUserResponse.getRole()).isEqualTo("ADMIN");
     }
@@ -167,27 +173,27 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().stream()
-                .anyMatch(f -> f.getError()
-                        .contains(String.format("User with identity '%s' already exists for project with identity '%s'", newUserIdentityOne, bidPackageProjectResponse.getIdentity())) && f.getUserEmail()
-                        .equals(newUserOne.getEmail()))).isTrue();
+            .anyMatch(f -> f.getError()
+                .contains(String.format("User with identity '%s' already exists for project with identity '%s'", newUserIdentityOne, bidPackageProjectResponse.getIdentity())) && f.getUserEmail()
+                .equals(newUserOne.getEmail()))).isTrue();
 
         //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
@@ -209,25 +215,25 @@ public class BidPackageProjectUserTest extends TestUtil {
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(invalidUserEmail).role("DEFAULT").build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().stream()
-                .anyMatch(f -> f.getError()
-                        .contains(String.format("Found 0 items with email %s", invalidUserEmail)) && f.getUserEmail()
-                        .equals(invalidUserEmail))).isTrue();
+            .anyMatch(f -> f.getError()
+                .contains(String.format("Found 0 items with email %s", invalidUserEmail)) && f.getUserEmail()
+                .equals(invalidUserEmail))).isTrue();
 
         //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
@@ -248,27 +254,27 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(firstUser.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().stream()
-                .anyMatch(f -> f.getError()
-                        .contains(String.format("User with identity '%s' already exists for project with identity '%s'", firstUserIdentity, bidPackageProjectResponse.getIdentity())) && f.getUserEmail()
-                        .equals(firstUser.getEmail()))).isTrue();
+            .anyMatch(f -> f.getError()
+                .contains(String.format("User with identity '%s' already exists for project with identity '%s'", firstUserIdentity, bidPackageProjectResponse.getIdentity())) && f.getUserEmail()
+                .equals(firstUser.getEmail()))).isTrue();
 
         //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
@@ -286,7 +292,7 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         //Resolve Discussion
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-                .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("RESOLVED").build()).build();
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("RESOLVED").build()).build();
 
         if (scenarioDiscussionResponse == null) {
             softAssertions.fail("Could not create scenario discussion. Parameter is null.");
@@ -304,23 +310,23 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Activate Discussion
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-                .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
         updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), scenarioDiscussionRequest, ScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("ACTIVE");
 
@@ -340,7 +346,7 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         //Delete Discussion
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-                .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("DELETE").build()).build();
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("DELETE").build()).build();
 
         if (scenarioDiscussionResponse == null) {
             softAssertions.fail("Could not create scenario discussion. Parameter is null.");
@@ -358,23 +364,23 @@ public class BidPackageProjectUserTest extends TestUtil {
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Activate Discussion
         scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
-                .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder().status("ACTIVE").build()).build();
         updateResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), scenarioDiscussionRequest, ScenarioDiscussionResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(updateResponse.getStatus()).isEqualTo("ACTIVE");
 
@@ -398,30 +404,83 @@ public class BidPackageProjectUserTest extends TestUtil {
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(invalidUserEmail).role("DEFAULT").build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserOne.getEmail()).role("DEFAULT")
-                .build());
+            .build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(newUserTwo.getEmail()).role("DEFAULT")
-                .build());
+            .build());
 
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-                .projectUsers(usersList).build();
+            .projectUsers(usersList).build();
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
 
         //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityOne))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
+            .anyMatch(u -> u.getUserIdentity().equals(newUserIdentityTwo))).isTrue();
 
         //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().stream()
-                .anyMatch(f -> f.getError()
-                        .contains(String.format("Found 0 items with email %s", invalidUserEmail)) && f.getUserEmail()
-                        .equals(invalidUserEmail))).isTrue();
+            .anyMatch(f -> f.getError()
+                .contains(String.format("Found 0 items with email %s", invalidUserEmail)) && f.getUserEmail()
+                .equals(invalidUserEmail))).isTrue();
 
         //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(newUserIdentityOne).build());
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(newUserIdentityTwo).build());
         QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26438"})
+    @Issue("COL-1900")
+    @Description("Verify system is able to delete Project Users")
+    public void deleteLastProjectUser() {
+        ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        UserCredentials firstUser = UserUtil.getUser();
+        String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(firstUserIdentity)
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        UserCredentials secondUser = UserUtil.getUser();
+        String secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
+        usersList.add(BidPackageProjectUserParameters.builder()
+            .userIdentity(secondUserIdentity)
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .build());
+
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
+            itemsList,
+            usersList,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(3);
+        if (softAssertions.wasSuccess()) {
+            BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(
+                BidPackageProjectUserParameters.builder()
+                .identity(firstUserIdentity)
+                .build()), bppResponse.getBidPackageIdentity(), bppResponse.getIdentity(), currentUser);
+
+            softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+                    .anyMatch(i -> i.getIdentity()
+                        .equals(firstUserIdentity)))
+                .isTrue();
+            softAssertions.assertThat(deleteUserResponse.getProjectUsers().getFailures().size()).isZero();
+        }
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
     }
 }
