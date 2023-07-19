@@ -89,6 +89,9 @@ public class JasperApiUtils {
         reportRequest = !currencyToSet.isEmpty()
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
             reportRequest;
+        reportRequest = setReportParameterByName(reportRequest, "projectRollup", "187");
+        //String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        //reportRequest = setReportParameterByName(reportRequest, "exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -235,6 +238,7 @@ public class JasperApiUtils {
         targetQuotedCostTrendGenericCurrencyTest(8, 23, 33);
     }
 
+
     /**
      * Target Quoted Cost Trend Value Tracking currency test
      */
@@ -247,6 +251,27 @@ public class JasperApiUtils {
      */
     public void targetQuotedCostTrendValueTrackingDetailsTest() {
         targetQuotedCostTrendGenericCurrencyTest(20, 93, 121);
+    }
+
+    /**
+     * Target Cost Trend currency test
+     */
+    public void targetCostTrendCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 17, 22);
+    }
+
+    /**
+     * Target Cost Value Tracking currency test
+     */
+    public void targetCostValueTrackingCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 68, 69);
+    }
+
+    /**
+     * Target Cost Value Tracking Details currency test
+     */
+    public void targetCostValueTrackingDetailsCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(20, 67, 68);
     }
 
     /**
@@ -566,6 +591,7 @@ public class JasperApiUtils {
             .getElementsByTag(tagName);
 
         ArrayList<String> gbpCostValues = new ArrayList<>();
+
         gbpCostValues.add(gbpSpanElements.get(keyOne).text());
         gbpCostValues.add(gbpSpanElements.get(keyTwo).text());
         gbpCostValues.add(gbpSpanElements.get(keyThree).text());
