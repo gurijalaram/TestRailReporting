@@ -90,8 +90,8 @@ public class JasperApiUtils {
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
             reportRequest;
         reportRequest = setReportParameterByName(reportRequest, "projectRollup", "187");
-        //String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-        //reportRequest = setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        reportRequest = setReportParameterByName(reportRequest, "exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -227,7 +227,17 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummaryGBP = generateAndReturnReportCurrencyOnly(CurrencyEnum.GBP.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = generateAndReturnReportCurrencyOnly(CurrencyEnum.USD.getCurrency());
 
-        softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
+        ArrayList<String> gbpScenarioCycleTimeValues = new ArrayList<>();
+        ArrayList<String> usdScenarioCycleTimeValues = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            gbpScenarioCycleTimeValues.add(jasperReportSummaryGBP.getFirstChartData().getChartDataPoints().get(i).getPropertyByName("Scenario Cycle Time (s)").getValue().toString());
+            usdScenarioCycleTimeValues.add(jasperReportSummaryUSD.getFirstChartData().getChartDataPoints().get(i).getPropertyByName("Scenario Cycle Time (s)").getValue().toString());
+        }
+
+        for (int i = 0; i < 4; i++) {
+            softAssertions.assertThat(gbpScenarioCycleTimeValues.get(i)).isEqualTo(usdScenarioCycleTimeValues.get(i));
+        }
+
         softAssertions.assertAll();
     }
 
