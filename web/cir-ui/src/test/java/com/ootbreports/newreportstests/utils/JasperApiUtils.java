@@ -224,11 +224,14 @@ public class JasperApiUtils {
      * Generic top level method for Cycle Time Value Tracking currency test
      */
     public void cycleTimeValueTrackingCurrencyTest() {
+        ArrayList<String> gbpScenarioCycleTimeValueList = getScenarioCycleTimeValues(CurrencyEnum.GBP.getCurrency());
+        ArrayList<String> usdScenarioCycleTimeValueList = getScenarioCycleTimeValues(CurrencyEnum.USD.getCurrency());
+
         for (int i = 0; i < 4; i++) {
             softAssertions.assertThat(
-                getScenarioCycleTimeValue(CurrencyEnum.GBP.getCurrency()).get(i)
+                gbpScenarioCycleTimeValueList.get(i)
             ).isEqualTo(
-                getScenarioCycleTimeValue(CurrencyEnum.USD.getCurrency()).get(i)
+                usdScenarioCycleTimeValueList.get(i)
             );
         }
 
@@ -613,10 +616,10 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
-    private ArrayList<String> getScenarioCycleTimeValue(String currencyToGet) {
+    private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
         return generateAndReturnReportCurrencyOnly(currencyToGet)
             .getFirstChartData().getChartDataPoints()
-            .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").toString())
+            .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
             );
     }
