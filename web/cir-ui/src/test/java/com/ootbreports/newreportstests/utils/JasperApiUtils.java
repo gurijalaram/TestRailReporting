@@ -248,7 +248,6 @@ public class JasperApiUtils {
         targetQuotedCostTrendGenericCurrencyTest(8, 23, 33);
     }
 
-
     /**
      * Target Quoted Cost Trend Value Tracking currency test
      */
