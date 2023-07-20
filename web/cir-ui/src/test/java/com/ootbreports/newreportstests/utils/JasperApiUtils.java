@@ -224,18 +224,18 @@ public class JasperApiUtils {
      * Generic top level method for Cycle Time Value Tracking currency test
      */
     public void cycleTimeValueTrackingCurrencyTest() {
-        JasperReportSummary jasperReportSummaryGBP = generateAndReturnReportCurrencyOnly(CurrencyEnum.GBP.getCurrency());
-        JasperReportSummary jasperReportSummaryUSD = generateAndReturnReportCurrencyOnly(CurrencyEnum.USD.getCurrency());
-
-        ArrayList<String> gbpScenarioCycleTimeValues = new ArrayList<>();
-        ArrayList<String> usdScenarioCycleTimeValues = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            gbpScenarioCycleTimeValues.add(jasperReportSummaryGBP.getFirstChartData().getChartDataPoints().get(i).getPropertyByName("Scenario Cycle Time (s)").getValue().toString());
-            usdScenarioCycleTimeValues.add(jasperReportSummaryUSD.getFirstChartData().getChartDataPoints().get(i).getPropertyByName("Scenario Cycle Time (s)").getValue().toString());
-        }
-
-        for (int i = 0; i < 4; i++) {
-            softAssertions.assertThat(gbpScenarioCycleTimeValues.get(i)).isEqualTo(usdScenarioCycleTimeValues.get(i));
+            softAssertions.assertThat(
+                getScenarioCycleTimeValue(
+                    CurrencyEnum.GBP.getCurrency(),
+                    i
+                )
+            ).isEqualTo(
+                getScenarioCycleTimeValue(
+                    CurrencyEnum.USD.getCurrency(),
+                    i
+                )
+            );
         }
 
         softAssertions.assertAll();
@@ -618,6 +618,11 @@ public class JasperApiUtils {
         softAssertions.assertThat(gbpCostValues.get(2)).isNotEqualTo(usdCostValues.get(2));
 
         softAssertions.assertAll();
+    }
+
+    private String getScenarioCycleTimeValue(String currencyToGet, int indexToGet) {
+        return generateAndReturnReportCurrencyOnly(currencyToGet)
+            .getFirstChartData().getChartDataPoints().get(indexToGet).getPropertyByName("Scenario Cycle Time (s)").getValue().toString();
     }
 
     private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
