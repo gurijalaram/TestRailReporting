@@ -26,6 +26,9 @@ import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4Report
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
 import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
+import com.ootbreports.newreportstests.targetcosttrend.TargetCostTrendReportTests;
+import com.ootbreports.newreportstests.targetcosttrend.TargetCostValueTrackingDetailsReportTests;
+import com.ootbreports.newreportstests.targetcosttrend.TargetCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
@@ -58,6 +61,9 @@ import org.junit.runners.Suite;
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,
     SheetMetalDtcReportTests.class,
+    TargetCostTrendReportTests.class,
+    TargetCostValueTrackingReportTests.class,
+    TargetCostValueTrackingDetailsReportTests.class,
     TargetAndQuotedCostTrendReportTests.class,
     TargetAndQuotedCostValueTrackingReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class
