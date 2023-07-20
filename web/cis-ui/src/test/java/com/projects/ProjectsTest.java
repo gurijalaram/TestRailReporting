@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -191,7 +192,6 @@ public class ProjectsTest extends TestBase {
 
         softAssertions.assertThat(createNewProjectsPage.isAddPartsModalDisplayed()).isEqualTo(true);
         softAssertions.assertThat(createNewProjectsPage.isShowHideFieldOptionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(createNewProjectsPage.isFilterTableOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(createNewProjectsPage.isSearchTableOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(createNewProjectsPage.isPartsAndAssembliesTableDisplayed()).isEqualTo(true);
 
@@ -280,6 +280,7 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(testCaseId = {"22909","22910","22911","22912","22913"})
     @Description("Verify user can filter a project by name")
@@ -324,6 +325,7 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(testCaseId = {"22914","22915"})
     @Description("Verify user can filter a project by status")
@@ -358,6 +360,7 @@ public class ProjectsTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(testCaseId = {"23790","23791"})
     @Description("Verify user can filter a project by due date")
