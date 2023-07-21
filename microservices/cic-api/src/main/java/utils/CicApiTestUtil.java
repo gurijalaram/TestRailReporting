@@ -55,7 +55,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CicApiTestUtil {
 
-    private static final int WAIT_TIME = 30;
+    private static final int WAIT_TIME = 20;
 
     /**
      * Deserialize workflow data from json file to string.
@@ -316,7 +316,7 @@ public class CicApiTestUtil {
      */
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
-        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
@@ -340,7 +340,7 @@ public class CicApiTestUtil {
      */
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
-        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
@@ -519,7 +519,7 @@ public class CicApiTestUtil {
         part = new ArrayList<>();
         for (int i = 0; i < numOfParts; i++) {
             part.add(WorkflowPart.builder()
-                .id(PlmApiTestUtil.getPlmPartByPartNumber(partDataList.get(i).getPlmPartNumber()).getId())
+                .id(new PlmApiTestUtil().getPlmPartByPartNumber(partDataList.get(i).getPlmPartNumber()).getId())
                 .costingInputs(CostingInputs.builder()
                     .processGroupName(partDataList.get(i).getProcessGroup())
                     .materialName(partDataList.get(i).getMaterial())

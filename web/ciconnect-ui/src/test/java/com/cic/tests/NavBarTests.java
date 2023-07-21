@@ -1,6 +1,7 @@
 package com.cic.tests;
 
 import com.apriori.pages.connectors.ConnectorsPage;
+import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.home.help.cicuserguide.CicUserGuide;
 import com.apriori.pages.home.settings.CostingServiceSettings;
 import com.apriori.pages.login.CicLoginPage;
@@ -11,15 +12,23 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import utils.WorkflowTestUtil;
 
-public class NavBarTests extends TestBase {
+public class NavBarTests extends WorkflowTestUtil {
 
-    private UserCredentials currentUser = UserUtil.getUser();
+    private SoftAssertions softAssertions;
+    private CIConnectHome ciConnectHome;
 
-    public NavBarTests() {
-        super();
+    @Before
+    public void setup() {
+        currentUser = UserUtil.getUser();
+        softAssertions = new SoftAssertions();
+        ciConnectHome = new CicLoginPage(driver).login(currentUser);
+
     }
 
     @Test

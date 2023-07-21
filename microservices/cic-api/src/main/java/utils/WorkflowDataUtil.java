@@ -201,6 +201,17 @@ public class WorkflowDataUtil {
     }
 
     /**
+     * Set the workflow Name
+     *
+     * @param workflowName
+     * @return current class object
+     */
+    public WorkflowDataUtil setWorkflowName(String workflowName) {
+        workflowRequestData.setName(workflowName);
+        return this;
+    }
+
+    /**
      * workflow data with no costing input fields
      *
      * @return current class object

@@ -1,7 +1,6 @@
 package com.cic.tests;
 
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
@@ -19,12 +18,9 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.PlmFieldDefinitions;
-import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflowJobResults;
 import entity.response.PlmPartResponse;
 import entity.response.PlmSearchPart;
@@ -40,7 +36,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.PlmApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
@@ -48,30 +43,19 @@ import utils.WorkflowTestUtil;
 
 import java.math.BigDecimal;
 
-public class PublishResultsTests extends TestBase {
+public class PublishResultsTests extends WorkflowTestUtil {
 
-    private UserCredentials currentUser = UserUtil.getUser();
-    private static WorkflowRequest workflowRequestDataBuilder;
     private static SoftAssertions softAssertions;
     private static PlmSearchPart plmPart;
     private static PlmApiTestUtil plmApiTestUtil;
     private static PlmFieldDefinitions plmFieldDefinitions;
-    private static WorkflowTestUtil workflowTestUtil;
-    private static PartData plmPartData;
-    private CIConnectHome ciConnectHome;
-
-    public PublishResultsTests() {
-        super();
-    }
 
     @Before
     public void setUpAndLogin() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        ciConnectHome = new CicLoginPage(driver).login(currentUser);
         plmApiTestUtil = new PlmApiTestUtil();
         plmFieldDefinitions = new PlmFieldDefinitions();
-        workflowTestUtil = new WorkflowTestUtil();
     }
 
     @Test
@@ -126,18 +110,16 @@ public class PublishResultsTests extends TestBase {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_CONSTANT);
         String multiString = "[\"Value 1\",\"Value 3\"]";
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_MULTI, PublishResultsWriteRule.CONSTANT, multiString)
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(plmPartResponse.getMultiselectString()).isEqualTo(multiString);
@@ -153,8 +135,6 @@ public class PublishResultsTests extends TestBase {
         String customDate = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmss) + ".000Z";
 
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
@@ -163,10 +143,10 @@ public class PublishResultsTests extends TestBase {
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_DATE, PublishResultsWriteRule.CONSTANT, customDate)
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(plmPartResponse.getRealNumber1()).isEqualTo(customNumber);
@@ -181,8 +161,6 @@ public class PublishResultsTests extends TestBase {
     public void testEachStandardWFGVWritingRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_GENERATED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -210,11 +188,11 @@ public class PublishResultsTests extends TestBase {
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_PRODUCTION_LIFE, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(agentWorkflowJobResults.get(0).getInput().getProcessGroupName()).isEqualTo(plmPartResponse.getApPG());
@@ -243,8 +221,6 @@ public class PublishResultsTests extends TestBase {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_GENERATED);
         String multiString = "[\"Value 1\",\"Value 3\"]";
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
@@ -255,11 +231,11 @@ public class PublishResultsTests extends TestBase {
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_MULTI, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(plmPartResponse.getMultiselectString()).isEqualTo("Value 1,Value 3");
@@ -276,8 +252,6 @@ public class PublishResultsTests extends TestBase {
         String customDate = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmss) + ".000Z";
 
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, customString)
@@ -288,10 +262,10 @@ public class PublishResultsTests extends TestBase {
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_DATE, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, customDate)
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(plmPartResponse.getRealNumber1()).isEqualTo(customNumber);
@@ -306,8 +280,6 @@ public class PublishResultsTests extends TestBase {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_CONSTANT);
         Double customNumber = new GenerateStringUtil().getRandomDoubleWithTwoDecimals();
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
@@ -329,11 +301,11 @@ public class PublishResultsTests extends TestBase {
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_PRODUCTION_LIFE, PublishResultsWriteRule.CONSTANT, String.valueOf(1.0))
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
 
-        plmPart = PlmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         PlmPartResponse plmPartResponse = plmApiTestUtil.plmCsrfToken().getPartInfoFromPlm(plmPart.getId()).getPlmPartResponse();
         softAssertions.assertThat(plmPartResponse).isNotNull();
         softAssertions.assertThat(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()).isEqualTo(plmPartResponse.getApPG());
@@ -358,7 +330,7 @@ public class PublishResultsTests extends TestBase {
     @After
     public void cleanup() {
         softAssertions.assertAll();
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), workflowTestUtil.getAgentWorkflowResponse());
+        this.deleteWorkflow();
         plmApiTestUtil.updatePartInfoToPlm(plmPart.getId(), plmFieldDefinitions, "Update part to reset the data");
     }
 }
