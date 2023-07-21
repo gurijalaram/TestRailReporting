@@ -326,6 +326,7 @@ public class BidPackageProjectsTest extends TestUtil {
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEqualTo(projectDisplayName);
+        softAssertions.assertThat(getBidPackageProjectResponse.getName()).isEqualTo(projectDisplayName);
     }
 
     @Test
