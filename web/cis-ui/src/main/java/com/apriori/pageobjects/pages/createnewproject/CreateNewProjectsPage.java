@@ -103,7 +103,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
     @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
     private WebElement btnUnread;
 
-    @FindBy(xpath = "//h3[@data-testid='displayName']")
+    @FindBy(xpath = "//h3[@data-testid='name']")
     private WebElement projectNameLink;
 
     private PageUtils pageUtils;

@@ -34,7 +34,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
     @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
     private WebElement btnUnread;
 
-    @FindBy(xpath = "//h3[@data-testid='displayName']")
+    @FindBy(xpath = "//h3[@data-testid='name']")
     private WebElement projectName;
 
     @FindBy(xpath = "(//span[@data-testid='data-label-Due Date']//following::span)[1]")
