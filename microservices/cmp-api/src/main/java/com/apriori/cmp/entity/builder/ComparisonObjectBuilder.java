@@ -1,6 +1,5 @@
 package com.apriori.cmp.entity.builder;
 
-
 import lombok.Builder;
 import lombok.Data;
 
