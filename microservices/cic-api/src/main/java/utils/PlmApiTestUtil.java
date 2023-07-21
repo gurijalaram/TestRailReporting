@@ -108,7 +108,7 @@ public class PlmApiTestUtil {
      * @return PlmPart response class
      */
     @SneakyThrows
-    public static PlmSearchPart getPlmPartByPartNumber(String plmPartNumber) {
+    public PlmSearchPart getPlmPartByPartNumber(String plmPartNumber) {
         SearchFilter searchFilter = new SearchFilter()
             .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(), plmPartNumber))
             .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())

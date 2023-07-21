@@ -24,23 +24,15 @@ import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
-public class PlmQueryDefRealRuleTests extends TestBase {
+public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
 
     private static final String QUERY_STRING_FIELD_VALUE = "%auto test \\- query%";
-    private static JobDefinition jobDefinitionData;
-    private static WorkflowRequest workflowRequestDataBuilder;
     private static SoftAssertions softAssertions;
-    private static PartData plmPartData;
-    private static WorkflowTestUtil workflowTestUtil;
-    private CIConnectHome ciConnectHome;
-
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
-        workflowTestUtil = new WorkflowTestUtil();
-        ciConnectHome = new CicLoginPage(driver).login(UserUtil.getUser());
+        currentUser = UserUtil.getUser();
     }
 
     @Test
@@ -48,14 +40,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Equal and verify data type")
     public void testWorkflowQueryDefRealEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.EQUAL, 1.1)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -67,14 +57,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Not Equal")
     public void testWorkflowQueryDefRealNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.1)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(4);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -92,14 +80,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Greater Than")
     public void testWorkflowQueryDefRealGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -111,14 +97,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Greater Than or Equal")
     public void testWorkflowQueryDefRealGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -132,14 +116,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real between")
     public void testWorkflowQueryDefRealBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.BETWEEN, 1.2,1.3)
+            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.BETWEEN, 1.2, 1.3)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -153,14 +135,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real NOT between")
     public void testWorkflowQueryDefRealNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_BETWEEN, 1.2,1.4)
+            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_BETWEEN, 1.2, 1.4)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -174,14 +154,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Less Than")
     public void testWorkflowQueryDefRealLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.LESS_THAN, 1.2)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -193,14 +171,12 @@ public class PlmQueryDefRealRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Real Less Than or Equal")
     public void testWorkflowQueryDefRealLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.LESS_THAN_EQUAL, 1.2)
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -212,8 +188,7 @@ public class PlmQueryDefRealRuleTests extends TestBase {
 
     @After
     public void cleanup() {
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), jobDefinitionData);
+        this.deleteWorkflow();
         softAssertions.assertAll();
     }
 }

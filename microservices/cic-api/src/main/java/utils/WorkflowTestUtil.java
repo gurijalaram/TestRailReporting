@@ -98,6 +98,18 @@ public class WorkflowTestUtil extends TestBase {
     }
 
     /**
+     * Track workflow job
+     *
+     * @return Current class object
+     */
+    public WorkflowTestUtil trackWorkflowWithoutRefresh() {
+        if (!CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())) {
+            throw new RuntimeException("FAILED TO FINISH WORKFLOW TO A TERMINAL STATE!!!");
+        }
+        return this;
+    }
+
+    /**
      * get workflow job results
      *
      * @return Current class object
@@ -193,7 +205,9 @@ public class WorkflowTestUtil extends TestBase {
      * @return current class object
      */
     public WorkflowTestUtil deleteWorkflow() {
-        CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
+        if (this.workflowRequestDataBuilder != null) {
+            CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
+        }
         return this;
     }
 
@@ -262,10 +276,6 @@ public class WorkflowTestUtil extends TestBase {
         this.agentWorkflowJobRunResponse = null;
         this.workflowRequestDataBuilder = null;
         this.workflowPartsRequestDataBuilder = null;
-    }
-
-    public AgentWorkflow getAgentWorkflowResponse() {
-        return agentWorkflowResponse;
     }
 
     public AgentWorkflowJobRun getAgentWorkflowJobRunResponse() {

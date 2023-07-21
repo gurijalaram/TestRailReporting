@@ -44,8 +44,8 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
     @FindBy(xpath = "//a[.='Privacy Policy']")
     private WebElement privacyPolicy;
 
-    @FindBy(css = ".auth0-lock-name")
-    private WebElement cloudLoginTitle;
+    @FindBy(xpath = "//h2[@class = 'textAccent']")
+    private WebElement onPremLoginTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -154,9 +154,9 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
      */
     @Override
     public String getLoginTitle() {
-        pageUtils.waitForElementToAppear(cloudLoginTitle);
-        pageUtils.waitForElementToBeClickable(cloudLoginTitle);
-        return cloudLoginTitle.getText();
+        pageUtils.waitForElementToAppear(onPremLoginTitle);
+        pageUtils.waitForElementToBeClickable(onPremLoginTitle);
+        return onPremLoginTitle.getText();
     }
 
     /**

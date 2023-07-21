@@ -17,10 +17,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.WorkflowTestUtil;
 
-public class CostingPreferencesTests extends TestBase {
+public class CostingPreferencesTests extends WorkflowTestUtil {
 
-    private UserCredentials currentUser = UserUtil.getUser();
+
     private SoftAssertions softAssertions;
     private CostingServiceSettingsData costingServiceSettingsData;
     private CIConnectHome ciConnectHome;
@@ -32,6 +33,7 @@ public class CostingPreferencesTests extends TestBase {
 
     @Before
     public void setup() {
+        currentUser = UserUtil.getUser();
         softAssertions = new SoftAssertions();
         ciConnectHome = new CicLoginPage(driver).login(currentUser);
 

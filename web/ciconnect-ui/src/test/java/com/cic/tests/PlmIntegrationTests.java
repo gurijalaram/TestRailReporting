@@ -11,7 +11,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import entity.request.JobDefinition;
 import entity.request.WorkflowRequest;
@@ -25,6 +24,7 @@ import enums.MappingRule;
 import enums.PlmPartDataType;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
+import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -32,27 +32,23 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.PlmApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.SearchFilter;
 import utils.WorkflowDataUtil;
+import utils.WorkflowTestUtil;
 
-public class PlmIntegrationTests extends TestBase {
+public class PlmIntegrationTests extends WorkflowTestUtil {
 
     private CostingServiceSettingsData costingServiceSettingsData;
-    private static AgentWorkflow agentWorkflowResponse;
-    private static JobDefinition jobDefinitionData;
-    private static ResponseWrapper<String> createWorkflowResponse;
-    private static WorkflowRequest workflowRequestDataBuilder;
-    private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
     private static SoftAssertions softAssertions;
-    private static PartData plmPartData;
     private CIConnectHome ciConnectHome;
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
-        ciConnectHome = new CicLoginPage(driver).login(UserUtil.getUser());
+        plmPartData = new PlmPartsUtil().getPlmPartData();
+        currentUser = UserUtil.getUser();
     }
 
     @Test
@@ -61,8 +57,6 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
@@ -75,29 +69,13 @@ public class PlmIntegrationTests extends TestBase {
             .addCostingInputRow(CostingInputFields.DESCRIPTION, MappingRule.MAPPED_FROM_PLM, "")
             .build();
 
-        SearchFilter searchFilter = new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
-                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            plmPart.getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        PlmSearchPart plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobPartResult(plmPart.getId());
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo("Aluminum, ANSI 3003");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo("Stock Machining");
@@ -114,8 +92,6 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapNoPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -128,29 +104,13 @@ public class PlmIntegrationTests extends TestBase {
             .addCostingInputRow(CostingInputFields.DESCRIPTION, MappingRule.DEFAULT_NO_PLM_VALUE, "3925 description")
             .build();
 
-        SearchFilter searchFilter = new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
-                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            plmPart.getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
+        PlmSearchPart plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobPartResult(plmPart.getId());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isEqualTo("3925 description");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo(plmPartData.getProcessGroup());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(plmPartData.getMaterial());
@@ -167,8 +127,6 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapSameAsSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.DEFAULT_NO_PLM_VALUE, plmPartData.getProcessGroup())
@@ -181,29 +139,15 @@ public class PlmIntegrationTests extends TestBase {
             .addCostingInputRow(CostingInputFields.DESCRIPTION, MappingRule.DEFAULT_NO_PLM_VALUE, "description")
             .build();
 
-        SearchFilter searchFilter = new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
-                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
+        PlmSearchPart plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
 
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobPartResult(plmPart.getId());
 
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            plmPart.getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(plmPartData.getMaterial());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo(plmPartData.getProcessGroup());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getVpeName()).isEqualTo("aPriori Brazil");
@@ -219,9 +163,7 @@ public class PlmIntegrationTests extends TestBase {
     public void testWorkflowMapWithConstantPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
-            .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
+            .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .addCostingInputRow(CostingInputFields.SCENARIO_NAME, MappingRule.CONSTANT, "scenario name 1234")
@@ -233,29 +175,15 @@ public class PlmIntegrationTests extends TestBase {
             .addCostingInputRow(CostingInputFields.DESCRIPTION, MappingRule.CONSTANT, "description 1234")
             .build();
 
-        SearchFilter searchFilter = new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
-                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
+        PlmSearchPart plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
 
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobPartResult(plmPart.getId());
 
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            plmPart.getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isEqualTo("description 1234");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName());
@@ -280,7 +208,9 @@ public class PlmIntegrationTests extends TestBase {
             .productionVolume(Integer.parseInt(new GenerateStringUtil().getRandomNumbersSpecLength(2)))
             .build();
 
-        ciConnectHome.clickCostingServiceSettings()
+        ciConnectHome = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickCostingServiceSettings()
             .enterScenarioName(costingServiceSettingsData.getScenarioName())
             .selectProcessGroup(costingServiceSettingsData.getProcessGroup())
             .selectDigitalFactory(costingServiceSettingsData.getDigitalFactory())
@@ -293,9 +223,7 @@ public class PlmIntegrationTests extends TestBase {
 
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
-            .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
+            .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.SCENARIO_NAME, MappingRule.MAPPED_FROM_PLM, "")
@@ -307,30 +235,15 @@ public class PlmIntegrationTests extends TestBase {
             .addCostingInputRow(CostingInputFields.DESCRIPTION, MappingRule.MAPPED_FROM_PLM, "")
             .build();
 
-        SearchFilter searchFilter = new SearchFilter()
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_FILTER.getFilterKey() + String.format(PlmPartsSearch.PLM_WC_PART_NUMBER_EQ.getFilterKey(),
-                workflowRequestDataBuilder.getQuery().getFilters().getFilters().get(0).getValue()))
-            .buildParameter(PlmPartsSearch.PLM_WC_PART_TYPE_ID.getFilterKey() + PlmWCType.PLM_WC_PART_TYPE.getPartType())
-            .build();
-        PlmSearchPart plmPart = CicApiTestUtil.getPlmPart(searchFilter);
+        PlmSearchPart plmPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
+        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = this.cicLogin()
+            .create()
+            .getWorkflowId()
+            .invokeQueryWorkflow()
+            .track()
+            .getJobPartResult(plmPart.getId());
 
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            plmPart.getId(),
-            AgentWorkflowJobPartsResult.class,
-            HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isNull();
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo(costingServiceSettingsData.getProcessGroup());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getVpeName()).isEqualTo(costingServiceSettingsData.getDigitalFactory());
@@ -340,8 +253,7 @@ public class PlmIntegrationTests extends TestBase {
 
     @After
     public void cleanup() {
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), jobDefinitionData);
+        this.deleteWorkflow();
         softAssertions.assertAll();
     }
 }

@@ -21,22 +21,18 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import utils.WorkflowTestUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class NotificationTests extends TestBase {
+public class NotificationTests extends WorkflowTestUtil {
 
-    private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
-    WorkflowHome workflowHome;
-
-    public NotificationTests() {
-        super();
-    }
 
     @Before
-    public void setUpAndLogin() {
+    public void setup() {
+        currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
     }
 

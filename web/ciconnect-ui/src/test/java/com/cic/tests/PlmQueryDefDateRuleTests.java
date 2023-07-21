@@ -1,15 +1,10 @@
 package com.cic.tests;
 
 import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflowJobResults;
 import enums.CICPartSelectionType;
 import enums.PlmPartDataType;
@@ -20,28 +15,20 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
-public class PlmQueryDefDateRuleTests extends TestBase {
+public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
 
     private static final String QUERY_STRING_FIELD_VALUE = "%auto test \\- query%";
-    private static JobDefinition jobDefinitionData;
-    private static WorkflowRequest workflowRequestDataBuilder;
     private static SoftAssertions softAssertions;
-    private static PartData plmPartData;
-    private static WorkflowTestUtil workflowTestUtil;
     private CIConnectHome ciConnectHome;
-
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
-        workflowTestUtil = new WorkflowTestUtil();
-        ciConnectHome = new CicLoginPage(driver).login(UserUtil.getUser());
+        currentUser = UserUtil.getUser();
     }
 
     @Test
@@ -49,14 +36,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Not Equal")
     public void testWorkflowQueryDefDateNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.NOT_EQUAL, DateUtil.getDateInMilliSeconds("04/21/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(4);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -74,14 +59,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Equal")
     public void testWorkflowQueryDefDateEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.EQUAL, DateUtil.getDateInMilliSeconds("04/21/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -93,14 +76,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Greater Than")
     public void testWorkflowQueryDefDateGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.GREATER_THAN, DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -112,14 +93,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Greater Than or Equal")
     public void testWorkflowQueryDefDateGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.GREATER_THAN_EQUAL, DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -133,14 +112,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Between")
     public void testWorkflowQueryDefDateBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.BETWEEN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"), DateUtil.getDateInMilliSeconds("04/23/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -154,14 +131,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Not Between")
     public void testWorkflowQueryDefDateNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.NOT_BETWEEN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"), DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -175,14 +150,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Less Than")
     public void testWorkflowQueryDefDateLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.LESS_THAN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -194,14 +167,12 @@ public class PlmQueryDefDateRuleTests extends TestBase {
     @Description("Test each operator for the Int data type in isolation - Date Less Than Equal")
     public void testWorkflowQueryDefDateLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.LESS_THAN_EQUAL, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
-        AgentWorkflowJobResults agentWorkflowJobResults = workflowTestUtil.createWorkflowAndGetJobResult(workflowRequestDataBuilder, ciConnectHome.getSession());
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(2);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
@@ -212,8 +183,7 @@ public class PlmQueryDefDateRuleTests extends TestBase {
 
     @After
     public void cleanup() {
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), jobDefinitionData);
+        this.deleteWorkflow();
         softAssertions.assertAll();
     }
 }

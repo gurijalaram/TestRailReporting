@@ -84,7 +84,7 @@ public class HistoryPage extends CICBasePage {
      */
     private Boolean trackJobStatus(String workflowName) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Batch Costing Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus = StringUtils.EMPTY;
         WebElement tableRow;
         tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
@@ -95,7 +95,7 @@ public class HistoryPage extends CICBasePage {
             }
             try {
                 pageUtils.waitForElementAndClick(refreshButton);
-                TimeUnit.SECONDS.sleep(30);
+                TimeUnit.SECONDS.sleep(WAIT_TIME);
                 finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName, 1), 6).getText();
                 log.info(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
             } catch (InterruptedException e) {
@@ -112,21 +112,31 @@ public class HistoryPage extends CICBasePage {
      * @param workflowName Workflow name to check for
      * @return True if the workflow exists
      */
+    @SneakyThrows
     public Boolean isScheduledWorkflowInvoked(String workflowName) {
+        Boolean isWorkflowInvoked = false;
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(3);
         try {
-            pageUtils.waitFor(150000);
             pageUtils.waitForElementToAppear(searchJobName);
             searchJobName.clear();
             searchJobName.sendKeys(workflowName);
             pageUtils.waitForElementAndClick(searchBtn);
-            pageUtils.waitFor(Constants.DEFAULT_WAIT);
-
-            return (tableUtils.getRowCount(historyJobListTable) > 0) ? true : false;
-
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+            isWorkflowInvoked = (tableUtils.getRowCount(historyJobListTable) > 0) ? true : false;
+            while (!isWorkflowInvoked) {
+                if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                    return isWorkflowInvoked;
+                }
+                TimeUnit.SECONDS.sleep(WAIT_TIME);
+                pageUtils.waitForElementAndClick(searchBtn);
+                pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+                isWorkflowInvoked = (tableUtils.getRowCount(historyJobListTable) > 0) ? true : false;
+            }
         } catch (StaleElementReferenceException staleElementReferenceException) {
             pageUtils.waitForElementAndClick(searchBtn);
-            return (tableUtils.getRowCount(historyJobListTable) > 0) ? true : false;
+            isWorkflowInvoked = (tableUtils.getRowCount(historyJobListTable) > 0) ? true : false;
         }
+        return isWorkflowInvoked;
     }
 
     /**
