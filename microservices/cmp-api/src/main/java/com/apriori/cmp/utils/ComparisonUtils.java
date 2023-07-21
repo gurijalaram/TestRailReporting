@@ -1,9 +1,12 @@
 package com.apriori.cmp.utils;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cmp.entity.enums.CMPAPIEnum;
 import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.request.UpdateComparison;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
+import com.apriori.cmp.entity.response.GetComparisonsResponse;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -12,6 +15,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ComparisonUtils {
 
@@ -26,7 +36,7 @@ public class ComparisonUtils {
      */
     public <T> T createComparison(CreateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON, klass)
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, klass)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
@@ -39,15 +49,15 @@ public class ComparisonUtils {
     /**
      * Update Comparison details given a Comparison ID
      *
-     * @param comparisonID - String of the requested Comparison ID
-     * @param comparison   - Update Comparison Object
-     * @param currentUser  - UserCredentials object
+     * @param inlineVariables - inline variables
+     * @param comparison      - Update Comparison Object
+     * @param currentUser     - UserCredentials object
      * @return GetComparisonResponse
      */
-    public <T> T updateComparison(String comparisonID, UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
+    public <T> T updateComparison(UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse, String... inlineVariables) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
-                .inlineVariables(comparisonID)
+                .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
@@ -60,19 +70,70 @@ public class ComparisonUtils {
     /**
      * Get Comparison details given a Comparison ID
      *
-     * @param comparisonID - String of the requested Comparison ID
-     * @param currentUser  - UserCredentials object
+     * @param inlineVariables - inline variables
+     * @param currentUser     - UserCredentials object
      * @return GetComparisonResponse
      */
-    public GetComparisonResponse getComparison(String comparisonID, UserCredentials currentUser) {
+    public GetComparisonResponse getComparison(UserCredentials currentUser, String... inlineVariables) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
-                .inlineVariables(comparisonID)
+                .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
+        // TODO: 17/07/2023 is this really a patch or should it be a get?
         ResponseWrapper<GetComparisonResponse> responseWrapper = HTTPRequest.build(requestEntity).patch();
 
         return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param currentUser - the user credentials
+     * @return response object
+     */
+    public List<GetComparisonResponse> getComparisons(UserCredentials currentUser) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        return responseWrapper.getResponseEntity().getItems();
+    }
+
+    /**
+     * Calls an api and queries with GET verb
+     * @param currentUser - the user credentials
+     * @param urlParams - parameters for url
+     * @return response object
+     */
+    public List<GetComparisonResponse> queryComparison(UserCredentials currentUser, String... urlParams) {
+        Map<String, String> searchCriteria = new HashMap<>();
+        List<String[]> uriParams = Arrays.stream(urlParams).map(o -> o.split(",")).collect(Collectors.toList());
+
+        uriParams.forEach(uriParam -> searchCriteria.put(uriParam[0].trim(), uriParam[1].trim()));
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .urlParams(Collections.singletonList(searchCriteria))
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<GetComparisonsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        return responseWrapper.getResponseEntity().getItems();
+    }
+
+    /**
+     * GET current person
+     *
+     * @param userCredentials - the user credentials
+     * @return person object
+     */
+    public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
+        return new PeopleUtil().getCurrentPerson(userCredentials);
     }
 }
