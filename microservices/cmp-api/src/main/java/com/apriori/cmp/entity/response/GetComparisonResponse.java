@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonRootName("response")
-public class GetComparisonResponse {
+public class GetComparisonResponse implements Comparable<GetComparisonResponse> {
     private String identity;
     private String createdBy;
     private String updatedBy;
@@ -41,4 +41,8 @@ public class GetComparisonResponse {
     @JsonProperty("comparisonObjects")
     private List<ComparisonObjects> objectsToCompare;
 
+    @Override
+    public int compareTo(GetComparisonResponse o) {
+        return 0;
+    }
 }
