@@ -694,7 +694,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
-                .allMatch(i -> i.getName().contains("a"))).isTrue();
+                .allMatch(i -> i.getName().toLowerCase().contains("a"))).isTrue();
         }
 
         params[1] = "name[CN],00";
@@ -703,7 +703,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
-                .allMatch(i -> i.getName().contains("00"))).isTrue();
+                .allMatch(i -> i.getName().toLowerCase().contains("00"))).isTrue();
         }
     }
 }
