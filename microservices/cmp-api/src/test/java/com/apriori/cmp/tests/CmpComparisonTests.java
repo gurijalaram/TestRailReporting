@@ -32,13 +32,6 @@ import java.util.stream.Collectors;
 public class CmpComparisonTests {
 
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
-    private static String componentName1 = "big ring";
-    private static String componentName2 = "small ring";
-    private static String componentName3 = "Pin";
-    private static String componentExt = ".SLDPRT";
-    private static File resourceFile1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName1 + componentExt);
-    private static File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName2 + componentExt);
-    private static File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName3 + componentExt);
     private static ComponentInfoBuilder component1;
     private static ComponentInfoBuilder component2;
     private static ComponentInfoBuilder component3;
@@ -66,6 +59,14 @@ public class CmpComparisonTests {
         currentUser = UserUtil.getUser();
         scenarioName = new GenerateStringUtil().generateScenarioName();
         comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        String componentName1 = "big ring";
+        String componentName2 = "small ring";
+        String componentName3 = "Pin";
+        String componentExt = ".SLDPRT";
+        File resourceFile1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName1 + componentExt);
+        File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName2 + componentExt);
+        File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName3 + componentExt);
 
         component1 = componentsUtil.postComponentQueryCID(
             ComponentInfoBuilder.builder()
