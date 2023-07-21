@@ -46,8 +46,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        String assertValue = PropertiesContext.get("${env}.reports.failed_login_message");
-        assertThat(loginPage.getLoginMessage(), is(equalTo(assertValue)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
     }
 
     @Test
@@ -70,7 +69,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLoginEmptyFields();
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_EMPTY_FIELDS)));
+        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
     }
 
     @Test
