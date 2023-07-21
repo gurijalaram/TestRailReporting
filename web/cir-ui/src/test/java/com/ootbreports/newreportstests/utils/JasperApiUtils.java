@@ -89,6 +89,9 @@ public class JasperApiUtils {
         reportRequest = !currencyToSet.isEmpty()
             ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
             reportRequest;
+        reportRequest = setReportParameterByName(reportRequest, "projectRollup", "187");
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        reportRequest = setReportParameterByName(reportRequest, "exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -221,10 +224,17 @@ public class JasperApiUtils {
      * Generic top level method for Cycle Time Value Tracking currency test
      */
     public void cycleTimeValueTrackingCurrencyTest() {
-        JasperReportSummary jasperReportSummaryGBP = generateAndReturnReportCurrencyOnly(CurrencyEnum.GBP.getCurrency());
-        JasperReportSummary jasperReportSummaryUSD = generateAndReturnReportCurrencyOnly(CurrencyEnum.USD.getCurrency());
+        ArrayList<String> gbpScenarioCycleTimeValueList = getScenarioCycleTimeValues(CurrencyEnum.GBP.getCurrency());
+        ArrayList<String> usdScenarioCycleTimeValueList = getScenarioCycleTimeValues(CurrencyEnum.USD.getCurrency());
 
-        softAssertions.assertThat(jasperReportSummaryGBP).isEqualTo(jasperReportSummaryUSD);
+        for (int i = 0; i < 4; i++) {
+            softAssertions.assertThat(
+                gbpScenarioCycleTimeValueList.get(i)
+            ).isEqualTo(
+                usdScenarioCycleTimeValueList.get(i)
+            );
+        }
+
         softAssertions.assertAll();
     }
 
@@ -247,6 +257,27 @@ public class JasperApiUtils {
      */
     public void targetQuotedCostTrendValueTrackingDetailsTest() {
         targetQuotedCostTrendGenericCurrencyTest(20, 93, 121);
+    }
+
+    /**
+     * Target Cost Trend currency test
+     */
+    public void targetCostTrendCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 17, 22);
+    }
+
+    /**
+     * Target Cost Value Tracking currency test
+     */
+    public void targetCostValueTrackingCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(8, 68, 69);
+    }
+
+    /**
+     * Target Cost Value Tracking Details currency test
+     */
+    public void targetCostValueTrackingDetailsCurrencyTest() {
+        targetQuotedCostTrendGenericCurrencyTest(20, 67, 68);
     }
 
     /**
@@ -566,6 +597,7 @@ public class JasperApiUtils {
             .getElementsByTag(tagName);
 
         ArrayList<String> gbpCostValues = new ArrayList<>();
+
         gbpCostValues.add(gbpSpanElements.get(keyOne).text());
         gbpCostValues.add(gbpSpanElements.get(keyTwo).text());
         gbpCostValues.add(gbpSpanElements.get(keyThree).text());
@@ -582,6 +614,14 @@ public class JasperApiUtils {
         softAssertions.assertThat(gbpCostValues.get(2)).isNotEqualTo(usdCostValues.get(2));
 
         softAssertions.assertAll();
+    }
+
+    private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
+        return generateAndReturnReportCurrencyOnly(currencyToGet)
+            .getFirstChartData().getChartDataPoints()
+            .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
+            .collect(Collectors.toCollection(ArrayList::new)
+            );
     }
 
     private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
