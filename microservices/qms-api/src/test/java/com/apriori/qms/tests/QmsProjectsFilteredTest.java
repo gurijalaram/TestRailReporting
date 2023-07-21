@@ -49,9 +49,6 @@ public class QmsProjectsFilteredTest extends TestUtil {
     private static ScenarioItem scenarioItemCompleted;
     private static ScenarioItem scenarioItemPurchased;
     private static ScenarioItem scenarioItemSentQuotation;
-    private static String newOwner;
-    private static String newUserIdentityFirst;
-    private static String newUserIdentitySecond;
     private static String newOwnerIdentity;
     private static UserCredentials firstUser;
     private static String firstUserIdentity;
@@ -273,7 +270,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     @TestRail(testCaseId = {"24083"})
     @Description("Search by Name[CN] + Owner[NI]")
     public void getFilteredProjectsByNameCNOwnerNI() {
-        String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[NI]," + newOwner};
+        String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[NI]," + newOwnerIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
