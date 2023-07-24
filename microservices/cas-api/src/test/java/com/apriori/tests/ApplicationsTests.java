@@ -1,10 +1,10 @@
 package com.apriori.tests;
 
-import com.apriori.entity.response.Customer;
-import com.apriori.entity.response.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.Applications;
+import com.apriori.entity.response.Customer;
+import com.apriori.entity.response.Customers;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -17,8 +17,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ApplicationsTests {
-    private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void getToken() {
@@ -39,7 +39,7 @@ public class ApplicationsTests {
             customer.getIdentity());
 
         soft.assertThat(responseApplications.getResponseEntity().getTotalItemCount())
-                .isGreaterThanOrEqualTo(1);
+            .isGreaterThanOrEqualTo(1);
         soft.assertAll();
     }
 }

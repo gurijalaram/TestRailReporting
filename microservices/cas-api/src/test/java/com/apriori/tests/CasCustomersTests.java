@@ -1,13 +1,13 @@
 package com.apriori.tests;
 
-import com.apriori.entity.response.Customer;
-import com.apriori.entity.response.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.Applications;
 import com.apriori.entity.response.CasErrorMessage;
+import com.apriori.entity.response.Customer;
+import com.apriori.entity.response.Customers;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -74,7 +74,7 @@ public class CasCustomersTests {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customers> responseName = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK,"?name[CN]=" + customer.getName());
+        ResponseWrapper<Customers> responseName = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + customer.getName());
 
         soft.assertThat(responseName.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);

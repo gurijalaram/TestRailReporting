@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.entity.response.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
@@ -9,6 +8,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.IdentityHolder;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.CasErrorMessage;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.Site;
@@ -73,11 +73,11 @@ public class CasUserSubLicensesTests {
     public void cleanUp() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
-                    deleteIdentityHolder.customerIdentity(),
-                    deleteIdentityHolder.siteIdentity(),
-                    deleteIdentityHolder.licenseIdentity(),
-                    deleteIdentityHolder.subLicenseIdentity(),
-                    deleteIdentityHolder.userIdentity()
+                deleteIdentityHolder.customerIdentity(),
+                deleteIdentityHolder.siteIdentity(),
+                deleteIdentityHolder.licenseIdentity(),
+                deleteIdentityHolder.subLicenseIdentity(),
+                deleteIdentityHolder.userIdentity()
             );
         }
         if (userIdentity != null) {

@@ -1,11 +1,11 @@
 package com.apriori.tests;
 
-import com.apriori.entity.response.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CasErrorMessage;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.entity.response.CustomerAssociationUser;
 import com.apriori.entity.response.CustomerAssociationUsers;
