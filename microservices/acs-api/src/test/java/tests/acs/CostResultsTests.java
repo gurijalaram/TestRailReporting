@@ -36,6 +36,7 @@ public class CostResultsTests {
         softAssertions.assertThat(resultMapBean).isNotNull();
         softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
         softAssertions.assertThat(propertyInfoMap.getAnnualCarbon().getDisplayName()).isNotNull();
+        softAssertions.assertThat(propertyInfoMap.getTotalCarbon().getCategory()).isNotNull();
         softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
         softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
         softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
