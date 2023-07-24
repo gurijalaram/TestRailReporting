@@ -33,6 +33,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
 
     //COMPONENTS
     COMPONENT("components/%s"),
+    COMPONENTS_ASSIGNED("components/assigned"),
 
     //SCENARIOS
     COMPONENT_SCENARIOS("components/%s/scenarios"),
