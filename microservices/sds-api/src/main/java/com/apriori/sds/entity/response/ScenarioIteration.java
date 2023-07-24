@@ -29,13 +29,13 @@ import java.util.List;
 @Data
 @JsonRootName(value = "response")
 public class ScenarioIteration {
+    private ScenarioMetadata scenarioMetadata;
     private String customerIdentity;
     private String scenarioKey;
     private Object scenarioIterationKey;
     private String hasThumbnail;
     private Thumbnail thumbnail;
     private String costingMessage;
-    ScenarioMetadata scenarioMetadata;
     private String createdBy;
     private String updatedBy;
     private CostingInput costingInput;
