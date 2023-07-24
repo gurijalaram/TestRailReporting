@@ -112,7 +112,7 @@ onprem:
 
   reports:
     ui_url: ${base_url}jasperserver-pro/
-    welcome_page_text: Cost Insight Report
+    welcome_page_text: aP Analytics
     failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
 
   admin:

@@ -235,4 +235,11 @@ public class CIConnectHome extends CICBasePage {
         pageUtils.waitForElementToBeClickable(usersMenuBtn);
         return driver.manage().getCookieNamed("JSESSIONID").getValue();
     }
+
+    /**
+     * Refresh browser
+     */
+    public void refreshBrowser() {
+        driver.navigate().refresh();
+    }
 }

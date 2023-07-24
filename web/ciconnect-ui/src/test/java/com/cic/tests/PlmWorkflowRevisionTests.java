@@ -7,49 +7,36 @@ import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
-import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
-import entity.response.AgentWorkflowJobRun;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
 import enums.PlmPartDataType;
 import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
+import utils.CicGuiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
+import utils.WorkflowTestUtil;
 
-public class PlmWorkflowRevisionTests extends TestBase {
+public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
 
-    private static AgentWorkflow agentWorkflowResponse;
-    private static JobDefinition jobDefinitionData;
-    private static WorkflowRequest workflowRequestDataBuilder;
-    private static ResponseWrapper<String> createWorkflowResponse;
-    private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
     private static SoftAssertions softAssertions;
     private static PartData plmPartData;
-    private CIConnectHome ciConnectHome;
-
 
     @Before
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
-        ciConnectHome = new CicLoginPage(driver).login(UserUtil.getUser());
+        currentUser = UserUtil.getUser();
     }
 
     @Test
@@ -59,31 +46,13 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowRevisionWhenReturnOnlyEnabled() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(true)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResults = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         AgentWorkflowJobPartsResult jobPartsRevisionResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResults, "B");
@@ -99,31 +68,13 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowMapSetRevisionDisabled() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(false)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(2);
         AgentWorkflowJobPartsResult jobPartsRevisionAResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "A");
@@ -140,8 +91,6 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowMapSetSpecificRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilter(QueryDefinitionFields.REVISION_NUMBER.getQueryDefinitionField(), "EQ", "B")
             .setQueryFilters("AND")
@@ -149,23 +98,7 @@ public class PlmWorkflowRevisionTests extends TestBase {
             .useLatestRevision(true)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(1);
         AgentWorkflowJobPartsResult jobPartsRevisionResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "B");
@@ -180,31 +113,13 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowNoPartWithMultiRev() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(true)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(1);
         AgentWorkflowJobPartsResult jobPartsRevisionResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "A");
@@ -221,8 +136,6 @@ public class PlmWorkflowRevisionTests extends TestBase {
         PartData plmPartWithNoParts = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS);
 
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartWithParts.getPlmPartNumber())
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartWithNoParts.getPlmPartNumber())
             .setQueryFilters("OR")
@@ -230,25 +143,10 @@ public class PlmWorkflowRevisionTests extends TestBase {
             .useLatestRevision(true)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(2);
+
         AgentWorkflowJobPartsResult jobPartsRevisionAResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "A");
         AgentWorkflowJobPartsResult jobPartsRevisionBResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "B");
 
@@ -267,31 +165,13 @@ public class PlmWorkflowRevisionTests extends TestBase {
     @Description("Verify no errors are displayed when 'Return Latest Revision' is enabled and job contains no parts")
     public void testWorkflowVerifyRevisionWithInValidPart() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", "invalid")
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(true)
             .build();
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
-
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.createQueryWorkflowAndGetJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(0);
     }
@@ -302,20 +182,18 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowEditDisabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
+            .setWorkflowName(GenerateStringUtil.saltString("----0WFCR"))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(false)
             .build();
-        workflowRequestDataBuilder.setName(GenerateStringUtil.saltString("----0WFCR"));
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
+        this.cicGuiLogin()
+            .createWorkflow()
+            .getWorkflow();
 
-        WorkflowHome workflowHome = ciConnectHome.clickWorkflowMenu()
+        WorkflowHome workflowHome = this.ciConnectHome.clickWorkflowMenu()
             .selectScheduleTab()
             .selectWorkflow(workflowRequestDataBuilder.getName())
             .clickEditWorkflowBtn()
@@ -329,19 +207,10 @@ public class PlmWorkflowRevisionTests extends TestBase {
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();
 
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResults = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResults = this.getWorkflow()
+            .invokeWorkflow()
+            .trackWorkflow()
+            .getJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
         AgentWorkflowJobPartsResult jobPartsRevisionResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResults, "B");
@@ -357,18 +226,16 @@ public class PlmWorkflowRevisionTests extends TestBase {
     public void testWorkflowEditEnabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
+            .setAgent(ciConnectHome.getSession())
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(true)
             .build();
-        workflowRequestDataBuilder.setName(GenerateStringUtil.saltString("----0WFCR"));
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
+        this.cicGuiLogin()
+            .createWorkflow()
+            .getWorkflow();
 
         WorkflowHome workflowHome = ciConnectHome.clickWorkflowMenu()
             .selectScheduleTab()
@@ -384,19 +251,10 @@ public class PlmWorkflowRevisionTests extends TestBase {
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();
 
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.getWorkflow()
+            .invokeWorkflow()
+            .trackWorkflow()
+            .getJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(2);
         AgentWorkflowJobPartsResult jobPartsRevisionAResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "A");
@@ -412,19 +270,18 @@ public class PlmWorkflowRevisionTests extends TestBase {
     @Description("Verify 'Return Latest Revision' setting is preserved when a workflow query is edited")
     public void testWorkflowEditEnabledPreserveRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
+        CIConnectHome ciConnectHome = new CicLoginPage(driver).login(currentUser);
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setCustomer(CicApiTestUtil.getCustomerName())
-            .setAgent(CicApiTestUtil.getAgent(ciConnectHome.getSession()))
+            .setWorkflowName(GenerateStringUtil.saltString("----0WFCR"))
             .setQueryFilter(QueryDefinitionFields.PART_NUMBER.getQueryDefinitionField(), "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .useLatestRevision(true)
             .build();
-        workflowRequestDataBuilder.setName(GenerateStringUtil.saltString("----0WFCR"));
 
-        createWorkflowResponse = CicApiTestUtil.createWorkflow(workflowRequestDataBuilder, ciConnectHome.getSession());
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains("CreateJobDefinition");
-        softAssertions.assertThat(createWorkflowResponse.getBody()).contains(">true<");
+        this.cicGuiLogin()
+            .createWorkflow()
+            .getWorkflow();
 
         WorkflowHome workflowHome = ciConnectHome.clickWorkflowMenu()
             .selectScheduleTab()
@@ -439,19 +296,10 @@ public class PlmWorkflowRevisionTests extends TestBase {
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();
 
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName());
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
-        softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
-
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
-
-        AgentWorkflowJobResults agentWorkflowJobResult = CicApiTestUtil.getCicAgentWorkflowJobResult(agentWorkflowResponse.getId(),
-            agentWorkflowJobRunResponse.getJobId(),
-            AgentWorkflowJobResults.class,
-            HttpStatus.SC_OK);
+        AgentWorkflowJobResults agentWorkflowJobResult = this.getWorkflow()
+            .invokeWorkflow()
+            .trackWorkflow()
+            .getJobResult();
 
         softAssertions.assertThat(agentWorkflowJobResult.size()).isEqualTo(1);
         AgentWorkflowJobPartsResult jobPartsRevisionResult = CicApiTestUtil.getMatchedRevisionWorkflowPartResult(agentWorkflowJobResult, "B");
@@ -463,8 +311,8 @@ public class PlmWorkflowRevisionTests extends TestBase {
 
     @After
     public void cleanup() {
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workflowRequestDataBuilder.getName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), jobDefinitionData);
+        this.deleteWorkflow();
         softAssertions.assertAll();
+        this.close();
     }
 }

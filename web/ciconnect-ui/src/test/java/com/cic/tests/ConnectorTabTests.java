@@ -3,6 +3,7 @@ package com.cic.tests;
 import com.apriori.pages.connectors.ConnectorsPage;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -11,18 +12,11 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import utils.CicApiTestUtil;
+import utils.WorkflowTestUtil;
 
-public class ConnectorTabTests extends TestBase {
+public class ConnectorTabTests extends WorkflowTestUtil {
     private UserCredentials currentUser = UserUtil.getUser();
-
-
-    public ConnectorTabTests() {
-        super();
-    }
-
-    @Before
-    public void setup() {
-    }
 
     @Test
     @TestRail(testCaseId = {"3955"})
@@ -39,7 +33,7 @@ public class ConnectorTabTests extends TestBase {
         softAssertions.assertThat(connectorsPage.getRefreshConnectorStatusBtn().isDisplayed()).isEqualTo(true);
         softAssertions.assertThat(connectorsPage.getEditConnectorBtn().isDisplayed()).isEqualTo(true);
 
-        connectorsPage.selectConnector("AS-FS 22-1 aP Internal");
+        connectorsPage.selectConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"));
         softAssertions.assertThat(connectorsPage.getEditConnectorBtn().isEnabled()).isEqualTo(true);
         softAssertions.assertAll();
     }

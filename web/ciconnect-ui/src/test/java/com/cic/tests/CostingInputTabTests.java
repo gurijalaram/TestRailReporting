@@ -18,22 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import utils.WorkflowTestUtil;
 
 import java.util.Arrays;
 
 @Slf4j
-public class CostingInputTabTests extends TestBase {
+public class CostingInputTabTests extends WorkflowTestUtil {
     private UserCredentials currentUser = UserUtil.getUser();
-    WorkflowHome workflowHome;
     SoftAssertions softAssertions;
-
-    public CostingInputTabTests() {
-        super();
-    }
-
-    @Before
-    public void setUpAndLogin() {
-    }
 
     @Test
     @TestRail(testCaseId = {"4297", "4305"})

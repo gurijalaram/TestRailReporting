@@ -215,12 +215,8 @@ public class DetailsPart extends CICBasePage {
         }
         pageUtils.waitForElementAndClick(this.getNextButtonElement());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
-        pageUtils.waitForElementToAppear(addRuleGroupElement);
-        if (pageUtils.isElementDisplayed(getQDReturnOnlyCheckboxElement())) {
-            object = new QueryDefinitions(driver);
-        } else if (pageUtils.isElementDisplayed(getCostingInputAddRowButton())) {
-            object = new CostingInputsPart(driver);
-        }
+        pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
+        object = workflowPopUpActiveTabElement.getText().equals("2") ? new QueryDefinitions(driver) : new CostingInputsPart(driver);
         return object;
     }
 

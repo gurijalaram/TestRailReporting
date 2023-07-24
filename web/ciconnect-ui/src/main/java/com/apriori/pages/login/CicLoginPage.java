@@ -7,6 +7,7 @@ import com.apriori.pages.home.CIConnectHome;
 import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -40,6 +41,8 @@ public class CicLoginPage extends CICBasePage {
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
         CIConnectHome ciConnectHome = aprioriLoginService.login(userCredentials, CIConnectHome.class);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToBeClickable(usersMenuBtn);
         if (Objects.isNull(ciConnectHome)) {
             throw new RuntimeException("Login failed!!");
         }
