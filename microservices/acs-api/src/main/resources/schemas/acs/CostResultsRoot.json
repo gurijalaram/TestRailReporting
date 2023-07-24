@@ -273,7 +273,7 @@
                   "type": "number"
                 },
                 "dfmRisk": {
-                  "type": "integer"
+                  "type": ["integer","string"]
                 },
                 "stockPropertywallThickness": {
                   "type": "number"
