@@ -2,9 +2,9 @@ package com.apriori.pageobjects.navtoolbars;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import lombok.extern.slf4j.Slf4j;

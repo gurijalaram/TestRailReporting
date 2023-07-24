@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;

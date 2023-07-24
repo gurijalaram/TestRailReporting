@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

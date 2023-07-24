@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.header;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.create.CreateDashboardPage;
 import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
@@ -14,7 +15,6 @@ import com.apriori.pageobjects.pages.view.ViewMessagesPage;
 import com.apriori.pageobjects.pages.view.ViewRepositoryPage;
 import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

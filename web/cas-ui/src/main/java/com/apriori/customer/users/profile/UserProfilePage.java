@@ -1,10 +1,10 @@
 package com.apriori.customer.users.profile;
 
+import com.apriori.PageUtils;
 import com.apriori.common.ModalUserList;
+import com.apriori.components.SelectComponent;
+import com.apriori.components.SourceListComponent;
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.SelectComponent;
-import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;

@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.pages.compare;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

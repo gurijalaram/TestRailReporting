@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.PageUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -12,7 +13,6 @@ import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
