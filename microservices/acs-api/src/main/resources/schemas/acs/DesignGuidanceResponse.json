@@ -87,10 +87,7 @@
                   "type": "integer"
                 },
                 "current": {
-                  "type": "string"
-                },
-                "current": {
-                  "type": "number"
+                  "type": ["string", "number", "integer"]
                 },
                 "custom": {
                   "type": "object",
