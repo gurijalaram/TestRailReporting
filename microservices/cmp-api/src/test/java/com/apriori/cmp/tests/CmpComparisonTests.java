@@ -13,6 +13,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -52,8 +53,8 @@ public class CmpComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"26183", "26184", "26185", "26186", "26187"})
-    @Description("Verify get only shows comparison for a given user")
+    @TestRail(testCaseId = {"26152", "26183", "26184", "26185", "26186", "26187"})
+    @Description("Verify comparison for a given user")
     public void verifyComparisonForGivenUser() {
         currentUser = UserUtil.getUser();
         scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -138,6 +139,10 @@ public class CmpComparisonTests {
             + secondUser);
 
         secondUserQuery.forEach(userQuery -> softAssertions.assertThat(userQuery.getCreatedBy()).isNotEqualTo(savedComparisonResponse.getCreatedBy()));
+
+        ResponseWrapper<String> deleteResponse = comparisonUtils.deleteComparison(savedComparisonResponse.getIdentity(), currentUser);
+
+        softAssertions.assertThat(deleteResponse.getBody()).isEmpty();
 
         softAssertions.assertAll();
     }
