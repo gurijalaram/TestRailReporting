@@ -1,12 +1,10 @@
 package com.cic.tests;
 
+import com.apriori.DateFormattingUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -14,15 +12,10 @@ import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
-import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
-import entity.response.AgentWorkflowJobRun;
 import entity.response.PlmSearchPart;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
@@ -33,7 +26,6 @@ import enums.PlmWCType;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
@@ -45,9 +37,9 @@ import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
 public class PlmUdaTests extends WorkflowTestUtil {
-    private final IterationsUtil iterationsUtil = new IterationsUtil();
     private static SoftAssertions softAssertions;
     private static PartData plmPartData;
+    private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @Before
     public void testSetup() {

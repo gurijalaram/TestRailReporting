@@ -9,7 +9,7 @@ import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PRAttachReportTab;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.DateFormattingUtils;
+import com.apriori.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -17,7 +17,6 @@ import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.MaterialNameEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import entity.request.PlmFieldDefinitions;

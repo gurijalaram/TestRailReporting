@@ -1,4 +1,4 @@
-package com.apriori.utils.json.deserializers;
+package com.apriori.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -12,8 +12,10 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author kpatel
  */
-public class DateTimeDeserializer_yyyyMMddTHHmmss extends JsonDeserializer<LocalDateTime> {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+public class DateTimeDeserializer_yyyyMMddTHHmmssZZZZ extends JsonDeserializer<LocalDateTime> {
+
+    private static DateTimeFormatter formatter =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)

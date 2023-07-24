@@ -7,7 +7,7 @@ import com.apriori.qds.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.utils.DateFormattingUtils;
+import com.apriori.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

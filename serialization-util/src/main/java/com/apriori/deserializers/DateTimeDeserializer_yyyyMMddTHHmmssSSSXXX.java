@@ -1,4 +1,4 @@
-package com.apriori.utils.json.deserializers;
+package com.apriori.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -12,17 +12,20 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author kpatel
  */
-public class DateTimeDeserializer_EEEMMMdHHmmsszyyyy extends JsonDeserializer<LocalDateTime> {
-
+public class DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX extends JsonDeserializer<LocalDateTime> {
     private static DateTimeFormatter formatter =
-        DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
+        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
 
+        // making sure that date has max 3 trailing numbers after seconds
+        // example: 2018-06-28T05:50:59.533242Z --> 2018-06-28T05:50:59.000Z
+        String formattedTime = jsonParser.getText().substring(0, 20) + "000Z";
+
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
-            return LocalDateTime.parse(jsonParser.getText(), formatter);
+            return LocalDateTime.parse(formattedTime, formatter);
         }
         return null;
     }

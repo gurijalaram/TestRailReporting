@@ -1,4 +1,4 @@
-package com.apriori.utils.json.deserializers;
+package com.apriori.deserializers;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;

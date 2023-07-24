@@ -1,6 +1,4 @@
-package com.apriori.utils.json.deserializers;
-
-import com.apriori.utils.DateFormattingUtils;
+package com.apriori.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -9,22 +7,22 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * @author cfrith
+ * @author kpatel
  */
+public class DateTimeDeserializer_MMMdyyyy extends JsonDeserializer<LocalDateTime> {
 
-public class DateDeserializer_yyyyMMdd extends JsonDeserializer<LocalDate> {
-
-    private static DateTimeFormatter formatter = DateFormattingUtils.dtf_yyyyMMdd;
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
 
     @Override
-    public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
 
         if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
-            return LocalDate.parse(jsonParser.getText(), formatter);
+            return LocalDate.parse(jsonParser.getText(), formatter).atStartOfDay();
         }
         return null;
     }

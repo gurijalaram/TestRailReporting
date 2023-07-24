@@ -1,8 +1,8 @@
 package com.apriori.cisapi.entity.response.userpreferences;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,15 +28,12 @@ public class CurrentExtendedUserPreferencesResponse extends Pagination {
     private String name;
     private String type;
     private String value;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime updatedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
-
     private String userIdentity;
     private String avatarColor;
     private String customerIdentity;

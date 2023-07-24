@@ -1,4 +1,4 @@
-package com.apriori.utils;
+package com.apriori;
 
 import java.time.format.DateTimeFormatter;
 

@@ -1,6 +1,6 @@
-package com.apriori.utils.json.serializers;
+package com.apriori.serializers;
 
-import com.apriori.utils.DateFormattingUtils;
+import com.apriori.DateFormattingUtils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
