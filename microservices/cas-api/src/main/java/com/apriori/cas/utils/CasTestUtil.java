@@ -1,7 +1,5 @@
 package com.apriori.cas.utils;
 
-import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
@@ -13,6 +11,7 @@ import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.entity.response.CustomerAssociationUser;
 import com.apriori.entity.response.CustomerAssociationUsers;
@@ -20,6 +19,7 @@ import com.apriori.entity.response.CustomerAssociations;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.CustomerUsers;
+import com.apriori.entity.response.Customers;
 import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.entity.response.Site;
@@ -49,157 +49,6 @@ import java.util.stream.Collectors;
 public class CasTestUtil extends TestUtil {
 
     /**
-     * Gets the special customer "aPriori Internal"
-     *
-     * @return The customer representing aPriori Internal
-     */
-    public Customer getAprioriInternal() {
-        Map<String, Object> filters = new HashMap<>();
-        filters.put("name[EQ]", "aPriori Internal");
-
-        Customer customer = findFirst(CASAPIEnum.CUSTOMERS, Customers.class, filters, Collections.emptyMap());
-
-        if (customer == null) {
-            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
-        }
-
-        return customer;
-    }
-
-    /**
-     * Creates a random customer.
-     *
-     * @return The response for the customer created.
-     */
-    public ResponseWrapper<Customer> createCustomer() {
-        GenerateStringUtil generator = new GenerateStringUtil();
-        return createCustomer(
-            generator.generateCustomerName(),
-            generator.generateCloudReference(),
-            generator.getRandomString(),
-            "apriori.com",
-            "apriori.co.uk",
-            "test.com",
-            "test.co.uk");
-    }
-
-    /**
-     * Creates a pseudo random customer.
-     *
-     * @param name           The name of the customer.
-     * @param cloudReference The customer cloud reference.
-     * @param description    Customer description.
-     * @param domains        The email domains for the customer.
-     * @return The response for the customer created.
-     */
-    public ResponseWrapper<Customer> createCustomer(String name, String cloudReference, String description, String... domains) {
-        Customer customer = Customer.builder().name(name)
-            .cloudReference(cloudReference)
-            .description(description)
-            .salesforceId(new GenerateStringUtil().generateSalesForceId())
-            .customerType("CLOUD_ONLY")
-            .active(true)
-            .mfaRequired(true)
-            .useExternalIdentityProvider(false)
-            .maxCadFileRetentionDays(584)
-            .maxCadFileSize(51)
-            .emailDomains(Arrays.asList(domains))
-            .build();
-        return create(CASAPIEnum.CUSTOMERS, Customer.class, customer, HttpStatus.SC_CREATED);
-    }
-
-    /**
-     * Searches for a specific customer association.
-     *
-     * @param source The source customer.
-     * @param target The target customer.
-     * @return The customer association for the target->source relationship.  Returns null
-     * if there is no association.
-     */
-    public CustomerAssociation findCustomerAssociation(Customer source, Customer target) {
-        return findFirst(
-            CASAPIEnum.CUSTOMER_ASSOCIATIONS,
-            CustomerAssociations.class,
-            Collections.singletonMap("targetCustomer.identity[EQ]", target.getIdentity()),
-            Collections.emptyMap(),
-            source.getIdentity());
-    }
-
-    /**
-     * @param source - the customer source
-     * @param association - The association that contains the target customer.
-     * @param identity - the identity
-     * @return
-     */
-    public CustomerAssociationUser findCustomerAssociationUser(Customer source, CustomerAssociation association, String identity) {
-        return findFirst(
-            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
-            CustomerAssociationUsers.class,
-            Collections.singletonMap("identity[EQ]", identity),
-            Collections.emptyMap(),
-            source.getIdentity(),
-            association.getIdentity()
-        );
-    }
-
-    /**
-     * @param source - the customer source
-     * @param association - The association that contains the target customer.
-     * @return ResponseWrapper <CustomerAssociationUsers>
-     */
-    public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
-        return find(
-            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
-            CustomerAssociationUsers.class,
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            1,
-            1000,
-            source.getIdentity(),
-            association.getIdentity()
-        );
-    }
-
-    /**
-     * @param source - the customer source
-     * @param association The association that contains the target customer.
-     * @return ResponseWrapper <CustomerUsers>
-     */
-    public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
-        return find(
-            CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
-            CustomerUsers.class,
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            1,
-            1000,
-            source.getIdentity(),
-            association.getIdentity()
-        );
-    }
-
-    /**
-     * Associates a user to another customer and creates an out of context relationship.
-     *
-     * @param user        The user to associate in the source customer.
-     * @param association The association that contains the target customer.
-     * @return The response.
-     */
-    public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(CustomerUser user, CustomerAssociation association) {
-        CustomerAssociationUser body = CustomerAssociationUser.builder()
-            .userIdentity(user.getIdentity())
-            .build();
-        return create(
-            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
-            CustomerAssociationUser.class,
-            body,
-            HttpStatus.SC_CREATED,
-            user.getCustomerIdentity(),
-            association.getIdentity()
-        );
-    }
-
-    /**
      * POST call to add a customer
      *
      * @param name           - the customer name
@@ -219,57 +68,6 @@ public class CasTestUtil extends TestUtil {
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
-                    .useExternalIdentityProvider(false)
-                    .maxCadFileRetentionDays(584)
-                    .maxCadFileSize(51)
-                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
-                    .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Looking for On Prem customer
-     *
-     * @return Customer class
-     */
-    public Customer findOnPremCustomer() {
-        return find(
-            CASAPIEnum.CUSTOMERS,
-            Customers.class,
-            Collections.emptyMap(),
-            Collections.emptyMap(),
-            1,
-            1000,
-            null)
-            .getResponseEntity()
-            .getItems()
-            .stream()
-            .filter(customer -> customer.getCustomerType().equals("ON_PREMISE_ONLY"))
-            .collect(Collectors.toList())
-            .get(0);
-    }
-
-    /**
-     * Creates a customer with On Premise customer type
-     *
-     * @param name - customer name
-     * @param email - customer email
-     * @return ResponseWrapper<Customer>
-     */
-    public ResponseWrapper<Customer> createOnPremCustomer(String name, String email) {
-        GenerateStringUtil generator = new GenerateStringUtil();
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("customer",
-                Customer.builder()
-                    .name(name)
-                    .cloudReference(null)
-                    .description(generator.getRandomString())
-                    .salesforceId(generator.generateSalesForceId())
-                    .customerType("ON_PREMISE_ONLY")
-                    .active(true)
-                    .mfaRequired(false)
                     .useExternalIdentityProvider(false)
                     .maxCadFileRetentionDays(584)
                     .maxCadFileSize(51)
@@ -361,61 +159,6 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param source - the customer source
-     * @return ResponseWrapper <CustomerUser>
-     */
-    public List<CustomerUser> findUsers(Customer source) {
-        return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
-    }
-
-    /**
-     * @param customer - the customer
-     * @return ResponseWrapper <CustomerUser>
-     */
-    public ResponseWrapper<CustomerUser> createUser(Customer customer) {
-        String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
-        return createUser(customer.getIdentity(), domain);
-    }
-
-    /**
-     * @param customerIdentity - customer identity
-     * @param domain - domain
-     * @return ResponseWrapper <CustomerUser>
-     */
-    public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
-        GenerateStringUtil generator = new GenerateStringUtil();
-        return createUser(customerIdentity, generator.generateUserName(), domain);
-    }
-
-    /**
-     * @param customerIdentity - customer identity
-     * @param userName - user name
-     * @param domain - domain
-     * @return ResponseWrapper <CustomerUser>
-     */
-    public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
-        String email = String.format("%s@%s", userName.toLowerCase(), domain);
-
-        CustomerUserProfile profile = CustomerUserProfile.builder().givenName("Robot")
-            .familyName("Automator")
-            .jobTitle("Automation Engineer")
-            .department("Automation")
-            .supervisor("Ciene Frith")
-            .townCity("Brooklyn")
-            .build();
-
-        CustomerUser user = CustomerUser.builder()
-            .userType("AP_CLOUD_USER")
-            .email(email)
-            .username(userName)
-            .active(true)
-            .userProfile(profile)
-            .build();
-
-        return create(CASAPIEnum.USERS, CustomerUser.class, user, HttpStatus.SC_CREATED, customerIdentity);
-    }
-
-    /**
      * @param userName - username
      * @return ResponseWrapper <CustomerUser>
      */
@@ -454,14 +197,16 @@ public class CasTestUtil extends TestUtil {
                     .createdByName("SYSTEM")
                     .licenseAssignments(Collections.singletonList(""))
                     .userType("AP_CLOUD_USER")
-                    .userProfile(new UpdatedProfile().setIdentity(profileIdentity)
-                        .setCreatedAt(profileCreatedAt)
-                        .setCreatedBy("#SYSTEM00000")
-                        .setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("QA")
-                        .setSupervisor("Ciene Frith"))
+                    .userProfile(UpdatedProfile.builder()
+                        .identity(profileIdentity)
+                        .createdAt(profileCreatedAt)
+                        .createdBy("#SYSTEM00000")
+                        .givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("QA")
+                        .supervisor("Ciene Frith")
+                        .build())
                     .build())
             .inlineVariables(customerIdentity, identity)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -535,49 +280,306 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param casLicense - license text
-     * @param customerIdentity - the customer identity
-     * @param siteIdentity - the site identity
-     * @param customerName - the customer name
-     * @param siteId - the site id
-     * @param subLicenseId - the sublicense id
-     * @return ResponseWrapper <LicenseResponse>
+     * Gets the special customer "aPriori Internal"
+     *
+     * @return The customer representing aPriori Internal
      */
-    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
+    public Customer getAprioriInternal() {
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("name[EQ]", "aPriori Internal");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
-                .inlineVariables(customerIdentity, siteIdentity)
-                .expectedResponseCode(HttpStatus.SC_CREATED)
-                .body(LicenseRequest.builder()
-                    .license(
-                        License.builder()
-                            .description("Test License")
-                            .apVersion("2020 R1")
-                            .createdBy("#SYSTEM00000")
-                            .license(String.format(casLicense, customerName, siteId, subLicenseId, subLicenseId))
-                            .build())
-                        .build());
+        Customer customer = findFirst(CASAPIEnum.CUSTOMERS, Customers.class, filters, Collections.emptyMap());
+
+        if (customer == null) {
+            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
+        }
+
+        return customer;
+    }
+
+    /**
+     * Creates a random customer.
+     *
+     * @return The response for the customer created.
+     */
+    public ResponseWrapper<Customer> createCustomer() {
+        GenerateStringUtil generator = new GenerateStringUtil();
+        return createCustomer(
+            generator.generateCustomerName(),
+            generator.generateCloudReference(),
+            generator.getRandomString(),
+            "apriori.com",
+            "apriori.co.uk",
+            "test.com",
+            "test.co.uk");
+    }
+
+    /**
+     * Creates a pseudo random customer.
+     *
+     * @param name           The name of the customer.
+     * @param cloudReference The customer cloud reference.
+     * @param description    Customer description.
+     * @param domains        The email domains for the customer.
+     * @return The response for the customer created.
+     */
+    public ResponseWrapper<Customer> createCustomer(String name, String cloudReference, String description, String... domains) {
+        Customer customer = Customer.builder().name(name)
+            .cloudReference(cloudReference)
+            .description(description)
+            .salesforceId(new GenerateStringUtil().generateSalesForceId())
+            .customerType("CLOUD_ONLY")
+            .active(true)
+            .mfaRequired(true)
+            .useExternalIdentityProvider(false)
+            .maxCadFileRetentionDays(584)
+            .maxCadFileSize(51)
+            .emailDomains(Arrays.asList(domains))
+            .build();
+        return create(CASAPIEnum.CUSTOMERS, Customer.class, customer, HttpStatus.SC_CREATED);
+    }
+
+    /**
+     * Searches for a specific customer association.
+     *
+     * @param source The source customer.
+     * @param target The target customer.
+     * @return The customer association for the target->source relationship.  Returns null
+     * if there is no association.
+     */
+    public CustomerAssociation findCustomerAssociation(Customer source, Customer target) {
+        return findFirst(
+            CASAPIEnum.CUSTOMER_ASSOCIATIONS,
+            CustomerAssociations.class,
+            Collections.singletonMap("targetCustomer.identity[EQ]", target.getIdentity()),
+            Collections.emptyMap(),
+            source.getIdentity());
+    }
+
+    /**
+     * @param source      - the customer source
+     * @param association - The association that contains the target customer.
+     * @param identity    - the identity
+     * @return
+     */
+    public CustomerAssociationUser findCustomerAssociationUser(Customer source, CustomerAssociation association, String identity) {
+        return findFirst(
+            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
+            CustomerAssociationUsers.class,
+            Collections.singletonMap("identity[EQ]", identity),
+            Collections.emptyMap(),
+            source.getIdentity(),
+            association.getIdentity()
+        );
+    }
+
+    /**
+     * @param source      - the customer source
+     * @param association - The association that contains the target customer.
+     * @return ResponseWrapper <CustomerAssociationUsers>
+     */
+    public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
+        return find(
+            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
+            CustomerAssociationUsers.class,
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            1,
+            1000,
+            source.getIdentity(),
+            association.getIdentity()
+        );
+    }
+
+    /**
+     * @param source      - the customer source
+     * @param association The association that contains the target customer.
+     * @return ResponseWrapper <CustomerUsers>
+     */
+    public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
+        return find(
+            CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
+            CustomerUsers.class,
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            1,
+            1000,
+            source.getIdentity(),
+            association.getIdentity()
+        );
+    }
+
+    /**
+     * Associates a user to another customer and creates an out of context relationship.
+     *
+     * @param user        The user to associate in the source customer.
+     * @param association The association that contains the target customer.
+     * @return The response.
+     */
+    public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(CustomerUser user, CustomerAssociation association) {
+        CustomerAssociationUser body = CustomerAssociationUser.builder()
+            .userIdentity(user.getIdentity())
+            .build();
+        return create(
+            CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
+            CustomerAssociationUser.class,
+            body,
+            HttpStatus.SC_CREATED,
+            user.getCustomerIdentity(),
+            association.getIdentity()
+        );
+    }
+
+    /**
+     * Looking for On Prem customer
+     *
+     * @return Customer class
+     */
+    public Customer findOnPremCustomer() {
+        return find(
+            CASAPIEnum.CUSTOMERS,
+            Customers.class,
+            Collections.emptyMap(),
+            Collections.emptyMap(),
+            1,
+            1000,
+            null)
+            .getResponseEntity()
+            .getItems()
+            .stream()
+            .filter(customer -> customer.getCustomerType().equals("ON_PREMISE_ONLY"))
+            .collect(Collectors.toList())
+            .get(0);
+    }
+
+    /**
+     * Creates a customer with On Premise customer type
+     *
+     * @param name  - customer name
+     * @param email - customer email
+     * @return ResponseWrapper<Customer>
+     */
+    public ResponseWrapper<Customer> createOnPremCustomer(String name, String email) {
+        GenerateStringUtil generator = new GenerateStringUtil();
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body("customer",
+                Customer.builder()
+                    .name(name)
+                    .cloudReference(null)
+                    .description(generator.getRandomString())
+                    .salesforceId(generator.generateSalesForceId())
+                    .customerType("ON_PREMISE_ONLY")
+                    .active(true)
+                    .mfaRequired(false)
+                    .useExternalIdentityProvider(false)
+                    .maxCadFileRetentionDays(584)
+                    .maxCadFileSize(51)
+                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
 
     /**
-     * @param klass - class
+     * @param source - the customer source
+     * @return ResponseWrapper <CustomerUser>
+     */
+    public List<CustomerUser> findUsers(Customer source) {
+        return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
+    }
+
+    /**
+     * @param customer - the customer
+     * @return ResponseWrapper <CustomerUser>
+     */
+    public ResponseWrapper<CustomerUser> createUser(Customer customer) {
+        String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
+        return createUser(customer.getIdentity(), domain);
+    }
+
+    /**
+     * @param customerIdentity - customer identity
+     * @param domain           - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
+    public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
+        GenerateStringUtil generator = new GenerateStringUtil();
+        return createUser(customerIdentity, generator.generateUserName(), domain);
+    }
+
+    /**
+     * @param customerIdentity - customer identity
+     * @param userName         - user name
+     * @param domain           - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
+    public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
+        String email = String.format("%s@%s", userName.toLowerCase(), domain);
+
+        CustomerUserProfile profile = CustomerUserProfile.builder().givenName("Robot")
+            .familyName("Automator")
+            .jobTitle("Automation Engineer")
+            .department("Automation")
+            .supervisor("Ciene Frith")
+            .townCity("Brooklyn")
+            .build();
+
+        CustomerUser user = CustomerUser.builder()
+            .userType("AP_CLOUD_USER")
+            .email(email)
+            .username(userName)
+            .active(true)
+            .userProfile(profile)
+            .build();
+
+        return create(CASAPIEnum.USERS, CustomerUser.class, user, HttpStatus.SC_CREATED, customerIdentity);
+    }
+
+    /**
+     * @param casLicense       - license text
      * @param customerIdentity - the customer identity
-     * @param siteIdentity - the site identity
-     * @param licenseIdentity - the license identity
+     * @param siteIdentity     - the site identity
+     * @param customerName     - the customer name
+     * @param siteId           - the site id
+     * @param subLicenseId     - the sublicense id
+     * @return ResponseWrapper <LicenseResponse>
+     */
+    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+            .inlineVariables(customerIdentity, siteIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(LicenseRequest.builder()
+                .license(
+                    License.builder()
+                        .description("Test License")
+                        .apVersion("2020 R1")
+                        .createdBy("#SYSTEM00000")
+                        .license(String.format(casLicense, customerName, siteId, subLicenseId, subLicenseId))
+                        .build())
+                .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * @param klass              - class
+     * @param customerIdentity   - the customer identity
+     * @param siteIdentity       - the site identity
+     * @param licenseIdentity    - the license identity
      * @param subLicenseIdentity - the sublicense identity
-     * @param userIdentity - the user identity
+     * @param userIdentity       - the user identity
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, klass)
-                .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
-                .expectedResponseCode(expectedResponseCode)
-                .body("userAssociation",
-                        AssociationUser.builder()
-                                .userIdentity(userIdentity)
-                                .build());
+            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body("userAssociation",
+                AssociationUser.builder()
+                    .userIdentity(userIdentity)
+                    .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -586,7 +588,7 @@ public class CasTestUtil extends TestUtil {
      * Creates new access control for user
      *
      * @param customerIdentity - customer identity
-     * @param userIdentity - user identity
+     * @param userIdentity     - user identity
      * @return ResponseWrapper <AccessControl>
      */
     public ResponseWrapper<AccessControl> addAccessControl(String customerIdentity, String userIdentity) {
@@ -607,12 +609,12 @@ public class CasTestUtil extends TestUtil {
     /**
      * Grants bulk access to customer application
      *
-     * @param aPInternalIdentity - identity of aP Internal customer
-     * @param siteIdentity - site identity
-     * @param deploymentIdentity - deployment identity
+     * @param aPInternalIdentity   - identity of aP Internal customer
+     * @param siteIdentity         - site identity
+     * @param deploymentIdentity   - deployment identity
      * @param installationIdentity - installation identity
-     * @param appIdentity - application identity
-     * @param sourceCustomerId - source customer identity
+     * @param appIdentity          - application identity
+     * @param sourceCustomerId     - source customer identity
      * @return ResponseWrapper <String>
      */
     public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
@@ -629,10 +631,10 @@ public class CasTestUtil extends TestUtil {
     /**
      * Changes activation state of a License.
      *
-     * @param klas - class
+     * @param klas             - class
      * @param customerIdentity - customer identity
-     * @param siteIdentity - site identity
-     * @param licenseIdentity - license identity
+     * @param siteIdentity     - site identity
+     * @param licenseIdentity  - license identity
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity, Integer expectedResponseCode) {
@@ -646,10 +648,10 @@ public class CasTestUtil extends TestUtil {
     /**
      * Requests access for a customer
      *
-     * @param klas - class
-     * @param customerIdentity - customer identity
-     * @param userIdentity - user identity
-     * @param serviceAccount - service account name
+     * @param klas                 - class
+     * @param customerIdentity     - customer identity
+     * @param userIdentity         - user identity
+     * @param serviceAccount       - service account name
      * @param expectedResponseCode - expected response code
      * @return <T>ResponseWrapper <T>
      */

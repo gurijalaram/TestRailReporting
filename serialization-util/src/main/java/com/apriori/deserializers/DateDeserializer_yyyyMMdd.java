@@ -1,6 +1,6 @@
-package com.apriori.utils.json.deserializers;
+package com.apriori.deserializers;
 
-import com.apriori.utils.DateFormattingUtils;
+import com.apriori.DateFormattingUtils;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;

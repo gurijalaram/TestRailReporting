@@ -1,8 +1,7 @@
 package com.apriori.cusapi.entity.response;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

@@ -1,6 +1,6 @@
 package com.apriori.vds.entity.request.user.group.associations;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-
-// Serialize
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 @JsonTypeName(value = "userGroupAssociation")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,15 +25,12 @@ public class UserGroupAssociationRequest {
     private String identity;
     private String updatedBy;
     private String userIdentity;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;

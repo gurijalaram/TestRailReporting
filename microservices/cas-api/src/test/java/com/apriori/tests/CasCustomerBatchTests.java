@@ -1,10 +1,10 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerBatch;
 import com.apriori.entity.response.CustomerBatches;
 import com.apriori.entity.response.PostBatch;

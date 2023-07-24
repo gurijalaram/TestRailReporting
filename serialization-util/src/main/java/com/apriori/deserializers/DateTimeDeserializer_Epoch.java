@@ -1,4 +1,4 @@
-package com.apriori.utils.json.deserializers;
+package com.apriori.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -6,21 +6,22 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 
 /**
- * @author kpatel
+ * @author rgurijala
  */
-public class DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ extends JsonDeserializer<LocalDateTime> {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+public class DateTimeDeserializer_Epoch extends JsonDeserializer<LocalDateTime> {
 
     @Override
     public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
 
-        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_STRING)) {
-            return LocalDateTime.parse(jsonParser.getText(), formatter);
+        if (jsonParser.getCurrentToken().equals(JsonToken.VALUE_NUMBER_INT)) {
+            return Instant.ofEpochMilli(jsonParser.readValueAs(Long.class)).atZone(ZoneId.systemDefault()).toLocalDateTime();
         }
         return null;
     }

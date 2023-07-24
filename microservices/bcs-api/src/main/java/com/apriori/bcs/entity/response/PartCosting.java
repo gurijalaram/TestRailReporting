@@ -1,7 +1,7 @@
 package com.apriori.bcs.entity.response;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -48,11 +48,9 @@ public class PartCosting {
     public Double height;
     public Double laborCost;
     public Double laborTime;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime lastCosted;
-
     public Double length;
     public Double lifetimeCost;
     public Double logisticsCost;

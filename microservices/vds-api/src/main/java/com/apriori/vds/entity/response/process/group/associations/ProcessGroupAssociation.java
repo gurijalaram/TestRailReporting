@@ -1,7 +1,7 @@
 package com.apriori.vds.entity.response.process.group.associations;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @JsonRootName(value = "response")
 public class ProcessGroupAssociation {
-
     private String createdBy;
     private String defaultVpeIdentity;
     private String defaultVpeName;
@@ -30,15 +29,12 @@ public class ProcessGroupAssociation {
     private String processGroupIdentity;
     private String processGroupName;
     private String updatedBy;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
