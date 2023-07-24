@@ -1,8 +1,8 @@
 package com.apriori.qds.entity.response.bidpackage;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.qds.entity.request.bidpackage.CommentReminder;
 import com.apriori.qds.entity.request.bidpackage.EmailReminder;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;

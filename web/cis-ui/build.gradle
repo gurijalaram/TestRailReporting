@@ -5,4 +5,5 @@ dependencies {
     implementation project(':microservices:cis-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':web-app-util')
+    implementation project(':serialization-util')
 }

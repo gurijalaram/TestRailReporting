@@ -1,7 +1,7 @@
 package com.apriori.fms.entity.response;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -21,21 +21,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FileResponse {
     private String identity;
-
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     private String updatedBy;
     private String deletedBy;
-
     private String customerIdentity;
     private String deploymentIdentity;
     private String installationIdentity;
     private String applicationIdentity;
     private String userIdentity;
-
     private String filename;
     private String folder;
     @JsonProperty("filesize")

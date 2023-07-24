@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas;
+package com.apriori.entity.response;
 
 import com.apriori.utils.Pagination;
 import com.apriori.utils.common.objects.Paged;

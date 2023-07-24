@@ -1,7 +1,7 @@
 package com.apriori.vds.entity.response.process.group.materials.stock;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.vds.entity.response.process.group.materials.SustainabilityInfo;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -42,18 +42,14 @@ public class ProcessGroupMaterialStock {
     private Double wallThickness;
     private Double webThickness;
     private Double width;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
     private SustainabilityInfo sustainabilityInfo;
 }

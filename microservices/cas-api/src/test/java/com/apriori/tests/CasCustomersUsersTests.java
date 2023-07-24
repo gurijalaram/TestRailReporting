@@ -1,10 +1,10 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
@@ -39,8 +39,8 @@ import java.util.stream.Collectors;
 
 public class CasCustomersUsersTests {
     private static final Logger logger = LoggerFactory.getLogger(CasCustomersUsersTests.class);
-    private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;

@@ -1,9 +1,9 @@
 package com.apriori.qms.entity.response.scenariodiscussion;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserEnablements;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUserProfile;
 import com.apriori.qms.entity.response.bidpackage.CustomAttributes;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;

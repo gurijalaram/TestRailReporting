@@ -7,6 +7,7 @@
 include(':utils')
 include(':apibase')
 include(':web-app-util')
+include(':serialization-util')
 include(':db')
 
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api",

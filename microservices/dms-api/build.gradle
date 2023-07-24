@@ -21,7 +21,7 @@ dependencies {
     implementation 'com.massisframework:j-text-utils:0.3.4'
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:qms-api')
-
+    implementation project(':serialization-util')
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
