@@ -14,7 +14,7 @@ sourceSets {
 
 dependencies {
     implementation project(':apibase')
-    implementation project(':utils')
+    implementation project(':shared-util')
 
     implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
     implementation group: 'net.sf.cssbox', name: 'pdf2dom', version: '2.0.1'

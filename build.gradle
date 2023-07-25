@@ -34,7 +34,7 @@ subprojects {
 
     // Copy allure properties into each module test resources
     processTestResources {
-        from project(":utils").projectDir.path + "/src/test/resources/allure.properties"
+        from project(":shared-util").projectDir.path + "/src/test/resources/allure.properties"
     }
 
     repositories {

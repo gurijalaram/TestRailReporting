@@ -3,7 +3,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':apibase')
     implementation project(':db')
     implementation project(':microservices:cic-api')

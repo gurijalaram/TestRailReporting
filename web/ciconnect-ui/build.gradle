@@ -13,7 +13,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':apibase')
     implementation project(':microservices:cic-api')
     implementation project(':microservices:cidapp-api')

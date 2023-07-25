@@ -15,7 +15,7 @@ sourceSets {
 
 dependencies {
     implementation project(':apibase')
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':microservices:bcs-api')
     implementation project(':serialization-util')
 

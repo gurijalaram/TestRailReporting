@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':microservices:edc-api')
     implementation project(':apibase')
     implementation project(':web-app-util')

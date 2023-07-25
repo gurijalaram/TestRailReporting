@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':apibase')
     implementation project(':microservices:sds-api')
     implementation project(':microservices:bcs-api')

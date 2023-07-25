@@ -15,7 +15,7 @@ sourceSets {
 
 dependencies {
     implementation project(':apibase')
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':db')
     implementation project(':serialization-util')
     implementation 'com.massisframework:j-text-utils:0.3.4'
