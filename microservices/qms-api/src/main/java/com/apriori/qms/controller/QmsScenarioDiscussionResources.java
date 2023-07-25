@@ -79,6 +79,37 @@ public class QmsScenarioDiscussionResources {
     }
 
     /**
+     * Gets scenario discussions with parameters.
+     *
+     * @param <T>             the type parameter
+     * @param paramKeysValues the param keys values
+     * @param responseClass   the response class
+     * @param httpStatus      the http status
+     * @param currentUser     the current user
+     * @return the scenario discussions with parameters
+     */
+    public static <T> T getScenarioDiscussionsWithParameters(String[] paramKeysValues, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        QueryParams queryParams = new QueryParams();
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(","))
+            .collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+        try {
+            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            throw new KeyValueException(ae.getMessage(), paramKeyValue);
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, responseClass)
+            .queryParams(queryParams.use(paramMap))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Update scenario discussion by identity
      *
      * @param <T>                              - response class type
