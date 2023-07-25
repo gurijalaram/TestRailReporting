@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
@@ -9,6 +8,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.AccessControl;
 import com.apriori.entity.response.AccessControls;
 import com.apriori.entity.response.CasErrorMessage;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

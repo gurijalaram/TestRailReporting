@@ -136,4 +136,21 @@ public class ComparisonUtils {
     public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
         return new PeopleUtil().getCurrentPerson(userCredentials);
     }
+
+    /**
+     * Calls an api with DELETE verb
+     *
+     * @param comparisonID - String of the requested Comparison ID
+     * @param currentUser  - UserCredentials object
+     * @return GetComparisonResponse
+     */
+    public <T> ResponseWrapper<T> deleteComparison(String comparisonID, UserCredentials currentUser) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, null)
+                .inlineVariables(comparisonID)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        return HTTPRequest.build(requestEntity).delete();
+    }
 }

@@ -3,6 +3,7 @@ package tests.acs;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.entity.response.acs.costresults.ProcessInstanceKey;
+import com.apriori.acs.entity.response.acs.costresults.PropertyInfoMap;
 import com.apriori.acs.entity.response.acs.costresults.PropertyValueMap;
 import com.apriori.acs.entity.response.acs.costresults.ResultMapBean;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -29,10 +30,13 @@ public class CostResultsTests {
         ProcessInstanceKey processInstanceKey = costResultsRootItem.getProcessInstanceKey();
         ResultMapBean resultMapBean = costResultsRootItem.getResultMapBean();
         PropertyValueMap propertyValueMap = resultMapBean.getPropertyValueMap();
+        PropertyInfoMap propertyInfoMap = resultMapBean.getPropertyInfoMap();
 
         softAssertions.assertThat(processInstanceKey.getProcessGroupName()).isEqualTo(processGroupName);
         softAssertions.assertThat(resultMapBean).isNotNull();
         softAssertions.assertThat(propertyValueMap.getTotalCarbon()).isNotNull();
+        softAssertions.assertThat(propertyInfoMap.getAnnualCarbon().getDisplayName()).isNotNull();
+        softAssertions.assertThat(propertyInfoMap.getTotalCarbon().getCategory()).isNotNull();
         softAssertions.assertThat(costResultsRootItem.getCostingFailed()).isEqualTo(false);
         softAssertions.assertThat(costResultsRootItem.getDepth()).isEqualTo("ROOT");
         softAssertions.assertThat(costResultsRootItem.getSecondaryProcess()).isEqualTo(false);
