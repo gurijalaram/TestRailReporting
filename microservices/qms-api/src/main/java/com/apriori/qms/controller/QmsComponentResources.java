@@ -150,6 +150,33 @@ public class QmsComponentResources {
     }
 
     /**
+     * Add component scenario user.
+     *
+     * @param <T>               the type parameter
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
+     * @param projectUsers      the project users
+     * @param responseClass     the response class
+     * @param httpStatus        the http status
+     * @param currentUser       the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserParameters projectUsers, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        ProjectUserRequest projectUserRequest = ProjectUserRequest.builder()
+            .users(Collections.singletonList(projectUsers)).build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(projectUserRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Add component scenario user scenario project user response.
      *
      * @param componentIdentity        the component identity
@@ -187,5 +214,29 @@ public class QmsComponentResources {
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Delete component scenario user.
+     *
+     * @param <T>                      the type parameter
+     * @param componentIdentity        the component identity
+     * @param scenarioIdentity         the scenario identity
+     * @param deleteProjectUserRequest the delete project user request
+     * @param responseClass            the response class
+     * @param httpStatus               the http status
+     * @param currentUser              the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .body(deleteProjectUserRequest)
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
     }
 }
