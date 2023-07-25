@@ -1,13 +1,12 @@
 package com.apriori.pageobjects.pages.myuser;
 
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
 public class TermsOfUsePage extends EagerPageComponent<TermsOfUsePage> {

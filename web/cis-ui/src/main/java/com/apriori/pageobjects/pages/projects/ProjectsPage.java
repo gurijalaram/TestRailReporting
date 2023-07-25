@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.projects;
 
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

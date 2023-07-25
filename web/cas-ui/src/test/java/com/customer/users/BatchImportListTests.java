@@ -1,25 +1,25 @@
 package com.customer.users;
 
+import com.apriori.PageUtils;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.components.CheckboxComponent;
+import com.apriori.components.PaginatorComponent;
+import com.apriori.components.SourceListComponent;
+import com.apriori.components.TableComponent;
+import com.apriori.components.TableRowComponent;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.components.CheckboxComponent;
-import com.apriori.utils.web.components.PaginatorComponent;
-import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
-import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;

@@ -1,9 +1,9 @@
 package com.apriori.customer.systemconfiguration;
 
+import com.apriori.EagerPageComponent;
+import com.apriori.components.RoutingComponent;
+import com.apriori.components.SelectComponent;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.EagerPageComponent;
-import com.apriori.utils.web.components.RoutingComponent;
-import com.apriori.utils.web.components.SelectComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -15,14 +15,12 @@ import org.openqa.selenium.support.FindBy;
  */
 @Slf4j
 public final class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
+    private final RoutingComponent groupsTab;
+    private final RoutingComponent permissionsTab;
     @FindBy(css = ".system-configuration-tab-groups a")
     private WebElement groupsTabRoot;
-    private final RoutingComponent groupsTab;
-
     @FindBy(css = ".system-configuration-tab-permissions a")
     private WebElement permissionsTabRoot;
-    private final RoutingComponent permissionsTab;
-
     @FindBy(css = ".site-drop-down")
     private WebElement siteDropDown;
     private SelectComponent siteSelectField;
@@ -40,6 +38,19 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
         super(driver, log);
         groupsTab = new RoutingComponent(getDriver(), groupsTabRoot);
         permissionsTab = new RoutingComponent(getDriver(), permissionsTabRoot);
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver   - WebDriver
+     * @param customer - Customer ID
+     * @return SystemConfigurationPage
+     */
+    public static SystemConfigurationPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/system-configuration/";
+        driver.navigate().to(String.format(url, customer));
+        return new SystemConfigurationPage(driver);
     }
 
     /**
@@ -71,19 +82,6 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
     protected void isLoaded() throws Error {
         this.getPageUtils().waitForElementToAppear(groupsTabRoot);
         this.getPageUtils().waitForElementToAppear(permissionsTabRoot);
-    }
-
-    /**
-     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
-     *
-     * @param driver - WebDriver
-     * @param customer - Customer ID
-     * @return SystemConfigurationPage
-     */
-    public static SystemConfigurationPage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/system-configuration/";
-        driver.navigate().to(String.format(url, customer));
-        return new SystemConfigurationPage(driver);
     }
 
     /**

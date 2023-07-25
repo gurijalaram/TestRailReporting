@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -27,7 +27,6 @@ public class ProjectsPartsAndAssemblyTableController extends EagerPageComponent<
 
     @Override
     protected void isLoaded() throws Error {
-
 
     }
 

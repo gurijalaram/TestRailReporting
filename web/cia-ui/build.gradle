@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':web-app-util')
 }

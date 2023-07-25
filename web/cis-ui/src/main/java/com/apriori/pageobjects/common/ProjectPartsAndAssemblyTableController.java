@@ -1,16 +1,12 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 public class ProjectPartsAndAssemblyTableController extends EagerPageComponent<ProjectPartsAndAssemblyTableController> {

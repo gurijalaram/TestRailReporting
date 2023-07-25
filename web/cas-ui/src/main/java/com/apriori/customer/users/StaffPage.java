@@ -1,8 +1,8 @@
 package com.apriori.customer.users;
 
+import com.apriori.PageUtils;
 import com.apriori.common.ModalUserList;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.SourceListComponent;
+import com.apriori.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

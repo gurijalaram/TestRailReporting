@@ -2,7 +2,7 @@ package com.apriori.pageobjects.common;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;

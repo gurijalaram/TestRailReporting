@@ -1,8 +1,8 @@
 package com.apriori.customer.systemconfiguration;
 
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
-import com.apriori.utils.web.components.SelectionTreeComponent;
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
+import com.apriori.components.SelectionTreeComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

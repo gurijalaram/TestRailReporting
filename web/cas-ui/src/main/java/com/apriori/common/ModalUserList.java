@@ -1,7 +1,7 @@
 package com.apriori.common;
 
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.SourceListComponent;
+import com.apriori.PageUtils;
+import com.apriori.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

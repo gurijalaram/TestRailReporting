@@ -3,8 +3,8 @@ package com.apriori.pageobjects.pages.explore;
 import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.PageUtils;
 
 import com.utils.MultiUpload;
 import com.utils.UploadStatusEnum;

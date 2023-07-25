@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.messages;
 
+import com.apriori.EagerPageComponent;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

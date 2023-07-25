@@ -1,18 +1,18 @@
 package com.customer;
 
+import com.apriori.PageUtils;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.components.CardsViewComponent;
+import com.apriori.components.PaginatorComponent;
+import com.apriori.components.SourceListComponent;
+import com.apriori.components.TableComponent;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.components.CardsViewComponent;
-import com.apriori.utils.web.components.PaginatorComponent;
-import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;

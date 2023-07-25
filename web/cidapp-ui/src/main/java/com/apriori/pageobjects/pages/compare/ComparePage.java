@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.compare;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ComparisonCardEnum;
