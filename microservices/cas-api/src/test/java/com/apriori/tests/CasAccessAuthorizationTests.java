@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
@@ -11,6 +10,7 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.entity.response.AccessAuthorization;
 import com.apriori.entity.response.AccessAuthorizations;
 import com.apriori.entity.response.CasErrorMessage;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -26,11 +26,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CasAccessAuthorizationTests {
+    private final CasTestUtil casTestUtil = new CasTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private IdentityHolder accessAuthorizationIdentityHolder;
     private String customerAssociationUserIdentity;
     private String customerAssociationUserIdentityEndpoint;
-    private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private Customer customer;
     private String url;
     private String customerIdentity;

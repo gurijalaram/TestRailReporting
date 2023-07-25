@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.entity.response.scenarios;
 
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

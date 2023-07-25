@@ -20,7 +20,7 @@ dependencies {
     implementation project(':microservices:cds-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:fms-api')
-
+    implementation project(':serialization-util')
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
