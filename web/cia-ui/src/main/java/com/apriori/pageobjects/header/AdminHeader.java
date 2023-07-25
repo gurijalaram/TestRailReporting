@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -17,5 +17,4 @@ public class AdminHeader extends AdminPageHeader {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
-
 }

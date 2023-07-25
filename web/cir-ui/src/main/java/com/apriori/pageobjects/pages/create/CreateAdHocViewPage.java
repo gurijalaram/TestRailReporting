@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

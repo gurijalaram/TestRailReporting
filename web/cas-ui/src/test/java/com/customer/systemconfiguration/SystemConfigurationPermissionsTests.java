@@ -4,14 +4,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.apriori.PageUtils;
+import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPermissionsPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.ListUtils;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;

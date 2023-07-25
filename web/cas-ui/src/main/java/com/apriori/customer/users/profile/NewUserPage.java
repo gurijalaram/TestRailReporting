@@ -1,8 +1,8 @@
 package com.apriori.customer.users.profile;
 
+import com.apriori.PageUtils;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.PageUtils;
 
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;

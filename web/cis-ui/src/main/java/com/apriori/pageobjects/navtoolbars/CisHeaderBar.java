@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +20,6 @@ public class CisHeaderBar extends EagerPageComponent<CisHeaderBar> {
 
     public CisHeaderBar(WebDriver driver, Logger logger) {
         super(driver, logger);
-
     }
 
     @Override

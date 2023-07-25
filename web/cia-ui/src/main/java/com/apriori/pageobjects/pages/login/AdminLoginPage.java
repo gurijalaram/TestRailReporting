@@ -2,10 +2,10 @@ package com.apriori.pageobjects.pages.login;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.PageUtils;
+import com.apriori.login.LoginService;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.LoginService;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;

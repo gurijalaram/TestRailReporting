@@ -1,5 +1,8 @@
 package com.apriori.customer;
 
+import com.apriori.PageUtils;
+import com.apriori.components.RoutingComponent;
+import com.apriori.components.SelectComponent;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.customeradmin.CustomerAdminPage;
@@ -7,10 +10,7 @@ import com.apriori.customeradmin.NavToolbar;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.security.SecurityPage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.RoutingComponent;
-import com.apriori.utils.web.components.SelectComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

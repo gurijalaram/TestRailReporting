@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 
 import lombok.extern.slf4j.Slf4j;

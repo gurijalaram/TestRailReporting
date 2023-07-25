@@ -2,10 +2,10 @@ package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 

@@ -1,18 +1,15 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.compare.ComparePage;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 

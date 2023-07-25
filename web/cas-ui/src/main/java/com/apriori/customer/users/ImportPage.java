@@ -1,8 +1,8 @@
 package com.apriori.customer.users;
 
 import com.apriori.common.UsersTableController;
+import com.apriori.components.SourceListComponent;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
@@ -52,6 +52,19 @@ public class ImportPage extends UsersPage {
     public ImportPage(WebDriver driver) {
         super(driver);
         usersTableController = new UsersTableController(driver);
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver   - WebDriver
+     * @param customer - Customer ID
+     * @return ImportPage
+     */
+    public static ImportPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/users/import";
+        driver.navigate().to(String.format(url, customer));
+        return new ImportPage(driver);
     }
 
     @Override
@@ -106,24 +119,11 @@ public class ImportPage extends UsersPage {
     }
 
     /**
-     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
-     *
-     * @param driver   - WebDriver
-     * @param customer - Customer ID
-     * @return ImportPage
-     */
-    public static ImportPage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/users/import";
-        driver.navigate().to(String.format(url, customer));
-        return new ImportPage(driver);
-    }
-
-    /**
      * Validates that table has a correct columns
      *
      * @param expectedName name of column
-     * @param id id of column
-     * @param soft soft assertions
+     * @param id           id of column
+     * @param soft         soft assertions
      * @return This object
      */
     public ImportPage validateImportUsersTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {

@@ -2,8 +2,8 @@ package com.apriori.pageobjects.navtoolbars;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

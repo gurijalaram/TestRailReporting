@@ -3,8 +3,8 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.EagerPageComponent;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import com.utils.ComparisonDeltaEnum;
 import lombok.extern.slf4j.Slf4j;

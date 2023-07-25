@@ -5,17 +5,17 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.apriori.PageUtils;
+import com.apriori.components.SelectionTreeItemComponent;
+import com.apriori.components.SourceListComponent;
+import com.apriori.components.TableComponent;
+import com.apriori.components.TableHeaderComponent;
 import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.components.SelectionTreeItemComponent;
-import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
-import com.apriori.utils.web.components.TableHeaderComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;

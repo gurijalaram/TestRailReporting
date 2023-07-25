@@ -3,4 +3,5 @@ dependencies {
     implementation project(':apibase')
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:css-api')
+    implementation project(':web-app-util')
 }
