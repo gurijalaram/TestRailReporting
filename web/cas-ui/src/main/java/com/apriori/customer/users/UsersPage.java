@@ -1,7 +1,7 @@
 package com.apriori.customer.users;
 
+import com.apriori.components.RoutingComponent;
 import com.apriori.customer.CustomerWorkspacePage;
-import com.apriori.utils.web.components.RoutingComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -13,21 +13,18 @@ import org.openqa.selenium.support.FindBy;
  */
 @Slf4j
 public class UsersPage extends CustomerWorkspacePage {
+    private final RoutingComponent customerStaffTab;
+    private final RoutingComponent importTab;
+    private final RoutingComponent aPrioriStaffTab;
+    private final RoutingComponent aPrioriAccessHistoryTab;
     @FindBy(xpath = "//a[.='Customer Staff']")
     private WebElement customerStaffTabRoot;
-    private final RoutingComponent customerStaffTab;
-
     @FindBy(xpath = "//a[.='Import']")
     private WebElement importTabRoot;
-    private final RoutingComponent importTab;
-
     @FindBy(xpath = "//a[.='aPriori Staff']")
     private WebElement aPrioriStaffTabRoot;
-    private final RoutingComponent aPrioriStaffTab;
-
     @FindBy(xpath = "//a[.='aPriori Staff Access History']")
     private WebElement aPrioriAccessHistoryTabRoot;
-    private final RoutingComponent aPrioriAccessHistoryTab;
 
     /**
      * Initializes a new instance of this object.

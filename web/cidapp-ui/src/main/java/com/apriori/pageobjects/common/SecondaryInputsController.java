@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

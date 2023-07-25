@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.homepage;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminPageHeader;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;

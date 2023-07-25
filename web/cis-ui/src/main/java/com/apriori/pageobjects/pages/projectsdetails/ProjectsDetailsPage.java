@@ -1,15 +1,11 @@
 package com.apriori.pageobjects.pages.projectsdetails;
 
-import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ProjectsPartsAndAssemblyTableController;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.web.components.EagerPageComponent;
 
-import com.utils.CisColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +17,6 @@ import java.util.List;
 
 @Slf4j
 public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage> {
-
 
     @FindBy(xpath = "//div[@data-testid='loader']")
     private WebElement spinner;

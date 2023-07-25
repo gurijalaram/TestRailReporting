@@ -6,6 +6,7 @@
 //Default modules initialization
 include(':utils')
 include(':apibase')
+include(':web-app-util')
 include(':serialization-util')
 include(':db')
 

@@ -1,8 +1,8 @@
 package com.apriori.newcustomer;
 
+import com.apriori.components.SelectFieldComponent;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.SelectFieldComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -90,9 +90,21 @@ public class CustomerProfilePage extends CustomerWorkspacePage {
     }
 
     /**
-     * @inheritDoc
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
      *
+     * @param driver   - WebDriver
+     * @param customer - Customer ID
+     * @return CustomerWorkspacePage
+     */
+    public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/profile";
+        driver.navigate().to(String.format(url, customer));
+        return new CustomerWorkspacePage(driver);
+    }
+
+    /**
      * @throws Error If the profile tab or users tab is missing
+     * @inheritDoc
      */
     @Override
     protected void isLoaded() throws Error {
@@ -420,19 +432,6 @@ public class CustomerProfilePage extends CustomerWorkspacePage {
     public CustomerProfilePage clickSaveButton() {
         getPageUtils().waitForElementAndClick(saveButton);
         return new CustomerProfilePage(getDriver());
-    }
-
-    /**
-     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
-     *
-     * @param driver - WebDriver
-     * @param customer - Customer ID
-     * @return CustomerWorkspacePage
-     */
-    public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/profile";
-        driver.navigate().to(String.format(url, customer));
-        return new CustomerWorkspacePage(driver);
     }
 
     /**

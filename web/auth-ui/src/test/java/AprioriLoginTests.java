@@ -1,14 +1,13 @@
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.login.ForgottenPasswordPage;
+import com.apriori.login.LoginService;
+import com.apriori.login.PrivacyPolicyPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.login.ForgottenPasswordPage;
-import com.apriori.utils.login.LoginService;
-import com.apriori.utils.login.PrivacyPolicyPage;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 

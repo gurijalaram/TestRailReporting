@@ -2,8 +2,8 @@ package com.apriori.pages;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.PageUtils;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

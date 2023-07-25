@@ -2,4 +2,5 @@ dependencies {
     implementation project(':apibase')
     implementation project(':utils')
     implementation project(':microservices:cds-api')
+    implementation project(':web-app-util')
 }

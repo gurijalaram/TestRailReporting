@@ -1,7 +1,10 @@
 package com.customer;
 
+import com.apriori.PageUtils;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.components.SourceListComponent;
+import com.apriori.components.TableComponent;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.StaffAccessHistoryPage;
 import com.apriori.customer.users.StaffPage;
@@ -12,13 +15,10 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
