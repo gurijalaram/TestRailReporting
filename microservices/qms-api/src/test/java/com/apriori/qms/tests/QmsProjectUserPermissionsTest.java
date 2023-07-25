@@ -1,5 +1,6 @@
 package com.apriori.qms.tests;
 
+import com.apriori.DateFormattingUtils;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
@@ -22,7 +23,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersPostResp
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -339,9 +339,9 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             bidPackageItemList,
             ApwErrorMessage.class,
             firstUser,
-            HttpStatus.SC_NOT_FOUND
+            HttpStatus.SC_FORBIDDEN
         );
-        softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage()).contains("User does not have rights to update the project attributes");
+        softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage()).contains("The User: UserIdentity  does not have permission to add more Parts & Assemblies into the project");
 
         //Validate non project user CANNOT add project item to the project
         bulkBidPackageProjectItemsErrorResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
@@ -350,10 +350,10 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             bidPackageItemList,
             ApwErrorMessage.class,
             nonProjectUser,
-            HttpStatus.SC_NOT_FOUND
+            HttpStatus.SC_FORBIDDEN
         );
         softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage())
-            .contains(String.format("Resource 'Project' with identity '%s' was not found", projectResponse.getIdentity()));
+            .contains("The User: UserIdentity doesn't have permission to interact with the project");
 
         //Validate project owner CAN add project item to the project
         BidPackageProjectItemsBulkResponse bulkBidPackageProjectItemsResponse = QmsBidPackageResources.createBidPackageBulkProjectItems(
@@ -380,10 +380,10 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             projectResponse.getIdentity(),
             prjItemIdentiesList,
             ApwErrorMessage.class,
-            HttpStatus.SC_CONFLICT,
+            HttpStatus.SC_FORBIDDEN,
             firstUser
         );
-        softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage()).contains("");
+        softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage()).contains("The User: UserIdentity does not have permission to delete Parts & Assemblies from the project");
 
         //Validate non project user CANNOT delete project item from the project
         bulkBidPackageProjectItemsErrorResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
@@ -391,11 +391,11 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             projectResponse.getIdentity(),
             prjItemIdentiesList,
             ApwErrorMessage.class,
-            HttpStatus.SC_NOT_FOUND,
+            HttpStatus.SC_FORBIDDEN,
             nonProjectUser
         );
         softAssertions.assertThat(bulkBidPackageProjectItemsErrorResponse.getMessage())
-            .contains(String.format("Resource 'Project' with identity '%s' was not found", projectResponse.getIdentity()));
+            .contains("The User: UserIdentity doesn't have permission to interact with the project");
 
         //Validate project owner CAN delete project item from the project
         bulkBidPackageProjectItemsResponse = QmsBidPackageResources.deleteBidPackageBulkProjectItems(
@@ -460,12 +460,12 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         //Validate project user (Not Owner) CANNOT delete another project user from the project
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(thirdProjectUserIdentity).build());
-        ApwErrorMessage deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_CONFLICT, firstUser);
-        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("");
+        ApwErrorMessage deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, firstUser);
+        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("The User: UserIdentity does not have permission to delete Parts & Assemblies from the project");
 
         //Validate non project user CANNOT delete another project user from the project
-        deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_CONFLICT, nonProjectUser);
-        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("");
+        deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, nonProjectUser);
+        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("The User: UserIdentity does not have permission to delete Parts & Assemblies from the project");
 
         //Validate project owner CAN delete another project user from the project
         QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), currentOwnerUser);
@@ -477,15 +477,15 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
     public void deleteProjectAsDifferentUsers() {
         //Validate project user (Not Owner) CANNOT delete project
         ApwErrorMessage deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProject(projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(),
-            ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, QmsProjectUserPermissionsTest.firstUser);
+            ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, QmsProjectUserPermissionsTest.firstUser);
         softAssertions.assertThat(deleteErrorResponse.getMessage())
-            .contains(String.format("Resource 'Project' with identity '%s' was not found", projectResponse.getIdentity()));
+            .contains("The User: UserIdentity does not have permission to delete the project");
 
         //Validate non project user CANNOT delete project
         deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProject(projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(),
-            ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND, nonProjectUser);
+            ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, nonProjectUser);
         softAssertions.assertThat(deleteErrorResponse.getMessage())
-            .contains(String.format("Resource 'Project' with identity '%s' was not found", projectResponse.getIdentity()));
+            .contains("The User: UserIdentity doesn't have permission to interact with the project");
 
         //Validate project owner CAN delete project
         QmsBidPackageResources.deleteBidPackageProject(projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(), null,
@@ -501,8 +501,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(currentProjectUserIdentity).build());
         ApwErrorMessage deleteErrorResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, projectResponse.getBidPackageIdentity(), projectResponse.getIdentity(),
-            ApwErrorMessage.class, HttpStatus.SC_CONFLICT, currentOwnerUser);
-        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("");
+            ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, currentOwnerUser);
+        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("Admin can delete himself only after reassigning the Ownership");
 
         //Validate project user (not owner) CAN delete self from the project
         userIdentityList = new ArrayList<>();
@@ -534,8 +534,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
                 .build()))
             .build();
         ApwErrorMessage deleteErrorResponse = QmsComponentResources.deleteComponentScenarioUser(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(),
-            deleteProjectUserRequest, ApwErrorMessage.class, HttpStatus.SC_CONFLICT, thirdUser);
-        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("");
+            deleteProjectUserRequest, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN, thirdUser);
+        softAssertions.assertThat(deleteErrorResponse.getMessage()).contains("Admin can delete himself only after reassigning the Ownership");
 
         //Update owner
         projectRequest = BidPackageProjectRequest.builder()
@@ -647,9 +647,9 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         ApwErrorMessage bppErrorResponse = QmsProjectResources.getProject(
             projectResponse.getIdentity(),
             ApwErrorMessage.class,
-            HttpStatus.SC_NOT_FOUND,
+            HttpStatus.SC_FORBIDDEN,
             nonProjectUser);
-        softAssertions.assertThat(bppErrorResponse.getMessage()).contains("");
+        softAssertions.assertThat(bppErrorResponse.getMessage()).contains("The User: UserIdentity doesn't have permission to interact with the project");
     }
 
     @Test
@@ -689,9 +689,9 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             projectResponse.getBidPackageIdentity(),
             projectResponse.getIdentity(),
             ApwErrorMessage.class,
-            HttpStatus.SC_NOT_FOUND,
+            HttpStatus.SC_FORBIDDEN,
             nonProjectUser);
-        softAssertions.assertThat(bppErrorResponse.getMessage()).contains("");
+        softAssertions.assertThat(bppErrorResponse.getMessage()).contains("The User: UserIdentity doesn't have permission to interact with the project");
     }
 
     @Test
@@ -722,8 +722,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
             projectResponse.getIdentity(),
             nonProjectUser,
             ApwErrorMessage.class,
-            HttpStatus.SC_NOT_FOUND);
-        softAssertions.assertThat(bpPItemsErrorResponse.getMessage()).contains(String.format("Resource 'Project' with identity '%s' was not found", projectResponse.getIdentity()));
+            HttpStatus.SC_FORBIDDEN);
+        softAssertions.assertThat(bpPItemsErrorResponse.getMessage()).contains("The User: UserIdentity doesn't have permission to interact with the project");
     }
 
     @Test
@@ -742,7 +742,7 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
         //Validate that the NOT Project User of the project is NOT able to Get all Project users of the project.
         ApwErrorMessage getBidPackageProjectUserErrorResponse = QmsBidPackageResources.getBidPackageProjectUsers(projectResponse.getBidPackageIdentity(),
-            projectResponse.getIdentity(), nonProjectUser, ApwErrorMessage.class, HttpStatus.SC_NOT_FOUND);
-        softAssertions.assertThat(getBidPackageProjectUserErrorResponse.getMessage()).contains("");
+            projectResponse.getIdentity(), nonProjectUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
+        softAssertions.assertThat(getBidPackageProjectUserErrorResponse.getMessage()).contains("The User: UserIdentity doesn't have permission to interact with the project");
     }
 }

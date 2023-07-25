@@ -544,7 +544,7 @@ public class BidPackageProjectUserTest extends TestUtil {
                 ScenarioDiscussionResponse.class,
                 HttpStatus.SC_OK, currentUser);
             softAssertions.assertThat(updateDiscussionResponse.getStatus()).isEqualTo("ACTIVE");
-            softAssertions.assertThat(updateDiscussionResponse.getAssigneeUserIdentity());
+            softAssertions.assertThat(updateDiscussionResponse.getAssigneeUserIdentity()).isEqualTo(secondUserIdentity);
 
             //Verify Admin User is able to delete PU that are Assigned to discussions
             List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
