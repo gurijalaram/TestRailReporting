@@ -1,11 +1,11 @@
 package com.apriori.tests;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.ColourEnum;
+import com.apriori.enums.PreferencesEnum;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.ColourEnum;
-import com.apriori.utils.enums.PreferencesEnum;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -17,15 +17,13 @@ import java.util.Map;
 
 public class SettingsTests {
 
-    final String asmPreferenceDefault = "";
-    final String batchSizeDefault = "458";
-    final String selectionColourDefault = ColourEnum.YELLOW.getColour();
-
+    private final String asmPreferenceDefault = "";
+    private final String batchSizeDefault = "458";
+    private final String selectionColourDefault = ColourEnum.YELLOW.getColour();
+    private UserCredentials currentUser;
+    private SoftAssertions softAssertions;
+    private Map<PreferencesEnum, String> preferencesToReset = new HashMap<>();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
-
-    UserCredentials currentUser;
-    SoftAssertions softAssertions;
-    Map<PreferencesEnum, String> preferencesToReset = new HashMap<>();
 
     @After
     public void resetSettings() {
@@ -36,16 +34,16 @@ public class SettingsTests {
     }
 
     @Test
-    @TestRail(id = 17225")
-        @Description("Update Assembly Strategy Only")
-        public void testUpdateAsmStrategy(){
+    @TestRail(id = 17225)
+    @Description("Update Assembly Strategy Only")
+    public void testUpdateAsmStrategy() {
 
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
 
-        String asmStrategy="PREFER_PUBLIC";
+        String asmStrategy = "PREFER_PUBLIC";
 
-        Map<PreferencesEnum, String>updateStrategy = new HashMap<>();
+        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         preferencesToReset.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmPreferenceDefault);
 
@@ -57,18 +55,18 @@ public class SettingsTests {
         softAssertions.assertAll();
     }
 
-@Test
-@TestRail(id = 21544")
+    @Test
+    @TestRail(id = 21544)
     @Description("Update Assembly Strategy Only")
-    public void testUpdateAsmStrategyWithOtherPreference(){
+    public void testUpdateAsmStrategyWithOtherPreference() {
 
-    softAssertions = new SoftAssertions();
-    currentUser = UserUtil.getUser();
+        softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
 
-    String asmStrategy="PREFER_PRIVATE";
-    String batchSize="600";
+        String asmStrategy = "PREFER_PRIVATE";
+        String batchSize = "600";
 
-    Map<PreferencesEnum, String>updatedPreferences = new HashMap<>();
+        Map<PreferencesEnum, String> updatedPreferences = new HashMap<>();
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
 
@@ -80,22 +78,22 @@ public class SettingsTests {
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.ASSEMBLY_STRATEGY).getValue())
             .as("Updated Assembly Strategy").isEqualTo(asmStrategy);
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.DEFAULT_BATCH_SIZE).getValue())
-                .as("Updated Batch Size").isEqualTo(batchSize);
+            .as("Updated Batch Size").isEqualTo(batchSize);
 
         softAssertions.assertAll();
     }
 
-@Test
-@TestRail(id = 21545")
+    @Test
+    @TestRail(id = 21545)
     @Description("Update Assembly Strategy Only")
-    public void testUpdateAsmStrategyWithOtherPreferences(){
+    public void testUpdateAsmStrategyWithOtherPreferences() {
 
-    softAssertions = new SoftAssertions();
-    currentUser = UserUtil.getUser();
+        softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
 
-    String asmStrategy="PREFER_PUBLIC";
-    String batchSize="750";
-    String selectionColour="#061282";
+        String asmStrategy = "PREFER_PUBLIC";
+        String batchSize = "750";
+        String selectionColour = "#061282";
 
         Map<PreferencesEnum, String> updatedPreferences = new HashMap<>();
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
@@ -114,7 +112,6 @@ public class SettingsTests {
             .as("Updated Batch Size").isEqualTo(batchSize);
         softAssertions.assertThat(userPreferencesUtil.getPreference(currentUser, PreferencesEnum.SELECTION_COLOUR).getValue())
             .as("Updated Batch Size").isEqualTo(selectionColour);
-
 
         softAssertions.assertAll();
     }
