@@ -1,5 +1,6 @@
 package tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -12,12 +13,12 @@ import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.authorization.AuthorizationUtil;
+import com.apriori.authorization.response.Token;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.authorization.Token;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
