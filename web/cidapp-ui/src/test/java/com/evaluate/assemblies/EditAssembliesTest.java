@@ -691,17 +691,17 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
 @Test
-@TestRail(id = "10899")
-@Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
-    public void testEditPublicSubcomponentsMixedWithPrivateThenOverride() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+@TestRail(id = 10899")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenOverride(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
+    final String FLANGE="flange";
+    final String NUT="nut";
+    final String BOLT="bolt";
+    String assemblyName="flange c";
+    final String assemblyExtension=".CATProduct";
 
         List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -750,17 +750,17 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
 @Test
-@TestRail(id = "10900")
-@Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
-    public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+@TestRail(id = 10900")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenRename(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    String newScenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
+    final String FLANGE="flange";
+    final String NUT="nut";
+    final String BOLT="bolt";
+    String assemblyName="flange c";
         final String assemblyExtension = ".CATProduct";
 
         List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
@@ -806,17 +806,17 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
 @Test
-@TestRail(id = "11142")
-@Description("Validate an error message appears if any issues occur")
-    public void testEditWithExistingPrivateScenarioName() {
-        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+@TestRail(id = 11142")
+    @Description("Validate an error message appears if any issues occur")
+    public void testEditWithExistingPrivateScenarioName(){
+    String preExistingScenarioName=new GenerateStringUtil().generateScenarioName();
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
+    final String FLANGE="flange";
+    final String NUT="nut";
+    final String BOLT="bolt";
+    String assemblyName="flange c";
         final String assemblyExtension = ".CATProduct";
 
         List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
@@ -867,17 +867,17 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
 @Test
-@TestRail(id = "10810")
-@Description("Shallow Edit an assembly with uncosted scenarios")
-    public void testShallowEditCostedAssemblyWithUncostedSubComponents() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+@TestRail(id = 10810")
+    @Description("Shallow Edit an assembly with uncosted scenarios")
+    public void testShallowEditCostedAssemblyWithUncostedSubComponents(){
+    String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
 
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
+    final String SMALL_RING="small ring";
 
-        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+    List<String>subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
         final UserCredentials currentUser = UserUtil.getUser();
@@ -1123,17 +1123,17 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
 @Test
-@TestRail(id = "6595")
-@Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
-    public void testEditPublicAssembly() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+@TestRail(id = 6595")
+    @Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
+    public void testEditPublicAssembly(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
+    final String FLANGE="flange";
+    final String NUT="nut";
+    final String BOLT="bolt";
+    String assemblyName="flange c";
+    final String assemblyExtension=".CATProduct";
 
         List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

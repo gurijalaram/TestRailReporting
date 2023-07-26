@@ -39,9 +39,9 @@ public class ComponentsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = "7248")
-    @Description("Add a new component.")
-    public void postComponents() {
+    @TestRail(id = 7248")
+        @Description("Add a new component.")
+        public void postComponents(){
         postTestingComponentAndAddToRemoveList();
-    }
+        }
 }

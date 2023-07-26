@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class PartPrimaryProcessGroupsTests extends TestUtil {
 
     @Test
-    @TestRail(id = "10881")
+    @TestRail(id = 10881)
     @Description("Validate Get Part Primary Process Groups Endpoint")
     public void testGetPartPrimaryProcessGroupsEndpoint() {
         AcsResources acsResources = new AcsResources();

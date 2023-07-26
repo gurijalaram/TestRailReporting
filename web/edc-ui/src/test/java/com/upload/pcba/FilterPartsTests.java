@@ -1,8 +1,6 @@
 package com.upload.pcba;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.TestBaseUI;
@@ -38,12 +36,12 @@ public class FilterPartsTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = "1727")
-    @Description("BOM - Filter Parts - Cost Status - Available Drop Down options")
-    public void testFiltering() {
+    @TestRail(id = 1727")
+        @Description("BOM - Filter Parts - Cost Status - Available Drop Down options")
+        public void testFiltering(){
         currentUser = UserUtil.getUser();
 
-        String fileName = "Test BOM 5.csv";
+        String fileName="Test BOM 5.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);

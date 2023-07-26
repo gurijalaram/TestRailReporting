@@ -36,16 +36,16 @@ public class SettingsTests {
     }
 
     @Test
-    @TestRail(id = "17225")
-    @Description("Update Assembly Strategy Only")
-    public void testUpdateAsmStrategy() {
+    @TestRail(id = 17225")
+        @Description("Update Assembly Strategy Only")
+        public void testUpdateAsmStrategy(){
 
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
 
-        String asmStrategy = "PREFER_PUBLIC";
+        String asmStrategy="PREFER_PUBLIC";
 
-        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
+        Map<PreferencesEnum, String>updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         preferencesToReset.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmPreferenceDefault);
 
@@ -57,18 +57,18 @@ public class SettingsTests {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(id = "21544")
+@Test
+@TestRail(id = 21544")
     @Description("Update Assembly Strategy Only")
-    public void testUpdateAsmStrategyWithOtherPreference() {
+    public void testUpdateAsmStrategyWithOtherPreference(){
 
-        softAssertions = new SoftAssertions();
-        currentUser = UserUtil.getUser();
+    softAssertions = new SoftAssertions();
+    currentUser = UserUtil.getUser();
 
-        String asmStrategy = "PREFER_PRIVATE";
-        String batchSize = "600";
+    String asmStrategy="PREFER_PRIVATE";
+    String batchSize="600";
 
-        Map<PreferencesEnum, String> updatedPreferences = new HashMap<>();
+    Map<PreferencesEnum, String>updatedPreferences = new HashMap<>();
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
         updatedPreferences.put(PreferencesEnum.DEFAULT_BATCH_SIZE, batchSize);
 
@@ -85,17 +85,17 @@ public class SettingsTests {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(id = "21545")
+@Test
+@TestRail(id = 21545")
     @Description("Update Assembly Strategy Only")
-    public void testUpdateAsmStrategyWithOtherPreferences() {
+    public void testUpdateAsmStrategyWithOtherPreferences(){
 
-        softAssertions = new SoftAssertions();
-        currentUser = UserUtil.getUser();
+    softAssertions = new SoftAssertions();
+    currentUser = UserUtil.getUser();
 
-        String asmStrategy = "PREFER_PUBLIC";
-        String batchSize = "750";
-        String selectionColour = "#061282";
+    String asmStrategy="PREFER_PUBLIC";
+    String batchSize="750";
+    String selectionColour="#061282";
 
         Map<PreferencesEnum, String> updatedPreferences = new HashMap<>();
         updatedPreferences.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);

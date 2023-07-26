@@ -1,8 +1,5 @@
 package com.customer;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.TestBaseUI;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
@@ -27,8 +24,8 @@ public class AprioriInternalProfileTests extends TestBaseUI {
 
     @Test
     @Description("Validate Edit button is disabled on customer profile tab for aPriori Internal")
-    @TestRail(id = "10585")
-    public void testEditButtonIsDisabledOnAprioriInternalProfile() {
+    @TestRail(id = 10585")
+        public void testEditButtonIsDisabledOnAprioriInternalProfile(){
         assertThat(customerProfilePage.canEdit(), is(false));
     }
 }

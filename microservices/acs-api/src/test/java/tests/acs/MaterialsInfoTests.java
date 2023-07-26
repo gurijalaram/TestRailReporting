@@ -28,7 +28,7 @@ import org.junit.Test;
 public class MaterialsInfoTests {
 
     @Test
-    @TestRail(id = "22695")
+    @TestRail(id = 22695)
     @Description("Test Get Materials Info endpoint for Additive Manufacturing")
     public void testGetMaterialsInfoAdditiveManufacturing() {
         AcsResources acsResources = new AcsResources();
@@ -50,7 +50,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22691")
+    @TestRail(id = 22691)
     @Description("Test Get Materials Info endpoint for Bar & Tube Fab")
     public void testGetMaterialsInfoBarAndTubeFab() {
         AcsResources acsResources = new AcsResources();
@@ -73,7 +73,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22692")
+    @TestRail(id = 22692)
     @Description("Test Get Materials Info endpoint for Casting - Die")
     public void testGetMaterialsInfoCastingDie() {
         AcsResources acsResources = new AcsResources();
@@ -96,7 +96,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22693")
+    @TestRail(id = 22693)
     @Description("Test Get Materials Info endpoint for Casting - Sand")
     public void testGetMaterialsInfoCastingSand() {
         AcsResources acsResources = new AcsResources();
@@ -119,7 +119,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22694")
+    @TestRail(id = 22694)
     @Description("Test Get Materials Info endpoint for Casting - Investment")
     public void testGetMaterialsInfoCastingInvestment() {
         AcsResources acsResources = new AcsResources();
@@ -142,7 +142,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22696")
+    @TestRail(id = 22696)
     @Description("Test Get Materials Info endpoint for Forging")
     public void testGetMaterialsInfoForging() {
         AcsResources acsResources = new AcsResources();
@@ -165,7 +165,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22697")
+    @TestRail(id = 22697)
     @Description("Test Get Materials Info endpoint for Plastic Molding")
     public void testGetMaterialsInfoPlasticMolding() {
         AcsResources acsResources = new AcsResources();
@@ -188,7 +188,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22698")
+    @TestRail(id = 22698)
     @Description("Test Get Materials Info endpoint for Powder Metal")
     public void testGetMaterialsInfoPowderMetal() {
         AcsResources acsResources = new AcsResources();
@@ -211,7 +211,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22699")
+    @TestRail(id = 22699)
     @Description("Test Get Materials Info endpoint for Rapid Prototyping")
     public void testGetMaterialsInfoRapidPrototyping() {
         AcsResources acsResources = new AcsResources();
@@ -234,7 +234,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22700")
+    @TestRail(id = 22700)
     @Description("Test Get Materials Info endpoint for Roto & Blow Molding")
     public void testGetMaterialsInfoRotoBlowMolding() {
         AcsResources acsResources = new AcsResources();
@@ -257,7 +257,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22701")
+    @TestRail(id = 22701)
     @Description("Test Get Materials Info endpoint for Sheet Metal")
     public void testGetMaterialsInfoSheetMetal() {
         AcsResources acsResources = new AcsResources();
@@ -280,7 +280,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22702")
+    @TestRail(id = 22702)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Transfer Die")
     public void testGetMaterialsInfoSheetMetalTransferDie() {
         AcsResources acsResources = new AcsResources();
@@ -303,7 +303,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22703")
+    @TestRail(id = 22703)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Hydroforming")
     public void testGetMaterialsInfoSheetMetalHydroforming() {
         AcsResources acsResources = new AcsResources();
@@ -326,7 +326,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22704")
+    @TestRail(id = 22704)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Roll Forming")
     public void testGetMaterialsInfoSheetMetalRollForming() {
         AcsResources acsResources = new AcsResources();
@@ -349,7 +349,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22705")
+    @TestRail(id = 22705)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Stretch Forming")
     public void testGetMaterialsInfoSheetMetalStretchForming() {
         AcsResources acsResources = new AcsResources();
@@ -372,7 +372,7 @@ public class MaterialsInfoTests {
     }
 
     @Test
-    @TestRail(id = "22706")
+    @TestRail(id = 22706)
     @Description("Test Get Materials Info endpoint for Stock Machining")
     public void testGetMaterialsInfoStockMachining() {
         AcsResources acsResources = new AcsResources();

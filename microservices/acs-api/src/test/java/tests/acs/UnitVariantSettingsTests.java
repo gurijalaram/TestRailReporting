@@ -17,7 +17,7 @@ import java.util.List;
 public class UnitVariantSettingsTests extends TestUtil {
 
     @Test
-    @TestRail(id = "8772")
+    @TestRail(id = 8772)
     @Description("Test Get Unit Variant Settings")
     public void testGetUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();
@@ -36,7 +36,7 @@ public class UnitVariantSettingsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "8773")
+    @TestRail(id = 8773)
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();

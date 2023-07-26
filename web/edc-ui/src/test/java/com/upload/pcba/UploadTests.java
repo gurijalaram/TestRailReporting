@@ -47,14 +47,14 @@ public class UploadTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = "1553")
-    @Description("Basic workflow to upload a csv file, edit missing sections and save")
-    public void testUploadBOM() {
+    @TestRail(id = 1553")
+        @Description("Basic workflow to upload a csv file, edit missing sections and save")
+        public void testUploadBOM(){
         currentUser = UserUtil.getUser();
 
-        String fileName = "Test BOM 5.csv";
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+        String fileName="Test BOM 5.csv";
+        String testMountTypeData=generateStringUtil.getRandomString();
+        String testPinCountData=generateStringUtil.getRandomNumbers();
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
@@ -79,14 +79,14 @@ public class UploadTests extends TestBaseUI {
 
     @Ignore("ignoring temporarily as qa-test gets 500 error while uploading wireHarness BOM")
     @Test
-    @TestRail(id = "13253")
-    @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
-    public void uploadWireHarnessBOMTest() {
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+    @TestRail(id = 13253")
+        @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
+        public void uploadWireHarnessBOMTest(){
+        String testMountTypeData=generateStringUtil.getRandomString();
+        String testPinCountData=generateStringUtil.getRandomNumbers();
 
         currentUser = UserUtil.getUser();
-        String fileName = "Wire Harness BOM.csv";
+        String fileName="Wire Harness BOM.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
@@ -96,17 +96,17 @@ public class UploadTests extends TestBaseUI {
 
         softAssertions.assertThat(uploadedFilePage.getBomTitleName()).isEqualTo("WIRE-HARNESS-PETE");
         softAssertions.assertAll();
-    }
+        }
 
-    @Test
-    @TestRail(id = "1731")
-    @Description("BOM can be deleted from main page")
-    public void deleteUploadedBOMTest() {
+        @Test
+        @TestRail(id = 1731")
+        @Description("BOM can be deleted from main page")
+        public void deleteUploadedBOMTest(){
         int numberOfBomAfterUpload;
         int numberOfBomAfterDelete;
 
         currentUser = UserUtil.getUser();
-        String fileName = "Test BOM 7.csv";
+        String fileName="Test BOM 7.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
@@ -122,11 +122,11 @@ public class UploadTests extends TestBaseUI {
 
     @Ignore("Ignored due to file location")
     @Test
-    @TestRail(id = "1732")
-    @Description("BOM can be exported to file from main page")
-    public void exportUploadedBOMTest() {
+    @TestRail(id = 1732")
+        @Description("BOM can be exported to file from main page")
+        public void exportUploadedBOMTest(){
         currentUser = UserUtil.getUser();
-        String fileName = "Test BOM 7.csv";
+        String fileName="Test BOM 7.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);

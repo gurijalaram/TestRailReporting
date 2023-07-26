@@ -31,11 +31,11 @@ import testsuites.categories.AcsTest;
 public class GcdTypesTests {
 
     private final SoftAssertions softAssertions = new SoftAssertions();
-    private final  AcsResources acsResources = new AcsResources();
+    private final AcsResources acsResources = new AcsResources();
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(id = "17181")
+    @TestRail(id = 17181)
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGcdTypesSheetMetal() {
 
@@ -51,7 +51,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17169")
+    @TestRail(id = 17169)
     @Description("Run API for Assembly Process Group")
     public void testGetGcdTypesAssembly() {
 
@@ -67,7 +67,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17170")
+    @TestRail(id = 17170)
     @Description("Run API for 2-Model Machining Process Group")
     public void testGetGcdTypesTwoModelMachining() {
 
@@ -83,7 +83,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17171")
+    @TestRail(id = 17171)
     @Description("Run API for Additive Manufacturing Process Group")
     public void testGetGcdTypesAdditiveManufacturing() {
 
@@ -99,7 +99,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17172")
+    @TestRail(id = 17172)
     @Description("Run API for Bar & Tube Fab Process Group")
     public void testGetGcdTypesBarAndTubeFab() {
 
@@ -115,7 +115,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17173")
+    @TestRail(id = 17173)
     @Description("Run API for Casting - Die Process Group")
     public void testGetGcdTypesCastingDie() {
 
@@ -131,7 +131,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17174")
+    @TestRail(id = 17174)
     @Description("Run API for Casting - Sand Process Group")
     public void testGetGcdTypesCastingSand() {
 
@@ -147,7 +147,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17175")
+    @TestRail(id = 17175)
     @Description("Run API for Casting - Investment Process Group")
     public void testGetGcdTypesCastingInvestment() {
 
@@ -163,7 +163,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17176")
+    @TestRail(id = 17176)
     @Description("Run API for Forging Process Group")
     public void testGetGcdTypesForging() {
 
@@ -179,7 +179,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17177")
+    @TestRail(id = 17177)
     @Description("Run API for Plastic Molding Process Group")
     public void testGetGcdTypesPlasticMolding() {
 
@@ -195,7 +195,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17178")
+    @TestRail(id = 17178)
     @Description("Run API for Powder Metal Process Group")
     public void testGetGcdTypesPowderMetal() {
 
@@ -211,7 +211,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17179")
+    @TestRail(id = 17179)
     @Description("Run API for Rapid Prototyping Process Group")
     public void testGetGcdTypesRapidPrototyping() {
 
@@ -227,7 +227,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17180")
+    @TestRail(id = 17180)
     @Description("Run API for Roto & Blow Molding Process Group")
     public void testGetGcdTypesRotoAndBlowMolding() {
 
@@ -243,7 +243,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17182")
+    @TestRail(id = 17182)
     @Description("Run API for Sheet Metal - Transfer Die Process Group")
     public void testGetGcdTypesSheetMetalTransferDie() {
 
@@ -259,7 +259,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17183")
+    @TestRail(id = 17183)
     @Description("Run API for Sheet Metal - Hydroforming Process Group")
     public void testGetGcdTypesSheetMetalHydroforming() {
 
@@ -275,7 +275,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17184")
+    @TestRail(id = 17184)
     @Description("Run API for Sheet Metal - Roll Forming Process Group")
     public void testGetGcdTypesSheetMetalRollForming() {
 
@@ -291,7 +291,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17185")
+    @TestRail(id = 17185)
     @Description("Run API for Sheet Metal - Stretch Forming Process Group")
     public void testGetGcdTypesSheetMetalStretchForming() {
 
@@ -307,7 +307,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17186")
+    @TestRail(id = 17186)
     @Description("Run API for Sheet Plastic Process Group")
     public void testGetGcdTypesSheetPlastic() {
 
@@ -323,7 +323,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17187")
+    @TestRail(id = 17187)
     @Description("Run API for Stock Machining Process Group")
     public void testGetGcdTypesStockMachining() {
 
@@ -339,7 +339,7 @@ public class GcdTypesTests {
     }
 
     @Test
-    @TestRail(id = "17188")
+    @TestRail(id = 17188)
     @Description("Run API for a Process group that does not exist")
     public void testGetGcdTypesForProcessGroupThatDoesNotExist() {
         GenericErrorResponse errorResponse = acsResources.getGcdTypes(

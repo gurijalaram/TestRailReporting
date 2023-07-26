@@ -24,7 +24,7 @@ import tests.workorders.WorkorderAPITests;
 public class RoutingSelectionTests extends TestUtil {
 
     @Test
-    @TestRail(id = "14843")
+    @TestRail(id = 14843)
     @Description("Save Routing Selection after Cost")
     public void testSaveRoutingSelection() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -66,7 +66,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14854")
+    @TestRail(id = 14854)
     @Description("Save Routing Selection after Cost for Additive Manufacturing")
     public void testSaveRoutingSelectionAdditiveManufacturing() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -108,7 +108,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14855")
+    @TestRail(id = 14855)
     @Description("Save Routing Selection after Cost for Bar & Tube")
     public void testSaveRoutingSelectionBarandTube() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -150,7 +150,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14856")
+    @TestRail(id = 14856)
     @Description("Save Routing Selection after Cost for Casting - Die")
     public void testSaveRoutingSelectionCastingDie() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -192,7 +192,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14857")
+    @TestRail(id = 14857)
     @Description("Save Routing Selection after Cost for Casting - Investment")
     public void testSaveRoutingSelectionCastingInvestment() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -234,7 +234,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14858")
+    @TestRail(id = 14858)
     @Description("Save Routing Selection after Cost for Casting - Sand")
     public void testSaveRoutingSelectionCastingSand() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -276,7 +276,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14859")
+    @TestRail(id = 14859)
     @Description("Save Routing Selection after Cost for Forging")
     public void testSaveRoutingSelectionForging() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -318,7 +318,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14860")
+    @TestRail(id = 14860)
     @Description("Save Routing Selection after Cost for Plastic Molding")
     public void testSaveRoutingSelectionPlasticMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -360,7 +360,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14861")
+    @TestRail(id = 14861)
     @Description("Save Routing Selection after Cost for Powder Metal")
     public void testSaveRoutingSelectionPowderMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -402,7 +402,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14862")
+    @TestRail(id = 14862)
     @Description("Save Routing Selection after Cost for Rapid Prototyping")
     public void testSaveRoutingSelectionRapidPrototyping() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -444,7 +444,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14863")
+    @TestRail(id = 14863)
     @Description("Save Routing Selection after Cost for Roto & Blow Molding")
     public void testSaveRoutingSelectionRotoandBlowMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -486,7 +486,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14864")
+    @TestRail(id = 14864)
     @Description("Save Routing Selection after Cost for Sheet Metal")
     public void testSaveRoutingSelectionSheetMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -528,7 +528,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14865")
+    @TestRail(id = 14865)
     @Description("Save Routing Selection after Cost for Sheet Metal - Hydroforming")
     public void testSaveRoutingSelectionSheetMetalHydroforming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -570,7 +570,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14866")
+    @TestRail(id = 14866)
     @Description("Save Routing Selection after Cost for Sheet Metal - Roll Forming")
     public void testSaveRoutingSelectionSheetMetalRollForming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -612,7 +612,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14867")
+    @TestRail(id = 14867)
     @Description("Save Routing Selection after Cost for Sheet Metal - Stretch Forming")
     public void testSaveRoutingSelectionSheetMetalStretchForming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -654,7 +654,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14868")
+    @TestRail(id = 14868)
     @Description("Save Routing Selection after Cost for Sheet Metal - Transfer Die")
     public void testSaveRoutingSelectionSheetMetalTransferDie() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -696,7 +696,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14869")
+    @TestRail(id = 14869)
     @Description("Save Routing Selection after Cost for Sheet Plastic")
     public void testSaveRoutingSelectionSheetPlastic() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -738,7 +738,7 @@ public class RoutingSelectionTests extends TestUtil {
     }
 
     @Test
-    @TestRail(id = "14870")
+    @TestRail(id = 14870)
     @Description("Save Routing Selection after Cost for Stock Machining")
     public void testSaveRoutingSelectionStockMachining() {
         FileUploadResources fileUploadResources = new FileUploadResources();

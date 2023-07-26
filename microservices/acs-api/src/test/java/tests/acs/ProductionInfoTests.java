@@ -22,7 +22,7 @@ import org.junit.Test;
 public class ProductionInfoTests extends TestUtil {
 
     @Test
-    @TestRail(id = "15430")
+    @TestRail(id = 15430)
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
         FileUploadResources fileUploadResources = new FileUploadResources();

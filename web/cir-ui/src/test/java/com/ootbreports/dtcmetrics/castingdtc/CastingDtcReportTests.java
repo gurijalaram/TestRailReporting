@@ -1,27 +1,9 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
-import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -31,9 +13,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
-
-import java.math.BigDecimal;
 
 public class CastingDtcReportTests extends TestBaseUI {
 
@@ -67,17 +46,17 @@ public class CastingDtcReportTests extends TestBaseUI {
 
     @Test
     @Category( {ReportsTest.class, OnPremTest.class})
-    @TestRail(id = "7247")
-    @Description("Verify report availability by search - Casting DTC Report")
-    public void testReportAvailabilityBySearch() {
+    @TestRail(id = 7247")
+        @Description("Verify report availability by search - Casting DTC Report")
+        public void testReportAvailabilityBySearch(){
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.CASTING_DTC.getReportName());
-    }
+        }
 
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(id = {1692})
-    @Description("Verify Export Set list controls function correctly - Casting DTC Report")
+        @Test
+        @Category(ReportsTest.class)
+        @TestRail(id = {1692})
+        @Description("Verify Export Set list controls function correctly - Casting DTC Report")
     public void testCastingDtcExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSelection(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -97,15 +76,15 @@ public class CastingDtcReportTests extends TestBaseUI {
 
     @Test
     @Category( {ReportsTest.class, OnPremTest.class})
-    @TestRail(id = "7342")
-    @Description("Verify apply button functionality - Casting DTC Report")
-    public void testApplyButton() {
+    @TestRail(id = 7342")
+        @Description("Verify apply button functionality - Casting DTC Report")
+        public void testApplyButton(){
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-            ReportNamesEnum.CASTING_DTC.getReportName(),
-            ExportSetEnum.CASTING_DTC.getExportSetName(),
-            RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
-        );
+        ReportNamesEnum.CASTING_DTC.getReportName(),
+        ExportSetEnum.CASTING_DTC.getExportSetName(),
+        RollupEnum.UC_CASTING_DTC_ALL.getRollupName()
+    );
     }
 
     @Test
@@ -305,17 +284,17 @@ public class CastingDtcReportTests extends TestBaseUI {
 
     @Test
     @Category( {ReportsTest.class, OnPremTest.class})
-    @TestRail(id = "7455")
-    @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
-    public void testProcessGroupSandAndDieCasting() {
+    @TestRail(id = 7455")
+        @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
+        public void testProcessGroupSandAndDieCasting(){
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testTwoProcessGroupsCasting();
-    }
+        }
 
-    @Test
-    @Category(ReportsTest.class)
-    @TestRail(id = {1709})
-    @Description("Validate chart tool-tips")
+        @Test
+        @Category(ReportsTest.class)
+        @TestRail(id = {1709})
+        @Description("Validate chart tool-tips")
     public void testChartToolTips() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcChartTooltips(

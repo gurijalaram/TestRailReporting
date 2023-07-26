@@ -1,7 +1,6 @@
 package com.apriori.edcapi.tests;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.users.Users;
 import com.apriori.edcapi.utils.UsersUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
@@ -21,15 +20,15 @@ public class UsersTest extends UsersUtil {
     }
 
     @Test
-    @TestRail(id = "9424")
-    @Description("GET the current representation of the user performing the request.")
-    public void testGetCurrentRepresentationOfUser() {
-        Users users = getCurrentUser();
+    @TestRail(id = 9424")
+        @Description("GET the current representation of the user performing the request.")
+        public void testGetCurrentRepresentationOfUser(){
+        Users users=getCurrentUser();
 
         softAssertions.assertThat(users.getUserType()).isEqualTo("AP_STAFF_USER");
         softAssertions.assertThat(users.getUserProfile().getFamilyName()).isEqualTo("Automation Account 01");
         softAssertions.assertThat(users.getCustomAttributes().getWorkspaceId()).isEqualTo(355);
 
         softAssertions.assertAll();
-    }
+        }
 }

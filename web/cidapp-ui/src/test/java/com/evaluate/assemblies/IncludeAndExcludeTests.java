@@ -79,17 +79,17 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = "11154")
-    @Description("Include and Exclude buttons disabled by default")
-    public void testIncludeAndExcludeDisabledButtons() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+    @TestRail(id = 11154")
+        @Description("Include and Exclude buttons disabled by default")
+        public void testIncludeAndExcludeDisabledButtons(){
+        String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
+        List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum=ProcessGroupEnum.FORGING;
+        final String componentExtension=".SLDPRT";
 
-        UserCredentials currentUser = UserUtil.getUser();
+        UserCredentials currentUser=UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -105,25 +105,24 @@ public class IncludeAndExcludeTests extends TestBaseUI {
                 currentUser)
             .openComponents();
 
-
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
         softAssertions.assertAll();
-    }
+        }
 
-    @Test
-    @TestRail(id = "11150")
-    @Description("Exclude all sub-components from top-level assembly")
-    public void testExcludeButtons() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        @Test
+        @TestRail(id = 11150")
+        @Description("Exclude all sub-components from top-level assembly")
+        public void testExcludeButtons(){
+        String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
+        List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum=ProcessGroupEnum.FORGING;
+        final String componentExtension=".SLDPRT";
 
-        UserCredentials currentUser = UserUtil.getUser();
+        UserCredentials currentUser=UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
