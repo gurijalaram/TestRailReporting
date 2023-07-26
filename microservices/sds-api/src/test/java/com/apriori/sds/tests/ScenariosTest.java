@@ -1,15 +1,23 @@
 package com.apriori.sds.tests;
 
 import com.apriori.GenerateStringUtil;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.request.PostComponentRequest;
+import com.apriori.sds.entity.request.PostWatchpointReportRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
 import com.apriori.sds.entity.response.ScenarioHoopsImage;
+import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
@@ -20,27 +28,29 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ScenariosTest extends SDSTestUtil {
 
     private static ScenarioItem testingScenario;
     private static ScenarioItem testingScenarioWithWatchpoint;
 
     @Test
-    @TestRail(id = {6922})
+    @TestRail(id = 6922)
     @Description("Find scenarios for a given component matching a specified query.")
     public void testGetScenarios() {
         this.getScenarios();
     }
 
     @Test
-    @TestRail(id = {6923})
+    @TestRail(id = 6923)
     @Description("Get the current representation of a scenario.")
     public void testGetScenarioByIdentity() {
         this.getScenarioByIdentity(getScenarioId());
     }
 
     @Test
-    @TestRail(id = {6924})
+    @TestRail(id = 6924)
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
         final RequestEntity requestEntity =
@@ -56,7 +66,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Test
     //TODO should be resolved after adding an API to create a custom image for CID.
     @Ignore("API that allow to create a custom image, doesn't exist for CID. Custom image is user guided.")
-    @TestRail(id = {6925})
+    @TestRail(id = 6925)
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {
         final RequestEntity requestEntity =
@@ -70,7 +80,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = {8589})
+    @TestRail(id = 8589)
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getWebImage() {
         final RequestEntity requestEntity =
@@ -84,7 +94,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = {6926})
+    @TestRail(id = 6926)
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
         final ScenarioItem testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
@@ -100,17 +110,17 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = 8430")
-        @Description("Copy a scenario.")
-        public void testCopyScenario(){
-        final String copiedScenarioName=new GenerateStringUtil().generateScenarioName();
+    @TestRail(id = 8430)
+    @Description("Copy a scenario.")
+    public void testCopyScenario() {
+        final String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        PostComponentRequest scenarioRequestBody=PostComponentRequest.builder()
-        .scenarioName(copiedScenarioName)
-        .createdBy(getTestingComponent().getComponentCreatedBy())
-        .build();
+        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
+            .scenarioName(copiedScenarioName)
+            .createdBy(getTestingComponent().getComponentCreatedBy())
+            .build();
 
-        final RequestEntity requestEntity=
+        final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(getComponentId(), getScenarioId())
                 .body("scenario", scenarioRequestBody)
@@ -127,25 +137,25 @@ public class ScenariosTest extends SDSTestUtil {
         this.addScenarioToDelete(copiedScenario.getIdentity());
     }
 
-@Test
-@TestRail(id = 8431")
+    @Test
+    @TestRail(id = 8431)
     @Description("Cost a scenario.")
-    public void testCostScenario(){
-    this.costAndGetReadyScenario();
+    public void testCostScenario() {
+        this.costAndGetReadyScenario();
     }
 
     @Test
-    @TestRail(id = 8429")
+    @TestRail(id = 8429)
     @Description("Update an existing scenario. ")
-    public void testUpdateScenario(){
-    final String updatedNotes="Automation Notes";
-    final String updatedDescription="Automation Description";
-    final ScenarioItem scenarioForUpdate=postTestingComponentAndAddToRemoveList();
+    public void testUpdateScenario() {
+        final String updatedNotes = "Automation Notes";
+        final String updatedDescription = "Automation Description";
+        final ScenarioItem scenarioForUpdate = postTestingComponentAndAddToRemoveList();
 
-    PostComponentRequest scenarioRequestBody=PostComponentRequest.builder()
-    .notes(updatedNotes)
-    .description(updatedDescription)
-    .updatedBy(scenarioForUpdate.getCreatedBy())
+        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
+            .notes(updatedNotes)
+            .description(updatedDescription)
+            .updatedBy(scenarioForUpdate.getCreatedBy())
             .build();
 
         final RequestEntity requestEntity =
@@ -153,7 +163,6 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
                 .body("scenario", scenarioRequestBody)
                 .expectedResponseCode(HttpStatus.SC_OK);
-
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).patch();
         final Scenario scenario = responseWrapper.getResponseEntity();
@@ -164,24 +173,24 @@ public class ScenariosTest extends SDSTestUtil {
         softAssertions.assertAll();
     }
 
-@Test
-@TestRail(id = 8433")
+    @Test
+    @TestRail(id = 8433)
     @Description("Publish a scenario.")
-    public void testPublishScenario(){
-    this.publishAndGetReadyToWorkScenario();
+    public void testPublishScenario() {
+        this.publishAndGetReadyToWorkScenario();
     }
 
     @Test
-    @TestRail(id = 8432")
+    @TestRail(id = 8432)
     @Description("Fork a scenario.")
-    public void testForkScenario(){
-    final String forkScenarioName=new GenerateStringUtil().generateScenarioName();
+    public void testForkScenario() {
+        final String forkScenarioName = new GenerateStringUtil().generateScenarioName();
 
-    PostComponentRequest scenarioRequestBody=PostComponentRequest.builder()
-    .scenarioName(forkScenarioName)
-    .override(false)
-    .updatedBy(getTestingComponent().getCreatedBy())
-    .build();
+        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
+            .scenarioName(forkScenarioName)
+            .override(false)
+            .updatedBy(getTestingComponent().getCreatedBy())
+            .build();
 
         ScenarioItem publishedScenario = publishAndGetReadyToWorkScenario();
 
@@ -210,7 +219,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = {8590})
+    @TestRail(id = 8590)
     @Description("GET a completed watchpoint report for a scenario.")
     public void testGetWatchPoint() {
         ScenarioItem scenarioWithCreatedWatchpoint = this.createWatchpoint();
@@ -231,20 +240,20 @@ public class ScenariosTest extends SDSTestUtil {
         HTTPRequest.build(requestEntity).get();
     }
 
-@Test
-@TestRail(id = 8434")
+    @Test
+    @TestRail(id = 8434)
     @Description("Create a watchpoint report.")
-    public void testCreateWatchpointReport(){
-    this.createWatchpoint();
+    public void testCreateWatchpointReport() {
+        this.createWatchpoint();
     }
 
     @Test
-    @TestRail(id = 7246")
+    @TestRail(id = 7246)
     @Description("Delete an existing scenario.")
-    public void deleteScenario(){
-    final ScenarioItem componentToDelete=postTestingComponentAndAddToRemoveList();
+    public void deleteScenario() {
+        final ScenarioItem componentToDelete = postTestingComponentAndAddToRemoveList();
 
-    removeTestingScenario(componentToDelete.getComponentIdentity(), componentToDelete.getScenarioIdentity());
+        removeTestingScenario(componentToDelete.getComponentIdentity(), componentToDelete.getScenarioIdentity());
         scenariosToDelete.remove(componentToDelete);
     }
 

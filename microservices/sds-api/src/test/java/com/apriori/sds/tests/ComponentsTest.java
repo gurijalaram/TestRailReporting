@@ -16,7 +16,7 @@ import org.junit.Test;
 public class ComponentsTest extends SDSTestUtil {
 
     @Test
-    @TestRail(id = {6937})
+    @TestRail(id = 6937)
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
         final RequestEntity requestEntity =
@@ -27,7 +27,7 @@ public class ComponentsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = {6938})
+    @TestRail(id = 6938)
     @Description("Get the current representation of a component.")
     public void getComponentByIdentity() {
         final RequestEntity requestEntity =
@@ -39,9 +39,9 @@ public class ComponentsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(id = 7248")
-        @Description("Add a new component.")
-        public void postComponents(){
+    @TestRail(id = 7248)
+    @Description("Add a new component.")
+    public void postComponents() {
         postTestingComponentAndAddToRemoveList();
-        }
+    }
 }
