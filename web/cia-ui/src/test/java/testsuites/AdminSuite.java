@@ -1,16 +1,7 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import org.junit.platform.suite.api.Suite;
 
-import com.navigation.AdminNavigationTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
-@ProjectRunID("261")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
-    AdminNavigationTests.class
-})
+@Suite
 public class AdminSuite {
 }

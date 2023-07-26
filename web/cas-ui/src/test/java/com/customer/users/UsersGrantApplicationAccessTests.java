@@ -118,7 +118,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @Test
     @Description("Validate granted applications can be added by Add button")
-    @Category( {SmokeTest.class})
+    @Category({SmokeTest.class})
     @TestRail(id = {12515})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
