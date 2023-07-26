@@ -4,6 +4,7 @@ import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.entity.response.SubLicense;
 import com.apriori.cds.entity.response.SubLicenses;
 import com.apriori.cds.enums.CDSAPIEnum;
