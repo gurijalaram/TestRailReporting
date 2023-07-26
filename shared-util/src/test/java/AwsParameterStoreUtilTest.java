@@ -1,4 +1,4 @@
-import com.apriori.utils.AwsParameterStoreUtil;
+import com.apriori.AwsParameterStoreUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
