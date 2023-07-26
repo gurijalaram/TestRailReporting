@@ -1,9 +1,6 @@
 package com.apriori.bcs.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
 import com.apriori.bcs.controller.CustomerResources;
 import com.apriori.bcs.entity.response.CustomAttributes;
 import com.apriori.bcs.entity.response.CustomerVPE;
@@ -12,9 +9,9 @@ import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.bcs.entity.response.UserDefinedAttributes;
 import com.apriori.bcs.entity.response.UserPreferences;
 import com.apriori.bcs.enums.BCSAPIEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -32,7 +29,7 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4169"})
+    @TestRail(id = 4169)
     @Description("API returns a list of tolerances associated with a specific CIS customer")
     public void getUserPreferences() {
         HTTPRequest.build(
@@ -43,7 +40,7 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4171"})
+    @TestRail(id = 4171)
     @Description("API returns a list of process groups associated with a specific CIS customer")
     public void getProcessGroups() {
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(
@@ -56,7 +53,7 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4172"})
+    @TestRail(id = 4172)
     @Description("API returns a list of user defined attributes associated with a specific CIS customer")
     public void getUserDefinedAttributes() {
         ResponseWrapper<UserDefinedAttributes> userDefinedAttributesResponse = HTTPRequest.build(
@@ -69,7 +66,7 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4173"})
+    @TestRail(id = 4173)
     @Description("API returns a list of VPEs associated with a specific CIS customer")
     public void getVirtualProductionEnvironments() {
         ResponseWrapper<CustomerVPE> customerVPEResponse = HTTPRequest.build(
@@ -82,14 +79,14 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4170"})
+    @TestRail(id = 4170)
     @Description("Update a customer's costing preferences")
     public void patchUserPreferences() {
         CustomerResources.patchCostingPreferences();
     }
 
     @Test
-    @TestRail(testCaseId = {"7955"})
+    @TestRail(id = 7955)
     @Description("Return a list of digital factories")
     public void getDigitalFactories() {
         ResponseWrapper<DigitalFactories> digitalFactoriesResponse = HTTPRequest.build(
@@ -102,7 +99,7 @@ public class CustomerResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7956"})
+    @TestRail(id = 7956)
     @Description("Return a customer's custom attributes")
     public void getCustomAttributes() {
         ResponseWrapper<CustomAttributes> customAttributesResponse = HTTPRequest.build(

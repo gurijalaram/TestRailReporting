@@ -1,10 +1,10 @@
 package com.apriori.pages.workflows.schedule.costinginputs;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

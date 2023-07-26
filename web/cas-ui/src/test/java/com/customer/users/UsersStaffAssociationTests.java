@@ -1,6 +1,9 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
@@ -12,14 +15,11 @@ import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
 import com.apriori.utils.common.customer.response.Customers;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class UsersStaffAssociationTests extends TestBase {
+public class UsersStaffAssociationTests extends TestBaseUI {
     private static final String STAFF_TEST_CUSTOMER = "Staff Association Test Customer";
     private static final String STAFF_TEST_USER = "staff-test-user";
     private Customer targetCustomer;
@@ -103,7 +103,7 @@ public class UsersStaffAssociationTests extends TestBase {
     @Test
     @Description("Verify staff users can be added to the list.")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"5587", "5588", "5589", "5590", "5591"})
+    @TestRail(id = {5587, 5588, 5589, 5590, 5591})
     public void testVerifyUsersCanBeAddedToTheList() {
 
         populateStaffTestUsers(21);
@@ -162,7 +162,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
     @Test
     @Description("Verify user can be removed from aPriori Staff table.")
-    @TestRail(testCaseId = {"12081"})
+    @TestRail(id = {12081})
     public void testVerifyAssociatedStaffCanBeRemoved() {
 
         populateStaffTestUsers(2);

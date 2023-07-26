@@ -1,6 +1,12 @@
 package com.apriori.qds.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.request.layout.LayoutRequest;
 import com.apriori.qds.entity.request.layout.LayoutRequestParameters;
@@ -8,14 +14,8 @@ import com.apriori.qds.entity.response.layout.LayoutResponse;
 import com.apriori.qds.entity.response.layout.LayoutsResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;

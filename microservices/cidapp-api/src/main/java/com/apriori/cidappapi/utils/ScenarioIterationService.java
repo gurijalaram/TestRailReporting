@@ -1,20 +1,20 @@
 package com.apriori.cidappapi.utils;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
 import com.apriori.entity.enums.CssAPIEnum;
 import com.apriori.entity.request.ErrorRequestResponse;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

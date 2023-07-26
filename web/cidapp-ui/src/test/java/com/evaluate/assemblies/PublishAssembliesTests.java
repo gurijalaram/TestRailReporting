@@ -4,10 +4,17 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -15,21 +22,13 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -40,7 +39,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class PublishAssembliesTests extends TestBase {
+public class PublishAssembliesTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -73,7 +72,7 @@ public class PublishAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10763", "10768"})
+    @TestRail(id = {10763, 10768})
     @Description("Publish an assembly with no missing sub-components")
     public void shallowPublishAssemblyTest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -122,7 +121,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11812", "6042"})
+    @TestRail(id = {11812, 6042})
     @Description("Verify publish scenario modal appears when publish button is clicked")
     public void testIncludeSubcomponentsAndCost() {
         final String FLANGE = "flange";
@@ -168,7 +167,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11811")
+    @TestRail(id = 11811)
     @Description("Publish button becomes unavailable when public sub-component selected alongside private sub-component(s)")
     public void testPublishButtonAvailability() {
         currentUser = UserUtil.getUser();
@@ -217,7 +216,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11828")
+    @TestRail(id = 11828)
     @Description("Validate an error message appears if any issues occur")
     public void testPublishWithExistingScenarioName() {
         String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -281,7 +280,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11829")
+    @TestRail(id = 11829)
     @Description("Validate a public iteration of the sub component is created")
     public void testCreatingPublicIterationOfSubcomponent() {
         currentUser = UserUtil.getUser();
@@ -330,7 +329,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11813", "11814", "11808", "6051"})
+    @TestRail(id = {11813, 11814, 11808, 6051})
     @Description("Validate public scenarios are overridden from publish modal")
     public void testOverridePublicScenarios() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -394,7 +393,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10773", "10775"})
+    @TestRail(id = {10773, 10775})
     @Description("Shallow Publish correctly publishes to Public Workspace")
     public void testShallowPublishInPublicWorkspace() {
         currentUser = UserUtil.getUser();
@@ -454,7 +453,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778", "6746", "6615", "6616", "6617", "6056", "6057"})
+    @TestRail(id = {10771, 10772, 10776, 10777, 10778, 6746, 6615, 6616, 6617, 6056, 6057})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();
@@ -547,7 +546,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10770")
+    @TestRail(id = 10770)
     @Description("Retain the Status/ Cost Maturity/ Lock during a Shallow Publish")
     public void testShallowPublishWithRetainedFeatures() {
         currentUser = UserUtil.getUser();
@@ -616,7 +615,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10787", "10789"})
+    @TestRail(id = {10787, 10789})
     @Description("Shallow Publish over existing Public Scenarios")
     public void testShallowPublishOverExistingPublicScenario() {
         String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -680,7 +679,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10786")
+    @TestRail(id = 10786)
     @Description("Attempt to Shallow Publish over existing Public locked scenarios")
     public void testShallowPublishExistingPublicLockedScenario() {
         currentUser = UserUtil.getUser();
@@ -738,7 +737,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10780")
+    @TestRail(id = 10780)
     @Description("Shallow Publish an assembly with Out of Date cost results")
     public void testShallowPublishWithOutOfDateCostResults() {
         currentUser = UserUtil.getUser();
@@ -799,7 +798,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11094", "11095"})
+    @TestRail(id = {11094, 11095})
     @Description("Validate when I select a sub components in a processing state the set inputs button is disabled until the scenario is unselected")
     public void testInputsEnabledDisabled() {
         currentUser = UserUtil.getUser();
@@ -850,7 +849,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11824", "11825"})
+    @TestRail(id = {11824, 11825})
     @Description("Validate when I select any sub components in a processing state the publish button is disabled")
     public void testPublishButtonDisabledEnabled() {
         currentUser = UserUtil.getUser();

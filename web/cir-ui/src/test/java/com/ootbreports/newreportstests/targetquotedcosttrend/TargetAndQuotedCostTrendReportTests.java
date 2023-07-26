@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.targetquotedcosttrend;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -21,7 +21,7 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     }
 
     @Test
-    @TestRail(testCaseId = {"3359"})
+    @TestRail(id = {3359})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.targetQuotedCostCurrencyTest();

@@ -1,14 +1,14 @@
 package com.apriori.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.entity.response.CustomerAssociations;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CasCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5681"})
+    @TestRail(id = {5681})
     @Description("Returns a list of customer associations for the customer")
     public void getCustomerAssociations() {
         ResponseWrapper<CustomerAssociations> associations = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATIONS,
@@ -44,7 +44,7 @@ public class CasCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5682"})
+    @TestRail(id = {5682})
     @Description("Get the customer association identified by its identity")
     public void getAssociationByIdentity() {
         ResponseWrapper<CustomerAssociations> associations = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATIONS,
@@ -67,7 +67,7 @@ public class CasCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"16125"})
+    @TestRail(id = {16125})
     @Description("Get the customer association with not existing identity")
     public void getAssociationThatNotExists() {
         String notExistingIdentity = "000000000000";

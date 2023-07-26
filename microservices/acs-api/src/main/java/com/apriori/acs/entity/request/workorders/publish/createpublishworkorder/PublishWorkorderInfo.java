@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.request.workorders.publish.createpublishworkorder;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 @Schema(location = "workorders/CreatePublishWorkorderResponse.json")
 public class PublishWorkorderInfo {

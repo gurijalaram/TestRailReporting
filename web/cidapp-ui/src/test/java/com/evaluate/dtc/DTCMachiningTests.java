@@ -1,27 +1,26 @@
 package com.evaluate.dtc;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
+import static com.apriori.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ToleranceEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
+import com.utils.ToleranceEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -30,7 +29,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class DTCMachiningTests extends TestBase {
+public class DTCMachiningTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -53,7 +52,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7751"})
+    @TestRail(id = {7751})
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -79,7 +78,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6441"})
+    @TestRail(id = {6441})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -106,7 +105,7 @@ public class DTCMachiningTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6439"})
+    @TestRail(id = {6439})
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -133,7 +132,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6445"})
+    @TestRail(id = {6445})
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -159,7 +158,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6444"})
+    @TestRail(id = {6444})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -185,7 +184,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6442"})
+    @TestRail(id = {6442})
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -212,7 +211,7 @@ public class DTCMachiningTests extends TestBase {
 
     /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"6440", "6443", "6447"})
+    @TestRail(id = {6440", "6443", "6447"})
     @Description("Ensure that  'Guidance' includes: - Issue type count - DTC Messaging for each guidance instance")
     public void stockMachiningDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -247,7 +246,7 @@ public class DTCMachiningTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"6438"})
+    @TestRail(id = {6438})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
         final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
@@ -274,7 +273,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     /*    @Test
-    @TestRail(testCaseId = {"6433", "6436", "6437"})
+    @TestRail(id = {6433", "6436", "6437"})
     @Description("Verify the investigate tab correctly presents features & conditions which impact cost")
     public void stockMachineDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -309,10 +308,10 @@ public class DTCMachiningTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"6452"})
+    @TestRail(id = {6452})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
 
         String componentName = "DTCCastingIssues";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");

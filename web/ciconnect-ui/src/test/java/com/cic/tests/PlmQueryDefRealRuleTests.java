@@ -1,14 +1,8 @@
 package com.cic.tests;
 
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflowJobResults;
 import enums.CICPartSelectionType;
 import enums.PlmPartDataType;
@@ -19,7 +13,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
@@ -36,7 +29,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4863", "4340"})
+    @TestRail(id = {4863, 4340})
     @Description("Test each operator for the Int data type in isolation - Real Equal and verify data type")
     public void testWorkflowQueryDefRealEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -53,7 +46,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24380"})
+    @TestRail(id = {24380})
     @Description("Test each operator for the Int data type in isolation - Real Not Equal")
     public void testWorkflowQueryDefRealNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -76,7 +69,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24385"})
+    @TestRail(id = {24385})
     @Description("Test each operator for the Int data type in isolation - Real Greater Than")
     public void testWorkflowQueryDefRealGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -93,7 +86,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24390"})
+    @TestRail(id = {24390})
     @Description("Test each operator for the Int data type in isolation - Real Greater Than or Equal")
     public void testWorkflowQueryDefRealGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -112,7 +105,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24395"})
+    @TestRail(id = {24395})
     @Description("Test each operator for the Int data type in isolation - Real between")
     public void testWorkflowQueryDefRealBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -131,7 +124,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24400"})
+    @TestRail(id = {24400})
     @Description("Test each operator for the Int data type in isolation - Real NOT between")
     public void testWorkflowQueryDefRealNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -150,7 +143,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24403"})
+    @TestRail(id = {24403})
     @Description("Test each operator for the Int data type in isolation - Real Less Than")
     public void testWorkflowQueryDefRealLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -167,7 +160,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24406"})
+    @TestRail(id = {24406})
     @Description("Test each operator for the Int data type in isolation - Real Less Than or Equal")
     public void testWorkflowQueryDefRealLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)

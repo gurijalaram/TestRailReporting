@@ -3,18 +3,18 @@ package com.help;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.navtoolbars.AboutUsPage;
 import com.apriori.pageobjects.navtoolbars.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-public class HelpTests extends TestBase {
+public class HelpTests extends TestBaseUI {
 
     private EdcAppLoginPage loginPage;
     private AboutUsPage aboutUsPage;
@@ -26,7 +26,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2272"})
+    @TestRail(id = {2272})
     @Description("Login page Help link takes user to Zendesk login page")
     public void onlineHelpTest() {
         currentUser = UserUtil.getUser();
@@ -39,7 +39,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "8941")
+    @TestRail(id = "8941")
     @Description("User can navigate to About Us pager")
     public void testAboutUs() {
         currentUser = UserUtil.getUser();

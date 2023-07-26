@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
@@ -11,11 +13,9 @@ import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.SubLicense;
 import com.apriori.entity.response.SubLicenses;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -72,7 +72,7 @@ public class CasSiteLicenseSublicenseTests {
 
     @Test
     @Description("Get the sub License identified by its identity for the customer site in the given license.")
-    @TestRail(testCaseId = {"5656"})
+    @TestRail(id = {5656})
     public void getSublicenseById() {
         ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
             customerIdentity,
@@ -94,7 +94,7 @@ public class CasSiteLicenseSublicenseTests {
 
     @Test
     @Description("Get sublicense with not existing identity")
-    @TestRail(testCaseId = {"16377"})
+    @TestRail(id = {16377})
     public void getSubLicenseThatNotExist() {
         String notExistingSubLicenseId = "000000000000";
 

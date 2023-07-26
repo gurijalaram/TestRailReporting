@@ -4,26 +4,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.nts.email.EmailService;
 import com.apriori.nts.entity.response.Email;
 import com.apriori.nts.entity.response.EmailsItems;
 import com.apriori.nts.entity.response.SendEmail;
 import com.apriori.nts.utils.Constants;
-import com.apriori.utils.TestHelper;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
-public class EmailsTests extends TestHelper {
+public class EmailsTests {
 
     @Test
-    @TestRail(testCaseId = {"3828", "10472", "3881"})
+    @TestRail(id = {3828, 10472, 3881})
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         EmailService emailService = new EmailService();
@@ -52,7 +48,7 @@ public class EmailsTests extends TestHelper {
     }
 
     @Test
-    @TestRail(testCaseId = {"10469", "10470", "10471"})
+    @TestRail(id = {10469, 10470, 10471})
     @Description("Send an email using the NTS API w/Attachment")
     public void sendEmailWithAttachment() {
         EmailService emailService = new EmailService();
@@ -82,7 +78,7 @@ public class EmailsTests extends TestHelper {
     }
 
     @Test
-    @TestRail(testCaseId = {"3880"})
+    @TestRail(id = {3880})
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
         EmailService emailService = new EmailService();

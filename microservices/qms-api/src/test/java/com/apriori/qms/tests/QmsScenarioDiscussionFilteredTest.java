@@ -1,18 +1,17 @@
 package com.apriori.qms.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -57,7 +56,7 @@ public class QmsScenarioDiscussionFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16057", "14672"})
+    @TestRail(id = {16057, 14672})
     @Description("Create, get scenario discussion with assignee user and useridentity")
     public void getFilteredScenarioDiscussionsByUserIdentity() {
         UserCredentials assignedUser = UserUtil.getUser();
@@ -75,7 +74,7 @@ public class QmsScenarioDiscussionFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14673"})
+    @TestRail(id = {14673})
     @Description("Create, get scenario discussion with mentioned user profile identity")
     public void getFilteredScenarioDiscussionsByMentionedUserIdentity() {
         String[] params = {"mentionedUsers.userIdentity[EQ]," + scenarioDiscussionResponse.getParticipants().get(0)
@@ -85,7 +84,7 @@ public class QmsScenarioDiscussionFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14674"})
+    @TestRail(id = {14674})
     @Description("Verify that user can GET a list of all Unresolved discussions")
     public void getFilteredUnResolvedScenarioDiscussions() {
         ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, "pageNumber,1", "status[NE],DELETED", "status[IN],ACTIVE");

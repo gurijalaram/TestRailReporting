@@ -1,20 +1,20 @@
 package com.evaluate.materialutilization;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
+import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.enums.ProcessGroupEnum.FORGING;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -24,7 +24,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class MaterialStockTests extends TestBase {
+public class MaterialStockTests extends TestBaseUI {
 
     UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -39,7 +39,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5115"})
+    @TestRail(id = {5115})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -79,7 +79,7 @@ public class MaterialStockTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"5148", "5151", "5152", "5153", "5156", "5160"})
+    @TestRail(id = {5148,5151", "5152", "5153", "5156", "5160"})
     @Description("Set the stock selection of a Scenario whose CAD file has material PMI attached uploaded via CI Design")
     public void materialPMIStock() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -124,7 +124,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5154", "5155", "5156"})
+    @TestRail(id = {5154, 5155, 5156})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
 

@@ -1,10 +1,10 @@
 package com.explore;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SearchTests extends TestBase {
+public class SearchTests extends TestBaseUI {
 
     public SearchTests() {
         super();
@@ -33,7 +33,7 @@ public class SearchTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "9556")
+    @TestRail(id = 9556)
     @Description("Component search by name on preset filters")
     public void testSearchByComponentName() {
         String componentName = "ASSEMBLY2";

@@ -1,8 +1,8 @@
 package com.apriori.cisapi.entity.response.userpreferences;
 
+import com.apriori.annotations.Schema;
+import com.apriori.authorization.response.Pagination;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
-import com.apriori.utils.Pagination;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

@@ -1,33 +1,32 @@
 package com.evaluate;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
+import static com.apriori.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.pageobjects.navtoolbars.DeletePage;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
 
-public class DeleteTests extends TestBase {
+public class DeleteTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
@@ -40,7 +39,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6736", "5431"})
+    @TestRail(id = {6736, 5431})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -72,7 +71,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7709"})
+    @TestRail(id = {7709})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -112,7 +111,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5432", "6730"})
+    @TestRail(id = {5432, 6730})
     @Description("Test a private scenario can be deleted from the evaluate view")
     public void testDeletePrivateScenarioEvaluate() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -141,7 +140,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13306"})
+    @TestRail(id = {13306})
     @Description("Test a public scenario can be deleted from the evaluate view")
     public void testDeletePublicScenarioEvaluate() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -178,7 +177,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6737", "6738"})
+    @TestRail(id = {6737, 6738})
     @Description("Test an edited private scenario and the original public scenario, which is locked, can be deleted from the evaluate view")
     public void testDeletePublicAndPrivateScenarios() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;

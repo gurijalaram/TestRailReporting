@@ -1,5 +1,6 @@
 package com.apriori.sds.entity.response;
 
+import com.apriori.annotations.Schema;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioCustomAttribute;
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioMetadata;
@@ -13,7 +14,6 @@ import com.apriori.entity.response.componentiteration.ScenarioDesignInvestigatio
 import com.apriori.entity.response.componentiteration.ScenarioDesignIssues;
 import com.apriori.entity.response.componentiteration.ScenarioDesignNotices;
 import com.apriori.entity.response.componentiteration.ScenarioProcess;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

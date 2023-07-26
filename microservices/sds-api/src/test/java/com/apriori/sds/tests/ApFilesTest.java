@@ -1,14 +1,14 @@
 package com.apriori.sds.tests;
 
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.PostComponentResponse;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Ignore;
@@ -20,7 +20,7 @@ import java.io.File;
 public class ApFilesTest  extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = {"8417"})
+    @TestRail(id = {8417})
     @Description("Import an existing aP File resulting in the creation/modification of components, scenarios and/or iterations. ")
     @Ignore
     public void testPostApFile() {

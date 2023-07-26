@@ -1,21 +1,16 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
-import com.apriori.pageobjects.pages.help.HelpDocPage;
-import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -23,7 +18,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class Sustainability extends TestBase {
+public class Sustainability extends TestBaseUI {
     UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private File resourceFile;
@@ -33,7 +28,7 @@ public class Sustainability extends TestBase {
     private MaterialProcessPage materialProcessPage;
 
     @Test
-    @TestRail(testCaseId = {"24103","24100","24360"})
+    @TestRail(id = {24103, 24100, 24360})
     @Description("Verify if Sustainability tab is presented on Evaluate page, and Material Carbon, Energy Carbon properties are visible")
     public void sustainabilityPropertiesTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

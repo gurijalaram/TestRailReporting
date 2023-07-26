@@ -1,16 +1,16 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserPreferences;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -68,7 +68,7 @@ public class CdsUserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12397"})
+    @TestRail(id = {12397})
     @Description("Returns a paged set of UserPreferences for a specific user.")
     public void getUserPreferences() {
         ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
@@ -78,7 +78,7 @@ public class CdsUserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12398", "12399"})
+    @TestRail(id = {12398, 12399})
     @Description("Creates a user preference for a user and gets it by identity")
     public void addUserPreference() {
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
@@ -97,7 +97,7 @@ public class CdsUserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12400"})
+    @TestRail(id = {12400})
     @Description("Updates an existing user preference by identity")
     public void updateUserPreference() {
         String updatedPreference = generateStringUtil.getRandomString();
@@ -118,7 +118,7 @@ public class CdsUserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12401", "12402"})
+    @TestRail(id = {12401, 12402})
     @Description("Adds or Replaces a UserPreference for a user")
     public void putUserPreference() {
         String preferenceName = generateStringUtil.getRandomString();

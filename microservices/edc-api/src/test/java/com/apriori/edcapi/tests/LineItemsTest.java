@@ -3,11 +3,11 @@ package com.apriori.edcapi.tests;
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -41,7 +41,7 @@ public class LineItemsTest extends LineItemsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9417")
+    @TestRail(id = 9417)
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {
         List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);

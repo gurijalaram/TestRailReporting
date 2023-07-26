@@ -22,7 +22,7 @@ import java.io.File;
  * @author kpatel
  */
 @RunWith(ConcurrentTestRunner.class)
-public class TestBase extends TestHelper {
+public class TestBase  {
 
     @Rule
     public TestRule testRule = new TestRule();

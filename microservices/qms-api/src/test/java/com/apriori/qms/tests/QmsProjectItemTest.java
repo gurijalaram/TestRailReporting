@@ -1,17 +1,17 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -59,7 +59,7 @@ public class QmsProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13773", "14913"})
+    @TestRail(id = {13773, 14913})
     @Issue("COL-1379")
     @Description("Find all project Items for particular project")
     public void getAllProjectItems() {
@@ -74,7 +74,7 @@ public class QmsProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14914"})
+    @TestRail(id = {14914})
     @Issue("COL-1379")
     @Description("Get project Item for particular project using project URL")
     public void getAllProjectItemByIdentity() {

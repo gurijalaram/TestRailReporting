@@ -1,11 +1,11 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.GenerateStringUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
@@ -31,14 +31,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8290"})
+    @TestRail(id = {8290})
     @Description("Returns a paged set of Site Variables for a specific customer.")
     public void getSiteVariables() {
         this.getSiteVariablesResponse();
     }
 
     @Test
-    @TestRail(testCaseId = {"8293"})
+    @TestRail(id = {8293})
     @Description("Get a site variable for a customer.")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
@@ -52,21 +52,21 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8291"})
+    @TestRail(id = {8291})
     @Description("Adds a Site Variable for a customer. The site variable can't already exist. Better to use PUT to create or replace the site variable.")
     public void postSiteVariablesByIdentity() {
         siteVariableIdsToDelete.add(this.postSiteVariables().getIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = {"8294"})
+    @TestRail(id = {8294})
     @Description("DELETEs a site variable.")
     public void deleteSiteVariablesByIdentity() {
         deleteSiteVariableById(this.postSiteVariables().getIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = {"8295"})
+    @TestRail(id = {8295})
     @Description("Updates a Site Variable for a customer. User PUT to create or replace if the site variable does not exist.")
     public void patchSiteVariablesByIdentity() {
         SiteVariable siteVariableBeforeUpdate = this.postSiteVariables();
@@ -84,7 +84,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8292"})
+    @TestRail(id = {8292})
     @Description("Adds or Replaces a SiteVariable for a user.")
     public void putSiteVariableForAUser() {
         SiteVariable siteVariable = getFirstSiteVariable();

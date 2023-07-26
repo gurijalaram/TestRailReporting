@@ -2,7 +2,7 @@ package com.apriori.pageobjects.pages.logout;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

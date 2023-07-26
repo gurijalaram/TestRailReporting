@@ -3,6 +3,7 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.ComponentRequest;
@@ -14,15 +15,14 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Successes;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
@@ -171,7 +171,7 @@ public class ComponentsUtil {
             .stream()
             .findFirst()
             .orElseThrow(
-                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                () -> new RuntimeException(String.format("Expected scenario state to be: %s Found: %s", ScenarioStateEnum.NOT_COSTED.getState(),
                     scenarioItem.stream().findFirst().get().getScenarioState())));
 
         return scenarioItem;

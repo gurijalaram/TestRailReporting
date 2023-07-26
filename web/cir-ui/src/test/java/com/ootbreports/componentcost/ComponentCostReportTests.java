@@ -5,15 +5,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
@@ -26,7 +26,7 @@ import utils.Constants;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class ComponentCostReportTests extends TestBase {
+public class ComponentCostReportTests extends TestBaseUI {
 
     private ComponentCostReportPage componentCostReportPage;
     private CommonReportTests commonReportTests;
@@ -37,7 +37,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3323"})
+    @TestRail(id = {3323})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -48,7 +48,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7134"})
+    @TestRail(id = {7134})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -56,8 +56,8 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7133"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7133})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -66,7 +66,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3324"})
+    @TestRail(id = {3324})
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -90,7 +90,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3325"})
+    @TestRail(id = {3325})
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -120,7 +120,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3326"})
+    @TestRail(id = {3326})
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -147,7 +147,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3327"})
+    @TestRail(id = {3327})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -173,7 +173,7 @@ public class ComponentCostReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3329"})
+    @TestRail(id = {3329})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         componentCostReportPage = new ReportsLoginPage(driver)
@@ -200,8 +200,8 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3328"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3328})
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
         componentCostReportPage = new ReportsLoginPage(driver)

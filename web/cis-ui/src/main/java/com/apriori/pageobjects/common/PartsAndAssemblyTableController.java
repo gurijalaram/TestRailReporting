@@ -37,7 +37,7 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
      * @return list of string
      */
     public List<String> getTableHeaders() {
-        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(tableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 
     /**
@@ -46,7 +46,7 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
      * @return list of string
      */
     public List<String> getPinnedTableHeaders() {
-        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 
     /**

@@ -5,18 +5,18 @@ import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang.SerializationUtils;
@@ -73,7 +73,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10947", "10948"})
+    @TestRail(id = {10947, 10948})
     @Description("Edit public sub-component with no Private counterparts")
     public void testEditPublicSubcomponentWithNoPrivateCounterpart() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -104,7 +104,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10949"})
+    @TestRail(id = {10949})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponentsOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -138,7 +138,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10950"})
+    @TestRail(id = {10950})
     @Description("Edit multiple public sub-components with no Private counterparts (Create)")
     public void testGroupEditPublicSubcomponentsRename() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -177,7 +177,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10951"})
+    @TestRail(id = {10951})
     @Description("Edit public sub-component with Private counterpart (Overwrite)")
     public void testEditPublicSubcomponentOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -217,7 +217,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10952"})
+    @TestRail(id = {10952})
     @Description("Edit public sub-component with Private counterpart (Create)")
     public void testEditPublicSubcomponentRename() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -258,7 +258,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10953"})
+    @TestRail(id = {10953})
     @Description("Edit multiple public sub-components with Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponentsWithPrivateCounterpartOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -296,7 +296,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10954"})
+    @TestRail(id = {10954})
     @Description("Edit multiple public sub-components with Private counterparts (Create)")
     public void testGroupEditPublicSubcomponentsWithPrivateCounterpartRename() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -335,7 +335,7 @@ public class GroupEditTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10955"})
+    @TestRail(id = {10955})
     @Description("Attempt to edit a sub-component that does not exist")
     public void testEditSubcomponentThatDoesNotExist() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();

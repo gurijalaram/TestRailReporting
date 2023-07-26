@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
-import com.apriori.utils.enums.StatusIconEnum;
 
+import com.utils.StatusIconEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

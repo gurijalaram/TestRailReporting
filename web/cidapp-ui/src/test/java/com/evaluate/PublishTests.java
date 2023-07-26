@@ -4,21 +4,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -31,7 +31,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class PublishTests extends TestBase {
+public class PublishTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -48,7 +48,7 @@ public class PublishTests extends TestBase {
     @Test
     @Category({SmokeTests.class, SanityTests.class})
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
-    @TestRail(testCaseId = {"6729", "6731"})
+    @TestRail(id = {6729, 6731})
     public void testPublishNewCostedScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -78,7 +78,7 @@ public class PublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6743", "6744", "6745", "6747", "6041", "21550"})
+    @TestRail(id = {6743, 6744, 6745, 6747, 6041, 21550})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
         final String file = "testpart-4.prt";

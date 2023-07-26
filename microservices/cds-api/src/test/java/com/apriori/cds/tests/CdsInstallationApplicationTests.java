@@ -1,17 +1,17 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -81,7 +81,7 @@ public class CdsInstallationApplicationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13183", "13184"})
+    @TestRail(id = {13183, 13184})
     @Description("Adds an application to an installation and deletes it")
     public void addApplicationToInstallation() {
         String realmKey = generateStringUtil.generateRealmKey();

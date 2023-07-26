@@ -1,19 +1,19 @@
 package com.apriori.sds.tests;
 
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -23,7 +23,7 @@ import org.junit.Test;
 public class AccessControlTests extends SDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = {"13638"})
+    @TestRail(id = {13638})
     @Description("Access check: Get a list of all scripts for the correct and wrong user.")
     public void get() {
         final UserCredentials userCredentials = UserUtil.getUser("common");
@@ -44,7 +44,7 @@ public class AccessControlTests extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13639"})
+    @TestRail(id = {13639})
     @Description("Access check: Update a scenario for the correct and wrong user.")
     public void update() {
         final String updatedNotes = "Automation Notes";
@@ -70,7 +70,7 @@ public class AccessControlTests extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13640"})
+    @TestRail(id = {13640})
     @Description("Access check: Delete a scenario for the correct and incorrect user.")
     public void delete() {
         final ScenarioItem componentToDeleteForTestingUser = postTestingComponentAndAddToRemoveList();
@@ -89,7 +89,7 @@ public class AccessControlTests extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13641"})
+    @TestRail(id = {13641})
     @Description("Access check: Publish a scenario for the correct and incorrect user.")
     public void publish() {
         final String publishScenarioName = new GenerateStringUtil().generateScenarioName();

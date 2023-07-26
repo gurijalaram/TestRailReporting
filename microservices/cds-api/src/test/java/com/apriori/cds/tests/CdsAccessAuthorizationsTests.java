@@ -1,6 +1,8 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessAuthorization;
@@ -9,11 +11,9 @@ import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.StatusAccessAuthorizations;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -80,7 +80,7 @@ public class CdsAccessAuthorizationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13115", "13116"})
+    @TestRail(id = {13115, 13116})
     @Description("Creating a new access authorization for customer and getting it")
     public void addAccessAuthorization() {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
@@ -98,7 +98,7 @@ public class CdsAccessAuthorizationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13117"})
+    @TestRail(id = {13117})
     @Description("Getting status report of access authorizations")
     public void getStatusOfAccessAuthorization() {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
@@ -116,7 +116,7 @@ public class CdsAccessAuthorizationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13118", "13119"})
+    @TestRail(id = {13118, 13119})
     @Description("Getting status report of access authorizations")
     public void getAccessAuthorizationByID() {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");

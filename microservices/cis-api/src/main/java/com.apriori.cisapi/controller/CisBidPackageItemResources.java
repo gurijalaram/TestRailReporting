@@ -1,5 +1,7 @@
 package com.apriori.cisapi.controller;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
@@ -7,14 +9,12 @@ import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.entity.enums.CssSearch;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 

@@ -1,9 +1,9 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.custom.attributes.CustomAttributesItems;
 import com.apriori.vds.tests.util.VDSTestUtil;
@@ -15,7 +15,7 @@ import org.junit.Test;
 public class CustomAttributesTest extends VDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = {"7949"})
+    @TestRail(id = {7949})
     @Description("Returns a list of UDAs for a specific customer.")
     public void getCustomAttributes() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributesItems.class)

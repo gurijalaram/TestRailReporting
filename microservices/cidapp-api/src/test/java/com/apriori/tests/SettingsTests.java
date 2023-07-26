@@ -1,11 +1,11 @@
 package com.apriori.tests;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.PreferencesEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -36,7 +36,7 @@ public class SettingsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "17225")
+    @TestRail(id = "17225")
     @Description("Update Assembly Strategy Only")
     public void testUpdateAsmStrategy() {
 
@@ -58,7 +58,7 @@ public class SettingsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "21544")
+    @TestRail(id = "21544")
     @Description("Update Assembly Strategy Only")
     public void testUpdateAsmStrategyWithOtherPreference() {
 
@@ -86,7 +86,7 @@ public class SettingsTests {
     }
 
     @Test
-    @TestRail(testCaseId = "21545")
+    @TestRail(id = "21545")
     @Description("Update Assembly Strategy Only")
     public void testUpdateAsmStrategyWithOtherPreferences() {
 

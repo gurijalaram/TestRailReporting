@@ -5,8 +5,8 @@ import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -18,7 +18,7 @@ public class CdsCustomerAssociationTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"5387"})
+    @TestRail(id = {5387})
     @Description("Get customer association for apriori Internal")
     public void getCustomerAssociations() {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
@@ -33,7 +33,7 @@ public class CdsCustomerAssociationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5825"})
+    @TestRail(id = {5825})
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,

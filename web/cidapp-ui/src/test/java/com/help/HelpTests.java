@@ -1,21 +1,21 @@
 package com.help;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Ignore;
@@ -26,7 +26,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class HelpTests extends TestBase {
+public class HelpTests extends TestBaseUI {
 
     UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -36,7 +36,7 @@ public class HelpTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"263", "6370", "6691", "6693"})
+    @TestRail(id = {263, 6370, 6691, 6693})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
         loginPage = new CidAppLoginPage(driver);
@@ -44,13 +44,13 @@ public class HelpTests extends TestBase {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), is(equalTo("Cost Insight Design\nUser Guide")));
+        assertThat(helpPage.getChildPageTitle(), is(equalTo("Cost Insight DesignUser Guide")));
     }
 
     @Test
     @Ignore("Currently no help button for inputs")
     @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"264","6371"})
+    @TestRail(id = {264, 6371})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void moreInputsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -71,7 +71,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264"})
+    @TestRail(id = {264})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void materialUtilHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -92,7 +92,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264"})
+    @TestRail(id = {264})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void designGuidanceHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -113,7 +113,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264"})
+    @TestRail(id = {264})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void processDetailsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -134,7 +134,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264"})
+    @TestRail(id = {264})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void costResultsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -155,7 +155,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6547"})
+    @TestRail(id = {6547})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void assemblyHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;

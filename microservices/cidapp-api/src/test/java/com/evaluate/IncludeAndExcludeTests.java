@@ -1,36 +1,32 @@
 package com.evaluate;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class IncludeAndExcludeTests {
 
+    private static UserCredentials currentUser;
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
-
-    private static UserCredentials currentUser;
 
     @Before
     public void setupUser() {
@@ -38,7 +34,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11925"})
+    @TestRail(id = {11925})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeAllSubcomponents() {
         final String assemblyName = "Assembly01";
@@ -85,7 +81,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11923", "11924"})
+    @TestRail(id = {11923, 11924})
     @Description("Exclude 1 or more sub-components from top-level assembly")
     public void testExcludeOneSeveralSubcomponents() {
         final String assemblyName = "Assembly01";
@@ -116,7 +112,6 @@ public class IncludeAndExcludeTests {
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-
         ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, true, PART_0001 + ", " + scenarioName);
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(1);
@@ -138,7 +133,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11926", "11927"})
+    @TestRail(id = {11926, 11927})
     @Description("Include 1 or more sub-components from top-level assembly")
     public void testIncludeOneSeveralSubcomponents() {
         final String assemblyName = "Assembly01";
@@ -197,7 +192,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11928"})
+    @TestRail(id = {11928})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeAllSubcomponents() {
         final String assemblyName = "Assembly01";
@@ -244,7 +239,7 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11931"})
+    @TestRail(id = {11931})
     @Description("Include and Exclude at the same time")
     public void testIncludeExcludeSimultaneous() {
         final String assemblyName = "Assembly01";

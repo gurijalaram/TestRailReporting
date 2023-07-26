@@ -1,14 +1,14 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Site;
+import com.apriori.cds.entity.response.Sites;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.common.customer.response.Sites;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -48,7 +48,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5969"})
+    @TestRail(id = {5969})
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
         ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES, Sites.class, HttpStatus.SC_OK);
@@ -59,7 +59,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5309"})
+    @TestRail(id = {5309})
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
         ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES, Sites.class, HttpStatus.SC_OK);
@@ -72,7 +72,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3299"})
+    @TestRail(id = {3299})
     @Description("Add a site to a customer")
     public void addCustomerSite() {
         String siteName = generateStringUtil.generateSiteName();
@@ -85,7 +85,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3279"})
+    @TestRail(id = {3279})
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
         ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
@@ -95,7 +95,7 @@ public class CdsSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5310"})
+    @TestRail(id = {5310})
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
         String siteName = generateStringUtil.generateSiteName();

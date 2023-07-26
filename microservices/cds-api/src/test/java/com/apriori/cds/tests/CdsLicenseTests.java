@@ -1,6 +1,8 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.entity.response.SubLicense;
 import com.apriori.cds.entity.response.SubLicenses;
@@ -14,12 +16,9 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UsersLicensing;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -99,7 +98,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5313"})
+    @TestRail(id = {5313})
     @Description("Get list of licenses for customer")
     public void getCustomerLicense() {
 
@@ -114,7 +113,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5968"})
+    @TestRail(id = {5968})
     @Description("Get list of licenses for customer")
     public void getCustomerLicenseByIdentity() {
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -128,7 +127,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6623"})
+    @TestRail(id = {6623})
     @Description("Activate a license.")
     public void activateLicenseTest() {
         String userIdentity = PropertiesContext.get("user_identity");
@@ -144,7 +143,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13301"})
+    @TestRail(id = {13301})
     @Description("Returns a list of licenses for a specific customer site.")
     public void getLicensesOfTheSite() {
 
@@ -159,7 +158,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13302"})
+    @TestRail(id = {13302})
     @Description("Returns a specific license for a specific customer site")
     public void getLicenseOfSiteById() {
         ResponseWrapper<LicenseResponse> licenseById = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_LICENSE_IDS,
@@ -175,7 +174,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"24043"})
+    @TestRail(id = {24043})
     @Description("Get a list of active licensed sub-modules")
     public void getActiveModules() {
         String userIdentity = PropertiesContext.get("user_identity");
@@ -187,7 +186,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"24044"})
+    @TestRail(id = {24044})
     @Description("Get a list of modules for inactive license")
     public void getModulesInactiveLicense() {
         ResponseWrapper<CdsErrorResponse> notActiveLicenseModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, CdsErrorResponse.class, HttpStatus.SC_NOT_FOUND, customerIdentity, siteIdentity);
@@ -196,7 +195,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6641"})
+    @TestRail(id = {6641})
     @Description("Get a sub license")
     public void getSubLicenses() {
         String userName = generateStringUtil.generateUserName();
@@ -221,7 +220,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6642"})
+    @TestRail(id = {6642})
     @Description("Get a sub license by Identity")
     public void getSubLicenseIdentity() {
         String userName = generateStringUtil.generateUserName();
@@ -247,7 +246,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6643"})
+    @TestRail(id = {6643})
     @Description("Adds a user sub-license association")
     public void addUserSubLicense() {
         String userName = generateStringUtil.generateUserName();
@@ -284,7 +283,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6644"})
+    @TestRail(id = {6644})
     @Description("Gets a list of users with a sub-license association")
     public void getUsersAssociatedWithSubLicense() {
         String userName = generateStringUtil.generateUserName();
@@ -331,7 +330,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13303"})
+    @TestRail(id = {13303})
     @Description("Returns a list of sites, licenses, and sub-licenses that the user is associated with")
     public void getUsersLicenses() {
         String userName = generateStringUtil.generateUserName();
@@ -376,7 +375,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6145"})
+    @TestRail(id = {6145})
     @Description("Deletes an existing user sub-license association")
     public void deleteCustomerSubLicense() {
         String userName = generateStringUtil.generateUserName();

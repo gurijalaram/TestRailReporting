@@ -1,8 +1,13 @@
 package com.apriori.qms.tests;
 
+import com.apriori.AuthUserContextUtil;
 import com.apriori.DateFormattingUtils;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.DateUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
@@ -13,14 +18,9 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectNotificationR
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -136,7 +136,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24073"})
+    @TestRail(id = {24073})
     @Description("Search by Status[IN] + Name[CN]")
     public void getFilteredProjectsByStatusINNameCN() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "name[CN]," + projectName};
@@ -152,7 +152,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24074"})
+    @TestRail(id = {24074})
     @Description("Search by Status[IN] + Name[CN] + Owner[IN]")
     public void getFilteredProjectsByStatusINNameCNOwnerIN() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "name[CN]," + projectName, "owner[IN]," + owner};
@@ -170,7 +170,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24075"})
+    @TestRail(id = {24075})
     @Description("Search by Status[IN] + Name[CN] + Owner[IN] + DueAt[LT]")
     public void getFilteredProjectsByStatusINNameCNOwnerINDueAtLT() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "name[CN]," + projectName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT};
@@ -190,7 +190,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24078"})
+    @TestRail(id = {24078})
     @Description("Search by Status[IN] + Owner[IN]")
     public void getFilteredProjectsByStatusINOwnerIN() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "owner[IN]," + owner};
@@ -206,7 +206,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24079"})
+    @TestRail(id = {24079})
     @Description("Search by Name[CN] + Owner[IN]")
     public void getFilteredProjectsByNameCNOwnerIN() {
         String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[IN]," + owner};
@@ -222,7 +222,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24080"})
+    @TestRail(id = {24080})
     @Description("Search by Status[NI] + Owner[IN]")
     public void getFilteredProjectsByStatusNIOwnerIN() {
         String[] params = {"pageNumber,1", "status[NI],COMPLETED", "owner[IN]," + owner};
@@ -238,7 +238,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24081"})
+    @TestRail(id = {24081})
     @Description("Search by Status[NI] + Owner[NI]")
     public void getFilteredProjectsByStatusNIOwnerNI() {
         String[] params = {"pageNumber,1", "status[NI],COMPLETED", "owner[NI]," + newOwnerIdentity};
@@ -254,7 +254,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24082"})
+    @TestRail(id = {24082})
     @Description("Search by Status[NI] + Name[CN]")
     public void getFilteredProjectsByStatusNINameCN() {
         String[] params = {"pageNumber,1", "status[NI],COMPLETED", "name[CN]," + projectName};
@@ -270,7 +270,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24083"})
+    @TestRail(id = {24083})
     @Description("Search by Name[CN] + Owner[NI]")
     public void getFilteredProjectsByNameCNOwnerNI() {
         String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[NI]," + newOwner};
@@ -286,7 +286,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24104"})
+    @TestRail(id = {24104})
     @Description("Search by Status[IN] + Name[CN] + Owner[IN] + DueAt[GT]")
     public void getFilteredProjectsByStatusINNameCNOwnerINDueAtGT() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "name[CN]," + projectName, "owner[IN]," + owner, "dueAt[GT]," + dueAtGT};
@@ -306,7 +306,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24111"})
+    @TestRail(id = {24111})
     @Description("VSearch by Status[IN] + Members[IN]")
     public void getFilteredProjectsByStatusINMembersIN() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "members[IN]," + firstUserIdentity};
@@ -323,7 +323,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24112"})
+    @TestRail(id = {24112})
     @Description("Search by Name[CN] + Members[NI]")
     public void getFilteredProjectsByNameCNMembersNI() {
         String projectNonMemberUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(UserUtil.getUser().getEmail());
@@ -341,7 +341,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24076"})
+    @TestRail(id = {24076})
     @Description("Search by Status[IN] + Name[CN] + Owner[IN] + DueAt[LT] + AllMessages[unread=no]")
     public void getFilteredProjectsByStatusINNameCNOwnerINDueAtLTUnReadNo() {
         String[] params = {"pageNumber,1", "status[IN]," + status, "name[CN]," + projectName, "owner[IN]," + owner, "dueAt[LT]," + dueAtLT, "hasUnreadMessages[EQ],no"};
@@ -361,7 +361,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24077"})
+    @TestRail(id = {24077})
     @Issue("COL-1831")
     @Description("Search by Status[IN] + Name[CN] + Owner[IN] + DueAt[LT] + Unread Messages[unread=yes]")
     public void getFilteredProjectsByStatusINNameCNOwnerINDueAtLTUnReadYes() {
@@ -384,7 +384,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24105"})
+    @TestRail(id = {24105})
     @Issue("COL-1831")
     @Description("Search by Status[IN] + Owner[IN]+Unread Messages[unread=yes]")
     public void getFilteredProjectsByStatusINOwnerINUnReadYes() {
@@ -401,7 +401,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
 
     //New Added
     @Test
-    @TestRail(testCaseId = {"21603"})
+    @TestRail(id = {21603})
     @Description("Verify that the User can filter project by dueAt(operator NL)")
     public void getFilteredProjectsByDueAtWithOperatorNL() {
         String[] params = {"dueAt[NL],null"};
@@ -415,7 +415,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"21604"})
+    @TestRail(id = {21604})
     @Description("Verify that the User can filter project by dueAt(operator GT)")
     public void getFilteredProjectsByDueAtWithOperatorGT() {
         //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
@@ -440,7 +440,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"21605"})
+    @TestRail(id = {21605})
     @Description("Verify that the User can filter project by dueAt(operator LT)")
     public void getFilteredProjectsByDueAtWithOperatorLT() {
         //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
@@ -465,7 +465,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24072"})
+    @TestRail(id = {24072})
     @Description("Verify that User can filter project by using range of dates")
     public void getFilteredProjectsByDueAtRange() {
         //DueAt format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
@@ -494,7 +494,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"17221"})
+    @TestRail(id = {17221})
     @Description("Verify that the User can filter project by status (operator EQ (equal))")
     public void getFilteredProjectsByStatusWithOperatorEQ() {
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[EQ],COMPLETED");
@@ -511,7 +511,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"17222"})
+    @TestRail(id = {17222})
     @Description("Verify that the User can filter project by status (operator NI (is none of) )")
     public void getFilteredProjectsByStatusWithOperatorNI() {
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NI],IN_NEGOTIATION");
@@ -521,7 +521,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"17223"})
+    @TestRail(id = {17223})
     @Description("Verify that the User can filter project by status (operator IN)")
     public void getFilteredProjectsByStatusWithOperatorIN() {
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[IN],IN_NEGOTIATION");
@@ -531,7 +531,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"17224"})
+    @TestRail(id = {17224})
     @Description("Verify that the User can filter project by status (operator NE (not equal))")
     public void getFilteredProjectsByStatusWithOperatorNE() {
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, "pageNumber,1", "status[NE],IN_NEGOTIATION");
@@ -541,7 +541,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22773"})
+    @TestRail(id = {22773})
     @Description("Verify that the User can filter project by owner with operators IN")
     public void getFilteredProjectsByOwnerWithOperatorIN() {
         String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -550,7 +550,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22774"})
+    @TestRail(id = {22774})
     @Issue("COL-1975")
     @Description("Verify that the User can filter project by owner with operators NI")
     public void getFilteredProjectsByOwnerWithOperatorNI() {
@@ -560,7 +560,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23771"})
+    @TestRail(id = {23771})
     @Description("Verify that the User can filter projects by Members (operator IN)")
     public void getFilteredProjectsByMembersWithOperatorIN() {
         String[] params = {"pageNumber,1", "members[IN]," + firstUserIdentity};
@@ -586,7 +586,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23772"})
+    @TestRail(id = {23772})
     @Issue("COL-1975")
     @Description("Verify that the User can filter projects by Members (operator NI)")
     public void getFilteredProjectsByMembersWithOperatorNI() {
@@ -613,7 +613,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23774"})
+    @TestRail(id = {23774})
     @Issue("COL-1975")
     @Description("Verify that the User will receive an empty list if he used 'NI='current user identity'' (members NI)")
     public void getFilteredProjectsByMembersCurrentUserWithOperatorNI() {
@@ -625,7 +625,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22775"})
+    @TestRail(id = {22775})
     @Issue("COL-1831")
     @Description("Verify that the User can filter projects by Unread messages(yes)")
     public void getFilteredProjectsByUnReadMessagesYes() {
@@ -648,7 +648,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22776"})
+    @TestRail(id = {22776})
     @Issue("COL-1975")
     @Description("Verify that the User can filter projects by Unread messages(no)")
     public void getFilteredProjectsByUnReadMessagesNo() {
@@ -671,7 +671,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22772"})
+    @TestRail(id = {22772})
     @Description("Search by Name[CN]")
     public void getFilteredProjectsByNameCN() {
         String[] params = {"pageNumber,1", "name[CN]," + projectName};
@@ -685,7 +685,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"26563"})
+    @TestRail(id = {26563})
     @Description("Filter project by name(operator CN) - with 1 or 2 characters")
     public void getFilteredProjectsByNameCNWith1Or2Char() {
         String[] params = {"pageNumber,1", "name[CN],a"};

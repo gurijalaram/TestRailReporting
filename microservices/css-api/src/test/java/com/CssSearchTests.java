@@ -5,11 +5,11 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
 
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -49,7 +49,7 @@ public class CssSearchTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"22731"})
+    @TestRail(id = {22731})
     @Description("Find scenario iterations for a given customer matching a specified query.")
     public void searchPartComponentScenarios() {
         ResponseWrapper<CssComponentResponse> components = cssComponent.postSearchRequest(currentUser, componentType);

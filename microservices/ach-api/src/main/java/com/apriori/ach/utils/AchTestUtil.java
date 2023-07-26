@@ -1,16 +1,16 @@
 package com.apriori.ach.utils;
 
+import com.apriori.TestUtil;
 import com.apriori.ach.entity.request.UserPreferencesRequest;
 import com.apriori.ach.entity.response.CustomerAch;
 import com.apriori.ach.entity.response.CustomersAch;
 import com.apriori.ach.entity.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.entity.response.UserPreference;
 import com.apriori.ach.enums.ACHAPIEnum;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
 

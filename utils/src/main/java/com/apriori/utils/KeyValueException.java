@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class KeyValueException extends RuntimeException {
 
     public KeyValueException(String message, List<String[]> throwableCause) {
-        log.debug("\n" + message + ". Is your key/value pair correct and complete?");
+        log.debug("" + message + ". Is your key/value pair correct and complete?");
         throwableCause.forEach(o -> log.debug(Arrays.stream(o).map(String::toUpperCase).collect(Collectors.joining(" > "))));
     }
 }

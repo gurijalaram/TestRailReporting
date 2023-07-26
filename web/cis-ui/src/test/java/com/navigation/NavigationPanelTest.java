@@ -1,29 +1,21 @@
 package com.navigation;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.myuser.TermsOfUsePage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
-public class NavigationPanelTest extends TestBase {
-
-    public NavigationPanelTest() {
-        super();
-    }
+public class NavigationPanelTest extends TestBaseUI {
 
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
@@ -32,8 +24,12 @@ public class NavigationPanelTest extends TestBase {
     private TermsOfUsePage termsOfUsePage;
     private ZendeskSignInPage zendeskSignInPage;
 
+    public NavigationPanelTest() {
+        super();
+    }
+
     @Test
-    @TestRail(testCaseId = {"11992", "12014", "12007"})
+    @TestRail(id = {11992, 12014, 12007})
     @Description("Verify the navigation bar default state and Header text on the home page")
     public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
@@ -49,7 +45,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13194", "13051", "12013"})
+    @TestRail(id = {13194, 13051, 12013})
     @Description("Verify that user can logout from the CIS application")
     public void testUserCanLogOutFromTheCISApplication() {
         loginPage = new CisLoginPage(driver);
@@ -72,7 +68,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13233"})
+    @TestRail(id = {13233})
     @Description("Verify that user can access the Terms of Use Page")
     public void testUserCanAccessTheTermsOfUsePage() {
         loginPage = new CisLoginPage(driver);
@@ -91,7 +87,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11997", "11999", "12000", "12003", "12008"})
+    @TestRail(id = {11997, 11999, 12000, 12003, 12008})
     @Description("Verify that user can view the left navigation bar items and aPriori logo")
     public void testNavBarItems() {
         loginPage = new CisLoginPage(driver);
@@ -111,7 +107,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13553"})
+    @TestRail(id = {13553})
     @Description("Verify that user can access the 'Support' page")
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);

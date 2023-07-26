@@ -1,7 +1,11 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.LicensedApplication;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.User;
@@ -11,18 +15,12 @@ import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-public class UsersGrantApplicationAccessTests extends TestBase {
+public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     private IdentityHolder installationIdentityHolder;
     private IdentityHolder licensedAppIdentityHolder;
@@ -118,8 +116,8 @@ public class UsersGrantApplicationAccessTests extends TestBase {
 
     @Test
     @Description("Validate granted applications can be added by Add button")
-    @Category({SmokeTest.class})
-    @TestRail(testCaseId = {"12515"})
+    @Category( {SmokeTest.class})
+    @TestRail(id = {12515})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
         PageUtils utils = new PageUtils(getDriver());
@@ -171,7 +169,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
 
     @Test
     @Description("Validate granted applications can be removed by Remove button")
-    @TestRail(testCaseId = {"12516"})
+    @TestRail(id = {12516})
     public void testAccessControlCanBeRemoved() {
         SoftAssertions soft = new SoftAssertions();
         UserProfilePage addModal = userProfilePage

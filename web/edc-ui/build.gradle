@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':shared-util')
     implementation project(':microservices:edc-api')
-    implementation project(':apibase')
+    implementation project('::shared-util')
     implementation project(':web-app-util')
 }

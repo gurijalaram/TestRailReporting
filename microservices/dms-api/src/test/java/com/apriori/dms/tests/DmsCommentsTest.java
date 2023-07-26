@@ -1,10 +1,10 @@
 package com.apriori.dms.tests;
 
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.CommentsRequestParameters;
 import entity.request.DmsCommentsRequest;
@@ -13,8 +13,6 @@ import entity.response.DmsCommentsResponse;
 import entity.response.DmsErrorMessageResponse;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DmsApiTestDataUtils;
@@ -31,7 +29,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13169", "14222"})
+    @TestRail(id = {13169, 14222})
     @Description("Verify user can add and delete comment")
     public void createAndDeleteComment() {
         String commentDescription = new GenerateStringUtil().getRandomString();
@@ -43,7 +41,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"15484"})
+    @TestRail(id = {15484})
     @Description("Verify user can add and update comment status to deleted")
     public void createAndUpdateComment() {
         String commentDescription = new GenerateStringUtil().getRandomString();
@@ -57,7 +55,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13170"})
+    @TestRail(id = {13170})
     @Description("get a valid comments")
     public void getComments() {
         DmsCommentsResponse responseWrapper = DmsApiTestUtils.getDiscussionComments(currentUser,
@@ -66,7 +64,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"15483"})
+    @TestRail(id = {15483})
     @Description("get a valid comment")
     public void getComment() {
         DmsCommentResponse responseWrapper = DmsApiTestUtils.getDiscussionComment(currentUser,
@@ -75,7 +73,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13171"})
+    @TestRail(id = {13171})
     @Description("update a valid comment")
     public void updateComment() {
         DmsCommentResponse commentUpdateResponse = DmsApiTestUtils.updateComment(dmsCommentResponse.getStatus(),
@@ -85,7 +83,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"16443"})
+    @TestRail(id = {16443})
     @Description("Verify user can add comment to discussion with another mentioned user")
     public void addCommentWithAnotherMentionedUser() {
         UserCredentials otherUser = UserUtil.getUser();
@@ -102,7 +100,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"16445"})
+    @TestRail(id = {16445})
     @Description("Verify that only discussion participants can add comment to current discussion")
     public void addCommentByOtherUser() {
         UserCredentials otherUser = UserUtil.getUser();

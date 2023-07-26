@@ -6,9 +6,9 @@ import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.IterationController;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class BcsSdsIntegrationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"9127"})
+    @TestRail(id = 9127)
     @Description("BCS: Set material mode when the material name is not blank")
     public void testMaterialMode() {
         Map<String, String> identities;
@@ -53,7 +53,7 @@ public class BcsSdsIntegrationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"9112"})
+    @TestRail(id = 9112)
     @Description("BCS: Set material mode when the material name is null")
     public void testMaterialModeIsNull() {
         Map<String, String> identities;

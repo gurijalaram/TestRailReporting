@@ -1,7 +1,7 @@
 package com.apriori.bcs.entity.response;
 
+import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

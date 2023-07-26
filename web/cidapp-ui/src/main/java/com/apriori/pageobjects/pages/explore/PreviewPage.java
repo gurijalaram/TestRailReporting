@@ -5,8 +5,8 @@ import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.utils.enums.StatusIconEnum;
 
+import com.utils.StatusIconEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

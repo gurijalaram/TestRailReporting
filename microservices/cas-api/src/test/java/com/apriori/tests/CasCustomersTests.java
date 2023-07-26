@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -8,11 +10,9 @@ import com.apriori.entity.response.Applications;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.Customers;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -43,7 +43,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5810"})
+    @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -54,7 +54,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5645"})
+    @TestRail(id = {5645})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -68,7 +68,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5643"})
+    @TestRail(id = {5643})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -82,14 +82,14 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5644"})
+    @TestRail(id = {5644})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
         casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, CasErrorMessage.class, HttpStatus.SC_NOT_FOUND, "76EA87KCHIKD");
     }
 
     @Test
-    @TestRail(testCaseId = {"5643"})
+    @TestRail(id = {5643})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + generateStringUtil.generateCustomerName());
@@ -99,7 +99,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5642", "5644"})
+    @TestRail(id = {5642, 5644})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -135,7 +135,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5826"})
+    @TestRail(id = {5826})
     @Description("Resetting the MFA enrollment status of every user for the customer")
     public void ResettingMFA() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -154,7 +154,7 @@ public class CasCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"16546"})
+    @TestRail(id = {16546})
     @Description("Return a paged list of applications licensed for a specific customer.")
     public void getCustomerLicensedApplications() {
         ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);

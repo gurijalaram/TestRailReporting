@@ -1,9 +1,9 @@
 package utils;
 
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.login.LoginService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CicLoginUtil extends TestBase {
+public class CicLoginUtil extends TestBaseUI {
 
     private LoginService aprioriLoginService;
     private WebDriver driver;

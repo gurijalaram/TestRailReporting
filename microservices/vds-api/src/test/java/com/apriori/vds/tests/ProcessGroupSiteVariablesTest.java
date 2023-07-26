@@ -2,12 +2,12 @@ package com.apriori.vds.tests;
 
 import static org.junit.Assert.assertNotEquals;
 
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.GenerateStringUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
@@ -33,14 +33,14 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8284"})
+    @TestRail(id = {8284})
     @Description("GET a paged set of Site Variables for a specific customer. ")
     public void getSiteVariables() {
         this.getProcessGroupSiteVariablesResponse();
     }
 
     @Test
-    @TestRail(testCaseId = {"8287"})
+    @TestRail(id = {8287})
     @Description("GET a site variable for a customer. ")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
@@ -55,21 +55,21 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8285"})
+    @TestRail(id = {8285})
     @Description("POST a Site Variable for a customer. The site variable can't already exist. Better to use PUT to create or replace the site variable.")
     public void postSiteVariablesByIdentity() {
         siteVariableIdsToDelete.add(this.postProcessGroupSiteVariables().getIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = {"8288"})
+    @TestRail(id = {8288})
     @Description("DELETEs a site variable. ")
     public void deleteSiteVariablesByIdentity() {
         deleteProcessGroupSiteVariableById(this.postProcessGroupSiteVariables().getIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = {"8289"})
+    @TestRail(id = {8289})
     @Description("PATCH a Site Variable for a customer. User PUT to create or replace if the site variable does not exist.")
     public void patchSiteVariablesByIdentity() {
         SiteVariable siteVariableBeforeUpdate = this.postProcessGroupSiteVariables();
@@ -87,7 +87,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8286"})
+    @TestRail(id = {8286})
     @Description("PUT Adds or Replaces a CustomAttribute for a user. ")
     public void putCustomAttributeByIdentity() {
         SiteVariable siteVariableBeforeUpdate = this.postProcessGroupSiteVariables();

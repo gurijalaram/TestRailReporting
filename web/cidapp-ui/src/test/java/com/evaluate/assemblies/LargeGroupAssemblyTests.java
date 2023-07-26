@@ -17,22 +17,20 @@ import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.utils.PartNamesEnum.WASHER;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -41,7 +39,7 @@ import testsuites.suiteinterface.ExtendedRegression;
 import java.util.Arrays;
 import java.util.List;
 
-public class LargeGroupAssemblyTests extends TestBase {
+public class LargeGroupAssemblyTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -84,7 +82,7 @@ public class LargeGroupAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11807", "11804"})
+    @TestRail(id = {11807, 11804})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void testPublishButtonAvailability() {
         loginPage = new CidAppLoginPage(driver);

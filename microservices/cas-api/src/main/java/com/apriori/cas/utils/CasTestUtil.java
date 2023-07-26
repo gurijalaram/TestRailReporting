@@ -1,6 +1,8 @@
 package com.apriori.cas.utils;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
@@ -26,14 +28,12 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 

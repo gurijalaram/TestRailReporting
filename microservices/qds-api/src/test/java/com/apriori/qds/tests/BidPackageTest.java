@@ -1,6 +1,13 @@
 package com.apriori.qds.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ErrorMessage;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageRequest;
@@ -8,16 +15,9 @@ import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackagesResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -44,14 +44,14 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13312"})
+    @TestRail(id = {13312})
     @Description("Create Bid Package")
     public void createBidPackage() {
         softAssertions.assertThat(bidPackageResponse.getName()).isEqualTo(bidPackageName);
     }
 
     @Test
-    @TestRail(testCaseId = {"13693"})
+    @TestRail(id = {13693})
     @Description("Create Bid Package with existing name")
     public void createBidPackageWithExistingName() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -66,7 +66,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13313"})
+    @TestRail(id = {13313})
     @Description("Create Bid Package greater than 64 characters")
     public void createBidPackageNameMoreThan64() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -81,7 +81,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13710", "13331", "13332"})
+    @TestRail(id = {13710, 13331, 13332})
     @Description("Create Bid Package is equal to 64 characters, delete bid package and verify bid package is deleted")
     public void createBidPackageNameEqualTo64() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -111,7 +111,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13636"})
+    @TestRail(id = {13636})
     @Description("Create Bid Package description is equal to 254 characters")
     public void createBidPackageNameEqualTo254() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -127,7 +127,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13325"})
+    @TestRail(id = {13325})
     @Description("Create Bid Package description is greater 254 characters")
     public void createBidPackageNameGreaterThan254() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -142,7 +142,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13350"})
+    @TestRail(id = {13350})
     @Description("Create Bid Package with empty name")
     public void createBidPackageWithEmptyName() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -165,7 +165,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13349"})
+    @TestRail(id = {13349})
     @Description("Create Bid Package with empty Description")
     public void createBidPackageWithEmptyDescription() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -188,7 +188,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13823"})
+    @TestRail(id = {13823})
     @Description("Create Bid Package with empty Description")
     public void createBidPackageWithEmptyStatus() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -211,7 +211,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13326"})
+    @TestRail(id = {13326})
     @Description("Updated existing Bid Package status")
     public void updateBidPackageStatus() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
@@ -234,7 +234,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13872"})
+    @TestRail(id = {13872})
     @Description("Updated existing Bid Package description")
     public void updateBidPackageDescription() {
         String bpDesc = RandomStringUtils.randomAlphabetic(15);
@@ -258,7 +258,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13693"})
+    @TestRail(id = {13693})
     @Description("Updated existing Bid Package name")
     public void updateBidPackageAssigned() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -282,7 +282,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13327", "13873", "13409"})
+    @TestRail(id = {13327, 13873, 13409})
     @Description("Find List of bid packages, pagination from the user for same customer")
     public void getBidPackages() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
@@ -299,7 +299,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13408"})
+    @TestRail(id = {13408})
     @Description("Find bid package from other customer identity")
     public void getBidPackagesFromAnotherCustomer() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext("testUser1@widgets.aprioritest.com");
@@ -315,7 +315,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13329"})
+    @TestRail(id = {13329})
     @Description("Get bid package")
     public void getBidPackage() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
@@ -331,7 +331,7 @@ public class BidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13333"})
+    @TestRail(id = {13333})
     @Description("Get bid package with invalid identity")
     public void getBidPackageWithInvalidIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)

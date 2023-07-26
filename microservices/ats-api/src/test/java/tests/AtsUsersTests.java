@@ -1,17 +1,17 @@
 package tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.ats.entity.response.AtsErrorMessage;
 import com.apriori.ats.entity.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -44,7 +44,7 @@ public class AtsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3578"})
+    @TestRail(id = {3578})
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
         String userEmail = "qa-automation-01@apriori.com";
@@ -55,7 +55,7 @@ public class AtsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3668"})
+    @TestRail(id = {3668})
     @Description("Get user by invalid email")
     public void getUserInvalidEmail() {
         String invalidEmail = "qa-automation-01-apriori.com";
@@ -66,7 +66,7 @@ public class AtsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"22086", "22087"})
+    @TestRail(id = {22086, 22087})
     @Description("Reset the MFA configuration for a user.")
     public void resetUserMFA() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -87,7 +87,7 @@ public class AtsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3579"})
+    @TestRail(id = {3579})
     @Description("Update/change the password of a user identified by their email")
     public void changeUserPassword() {
         String customerName = generateStringUtil.generateCustomerName();

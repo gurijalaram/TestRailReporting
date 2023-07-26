@@ -1,7 +1,7 @@
 package com.apriori.cmp.entity.response;
 
-import com.apriori.utils.Pagination;
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
+import com.apriori.authorization.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;

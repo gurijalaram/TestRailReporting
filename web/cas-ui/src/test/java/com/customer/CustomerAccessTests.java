@@ -1,6 +1,9 @@
 package com.customer;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
@@ -11,15 +14,12 @@ import com.apriori.customer.users.StaffPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-public class CustomerAccessTests extends TestBase {
+public class CustomerAccessTests extends TestBaseUI {
 
     private Customer targetCustomer;
     private String cloudRef;
@@ -68,7 +68,7 @@ public class CustomerAccessTests extends TestBase {
     @Test
     @Category(SmokeTest.class)
     @Description("Validate requesting access for a user that is not in white list of customer")
-    @TestRail(testCaseId = {"12082", "12083", "12085", "12088", "12144", "13172"})
+    @TestRail(id = {12082, 12083, 12085, 12088, 12144, 13172})
     public void requestAccessForNotWhiteListUser() {
         UsersListPage serviceAccountUsers = usersPage.goToCustomerStaff();
         SourceListComponent users = serviceAccountUsers.getUsersList();
@@ -113,12 +113,12 @@ public class CustomerAccessTests extends TestBase {
 
     @Test
     @Description("Validate user from white list can request and revoke customer access")
-    @TestRail(testCaseId = {"12084", "12087", "12934", "12935", "12936", "12923"})
+    @TestRail(id = {12084, 12087, 12934, 12935, 12936, 12923})
     public void requestCustomerAccess() {
         String userName = "qa-automation-10";
         String email = "qa-automation-10@apriori.com";
         String password = "TrumpetSnakeFridgeToasty18!%";
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         StaffPage aPrioriUsers = usersPage.goToStaffPage()
             .clickAddFromList();
 
@@ -187,9 +187,9 @@ public class CustomerAccessTests extends TestBase {
     @Test
     @Category(SmokeTest.class)
     @Description("Validate that aPriori staff user cannot add self to a customer")
-    @TestRail(testCaseId = {"16123"})
+    @TestRail(id = {16123})
     public void selfAddingToWhiteList() {
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         StaffPage aPrioriUsers = usersPage.goToStaffPage()
             .clickAddFromList();
 

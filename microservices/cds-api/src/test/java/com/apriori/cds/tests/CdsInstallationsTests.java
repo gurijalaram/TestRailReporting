@@ -1,18 +1,18 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.InstallationResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -50,7 +50,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5823"})
+    @TestRail(id = {5823})
     @Description("API returns a list of all the installations in the CDS DB")
     public void getInstallations() {
         ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class, HttpStatus.SC_OK);
@@ -61,7 +61,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5316"})
+    @TestRail(id = {5316})
     @Description("Add a installation to a customer")
     public void addCustomerInstallation() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -108,7 +108,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5318"})
+    @TestRail(id = {5318})
     @Description("get Installations by Identity")
     public void getInstallationByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -161,7 +161,7 @@ public class CdsInstallationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5317"})
+    @TestRail(id = {5317})
     @Description("Update an installation")
     public void patchInstallationByIdentity() {
         String customerName = generateStringUtil.generateCustomerName();

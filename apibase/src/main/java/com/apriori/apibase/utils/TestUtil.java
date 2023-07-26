@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.utils.TestHelper;
 import com.apriori.utils.common.objects.Paged;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.enums.EndpointEnum;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+
+
+
+
+
 
 import org.apache.http.HttpStatus;
 
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestUtil extends TestHelper {
+public class TestUtil  {
 
     protected static void validateResponseCodeByExpectingAndRealCode(int expectedStatus, int realStatusCode) {
         assertEquals("The response code should be as expected ",  expectedStatus, realStatusCode);

@@ -1,9 +1,9 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.tests.util.ProcessGroupUtil;
@@ -15,14 +15,14 @@ import org.junit.Test;
 public class ProcessGroupMaterialsTest extends ProcessGroupUtil {
 
     @Test
-    @TestRail(testCaseId = {"8129"})
+    @TestRail(id = {8129})
     @Description("Get a list of Materials for a specific customer process group.")
     public void getMaterials() {
         getProcessGroupMaterial();
     }
 
     @Test
-    @TestRail(testCaseId = {"8130"})
+    @TestRail(id = {8130})
     @Description("Get a specific Material for a customer identified by its identity.")
     public void getMaterialByIdentity() {
         RequestEntity requestEntity =

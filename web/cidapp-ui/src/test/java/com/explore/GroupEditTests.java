@@ -4,23 +4,23 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupEditTests extends TestBase {
+public class GroupEditTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -40,7 +40,7 @@ public class GroupEditTests extends TestBase {
     private CssComponent cssComponent = new CssComponent();
 
     @Test
-    @TestRail(testCaseId = {"14723"})
+    @TestRail(id = {14723})
     @Description("Verify user can edit multiple scenarios")
     public void testGroupEdit() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -106,7 +106,7 @@ public class GroupEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14724"})
+    @TestRail(id = {14724})
     @Description("Attempt to edit multiple scenarios, including a private scenario")
     public void testGroupEditPublicAndPrivateScenario() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -143,7 +143,7 @@ public class GroupEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14725"})
+    @TestRail(id = {14725})
     @Description("Attempt to edit multiple scenarios, including one which is processing")
     public void testGroupEditScenarioInProcessingState() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -185,7 +185,7 @@ public class GroupEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14726", "15015"})
+    @TestRail(id = {14726, 15015})
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();

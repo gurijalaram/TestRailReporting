@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.workorders.cost.iterations;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import java.util.ArrayList;
 import java.util.List;

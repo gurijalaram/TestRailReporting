@@ -1,6 +1,6 @@
 package com.apriori.utils.email.response;
 
-import com.apriori.utils.http.enums.Schema;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

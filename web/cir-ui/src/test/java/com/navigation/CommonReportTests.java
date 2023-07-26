@@ -6,6 +6,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.PropertyEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -18,23 +25,16 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.reports.AssemblySetEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
-import com.apriori.utils.web.driver.TestBase;
 
+import enums.AssemblySetEnum;
+import enums.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Constants;
 
 import java.util.ArrayList;
 
-public class CommonReportTests extends TestBase {
+public class CommonReportTests extends TestBaseUI {
 
     private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;

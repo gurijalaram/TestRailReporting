@@ -2,6 +2,7 @@ package com.apriori.tests.newendpoint;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.enums.Direction;
 import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
 import com.apriori.cidappapi.entity.request.operators.LogicalOperator;
@@ -10,10 +11,9 @@ import com.apriori.cidappapi.entity.request.operators.Params;
 import com.apriori.cidappapi.entity.request.operators.Query;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.entity.request.ErrorRequestResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -29,7 +29,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12420"})
+    @TestRail(id = {12420})
     @Description("Verify: if fails when using in query non existing operator: 'wrongOperator'")
     public void shouldFailWithNonExistingOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -51,7 +51,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12421"})
+    @TestRail(id = {12421})
     @Description("Verify: if fails when using in query non invalid operator: (removed property)")
     public void shouldFailWithInvalidOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -72,7 +72,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12422"})
+    @TestRail(id = {12422})
     @Description("Verify: if fails when using in query non parsable operator")
     public void shouldFailNotParsableOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest = setWithEmptyBracketNotOperator();
@@ -86,7 +86,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12423"})
+    @TestRail(id = {12423})
     @Description("Verify: if fails when using invalid value expected: double, used: string")
     public void shouldFailWithInvalidValueTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -113,7 +113,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12424"})
+    @TestRail(id = {12424})
     @Description("Verify: if fails when using invalid value for Sorting Direction enum")
     public void shouldFailWithWrongSortingDirectionValueTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -134,7 +134,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12425"})
+    @TestRail(id = {12425})
     @Description("Verify: if fails when using Sorting with missing property")
     public void shouldFailWithMissingPropertyInDirectionTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -154,7 +154,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12482"})
+    @TestRail(id = {12482})
     @Description("Verify: query fail when five operators are aggregated with one logical operator")
     public void shouldFailWithFiveOperatorsTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -172,7 +172,7 @@ public class VerifyIfFailsTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"12483"})
+    @TestRail(id = {12483})
     @Description("Verify: query fail when query depth is used")
     public void shouldFailWithFourthQueryDepthTest() {
         ScenarioIterationRequest scenarioIterationRequest =

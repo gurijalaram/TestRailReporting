@@ -4,23 +4,23 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ColourEnum;
@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class IncludeAndExcludeTests extends TestBase {
+public class IncludeAndExcludeTests extends TestBaseUI {
 
     private static ComponentInfoBuilder componentAssembly;
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -79,7 +79,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11154")
+    @TestRail(id = "11154")
     @Description("Include and Exclude buttons disabled by default")
     public void testIncludeAndExcludeDisabledButtons() {
         String assemblyName = "Hinge assembly";
@@ -113,7 +113,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11150")
+    @TestRail(id = "11150")
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeButtons() {
         String assemblyName = "Hinge assembly";
@@ -148,7 +148,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11874", "11843", "11842", "11155", "11148"})
+    @TestRail(id = {11874", "11843", "11842", "11155", "11148})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
         String assemblyName = "Hinge assembly";
@@ -199,7 +199,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11153", "11152", "11151"})
+    @TestRail(id = {11153", "11152", "11151})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeButtonEnabledWithCostedComponents() {
         String assemblyName = "Hinge assembly";
@@ -245,7 +245,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11150", "11149", "11156"})
+    @TestRail(id = {11150", "11149", "11156})
     @Description("Include all sub-components from top-level assembly")
     public void testExcludeButtonEnabledWithCostedComponents() {
         String assemblyName = "Hinge assembly";
@@ -289,7 +289,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"12089", "6554"})
+    @TestRail(id = {12089", "6554})
     @Description("Verify Excluded scenarios are not highlighted in flattened view")
     public void testExcludedScenarioInFlattenedView() {
         String assemblyName = "Hinge assembly";
@@ -327,7 +327,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11921", "11920", "11919"})
+    @TestRail(id = {11921", "11920", "11919})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
         String assemblyName = "flange c";
@@ -391,7 +391,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11918", "11917", "11916"})
+    @TestRail(id = {11918", "11917", "11916})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeSubcomponentsAndCost() {
         String assemblyName = "flange c";
@@ -449,8 +449,8 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issues({@Issue("AP-74028")})
-    @TestRail(testCaseId = {"12135", "12052", "12138"})
+    @Issues( {@Issue("AP-74028")})
+    @TestRail(id = {12135", "12052", "12138})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
         String assemblyName = "autobotasm";
@@ -523,7 +523,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Issue("2657")
-    @TestRail(testCaseId = {"11099"})
+    @TestRail(id = {11099})
     @Description("Validate  the set inputs button cannot be selected when sub assemblies and parts are selected")
     public void testInputsDisabledPartsSubassemblies() {
 

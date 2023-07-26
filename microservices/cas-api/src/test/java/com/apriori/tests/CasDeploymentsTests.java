@@ -1,15 +1,14 @@
 package com.apriori.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.Deployment;
 import com.apriori.entity.response.Deployments;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +31,7 @@ public class CasDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5657"})
+    @TestRail(id = {5657})
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
 
@@ -44,7 +43,7 @@ public class CasDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5658"})
+    @TestRail(id = {5658})
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
 

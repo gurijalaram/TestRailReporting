@@ -4,26 +4,26 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
@@ -35,20 +35,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupCostTests extends TestBase {
+public class GroupCostTests extends TestBaseUI {
 
+    private final SoftAssertions softAssertions = new SoftAssertions();
+    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemA;
-    private final SoftAssertions softAssertions = new SoftAssertions();
-    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
     private CssComponent cssComponent = new CssComponent();
 
     @Test
-    @TestRail(testCaseId = {"14796"})
+    @TestRail(id = {14796})
     @Description("Select multiple private components and cost")
     public void testGroupCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -92,7 +92,7 @@ public class GroupCostTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14797"})
+    @TestRail(id = {14797})
     @Description("Verify that Cost button is disabled when more than 10 private components are selected")
     public void testCostMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
@@ -147,7 +147,7 @@ public class GroupCostTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14798"})
+    @TestRail(id = {14798})
     @Description("Verify that Cost button is disabled when a combination of private and public parts are selected")
     public void testGroupCostPrivateAndPublicScenarios() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -195,7 +195,7 @@ public class GroupCostTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14800"})
+    @TestRail(id = {14800})
     @Description("Verify that Cost button is disabled when a combination of parts and assemblies are selected")
     public void testGroupCostPartAndAssemblyScenarios() {
         currentUser = UserUtil.getUser();
@@ -236,7 +236,7 @@ public class GroupCostTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14801", "14799"})
+    @TestRail(id = {14801, 14799})
     @Description("Verify that Cost button is disabled when any in a multi-selection of parts has Component Type Unknown")
     public void testGroupCostUnknownScenarios() {
         currentUser = UserUtil.getUser();
@@ -254,7 +254,7 @@ public class GroupCostTests extends TestBase {
             .clickClose()
             .selectFilter("Recent")
             .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
-                    "" + "titan charger lead" + ", " + scenarioName + "");
+                "" + "titan charger lead" + ", " + scenarioName + "");
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
@@ -264,7 +264,7 @@ public class GroupCostTests extends TestBase {
 
         explorePage.refresh()
             .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
-                   "" + "titan charger lead" + ", " + scenarioName + "");
+                "" + "titan charger lead" + ", " + scenarioName + "");
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(true);
 

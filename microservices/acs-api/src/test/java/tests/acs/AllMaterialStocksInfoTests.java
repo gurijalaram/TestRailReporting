@@ -1,16 +1,11 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.OrderingComparison.greaterThan;
-
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -19,7 +14,7 @@ import org.junit.Test;
 public class AllMaterialStocksInfoTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "16829")
+    @TestRail(id = 16829)
     @Description("Test Get All Material Stocks Info endpoint")
     public void testGetAllMaterialStocksInfo() {
         AcsResources acsResources = new AcsResources();

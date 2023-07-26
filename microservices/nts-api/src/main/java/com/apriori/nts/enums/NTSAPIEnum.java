@@ -1,7 +1,7 @@
 package com.apriori.nts.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.interfaces.ExternalEndpointEnum;
+import com.apriori.properties.PropertiesContext;
 
 public enum NTSAPIEnum implements ExternalEndpointEnum {
 

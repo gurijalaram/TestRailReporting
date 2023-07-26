@@ -1,16 +1,16 @@
 package com.apriori.qds.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectUsersResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -40,7 +40,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13352", "13649"})
+    @TestRail(id = {13352, 13649})
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
         UserCredentials defaultUser = UserUtil.getUser();
@@ -56,7 +56,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13353", "13647"})
+    @TestRail(id = {13353, 13647})
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
         UserCredentials adminUser = UserUtil.getUser();
@@ -72,7 +72,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13355"})
+    @TestRail(id = {13355})
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
         BidPackageProjectUserResponse getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(),
@@ -84,7 +84,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13354"})
+    @TestRail(id = {13354})
     @Description("find all bid package project users")
     public void getBidPackageProjectUsers() {
         BidPackageProjectUsersResponse getBidPackageProjectUserResponse = BidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getIdentity(),
@@ -95,7 +95,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13356"})
+    @TestRail(id = {13356})
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
         BidPackageProjectUserResponse updateBidPackageProjectUserResponse = BidPackageResources.updateBidPackageProjectUser("ADMIN",

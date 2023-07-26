@@ -1,6 +1,8 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.response.layout.LayoutResponse;
 import com.apriori.qds.entity.response.layout.ViewElementResponse;
@@ -9,11 +11,9 @@ import com.apriori.qms.entity.request.layout.LayoutConfigurationParameters;
 import com.apriori.qms.entity.request.layout.LayoutConfigurationRequest;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationResponse;
 import com.apriori.qms.entity.response.layout.LayoutConfigurationsResponse;
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -49,7 +49,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12538", "12545", "12544", "13113", "12887"})
+    @TestRail(id = {12538, 12545, 12544, 13113, 12887})
     @Description("Create, delete layout configuration, " +
         "verify layout that does not exist, " +
         "Update layout configuration that does not exist" +
@@ -98,9 +98,8 @@ public class LayoutConfigurationTest extends TestUtil {
         softAssertions.assertThat(errorMessageResponse.getMessage()).contains("Resource 'Layout' with identity '" + layoutConfigurationResponse.getIdentity() + "' was not found");
     }
 
-
     @Test
-    @TestRail(testCaseId = {"12537", "13111"})
+    @TestRail(id = {12537, 13111})
     @Description("Verify that user can find all configuration for layout and get with empty configurations")
     public void getLayoutConfigurations() {
         LayoutConfigurationsResponse layoutConfigurationsResponse = QmsLayoutResources.getLayoutConfigurations(viewElementsResponse.getName(), LayoutConfigurationsResponse.class, HttpStatus.SC_OK, currentUser);
@@ -120,7 +119,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12542", "12540"})
+    @TestRail(id = {12542, 12540})
     @Description("Verify that user get configuration by identity and verify layout configuration identity")
     public void getLayoutConfiguration() {
         LayoutConfigurationResponse getLycResponse = QmsLayoutResources.getLayoutConfiguration(
@@ -133,7 +132,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12543"})
+    @TestRail(id = {12543})
     @Description("Verify that user can update layout configuration")
     public void updateLayoutConfiguration() {
         String lycName = new GenerateStringUtil().getRandomString();
@@ -149,7 +148,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12539"})
+    @TestRail(id = {12539})
     @Issue("COL-1710")
     @Description("Create layout configuration with name that already exists")
     public void createLayoutConfigurationWithSameName() {
@@ -164,7 +163,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12541"})
+    @TestRail(id = {12541})
     @Issue("COL-1710")
     @Description("Create layout configuration with blank name")
     public void createLayoutConfigurationWithEmptyName() {
@@ -179,7 +178,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12881"})
+    @TestRail(id = {12881})
     @Issue("COL-1710")
     @Description("Create layout configuration name more than 64 characters")
     public void createLayoutConfigurationNameMoreThan64() {
@@ -194,7 +193,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12887"})
+    @TestRail(id = {12887})
     @Description("Delete Invalid layout configuration")
     public void deleteInvalidLayoutConfiguration() {
         ApwErrorMessage errorMessageResponse = QmsLayoutResources.deleteLayoutConfiguration(
@@ -208,7 +207,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13106"})
+    @TestRail(id = {13106})
     @Description("Create layout configuration with blank configuration")
     public void createLayoutConfigurationWithEmptyConfig() {
         LayoutConfigurationRequest layoutConfigurationRequestBuilder = LayoutConfigurationRequest.builder()
@@ -231,7 +230,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13107", "13109"})
+    @TestRail(id = {13107, 13109})
     @Description("Create, Share  layout configuration and Verify layout configuration is shared")
     public void createShareAndVerifyLayoutConfiguration() {
         String lcName = "LCN" + new GenerateStringUtil().getRandomNumbers();
@@ -263,7 +262,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13108", "13110"})
+    @TestRail(id = {13108, 13110})
     @Description("Create, UnShare  layout configuration and Verify layout configuration is shared")
     public void createAndUnShareAndVerifyLayoutConfiguration() {
         String lcName = "LCN" + new GenerateStringUtil().getRandomNumbers();

@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.cycletimevaluetracking;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -21,7 +21,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @TestRail(testCaseId = {"25987"})
+    @TestRail(id = {25987})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.cycleTimeValueTrackingCurrencyTest();

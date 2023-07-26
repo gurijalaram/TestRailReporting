@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.acs.entity.enums.workorders.CidWorkorderApiEnum;
 import com.apriori.acs.entity.enums.workorders.WorkorderStatusEnum;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
@@ -16,6 +17,7 @@ import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionI
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoScenarioKey;
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoVpe;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishInputs;
+import com.apriori.acs.entity.response.workorders.MaterialCatalogKeyData;
 import com.apriori.acs.entity.response.workorders.allimages.AllImagesInputs;
 import com.apriori.acs.entity.response.workorders.allimages.AllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesInputs;
@@ -50,16 +52,14 @@ import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
 import com.apriori.acs.entity.response.workorders.upload.OrderId;
-import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
+import com.apriori.acs.utils.OldAuthorizationUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authorization.OldAuthorizationUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.reader.file.user.UserUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

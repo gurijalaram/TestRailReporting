@@ -3,12 +3,12 @@ package com.evaluate;
 import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.customizations.ProcessGroups;
 import com.apriori.cidappapi.utils.CustomizationUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.AssemblyProcessGroupEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.AssemblyProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -27,7 +27,7 @@ public class ListProcessGroupTests {
     private SoftAssertions softAssertions;
 
     @Test
-    @TestRail(testCaseId = {"6197"})
+    @TestRail(id = 6197)
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
         final UserCredentials user = UserUtil.getUser();
@@ -56,7 +56,7 @@ public class ListProcessGroupTests {
     @Ignore("Assemblies cannot be upload")
     @Test
     @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"6198"})
+    @TestRail(id = 6198)
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
         final UserCredentials user = UserUtil.getUser();

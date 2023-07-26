@@ -6,16 +6,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.ScenarioComparisonReportPage;
-import com.apriori.utils.TestRail;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -28,7 +28,7 @@ import utils.Constants;
 
 import java.math.BigDecimal;
 
-public class ScenarioComparisonReportTests extends TestBase {
+public class ScenarioComparisonReportTests extends TestBaseUI {
 
     private ScenarioComparisonReportPage scenarioComparisonReportPage;
     private InputControlsTests inputControlsTests;
@@ -41,7 +41,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3245"})
+    @TestRail(id = {3245})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -52,7 +52,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7321"})
+    @TestRail(id = {7321})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -60,8 +60,8 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3245"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3245})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -69,8 +69,8 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3246"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3246})
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -104,7 +104,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3305"})
+    @TestRail(id = {3305})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         BigDecimal gbpFirstFbc;
@@ -140,7 +140,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3249"})
+    @TestRail(id = {3249})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
@@ -163,7 +163,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7665"})
+    @TestRail(id = {7665})
     @Description("Verify Created By input control search works - Scenario Comparison Report")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -175,7 +175,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3307"})
+    @TestRail(id = {3307})
     @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -216,7 +216,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7667"})
+    @TestRail(id = {7667})
     @Description("Verify Created By input control buttons work - Scenario Comparison Report")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -229,7 +229,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7664"})
+    @TestRail(id = {7664})
     @Description("Verify Last Modified By input control search works - Scenario Comparison Report")
     public void testLastModifiedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -241,7 +241,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3349"})
+    @TestRail(id = {3349})
     @Description("Verify Last Modified By input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testLastModifiedByFilterOperation() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -275,7 +275,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7666"})
+    @TestRail(id = {7666})
     @Description("Verify Last Modified By input control buttons work - Scenario Comparison Report")
     public void testLastModifiedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -288,7 +288,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3247"})
+    @TestRail(id = {3247})
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
@@ -323,8 +323,8 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3248"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3248})
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)
@@ -349,7 +349,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3304"})
+    @TestRail(id = {3304})
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -374,8 +374,8 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3306"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3306})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
         scenarioComparisonReportPage = new ReportsLoginPage(driver)

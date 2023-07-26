@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.pageobjects.navtoolbars.NavigationBar;
-import com.apriori.utils.FileResourceUtil;
 
 import com.utils.RightClickOptionEnum;
 import lombok.extern.slf4j.Slf4j;

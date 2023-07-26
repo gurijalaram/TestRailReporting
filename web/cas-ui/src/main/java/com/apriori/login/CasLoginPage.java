@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.customeradmin.CustomerAdminPage;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

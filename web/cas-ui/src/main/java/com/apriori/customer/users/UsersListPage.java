@@ -6,8 +6,8 @@ import com.apriori.components.SearchFieldComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;

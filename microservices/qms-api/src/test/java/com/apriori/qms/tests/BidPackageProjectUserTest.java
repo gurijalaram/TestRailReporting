@@ -1,7 +1,10 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
@@ -19,12 +22,9 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -80,7 +80,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15485", "13789"})
+    @TestRail(id = {15485, 13789})
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {
         UserCredentials defaultUser = UserUtil.getUser();
@@ -99,7 +99,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13782", "13788"})
+    @TestRail(id = {13782, 13788})
     @Description("Create and delete ADMIN ROLE project user")
     public void createAndDeleteBidPackageAdminProjectUser() {
         UserCredentials adminUser = UserUtil.getUser();
@@ -119,7 +119,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13793"})
+    @TestRail(id = {13793})
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
         BidPackageProjectUserResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUser(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectUserResponse.getProjectUsers()
@@ -130,7 +130,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13790"})
+    @TestRail(id = {13790})
     @Description("find all bid package project users")
     public void getBidPackageProjectUsers() {
         BidPackageProjectUsersResponse getBidPackageProjectUserResponse = QmsBidPackageResources.getBidPackageProjectUsers(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectUsersResponse.class, HttpStatus.SC_OK);
@@ -139,7 +139,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13786"})
+    @TestRail(id = {13786})
     @Description("Updated user role from default to admin")
     public void updateBidPackageDefaultProjectUser() {
         BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
@@ -152,7 +152,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14224", "14225", "14236"})
+    @TestRail(id = {14224, 14225, 14236})
     @Description("Get list of possible users, pagination and validate json response schema")
     public void getParticipants() {
         ParticipantsResponse participantsResponse = QmsBidPackageResources.getParticipants(currentUser);
@@ -163,7 +163,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25818"})
+    @TestRail(id = {25818})
     @Description("Adding duplicate Bulk project users")
     public void createBidPackageProjectUsersDuplicate() {
         UserCredentials newUserOne = UserUtil.getUser();
@@ -203,7 +203,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25819"})
+    @TestRail(id = {25819})
     @Description("Adding Bulk Project Users - One of Project User with an invalid email")
     public void createBidPackageProjectUsersInvalidEmail() {
         String invalidUserEmail = "invalid_email.com";
@@ -243,7 +243,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25820"})
+    @TestRail(id = {25820})
     @Description("Adding Bulk Project User - One of Project User already exist")
     public void createBidPackageProjectUsersAlreadyPresentUser() {
         UserCredentials newUserOne = UserUtil.getUser();
@@ -284,7 +284,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25830"})
+    @TestRail(id = {25830})
     @Description("Adding Bulk Project User - UnResolved Discussion of Project after adding Project Users")
     public void createBidPackageProjectUsersUnResolvedDiscussion() {
         ScenarioDiscussionResponse scenarioDiscussionResponse = QmsApiTestUtils.createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
@@ -338,7 +338,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25831"})
+    @TestRail(id = {25831})
     @Description("Adding Bulk Project User - UnDelete Discussion of Project after adding Project Users")
     public void createBidPackageProjectUsersUnDeleteDiscussion() {
         ScenarioDiscussionResponse scenarioDiscussionResponse = QmsApiTestUtils.createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
@@ -392,7 +392,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25958"})
+    @TestRail(id = {25958})
     @Description("Adding Bulk Project Users - One of user doesn’t exist in database")
     public void createBidPackageProjectUsersInvalid() {
         String invalidUserEmail = "qwerty@apriori.com";
@@ -432,7 +432,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"26438"})
+    @TestRail(id = {26438})
     @Issue("COL-1900")
     @Description("Verify system is able to delete Project Users")
     public void deleteLastProjectUser() {

@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -367,7 +367,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
         String operations = elementsOperations.getText();
 
-        return Arrays.asList(operations.split("\n"));
+        return Arrays.asList(operations.split(""));
     }
 
     /**

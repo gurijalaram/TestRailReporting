@@ -1,5 +1,6 @@
 package com.apriori.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
@@ -12,11 +13,10 @@ import com.apriori.entity.response.AccessAuthorizations;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerAssociation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -76,7 +76,7 @@ public class CasAccessAuthorizationTests {
 
     @Test
     @Description("Creating a new access authorization for customer and getting it")
-    @TestRail(testCaseId = {"5586", "12177"})
+    @TestRail(id = {5586, 12177})
     public void addAccessAuthorization() {
         ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, aPStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
         soft.assertThat(requestAccess.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
@@ -94,7 +94,7 @@ public class CasAccessAuthorizationTests {
 
     @Test
     @Description("Return a single access authorization by its identity.")
-    @TestRail(testCaseId = {"16547", "12183"})
+    @TestRail(id = {16547, 12183})
     public void getAccessAuthorizationById() {
         ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, aPStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
         String accessAuthorizationId = requestAccess.getResponseEntity().getIdentity();
@@ -108,7 +108,7 @@ public class CasAccessAuthorizationTests {
 
     @Test
     @Description("Add access authorization for a user other than yourself")
-    @TestRail(testCaseId = {"12181"})
+    @TestRail(id = {12181})
     public void authorizeAnotherUser() {
         ResponseWrapper<CasErrorMessage> requestAccess = casTestUtil.addAccessAuthorization(CasErrorMessage.class, customerIdentity, "000000000000", "service-account.1", HttpStatus.SC_FORBIDDEN);
         soft.assertThat(requestAccess.getResponseEntity().getMessage()).isEqualTo("You are not allowed to manage access authorizations for a user other than yourself");

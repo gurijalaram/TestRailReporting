@@ -1,7 +1,7 @@
 package com.apriori.cirapi.entity.request;
 
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.FileResourceUtil;
+import com.apriori.json.JsonManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

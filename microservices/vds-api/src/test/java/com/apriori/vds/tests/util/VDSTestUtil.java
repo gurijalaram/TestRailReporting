@@ -1,13 +1,13 @@
 package com.apriori.vds.tests.util;
 
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.TestUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
@@ -16,7 +16,6 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 
 import java.util.List;

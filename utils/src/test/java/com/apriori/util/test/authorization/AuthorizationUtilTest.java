@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.utils.authorization.AuthorizationUtil;
+
 import com.apriori.utils.authorization.Token;
-import com.apriori.utils.http.utils.ResponseWrapper;
+
 
 import lombok.SneakyThrows;
 import org.junit.Test;

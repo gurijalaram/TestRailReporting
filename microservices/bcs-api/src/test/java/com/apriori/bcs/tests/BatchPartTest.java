@@ -3,9 +3,9 @@ package com.apriori.bcs.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.controller.MultiPartResources;
@@ -16,17 +16,14 @@ import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import io.qameta.allure.Issues;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
@@ -51,7 +48,7 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9111"})
+    @TestRail(id = {9111})
     @Description("Test costing scenario" +
         "1. Create a new batch, " +
         "2. Add 10 parts to batch " +
@@ -69,7 +66,7 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4280"})
+    @TestRail(id = {4280})
     @Description("Create Batch and Add Part to a batch")
     public void createBatchPart() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
@@ -81,7 +78,7 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"7954"})
+    @TestRail(id = {7954})
     @Description("Create Batch, Add Part to a batch, wait until part is costed and get results")
     public void createBatchPartAndGetResults() {
         assertTrue("Track and verify Batch Part Costing is completed", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity(), BCSState.COMPLETED));
@@ -98,7 +95,7 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9544"})
+    @TestRail(id = {9544})
     @Description("Create 2 Batches, Add Part to a batch1, get the part for batch2 and verify error")
     public void createBatchPartFromMismatchedBatch() {
         Batch batch2 = BatchResources.createBatch().getResponseEntity();
@@ -115,16 +112,15 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4280", "4279"})
+    @TestRail(id = {4280, 4279})
     @Description("Get part to a batch")
     public void getBatchParts() {
         ResponseWrapper<Parts> partsResponse = BatchPartResources.getBatchPartById(batch.getIdentity());
         assertNotEquals(partsResponse.getResponseEntity().getItems().size(), 0);
     }
 
-
     @Test
-    @TestRail(testCaseId = {"8108"})
+    @TestRail(id = {8108})
     @Description("Create part with invalid form data: annualVolume ")
     public void createBatchPartsInvalidFormDataAnnualVolume() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -135,7 +131,7 @@ public class BatchPartTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4280"})
+    @TestRail(id = {4280})
     @Description("Create part with Valid UDA Field in form data")
     public void createBatchPartWithValidUDAField() {
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartWithValidUDA(batch.getIdentity());

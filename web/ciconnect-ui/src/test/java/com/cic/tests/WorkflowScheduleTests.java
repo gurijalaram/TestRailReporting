@@ -1,5 +1,8 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.dataservice.TestDataService;
 import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
@@ -7,12 +10,9 @@ import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.details.WorkflowSchedule;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -20,7 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WorkflowScheduleTests extends TestBase {
+public class WorkflowScheduleTests extends TestBaseUI {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
     private WorkflowSchedule workflowSchedule;
@@ -45,7 +45,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4083"})
+    @TestRail(id = {4083})
     @Description("Create minutes schedule workflow")
     public void testCreateMinutesScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -62,7 +62,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3600"})
+    @TestRail(id = {3600})
     @Description("Create Disabled schedule workflow and workflow does not run")
     public void testCreateDisabledScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -91,7 +91,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3601", "4324", "4325", "4331"})
+    @TestRail(id = {3601, 4324, 4325, 4331})
     @Description("1. Create minutes schedule workflow to invoke in 1 minute " +
         "2. Edit workflow to disable the schedule and verify job is not invoked" +
         "3. Edit workflow to enable the schedule and verify job is invoked")
@@ -138,7 +138,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9113"})
+    @TestRail(id = {9113})
     @Description("Create Hourly schedule workflow")
     public void testCreateHourlyScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -173,7 +173,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9114"})
+    @TestRail(id = {9114})
     @Description("Create Daily schedule workflow")
     public void testCreateDailyScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -210,7 +210,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9115"})
+    @TestRail(id = {9115})
     @Description("Create Weekly schedule workflow")
     public void testCreateWeeklyScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -228,7 +228,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9116"})
+    @TestRail(id = {9116})
     @Description("Create Monthly schedule workflow")
     public void testCreateMonthlyScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()
@@ -268,7 +268,7 @@ public class WorkflowScheduleTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9117"})
+    @TestRail(id = {9117})
     @Description("Create Yearly schedule workflow")
     public void testCreateYearlyScheduledWorkflow() {
         workflowSchedule = WorkflowSchedule.builder()

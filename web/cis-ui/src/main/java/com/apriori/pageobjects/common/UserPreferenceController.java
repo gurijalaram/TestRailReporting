@@ -28,7 +28,7 @@ public class UserPreferenceController extends EagerPageComponent<UserPreferenceC
      * @return list of string
      */
     public List<String> getUserPreferenceItems() {
-        return Stream.of(getDriver().findElement(By.xpath("//div[@aria-orientation='vertical']")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(getDriver().findElement(By.xpath("//div[@aria-orientation='vertical']")).getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 
     /**
@@ -37,6 +37,6 @@ public class UserPreferenceController extends EagerPageComponent<UserPreferenceC
      * @return list of string
      */
     public List<String> getDisplayPreferenceItems() {
-        return Stream.of(getDriver().findElement(By.xpath("//div[starts-with(@id,'vertical-tabpanel')]")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(getDriver().findElement(By.xpath("//div[starts-with(@id,'vertical-tabpanel')]")).getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 }

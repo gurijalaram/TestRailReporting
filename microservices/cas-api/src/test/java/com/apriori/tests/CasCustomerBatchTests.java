@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -8,11 +10,9 @@ import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerBatch;
 import com.apriori.entity.response.CustomerBatches;
 import com.apriori.entity.response.PostBatch;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -41,7 +41,7 @@ public class CasCustomerBatchTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5668", "5669", "5675"})
+    @TestRail(id = {5668, 5669, 5675})
     @Description("Upload a new user batch file, Returns a list of batches for the customer, Delete the Batch by its identity.")
     public void getCustomerBatches() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -72,7 +72,7 @@ public class CasCustomerBatchTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5668", "5670", "5675"})
+    @TestRail(id = {5668, 5670, 5675})
     @Description("Upload a new user batch file, Get the Batch identified by its identity, Delete the Batch by its identity.")
     public void getBatchById() {
         String customerName = generateStringUtil.generateCustomerName();

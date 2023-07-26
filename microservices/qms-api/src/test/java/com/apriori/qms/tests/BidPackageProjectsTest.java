@@ -1,8 +1,13 @@
 package com.apriori.qms.tests;
 
+import com.apriori.AuthUserContextUtil;
 import com.apriori.DateFormattingUtils;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.DateUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
@@ -12,14 +17,9 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -51,9 +51,8 @@ public class BidPackageProjectsTest extends TestUtil {
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
 
-
     @Test
-    @TestRail(testCaseId = {"13742", "13752", "22955", "14738", "25962"})
+    @TestRail(id = {13742, 13752, 22955, 14738, 25962})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
@@ -87,7 +86,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13898", "13899", "14671", "23010"})
+    @TestRail(id = {13898, 13899, 14671, 23010})
     @Description("Get list of all Bid Package Projects and verify pagination ")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = QmsBidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser);
@@ -104,7 +103,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13750", "14684", "22957"})
+    @TestRail(id = {13750, 14684, 22957})
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
@@ -121,7 +120,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13751", "22958", "24277", "25989"})
+    @TestRail(id = {13751, 22958, 24277, 25989})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
         String projectNameNew = new GenerateStringUtil().getRandomString();
@@ -159,7 +158,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13744"})
+    @TestRail(id = {13744})
     @Description("Create Bid Package project name is greater than 64 characters")
     public void createProjectNameGreaterThan64() {
         HashMap<String, String> prjAttributesMap = new HashMap<>();
@@ -170,7 +169,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13745"})
+    @TestRail(id = {13745})
     @Description("Create Bid Package project with empty name")
     public void createProjectWithEmptyName() {
         HashMap<String, String> prjAttributesMap = new HashMap<>();
@@ -180,7 +179,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13747"})
+    @TestRail(id = {13747})
     @Description("Create Bid Package with project description greater than 254 characters")
     public void createProjectDescGreaterThan254() {
         HashMap<String, String> prjAttributesMap = new HashMap<>();
@@ -191,7 +190,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13743", "13749"})
+    @TestRail(id = {13743, 13749})
     @Description("Create Bid Package project name equal to 64 characters, delete the bid package and create project with deleted Bid Package identity")
     public void createProjectNameEqualTo64() {
         HashMap<String, String> prjAttributesMap = new HashMap<>();
@@ -210,7 +209,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13746"})
+    @TestRail(id = {13746})
     @Description("Create Bid Package description is equal to 254 characters")
     public void createProjectDescEqualTo254() {
         String projectDescription = RandomStringUtils.randomAlphabetic(254);
@@ -227,7 +226,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13754"})
+    @TestRail(id = {13754})
     @Description("Verify bid package project is deleted")
     public void verifyBidPackageProjectIsDeleted() {
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
@@ -237,7 +236,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13894"})
+    @TestRail(id = {13894})
     @Description("Find a project with invalid identity")
     public void getProjectWithInvalidIdentity() {
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
@@ -245,7 +244,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13753"})
+    @TestRail(id = {13753})
     @Description("delete a project with invalid identity")
     public void deleteProjectWithInvalidIdentity() {
         ApwErrorMessage qmsErrorMessage = QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), "INVALID", ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
@@ -253,7 +252,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14124", "14670"})
+    @TestRail(id = {14124, 14670})
     @Description("Verify that project is deleted after deleting bid-package")
     public void verifyProjectIsDeletedAfterBidPackageDeleted() {
         String bidPackName = new GenerateStringUtil().getRandomNumbers();
@@ -276,7 +275,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24265"})
+    @TestRail(id = {24265})
     @Description("Verify project name cannot be updated to null/empty")
     public void updateEmptyProjectName() {
         //Project Name is Empty
@@ -299,7 +298,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24266"})
+    @TestRail(id = {24266})
     @Description("Verify display name cannot be updated to empty")
     public void updateEmptyProjectDisplayName() {
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -309,13 +308,13 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage errorProjectResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(errorProjectResponse.getMessage())
-            .contains("2 validation failures were found:\n" +
-                "* 'displayName' should not be empty.\n" +
+            .contains("2 validation failures were found:" +
+                "* 'displayName' should not be empty." +
                 "* 'displayName' should not be blank");
     }
 
     @Test
-    @TestRail(testCaseId = {"24267"})
+    @TestRail(id = {24267})
     @Description("Verify display name can be updated with maximum of 64 characters only")
     public void updateProjectDisplayNameEqualTo64() {
         String projectDisplayName = RandomStringUtils.randomAlphabetic(64);
@@ -330,7 +329,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24268"})
+    @TestRail(id = {24268})
     @Description("Verify display name cannot be updated to more than 64 characters")
     public void updateProjectDisplayNameGreaterThan64() {
         String projectDisplayName = RandomStringUtils.randomAlphabetic(70);
@@ -345,7 +344,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24269"})
+    @TestRail(id = {24269})
     @Description("Verify project status can not be updated to null")
     public void updateEmptyProjectStatus() {
         //Project Status is Empty
@@ -370,7 +369,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24270"})
+    @TestRail(id = {24270})
     @Description("Verify project status can be updated to only following status IN_NEGOTIATION ,COMPLETED  & PURCHASED")
     public void updateProjectStatuses() {
         //Project Status is "COMPLETED"
@@ -402,7 +401,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24275"})
+    @TestRail(id = {24275})
     @Description("Verify other than admin users cannot update the project attributes")
     public void updateProjectAttributesByNonAdminUser() {
         softAssertions.assertThat(bidPackageProjectResponse.getBidPackageIdentity())
@@ -430,7 +429,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24276"})
+    @TestRail(id = {24276})
     @Description("Verify project owner(identity) cannot be updated to null, empty and invalid")
     public void updateEmptyProjectOwner() {
         //Project owner is Empty
@@ -441,9 +440,9 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("3 validation failures were found:\n" +
-                "* 'owner' should not be empty.\n" +
-                "* 'owner' should not be blank.\n" +
+            .contains("3 validation failures were found:" +
+                "* 'owner' should not be empty." +
+                "* 'owner' should not be blank." +
                 "* 'owner' is not a valid identity.");
 
         //Project owner is null
@@ -468,7 +467,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24278"})
+    @TestRail(id = {24278})
     @Description("Verify project name can be updated with maximum of 64 characters only")
     public void updateProjectNameEqualTo64() {
         String projectName64 = RandomStringUtils.randomAlphabetic(64);
@@ -482,7 +481,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24279"})
+    @TestRail(id = {24279})
     @Description("Verify project name cannot be updated to more than 64 characters")
     public void updateProjectNameGreaterThan64() {
         String projectName = RandomStringUtils.randomAlphabetic(70);
@@ -497,7 +496,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24280"})
+    @TestRail(id = {24280})
     @Description("Verify dueAt can be updated to valid date or datetime format( yyyy-MM-dd & yyyy-MM-dd'T'HH:mm:ss.SSS'Z' )")
     public void updateBidPackageProjectDueAtValidFormats() {
         //yyyy-MM-dd
@@ -530,7 +529,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24281"})
+    @TestRail(id = {24281})
     @Issue("COL-1834")
     @Description("Verify response should not contain the dueAt attribute, when dueAt attribute is having null or empty values in request")
     public void updateEmptyProjectDueAt() {
@@ -554,7 +553,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24347"})
+    @TestRail(id = {24347})
     @Issue("COL-1834")
     @Description("Verify response should not contain the description attribute, when description attribute is having null or empty values in request")
     public void updateEmptyProjectDescription() {
@@ -578,7 +577,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24349"})
+    @TestRail(id = {24349})
     @Description("Verify project description cannot be updated to more than 254 characters")
     public void updateProjectDescriptionGreaterThan64() {
         String projectDes = RandomStringUtils.randomAlphabetic(255);
@@ -593,7 +592,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24350"})
+    @TestRail(id = {24350})
     @Description("Verify project description can be updated with maximum of 254 characters only")
     public void updateProjectDescriptionEqualTo254() {
         String projectDescription254 = RandomStringUtils.randomAlphabetic(254);
@@ -607,7 +606,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24354"})
+    @TestRail(id = {24354})
     @Description("Verify project display name cannot be updated to null")
     public void updateNullProjectDisplayName() {
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -621,7 +620,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24351", "25959"})
+    @TestRail(id = {24351, 25959})
     @Description("Verify updated owner/admin users can update the project attributes." +
         "Verify updating Project Owner's identity will change ownerFullName accordingly")
     public void updateProjectWithNewOwner() {
@@ -677,7 +676,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24313", "24412"})
+    @TestRail(id = {24313, 24412})
     @Description("Verify dueAt can not be updated to invalid date or invalid datetime format")
     public void updateInvalidProjectDueAt() {
         //Invalid format #1
@@ -712,7 +711,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25922"})
+    @TestRail(id = {25922})
     @Description("Verify deletion of bid package project created automatically while creating QMS scenario-discussions is deleting all associated items like projectItems, discussions and bidPackageItems")
     public void deleteBidPackageProjectAndVerifyAllAssociatedEntitiesDeleted() {
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
@@ -767,7 +766,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24295"})
+    @TestRail(id = {24295})
     @Issue("COL-1836")
     @Description("Verify project status can not be updated to any other status other than following status IN_NEGOTIATION ,COMPLETED & PURCHASED")
     public void updateProjectStatusToActive() {
@@ -782,7 +781,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24427"})
+    @TestRail(id = {24427})
     @Description("For Bidpackage/project? endpoint  || Verify for project status can be updated to OPEN or IN_PROGRESS")
     public void updateProjectStatusToOpenAndInProgress() {
         //OPEN
@@ -805,7 +804,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24481"})
+    @TestRail(id = {24481})
     @Description("Verify new project can be created with OPEN or IN_PROGRESS Status")
     public void createProjectWithStatusOpenAndInProgress() {
         //OPEN

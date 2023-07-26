@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.associations.ProcessGroupAssociationRequest;
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
@@ -41,14 +41,14 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"C8411"})
+    @TestRail(id = {C8411})
     @Description("Returns a paged set of ProcessGroupAssociation for the current user.")
     public void testGetProcessGroupAssociations() {
         getProcessGroupAssociations();
     }
 
     @Test
-    @TestRail(testCaseId = {"C8414"})
+    @TestRail(id = {C8414})
     @Description("Get a ProcessGroupAssociation for a customer.")
     public void testGetMaterialByIdentity() {
         RequestEntity requestEntity =
@@ -60,14 +60,14 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"C8412"})
+    @TestRail(id = {C8412})
     @Description("Adds a ProcessGroupAssociation for a customer.")
     public void testPostProcessGroupAssociation() {
         getTestingProcessGroupAssociation();
     }
 
     @Test
-    @TestRail(testCaseId = {"C8415"})
+    @TestRail(id = {C8415})
     @Description("DELETEs a ProcessGroupAssociation for a customer.")
     public void testDeleteProcessGroupAssociation() {
         deleteProcessGroupAssociation(
@@ -76,7 +76,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"C8416"})
+    @TestRail(id = {C8416})
     @Description("Updates a ProcessGroupAssociation for a customer.")
     public void testPatchProcessGroupAssociation() {
         ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
@@ -104,7 +104,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"C8413"})
+    @TestRail(id = {C8413})
     @Description("Adds or Replaces a ProcessGroupAssociation for a customer. ")
     public void testPutCreateProcessGroupAssociation() {
         ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();
@@ -135,7 +135,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"C9038"})
+    @TestRail(id = {C9038})
     @Description("Replaces a ProcessGroupAssociation for a customer. ")
     public void testPutUpdateProcessGroupAssociation() {
         ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();

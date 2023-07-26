@@ -1,19 +1,19 @@
 package com.userpreference;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.settings.UserPreferencePage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CisDisplayPreferenceEnum;
 import com.utils.CisUserPreferenceItemsEnum;
@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class UserPreferenceTest extends TestBase {
+public class UserPreferenceTest extends TestBaseUI {
 
     public UserPreferenceTest() {
         super();
@@ -37,7 +37,7 @@ public class UserPreferenceTest extends TestBase {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"16464","16465","16466"})
+    @TestRail(id = {16464, 16465, 16466})
     @Description("Verify user can view the user preferences")
     public void testUserPreferenceModal() {
         loginPage = new CisLoginPage(driver);
@@ -59,7 +59,7 @@ public class UserPreferenceTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16674","16677","16679","16681","16683","16686","16687","16688"})
+    @TestRail(id = {16674, 16677, 16679, 16681, 16683, 16686, 16687, 16688})
     @Description("Verify user can change the display preferences")
     public void testDisplayPreferences() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

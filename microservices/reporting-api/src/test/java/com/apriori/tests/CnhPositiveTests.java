@@ -3,10 +3,10 @@ package com.apriori.tests;
 import com.apriori.cnh.entity.apicalls.CnhService;
 import com.apriori.cnh.entity.request.ExecuteRequest;
 import com.apriori.cnh.entity.response.ExecuteResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
+
+
+
+
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -17,7 +17,7 @@ public class CnhPositiveTests {
     private String customerId = "3KED5H5BKN85";
 
     @Test
-    @TestRail(testCaseId = {"14057"})
+    @TestRail(id = {14057})
     @Description("Verify report-1")
     public void shouldExecuteReport1Test() {
         SoftAssertions soft = new SoftAssertions();
@@ -40,7 +40,7 @@ public class CnhPositiveTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"14058"})
+    @TestRail(id = {14058})
     @Description("Verify slow-query")
     public void shouldExecuteSlowQueryTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -63,7 +63,7 @@ public class CnhPositiveTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"14059"})
+    @TestRail(id = {14059})
     @Description("Verify a few calls run at once")
     public void shouldExecuteFewCallsTest() {
         SoftAssertions soft = new SoftAssertions();

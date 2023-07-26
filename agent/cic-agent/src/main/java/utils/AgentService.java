@@ -1,12 +1,12 @@
 package utils;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.utils.AwsParameterStoreUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -331,56 +331,56 @@ public class AgentService {
                 for (String line : optionFileContent) {
                     switch (line) {
                         case "installDirectory=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("");
                             break;
                         case "url=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("");
                             break;
                         case "appKey=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAppKey()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getAppKey()).append("");
                             break;
                         case "scanRate=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("");
                             break;
                         case "agentId=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("");
                             break;
                         case "port=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("");
                             break;
                         case "plmType=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
+                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("");
                             break;
                         case "auth-token=":
-                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("");
                             break;
                         case "reconnectionInterval=":
-                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("");
                             break;
                         case "hostName=":
-                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("");
                             break;
                         case "user=":
-                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("");
                             break;
                         case "password=":
-                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("");
                             break;
                         case "fscUrl=":
-                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("");
                             break;
                         case "rootFolderPath=":
-                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("\n") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("\n");
+                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("");
                             break;
                         default:
-                            stringBuilder.append(line).append("\n");
+                            stringBuilder.append(line).append("");
                     }
                 }
                 if (optionsFile.exists()) {
@@ -808,10 +808,10 @@ public class AgentService {
         return AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
             .appKey(agentConnectionInfo.getAppKey())
-            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
-            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "#"))
+            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "#")))
             .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
-            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
+            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "#"))
             .build();
     }
 }

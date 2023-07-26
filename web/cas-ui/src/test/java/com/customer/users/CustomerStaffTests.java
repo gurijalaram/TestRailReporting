@@ -1,8 +1,12 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -13,17 +17,13 @@ import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.Obligation;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
 import com.apriori.utils.UserCreation;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CustomerStaffTests extends TestBase {
+public class CustomerStaffTests extends TestBaseUI {
 
     private UsersListPage usersListPage;
     private Customer targetCustomer;
@@ -88,7 +88,7 @@ public class CustomerStaffTests extends TestBase {
     @Test
     @Description("Validate customer staff table has correct details")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"4061", "4380", "10572", "10574", "10580"})
+    @TestRail(id = {4061, 4380, 10572, 10574, 10580})
     public void testCustomerStaffTableViewHasCorrectDetails() {
         UsersListPage goToTableView = usersListPage
                 .clickTableViewButton()
@@ -103,7 +103,7 @@ public class CustomerStaffTests extends TestBase {
                 .validateUsersTableHasCorrectColumns("Department", "userProfile.department", soft)
                 .validateUsersTableHasCorrectColumns("Created", "createdAt", soft);
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent users = goToTableView.getUsersList();
         PaginatorComponent paginator = Obligation.mandatory(users::getPaginator, "The customer staff table is missing pagination.");
@@ -145,12 +145,12 @@ public class CustomerStaffTests extends TestBase {
     @Test
     @Description("Validate Card button switches to card view of customer staff")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"10573", "10575", "10576", "10577"})
+    @TestRail(id = {10573, 10575, 10576, 10577})
     public void testCustomerStaffCardView() {
         UsersListPage goToCardView = usersListPage
                 .clickCardViewButton();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent users = goToCardView.getUserListCardView();
         PaginatorComponent paginator = Obligation.mandatory(users::getPaginator, "The customer staff page is missing pagination.");
@@ -195,7 +195,7 @@ public class CustomerStaffTests extends TestBase {
 
     @Test
     @Description("Validate license details panel")
-    @TestRail(testCaseId = {"13101", "13102", "13103", "13104"})
+    @TestRail(id = {13101, 13102, 13103, 13104})
     public void licenseDetailsTest() {
         String siteName = new GenerateStringUtil().generateSiteName();
         String siteId = new GenerateStringUtil().generateSiteID();
@@ -223,7 +223,7 @@ public class CustomerStaffTests extends TestBase {
             .overridingErrorMessage("Expected 'Select a User' placeholder is displayed")
             .isEqualTo("Select a single User");
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         SourceListComponent users = usersListPage.getUsersList();
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
@@ -274,13 +274,13 @@ public class CustomerStaffTests extends TestBase {
 
     @Test
     @Description("Validate delete users can be canceled")
-    @TestRail(testCaseId = {"14228", "14230", "14231", "14232", "14233"})
+    @TestRail(id = {14228, 14230, 14231, 14232, 14233})
     public void deleteUserCancel() {
         soft.assertThat(usersListPage.isDeleteButtonEnable())
             .overridingErrorMessage("Delete user button expected to be disabled")
             .isFalse();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         long pageSize = 10;
         long selected = 0;
         SourceListComponent users = usersListPage.getUsersList();
@@ -313,10 +313,10 @@ public class CustomerStaffTests extends TestBase {
 
     @Test
     @Description("Validate users can be deleted from customer staff table")
-    @TestRail(testCaseId = {"14229", "14234", "14235"})
+    @TestRail(id = {14229, 14234, 14235})
     public void deleteUserFromStaffTable() {
         String userName = sourceUsers.get(5).getUsername();
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         SourceListComponent users = usersListPage.getUsersList();
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);

@@ -1,7 +1,7 @@
 package com.apriori.bcs.entity.request;
 
+import com.apriori.annotations.Schema;
 import com.apriori.bcs.entity.response.UserPreference;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 

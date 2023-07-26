@@ -1,33 +1,31 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC_COMPARISON.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
         JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
-
-    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
@@ -35,7 +33,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7409")
+    @TestRail(id = 7409)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -45,7 +43,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7410")
+    @TestRail(id = 7410)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -55,7 +53,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7489")
+    @TestRail(id = 7489)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -65,7 +63,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7390")
+    @TestRail(id = 7390)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
@@ -75,7 +73,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7509")
+    @TestRail(id = 7509)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Comparison Report")
     public void testDtcScoreLow() {
         List<String> partNames = Arrays.asList(
@@ -91,7 +89,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7512")
+    @TestRail(id = 7512)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Comparison Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
@@ -107,7 +105,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7515")
+    @TestRail(id = 7515)
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Comparison Report")
     public void testDtcScoreHigh() {
         List<String> partNames = Arrays.asList(
@@ -123,7 +121,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7544")
+    @TestRail(id = 7544)
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
         jasperApiUtils.genericDtcScoreTest(
@@ -134,7 +132,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = "7656")
+    @TestRail(id = 7656)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcTest(

@@ -5,21 +5,21 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -30,7 +30,7 @@ import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
+public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     private TargetAndQuotedCostValueTrackingPage targetAndQuotedCostValueTrackingPage;
     private InputControlsTests inputControlsTests;
@@ -42,7 +42,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7325"})
+    @TestRail(id = {7325})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -53,7 +53,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7327"})
+    @TestRail(id = {7327})
     @Description("Validate report available by library - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -64,7 +64,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7329"})
+    @TestRail(id = {7329})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -75,7 +75,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3364"})
+    @TestRail(id = {3364})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -87,7 +87,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7424"})
+    @TestRail(id = {7424})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -99,7 +99,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3365"})
+    @TestRail(id = {3365})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
@@ -125,8 +125,8 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3368"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3368})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 1")
     public void testLinksToMilestoneProjectOne() {
         testMilestoneProjectLink("1");
@@ -134,7 +134,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7669"})
+    @TestRail(id = {7669})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 2")
     public void testLinksToMilestoneProjectTwo() {
         testMilestoneProjectLink("2");
@@ -142,7 +142,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7670"})
+    @TestRail(id = {7670})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 3")
     public void testLinksToMilestoneProjectThree() {
         testMilestoneProjectLink("3");
@@ -150,7 +150,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7671"})
+    @TestRail(id = {7671})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 4")
     public void testLinksToMilestoneProjectFour() {
         testMilestoneProjectLink("4");
@@ -158,7 +158,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3366"})
+    @TestRail(id = {3366})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
@@ -181,7 +181,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3367"})
+    @TestRail(id = {3367})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
@@ -202,9 +202,9 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String reportsVpe = targetAndQuotedCostValueTrackingPage.getValueFromReport("11");
         String reportsProcessGroup = targetAndQuotedCostValueTrackingPage.getValueFromReport("14");
         String reportsMaterialComposition = targetAndQuotedCostValueTrackingPage.getValueFromReport("17")
-                .replace("\n", " ");
+            .replace("", " ");
         String reportsAnnualVolume = targetAndQuotedCostValueTrackingPage.getValueFromReport("22")
-                .replace(",", "");
+            .replace(",", "");
         String reportsCurrentCost = targetAndQuotedCostValueTrackingPage.getValueFromReport("24");
 
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);

@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -24,7 +24,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12438"})
+    @TestRail(id = {12438})
     @Description("Verify that GET scenario-iterations returns exactly specified 5 items - paging")
     public void getFivePartsTest() {
         QueryParams queryParams = new QueryParams();
@@ -38,7 +38,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12439"})
+    @TestRail(id = {12439})
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition EQ (equals)")
     public void getOnePartTest() {
         QueryParams queryParams = new QueryParams();
@@ -55,7 +55,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12440"})
+    @TestRail(id = {12440})
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition NE (not equals)")
     public void notGetOnePartTest() {
         QueryParams queryParams = new QueryParams();
@@ -71,7 +71,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12441"})
+    @TestRail(id = {12441})
     @Description("Verify that GET scenario-iterations returns exactly specified parts in the range - condition IN")
     public void getPartsInRangeTest() {
         QueryParams queryParams = new QueryParams();
@@ -84,7 +84,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12442"})
+    @TestRail(id = {12442})
     @Description("Verify that GET scenario-iterations do not return exactly specified parts in the range - condition IN")
     public void notGetPartsInRangeTest() {
         QueryParams queryParams = new QueryParams();
@@ -97,7 +97,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12443"})
+    @TestRail(id = {12443})
     @Description("Verify that GET scenario-iterations return correct parts when using  AND operator")
     public void getPartsTwoParamsWithAndTest() {
         QueryParams queryParams = new QueryParams();
@@ -111,7 +111,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12444"})
+    @TestRail(id = {12444})
     @Description("Verify that GET scenario-iterations return correct parts when using  SW(starts with / LIKE) operator")
     public void getPartsMatchTest() {
         QueryParams queryParams = new QueryParams();

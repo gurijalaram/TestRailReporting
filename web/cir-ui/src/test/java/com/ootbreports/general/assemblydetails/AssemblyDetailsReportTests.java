@@ -7,27 +7,27 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.PropertyEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ComponentInfoColumnEnum;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.reports.AssemblySetEnum;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import com.utils.CurrencyEnum;
+import enums.AssemblySetEnum;
+import enums.AssemblyTypeEnum;
+import enums.ComponentInfoColumnEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AssemblyDetailsReportTests extends TestBase {
+public class AssemblyDetailsReportTests extends TestBaseUI {
 
     private AssemblyDetailsReportPage assemblyDetailsReportPage;
     private InputControlsTests inputControlsTests;
@@ -56,8 +56,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1915"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1915})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigationAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
@@ -68,7 +68,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3060"})
+    @TestRail(id = {3060})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
@@ -77,7 +77,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1916"})
+    @TestRail(id = {1916})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
         commonReportTests = new CommonReportTests(driver);
@@ -85,8 +85,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1922"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1922})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -119,7 +119,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3205"})
+    @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -167,7 +167,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3067", "1929"})
+    @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -209,8 +209,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3068", "1929"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3068, 1929})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
@@ -262,7 +262,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1934", "1929"})
+    @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
@@ -312,7 +312,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3231", "1929"})
+    @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
         assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
@@ -361,7 +361,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3232", "1929"})
+    @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
         assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
@@ -411,8 +411,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3233", "1929"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
         assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
@@ -462,8 +462,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1919"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1919})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
         inputControlsTests = new InputControlsTests(driver);
@@ -473,8 +473,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3244"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3244})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -483,7 +483,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1930"})
+    @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -569,8 +569,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1918"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1918})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -601,8 +601,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1920"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1920})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
         inputControlsTests = new InputControlsTests(driver);
@@ -610,8 +610,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1931"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -645,7 +645,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1921"})
+    @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -663,7 +663,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7683"})
+    @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
     public void testCreatedByFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -675,7 +675,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7684"})
+    @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -723,7 +723,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7685"})
+    @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
     public void testCreatedByFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -736,7 +736,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7686"})
+    @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
     public void testLastModifiedFilterSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -748,7 +748,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7687"})
+    @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -784,7 +784,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7688"})
+    @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
     public void testLastModifiedFilterButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -796,8 +796,8 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7689", "1921"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
         inputControlsTests = new InputControlsTests(driver);
@@ -809,7 +809,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     //@Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1924"})
+    @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -854,7 +854,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1928"})
+    @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -886,7 +886,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1933"})
+    @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
@@ -915,7 +915,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
     @Test
     //@Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1927"})
+    @TestRail(id = {1927})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)

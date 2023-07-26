@@ -2,24 +2,21 @@ package com.cic.tests;
 
 import com.apriori.pages.connectors.ConnectorsPage;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.WorkflowTestUtil;
 
 public class ConnectorTabTests extends WorkflowTestUtil {
     private UserCredentials currentUser = UserUtil.getUser();
 
     @Test
-    @TestRail(testCaseId = {"3955"})
+    @TestRail(id = {3955})
     @Description("Test Connectors List Tab")
     public void testConnectorsTabButtons() {
         SoftAssertions softAssertions = new SoftAssertions();

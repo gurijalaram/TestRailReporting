@@ -1,6 +1,8 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageProjectResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserParameters;
@@ -8,11 +10,9 @@ import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserRequest
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -50,7 +50,7 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24361"})
+    @TestRail(id = {24361})
     @Description("Add Multiple Users to the Project")
     public void testCreateBidPackageDefaultProjectUser() {
         String firstUserEmail = UserUtil.getUser().getEmail();

@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
@@ -8,15 +10,13 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -35,7 +35,7 @@ public class ReCostScenarioTests {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6101"})
+    @TestRail(id = 6101)
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -73,7 +73,7 @@ public class ReCostScenarioTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6102"})
+    @TestRail(id = 6102)
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -84,7 +84,7 @@ public class ReCostScenarioTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6103"})
+    @TestRail(id = {6103})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -119,7 +119,7 @@ public class ReCostScenarioTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6104"})
+    @TestRail(id = {6104})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -130,7 +130,7 @@ public class ReCostScenarioTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6105"})
+    @TestRail(id = {6105})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -141,7 +141,7 @@ public class ReCostScenarioTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6106"})
+    @TestRail(id = {6106})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;

@@ -1,20 +1,20 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.ErrorResponse;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.FeatureResponse;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.cds.utils.RandomCustomerData;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -55,7 +55,7 @@ public class CdsFeatureTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21921"})
+    @TestRail(id = {21921})
     @Description("Verify Create Installation Feature Flag")
     public void verifyCreateInstallationFlag() {
         setAllCustomerData();
@@ -82,7 +82,7 @@ public class CdsFeatureTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21926"})
+    @TestRail(id = {21926})
     @Description("Verify invalid Installation Feature Flag with wrong deployment")
     public void verifyInvalidInstallationFlag() {
         setAllCustomerData();
@@ -98,7 +98,7 @@ public class CdsFeatureTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21924"})
+    @TestRail(id = {21924})
     @Description("Verify create installation features on installation")
     public void verifyCreateInstallationFeaturesOnInstallation() {
         RandomCustomerData rcd = new RandomCustomerData();
@@ -143,7 +143,7 @@ public class CdsFeatureTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21927"})
+    @TestRail(id = {21927})
     @Description("Verify Update installation feature")
     public void verifyUpdateInstallationFeature() {
         setAllCustomerData();
@@ -171,7 +171,7 @@ public class CdsFeatureTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21928"})
+    @TestRail(id = {21928})
     @Description("Verify Update installation feature - wrong installation url")
     public void verifyUpdateInstallationFeatureWrong() {
         setAllCustomerData();

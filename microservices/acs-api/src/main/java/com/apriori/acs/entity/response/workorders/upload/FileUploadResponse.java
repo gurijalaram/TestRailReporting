@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 @Schema(location = "workorders/FileUploadResponse.json")
 public class FileUploadResponse {

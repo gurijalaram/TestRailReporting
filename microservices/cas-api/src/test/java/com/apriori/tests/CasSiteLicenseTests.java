@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
@@ -11,11 +13,9 @@ import com.apriori.entity.response.LicenseByIdentity;
 import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.Licenses;
 import com.apriori.entity.response.Site;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -67,7 +67,7 @@ public class CasSiteLicenseTests {
 
     @Test
     @Description("Gets licenses for a customer site")
-    @TestRail(testCaseId = {"5653"})
+    @TestRail(id = {5653})
     public void getSitesLicenses() {
         String subLicenseId = UUID.randomUUID().toString();
 
@@ -82,7 +82,7 @@ public class CasSiteLicenseTests {
 
     @Test
     @Description("Gets license details by license identity")
-    @TestRail(testCaseId = {"5654"})
+    @TestRail(id = {5654})
     public void getSiteLicenseByIdentity() {
         String subLicenseId = UUID.randomUUID().toString();
 
@@ -99,7 +99,7 @@ public class CasSiteLicenseTests {
 
     @Test
     @Description("Activates a site license")
-    @TestRail(testCaseId = {"16261"})
+    @TestRail(id = {16261})
     public void activateLicense() {
         String subLicenseId = UUID.randomUUID().toString();
 
@@ -115,7 +115,7 @@ public class CasSiteLicenseTests {
 
     @Test
     @Description("Get license with not existing identity and activate")
-    @TestRail(testCaseId = {"16280", "16281"})
+    @TestRail(id = {16280, 16281})
     public void getAndActivateLicenseThatNotExist() {
         String notExistingLicenseId = "000000000000";
 

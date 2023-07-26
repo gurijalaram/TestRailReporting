@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.targetcosttrend;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -21,7 +21,7 @@ public class TargetCostValueTrackingReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @TestRail(testCaseId = {"2246"})
+    @TestRail(id = {2246})
     @Description("Input Controls - Currency Code - Target Quoted Cost Value Tracking Report")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.targetCostValueTrackingCurrencyTest();

@@ -1,7 +1,7 @@
 package com.apriori.acs.entity.response.acs.productioninfo;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Data;
 

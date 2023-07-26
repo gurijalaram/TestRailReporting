@@ -1,13 +1,13 @@
 package tests.workorders;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.json.JsonManager;
 
 import io.qameta.allure.Description;
 import junitparams.FileParameters;

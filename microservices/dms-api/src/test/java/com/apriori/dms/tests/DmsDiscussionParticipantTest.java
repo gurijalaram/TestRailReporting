@@ -1,14 +1,11 @@
 package com.apriori.dms.tests;
 
-
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import entity.response.DmsDiscussionParticipantsResponse;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DmsApiTestDataUtils;
@@ -23,7 +20,7 @@ public class DmsDiscussionParticipantTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13167"})
+    @TestRail(id = {13167})
     @Description("get discussion participants")
     public void getDiscussionParticipants() {
         DmsDiscussionParticipantsResponse responseWrapper = DmsApiTestUtils.getDiscussionParticipants(dmsScenarioDiscussionResponse.getItems()

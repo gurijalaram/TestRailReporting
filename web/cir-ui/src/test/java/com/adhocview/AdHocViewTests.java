@@ -4,21 +4,21 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 
-public class AdHocViewTests extends TestBase {
+public class AdHocViewTests extends TestBaseUI {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = "12517")
+    @TestRail(id = "12517")
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testAdHocViewCreation() {
         CreateAdHocViewPage createAdHocViewPage = new ReportsLoginPage(driver)

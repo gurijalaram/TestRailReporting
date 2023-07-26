@@ -1,7 +1,14 @@
 package com.apriori.qds.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectItemResponse;
@@ -10,17 +17,10 @@ import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.utils.QdsApiTestUtils;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -65,7 +65,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13411", "13427"})
+    @TestRail(id = {13411, 13427})
     @Description("Create and delete Bid Package Project Item " +
         "PreRequisites : 1. Create BidPackage 2. Create BidPackageItem 3. Create BidPackageProject")
     public void createAndDeleteBidPackageProjectItem() {
@@ -86,7 +86,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13420"})
+    @TestRail(id = {13420})
     @Description("Get Bid Package Project Item")
     public void getBidPackageProjectItem() {
         BidPackageProjectItemResponse getBidPackageProjectItemResponse = BidPackageResources.getBidPackageProjectItem(
@@ -100,7 +100,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13418", "13419"})
+    @TestRail(id = {13418, 13419})
     @Description("Get all Bid Package Project Items and verify pagination")
     public void getBidPackageProjectItems() {
         BidPackageProjectItemsResponse getBidPackageProjectItemResponse = BidPackageResources.getBidPackageProjectItems(
@@ -113,7 +113,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13412"})
+    @TestRail(id = {13412})
     @Description("Create  Bid Package Project Item with out project")
     public void createProjectItemWithoutProject() {
         BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
@@ -132,7 +132,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13413"})
+    @TestRail(id = {13413})
     @Description("Create  Bid Package Project Item with out bidPackageItemIdentity")
     public void createProjectItemWithoutPackageItem() {
         ErrorMessage bppiResponse = BidPackageResources.createBidPackageProjectItem(
@@ -148,7 +148,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13416"})
+    @TestRail(id = {13416})
     @Description("Create  Bid Package Project Item with out bid Package")
     public void createProjectItemWithoutBidPackage() {
         String bpName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -174,7 +174,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13421", "13429", "13430"})
+    @TestRail(id = {13421, 13429, 13430})
     @Description("Delete and Get project Item to verify project item is removed")
     public void deleteAndGetProjectItemWithNoItemIdentity() {
         BidPackageResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(),
@@ -214,7 +214,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13423"})
+    @TestRail(id = {13423})
     @Description("Get project Item by Invalid Identity")
     public void grtProjectItemWithNoInvalidProjectIdentity() {
         ErrorMessage getErrorResponse = BidPackageResources.getBidPackageProjectItem(
@@ -228,7 +228,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13428"})
+    @TestRail(id = {13428})
     @Description("Delete project Item by incorrect project Identity")
     public void deleteProjectItemWithInvalidIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)

@@ -110,7 +110,7 @@ public class InputsController {
      * @return list of string
      */
     public List<String> getSecondaryProcesses(WebElement secondaryProcesses) {
-        return Arrays.stream(secondaryProcesses.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(secondaryProcesses.getText().split("")).collect(Collectors.toList());
     }
 
     /**
@@ -141,7 +141,7 @@ public class InputsController {
      * @return list as string
      */
     public List<String> getListOfDigitalFactory(WebElement digitalFactoryList, String filterOption) {
-        return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase(filterOption)).collect(Collectors.toList());
+        return Arrays.stream(digitalFactoryList.getText().split("")).filter(x -> !x.equalsIgnoreCase(filterOption)).collect(Collectors.toList());
     }
 
     /**

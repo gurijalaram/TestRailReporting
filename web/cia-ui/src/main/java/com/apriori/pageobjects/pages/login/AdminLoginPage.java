@@ -6,9 +6,9 @@ import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

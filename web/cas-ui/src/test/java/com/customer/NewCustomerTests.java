@@ -1,18 +1,18 @@
 package com.customer;
 
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customeradmin.CustomerAdminPage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class NewCustomerTests extends TestBase {
+public class NewCustomerTests extends TestBaseUI {
     private CustomerWorkspacePage customerViewPage;
     private CustomerProfilePage customerProfilePage;
     private CdsTestUtil cdsTestUtil;
@@ -59,7 +59,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Clicking the New Customer button takes me to the profile form and all displays are valid.")
-    @TestRail(testCaseId = {"9600"})
+    @TestRail(id = {9600})
     public void testValidateThatTheFormLabelsAreCorrect() {
         soft.assertThat(customerViewPage.getProfileTab().isActive())
             .overridingErrorMessage("The profile tab not the active tab.")
@@ -109,7 +109,7 @@ public class NewCustomerTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("Clicking the cancel button returns the user to the customer list.")
-    @TestRail(testCaseId = {"9613"})
+    @TestRail(id = {9613})
     public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
 
         CustomerAdminPage actual = customerProfilePage.clickCancelButton(CustomerAdminPage.class);
@@ -120,7 +120,7 @@ public class NewCustomerTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("The save button creates the new customer and reloads the page in edit mode.")
-    @TestRail(testCaseId = {"9616", "10627"})
+    @TestRail(id = {9616, 10627})
     public void testSaveCreatesTheNewCustomerAndThePageReloadsWithTheNewCustomer() {
 
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
@@ -219,7 +219,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("All expected validations show up.")
-    @TestRail(testCaseId = {"9617", "9618", "9622", "9629", "9631", "9634"})
+    @TestRail(id = {9617, 9618, 9622, 9629, 9631, 9634})
     public void testRequiredValidations() {
 
         testTheNecessaryFieldsAreRequired();
@@ -236,7 +236,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be disabled for on premise customers and required for cloud customers.")
-    @TestRail(testCaseId = {"9623"})
+    @TestRail(id = {9623})
     public void testCloudReferenceIsDisabledForOnPremiseCustomers() {
 
         customerProfilePage.selectCustomerTypeOnPremise();
@@ -257,7 +257,7 @@ public class NewCustomerTests extends TestBase {
     @Test
     @Ignore("Status is currently disabled in customer profile")
     @Description("Validate that customer can be set to inactive by unselecting Status checkbox")
-    @TestRail(testCaseId = {"10633"})
+    @TestRail(id = {10633})
     public void testNewCustomerCanBeCreatedWithInactiveStatus() {
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -278,7 +278,7 @@ public class NewCustomerTests extends TestBase {
         CustomerAdminPage findCustomer = customerViewPage.goToCustomersList()
                 .clickCardViewButton();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent customers = findCustomer.getSourceList();
         Obligation.mandatory(customers::getSearch, "Customers list search is missing").search(customerIdentity);

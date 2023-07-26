@@ -3,23 +3,22 @@ package com.evaluate.dtc;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.ThreadsPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -29,7 +28,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class ThreadTests extends TestBase {
+public class ThreadTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ThreadsPage threadingPage;
@@ -72,7 +71,7 @@ public class ThreadTests extends TestBase {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"28", "1631"})
+    @TestRail(id = {28", "1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -99,7 +98,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"8902"})
+    @TestRail(id = {8902})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -137,7 +136,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"29"})
+    @TestRail(id = {29"})
     @Description("Test to set dropdown value to no")
     public void setDropdownValueNo() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -163,7 +162,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"3847"})
+    @TestRail(id = {3847"})
     @Description("Test to set dropdown value to yes")
     public void setDropdownValueYes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -225,7 +224,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"32", "33"})
+    @TestRail(id = {32", "33"})
     @Description("Testing changing the thread value and cancelling doesn't remove the value")
     public void changeThreadValueCancel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -255,7 +254,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"32", "34"})
+    @TestRail(id = {32", "34"})
     @Description("Testing that adding text values in the thread length shows a warning message")
     public void junkValuesCharTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -306,7 +305,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"35"})
+    @TestRail(id = {35"})
     @Description("Testing that adding a value of 0 in the thread shows a warning message")
     public void zeroValueTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -333,7 +332,7 @@ public class ThreadTests extends TestBase {
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"30"})
+    @TestRail(id = {30"})
     @Description("Testing a public thread cannot be edited")
     public void cannotEditPublicThread() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -359,7 +358,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"8903"})
+    @TestRail(id = {8903})
     @Description("Testing thread length persist when attributes are changed from process group")
     public void maintainingThreadChangeAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -397,7 +396,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"8904", "6358", "6359"})
+    @TestRail(id = {8904, 6358, 6359})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -433,7 +432,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8905", "6299", "6362"})
+    @TestRail(id = {8905, 6299, 6362})
     @Description("Testing thread units persist when changed to centimetres")
     public void validateThreadUnitsCM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -470,7 +469,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"8906"})
+    @TestRail(id = {8906})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -508,7 +507,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8268"})
+    @TestRail(id = {8268})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -530,7 +529,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8268"})
+    @TestRail(id = {8268})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -553,7 +552,7 @@ public class ThreadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"8268"})
+    @TestRail(id = {8268})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -576,7 +575,7 @@ public class ThreadTests extends TestBase {
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
     /*@Test
-    @TestRail(testCaseId = {"64"})
+    @TestRail(id = {64"})
     @Description("Validate thread filter behaves correctly in Investigation tab.")
     public void threadFilter() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

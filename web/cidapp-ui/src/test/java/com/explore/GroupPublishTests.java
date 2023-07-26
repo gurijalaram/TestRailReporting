@@ -4,25 +4,25 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupPublishTests extends TestBase {
+public class GroupPublishTests extends TestBaseUI {
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final CssComponent cssComponent = new CssComponent();
@@ -52,7 +52,7 @@ public class GroupPublishTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemA;
 
     @Test
-    @TestRail(testCaseId = {"14458"})
+    @TestRail(id = {14458})
     @Description("Publish multiple components")
     public void testGroupPublishPartScenarios() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -100,7 +100,7 @@ public class GroupPublishTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"14463", "14460"})
+    @TestRail(id = {14463, 14460})
     @Description("Publish multiple assemblies")
     public void testGroupPublishAssemblyScenarios() {
         currentUser = UserUtil.getUser();
@@ -186,7 +186,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14459"})
+    @TestRail(id = {14459})
     @Description("Publish a mix of components and assemblies")
     public void testGroupPublishComponentAndAssembly() {
         currentUser = UserUtil.getUser();
@@ -225,7 +225,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14464", "21551"})
+    @TestRail(id = {14464, 21551})
     @Description("Publish multiple components and set inputs in modal")
     public void testGroupPublishWithInputs() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -304,7 +304,7 @@ public class GroupPublishTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14461", "14462"})
+    @TestRail(id = {14461, 14462})
     @Description("Attempt to publish more than 10 components/assemblies")
     public void testGroupPublishMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();

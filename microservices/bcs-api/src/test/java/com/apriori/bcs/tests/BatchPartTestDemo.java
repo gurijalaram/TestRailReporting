@@ -7,10 +7,10 @@ import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.Parts;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -35,7 +35,7 @@ public class BatchPartTestDemo {
     }
 
     @Test
-    @TestRail(testCaseId = {"9111"})
+    @TestRail(id = {9111})
     @Description("Test costing scenario" +
         "1. Create a new batch, " +
         "2. Add 10 parts to batch " +

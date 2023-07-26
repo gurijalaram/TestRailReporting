@@ -1,11 +1,9 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
-
-import java.util.List;
 
 @Schema(location = "ScenarioManifest.json")
 @Data

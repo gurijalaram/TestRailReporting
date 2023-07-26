@@ -1,6 +1,8 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.response.IdentityProviderResponse;
@@ -10,11 +12,9 @@ import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.IdentityProvider;
 import com.apriori.entity.response.IdentityProviders;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -67,7 +67,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5646", "5647"})
+    @TestRail(id = {5646, 5647})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
         String customerName = generateStringUtil.generateCustomerName();

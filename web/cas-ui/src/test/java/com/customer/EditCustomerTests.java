@@ -1,15 +1,15 @@
 package com.customer;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class EditCustomerTests extends TestBase {
+public class EditCustomerTests extends TestBaseUI {
 
     private CustomerProfilePage customerProfilePage;
     private CdsTestUtil cdsTestUtil;
@@ -131,7 +131,7 @@ public class EditCustomerTests extends TestBase {
 
     @Test
     @Description("Test that customer details do not save when validation fails and cancels")
-    @TestRail(testCaseId = {"10056, 10057, 10058, 10059, 10060, 10061"})
+    @TestRail(id = {10056, 10057, 10058, 10059, 10060, 10061})
     public void testEditAndCancel() {
         SoftAssertions soft = new SoftAssertions();
 
@@ -170,7 +170,7 @@ public class EditCustomerTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("Test that customer details can be edited and saved.")
-    @TestRail(testCaseId = {"10060"})
+    @TestRail(id = {10060})
     public void testEditAndSave() {
         SoftAssertions soft = new SoftAssertions();
 

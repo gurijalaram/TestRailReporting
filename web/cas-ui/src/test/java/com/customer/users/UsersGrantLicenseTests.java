@@ -1,7 +1,11 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -9,15 +13,11 @@ import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.Obligation;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -29,7 +29,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 @Ignore("Feature is not available on qa test now")
-public class UsersGrantLicenseTests extends TestBase {
+public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
@@ -89,7 +89,7 @@ public class UsersGrantLicenseTests extends TestBase {
 
     @Test
     @Description("Grant sublicense to a customer user")
-    @TestRail(testCaseId = {"16825", "16815", "16816", "16817", "16818", "16819", "16821", "16823", "16824", "16827"})
+    @TestRail(id = {16825, 16815, 16816, 16817, 16818, 16819, 16821, 16823, 16824, 16827})
     public void grantLicenseToAUser() {
         license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
         licenseName = license.getResponseEntity().getDescription();
@@ -98,7 +98,7 @@ public class UsersGrantLicenseTests extends TestBase {
         userProfilePage = usersListPage.selectUser(customerIdentity, userIdentity, userName);
 
         SoftAssertions soft = new SoftAssertions();
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         SourceListComponent grantedLicenses = userProfilePage.getGrantedLicensesContainer();
 
         CardsViewComponent availableLicense = Obligation.mandatory(grantedLicenses::getCardGrid, "The license was not found");
@@ -137,7 +137,7 @@ public class UsersGrantLicenseTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16810", "16811"})
+    @TestRail(id = {16810, 16811})
     @Description("Validates empty granted licenses container")
     public void emptyLicenseContainer() {
         SoftAssertions soft = new SoftAssertions();

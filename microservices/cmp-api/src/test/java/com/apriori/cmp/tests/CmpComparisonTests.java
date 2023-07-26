@@ -2,6 +2,8 @@ package com.apriori.cmp.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
@@ -9,13 +11,11 @@ import com.apriori.cmp.entity.request.CreateComparison;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
 import com.apriori.cmp.entity.response.PostComparisonResponse;
 import com.apriori.cmp.utils.ComparisonUtils;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
@@ -42,7 +42,7 @@ public class CmpComparisonTests {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = "26182")
+    @TestRail(id = 26182)
     @Description("Get a list of comparisons")
     public void getComparisonsTest() {
         currentUser = UserUtil.getUser();
@@ -53,7 +53,7 @@ public class CmpComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"26152", "26183", "26184", "26185", "26186", "26187"})
+    @TestRail(id = {26152, 26183, 26184, 26185, 26186, 26187})
     @Description("Verify comparison for a given user")
     public void verifyComparisonForGivenUser() {
         currentUser = UserUtil.getUser();

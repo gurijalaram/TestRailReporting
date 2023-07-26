@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -36,7 +35,7 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7416"})
+    @TestRail(id = {7416})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -47,7 +46,7 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7417"})
+    @TestRail(id = {7417})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -58,7 +57,7 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7396"})
+    @TestRail(id = {7396})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -69,7 +68,7 @@ public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7397"})
+    @TestRail(id = {7397})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(

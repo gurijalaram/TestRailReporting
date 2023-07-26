@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -36,7 +35,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3023"})
+    @TestRail(id = {3023})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -47,7 +46,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7413"})
+    @TestRail(id = {7413})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -58,7 +57,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3024"})
+    @TestRail(id = {3024})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -69,7 +68,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7393"})
+    @TestRail(id = {7393})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(

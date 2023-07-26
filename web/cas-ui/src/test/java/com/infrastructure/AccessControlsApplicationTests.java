@@ -1,6 +1,12 @@
 package com.infrastructure;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.InstallationItems;
@@ -8,19 +14,13 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
 import com.apriori.utils.UserCreation;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -33,7 +33,7 @@ import org.junit.experimental.categories.Category;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AccessControlsApplicationTests extends TestBase {
+public class AccessControlsApplicationTests extends TestBaseUI {
 
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
@@ -114,7 +114,7 @@ public class AccessControlsApplicationTests extends TestBase {
     @Test
     @Description("Validate all users can be given access to applications from infrastructure view")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"13224", "13225", "13226", "13227", "13230", "14060"})
+    @TestRail(id = {13224, 13225, 13226, 13227, 13230, 14060})
     public void testUsersCanBeGivenAccessToApplication() {
         SoftAssertions soft = new SoftAssertions();
         ResponseWrapper<Users> customerUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);

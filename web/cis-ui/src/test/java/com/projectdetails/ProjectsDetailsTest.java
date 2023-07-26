@@ -1,21 +1,21 @@
 package com.projectdetails;
 
 import com.apriori.DateFormattingUtils;
+import com.apriori.DateUtil;
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.createnewproject.CreateNewProjectsPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.pageobjects.pages.projectsdetails.ProjectsDetailsPage;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CisColumnsEnum;
 import com.utils.CisProjectStatusEnum;
@@ -27,7 +27,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProjectsDetailsTest extends TestBase {
+public class ProjectsDetailsTest extends TestBaseUI {
 
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
@@ -56,7 +56,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"23727", "23728", "23729", "23730"})
+    @TestRail(id = {23727, 23728, 23729, 23730})
     @Description("Verify the project detailed page content of a selected project")
     public void testProjectDetailedPageSkeleton() {
 
@@ -89,7 +89,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"23907", "24445", "24446", "22447"})
+    @TestRail(id = {23907, 24445, 24446, 22447})
     @Description("Verify the detail and parts and assembly table details in project page")
     public void testProjectDetailsAndPartsAndAssemblies() {
 
@@ -127,7 +127,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"24465", "24466", "24467"})
+    @TestRail(id = {24465, 24466, 24467})
     @Description("Verify the user can edit the project details")
     public void testEditProjectDetails() {
 
@@ -174,7 +174,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"24471", "24472", "24473", "24474"})
+    @TestRail(id = {24471, 24472, 24473, 24474})
     @Description("Verify the user can see the project user details")
     public void testProjectUserDetails() {
 
@@ -215,7 +215,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"25826", "25827"})
+    @TestRail(id = {25826, 25827})
     @Description("Verify the user can change the project status")
     public void testProjectStatus() {
 
@@ -271,7 +271,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"25925", "25926"})
+    @TestRail(id = {25925, 25926})
     @Description("Verify the user can delete the project")
     public void testDeleteProject() {
 
@@ -314,7 +314,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"25823", "25824", "25825"})
+    @TestRail(id = {25823, 25824, 25825})
     @Description("Verify that new users can be added to the project")
     public void testAddNewProjectUsers() {
 
@@ -359,7 +359,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"25804", "25805", "25821"})
+    @TestRail(id = {25804, 25805, 25821})
     @Description("Verify that users can be removed from the project")
     public void testRemoveProjectUsers() {
 
@@ -399,7 +399,7 @@ public class ProjectsDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26123", "26124", "26125", "26126", "26128"})
+    @TestRail(id = {26123, 26124, 26125, 26126, 26128})
     @Description("Verify that user can add new parts & assemblies after a project creation")
     public void testAddNewPartsAndAssembliesAfterCreation() {
         final String assemblyName = "Hinge assembly";

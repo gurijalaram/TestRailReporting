@@ -5,7 +5,7 @@ repositories {
 
 dependencies {
     implementation project(':shared-util')
-    implementation project(':apibase')
+    implementation project('::shared-util')
     implementation project(':db')
     implementation project(':web-app-util')
     implementation project(':serialization-util')

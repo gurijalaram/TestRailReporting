@@ -2,10 +2,10 @@ package tests;
 
 import com.apriori.ats.entity.request.ResetAutoUsers;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

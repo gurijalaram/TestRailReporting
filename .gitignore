@@ -112,7 +112,6 @@ allure-results/
 screenshots/
 /cid/git
 /internalapi/build/
-/apibase/build/
 /cid/build/
 /pageobjects/build/
 /utils/build/

@@ -3,8 +3,17 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -13,18 +22,9 @@ import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -37,7 +37,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class SecondaryProcessTests extends TestBase {
+public class SecondaryProcessTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private AdvancedPage advancedPage;
@@ -62,7 +62,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5140", "5115", "5132", "5444"})
+    @TestRail(id = {5140, 5115, 5132, 5444})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")
     public void secondaryProcessLeakTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -102,7 +102,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Issue("BA-2651")
-    @TestRail(testCaseId = {"5142", "5149"})
+    @TestRail(id = {5142, 5149})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -149,7 +149,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5151"})
+    @TestRail(id = {5151})
     @Description("Test secondary process Atmosphere Oil Harden")
     public void secondaryProcessAtmosphereOilHarden() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -186,7 +186,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Issue("BA-2651")
-    @TestRail(testCaseId = {"5157"})
+    @TestRail(id = {5157})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -225,7 +225,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5161", "8866"})
+    @TestRail(id = {5161, 8866})
     @Description("Test secondary process Vacuum Temper")
     public void secondaryProcessVacuumTemper() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -352,7 +352,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5132"})
+    @TestRail(id = {5132})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -389,7 +389,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Issues(@Issue("BA-2651"))
-    @TestRail(testCaseId = {"5141", "5142", "5143"})
+    @TestRail(id = {5141, 5142, 5143})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -424,7 +424,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5144", "5145", "5146", "5147"})
+    @TestRail(id = {5144, 5145, 5146, 5147})
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -491,7 +491,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5116", "5119"})
+    @TestRail(id = {5116, 5119})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -540,7 +540,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"5117"})
+    @TestRail(id = {5117})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -575,7 +575,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Issue("BA-2651")
-    @TestRail(testCaseId = {"5150"})
+    @TestRail(id = {5150})
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -612,7 +612,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5152"})
+    @TestRail(id = {5152})
     @Description("Test secondary process Vacuum air harden")
     public void secondaryProcessVacuumAirHarden() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -649,7 +649,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5153", "5162"})
+    @TestRail(id = {5153, 5162})
     @Description("Test secondary process Vacuum Air Harden with High Temper")
     public void secondaryProcessVacuumAirHardenHighTemp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -686,7 +686,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5154"})
+    @TestRail(id = {5154})
     @Description("Test secondary process Spring steel")
     public void secondaryProcessSpringSteel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -720,7 +720,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5155"})
+    @TestRail(id = {5155})
     @Description("Test secondary process Stainless steel")
     public void secondaryProcessStainlessSteel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -754,7 +754,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5156"})
+    @TestRail(id = {5156})
     @Description("Test secondary process High Speed Steel Harden")
     public void secondaryProcessHighSpeedSteel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -788,7 +788,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5158"})
+    @TestRail(id = {5158})
     @Description("Test secondary process Low Temp Vacuum Anneal")
     public void secondaryProcessLowTempVacuumAnneal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -823,7 +823,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5159", "5129"})
+    @TestRail(id = {5159, 5129})
     @Description("Test secondary process High Temp Vacuum Anneal")
     public void secondaryProcessHighTempVacuumAnneal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -857,7 +857,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5160"})
+    @TestRail(id = {5160})
     @Description("Test secondary process Standard Temper")
     public void secondaryProcessStandardTemper() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -891,8 +891,8 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Category({SmokeTests.class})
-    @TestRail(testCaseId = {"5122"})
+    @Category( {SmokeTests.class})
+    @TestRail(id = {5122})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -920,7 +920,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5127"})
+    @TestRail(id = {5127})
     @Description("Validate if a secondary process fails to cost, entire part fails to cost")
     public void secondaryProcessCostFailed() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -946,7 +946,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5133", "5134", "5138"})
+    @TestRail(id = {5133, 5134, 5138})
     @Description("Validate the user can clear all secondary process selections")
     public void clearAllSP() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -988,7 +988,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5120", "5121", "5123"})
+    @TestRail(id = {5120, 5121, 5123})
     @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
     public void secondaryProcessXray() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -1026,7 +1026,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9106", "9102"})
+    @TestRail(id = {9106, 9102})
     @Description("Check that Powder Coat Conveyor is available in Surface Treatment")
     public void secondaryProcessPowderCoatConveyor() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -1059,7 +1059,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8867"})
+    @TestRail(id = {8867})
     @Description("Validate the user can select a different secondary DF for each type of secondary process")
     public void secondaryProcessNotDefaultDigitalFactory() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

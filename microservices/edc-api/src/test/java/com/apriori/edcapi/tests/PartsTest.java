@@ -6,16 +6,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edcapi.entity.response.line.items.LineItemParts;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.entity.response.parts.Parts;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.edcapi.utils.PartsUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -49,7 +49,7 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9417")
+    @TestRail(id = "9417")
     @Description("GET List the line items in a bill of materials matching a specified query.")
     public void testListPartsInLineItem() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
@@ -61,7 +61,7 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9419")
+    @TestRail(id = "9419")
     @Description("POST Add a new part to a line item.")
     public void testAddNewPartTOLineItem() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
@@ -78,7 +78,7 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9420")
+    @TestRail(id = "9420")
     @Description("PATCH Update a part")
     public void testUpdatePart() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
@@ -99,7 +99,7 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9421")
+    @TestRail(id = "9421")
     @Description("POST Select a part for export")
     public void testSelectPartForExport() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
@@ -114,7 +114,7 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9422")
+    @TestRail(id = "9422")
     @Description("POST Cost one or more parts in a line item.")
     public void testCostPartInLineItem() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);

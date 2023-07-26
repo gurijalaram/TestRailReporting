@@ -1,19 +1,19 @@
 package com.customer;
 
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.PaginatorComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.customeradmin.CustomerAdminPage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-public class CustomersTests extends TestBase {
+public class CustomersTests extends TestBaseUI {
     private CustomerAdminPage customerAdminPage;
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil;
@@ -41,7 +41,7 @@ public class CustomersTests extends TestBase {
     @Test
     @Description("Validate customers table has correct details")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"5594", "5596", "9943", "5555", "6267", "6268", "6269"})
+    @TestRail(id = {5594, 5596, 9943, 5555, 6267, 6268, 6269})
     public void testCustomersTableViewHasCorrectDetails() {
         SoftAssertions soft = new SoftAssertions();
         customerAdminPage
@@ -64,7 +64,7 @@ public class CustomersTests extends TestBase {
             .validateCustomersTableIsSortable("createdAt", soft)
             .validateCustomersTableIsSortable("updatedAt", soft);
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent customers = customerAdminPage.getSourceList();
         PaginatorComponent paginator = Obligation.mandatory(customers::getPaginator, "The customers table is missing pagination.");
@@ -100,13 +100,13 @@ public class CustomersTests extends TestBase {
     @Test
     @Description("Validate Card button switches to card view of customers")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"13249", "13250", "13251"})
+    @TestRail(id = {13249, 13250, 13251})
     public void testCustomerStaffCardView() {
         SoftAssertions soft = new SoftAssertions();
         CustomerAdminPage goToCardView = customerAdminPage
             .clickCardViewButton();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent customers = goToCardView.getSourceList();
 

@@ -1,15 +1,15 @@
 package com.evaluate;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.MultiUpload;
 import com.utils.UploadStatusEnum;
@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenUnknownComponentsTests extends TestBase {
+public class OpenUnknownComponentsTests extends TestBaseUI {
 
     private File resourceFile;
     private CidAppLoginPage loginPage;
@@ -34,7 +34,7 @@ public class OpenUnknownComponentsTests extends TestBase {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14203")
+    @TestRail(id = 14203)
     @Description("Test opening an 'unknown' component immediately after upload")
     public void testOpenUnknownPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
@@ -67,7 +67,7 @@ public class OpenUnknownComponentsTests extends TestBase {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14204")
+    @TestRail(id = 14204)
     @Description("Test opening an 'unknown' component immediately after upload")
     public void testOpenUnknownAssembly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -100,7 +100,7 @@ public class OpenUnknownComponentsTests extends TestBase {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "15038")
+    @TestRail(id = 15038)
     @Description("Test opening a single part component from import modal")
     public void testOpenPartFromImportModal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
@@ -128,7 +128,7 @@ public class OpenUnknownComponentsTests extends TestBase {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "15038")
+    @TestRail(id = 15038)
     @Description("Test opening an 'unknown' component from import modal")
     public void testOpenAssemblyFromImportModal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -156,7 +156,7 @@ public class OpenUnknownComponentsTests extends TestBase {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "15039")
+    @TestRail(id = 15039)
     @Description("Test opening a single part component from import modal after multi file upload")
     public void testOpenFromImportModalMultiUpload() {
         final String targetComponentName = "Case_17";

@@ -1,23 +1,22 @@
 package com.evaluate.dtc;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
@@ -28,16 +27,15 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class SheetMetalDTCTests extends TestBase {
+public class SheetMetalDTCTests extends TestBaseUI {
 
+    SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private ToleranceDefaultsPage toleranceDefaultsPage;
     private ExplorePage explorePage;
     private InvestigationPage investigationPage;
-    SoftAssertions softAssertions = new SoftAssertions();
-
     private UserCredentials currentUser;
     private File resourceFile;
 
@@ -53,7 +51,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6496", "6499", "6500"})
+    @TestRail(id = {6496, 6499, 6500})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -108,7 +106,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6497", "6498"})
+    @TestRail(id = {6497, 6498})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -141,7 +139,7 @@ public class SheetMetalDTCTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6495", "6501"})
+    @TestRail(id = {6495, 6501})
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -180,7 +178,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6486"})
+    @TestRail(id = {6486})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -213,7 +211,7 @@ public class SheetMetalDTCTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"1834", "1835", "1836", "1837", "6491", "6492", "6493", "6494"})
+    @TestRail(id = {1834, 1835, 1836, 1837, 6491, 6492, 6493, 6494})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 
@@ -256,8 +254,8 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
     @Ignore("Requires tolerances for additional operation")
-    @Category({SmokeTests.class, IgnoreTests.class})
-    @TestRail(testCaseId = {"6502", "719"})
+    @Category( {SmokeTests.class, IgnoreTests.class})
+    @TestRail(id = {6502, 719})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

@@ -1,22 +1,20 @@
 package com.evaluate.assemblies;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Percentage;
 import org.junit.Test;
@@ -28,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class GroupCostingTests extends TestBase {
+public class GroupCostingTests extends TestBaseUI {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private EvaluatePage evaluatePage;
@@ -42,7 +40,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11088", "11089", "11093", "12041"})
+    @TestRail(id = {11088, 11089, 11093, 12041})
     @Description("Verify set inputs button only available for 10 or less sub-components")
     public void selectMaxTenSubComponentsTest() {
 
@@ -112,7 +110,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11097", "11090", "11092", "11094", "11091"})
+    @TestRail(id = {11097, 11090, 11092, 11094, 11091})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {
         final String retainText = "Retain Existing Input";

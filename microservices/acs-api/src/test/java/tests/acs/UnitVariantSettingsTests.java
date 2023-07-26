@@ -1,14 +1,13 @@
 package tests.acs;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 public class UnitVariantSettingsTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "8772")
+    @TestRail(id = "8772")
     @Description("Test Get Unit Variant Settings")
     public void testGetUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();
@@ -37,7 +36,7 @@ public class UnitVariantSettingsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8773")
+    @TestRail(id = "8773")
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();

@@ -6,11 +6,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.customizations.DigitalFactories;
 import com.apriori.cidappapi.utils.CustomizationUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class ListOfDigitalFactoryTests {
     private CustomizationUtil customizationUtil = new CustomizationUtil();
 
     @Test
-    @TestRail(testCaseId = {"5415"})
+    @TestRail(id = 5415)
     @Description("Get List of Digital Factory")
     public void getListOfDigitalFactory() {
         final UserCredentials user = UserUtil.getUser();

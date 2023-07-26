@@ -1,19 +1,19 @@
 package com.apriori.qds.tests;
 
+import com.apriori.AuthUserContextUtil;
 import com.apriori.DateFormattingUtils;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.DateUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -41,7 +41,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13334", "13343", "24418"})
+    @TestRail(id = {13334, 13343, 24418})
     @Description("Create and Delete Bid Package Project")
     public void createAndDeleteProject() {
         BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
@@ -52,7 +52,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13335", "13348", "24419"})
+    @TestRail(id = {13335, 13348, 24419})
     @Description("Get all Bid Package Projects and verify pagination")
     public void getBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = BidPackageResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser);
@@ -67,7 +67,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13338", "24419"})
+    @TestRail(id = {13338, 24419})
     @Description("Find Bid Package Project By Identity")
     public void getBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = BidPackageResources.getBidPackageProject(bidPackageResponse.getIdentity(),
@@ -79,7 +79,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13340", "24420"})
+    @TestRail(id = {13340, 24420})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
         String projectNameNew = new GenerateStringUtil().getRandomString();
@@ -108,7 +108,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24424", "24425"})
+    @TestRail(id = {24424, 24425})
     @Description("Verify DueAt & Description field is optional for Project creation")
     public void createBidPackageProjectWithOptionalFields() {
         HashMap<String, String> projectAttributes = new HashMap<>();
@@ -123,7 +123,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24426"})
+    @TestRail(id = {24426})
     @Description("Verify for project status can be updated to OPEN or IN_PROGRESS")
     public void updateBidPackageProjectValidStatus() {
         //OPEN Status

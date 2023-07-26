@@ -1,15 +1,15 @@
 package com.evaluate;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -20,7 +20,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class WatchpointReports extends TestBase {
+public class WatchpointReports extends TestBaseUI {
 
     private File resourceFile;
     private CidAppLoginPage loginPage;
@@ -35,7 +35,7 @@ public class WatchpointReports extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Issue("BA-2962")
-    @TestRail(testCaseId = {"21933", "21934", "21940"})
+    @TestRail(id = {21933, 21934, 21940})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

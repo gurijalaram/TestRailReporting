@@ -1,6 +1,6 @@
 package com.apriori.utils.reader.file;
 
-import com.apriori.utils.FileResourceUtil;
+
 import com.apriori.utils.constants.CommonConstants;
 
 import com.fasterxml.jackson.databind.MappingIterator;
@@ -76,7 +76,7 @@ public class InitFileData {
                 rows.add(line);
             }
         } catch (IOException e) {
-            logError("Error when initializing rows. \n" + e.getMessage());
+            logError("Error when initializing rows. " + e.getMessage());
             return null;
         }
 

@@ -1,13 +1,13 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.Configurations;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -25,7 +25,7 @@ public class CasConfigurationsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5660"})
+    @TestRail(id = {5660})
     @Description("Returns a list of all aP Versions.")
     public void getConfigurationsTest() {
         ResponseWrapper<Configurations> configurationsResponse = casTestUtil.getCommonRequest(CASAPIEnum.CONFIGURATIONS, Configurations.class, HttpStatus.SC_OK);

@@ -1,6 +1,15 @@
 package com.apriori.qms.controller;
 
+import com.apriori.AuthUserContextUtil;
 import com.apriori.DateFormattingUtils;
+import com.apriori.DateUtil;
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageParameters;
@@ -18,16 +27,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 import utils.QmsApiTestUtils;

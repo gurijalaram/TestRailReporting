@@ -3,19 +3,18 @@ package com.integration.tests;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.PDFDocument;
+import com.apriori.TestBaseUI;
+import com.apriori.authorization.response.EmailMessage;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.email.GraphEmailService;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.pdf.PDFDocument;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.JobDefinition;
 import entity.response.AgentWorkflow;
@@ -36,7 +35,7 @@ import org.junit.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 
-public class CIRIntegrationTests extends TestBase {
+public class CIRIntegrationTests extends TestBaseUI {
 
     private static String loginSession;
     UserCredentials currentUser = UserUtil.getUser();
@@ -64,7 +63,7 @@ public class CIRIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12046"})
+    @TestRail(id = {12046})
     @Description("Verify user can login CIR")
     public void testUserLoginCIR() {
         ReportsHeader reportsHeader = new ReportsLoginPage(driver)
@@ -76,7 +75,7 @@ public class CIRIntegrationTests extends TestBase {
 
     @Test
     @Issue("DEVOPS-3166")
-    @TestRail(testCaseId = {"12046"})
+    @TestRail(id = {12046})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
         loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();

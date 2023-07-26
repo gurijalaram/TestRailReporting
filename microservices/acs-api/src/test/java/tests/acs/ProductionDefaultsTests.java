@@ -5,13 +5,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.productiondefaults.ProductionDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.junit.Test;
 public class ProductionDefaultsTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "10586")
+    @TestRail(id = "10586")
     @Description("Verify Get Production Defaults Endpoint")
     public void testGetProductionDefaultsEndpoint() {
         AcsResources acsResources = new AcsResources();
@@ -29,7 +29,7 @@ public class ProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10587")
+    @TestRail(id = "10587")
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
         AcsResources acsResources = new AcsResources();
@@ -39,7 +39,7 @@ public class ProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10588")
+    @TestRail(id = "10588")
     @Description("Verify Set Production Defaults Endpoint")
     public void testSetProductionDetailsEndpoint() {
         AcsResources acsResources = new AcsResources();
@@ -59,7 +59,7 @@ public class ProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10606")
+    @TestRail(id = "10606")
     @Description("Set Production Defaults Negative Test")
     public void testNegativeSetProductionDefaults() {
         AcsResources acsResources = new AcsResources();

@@ -31,6 +31,6 @@ public class PartsAndAssemblyFilterController extends EagerPageComponent<PartsAn
      * @return list of string
      */
     public List<String> getOperationList() {
-        return Stream.of(operationList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(operationList.getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 }

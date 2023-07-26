@@ -1,15 +1,15 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.PageUtils;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
+import enums.DtcScoreEnum;
+import enums.MassMetricEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

@@ -1,10 +1,10 @@
 package com.apriori.edcapi.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edcapi.entity.response.users.Users;
 import com.apriori.edcapi.utils.UsersUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -21,7 +21,7 @@ public class UsersTest extends UsersUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "9424")
+    @TestRail(id = "9424")
     @Description("GET the current representation of the user performing the request.")
     public void testGetCurrentRepresentationOfUser() {
         Users users = getCurrentUser();

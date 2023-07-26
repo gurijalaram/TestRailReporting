@@ -1,11 +1,19 @@
 package com.evaluate;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
@@ -17,18 +25,10 @@ import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPag
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.DecimalPlaceEnum;
@@ -48,7 +48,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProcessRoutingTests extends TestBase {
+public class ProcessRoutingTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
@@ -83,7 +83,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"14404", "15002", "15816", "14408"})
+    @TestRail(id = {14404, 15002, 15816, 14408})
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -115,7 +115,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14392", "14395", "14397", "14398", "14400", "14406", "7845", "16093"})
+    @TestRail(id = {14392, 14395, 14397, 14398, 14400, 14406, 7845, 16093})
     @Description("Validate routings UI features")
     public void testRoutingSelectionUI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -163,7 +163,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15817", "15817", "15820"})
+    @TestRail(id = {15817, 15817, 15820})
     @Description("Validate routings availability in regards to scenario cost status")
     public void costStatusAndRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -209,7 +209,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14992", "15806", "7835"})
+    @TestRail(id = {14992, 15806, 7835})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -243,7 +243,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7854", "12379", "12381", "12382"})
+    @TestRail(id = {7854, 12379, 12381, 12382})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -294,7 +294,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15012", "14401", "15050", "15988", "7851", "7852"})
+    @TestRail(id = {15012, 14401, 15050, 15988, 7851, 7852})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -336,7 +336,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(testCaseId = {"7855", "14985", "15799"})
+    @TestRail(id = {7855, 14985, 15799})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -368,7 +368,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7844", "7290", "7291", "7292"})
+    @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -412,7 +412,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7846"})
+    @TestRail(id = {7846})
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -443,7 +443,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(testCaseId = {"7850"})
+    @TestRail(id = {7850})
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -483,7 +483,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7848"})
+    @TestRail(id = {7848})
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -519,7 +519,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7859"})
+    @TestRail(id = {7859})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -542,7 +542,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16132", "7841"})
+    @TestRail(id = {16132, 7841})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -581,7 +581,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"14984", "15798"})
+    @TestRail(id = {14984, 15798})
     @Description("Validate routings 2-Model Machining")
     public void routings2mm() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -634,7 +634,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Issue("BA-2757")
-    @TestRail(testCaseId = {"14987", "15801"})
+    @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
@@ -668,7 +668,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14988", "15802"})
+    @TestRail(id = {14988, 15802})
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -702,7 +702,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14989", "15803"})
+    @TestRail(id = {14989, 15803})
     @Description("Validate routings Investment Cast")
     public void routingsInvestmentCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_INVESTMENT;
@@ -734,7 +734,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14990", "15804", "7843"})
+    @TestRail(id = {14990, 15804, 7843})
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -765,7 +765,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14991", "15805"})
+    @TestRail(id = {14991, 15805})
     @Description("Validate routings Forging")
     public void routingsForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -798,7 +798,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14994", "15808"})
+    @TestRail(id = {14994, 15808})
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
@@ -832,7 +832,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14995", "15809"})
+    @TestRail(id = {14995, 15809})
     @Description("Validate routings Roto & Blow Molding")
     public void routingsRotoBlowMold() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
@@ -866,7 +866,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14996", "15810"})
+    @TestRail(id = {14996, 15810})
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -902,7 +902,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14997", "15811"})
+    @TestRail(id = {14997, 15811})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_HYDROFORMING;
@@ -942,7 +942,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14999", "15813"})
+    @TestRail(id = {14999, 15813})
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
@@ -973,7 +973,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15001", "15815"})
+    @TestRail(id = {15001, 15815})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
@@ -1007,7 +1007,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16383"})
+    @TestRail(id = {16383})
     @Description("Validate routings are disabled")
     public void routingsDisabled() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -1057,7 +1057,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7857"})
+    @TestRail(id = {7857})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -1092,7 +1092,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"16095", "16099"})
+    @TestRail(id = {16095, 16099})
     @Description("Validate group cost behaviour against routings")
     public void routingsAndGroupCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1191,7 +1191,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16098"})
+    @TestRail(id = {16098})
     @Description("Validate sub-component can be costed with an alternate routing in an assembly")
     public void testRoutingsInAssembly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -1206,7 +1206,7 @@ public class ProcessRoutingTests extends TestBase {
 
         subComponentA = FileResourceUtil.getCloudFile(processGroupEnum, subComponentAName + ".prt.5");
         subComponentB = FileResourceUtil.getCloudFile(processGroupEnum, subComponentBName + ".prt.1");
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".asm.1");
+        assembly = FileResourceUtil.getCloudFile(ASSEMBLY, assemblyName + ".asm.1");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -1242,7 +1242,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14409"})
+    @TestRail(id = {14409})
     @Description("Validate routings and user preferences")
     public void routingsAndUserPreferences() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;

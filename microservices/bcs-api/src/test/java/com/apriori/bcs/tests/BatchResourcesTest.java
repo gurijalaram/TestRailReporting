@@ -3,7 +3,6 @@ package com.apriori.bcs.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.bcs.controller.BatchResources;
@@ -11,8 +10,8 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Batches;
 import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.AfterClass;
@@ -40,7 +39,7 @@ public class BatchResourcesTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4275"})
+    @TestRail(id = {4275})
     @Description("API returns a list of Batches in the CIS DB")
     public void getBatches() {
         ResponseWrapper<Batches> batchesResponse = BatchResources.getBatches();
@@ -49,7 +48,7 @@ public class BatchResourcesTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4277"})
+    @TestRail(id = {4277})
     @Description("API returns a representation of a single Batch in the CIS DB")
     public void getBatch() {
         ResponseWrapper<Batch> batchResponse = BatchResources.getBatchRepresentation(batch1.getIdentity());
@@ -58,7 +57,7 @@ public class BatchResourcesTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"7906"})
+    @TestRail(id = {7906})
     @Description("Cancel batch processing")
     public void batchProcessingCancel() {
         Batch batch = BatchResources.createBatch().getResponseEntity();
@@ -71,7 +70,7 @@ public class BatchResourcesTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4988"})
+    @TestRail(id = {4988})
     @Description("Create and Cost the empty batch")
     public void createBatchCosting() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();

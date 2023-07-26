@@ -4,18 +4,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class ComponentRedirectTests {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14197")
+    @TestRail(id = 14197)
     @Description("Verify receipt of 301 response when getting component details of a file which already exists")
     public void receive301AfterUploadOfExistingComponent() {
 
@@ -59,7 +59,7 @@ public class ComponentRedirectTests {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14440")
+    @TestRail(id = 14440)
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithNewScenario() {
 
@@ -86,7 +86,7 @@ public class ComponentRedirectTests {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14444")
+    @TestRail(id = 14444)
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithOverriddenScenario() {
 
@@ -114,7 +114,7 @@ public class ComponentRedirectTests {
 
     @Test
     @Category(RegressionTestSuite.class)
-    @TestRail(testCaseId = "14450")
+    @TestRail(id = 14450)
     @Description("Verify receipt of 301 response when getting iteration details of a file which already exists using new scenario")
     public void receive301IterationsEndpoint() {
 

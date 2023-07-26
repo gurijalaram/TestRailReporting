@@ -1,8 +1,8 @@
 package com.apriori.qms.entity.response.bidpackage;
 
+import com.apriori.annotations.Schema;
+import com.apriori.authorization.response.Pagination;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.utils.Pagination;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;

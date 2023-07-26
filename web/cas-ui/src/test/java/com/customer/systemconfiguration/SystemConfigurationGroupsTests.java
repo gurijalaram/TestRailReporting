@@ -6,17 +6,17 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableHeaderComponent;
 import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Ignore("Feature is not fully ready yet.  Can remove this once fully built e2e")
-public class SystemConfigurationGroupsTests extends TestBase {
+public class SystemConfigurationGroupsTests extends TestBaseUI {
     private SystemConfigurationGroupsPage systemConfigurationGroupsPage;
 
     @Before
@@ -98,7 +98,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
     @Test
     @Description("Test that the groups are displayed and the first one is selected.")
-    @TestRail(testCaseId = {"9880", "9883", "9881", "9903"})
+    @TestRail(id = {9880, 9883, 9881, 9903})
     public void testValidateShouldDisplayGroupsForTheCustomer() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -134,7 +134,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
     @Test
     @Description("Test that the groups can be expanded and collapsed.")
-    @TestRail(testCaseId = {"9905"})
+    @TestRail(id = {9905})
     public void testValidateGroupsCanBeExpandedAndCollapsed() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -162,7 +162,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
             soft.succeeded();
         } catch (TimeoutException e) {
             String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
-            soft.fail("Expected the header for selected group, %s, to be GROUP DETAILS - %s.\nActual value was %s.", groupName, groupName.toUpperCase(), detailsHeader);
+            soft.fail("Expected the header for selected group, %s, to be GROUP DETAILS - %s.Actual value was %s.", groupName, groupName.toUpperCase(), detailsHeader);
         }
     }
 
@@ -237,7 +237,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
     @Test
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"9906", "9942"})
+    @TestRail(id = {9906, 9942})
     public void testValidateGroupSelectionUpdatesTheSelectedDetails() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -285,7 +285,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9953", "9954", "9968"})
+    @TestRail(id = {9953, 9954, 9968})
     public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -331,7 +331,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9999", "10000", "10001"})
+    @TestRail(id = {9999, 10000, 10001})
     public void testValidateGroupMembersHasCorrectDetails() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -364,7 +364,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10006", "10007"})
+    @TestRail(id = {10006, 10007})
     public void testValidateGroupAttributesHasCorrectDetails() {
 
         SoftAssertions soft = new SoftAssertions();

@@ -1,16 +1,16 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -63,7 +63,7 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = {"3294"})
+    @TestRail(id = {3294})
     @Description("Adding out of context access control")
     public void postAccessControl() {
         String userName = generateStringUtil.generateUserName();
@@ -85,7 +85,7 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = {"3290"})
+    @TestRail(id = {3290})
     @Description("Get Access controls by Customer and User")
     public void getAccessControl() {
         String userName = generateStringUtil.generateUserName();
@@ -109,7 +109,7 @@ public class CdsAccessControlsTests  {
     }
 
     @Test
-    @TestRail(testCaseId = {"3292"})
+    @TestRail(id = {3292})
     @Description("Get access control by Control ID")
     public void getAccessControlById() {
         String userName = generateStringUtil.generateUserName();

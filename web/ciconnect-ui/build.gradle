@@ -14,7 +14,7 @@ sourceSets {
 
 dependencies {
     implementation project(':shared-util')
-    implementation project(':apibase')
+    implementation project('::shared-util')
     implementation project(':microservices:cic-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':web-app-util')

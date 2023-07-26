@@ -1,19 +1,19 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import org.junit.Test;
 public class DisplayUnitsTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "8769")
+    @TestRail(id = 8769)
     @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
         AcsResources acsResources = new AcsResources();
@@ -46,7 +46,7 @@ public class DisplayUnitsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8770")
+    @TestRail(id = 8770)
     @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
         AcsResources acsResources = new AcsResources();
@@ -79,7 +79,7 @@ public class DisplayUnitsTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8771")
+    @TestRail(id = 8771)
     @Description("Test Set Length and Mass Display Unit")
     public void setLengthAndMassDisplayUnitTest() {
         AcsResources acsResources = new AcsResources();

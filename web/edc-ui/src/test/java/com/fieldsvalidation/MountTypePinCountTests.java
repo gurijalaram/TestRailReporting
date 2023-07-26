@@ -1,14 +1,14 @@
 package com.fieldsvalidation;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class MountTypePinCountTests extends TestBase {
+public class MountTypePinCountTests extends TestBaseUI {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
@@ -41,7 +41,7 @@ public class MountTypePinCountTests extends TestBase {
 
     @Test
     @Ignore("this feature is not on qa-test yet")
-    @TestRail(testCaseId = "15407")
+    @TestRail(id = "15407")
     @Description("Verify that three variants radio buttons for Mount Type field exists")
     public void mountTypeRadioBtnTest() {
         currentUser = UserUtil.getUser();
@@ -64,7 +64,7 @@ public class MountTypePinCountTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3223", "3217"})
+    @TestRail(id = {3223", "3217})
     @Description("Verify Mount Type Accepted Values >=5 Characters ,Verify Pin Count and Mount Type are required fields")
     public void mountTypePinCountAreRequiredTest() {
         String testMountTypeData = generateStringUtil.getRandomString();
@@ -94,7 +94,7 @@ public class MountTypePinCountTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "3222")
+    @TestRail(id = "3222")
     @Description("Verify Pin Count only accepts integer values")
     public void pinCountNeedsToBeIntTest() {
         String testMountTypeData = generateStringUtil.getRandomString();

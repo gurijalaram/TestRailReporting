@@ -1,7 +1,7 @@
 package com.apriori.acs.entity.response.acs.productioninfo;
 
+import com.apriori.acs.entity.response.workorders.MaterialCatalogKeyData;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
-import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

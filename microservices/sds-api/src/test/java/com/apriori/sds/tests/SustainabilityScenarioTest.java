@@ -5,15 +5,15 @@ import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.entity.response.componentiteration.ScenarioProcess;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.ScenarioIteration;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -27,7 +27,7 @@ public class SustainabilityScenarioTest extends SDSTestUtil {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"24068", "24069"})
+    @TestRail(id = {24068, 24069})
     @Description("Verify sustainability fields for scenario  after costing")
     public void verifySustainabilityFieldsForScenario() {
 

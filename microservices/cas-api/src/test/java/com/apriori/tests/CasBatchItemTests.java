@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -8,11 +10,9 @@ import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItems;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.PostBatch;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -42,7 +42,7 @@ public class CasBatchItemTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5671"})
+    @TestRail(id = {5671})
     @Description("Returns a list of batch items for the customer batch.")
     public void getBatchItems() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -70,7 +70,7 @@ public class CasBatchItemTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5672"})
+    @TestRail(id = {5672})
     @Description("Creates users from Batch by provided identities.")
     public void createBatchItems() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -91,7 +91,7 @@ public class CasBatchItemTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5674"})
+    @TestRail(id = {5674})
     @Description("Get the Batch Item identified by its identity.")
     public void getItemById() {
         String customerName = generateStringUtil.generateCustomerName();
@@ -133,7 +133,7 @@ public class CasBatchItemTests {
     // TODO endpoint is not implemented
     @Ignore("Endpoint is not implemented")
     @Test
-    @TestRail(testCaseId = {"5673"})
+    @TestRail(id = {5673})
     @Description("Update an existing Batch Item identified by its identity.")
     public void updateBatchItem() {
         String customerName = generateStringUtil.generateCustomerName();

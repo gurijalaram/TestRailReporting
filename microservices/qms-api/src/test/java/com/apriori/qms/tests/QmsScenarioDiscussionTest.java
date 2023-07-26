@@ -1,8 +1,16 @@
 package com.apriori.qms.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
@@ -15,18 +23,9 @@ import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResp
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -80,7 +79,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14608", "14613"})
+    @TestRail(id = {14608, 14613})
     @Description("Create and delete Scenario Discussion")
     public void createAndDeleteScenarioDiscussion() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -89,7 +88,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14610"})
+    @TestRail(id = {14610})
     @Description("Get Scenario Discussion by identity")
     public void getScenarioDiscussion() {
         ScenarioDiscussionResponse getScenarioDiscussionResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(scenarioDiscussionResponse.getIdentity(), ScenarioDiscussionResponse.class,
@@ -99,7 +98,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14609"})
+    @TestRail(id = {14609})
     @Description("Get list of all Scenario Discussions")
     public void getScenarioDiscussions() {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
@@ -112,7 +111,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14611", "14612", "15472", "16050"})
+    @TestRail(id = {14611, 14612, 15472, 16050})
     @Issue("COL-1824")
     @Description("Verify that User can update Scenario discussion description and status (ACTIVE & RESOLVED")
     public void updateScenarioDiscussionDescriptionAndStatus() {
@@ -148,7 +147,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14675", "14678", "15477"})
+    @TestRail(id = {14675, 14678, 15477})
     @Description("Verify that User can add comment, update status to delete to scenario discussion" +
         "and verify comment view is created for the same user")
     public void addAndDeleteCommentToDiscussion() {
@@ -178,7 +177,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15473"})
+    @TestRail(id = {15473})
     @Description("Verify that user can GET discussion's comment by identity")
     public void getDiscussionComment() {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, DiscussionCommentResponse.class)
@@ -192,7 +191,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14677"})
+    @TestRail(id = {14677})
     @Description("Verify that user can FIND list of discussion's comment")
     public void getDiscussionComments() {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentsResponse.class)
@@ -206,7 +205,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14676"})
+    @TestRail(id = {14676})
     @Description("Verify that User can add comment with mentioning user to scenario discussion")
     public void addCommentWithUserToDiscussion() {
         String commentContent = new GenerateStringUtil().generateNotes();
@@ -216,7 +215,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22256"})
+    @TestRail(id = {22256})
     @Description("Verify that User will not get 409 error on valid actions after getting this error on invalid action")
     public void verifyScenarioDiscussionNo409ErrorWith2Users() {
         UserCredentials assignedUser = UserUtil.getUser();
@@ -260,7 +259,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22257"})
+    @TestRail(id = {22257})
     @Description("Verify that by default, User will GET 300 discussion (PageSize)")
     public void verifyGetDiscussionsPageSizeDefault() {
         QueryParams queryParams = new QueryParams();
@@ -278,7 +277,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15448"})
+    @TestRail(id = {15448})
     @Description("Verify that user can Assign / Un-assign scenario discussion")
     public void assignUnAssignDiscussion() {
         UserCredentials assigneeUser = UserUtil.getUser();
@@ -316,7 +315,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16565"})
+    @TestRail(id = {16565})
     @Issue("COL-1824")
     @Description("Verify that User cannot add comments to discussion with RESOLVED status")
     public void verifyCannotAddCommentsResolvedStatus() {
@@ -352,7 +351,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16052", "16051"})
+    @TestRail(id = {16052, 16051})
     @Issue("COL-1814")
     @Description("Verify that user can DELETE & UNDELETE discussion (Patch Method)")
     public void deleteDiscussionByPatchMethod() {
@@ -374,7 +373,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14649"})
+    @TestRail(id = {14649})
     @Description("Verify that User can not change Status of Deleted Discussion")
     public void verifyNoStatusChangeAfterDiscussionDeleted() {
         ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
@@ -393,7 +392,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16056", "14679"})
+    @TestRail(id = {16056, 14679})
     @Description("Verify that user can Update discussion comment's Status (UnDeleted) and Content")
     public void updateDiscussionCommentStatusAndContent() {
         String commentContent = new GenerateStringUtil().generateNotes();
@@ -443,7 +442,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14686"})
+    @TestRail(id = {14686})
     @Description("Verify that mentioned User in the comment will be added as participant")
     public void verifyCommentMentionedUserAsParticipant() {
         UserCredentials mentionedUser = UserUtil.getUser();
@@ -480,7 +479,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16564"})
+    @TestRail(id = {16564})
     @Description("Verify that comment-view will be created for participant who read the comment")
     public void verifyCommentViewCreatedForParticipant() {
         UserCredentials assigneeUser = UserUtil.getUser();

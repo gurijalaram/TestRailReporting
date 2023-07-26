@@ -1,6 +1,6 @@
 package com.apriori.edcapi.entity.response.parts;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Data;
 

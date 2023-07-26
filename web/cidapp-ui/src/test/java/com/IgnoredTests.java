@@ -4,24 +4,24 @@ import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_LOCKED_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -34,8 +34,7 @@ import testsuites.suiteinterface.IgnoreTests;
 
 import java.io.File;
 
-
-public class IgnoredTests extends TestBase {
+public class IgnoredTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -58,7 +57,7 @@ public class IgnoredTests extends TestBase {
     @Category(IgnoreTests.class)
     @Test
     @Ignore("At the moment a new scenario name cannot be created from a public scenario")
-    @TestRail(testCaseId = {"5950", "5951", "5952"})
+    @TestRail(id = {5950, 5951, 5952})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -99,7 +98,7 @@ public class IgnoredTests extends TestBase {
 
     @Test
     @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"6210", "5435", "6735"})
+    @TestRail(id = {6210, 5435, 6735})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -138,7 +137,7 @@ public class IgnoredTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6212"})
+    @TestRail(id = {6212})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -178,7 +177,7 @@ public class IgnoredTests extends TestBase {
     /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
     @Ignore("Properties Dialogue not yet available")
     @Test
-    @TestRail(testCaseId = {"1261"})
+    @TestRail(id = {1261})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void geometryTest() {
 

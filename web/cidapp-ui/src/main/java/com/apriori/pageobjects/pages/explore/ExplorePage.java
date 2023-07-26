@@ -7,15 +7,15 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import com.apriori.PageUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;

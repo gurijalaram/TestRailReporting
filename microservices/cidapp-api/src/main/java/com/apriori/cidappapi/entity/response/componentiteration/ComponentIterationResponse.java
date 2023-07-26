@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.entity.response.componentiteration;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 @Schema(location = "ComponentIterationsResponse.json")
 public class ComponentIterationResponse {

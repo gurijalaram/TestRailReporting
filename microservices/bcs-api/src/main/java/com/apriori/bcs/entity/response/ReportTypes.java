@@ -1,7 +1,7 @@
 package com.apriori.bcs.entity.response;
 
-import com.apriori.utils.Pagination;
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
+import com.apriori.authorization.response.Pagination;
 
 import lombok.Data;
 

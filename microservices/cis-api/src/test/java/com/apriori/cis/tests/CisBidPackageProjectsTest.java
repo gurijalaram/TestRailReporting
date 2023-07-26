@@ -1,16 +1,16 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageProjectResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -38,7 +38,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14378", "14098"})
+    @TestRail(id = {14378, 14098})
     @Description("Create and Delete Bid Package Project")
     public void testCreateAndDeleteProject() {
         BidPackageProjectResponse bppResponse = CisBidPackageProjectResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
@@ -52,7 +52,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15151", "14384"})
+    @TestRail(id = {15151, 14384})
     @Description("Get list of all Bid Package Projects and verify pagination")
     public void testGetBidPackageProjects() {
         BidPackageProjectsResponse projectsResponse = CisBidPackageProjectResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser, BidPackageProjectsResponse.class, HttpStatus.SC_OK);
@@ -62,7 +62,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14381", "14383", "14376"})
+    @TestRail(id = {14381, 14383, 14376})
     @Description("Find Project By ID")
     public void testGetBidPackageProject() {
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageProjectResources.getBidPackageProject(bidPackageResponse.getIdentity(),
@@ -73,7 +73,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14384"})
+    @TestRail(id = {14384})
     @Description("Find Projects - Invalid BidPackageID")
     public void testGetProjectsWithInvalidBidPackageId() {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.getBidPackageProjects(
@@ -84,20 +84,20 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14382"})
+    @TestRail(id = {14382})
     @Description("Find Project - Invalid Data")
     public void testGetProjectWithInvalidData() {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.getBidPackageProject(
             "Invalid BidPackageID", "Invalid ProjectID", CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(bidPackageProjectsError.getMessage())
-            .isEqualTo("2 validation failures were found:\n" +
-                "* 'bidPackageIdentity' is not a valid identity.\n" +
+            .isEqualTo("2 validation failures were found:" +
+                "* 'bidPackageIdentity' is not a valid identity." +
                 "* 'projectIdentity' is not a valid identity.");
     }
 
     @Test
-    @TestRail(testCaseId = {"14380"})
+    @TestRail(id = {14380})
     @Description("Find Project - Invalid Data")
     public void testCreateProjectWithInvalidData() {
         CisErrorMessage bidPackageProjectsError = CisBidPackageProjectResources.createBidPackageProject(
@@ -108,7 +108,7 @@ public class CisBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "14379")
+    @TestRail(id = 14379)
     @Description("Create Project with Existing Name")
     public void testCreateProjectWithExistingName() {
         String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();

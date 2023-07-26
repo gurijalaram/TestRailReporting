@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import entity.request.ConnectorRequest;
 import entity.response.AgentConnectionInfo;
@@ -25,7 +25,7 @@ import org.junit.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 
-public class CicConnectorTest extends TestBase {
+public class CicConnectorTest extends TestBaseUI {
 
     private UserCredentials currentUser = UserUtil.getUser();
     private static String loginSession;
@@ -53,7 +53,7 @@ public class CicConnectorTest extends TestBase {
         AgentConnectionOptions agentConnectionOptions = AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
             .appKey(agentConnectionInfo.getAppKey())
-            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "#"))
             .build();
         softAssertions.assertThat(agentConnectionOptions.getAgentName()).isNotNull();
     }

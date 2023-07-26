@@ -5,8 +5,8 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -18,7 +18,7 @@ public class CdsUsersTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Test
-    @TestRail(testCaseId = {"3697"})
+    @TestRail(id = {3697})
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class, HttpStatus.SC_OK);
@@ -28,9 +28,8 @@ public class CdsUsersTests {
         soft.assertAll();
     }
 
-
     @Test
-    @TestRail(testCaseId = {"3698"})
+    @TestRail(id = {3698})
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
         ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class, HttpStatus.SC_OK);
@@ -45,7 +44,7 @@ public class CdsUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5971"})
+    @TestRail(id = {5971})
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
         ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class, HttpStatus.SC_OK);

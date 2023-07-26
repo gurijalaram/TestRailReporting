@@ -1,18 +1,17 @@
 package com.apriori.dds.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ErrorMessage;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.CommentsRequest;
 import entity.request.CommentsRequestParameters;
@@ -66,7 +65,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12360", "12378"})
+    @TestRail(id = {12360, 12378})
     @Description("Create and Delete a valid comment")
     public void createAndDeleteComment() {
         String content = new GenerateStringUtil().getRandomString();
@@ -87,7 +86,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12376", "14326"})
+    @TestRail(id = {12376, 14326})
     @Description("get a valid comments and verify pagination")
     public void getComments() {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentsResponse.class)
@@ -102,7 +101,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12373"})
+    @TestRail(id = {12373})
     @Description("get a valid comment")
     public void getComment() {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
@@ -118,7 +117,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12375"})
+    @TestRail(id = {12375})
     @Description("update a valid comment")
     public void updateComment() {
         String commentContent = RandomStringUtils.randomAlphabetic(15);
@@ -143,7 +142,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12371"})
+    @TestRail(id = {12371})
     @Description("Create a valid comment")
     public void createCommentWithInvalidStatus() {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
@@ -163,7 +162,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12372"})
+    @TestRail(id = {12372})
     @Description("Create a comment with invalid discussion")
     public void createCommentWithInvalidDiscussion() {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
@@ -183,7 +182,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14330"})
+    @TestRail(id = {14330})
     @Description("Create a comment with empty content")
     public void createCommentWithEmptyContent() {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
@@ -203,7 +202,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12374"})
+    @TestRail(id = {12374})
     @Description("get a invalid comment")
     public void getInvalidComment() {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
@@ -219,7 +218,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12377"})
+    @TestRail(id = {12377})
     @Description("get a comment With Invalid discussion")
     public void getCommentWithInvalidDiscussion() {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
@@ -235,7 +234,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14329"})
+    @TestRail(id = {14329})
     @Description("Create a comment with empty mentioned users")
     public void createCommentWithEmptyMentionedUsers() {
         String content = new GenerateStringUtil().getRandomString();

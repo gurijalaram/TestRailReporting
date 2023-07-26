@@ -3,37 +3,34 @@ package com.evaluate.assemblies;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.WebElement;
 import testsuites.suiteinterface.ExtendedRegression;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
+public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -82,7 +79,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = "11979")
+    @TestRail(id = 11979)
     @Description("Verify Include and Exclude buttons disabled for a component that is part both of the top level assembly and sub-assembly")
     public void testIncludeAndExcludeDisabledForAssembly() {
         loginPage = new CidAppLoginPage(driver);
@@ -100,7 +97,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = "11158")
+    @TestRail(id = 11158)
     @Description("Verify Exclude button disabled when selecting included sub-component from sub-assembly")
     public void testExcludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
@@ -115,7 +112,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11157", "11862", "6556"})
+    @TestRail(id = {11157, 11862, 6556})
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
@@ -143,7 +140,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11827", "11826"})
+    @TestRail(id = {11827, 11826})
     @Description("Validate  the publish button will only be enabled in the tree view and now the list view")
     public void testPublishButtonEnabledInTreeView() {
         loginPage = new CidAppLoginPage(driver);
@@ -165,7 +162,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = "12196")
+    @TestRail(id = 12196)
     @Description("Verify Table View indicates when only some, but not all, sub-components are excluded")
     public void testExcludeRepeatingComponent() {
         loginPage = new CidAppLoginPage(driver);
@@ -228,7 +225,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"11873", "11863", "11950"})
+    @TestRail(id = {11873, 11863, 11950})
     @Description("Validate that in instances where multiple iterations of a part exist in an assembly, selection of this in table view will highlight all upon switch to tree view")
     public void testMultipleIterationOfPartHighlightedInTreeAndTableView() {
 

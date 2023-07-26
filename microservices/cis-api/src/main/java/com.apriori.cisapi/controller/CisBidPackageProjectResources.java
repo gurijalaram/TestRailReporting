@@ -1,17 +1,17 @@
 package com.apriori.cisapi.controller;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectUsersDeleteResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 

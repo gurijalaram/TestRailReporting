@@ -1,10 +1,10 @@
 package com.apriori.entity.builder;
 
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

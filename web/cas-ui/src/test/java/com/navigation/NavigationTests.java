@@ -1,18 +1,17 @@
 package com.navigation;
 
+import com.apriori.TestBaseUI;
 import com.apriori.customer.CustomerWorkspacePage;
-import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -21,7 +20,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class NavigationTests extends TestBase {
+public class NavigationTests extends TestBaseUI {
 
     private CustomerWorkspacePage customerProfilePage;
     private String customerID;
@@ -37,7 +36,7 @@ public class NavigationTests extends TestBase {
     // System Configuration page is disabled in CAS
     @Test
     @Description("Test that pages can be accessed directly by their URL")
-    @TestRail(testCaseId = {"9907"})
+    @TestRail(id = {9907})
     public void testAccessPagesViaDirectURL() {
         SoftAssertions soft = new SoftAssertions();
         String errorMessage = "Navigating to %s URL doesn't load expected page content";
@@ -67,7 +66,7 @@ public class NavigationTests extends TestBase {
     @Test
     @Category(SmokeTest.class)
     @Description("Test that the URL updates when navigating between pages")
-    @TestRail(testCaseId = {"9908"})
+    @TestRail(id = {9908})
     public void testURLUpdatesWithPageChange() {
 
         SoftAssertions soft = new SoftAssertions();

@@ -1,6 +1,6 @@
 package com.apriori.sds.entity.response;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
@@ -22,6 +22,4 @@ public class FeatureDecisionsResponse {
     Boolean hasNextPage;
     Boolean hasPreviousPage;
     List<Items> items;
-
-
 }

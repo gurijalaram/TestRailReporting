@@ -1,5 +1,7 @@
 package com.apriori.bcs.controller;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.PartReport;
@@ -8,18 +10,16 @@ import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.part.PartData;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

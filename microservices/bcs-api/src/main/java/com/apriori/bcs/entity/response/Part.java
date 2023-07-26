@@ -1,9 +1,9 @@
 package com.apriori.bcs.entity.response;
 
+import com.apriori.annotations.Schema;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.reader.file.part.PartData;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

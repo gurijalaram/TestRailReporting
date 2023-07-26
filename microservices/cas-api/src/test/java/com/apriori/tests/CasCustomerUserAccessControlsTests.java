@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
@@ -10,11 +12,9 @@ import com.apriori.entity.response.AccessControls;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -64,7 +64,7 @@ public class CasCustomerUserAccessControlsTests {
 
     @Test
     @Description("POSTs a new access control for a user.")
-    @TestRail(testCaseId = {"16144"})
+    @TestRail(id = {16144})
     public void postAccessControl() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
@@ -87,7 +87,7 @@ public class CasCustomerUserAccessControlsTests {
 
     @Test
     @Description("Returns a list of access controls for the customer user")
-    @TestRail(testCaseId = {"16145"})
+    @TestRail(id = {16145})
     public void getUserAccessControls() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
@@ -115,7 +115,7 @@ public class CasCustomerUserAccessControlsTests {
 
     @Test
     @Description("Get a specific access control for a customer user identified by its identity")
-    @TestRail(testCaseId = {"16146"})
+    @TestRail(id = {16146})
     public void getAccessControlByIdentity() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
@@ -142,7 +142,7 @@ public class CasCustomerUserAccessControlsTests {
 
     @Test
     @Description("Delete an access control for a user")
-    @TestRail(testCaseId = "16147")
+    @TestRail(id = 16147)
     public void deleteAccessControl() {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
@@ -159,7 +159,7 @@ public class CasCustomerUserAccessControlsTests {
 
     @Test
     @Description("Get the customer user access control with not existing identity")
-    @TestRail(testCaseId = {"16150"})
+    @TestRail(id = {16150})
     public void getAccessControlThatNotExists() {
         String notExistingIdentity = "000000000000";
         String userName = generateStringUtil.generateUserName();

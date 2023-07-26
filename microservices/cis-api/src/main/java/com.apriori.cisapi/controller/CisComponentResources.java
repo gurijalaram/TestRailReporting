@@ -1,10 +1,10 @@
 package com.apriori.cisapi.controller;
 
 import com.apriori.cisapi.entity.enums.CisAPIEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.reader.file.user.UserCredentials;
 
 /**
  * The type Cis component resources.

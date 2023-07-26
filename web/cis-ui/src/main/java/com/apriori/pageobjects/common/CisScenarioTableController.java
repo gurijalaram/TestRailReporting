@@ -158,7 +158,7 @@ public class CisScenarioTableController extends EagerPageComponent<CisScenarioTa
      * @return list of string
      */
     public List<String> getTableHeaders() {
-        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(tableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 
     /**

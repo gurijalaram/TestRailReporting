@@ -1,5 +1,6 @@
 package com.apriori.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -11,10 +12,9 @@ import com.apriori.entity.response.CustomerAssociationUser;
 import com.apriori.entity.response.CustomerAssociationUsers;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -73,7 +73,7 @@ public class CasCustomerUserAssociationTests {
 
     @Test
     @Description("Create a user association from a source customer user to a target customer.")
-    @TestRail(testCaseId = {"5683"})
+    @TestRail(id = {5683})
     public void createUserAssociation() {
         CustomerUser user = usersToAssociate.get(0);
         ResponseWrapper<CustomerAssociationUser> response = casTestUtil.createCustomerAssociationUser(user, customerAssociationToAprioriInternal);
@@ -96,7 +96,7 @@ public class CasCustomerUserAssociationTests {
 
     @Test
     @Description("Gets a list of customer associations.")
-    @TestRail(testCaseId = {"5684"})
+    @TestRail(id = {5684})
     public void getUserAssociations() {
         usersToAssociate.stream()
             .map((user) -> casTestUtil.createCustomerAssociationUser(user, customerAssociationToAprioriInternal))
@@ -112,7 +112,7 @@ public class CasCustomerUserAssociationTests {
 
     @Test
     @Description("Gets a list of candidates that can be associated to a customer.")
-    @TestRail(testCaseId = {"10066"})
+    @TestRail(id = {10066})
     public void getUserAssociationCandidates() {
         associatedUsers.add(casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity());
         List<CustomerUser> allUsers = casTestUtil.findUsers(aprioriInternal);
@@ -125,7 +125,7 @@ public class CasCustomerUserAssociationTests {
 
     @Test
     @Description("Delete a user association from a customer.")
-    @TestRail(testCaseId = {"5685"})
+    @TestRail(id = {5685})
     public void deleteUserAssociation() {
         final CustomerAssociationUser user = casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity();
 

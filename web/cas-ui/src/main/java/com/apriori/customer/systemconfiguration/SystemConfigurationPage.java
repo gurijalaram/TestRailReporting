@@ -3,7 +3,7 @@ package com.apriori.customer.systemconfiguration;
 import com.apriori.EagerPageComponent;
 import com.apriori.components.RoutingComponent;
 import com.apriori.components.SelectComponent;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

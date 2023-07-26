@@ -2,11 +2,11 @@ package com.apriori.vds.tests.util;
 
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.bcs.entity.response.ProcessGroups;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;

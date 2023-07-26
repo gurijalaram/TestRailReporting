@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
@@ -14,13 +15,12 @@ import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -39,7 +39,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4979"})
+    @TestRail(id = {4979})
     @Description("Create a part with invalid VPE")
     public void createBatchPartInvalidVPE() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -53,7 +53,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4978"})
+    @TestRail(id = {4978})
     @Description("Create a part with invalid Process Group")
     public void createBatchPartInvalidPG() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -70,7 +70,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4983", "8104"})
+    @TestRail(id = {4983, 8104})
     @Description("Create a part with non-supported file type (txt, pdf) ")
     public void createBatchPartNonSupportedFile() {
         // Test with txt file
@@ -89,7 +89,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"4368"})
+    @TestRail(id = {4368})
     @Description("Create a part with invalid UDA")
     public void createBatchPartInvalidUDA() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -103,7 +103,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9535", "8099"})
+    @TestRail(id = {9535, 8099})
     @Description("Create part with invalid batch Identity")
     public void createBatchPartWithInvalidBatch() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -113,7 +113,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8036", "8095", "8099"})
+    @TestRail(id = {8036, 8095, 8099})
     @Description("Invalid Customer Identity")
     public void createBatchWithInvalidCustomerID() {
         ResponseWrapper<ErrorMessage> batchResponse = BatchResources.createBatch("INVALIDCUSTOMER", ErrorMessage.class);
@@ -122,7 +122,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8113"})
+    @TestRail(id = {8113})
     @Description("Create part with blank / missing External Identity")
     public void createBatchPartWithExternalIDBlank() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -133,7 +133,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8037"})
+    @TestRail(id = {8037})
     @Description("Get single batch with invalid customer identity")
     public void getBatchWithInvalidCustomerID() {
         ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
@@ -146,7 +146,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8049"})
+    @TestRail(id = {8049})
     @Description("Get batch with invalid batch identity")
     public void getBatchWithInvalidBatchID() {
         HTTPRequest.build(
@@ -159,7 +159,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8058"})
+    @TestRail(id = {8058})
     @Description("Cancel batch with invalid batch identity")
     public void cancelBatchWithInvalidBatchID() {
         HTTPRequest.build(BatchResources.getBatchRequestEntity(
@@ -169,7 +169,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8094"})
+    @TestRail(id = {8094})
     @Description("get parts with invalid Batch identity")
     public void getBatchPartWithInvalidBatchID() {
         HTTPRequest.build(
@@ -182,7 +182,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8123", "9538"})
+    @TestRail(id = {8123, 9538})
     @Description("Return a single Batch-Part using an invalid batch")
     public void getBatchPartWithInvalidPartIdentity() {
         HTTPRequest.build(
@@ -196,7 +196,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8125"})
+    @TestRail(id = {8125})
     @Description("Get Batch part results with UnCosted part identity")
     public void getBatchPartResultWithUnCostedPartIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -212,7 +212,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8126","9540"})
+    @TestRail(id = {8126, 9540})
     @Description("Get Batch part results with invalid part identity")
     public void getBatchPartResultWithInvalidPartIdentity() {
         HTTPRequest.build(
@@ -226,7 +226,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9541"})
+    @TestRail(id = {9541})
     @Description("Get Batch part results with missing batch")
     public void getBatchPartResultWithMissingBatchIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -241,7 +241,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8128"})
+    @TestRail(id = {8128})
     @Description("Get Batch part report with UnCosted part identity")
     public void getBatchPartReportWithUnCostedPartIdentity() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -258,7 +258,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9545", "9550"})
+    @TestRail(id = {9545, 9550})
     @Description("Get part report with invalid batch and invalid part identity")
     public void getBatchPartReportWithInvalidBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -282,7 +282,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8100","9546"})
+    @TestRail(id = {8100, 9546})
     @Description("Get part report with missing batch")
     public void getBatchPartReportWithMissingBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -300,7 +300,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9543"})
+    @TestRail(id = {9543})
     @Description("Get part report with missing Part identity")
     public void getBatchPartReportWithMissingPartId() {
         ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
@@ -316,7 +316,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9539"})
+    @TestRail(id = {9539})
     @Description("Get single part with missing batch id")
     public void getSinglePartWithMissingBatchId() {
         Part part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
@@ -333,7 +333,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8096"})
+    @TestRail(id = {8096})
     @Description("Get part to a batch with missing batch identity")
     public void getBatchPartsWithMissingBatchID() {
         HTTPRequest.build(
@@ -346,7 +346,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8690"})
+    @TestRail(id = {8690})
     @Description("Attempt to add a new part to a batch using empty string values")
     public void createBatchPartWithEmptyStringValues() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
@@ -356,7 +356,7 @@ public class BatchPartNegativeTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"8110", "8116"})
+    @TestRail(id = {8110, 8116})
     @Description("Attempt to add a new part to a batch with invalid production life")
     public void createBatchPartWithInvalidProductionLife() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();

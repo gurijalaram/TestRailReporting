@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.user.group.associations.UserGroupAssociationRequest;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociation;
@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
 
@@ -30,14 +29,14 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8321"})
+    @TestRail(id = {8321})
     @Description("GET a list of UserGroupAssociations assigned to a specific group for a customer.")
     public void getUserGroupAssociations() {
         this.getUserGroupAssociationsResponse();
     }
 
     @Test
-    @TestRail(testCaseId = {"8323"})
+    @TestRail(id = {8323})
     @Description("GET a specific UserGroupAssociation.")
     public void getUserGroupAssociationByIdentity() {
         RequestEntity requestEntity =
@@ -52,15 +51,14 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8322"})
+    @TestRail(id = {8322})
     @Description("POST a new UserGroupAssociation.")
     public void postUserGroupAssociationTest() {
         this.postUserGroupAssociation();
     }
 
-
     @Test
-    @TestRail(testCaseId = {"8324"})
+    @TestRail(id = {8324})
     @Description("DELETE a UserGroupAssociation.")
     public void deleteSiteVariablesByIdentity() {
         final String idToDelete = this.postUserGroupAssociation().getIdentity();
@@ -70,7 +68,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8325"})
+    @TestRail(id = {8325})
     @Description("PATCH a UserGroupAssociation.")
     public void patchUserGroupAssociationByIdentity() {
         UserGroupAssociation userGroupAssociationBeforeUpdate = this.postUserGroupAssociation();

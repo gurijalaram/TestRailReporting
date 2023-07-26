@@ -1,18 +1,18 @@
 package com.evaluate;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,21 +24,20 @@ import java.util.List;
 
 public class GroupCostingTests {
 
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;
-    private SoftAssertions softAssertions;
-    private UserCredentials currentUser;
-
     private final List<String> subComponentNames = Arrays.asList(
         "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
         "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob");
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions;
+    private UserCredentials currentUser;
     private String subComponentExtension = ".SLDPRT";
     private String assemblyName = "RandomShapeAsm";
     private String assemblyExtension = ".SLDASM";
 
     @Test
-    @TestRail(testCaseId = {"10620", "11845"})
+    @TestRail(id = {10620, 11845})
     @Description("Group Cost 10 components")
     public void testGroupCostTenParts() {
 
@@ -72,7 +71,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10620", "11846"})
+    @TestRail(id = {10620, 11846})
     @Description("Attempt to Group Cost 11 components")
     public void testGroupCostElevenParts() {
 
@@ -105,7 +104,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11849", "11848", "11847"})
+    @TestRail(id = {11849, 11848, 11847})
     @Description("Verify 400 Error")
     public void testVerify400Error() {
         final String FLANGE = "flange";
@@ -146,7 +145,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = "11848")
+    @TestRail(id = 11848)
     @Description("Verify Error Response for Empty Scenario Identity")
     public void testEmptyScenarioIdentity() {
 
@@ -181,7 +180,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = "11847")
+    @TestRail(id = 11847)
     @Description("Verify Error Response for Empty Scenario Identity")
     public void testEmptyComponentIdentity() {
 
@@ -216,7 +215,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = "11849")
+    @TestRail(id = 11849)
     @Description("Verify Error Response for Empty Costing Template Identity")
     public void testEmptyCostingTemplateIdentity() {
 
@@ -250,7 +249,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = "11850")
+    @TestRail(id = 11850)
     @Description("Verify Error Response for Empty Group Item List")
     public void testEmptyGroupItemList() {
 

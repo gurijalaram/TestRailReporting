@@ -1,7 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -37,7 +37,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3046"})
+    @TestRail(id = {3046})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCode() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -47,7 +47,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3043"})
+    @TestRail(id = {3043})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -57,7 +57,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7418"})
+    @TestRail(id = {7418})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -67,7 +67,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3044"})
+    @TestRail(id = {3044})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -77,7 +77,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7398"})
+    @TestRail(id = {7398})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
@@ -87,7 +87,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7448"})
+    @TestRail(id = {7448})
     @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Report")
     public void testSingleProcessGroup() {
         List<String> partNames = Arrays.asList(
@@ -102,7 +102,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7532"})
+    @TestRail(id = {7532})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
         List<String> partNames = Arrays.asList(
@@ -119,7 +119,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7535"})
+    @TestRail(id = {7535})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
@@ -136,7 +136,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7538"})
+    @TestRail(id = {7538})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
         List<String> partNames = Arrays.asList(
@@ -153,7 +153,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
+    @TestRail(id = {3045})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
         List<String> partNames = Arrays.asList(

@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.entity.request;
 
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

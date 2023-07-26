@@ -1,16 +1,14 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pagedata.CostingServiceSettingsData;
 import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.home.settings.CostingServiceSettings;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -40,7 +38,7 @@ public class CostingPreferencesTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4006", "4426"})
+    @TestRail(id = {4006, 4426})
     @Description("Check the Costing Preferences Model Dialog and Save settings")
     public void testCostingSettingsPreferences() {
         costingServiceSettingsData = CostingServiceSettingsData.builder()
@@ -73,7 +71,7 @@ public class CostingPreferencesTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4019"})
+    @TestRail(id = {4019})
     @Description("If Cancel is clicked then any changes made in that Modal Session are not persisted")
     public void testCancelCostingSettingsPreferences() {
         CostingServiceSettings costingServiceSettings = ciConnectHome.clickCostingServiceSettings();

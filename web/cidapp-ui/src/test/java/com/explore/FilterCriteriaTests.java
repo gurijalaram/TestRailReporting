@@ -5,26 +5,26 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.CurrencyEnum;
@@ -43,7 +43,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class FilterCriteriaTests extends TestBase {
+public class FilterCriteriaTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -68,7 +68,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6213"})
+    @TestRail(id = {6213})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -94,7 +94,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6214"})
+    @TestRail(id = {6214})
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
 
@@ -123,7 +123,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6215"})
+    @TestRail(id = {6215})
     @Description("Test private criteria part contains")
     public void testPrivateCriteriaContains() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -149,7 +149,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6216"})
+    @TestRail(id = {6216})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -175,7 +175,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6217"})
+    @TestRail(id = {6217})
     @Description("Test public criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
         final String assemblyName = "Hinge assembly";
@@ -228,7 +228,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6218"})
+    @TestRail(id = {6218})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -260,7 +260,7 @@ public class FilterCriteriaTests extends TestBase {
     @Test
     @Issue("BA-2610")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6221", "6532"})
+    @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
     public void testFilterAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -307,7 +307,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6169", "6170"})
+    @TestRail(id = {6169, 6170})
     @Description("Check that user cannot Delete Preset Filters")
     public void testDeleteButtonDisabledForPresetFilters() {
         currentUser = UserUtil.getUser();
@@ -325,7 +325,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6100"})
+    @TestRail(id = {6100})
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void testCancelNewSaveRename() {
         currentUser = UserUtil.getUser();
@@ -363,7 +363,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9108"})
+    @TestRail(id = {9108})
     @Description("Verify that filter values for cost results are converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesToEUR() {
         currentUser = UserUtil.getUser();
@@ -390,7 +390,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9109"})
+    @TestRail(id = {9109})
     @Description("Verify that filter value for Finish Mass is converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesToGram() {
         currentUser = UserUtil.getUser();
@@ -417,7 +417,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9110"})
+    @TestRail(id = {9110})
     @Description("Verify that filter value for Cycle Time is converted after changing unit preferences")
     public void testFilterValuesAfterChangingUnitPreferencesForCycleTime() {
         currentUser = UserUtil.getUser();

@@ -3,21 +3,20 @@ package com.evaluate.materialutilization;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,7 +25,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class PartNestingTests extends TestBase {
+public class PartNestingTests extends TestBaseUI {
 
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
@@ -42,7 +41,7 @@ public class PartNestingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"5922"})
+    @TestRail(id = {5922})
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -68,7 +67,7 @@ public class PartNestingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7699"})
+    @TestRail(id = {7699})
     @Description("Select Rectangular method of Part Nesting and cost")
     public void partNestingTabRectangularNesting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -97,7 +96,7 @@ public class PartNestingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7698"})
+    @TestRail(id = {7698})
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -122,7 +121,7 @@ public class PartNestingTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7699"})
+    @TestRail(id = {7699})
     @Description("Select Machine Default method of Part Nesting and cost")
     public void partNestingTabMachineDefaultNesting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -150,7 +149,7 @@ public class PartNestingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5923"})
+    @TestRail(id = {5923})
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

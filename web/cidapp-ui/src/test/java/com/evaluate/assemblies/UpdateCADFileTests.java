@@ -1,24 +1,24 @@
 package com.evaluate.assemblies;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -29,7 +29,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class UpdateCADFileTests extends TestBase {
+public class UpdateCADFileTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
     private UpdateCadFilePage updateCadFilePage;
@@ -81,7 +81,7 @@ public class UpdateCADFileTests extends TestBase {
     private File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
     @Test
-    @TestRail(testCaseId = {"10903", "10961", "12032"})
+    @TestRail(id = {10903, 10961, 12032})
     @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -151,7 +151,7 @@ public class UpdateCADFileTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10928", "10929", "10933", "11967"})
+    @TestRail(id = {10928, 10929, 10933, 11967})
     @Description("Verify enabled/disabled behaviour of Update CAD button in Assembly Explorer Table")
     public void verifyUpdateCADButtonAsmExplorerTableTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -187,7 +187,7 @@ public class UpdateCADFileTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11965")
+    @TestRail(id = 11965)
     @Description("Validate updating of CAD file for the sub-component of a sub-assembly via components table.")
     public void updateSubAssemblyCADFilesFromComponentTableTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -261,7 +261,7 @@ public class UpdateCADFileTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10908", "10909", "12131"})
+    @TestRail(id = {10908, 10909, 12131})
     @Description("Validate updating sub-assembly and sub-component CAD files by opening new tab from Components Table.")
     public void updateSubComponentCADFileTest() {
         SoftAssertions soft = new SoftAssertions();

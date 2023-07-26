@@ -5,13 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -30,7 +30,7 @@ public class FileManagementControllerTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3933"})
+    @TestRail(id = 3933)
     @Description("Get files for a targetCloudContext with an authorized user")
     public void getFiles() {
         List<FileResponse> files = FileManagementController.getFiles(userCredentials).getResponseEntity().getResponse().getItems();
@@ -41,7 +41,7 @@ public class FileManagementControllerTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3939", "3934"})
+    @TestRail(id = {3939, 3934})
     @Description("Upload a file for a targetCloudContext with an authorized user")
     public void uploadFile() {
         String fileIdentity = FileManagementController.uploadFile(userCredentials, ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt").getIdentity();

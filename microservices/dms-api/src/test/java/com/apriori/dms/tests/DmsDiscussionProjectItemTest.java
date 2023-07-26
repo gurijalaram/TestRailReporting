@@ -1,10 +1,10 @@
 package com.apriori.dms.tests;
 
+import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -14,7 +14,7 @@ import utils.DmsApiTestUtils;
 
 public class DmsDiscussionProjectItemTest extends DmsApiTestDataUtils {
     @Test
-    @TestRail(testCaseId = {"24413", "24414"})
+    @TestRail(id = {24413, 24414})
     @Description("Verify all discussions associated with the project item gets deleted by discussions delete by projectItemIdentity API")
     public void verifyDeleteAllDiscussionsOnProjectItemDelete() {
         ScenarioDiscussionResponse qmsScenarioDiscussionResponse2 = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);

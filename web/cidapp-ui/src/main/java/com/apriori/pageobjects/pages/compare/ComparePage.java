@@ -4,10 +4,10 @@ import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ComparisonCardEnum;
 import com.utils.ComparisonDeltaEnum;
+import com.utils.StatusIconEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

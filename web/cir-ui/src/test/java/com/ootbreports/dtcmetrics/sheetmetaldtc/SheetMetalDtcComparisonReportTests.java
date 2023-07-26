@@ -4,23 +4,23 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.MassMetricEnum;
+import enums.RollupEnum;
+import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
-public class SheetMetalDtcComparisonReportTests extends TestBase {
+public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
 
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private InputControlsTests inputControlsTests;
@@ -40,8 +40,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7313"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7313})
     @Description("Validate report is available by navigation - Sheet Metal DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -52,7 +52,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7316"})
+    @TestRail(id = {7316})
     @Description("Validate report is available by library - Sheet Metal DTC Comparison Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -61,7 +61,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7319"})
+    @TestRail(id = {7319})
     @Description("Validate report is available by search - Sheet Metal DTC Comparison Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -69,8 +69,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3038"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
         String rollupName = String.format(
@@ -94,7 +94,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3039"})
+    @TestRail(id = {3039})
     @Description("Verify earliest and latest export date calendar widgets correctly filter the list of export sets")
     public void testExportSetDateFilterDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -105,7 +105,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7367"})
+    @TestRail(id = {7367})
     @Description("Verify apply button functionality - Sheet Metal DTC Comparison Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -117,8 +117,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7370"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7370})
     @Description("Verify cancel button functionality - Sheet Metal DTC Comparison Report")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -127,7 +127,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7373"})
+    @TestRail(id = {7373})
     @Description("Verify reset button functionality - Sheet Metal DTC Comparison Report")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -139,7 +139,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = {"7376"})
+    @TestRail(id = {7376})
     @Description("Verify save button functionality - Sheet Metal DTC Comparison Report")
     public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -151,7 +151,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7694"})
+    @TestRail(id = {7694})
     @Description("Verify Export Set list controls function correctly - Panel Buttons - Sheet Metal DTC Comparison Reports")
     public void testExportSetListControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -160,7 +160,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7691"})
+    @TestRail(id = {7691})
     @Description("Verify Export Set list controls function correctly - Search - Sheet Metal DTC Comparison Reports")
     public void testExportSetSearch() {
         inputControlsTests = new InputControlsTests(driver);
@@ -172,7 +172,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3042"})
+    @TestRail(id = {3042})
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
@@ -183,8 +183,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7419"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7419})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -197,7 +197,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7420"})
+    @TestRail(id = {7420})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Comparison Report")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -210,7 +210,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7399"})
+    @TestRail(id = {7399})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -222,8 +222,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7400"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7400})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -236,7 +236,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7672"})
+    @TestRail(id = {7672})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Comparison Report")
     public void testSortOrderManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
@@ -249,8 +249,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7673"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7673})
     @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Comparison Report")
     public void testSortOrderBends() {
         commonReportTests = new CommonReportTests(driver);
@@ -264,7 +264,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7674"})
+    @TestRail(id = {7674})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Comparison Report")
     public void testSortOrderTolerances() {
         commonReportTests = new CommonReportTests(driver);
@@ -278,7 +278,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7675"})
+    @TestRail(id = {7675})
     @Description("Verify Sort Order input control functions correctly - Machining Times - Sheet Metal DTC Comparison Report")
     public void testSortOrderMachiningTime() {
         commonReportTests = new CommonReportTests(driver);
@@ -292,7 +292,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7676"})
+    @TestRail(id = {7676})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Comparison Report")
     public void testSortOrderAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
@@ -305,8 +305,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7378"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7378})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Comparison Report")
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
@@ -318,7 +318,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7449"})
+    @TestRail(id = {7449})
     @Description("Verify process group input control functionality - No Selection - Sheet Metal DTC Comparison Report")
     public void testProcessGroupInputControlNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -330,7 +330,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3048"})
+    @TestRail(id = {3048})
     @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
         inputControlsTests = new InputControlsTests(driver);
@@ -343,7 +343,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3051"})
+    @TestRail(id = {3051})
     @Description("Verify Select Parts list controls function correctly - Panel Buttons")
     public void testPartListInputControlButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -356,7 +356,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7530"})
+    @TestRail(id = {7530})
     @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -367,8 +367,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7533"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7533})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -381,7 +381,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7536"})
+    @TestRail(id = {7536})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -394,7 +394,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7539"})
+    @TestRail(id = {7539})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
@@ -406,8 +406,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7541"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7541})
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreAll() {
         inputControlsTests = new InputControlsTests(driver);

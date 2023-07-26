@@ -1,8 +1,8 @@
 package com.apriori.dms.tests;
 
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.response.ApwErrorMessage;
+import com.apriori.testrail.TestRail;
 
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
@@ -26,7 +26,7 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"14217"})
+    @TestRail(id = {14217})
     @Description("Verify that user can Update description of Discussion")
     public void updateValidDiscussionDescription() {
         String description = new GenerateStringUtil().generateNotes();
@@ -41,7 +41,7 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13054"})
+    @TestRail(id = {13054})
     @Description("Verify that user can Update status of Discussion")
     public void updateValidDiscussionStatus() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
@@ -72,7 +72,7 @@ public class DmsDiscussionTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"13053", "14223"})
+    @TestRail(id = {13053, 14223})
     @Description("get list of all discussion and verify pagination")
     public void getDiscussions() {
         DmsDiscussionsResponse responseWrapper = DmsApiTestUtils.getDiscussions(DmsDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);

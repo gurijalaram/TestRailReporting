@@ -1,16 +1,15 @@
 package com.ootbreports.newreportstests.designoutlieridentification;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -31,7 +30,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
-    @TestRail(testCaseId = {"7387"})
+    @TestRail(id = {7387})
     @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -41,7 +40,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
-    @TestRail(testCaseId = {"7386"})
+    @TestRail(id = {7386})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(

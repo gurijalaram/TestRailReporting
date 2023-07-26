@@ -1,24 +1,24 @@
 package com.explore;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -32,7 +32,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class PreviewPanelTests extends TestBase {
+public class PreviewPanelTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private PreviewPage previewPage;
@@ -50,7 +50,7 @@ public class PreviewPanelTests extends TestBase {
 
     @Test
     @Description("Test preview panel data is displayed")
-    @TestRail(testCaseId = {"6350", "6349"})
+    @TestRail(id = {6350, 6349})
     public void testPreviewPanelDisplay() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -80,7 +80,7 @@ public class PreviewPanelTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
-    @TestRail(testCaseId = {"6351", "6201", "6352"})
+    @TestRail(id = {6351, 6201, 6352})
     public void previewPanelMetrics() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -119,7 +119,7 @@ public class PreviewPanelTests extends TestBase {
     @Category(SmokeTests.class)
     @Issue("APD-1663")
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
-    @TestRail(testCaseId = {"6202", "6203", "6204"})
+    @TestRail(id = {6202, 6203, 6204})
     public void previewPanelMultiSelect() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

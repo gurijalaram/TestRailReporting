@@ -1,14 +1,15 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -20,21 +21,12 @@ import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
-import com.utils.SortOrderEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -44,11 +36,9 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ExtendedRegression;
 import testsuites.suiteinterface.SmokeTests;
 
-import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
-public class EditAssembliesTest extends TestBase {
+public class EditAssembliesTest extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -70,17 +60,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10768"})
-    @Description("Shallow Publish assembly and scenarios costed in CI Design")
-    public void testShallowPublishCostedCID() {
-        final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String assemblyExtension = ".SLDASM";
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-        final String subComponentExtension = ".SLDPRT";
-        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+    @TestRail(id = {10768"})
+        @Description("Shallow Publish assembly and scenarios costed in CI Design")
+        public void testShallowPublishCostedCID(){
+        final String hinge_assembly="Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension=".SLDASM";
+        final String big_ring="big ring";
+        final String pin="Pin";
+        final String small_ring="small ring";
+        final String subComponentExtension=".SLDPRT";
+        final List<String>subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
@@ -119,17 +109,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "6076", "6515"})
-    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
-    public void testShallowEditCostedCID() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+    @TestRail(id = {10799", "6076", "6515"})
+        @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
+        public void testShallowEditCostedCID(){
+        final String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension=".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup=ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        final UserCredentials currentUser=UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -163,18 +153,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10801"})
+@Test
+@TestRail(id = {10801"})
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
-    public void testShallowEditRetainStatus() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+    public void testShallowEditRetainStatus(){
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+    final String subComponentExtension=".SLDPRT";
+    final ProcessGroupEnum subComponentProcessGroup=ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+    final UserCredentials currentUser=UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -214,18 +204,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10802", "10803", "10835", "6613"})
+@Test
+@TestRail(id = {10802", "10803", "10835", "6613"})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
-    public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+    public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents(){
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+    final String subComponentExtension=".SLDPRT";
+    final ProcessGroupEnum subComponentProcessGroup=ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+    final UserCredentials currentUser=UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -274,17 +264,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10804", "6733", "6594"})
-    @Description("Shallow Edit keeps original assembly intact on Public Workspace")
-    public void testShallowEditCheckDuplicate() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+    @TestRail(id = {10804", "6733", "6594"})
+        @Description("Shallow Edit keeps original assembly intact on Public Workspace")
+        public void testShallowEditCheckDuplicate(){
+        final String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension=".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup=ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        final UserCredentials currentUser=UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -318,17 +308,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"10806", "10807", "10809", "6614"})
-    @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
-    public void testShallowEditPublishPublicWorkspaceLockNotes() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+    @TestRail(id = {10806", "10807", "10809", "6614"})
+        @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
+        public void testShallowEditPublishPublicWorkspaceLockNotes(){
+        final String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final List<String>subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension=".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup=ProcessGroupEnum.FORGING;
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        final UserCredentials currentUser=UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -383,17 +373,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Ignore("A unique assembly is needed to do this and then some post steps to delete this unique assembly and subcomponents")
     @Test
-    @TestRail(testCaseId = {"10836", "10811"})
-    @Description("Shallow Edit an assembly with larger set of sub-components ")
-    public void testUploadCostPublishAssemblyLargeSetSubcomponents() {
-        final String assemblyName = "FUSELAGE_SUBASSEMBLY";
-        final String assemblyExtension = ".CATProduct";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String subcomponent1 = "505-04426-001 1 1 ---";
-        final String subcomponent2 = "550-05628-401 PRIMARY 1 ---";
-        final String subcomponent3 = "550-05676-001 1 1 ---";
-        final List<String> uploadedSubcomponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3);
-        final String subComponentExtension = ".CATPart";
+    @TestRail(id = {10836", "10811"})
+        @Description("Shallow Edit an assembly with larger set of sub-components ")
+        public void testUploadCostPublishAssemblyLargeSetSubcomponents(){
+        final String assemblyName="FUSELAGE_SUBASSEMBLY";
+        final String assemblyExtension=".CATProduct";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final String subcomponent1="505-04426-001 1 1 ---";
+        final String subcomponent2="550-05628-401 PRIMARY 1 ---";
+        final String subcomponent3="550-05676-001 1 1 ---";
+        final List<String>uploadedSubcomponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3);
+        final String subComponentExtension=".CATPart";
         final List<String> listOfSubComponents = Arrays.asList(subcomponent1, subcomponent2, subcomponent3, "MS14108-3 1 ---", "505-04596-001 1 1 ---", "550-05526-001 1 1 --A", "550-05629-401 PRIMARY 1 ---", "550-05673-401 PRIMARY 1 ---",
             "550-05676-002 1 1 ---", "550-05682-001 1 1 --A", "550-05683-001 1 1 ---", "550-05683-002 1 1 ---", "550-05689-001 1 1 ---", "550-05690-001 1 1 ---", "CCR244SS-3-2 1 ---",
             "MS14108-15 1 ---", "MS14218AD4-4 1 ---", "MS20392-1C15 1 ---", "MS20470AD4-5 1 ---", "MS20470AD4-6 1 ---", "MS21059L3 1 ---", "MS21059L08 1 ---", "MS24665-132 1 ---", "NAS1789-3 1 ---", "NAS9309M-6-04 1 ---");
@@ -428,18 +418,18 @@ public class EditAssembliesTest extends TestBase {
         listOfSubComponents.forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
-    @Test
-    @TestRail(testCaseId = {"10810"})
+@Test
+@TestRail(id = {10810"})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
-    public void testUploadUncostedAssemblySubcomponentOverride() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String bigRing = "big ring";
-        final String pin = "Pin";
-        final String smallRing = "small ring";
-        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
-        final String subComponentExtension = ".SLDPRT";
+    public void testUploadUncostedAssemblySubcomponentOverride(){
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final String bigRing="big ring";
+    final String pin="Pin";
+    final String smallRing="small ring";
+    final List<String>subComponentNames = Arrays.asList(bigRing, pin, smallRing);
+    final String subComponentExtension=".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
@@ -475,17 +465,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"10813", "10815", "11032"})
-    @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
-    public void testShallowEditPrivateLockedRename() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String bigRing = "big ring";
-        final String pin = "Pin";
-        final String smallRing = "small ring";
-        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
-        final String subComponentExtension = ".SLDPRT";
+    @TestRail(id = {10813", "10815", "11032"})
+        @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
+        public void testShallowEditPrivateLockedRename(){
+        final String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+        final String bigRing="big ring";
+        final String pin="Pin";
+        final String smallRing="small ring";
+        final List<String>subComponentNames = Arrays.asList(bigRing, pin, smallRing);
+        final String subComponentExtension=".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
@@ -536,18 +526,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10814", "6596", "6046"})
+@Test
+@TestRail(id = {10814", "6596", "6046"})
     @Description("Shallow Edit over existing Private scenarios with override")
-    public void testShallowEditPrivateOverride() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String bigRing = "big ring";
-        final String pin = "Pin";
-        final String smallRing = "small ring";
-        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
-        final String subComponentExtension = ".SLDPRT";
+    public void testShallowEditPrivateOverride(){
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final String bigRing="big ring";
+    final String pin="Pin";
+    final String smallRing="small ring";
+    final List<String>subComponentNames = Arrays.asList(bigRing, pin, smallRing);
+    final String subComponentExtension=".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
@@ -587,17 +577,17 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Issue("BA-2965")
-    @TestRail(testCaseId = {"10895", "10897"})
-    @Description("Edit public sub-component with Private counterpart (Override)")
-    public void testEditPublicAndOverridePrivateSubcomponent() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+    @TestRail(id = {10895", "10897"})
+        @Description("Edit public sub-component with Private counterpart (Override)")
+        public void testEditPublicAndOverridePrivateSubcomponent(){
+        String scenarioName=new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+        final String assemblyName="Hinge assembly";
+        final String assemblyExtension=".SLDASM";
+        final String BIG_RING="big ring";
+        final String PIN="Pin";
+        final String SMALL_RING="small ring";
 
         final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
@@ -647,18 +637,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10896", "10898", "5619", "5428"})
+@Test
+@TestRail(id = {10896", "10898", "5619", "5428"})
     @Description("Edit public sub-component with Private counterpart (Override)")
-    public void testEditPublicAndRenamePrivateSubcomponent() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+    public void testEditPublicAndRenamePrivateSubcomponent(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    String newScenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
         final String SMALL_RING = "small ring";
 
         final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
@@ -700,9 +690,9 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = "10899")
-    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
+@Test
+@TestRail(id = "10899")
+@Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenOverride() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
@@ -759,9 +749,9 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = "10900")
-    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
+@Test
+@TestRail(id = "10900")
+@Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -815,9 +805,9 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = "11142")
-    @Description("Validate an error message appears if any issues occur")
+@Test
+@TestRail(id = "11142")
+@Description("Validate an error message appears if any issues occur")
     public void testEditWithExistingPrivateScenarioName() {
         String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -876,9 +866,9 @@ public class EditAssembliesTest extends TestBase {
         assertThat(editScenarioStatusPage.getEditScenarioErrorMessage(), containsString("failed while attempting to create private scenario(s)."));
     }
 
-    @Test
-    @TestRail(testCaseId = "10810")
-    @Description("Shallow Edit an assembly with uncosted scenarios")
+@Test
+@TestRail(id = "10810")
+@Description("Shallow Edit an assembly with uncosted scenarios")
     public void testShallowEditCostedAssemblyWithUncostedSubComponents() {
         String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
@@ -930,18 +920,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"12040", "11954", "6521", "10874", "11027"})
+@Test
+@TestRail(id = {12040", "11954", "6521", "10874", "11027"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
-    public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
+    public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration(){
+    String assemblyName="flange c";
+    final String assemblyExtension=".CATProduct";
+    final String FLANGE="flange";
+    final String NUT="nut";
+    final String BOLT="bolt";
 
-        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+    List<String>subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+    final ProcessGroupEnum processGroupEnum=ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".CATPart";
 
         currentUser = UserUtil.getUser();
@@ -994,27 +984,27 @@ public class EditAssembliesTest extends TestBase {
             .clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName))
-            .as("Verify that deleted sub-component replaced with Public 'missing' scenario").contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(BOLT))
-                .as("Verify that deleted sub-component replaced with 'missing' scenario").isTrue();
+    softAssertions.assertThat(componentsTreePage.getRowDetails(BOLT, scenarioName))
+    .as("Verify that deleted sub-component replaced with Public 'missing' scenario").contains(StatusIconEnum.PRIVATE.getStatusIcon());
+    softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(BOLT))
+    .as("Verify that deleted sub-component replaced with 'missing' scenario").isTrue();
 
-        softAssertions.assertAll();
+    softAssertions.assertAll();
     }
 
     @Test
     @Issue("BA-2965")
-    @TestRail(testCaseId = {"12037"})
+    @TestRail(id = {12037"})
     @Description("Validate I can switch between public sub components")
-    public void testSwitchBetweenPublicSubcomponents() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String editedComponentScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+    public void testSwitchBetweenPublicSubcomponents(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    String editedComponentScenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
+    final String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
         final String SMALL_RING = "small ring";
 
         final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
@@ -1076,27 +1066,27 @@ public class EditAssembliesTest extends TestBase {
             .confirmCost("Yes")
             .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2);
 
-        double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
-        double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
+    double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
+    double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
-        softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
+    softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
+    softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
 
-        softAssertions.assertAll();
+    softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"11133", "11141"})
+    @TestRail(id = {11133", "11141"})
     @Description("Validate the edit button will only be enabled when top level sub components are selected")
-    public void testEditButtonSubAssembly() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+    public void testEditButtonSubAssembly(){
+    String scenarioName=new GenerateStringUtil().generateScenarioName();
+    currentUser = UserUtil.getUser();
 
-        final String SUB_ASSEMBLY = "assy03A";
-        final String TOP_LEVEL = "assy03";
+    final String SUB_ASSEMBLY="assy03A";
+    final String TOP_LEVEL="assy03";
 
-        List<String> subAssemblyComponentNames = Arrays.asList("Part0005a", "Part0005b");
-        List<String> subComponentNames = Arrays.asList("Part0004", "Part0003", "Part0002");
+    List<String>subAssemblyComponentNames = Arrays.asList("Part0005a", "Part0005b");
+    List<String>subComponentNames = Arrays.asList("Part0004", "Part0003", "Part0002");
 
         final String componentExtension = ".ipt";
         final String assemblyExtension = ".iam";
@@ -1132,9 +1122,9 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = "6595")
-    @Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
+@Test
+@TestRail(id = "6595")
+@Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
     public void testEditPublicAssembly() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
@@ -1182,18 +1172,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"6601", "6602", "11869", "12022", "12023", "6522"})
+@Test
+@TestRail(id = {6601", "6602", "11869", "12022", "12023", "6522"})
     @Description("Validate user can open a public component from a private workspace")
-    public void testOpeningPublicComponentFromPrivateWorkspace() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+    public void testOpeningPublicComponentFromPrivateWorkspace(){
+    String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
 
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
+    final String SMALL_RING="small ring";
 
-        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+    List<String>subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
         final UserCredentials currentUser = UserUtil.getUser();
@@ -1242,26 +1232,26 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(evaluatePage.getTabTitle()).contains("PIN");
         softAssertions.assertThat(evaluatePage.getTabCount()).isEqualTo(2);
 
-        evaluatePage.editScenario(EditScenarioStatusPage.class)
-            .close(EvaluatePage.class);
+    evaluatePage.editScenario(EditScenarioStatusPage.class)
+    .close(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
+    softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 
-        softAssertions.assertAll();
+    softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"11960"})
+    @TestRail(id = {11960"})
     @Description("Validate a private sub component will take preference over a public iteration when editing a public assembly")
-    public void testEditPublicAssemblyAssociationsPrivatePreference() {
-        final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String assemblyExtension = ".SLDASM";
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-        final String subComponentExtension = ".SLDPRT";
-        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+    public void testEditPublicAssemblyAssociationsPrivatePreference(){
+    final String hinge_assembly="Hinge assembly";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final String assemblyExtension=".SLDASM";
+    final String big_ring="big ring";
+    final String pin="Pin";
+    final String small_ring="small ring";
+    final String subComponentExtension=".SLDPRT";
+    final List<String>subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
@@ -1318,18 +1308,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"11961", "11956"})
+@Test
+@TestRail(id = {11961", "11956"})
     @Description("Validate a new private sub component will take preference over a public iteration when editing a public assembly")
-    public void testEditPublicAssemblyAssociationsPrivateNewScenarioPreferenceAndDelete() {
-        final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String assemblyExtension = ".SLDASM";
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-        final String subComponentExtension = ".SLDPRT";
-        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+    public void testEditPublicAssemblyAssociationsPrivateNewScenarioPreferenceAndDelete(){
+    final String hinge_assembly="Hinge assembly";
+    final ProcessGroupEnum assemblyProcessGroup=ProcessGroupEnum.ASSEMBLY;
+    final String assemblyExtension=".SLDASM";
+    final String big_ring="big ring";
+    final String pin="Pin";
+    final String small_ring="small ring";
+    final String subComponentExtension=".SLDPRT";
+    final List<String>subComponentNames = Arrays.asList(big_ring, pin, small_ring);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final File resourceFile = FileResourceUtil.getCloudFile(subComponentProcessGroup, big_ring + subComponentExtension);
 
@@ -1409,18 +1399,18 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10843"})
+@Test
+@TestRail(id = {10843"})
     @Description("Validate assembly explorer table updates when sub-components changed")
-    public void testAssemblyExplorerTableUpdates() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+    public void testAssemblyExplorerTableUpdates(){
+    String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
 
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
+    final String SMALL_RING="small ring";
 
-        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+    List<String>subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
         final UserCredentials currentUser = UserUtil.getUser();
@@ -1487,24 +1477,24 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
-            .contains("7,777", "612");
+    softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, scenarioName)).as("Verify details updated")
+    .contains("7,777", "612");
 
-        softAssertions.assertAll();
+    softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"10860", "21552"})
+    @TestRail(id = {10860", "21552"})
     @Description("Validate 'missing' scenario created if sub-component deleted'")
-    public void testMissingSubComponentOnDeletion() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+    public void testMissingSubComponentOnDeletion(){
+    String assemblyName="Hinge assembly";
+    final String assemblyExtension=".SLDASM";
 
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+    final String BIG_RING="big ring";
+    final String PIN="Pin";
+    final String SMALL_RING="small ring";
 
-        List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+    List<String>subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
         final UserCredentials currentUser = UserUtil.getUser();

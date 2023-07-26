@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.componentcost;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
@@ -25,7 +24,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3329"})
+    @TestRail(id = {3329})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.genericComponentCostCurrencyTest();

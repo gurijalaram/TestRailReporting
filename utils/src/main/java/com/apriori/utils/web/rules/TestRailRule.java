@@ -1,6 +1,6 @@
 package com.apriori.utils.web.rules;
 
-import com.apriori.utils.TestRail;
+
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.web.driver.TestMode;
 import com.apriori.utils.web.exceptions.APIClient;
@@ -93,7 +93,7 @@ public class TestRailRule extends TestWatcher {
         APIClient client = new APIClient(API_URL);
         client.setUser(USERNAME);
         client.setPassword(PASSWORD);
-        String[] values = testRail.testCaseId();
+        String[] values = testRail.id();
         for (String value : values) {
             client.sendPost("add_result_for_case/" + CommonConstants.RUN_ID + "/" + value + "", parameterData);
         }

@@ -1,18 +1,18 @@
 package tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.ats.entity.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -45,7 +45,7 @@ public class AtsAuthenticationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"22084"})
+    @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
         UserCredentials userCreds = UserUtil.getUser();
@@ -58,7 +58,7 @@ public class AtsAuthenticationTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"22083"})
+    @TestRail(id = {22083})
     @Description("Creates a user for SAML federated providers")
     public void createUserForSaml() {
         String customerName = generateStringUtil.generateCustomerName();

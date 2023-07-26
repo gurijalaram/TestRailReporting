@@ -1,16 +1,16 @@
 package com.apriori.sds.tests;
 
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.ConnectionRequest;
 import com.apriori.sds.entity.response.Connection;
 import com.apriori.sds.entity.response.ConnectionsItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -29,7 +29,7 @@ public class ConnectionsTest extends SDSTestUtil {
     private static Set<String> connectionsToDelete = new HashSet<>();
 
     @Test
-    @TestRail(testCaseId = {"6936"})
+    @TestRail(id = {6936})
     @Description("Find connections for a customer matching a specified query.")
     @Ignore
     public void testGetConnections() {
@@ -47,7 +47,7 @@ public class ConnectionsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8625"})
+    @TestRail(id = {8625})
     @Description("Add a Connection to the ST Installation")
     @Ignore
     public void testPostConnections() {
@@ -55,7 +55,7 @@ public class ConnectionsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8627"})
+    @TestRail(id = {8627})
     @Description("Delete - a Connection to an Installation.")
     @Ignore
     public void testDeleteConnections() {
@@ -65,7 +65,7 @@ public class ConnectionsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8626"})
+    @TestRail(id = {8626})
     @Description("Update - a Connection to an Installation.")
     @Ignore
     public void testPatchConnections() {

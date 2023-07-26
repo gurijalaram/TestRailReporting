@@ -6,12 +6,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cisapi.controller.CisUserPreferencesResources;
 import com.apriori.cisapi.entity.response.userpreferences.CurrentExtendedUserPreferencesResponse;
 import com.apriori.cisapi.entity.response.userpreferences.ExtendedUserPreferencesResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -26,7 +26,7 @@ public class CisUserPreferencesTest extends CisUserPreferencesResources {
     }
 
     @Test
-    @TestRail(testCaseId = "22095")
+    @TestRail(id = 22095)
     @Description("Get Extended User Preferences")
     public void testGetCurrentExtendedUserPreferences() {
         CurrentExtendedUserPreferencesResponse currentExtendedUserPreferenceResponse = getCurrentExtendedUserPreferences();
@@ -34,7 +34,7 @@ public class CisUserPreferencesTest extends CisUserPreferencesResources {
     }
 
     @Test
-    @TestRail(testCaseId = "22096")
+    @TestRail(id = 22096)
     @Description("Get Logged in user's Extended User Preferences")
     public void testGetLoggedExtendedUserPreferences() {
         ExtendedUserPreferencesResponse loggedExtendedUserPreferenceResponse = getLoggedExtendedUserPreferences();
@@ -42,7 +42,7 @@ public class CisUserPreferencesTest extends CisUserPreferencesResources {
     }
 
     @Test
-    @TestRail(testCaseId = "22097")
+    @TestRail(id = 22097)
     @Description("Update Extended User Preferences")
     public void testUpdateCurrentExtendedUserPreferences() {
         String avatarColor = "#009999";

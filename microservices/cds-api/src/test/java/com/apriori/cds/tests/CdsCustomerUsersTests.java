@@ -1,5 +1,8 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.response.ErrorMessage;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProperties;
@@ -7,14 +10,11 @@ import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -58,7 +58,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3293"})
+    @TestRail(id = {3293})
     @Description("Add a user to a customer")
     public void addCustomerUsers() {
         String userName = generateStringUtil.generateUserName();
@@ -71,7 +71,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3250"})
+    @TestRail(id = {3250})
     @Description("Get a list of users for a customer")
     public void getCustomerUsers() {
         String userName = generateStringUtil.generateUserName();
@@ -87,7 +87,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3281"})
+    @TestRail(id = {3281})
     @Description("Add a user to a customer")
     public void getCustomerUserByIdentity() {
         String userName = generateStringUtil.generateUserName();
@@ -102,7 +102,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3295"})
+    @TestRail(id = {3295})
     @Description("Update a user")
     public void patchUserByIdentity() {
         String userName = generateStringUtil.generateUserName();
@@ -116,7 +116,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5967"})
+    @TestRail(id = {5967})
     @Description("Delete user wrong identity")
     public void deleteWrongUserIdentity() {
         String userName = generateStringUtil.generateUserName();
@@ -133,7 +133,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13304"})
+    @TestRail(id = {13304})
     @Description("Updates/changes the credentials for the user identified by their identity")
     public void updateUserCredentials() {
         String userName = generateStringUtil.generateUserName();
@@ -151,7 +151,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"24489"})
+    @TestRail(id = {24489})
     @Description("GET Required User Properties")
     public void getUserProperties() {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);

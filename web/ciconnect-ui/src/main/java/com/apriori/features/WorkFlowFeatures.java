@@ -1,5 +1,6 @@
 package com.apriori.features;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.enums.ConnectorComponentEnum;
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.WorkflowHome;
@@ -9,7 +10,6 @@ import com.apriori.pages.workflows.schedule.details.WorkflowSchedule;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.request.workorders.cost.createcostworkorder;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 @Schema(location = "workorders/CreateCostWorkorderResponse.json")
 public class CostOrderCommand {

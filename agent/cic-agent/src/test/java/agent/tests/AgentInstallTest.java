@@ -1,7 +1,7 @@
 package agent.tests;
 
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
+import com.apriori.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import utils.AgentService;
 import utils.CicLoginUtil;
 
-public class AgentInstallTest extends TestBase {
+public class AgentInstallTest extends TestBaseUI {
 
     private static String loginSession;
     private static SoftAssertions softAssertions;

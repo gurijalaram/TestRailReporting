@@ -1,13 +1,13 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -51,7 +51,7 @@ public class CdsGetCustomerTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3278"})
+    @TestRail(id = {3278})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
         ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity);
@@ -61,7 +61,7 @@ public class CdsGetCustomerTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5957"})
+    @TestRail(id = {5957})
     @Description("Get customer applications")
     public void getCustomersApplications() {
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
@@ -74,7 +74,7 @@ public class CdsGetCustomerTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5305"})
+    @TestRail(id = {5305})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
         ResponseWrapper<Customer> updatedEmail = cdsTestUtil.updateCustomer(customerIdentity, updatedEmailPattern);

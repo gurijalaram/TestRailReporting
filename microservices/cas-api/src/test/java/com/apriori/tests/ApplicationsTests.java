@@ -1,14 +1,14 @@
 package com.apriori.tests;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.Applications;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.Customers;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,7 +26,7 @@ public class ApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5659"})
+    @TestRail(id = {5659})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
         ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);

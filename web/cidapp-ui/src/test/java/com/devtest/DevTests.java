@@ -1,15 +1,15 @@
 package com.devtest;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class DevTests extends TestBase {
+public class DevTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -27,7 +27,7 @@ public class DevTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"14726", "15015"})
+    @TestRail(id = {14726, 15015})
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();

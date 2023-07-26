@@ -5,9 +5,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.startsWith;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfoComponent;
@@ -31,13 +34,10 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.json.JsonManager;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -61,7 +61,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"6933"})
+    @TestRail(id = {6933})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
@@ -90,7 +90,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"7697"})
+    @TestRail(id = {7697})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
         NewPartRequest productionInfoInputs = setupProductionInfoInputs();
@@ -120,7 +120,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "11974")
+    @TestRail(id = 11974)
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
         NewPartRequest productionInfoInputs = setupProductionInfoInputs();
@@ -170,7 +170,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"7710"})
+    @TestRail(id = {7710})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
@@ -193,7 +193,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"8681"})
+    @TestRail(id = {8681})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
         Object productionInfoInputs = setupProductionInfoInputs();
@@ -226,7 +226,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"8682"})
+    @TestRail(id = {8682})
     @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
     public void testFileNameAndExtensionInputAndOutput() {
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -255,7 +255,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"8689"})
+    @TestRail(id = {8689})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
@@ -281,7 +281,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"8693"})
+    @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
         NewPartRequest productionInfoInputs = setupProductionInfoInputs();
@@ -316,7 +316,7 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @TestRail(testCaseId = {"8693"})
+    @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
         NewPartRequest productionInfoInputs = setupProductionInfoInputs();
@@ -354,7 +354,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "11981")
+    @TestRail(id = 11981)
     @Description("Delete Scenario")
     public void testDeleteScenario() {
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
@@ -383,7 +383,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "11990")
+    @TestRail(id = 11990)
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
         testShallowEditOfScenario(
@@ -393,7 +393,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "11991")
+    @TestRail(id = 11991)
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
         testShallowEditOfScenario(
@@ -403,7 +403,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "12044")
+    @TestRail(id = 12044)
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
@@ -425,7 +425,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "12047")
+    @TestRail(id = 12047)
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(

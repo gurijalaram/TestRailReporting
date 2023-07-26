@@ -1,14 +1,14 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
@@ -19,8 +19,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
-
-public class TableHeadersTests extends TestBase {
+public class TableHeadersTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
@@ -32,7 +31,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7928"})
+    @TestRail(id = {7928})
     @Description("Test default list of column headers in the workspace")
     public void testDefaultColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
@@ -44,7 +43,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6347"})
+    @TestRail(id = {6347})
     @Description("Test added columns are displayed in the workspace")
     public void testAddColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
@@ -63,7 +62,7 @@ public class TableHeadersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6346"})
+    @TestRail(id = {6346})
     @Description("Test remove thumbnails")
     public void testRemoveThumbnails() {
         loginPage = new CidAppLoginPage(driver);
@@ -89,7 +88,7 @@ public class TableHeadersTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"6340"})
+    @TestRail(id = {6340})
     @Description("Test sort all columns")
     public void testSortColumns() {
         loginPage = new CidAppLoginPage(driver);

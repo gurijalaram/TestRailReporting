@@ -5,18 +5,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -29,7 +29,7 @@ import testsuites.suiteinterface.ExtendedRegression;
 
 import java.io.File;
 
-public class PsoEditTests extends TestBase {
+public class PsoEditTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -40,7 +40,7 @@ public class PsoEditTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"7286", "7287", "7288", "7289", "6634", "6635"})
+    @TestRail(id = {7286, 7287, 7288, 7289, 6634, 6635})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -78,7 +78,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @Issue("BA-2651")
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7269", "7297", "7289", "7296"})
+    @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -121,7 +121,7 @@ public class PsoEditTests extends TestBase {
 
     @Ignore("Ignoring this test only as we need to find a way to count bar horizontally")
     @Test
-    @TestRail(testCaseId = {"7294", "7295"})
+    @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -157,7 +157,7 @@ public class PsoEditTests extends TestBase {
     @Test
     @Category(ExtendedRegression.class)
     @Issue("BA-2651")
-    @TestRail(testCaseId = {"7293"})
+    @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -185,7 +185,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7299"})
+    @TestRail(id = {7299})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -214,7 +214,7 @@ public class PsoEditTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"8972"})
+    @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -269,7 +269,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7275"})
+    @TestRail(id = {7275})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -296,7 +296,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16707"})
+    @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

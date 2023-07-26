@@ -1,18 +1,18 @@
 package com.cic.tests;
 
 import com.apriori.DateFormattingUtils;
+import com.apriori.DateUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
@@ -48,7 +48,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5074", "22711"})
+    @TestRail(id = {5074, 22711})
     @Description("Test setting multiselect UDA using mapping rule 'Mapped from PLM' with value set in PLM System, " +
         "Test reading UDA of all data types with mapping rule 'Mapped from PLM' with value set in PLM")
     public void testMultiSelectUdaMapSetInPlm() {
@@ -97,7 +97,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5218", "4411"})
+    @TestRail(id = {5218, 4411})
     @Description("Test setting multiselect UDA using mapping rule 'Mapped from PLM' with NO value set in PLM System," +
         "Test reading UDA of all data types with mapping rule 'Mapped from PLM' with NO value set in PLM")
     public void testMultiSelectUdaMapNotInPlm() {
@@ -145,7 +145,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22709", "22713"})
+    @TestRail(id = {22709, 22713})
     @Description("Test setting multiselect UDA using mapping rule 'Default if NO PLM Value' with Value set in PLM system, " +
         "Test reading UDA of all data types with mapping rule 'Default if no PLM value' with value set in PLM")
     public void testMultiSelectUdaMapDefaultSetInPlm() {
@@ -198,7 +198,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22710", "22712"})
+    @TestRail(id = {22710, 22712})
     @Description("Test setting multiselect UDA using mapping rule 'Default if no PLM value' with NO value set in PLM System, " +
         " \"Test reading UDA of all data types with mapping rule 'Default if no PLM value' with NO value set in PLM\"")
     public void testMultiSelectUdaNotMappedInPlm() {
@@ -251,7 +251,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"10511"})
+    @TestRail(id = {10511})
     @Description("Invalid value for Digital Factory read from PLM system results in part processing failure and useful error message")
     public void testMultiSelectUdaWithInvalidVpe() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_VPE);
@@ -272,7 +272,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"10512"})
+    @TestRail(id = {10512})
     @Description("Invalid value for Process Group read from PLM system results in part processing failure and useful error message")
     public void testMultiSelectUdaWithInvalidProcessGroup() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_PG);
@@ -307,7 +307,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5076"})
+    @TestRail(id = {5076})
     @Description("Test invalid value for multiselect UDA read from PLM")
     public void testMultiSelectUdaWithInvalidUda() {
         PartData plmInvalidUdaFormatData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_UDA_FORMAT);
@@ -359,7 +359,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
 
     @Test
     @Issue("APG-981")
-    @TestRail(testCaseId = {"10513"})
+    @TestRail(id = {10513})
     @Description("Invalid value for Material read from PLM system results in part processing failure and useful error message")
     public void testMultiSelectUdaWithInvalidMaterial() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_INVALID_MATERIAL);
@@ -394,7 +394,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5073", "22716"})
+    @TestRail(id = {5073, 22716})
     @Description("Test setting multiselect UDA using mapping rule constant, " +
         " UDAs of all data types can be set in workflow with mapping rule constant")
     public void testMultiSelectUdaConstantMappedRule() {

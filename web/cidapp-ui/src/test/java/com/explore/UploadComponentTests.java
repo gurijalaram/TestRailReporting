@@ -8,30 +8,30 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
+import com.utils.StatusIconEnum;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UploadComponentTests extends TestBase {
+public class UploadComponentTests extends TestBaseUI {
 
     private File resourceFile;
     private File resourceFile1;
@@ -88,7 +88,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"11879", "11878", "12161"})
+    @TestRail(id = {11879, 11878, 12161})
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
         UserCredentials currentUser = UserUtil.getUser();
@@ -110,7 +110,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11884", "11895"})
+    @TestRail(id = {11884, 11895})
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -137,7 +137,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"11878", "11883"})
+    @TestRail(id = {11878, 11883})
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
         currentUser = UserUtil.getUser();
@@ -161,7 +161,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11881, 11882"})
+    @TestRail(id = {11881, 11882})
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
         currentUser = UserUtil.getUser();
@@ -186,7 +186,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11891")
+    @TestRail(id = 11891)
     @Description("Validate that user can delete components from the Import CAD File modal")
     public void testDeleteCadFiles() {
         currentUser = UserUtil.getUser();
@@ -211,7 +211,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11898", "11893"})
+    @TestRail(id = {11898, 11893})
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
         currentUser = UserUtil.getUser();
@@ -260,7 +260,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11889")
+    @TestRail(id = 11889)
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
     public void testOverrideExistingScenarioFailure() {
         currentUser = UserUtil.getUser();
@@ -301,7 +301,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11901")
+    @TestRail(id = 11901)
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
         currentUser = UserUtil.getUser();
@@ -343,7 +343,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11888", "5618"})
+    @TestRail(id = {11888, 5618})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
         currentUser = UserUtil.getUser();
@@ -398,7 +398,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10750")
+    @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
         currentUser = UserUtil.getUser();
@@ -432,7 +432,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6037")
+    @TestRail(id = 6037)
     @Description("Create a New Component.Scenario - user does not have a pre existing private Component.Scenario of that name")
     public void testUploadThenCheckAvailabilityWithNewUser() {
         currentUser = UserUtil.getUser();
@@ -460,7 +460,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11900", "11890"})
+    @TestRail(id = {11900, 11890})
     @Description("Validate multiple upload of same components is blocked")
     public void multipleUploadOfSameComponents() {
         currentUser = UserUtil.getUser();
@@ -484,7 +484,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11910"})
+    @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
         currentUser = UserUtil.getUser();
@@ -523,7 +523,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"12169", "12171", "12172", "12168"})
+    @TestRail(id = {12169, 12171, 12172, 12168})
     @Description("Validate race conditions - upload a full assembly with override")
     public void uploadMultiLevelAssemblyWithOverrideAndRename() {
         currentUser = UserUtil.getUser();

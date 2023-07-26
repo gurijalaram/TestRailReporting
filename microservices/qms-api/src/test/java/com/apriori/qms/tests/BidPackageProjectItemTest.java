@@ -1,7 +1,11 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItem;
@@ -12,13 +16,9 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.ApwErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -71,7 +71,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14685", "14912"})
+    @TestRail(id = {14685, 14912})
     @Description("Verify that Project Item creates automatically with Project creation")
     public void createAndGetProjectItem() {
         softAssertions.assertThat(bidPackageProjectResponse.getItems().size()).isGreaterThan(0);
@@ -109,7 +109,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14911"})
+    @TestRail(id = {14911})
     @Description("Find all project Items for particular project using bid-package URL")
     public void getAllProjectItems() {
         BidPackageProjectItemsResponse bpPItemsResponse = QmsBidPackageResources.getBidPackageProjectItems(
@@ -122,7 +122,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24020", "24004"})
+    @TestRail(id = {24020, 24004})
     @Description("Verify user is able to create bulk project items by using project-items creation API")
     public void createBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
@@ -194,7 +194,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24003"})
+    @TestRail(id = {24003})
     @Description("Verify user is not able to create project items by using project-items creation API, with duplicate (already used) BidPackageItem")
     public void createBidPackageDuplicateProjectItemsForSameProject() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
@@ -237,7 +237,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24019"})
+    @TestRail(id = {24019})
     @Description("Verify user is not able to create  project items by using project-items creation API for new project inside the existing  bidPackage if BidPackageItem for scenario already exists")
     public void createBidPackageDuplicateProjectItemsForNewProject() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
@@ -271,7 +271,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24006"})
+    @TestRail(id = {24006})
     @Description("Verify user is not able to create project items by using project-items creation API, for null component, scenario and iteration identity")
     public void createBidPackageNullProjectItems() {
         //All Identities null
@@ -378,7 +378,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24005"})
+    @TestRail(id = {24005})
     @Description("Verify user is not able to create  project items by using project-items creation API,   for invalid  component, scenario and iteration identity")
     public void createBidPackageInvalidProjectItems() {
         //All Identities null
@@ -485,7 +485,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24032", "24025"})
+    @TestRail(id = {24032, 24025})
     @Description("Verify user is able to delete multiple/bulk project items and Verify user is not able to delete already deleted project items by API for bulk deleting functionality for project identity")
     public void deleteBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();
@@ -597,7 +597,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24021"})
+    @TestRail(id = {24021})
     @Issue("COL-1858")
     @Description("Verify the error message when user tries to delete project items by  passing invalid, null or empty project-item identity")
     public void deleteInvalidBulkBidPackageProjectItems() {
@@ -659,7 +659,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24416"})
+    @TestRail(id = {24416})
     @Description("Verify error message when either bidPackage or project identity is invalid while deleting bulk project items")
     public void deleteBulkBidPackageProjectItemsWithInvalidBidPackageAndProject() {
         //Invalid Bidpackage
@@ -698,7 +698,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24030"})
+    @TestRail(id = {24030})
     @Description("Verify error message when system is unable to find either bidPackage or project while deleting bulk project items")
     public void deleteBulkBidPackageProjectItemsWithDeletedBidPackageAndProject() {
         //Create & Delete Bidpackage/Project
@@ -744,7 +744,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24031"})
+    @TestRail(id = {24031})
     @Description("Verify duplicate project items gets discarded while performing bulk deletion of project-item identity")
     public void deleteDuplicateBulkBidPackageProjectItems() {
         List<BidPackageProjectItem> prjItemIdentiesList = new ArrayList<>();
@@ -778,7 +778,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"26293"})
+    @TestRail(id = {26293})
     @Description("Delete Project Item without discussions inside of it")
     public void deleteBulkBidPackageProjectItemWithNoDiscussion() {
         List<BidPackageProjectItem> bidPackageItemList = new ArrayList<>();

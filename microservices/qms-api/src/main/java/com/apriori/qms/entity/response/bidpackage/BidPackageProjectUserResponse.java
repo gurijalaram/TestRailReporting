@@ -1,7 +1,7 @@
 package com.apriori.qms.entity.response.bidpackage;
 
+import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,5 +25,4 @@ public class BidPackageProjectUserResponse {
     private String role;
     private String userEmail;
     private BidPackageProjectUserDetails user;
-
 }

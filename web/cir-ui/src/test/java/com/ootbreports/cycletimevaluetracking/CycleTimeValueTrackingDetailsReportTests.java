@@ -5,17 +5,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
-public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
+public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
     private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private CommonReportTests commonReportTests;
@@ -35,7 +35,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7325"})
+    @TestRail(id = {7325})
     @Description("Validate report available by navigation - Cycle Time Value Tracking Details Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -45,8 +45,8 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7327"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7327})
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -57,7 +57,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7239"})
+    @TestRail(id = {7239})
     @Description("Verify report availability by search - Cycle Time Value Tracking Details Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -68,7 +68,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7628"})
+    @TestRail(id = {7628})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Details Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -87,8 +87,8 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7627"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7627})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
@@ -112,7 +112,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2334"})
+    @TestRail(id = {2334})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)

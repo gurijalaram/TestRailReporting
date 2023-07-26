@@ -4,9 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -14,7 +15,6 @@ import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.enums.reports.SortOrderEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -25,7 +25,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
-public class PlasticDtcDetailsReportTests extends TestBase {
+public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
@@ -37,7 +37,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7305"})
+    @TestRail(id = {7305})
     @Description("Validate report is available by navigation - Plastic DTC Details Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -47,8 +47,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7308"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7308})
     @Description("Validate report is available by library - Plastic DTC Details Report")
     public void testPlasticDtcReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -59,7 +59,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7311"})
+    @TestRail(id = {7311})
     @Description("Validate report is available by search - Plastic DTC Details")
     public void testPlasticDtcReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -70,7 +70,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7356"})
+    @TestRail(id = {7356})
     @Description("Verify apply button functionality - Plastic DTC Details Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -82,8 +82,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7359"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7359})
     @Description("Verify cancel button functionality - Plastic DTC Details Report")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -92,7 +92,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7362"})
+    @TestRail(id = {7362})
     @Description("Verify reset button functionality - Plastic DTC Details Report")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -104,7 +104,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = {"7365"})
+    @TestRail(id = {7365})
     @Description("Verify save button functionality - Plastic DTC Details Report")
     public void testSaveAndRemoveButtons() {
         inputControlsTests = new InputControlsTests(driver);
@@ -115,8 +115,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class})
-    @TestRail(testCaseId = {"7406"})
+    @Category( {ReportsTest.class})
+    @TestRail(id = {7406})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -128,8 +128,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7407"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7407})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -141,8 +141,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7381"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7381})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -155,7 +155,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7382"})
+    @TestRail(id = {7382})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -167,8 +167,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7519"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7519})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -180,7 +180,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7522"})
+    @TestRail(id = {7522})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Details Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -193,7 +193,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7525"})
+    @TestRail(id = {7525})
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Details Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -205,8 +205,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7528"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7528})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
@@ -218,8 +218,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1371"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1371})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
@@ -230,8 +230,8 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"1369"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
         plasticDtcReportPage = new ReportsLoginPage(driver)
@@ -250,7 +250,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
 
     @Test
     //@Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1378"})
+    @TestRail(id = {1378})
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);

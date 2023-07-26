@@ -31,8 +31,8 @@ public class ColumnUtils {
      * @return string
      */
     public String columnDetails(String table, String column, String rowLocator) {
-        String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + table + "']//thead")).getAttribute("innerText").split("\n");
-        String[] cells = driver.findElement(By.xpath(rowLocator)).getAttribute("innerText").split("\n");
+        String[] columns = driver.findElement(By.xpath("//div[@data-ap-comp='" + table + "']//thead")).getAttribute("innerText").split("");
+        String[] cells = driver.findElement(By.xpath(rowLocator)).getAttribute("innerText").split("");
 
         String[] filteredCells = Arrays.stream(cells).filter(cell -> !cell.equals("\t") && !cell.equals("\t\t")).toArray(String[]::new);
 

@@ -1,8 +1,10 @@
 package com.apriori.qms.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserParameters;
@@ -12,12 +14,9 @@ import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionReque
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -58,7 +57,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15474", "15476"})
+    @TestRail(id = {15474, 15476})
     @Description("Verify that user can add and delete the Project User")
     public void addAndDeleteComponentScenarioUser() {
         //Add
@@ -106,7 +105,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16351"})
+    @TestRail(id = {16351})
     @Description("Verify that more than 10 Users can be added by using SHARE option")
     public void addMoreThan10ComponentScenarioUsers() {
         List<String> usersList = new ArrayList<>();
@@ -140,7 +139,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16352"})
+    @TestRail(id = {16352})
     @Description("Verify that user will not get error messages when adding a new user to a component/scenario pair where one of the discussions is RESOLVED")
     public void addNewUserToResolvedDiscussionNoError() {
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
@@ -174,7 +173,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16531"})
+    @TestRail(id = {16531})
     @Description("Verify that user will not get error messages when adding a new user to a component/scenario pair where one of the discussions is DELETED")
     public void addNewUserToDeletedDiscussionNoError() {
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
@@ -208,7 +207,7 @@ public class QmsScenarioSharingTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16353"})
+    @TestRail(id = {16353})
     @Description("Verify that user will not get error messages after deleted himself from User list")
     public void deleteSelfComponentScenarioUserNoError() {
         //Add

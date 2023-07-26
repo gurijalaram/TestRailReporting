@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
@@ -15,11 +17,9 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.SubLicenses;
 import com.apriori.entity.response.SublicenseAssociation;
 import com.apriori.entity.response.UserLicensing;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -91,7 +91,7 @@ public class CasUserSubLicensesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10877"})
+    @TestRail(id = {10877})
     @Description("Make sure users cannot be assigned to a sublicense under an expired license")
     public void expiredLicense() {
         String subLicenseId = UUID.randomUUID().toString();
@@ -109,7 +109,7 @@ public class CasUserSubLicensesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10878"})
+    @TestRail(id = {10878})
     @Description("Make sure users cannot be assigned to a masterLicense")
     public void masterLicense() {
         String subLicenseId = UUID.randomUUID().toString();
@@ -126,7 +126,7 @@ public class CasUserSubLicensesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10879"})
+    @TestRail(id = {10879})
     @Description("Make sure users cannot be assigned to a masterLicense")
     public void aPrioriInternalLicense() {
         String subLicenseId = UUID.randomUUID().toString();
@@ -143,7 +143,7 @@ public class CasUserSubLicensesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5652", "5655", "5676", "5677", "5678"})
+    @TestRail(id = {5652, 5655, 5676, 5677, 5678})
     @Description("Validate that user can be added to a sub license")
     public void assignSublicenseToUser() {
         String subLicenseId = UUID.randomUUID().toString();
@@ -182,7 +182,7 @@ public class CasUserSubLicensesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13105"})
+    @TestRail(id = {13105})
     @Description("Returns assigned sub license information for the specified user")
     public void getUsersSublicense() {
         String subLicenseId = UUID.randomUUID().toString();

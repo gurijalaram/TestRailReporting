@@ -1,8 +1,13 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Deployment;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -11,15 +16,10 @@ import com.apriori.entity.response.AccessControls;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.Sites;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -83,7 +83,7 @@ public class CasBulkGrantDenyAccessTests {
 
     @Test
     @Description("Bulk grants a source customer's users application access to the target customers applications.")
-    @TestRail(testCaseId = {"13213"})
+    @TestRail(id = {13213})
     public void bulkGrantAccessOutOfContext() {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
@@ -108,7 +108,7 @@ public class CasBulkGrantDenyAccessTests {
 
     @Test
     @Description("Bulk denies all access controls to target customers applications.")
-    @TestRail(testCaseId = {"13214"})
+    @TestRail(id = {13214})
     public void denyAllAccessOutOfContext() {
         String user1Identity = sourceUsers.get(0).getIdentity();
         String user2Identity = sourceUsers.get(1).getIdentity();
@@ -136,7 +136,7 @@ public class CasBulkGrantDenyAccessTests {
 
     @Test
     @Description("Bulk grant/deny all access controls to customers applications")
-    @TestRail(testCaseId = {"13211", "13212"})
+    @TestRail(id = {13211, 13212})
     public void grantAllDenyAll() {
         String userIdentity = sourceUsers.get(0).getIdentity();
         String cloudRef = generateStringUtil.generateCloudReference();

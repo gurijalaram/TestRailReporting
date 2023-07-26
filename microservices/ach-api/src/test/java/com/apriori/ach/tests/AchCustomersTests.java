@@ -3,10 +3,10 @@ package com.apriori.ach.tests;
 import com.apriori.ach.entity.response.CustomersAch;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.utils.AchTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.authorization.AuthorizationUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -23,7 +23,7 @@ public class AchCustomersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21955"})
+    @TestRail(id = {21955})
     @Description("Get a list of customers")
     public void getCustomers() {
         SoftAssertions soft = new SoftAssertions();

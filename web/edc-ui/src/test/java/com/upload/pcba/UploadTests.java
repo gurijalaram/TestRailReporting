@@ -1,17 +1,17 @@
 package com.upload.pcba;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.ElectronicsDataCollectionPage;
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.EdcUiResources;
 import com.utils.RightClickOptionEnum;
@@ -24,7 +24,7 @@ import org.junit.Test;
 import java.io.File;
 import java.nio.file.Paths;
 
-public class UploadTests extends TestBase {
+public class UploadTests extends TestBaseUI {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
@@ -47,7 +47,7 @@ public class UploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1553")
+    @TestRail(id = "1553")
     @Description("Basic workflow to upload a csv file, edit missing sections and save")
     public void testUploadBOM() {
         currentUser = UserUtil.getUser();
@@ -79,7 +79,7 @@ public class UploadTests extends TestBase {
 
     @Ignore("ignoring temporarily as qa-test gets 500 error while uploading wireHarness BOM")
     @Test
-    @TestRail(testCaseId = "13253")
+    @TestRail(id = "13253")
     @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
     public void uploadWireHarnessBOMTest() {
         String testMountTypeData = generateStringUtil.getRandomString();
@@ -99,7 +99,7 @@ public class UploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1731")
+    @TestRail(id = "1731")
     @Description("BOM can be deleted from main page")
     public void deleteUploadedBOMTest() {
         int numberOfBomAfterUpload;
@@ -122,7 +122,7 @@ public class UploadTests extends TestBase {
 
     @Ignore("Ignored due to file location")
     @Test
-    @TestRail(testCaseId = "1732")
+    @TestRail(id = "1732")
     @Description("BOM can be exported to file from main page")
     public void exportUploadedBOMTest() {
         currentUser = UserUtil.getUser();

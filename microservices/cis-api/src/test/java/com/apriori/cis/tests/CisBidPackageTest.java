@@ -4,17 +4,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackagesResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -38,7 +38,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14126", "14130"})
+    @TestRail(id = {14126, 14130})
     @Description("Create, Delete and verify Bid Package is deleted")
     public void testCreateDeleteAndVerifyBidPackage() {
         String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -55,9 +55,8 @@ public class CisBidPackageTest extends TestUtil {
         softAssertions.assertAll();
     }
 
-
     @Test
-    @TestRail(testCaseId = {"14131"})
+    @TestRail(id = {14131})
     @Description("Find List of bid packages and verify pagination for customer identity")
     public void testGetBidPackages() {
         BidPackagesResponse getBidPackagesResponse = CisBidPackageResources.getBidPackages(BidPackagesResponse.class, HttpStatus.SC_OK, currentUser);
@@ -70,7 +69,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14128"})
+    @TestRail(id = {14128})
     @Description("Get bid package by identity")
     public void testGetBidPackage() {
         BidPackageResponse getBidPackageResp = CisBidPackageResources.getBidPackage(bidPackageResponse.getIdentity(), BidPackageResponse.class, HttpStatus.SC_OK, currentUser);
@@ -79,7 +78,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14129"})
+    @TestRail(id = {14129})
     @Description("Updated existing Bid Package status")
     public void testUpdateBidPackageStatus() {
         BidPackageRequest bidPackageRequestBuilder = BidPackageRequest.builder()
@@ -97,7 +96,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14372"})
+    @TestRail(id = {14372})
     @Description("Create Bid Package empty name")
     public void testCreateBidPackageEmptyName() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -114,7 +113,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14375"})
+    @TestRail(id = {14375})
     @Description("Create Bid Package empty name")
     public void testUpdateBidPackageWithInvalidIdentity() {
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
@@ -132,7 +131,7 @@ public class CisBidPackageTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14371"})
+    @TestRail(id = {14371})
     @Description("Create Bid Package empty name")
     public void testCreateBidPackageWithExistingName() {
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();

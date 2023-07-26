@@ -1,6 +1,7 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageItemResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemParameters;
@@ -10,11 +11,10 @@ import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -46,7 +46,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14599", "14604"})
+    @TestRail(id = {14599, 14604})
     @Description("Create and delete Bid Package Item and verify bid package item is removed")
     public void testCreateBidPackageItemWithValidData() {
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -78,7 +78,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14600"})
+    @TestRail(id = {14600})
     @Description("Update Bid package Item with Valid Data")
     public void testUpdateBidPackageItem() {
         ScenarioItem updateScenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(1);
@@ -99,7 +99,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14601"})
+    @TestRail(id = {14601})
     @Description("Update Bid package Item with Invalid Data")
     public void testUpdateBidPackageItemWithInvalidData() {
         BidPackageItemRequest bidPackageItemRequestBuilder = BidPackageItemRequest.builder()
@@ -114,13 +114,13 @@ public class CisBidPackageItemTest extends TestUtil {
             "Invalid bidPackageItemIdentity",
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
-        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("2 validation failures were found:\n" +
-            "* 'bidPackageIdentity' is not a valid identity.\n" +
+        softAssertions.assertThat(cisErrorMessage.getMessage()).contains("2 validation failures were found:" +
+            "* 'bidPackageIdentity' is not a valid identity." +
             "* 'identity' is not a valid identity.");
     }
 
     @Test
-    @TestRail(testCaseId = {"14604"})
+    @TestRail(id = {14604})
     @Description("Delete valid Bid Package Item")
     public void testDeleteBidPackageItem() {
         CisBidPackageItemResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
@@ -138,7 +138,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14605"})
+    @TestRail(id = {14605})
     @Description("Delete Invalid Bid Package Item")
     public void testDeleteBidPackageItemWithInvalidData() {
         CisErrorMessage cisErrorMessage = CisBidPackageItemResources.deleteBidPackageItem(
@@ -150,7 +150,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14602"})
+    @TestRail(id = {14602})
     @Description("Get Bid package Item With valid Data")
     public void testGetBidPackageItem() {
         BidPackageItemResponse updateBidPackageItemResponse = CisBidPackageItemResources.getBidPackageItem(
@@ -163,7 +163,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14603", "14607"})
+    @TestRail(id = {14603, 14607})
     @Description("Get Bid Package Item with invalid identity")
     public void testGetBidPackageItemWithInvalidData() {
         CisErrorMessage cisInvalidErrorMessage = CisBidPackageItemResources.getBidPackageItem(
@@ -172,13 +172,13 @@ public class CisBidPackageItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
-        softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("2 validation failures were found:\n" +
-            "* 'bidPackageIdentity' is not a valid identity.\n" +
+        softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("2 validation failures were found:" +
+            "* 'bidPackageIdentity' is not a valid identity." +
             "* 'identity' is not a valid identity.");
     }
 
     @Test
-    @TestRail(testCaseId = {"14606"})
+    @TestRail(id = {14606})
     @Description("Find list of  Bid Package Items and verify pagination")
     public void testGetBidPackageItems() {
         BidPackageItemsResponse getBidPackageItemsResponse = CisBidPackageItemResources.getBidPackageItems(
@@ -191,7 +191,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13903"})
+    @TestRail(id = {13903})
     @Description("Get Bid package Item with invalid data")
     public void testGetBidPackageItemsByInvalidData() {
         CisErrorMessage cisInvalidErrorMessage = CisBidPackageItemResources.getBidPackageItems(
@@ -203,7 +203,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14597"})
+    @TestRail(id = {14597})
     @Description("Create Bid Package Items with Invalid BidPackage ID")
     public void testCreateBidPackItemWithInvalidBidPackageIdentity() {
         CisErrorMessage cisErrorMessage = CisBidPackageItemResources.createBidPackageItem(
@@ -217,7 +217,7 @@ public class CisBidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14598"})
+    @TestRail(id = {14598})
     @Description("Create Bid Package Items with Invalid Data")
     public void testCreateBidPackItemWithInvalidData() {
         CisErrorMessage cisErrorMessage = CisBidPackageItemResources.createBidPackageItem(

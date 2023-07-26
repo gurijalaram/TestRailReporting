@@ -1,22 +1,21 @@
 package com.apriori.qms.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.TestUtil;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
 import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -52,7 +51,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12479"})
+    @TestRail(id = {12479})
     @Description("get component Details by identity")
     public void getComponentDetails() {
         ResponseWrapper<ComponentResponse> componentResponse = QmsComponentResources.getComponent(userContext,
@@ -62,7 +61,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12496"})
+    @TestRail(id = {12496})
     @Description("Get the component scenario latest iteration")
     public void getComponentsIterationsLatest() {
         ResponseWrapper<ComponentIteration> componentIterationResponse = QmsComponentResources.getLatestIteration(userContext,
@@ -74,7 +73,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12983"})
+    @TestRail(id = {12983})
     @Description("Get component Scenario")
     public void getComponentScenario() {
         ResponseWrapper<ScenarioResponse> componentScenarioResponse = QmsComponentResources.getComponentScenario(userContext,
@@ -85,7 +84,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12979"})
+    @TestRail(id = {12979})
     @Description("Get component Scenarios")
     public void getComponentScenarios() {
         ResponseWrapper<ScenariosResponse> componentScenariosResponse = QmsComponentResources.getComponentScenarios(userContext,
@@ -95,7 +94,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22094", "15475"})
+    @TestRail(id = {22094, 15475})
     @Description("Get component Scenarios Users and Verify avatarColor field is present in User object in Share")
     public void getComponentScenarioUsers() {
         ResponseWrapper<ScenarioProjectUserResponse> componentScenariosResponse =

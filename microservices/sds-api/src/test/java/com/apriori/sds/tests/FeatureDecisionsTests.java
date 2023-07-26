@@ -1,9 +1,9 @@
 package com.apriori.sds.tests;
 
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.FeatureDecisionController;
 import com.apriori.sds.entity.response.FeatureDecisionsResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -14,7 +14,7 @@ public class FeatureDecisionsTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = "21945")
+    @TestRail(id = "21945")
     @Description("Verify feature decisions test")
     public void testFeatureDecisionsTest() {
         FeatureDecisionController featureDecisionController = new FeatureDecisionController();

@@ -1,9 +1,9 @@
 package com.ootbreports.targetquotedcosttrend;
 
-import com.apriori.utils.TestRail;
+import com.apriori.TestBaseUI;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -13,7 +13,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 
-public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase {
+public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBaseUI {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
@@ -24,7 +24,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7324"})
+    @TestRail(id = {7324})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -35,7 +35,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7326"})
+    @TestRail(id = {7326})
     @Description("Validate report is available by library - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -46,7 +46,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7328"})
+    @TestRail(id = {7328})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -56,8 +56,8 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7425"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7425})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -68,8 +68,8 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7426"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {7426})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);

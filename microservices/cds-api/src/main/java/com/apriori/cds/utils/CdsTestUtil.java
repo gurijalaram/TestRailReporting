@@ -2,12 +2,20 @@ package com.apriori.cds.utils;
 
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cds.entity.response.AttributeMappings;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Customers;
+import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.ErrorResponse;
 import com.apriori.cds.entity.response.IdentityProviderRequest;
 import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.request.AccessAuthorizationRequest;
@@ -37,22 +45,14 @@ import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.cds.objects.response.UserRole;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Customers;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.LicensedApplication;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
@@ -851,7 +851,7 @@ public class CdsTestUtil extends TestUtil {
         String token = new AuthorizationUtil().getTokenAsString();
 
         StringBuilder sb = new StringBuilder(users);
-        String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,\n";
+        String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,";
         for (int i = 0; i < 23; i++) {
             sb.append(String.format(userRecord, i, i, email, i, i));
         }

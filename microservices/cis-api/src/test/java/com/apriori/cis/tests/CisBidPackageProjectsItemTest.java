@@ -1,6 +1,7 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageProjectItemResources;
 import com.apriori.cisapi.controller.CisBidPackageProjectResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
@@ -11,11 +12,10 @@ import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -59,7 +59,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"14091"})
+    @TestRail(id = {14091})
     @Description("Create Project Item with valid inputs")
     public void createValidBidPackageProjectItemValid() {
         CisBidPackageProjectItemResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectItemResponse.getIdentity(), null, currentUser);
@@ -71,7 +71,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"14092"})
+    @TestRail(id = {14092})
     @Description("Create Project Item with valid inputs")
     public void createInvalidBidPackageProjectItem() {
         CisBidPackageProjectItemResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), bidPackageProjectItemResponse.getIdentity(), null, currentUser);
@@ -83,7 +83,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"13487"})
+    @TestRail(id = {13487})
     @Description("Get Project Item")
     public void getBidPackageProjectItem() {
         BidPackageProjectItemsResponse getBidPackageProjectItemsResponse = CisBidPackageProjectItemResources.getBidPackageProjectItem(
@@ -99,7 +99,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"14098"})
+    @TestRail(id = {14098})
     @Description("Delete valid Bid Package Project Item")
     public void deleteValidBidPackageProjectItem() {
         CisBidPackageProjectItemResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(),
@@ -108,7 +108,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"14413"})
+    @TestRail(id = {14413})
     @Description("Delete In-valid Bid Package Project Item")
     public void deleteInValidBidPackageProjectItem() {
         CisErrorMessage cisErrorMessage = CisBidPackageProjectItemResources.deleteBidPackageProjectItem("INVALID_BP_ID",
@@ -119,7 +119,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14093"})
+    @TestRail(id = {14093})
     @Description("Get Project Items with valid data")
     public void getValidBidPackageProjectItems() {
         BidPackageProjectItemsResponse getBidPackageProjectItemsResponse = CisBidPackageProjectItemResources.getBidPackageProjectItems(
@@ -132,7 +132,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14412"})
+    @TestRail(id = {14412})
     @Description("Get Project Items with in-valid data")
     public void getInvalidBidPackageProjectItems() {
         CisErrorMessage getBidPackageProjectItemsResponse = CisBidPackageProjectItemResources.getBidPackageProjectItems(
@@ -141,12 +141,12 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectItemsResponse.getMessage())
-            .contains("2 validation failures were found:\n* 'projectIdentity' is not a valid identity.\n* 'bidPackageIdentity' is not a valid identity.");
+            .contains("2 validation failures were found:* 'projectIdentity' is not a valid identity.* 'bidPackageIdentity' is not a valid identity.");
     }
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"13489"})
+    @TestRail(id = {13489})
     @Description("Mention a User in a Reply (Retrieve the Project users)")
     public void getBidPackageProjectItemUsers() {
         CisErrorMessage getBidPackageProjectItemsResponse = CisBidPackageProjectItemResources.getBidPackageProjectItemUsers(
@@ -155,7 +155,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
             currentUser,
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectItemsResponse.getMessage())
-            .contains("2 validation failures were found:\n* 'projectIdentity' is not a valid identity.\n* 'bidPackageIdentity' is not a valid identity.");
+            .contains("2 validation failures were found:* 'projectIdentity' is not a valid identity.* 'bidPackageIdentity' is not a valid identity.");
     }
 
     @After

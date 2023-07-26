@@ -1,13 +1,13 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
 import com.apriori.qms.controller.QmsUserPreferenceResources;
 import com.apriori.qms.entity.request.userpreference.UserPreferenceParameters;
 import com.apriori.qms.entity.request.userpreference.UserPreferenceRequest;
 import com.apriori.qms.entity.response.userpreference.UserPreferenceResponse;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,7 +26,7 @@ public class QmsUserPreferenceTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16854"})
+    @TestRail(id = {16854})
     @Description("Verify that user can get user preference")
     public void verifyGetUserPreference() {
         UserPreferenceResponse userPreferenceResponse =
@@ -35,7 +35,7 @@ public class QmsUserPreferenceTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16855"})
+    @TestRail(id = {16855})
     @Description("Verify that user can update user preference")
     public void verifyUpdateUserPreference() {
         UserPreferenceRequest userPreferenceRequestBuilder = UserPreferenceRequest.builder()
@@ -48,7 +48,7 @@ public class QmsUserPreferenceTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16856"})
+    @TestRail(id = {16856})
     @Description("Verify that user can delete user preference")
     public void verifyDeleteUserPreference() {
         QmsUserPreferenceResources.deleteUserPreference(currentUser, HttpStatus.SC_NO_CONTENT);

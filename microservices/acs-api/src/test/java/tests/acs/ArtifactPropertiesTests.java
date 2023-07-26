@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactListItem;
 import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
@@ -12,13 +15,10 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.json.JsonManager;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import org.junit.Test;
 public class ArtifactPropertiesTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "12079")
+    @TestRail(id = 12079)
     @Description("Verify Get Artifact Properties Endpoint")
     public void testGetArtifactPropertiesEndpoint() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -56,6 +56,7 @@ public class ArtifactPropertiesTests extends TestUtil {
         ArtifactPropertiesResponse getArtifactPropertiesResponse = acsResources.getArtifactProperties(costOutputs.getScenarioIterationKey(), getGcdMappingResponse);
 
         performAssertions(getArtifactPropertiesResponse.getArtifactList().get(0), "Edge:57");
+
         performAssertions(getArtifactPropertiesResponse.getArtifactList().get(1), "Edge:61");
     }
 

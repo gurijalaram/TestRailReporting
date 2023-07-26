@@ -1,22 +1,22 @@
 package com.compare;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.google.common.collect.Ordering;
 import com.utils.ColumnsEnum;
@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class QuickComparisonTests  extends TestBase {
+public class QuickComparisonTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -62,9 +62,8 @@ public class QuickComparisonTests  extends TestBase {
         }
     }
 
-
     @Test
-    @TestRail(testCaseId = "24296")
+    @TestRail(id = 24296)
     @Description("Quick Compare option disabled if multiple scenarios selected in Explore view")
     public void validateQuickCompareDisabledForMultiSelect() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -103,7 +102,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"24294", "24299"})
+    @TestRail(id = {24294, 24299})
     @Description("User can create a comparison by selection of a single scenario on Evaluate page")
     public void createQuickComparisonFromEvaluate() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -158,7 +157,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"24293", "24298"})
+    @TestRail(id = {24293, 24298})
     @Description("User can create a comparison by selection of a single scenario on Explore page")
     public void createQuickComparisonFromExplore() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -213,7 +212,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"24293", "24294", "24345"})
+    @TestRail(id = {24293, 24294, 24345})
     @Description("Verify that Quick Compare displays most recently edited scenarios for comparison in order")
     public void testQuickCompareScenarioOrdering() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -312,7 +311,7 @@ public class QuickComparisonTests  extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26147"})
+    @TestRail(id = {26147})
     @Description("Validate scenarios can be deleted from quick comparison via modify comparison")
     public void testDeleteQuickComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;

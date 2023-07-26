@@ -4,18 +4,18 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
@@ -29,7 +29,7 @@ import utils.Constants;
 
 import java.math.BigDecimal;
 
-public class CostOutlierIdentificationDetailsReportTests extends TestBase {
+public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     private CostOutlierIdentificationReportPage costOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
@@ -41,7 +41,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1944"})
+    @TestRail(id = {1944})
     @Description("Validate report is available by navigation - menu")
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
@@ -52,7 +52,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6184"})
+    @TestRail(id = {6184})
     @Description("Validate details report is available by library")
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -63,7 +63,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6183"})
+    @TestRail(id = {6183})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -74,7 +74,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1956"})
+    @TestRail(id = {1956})
     @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
         inputControlsTests = new InputControlsTests(driver);
@@ -86,7 +86,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6253"})
+    @TestRail(id = {6253})
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
         inputControlsTests = new InputControlsTests(driver);
@@ -98,7 +98,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     //@Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6823"})
+    @TestRail(id = {6823})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")
     public void testDataIntegrityAgainstCID() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
@@ -132,7 +132,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1965"})
+    @TestRail(id = {1965})
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
@@ -179,7 +179,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6988"})
+    @TestRail(id = {6988})
     @Description("Percent difference threshold filter - details report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
@@ -191,7 +191,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6992"})
+    @TestRail(id = {6992})
     @Description("Annualised potential savings threshold filter - details report - junk value")
     public void testAnnualisedFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
@@ -203,7 +203,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6989"})
+    @TestRail(id = {6989})
     @Description("Percent difference threshold filter - details report - decimal places")
     public void testPercentDifferenceFilterDecimalPlaces() {
         inputControlsTests = new InputControlsTests(driver);
@@ -215,7 +215,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7024"})
+    @TestRail(id = {7024})
     @Description("Annualised potential savings threshold filter - details report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
@@ -227,7 +227,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7026"})
+    @TestRail(id = {7026})
     @Description("Percent difference threshold filter - details report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
@@ -239,7 +239,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"6990"})
+    @TestRail(id = {6990})
     @Description("Annualised potential savings threshold filter - details report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
@@ -286,8 +286,8 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"6985"})
+    @Category( {ReportsTest.class, OnPremTest.class})
+    @TestRail(id = {6985})
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)

@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -7,11 +9,9 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.ServiceAccounts;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -42,7 +42,7 @@ public class CasCustomerServiceAccountsTests {
 
     @Test
     @Description("Returns a list of users for the customer that are considered service accounts.")
-    @TestRail(testCaseId = {"16543"})
+    @TestRail(id = {16543})
     public void getCustomersServiceAccounts() {
         customer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = customer.getIdentity();
@@ -57,7 +57,7 @@ public class CasCustomerServiceAccountsTests {
 
     @Test
     @Description("Gets service accounts for On Prem customer")
-    @TestRail(testCaseId = {"16544"})
+    @TestRail(id = {16544})
     public void getServiceAccountsOnPremCustomer() {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String email = customerName.toLowerCase();

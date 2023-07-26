@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.PageUtils;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
@@ -11,10 +13,8 @@ import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
 
+import com.utils.StatusIconEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -602,7 +602,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfProcessGroups() {
         pageUtils.waitForElementAndClick(processGroupList);
-        return Arrays.stream(processGroupList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
+        return Arrays.stream(processGroupList.getText().split("")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
     }
 
     /**

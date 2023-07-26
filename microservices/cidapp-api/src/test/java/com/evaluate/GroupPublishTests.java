@@ -6,6 +6,7 @@ import static com.apriori.entity.enums.CssSearch.LAST_ACTION_EQ;
 import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
@@ -16,13 +17,12 @@ import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -59,7 +59,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11851", "11852"})
+    @TestRail(id = {11851, 11852})
     @Description("Publish a single private sub-component with no public counterpart")
     public void testGroupPublishPrivateSubcomponent() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -122,7 +122,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11853"})
+    @TestRail(id = {11853})
     @Description("Publish a multiple private sub-components with no public counterpart")
     public void testGroupPublishPrivateSubcomponents() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -165,7 +165,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11854"})
+    @TestRail(id = {11854})
     @Description("Publish multiple private sub-components with no public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -215,7 +215,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11855"})
+    @TestRail(id = {11855})
     @Description("Publish private sub-component with public counterpart Setting Override to true")
     public void testGroupPublishPrivateSubcomponentTrueOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -277,7 +277,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11856"})
+    @TestRail(id = {11856})
     @Description("Publish private sub-component with public counterpart Setting Override to false")
     public void testGroupPublishPrivateSubcomponentFalseOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -349,7 +349,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11857"})
+    @TestRail(id = {11857})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to true")
     public void testGroupPublishPrivateSubcomponentsTrueOverride() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -418,7 +418,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11858"})
+    @TestRail(id = {11858})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverrideNewScenario() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -489,7 +489,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11859"})
+    @TestRail(id = {11859})
     @Description("Attempt to use pre-existing scenario name for public component when publishing with create new option")
     public void testGroupPublishPrivateSubAttemptExistingScenarioName() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -571,7 +571,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11935"})
+    @TestRail(id = {11935})
     @Description("Attempt to use publish a public scenario")
     public void testAttemptPublishPublic() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -635,7 +635,7 @@ public class GroupPublishTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11936"})
+    @TestRail(id = {11936})
     @Description("Attempt to publish a scenario that does not exist (incorrect scenario name or component name)")
     public void testAttemptPublicScenarioNotExist() {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();

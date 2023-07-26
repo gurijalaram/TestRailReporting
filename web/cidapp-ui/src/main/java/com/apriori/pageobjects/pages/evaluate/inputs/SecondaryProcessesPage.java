@@ -220,7 +220,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return list of string
      */
     public List<String> getSelectedPreviewList() {
-        return Arrays.stream(selectedPreviewItems.getText().split("\n")).collect(Collectors.toList());
+        return Arrays.stream(selectedPreviewItems.getText().split("")).collect(Collectors.toList());
     }
 
     /**

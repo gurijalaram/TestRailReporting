@@ -8,6 +8,10 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
@@ -15,11 +19,8 @@ import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPage;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
@@ -27,7 +28,6 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.web.driver.TestBase;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +38,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InputControlsTests extends TestBase {
+public class InputControlsTests extends TestBaseUI {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
@@ -881,7 +881,7 @@ public class InputControlsTests extends TestBase {
         String reportsVpe = targetQuotedCostTrendReportPage.getValueFromReport("11");
         String reportsProcessGroup = targetQuotedCostTrendReportPage.getValueFromReport("14");
         String reportsMaterialComposition = targetQuotedCostTrendReportPage.getValueFromReport("17")
-                .replace("\n", " ");
+            .replace("", " ");
         String reportsAnnualVolume = targetQuotedCostTrendReportPage.getValueFromReport("22");
         String reportsCurrentCost = targetQuotedCostTrendReportPage.getValueFromReport("24");
 

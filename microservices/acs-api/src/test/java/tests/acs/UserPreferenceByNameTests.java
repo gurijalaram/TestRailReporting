@@ -6,11 +6,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import org.junit.Test;
 public class UserPreferenceByNameTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "10798")
+    @TestRail(id = 10798)
     @Description("Validate Get User Preference By Name Endpoint")
     public void testGetUserPreferenceByName() {
         AcsResources acsResources = new AcsResources();
@@ -30,7 +30,7 @@ public class UserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10846")
+    @TestRail(id = 10846)
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
         AcsResources acsResources = new AcsResources();
@@ -40,7 +40,7 @@ public class UserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10847")
+    @TestRail(id = 10847)
     @Description("Validate Set User Preference By Name")
     public void testSetUserPreferenceByName() {
         String useVpeKey = "prod.info.default.use.vpe.for.all.processes";
@@ -63,7 +63,7 @@ public class UserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "10848")
+    @TestRail(id = 10848)
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {
         AcsResources acsResources = new AcsResources();

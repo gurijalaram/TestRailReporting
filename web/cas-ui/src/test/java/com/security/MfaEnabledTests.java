@@ -1,14 +1,14 @@
 package com.security;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.security.SecurityPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -16,7 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MfaEnabledTests extends TestBase {
+public class MfaEnabledTests extends TestBaseUI {
     private SecurityPage securityPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
@@ -47,7 +47,7 @@ public class MfaEnabledTests extends TestBase {
 
     @Test
     @Description("Validates security tab for MFA enabled customer")
-    @TestRail(testCaseId = {"5572", "5573", "13281"})
+    @TestRail(id = {5572, 5573, 13281})
     public void testMfaEnabledSecurityPage() {
         SoftAssertions soft = new SoftAssertions();
         soft.assertThat(securityPage.getFieldName())

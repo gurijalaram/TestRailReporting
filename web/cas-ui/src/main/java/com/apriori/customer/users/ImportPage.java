@@ -2,7 +2,7 @@ package com.apriori.customer.users;
 
 import com.apriori.common.UsersTableController;
 import com.apriori.components.SourceListComponent;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;

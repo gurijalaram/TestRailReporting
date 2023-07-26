@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.SustainabilityInfo;
@@ -22,7 +22,7 @@ public class SustainabilityMaterialsTests extends ProcessGroupUtil {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"24098"})
+    @TestRail(id = {24098})
     @Description("Get materials endpoint returns sustainability info")
     public void verifySustainabilityFieldsForMaterials() {
         List<ProcessGroupMaterial> materials = getProcessGroupMaterial();
@@ -34,7 +34,7 @@ public class SustainabilityMaterialsTests extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24099"})
+    @TestRail(id = {24099})
     @Description("Get material stocks endpoint returns sustainability info")
     public void verifySustainabilityInfoForMaterialStocks() {
         List<ProcessGroupMaterialStock> materialStocks = getProcessGroupMaterialStocks();

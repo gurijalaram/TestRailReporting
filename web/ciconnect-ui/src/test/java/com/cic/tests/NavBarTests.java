@@ -7,10 +7,8 @@ import com.apriori.pages.home.settings.CostingServiceSettings;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.pages.workflows.WorkflowHome;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
@@ -32,7 +30,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3653"})
+    @TestRail(id = {3653})
     public void testNavigateToUsersTab() {
         UsersPage usersPage = new CicLoginPage(driver)
             .login(currentUser)
@@ -41,7 +39,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3654"})
+    @TestRail(id = {3654})
     public void testNavigateToConnectorsTab() {
         ConnectorsPage connectorsPage = new CicLoginPage(driver)
             .login(currentUser)
@@ -52,7 +50,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3652"})
+    @TestRail(id = {3652})
     public void testNavigateToWorkflowsTab() {
         WorkflowHome workflowHome = new CicLoginPage(driver)
             .login(currentUser)
@@ -62,7 +60,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3659"})
+    @TestRail(id = {3659})
     public void testUserDropDownInfo() {
         WorkflowHome workflowHome = new CicLoginPage(driver)
             .login(currentUser)
@@ -73,7 +71,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3655"})
+    @TestRail(id = {3655})
     public void testCicUserGuideNavigation() throws Exception {
         CicUserGuide cicUserGuide = new CicLoginPage(driver)
             .login(currentUser)
@@ -85,7 +83,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4002"})
+    @TestRail(id = {4002})
     public void testNavigateToCostingServiceSettings() {
         CostingServiceSettings costingServiceSettings = new CicLoginPage(driver)
             .login(currentUser)

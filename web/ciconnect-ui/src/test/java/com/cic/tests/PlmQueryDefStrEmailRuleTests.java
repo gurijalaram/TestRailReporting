@@ -1,15 +1,8 @@
 package com.cic.tests;
 
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
 import entity.response.AgentWorkflowJobResults;
 import enums.CICPartSelectionType;
 import enums.PlmPartDataType;
@@ -20,7 +13,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
@@ -38,7 +30,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4148", "4195"})
+    @TestRail(id = {4148, 4195})
     @Description("Test each operator for the Int data type in isolation - String Equal and String1 attribute")
     public void testWorkflowQueryDefStringEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -55,7 +47,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24382"})
+    @TestRail(id = {24382})
     @Description("Test each operator for the Int data type in isolation - String NotEqual")
     public void testWorkflowQueryDefStringNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -78,7 +70,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24387"})
+    @TestRail(id = {24387})
     @Description("Test each operator for the Int data type in isolation - String contains")
     public void testWorkflowQueryDefStringContains() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -95,7 +87,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24392"})
+    @TestRail(id = {24392})
     @Description("Test each operator for the Int data type in isolation - String Begins with")
     public void testWorkflowQueryDefStringBeginsWith() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -112,7 +104,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24397"})
+    @TestRail(id = {24397})
     @Description("Test each operator for the Int data type in isolation - String Ends with")
     public void testWorkflowQueryDefStringEndsWith() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -129,7 +121,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4412"})
+    @TestRail(id = {4412})
     @Description("Test each operator for the Int data type in isolation - Email Equal")
     public void testWorkflowQueryDefEmailEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -146,7 +138,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24383"})
+    @TestRail(id = {24383})
     @Description("Test each operator for the Int data type in isolation - Email Not Equal")
     public void testWorkflowQueryDefEmailNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -169,7 +161,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24388"})
+    @TestRail(id = {24388})
     @Description("Test each operator for the Int data type in isolation - Email Contains")
     public void testWorkflowQueryDefEmailContains() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -186,7 +178,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24393"})
+    @TestRail(id = {24393})
     @Description("Test each operator for the Int data type in isolation - Email Begins With")
     public void testWorkflowQueryDefEmailBeginsWith() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -203,7 +195,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24398"})
+    @TestRail(id = {24398})
     @Description("Test each operator for the Int data type in isolation - Email Ends With")
     public void testWorkflowQueryDefEmailEndsWith() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)

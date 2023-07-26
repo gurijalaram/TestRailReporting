@@ -10,10 +10,10 @@ import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.ChartDataPointProperty;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.entity.response.ReportStatusResponse;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;

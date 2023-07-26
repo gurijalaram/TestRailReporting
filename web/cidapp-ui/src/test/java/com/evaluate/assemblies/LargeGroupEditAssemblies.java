@@ -18,20 +18,20 @@ import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.utils.PartNamesEnum.WASHER;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
@@ -40,7 +40,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class LargeGroupEditAssemblies extends TestBase {
+public class LargeGroupEditAssemblies extends TestBaseUI {
 
     private static String scenarioName;
     private static String scenarioName2;
@@ -80,7 +80,7 @@ public class LargeGroupEditAssemblies extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10883", "10884", "10885", "10894", "11140"})
+    @TestRail(id = {10883", "10884", "10885", "10894", "11140})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
         loginPage = new CidAppLoginPage(driver);

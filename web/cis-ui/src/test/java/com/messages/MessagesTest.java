@@ -1,34 +1,27 @@
 package com.messages;
 
-
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.messages.MessagesPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
 
-
-public class MessagesTest extends TestBase {
-
-    public MessagesTest() {
-        super();
-    }
+public class MessagesTest extends TestBaseUI {
 
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
@@ -38,8 +31,12 @@ public class MessagesTest extends TestBase {
     private File resourceFile;
     private UserCredentials currentUser;
 
+    public MessagesTest() {
+        super();
+    }
+
     @Test
-    @TestRail(testCaseId = {"13317","13318","13319","13554","13561"})
+    @TestRail(id = {13317, 13318, 13319, 13554, 13561})
     @Description("Verify messages page navigation and view all messages on the page")
     public void testMessagePageContent() {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -55,23 +52,23 @@ public class MessagesTest extends TestBase {
 
         softAssertions.assertThat(leftHandNavigationBar.isMessagesLinkDisplayed()).isEqualTo(true);
 
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .addComment("New Reply")
-                .clickComment()
-                .selectCreatedDiscussion();
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .addComment("New Reply")
+            .clickComment()
+            .selectCreatedDiscussion();
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+            .clickOnUnread();
 
         softAssertions.assertThat(messagesPage.getMessagesHeaderTitle()).contains("All Messages");
         softAssertions.assertThat(messagesPage.isMessagesDisplayed()).isEqualTo(true);
@@ -90,7 +87,7 @@ public class MessagesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14741","14748","14750","14758","14759","16107","16108"})
+    @TestRail(id = {14741, 14748, 14750, 14758, 14759, 16107, 16108})
     @Description("Open a discussion from subject/attribute/replies")
     public void testMessagePageDiscussions() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -101,20 +98,20 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .addComment("New Reply")
-                .clickComment()
-                .selectCreatedDiscussion();
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .addComment("New Reply")
+            .clickComment()
+            .selectCreatedDiscussion();
 
         messagesPage = leftHandNavigationBar.clickMessages();
 
@@ -138,7 +135,6 @@ public class MessagesTest extends TestBase {
 
         messagesPage = leftHandNavigationBar.clickMessages();
 
-
         partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Attribute");
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
@@ -159,13 +155,13 @@ public class MessagesTest extends TestBase {
         softAssertions.assertThat(messagesPage.isFilterValueDisplayed()).isEqualTo(true);
 
         messagesPage.clickOnRemoveFilter()
-                .clickOnRead();
+            .clickOnRead();
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"14755", "14757"})
+    @TestRail(id = {14755, 14757})
     @Description("Verify that user can filter discussions by assigned user")
     public void testFilterMessagesByAssignedUser() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -176,47 +172,47 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .shareScenario()
-                .selectAUser("qa-automation-22@apriori.com")
-                .clickOnInvite()
-                .clickOnCreatedDiscussion()
-                .clickMoreOption()
-                .clickAssignToOption()
-                .selectAParticipant("QA Automation Account 22");
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .shareScenario()
+            .selectAUser("qa-automation-22@apriori.com")
+            .clickOnInvite()
+            .clickOnCreatedDiscussion()
+            .clickMoreOption()
+            .clickAssignToOption()
+            .selectAParticipant("QA Automation Account 22");
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread()
-                .clickOnFilter()
-                .clickOnAddCondition()
-                .selectAssigneeToFilter("qa-automation-22@apriori.com")
-                .clickOnFilteredDiscussion();
+            .clickOnUnread()
+            .clickOnFilter()
+            .clickOnAddCondition()
+            .selectAssigneeToFilter("qa-automation-22@apriori.com")
+            .clickOnFilteredDiscussion();
 
         softAssertions.assertThat(messagesPage.getAssignedState()).contains("QA Automation Account 22");
 
         softAssertions.assertAll();
 
         messagesPage.clickOnActiveFilter()
-                .clickOnRemoveFilter()
-                .clickOnRead();
+            .clickOnRemoveFilter()
+            .clickOnRead();
     }
 
     @Test
-    @TestRail(testCaseId = {"15525","15526"})
+    @TestRail(id = {15525, 15526})
     @Description("Verify that user can filter discussions by mentioned user")
     public void testFilterMessagesByMentionedUser() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -227,25 +223,25 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("This is a discussion with a mention user @22")
-                .selectMentionUser("qa-automation-22@apriori.com")
-                .clickComment()
-                .selectCreatedDiscussion();
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("This is a discussion with a mention user @22")
+            .selectMentionUser("qa-automation-22@apriori.com")
+            .clickComment()
+            .selectCreatedDiscussion();
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread()
-                .clickOnFilter()
-                .clickOnAddCondition()
-                .selectMentionedUserToFilter("QA Automation Account 22")
-                .clickOnFilteredDiscussion();
+            .clickOnUnread()
+            .clickOnFilter()
+            .clickOnAddCondition()
+            .selectMentionedUserToFilter("QA Automation Account 22")
+            .clickOnFilteredDiscussion();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -254,12 +250,12 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
 
         messagesPage.clickOnActiveFilter()
-                .clickOnRemoveFilter()
-                .clickOnRead();
+            .clickOnRemoveFilter()
+            .clickOnRead();
     }
 
     @Test
-    @TestRail(testCaseId = {"15534","15535"})
+    @TestRail(id = {15534, 15535})
     @Description("Verify that user can filter discussions by state")
     public void testFilterMessagesByResolvedState() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -270,25 +266,25 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .clickOnResolveIcon();
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .clickOnResolveIcon();
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread()
-                .clickOnFilter()
-                .clickOnAddCondition()
-                .selectStatusToFilter("Resolved")
-                .clickOnFilteredDiscussion();
+            .clickOnUnread()
+            .clickOnFilter()
+            .clickOnAddCondition()
+            .selectStatusToFilter("Resolved")
+            .clickOnFilteredDiscussion();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -297,12 +293,12 @@ public class MessagesTest extends TestBase {
         softAssertions.assertAll();
 
         messagesPage.clickOnActiveFilter()
-                .clickOnRemoveFilter()
-                .clickOnRead();
+            .clickOnRemoveFilter()
+            .clickOnRead();
     }
 
     @Test
-    @TestRail(testCaseId = {"15523","15524","16251","16252"})
+    @TestRail(id = {15523, 15524, 16251, 16252})
     @Description("Verify that user can assign a discussion on message page")
     public void testAssignDiscussionInMessagePage() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -313,43 +309,43 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .shareScenario()
-                .selectAUser("qa-automation-22@apriori.com")
-                .selectAUser("qa-automation-23@apriori.com")
-                .selectAUser("qa-automation-24@apriori.com")
-                .clickOnInvite()
-                .clickOnCreatedDiscussion()
-                .clickMoreOption()
-                .clickAssignToOption()
-                .selectAParticipant("QA Automation Account 22");
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .shareScenario()
+            .selectAUser("qa-automation-22@apriori.com")
+            .selectAUser("qa-automation-23@apriori.com")
+            .selectAUser("qa-automation-24@apriori.com")
+            .clickOnInvite()
+            .clickOnCreatedDiscussion()
+            .clickMoreOption()
+            .clickAssignToOption()
+            .selectAParticipant("QA Automation Account 22");
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread();
+            .clickOnUnread();
 
         softAssertions.assertThat(messagesPage.isMoreOptionMenuDisplayed()).isEqualTo(true);
 
         messagesPage.clickOnMoreOptionMenu()
-                .clickOnUnAssignToOption();
+            .clickOnUnAssignToOption();
 
         softAssertions.assertThat(messagesPage.getDiscussionAssignedState()).doesNotContain("QA Automation Account 22");
 
         messagesPage.clickOnMoreOptionMenu()
-                .clickOnAssignToOption();
+            .clickOnAssignToOption();
 
         softAssertions.assertThat(messagesPage.isAssignToUserListDisplayed()).isEqualTo(true);
 
@@ -363,7 +359,7 @@ public class MessagesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"22677","22678","22679"})
+    @TestRail(id = {22677, 22678, 22679})
     @Description("Verify that user configured message view is saved")
     public void testSaveConfiguredMessageView() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -376,31 +372,31 @@ public class MessagesTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(currentUser);
-        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickMessageIconOnCommentSection()
-                .clickOnAttribute()
-                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .addCommentWithMention("This is a new reply with a mention user @22");
+        partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickMessageIconOnCommentSection()
+            .clickOnAttribute()
+            .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .addCommentWithMention("This is a new reply with a mention user @22");
 
         partsAndAssembliesDetailsPage.selectMentionUser("QA Automation Account")
-                .clickComment()
-                .selectCreatedDiscussion();
+            .clickComment()
+            .selectCreatedDiscussion();
 
         messagesPage = leftHandNavigationBar.clickMessages()
-                .clickOnUnread()
-                .clickOnFilter()
-                .clickOnAddCondition()
-                .selectMentionedUserToFilter("QA Automation Account 22")
-                .clickOnFilteredDiscussion();
+            .clickOnUnread()
+            .clickOnFilter()
+            .clickOnAddCondition()
+            .selectMentionedUserToFilter("QA Automation Account 22")
+            .clickOnFilteredDiscussion();
 
         partsAndAssembliesDetailsPage = messagesPage.clickOnSubjectOrAttribute("Subject");
 

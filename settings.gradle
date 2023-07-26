@@ -5,7 +5,7 @@
 //Utils
 //Default modules initialization
 //include(':utils')
-include(':apibase')
+//include('::shared-util')
 include(':serialization-util')
 include(':shared-util')
 include(':web-app-util')

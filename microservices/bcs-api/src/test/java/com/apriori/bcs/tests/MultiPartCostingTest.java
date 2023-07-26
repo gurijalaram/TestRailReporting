@@ -6,11 +6,11 @@ import com.apriori.bcs.controller.MultiPartResources;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -33,7 +33,7 @@ public class MultiPartCostingTest {
     }
 
     @Test
-    @TestRail(testCaseId = {"9111"})
+    @TestRail(id = {9111})
     @Issue("DEVOPS-2159")
     @Description("Test costing scenario, " +
         "1. creating a new batch" +

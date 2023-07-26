@@ -1,16 +1,16 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.AssociationUserResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -72,7 +72,7 @@ public class CdsAssociationUserTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5959"})
+    @TestRail(id = {5959})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
         String aPStaffIdentity = PropertiesContext.get("user_identity");
@@ -83,7 +83,7 @@ public class CdsAssociationUserTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5965"})
+    @TestRail(id = {5965})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
         String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity02");
@@ -112,7 +112,7 @@ public class CdsAssociationUserTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5964"})
+    @TestRail(id = {5964})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
         String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity03");

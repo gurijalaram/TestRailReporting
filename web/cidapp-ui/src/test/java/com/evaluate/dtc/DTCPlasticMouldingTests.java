@@ -3,22 +3,21 @@ package com.evaluate.dtc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,16 +25,15 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class DTCPlasticMouldingTests extends TestBase {
+public class DTCPlasticMouldingTests extends TestBaseUI {
 
+    SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private InvestigationPage investigationPage;
-
     private UserCredentials currentUser;
     private File resourceFile;
-    SoftAssertions softAssertions = new SoftAssertions();
 
     public DTCPlasticMouldingTests() {
         super();
@@ -43,7 +41,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
-    @TestRail(testCaseId = {"6410", "8334"})
+    @TestRail(id = {6410, 8334})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -85,9 +83,9 @@ public class DTCPlasticMouldingTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Category({SmokeTests.class})
+    @Category( {SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"6411", "6412"})
+    @TestRail(id = {6411, 6412})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -117,7 +115,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6426"})
+    @TestRail(id = {6426})
     @Description("Testing DTC Plastic Moulding Edge Radius Internal")
     public void testMouldingEdgeInternal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -144,7 +142,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6425"})
+    @TestRail(id = {6425})
     @Description("Testing DTC Plastic Moulding Edge Radius External")
     public void testMouldingEdgeExternal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -171,7 +169,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6463", "6421", "6414", "6425", "6426"})
+    @TestRail(id = {6463, 6421, 6414, 6425, 6426})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -213,7 +211,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6420", "6421", "6424", "6460"})
+    @TestRail(id = {6420, 6421, 6424, 6460})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -270,7 +268,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6419", "6423"})
+    @TestRail(id = {6419, 6423})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -311,7 +309,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6415", "6416", "6427"})
+    @TestRail(id = {6415, 6416, 6427})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticSlideLift() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -342,7 +340,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6422"})
+    @TestRail(id = {6422})
     @Description("Max. wall thickness for Structural Foam Moulding")
     public void maxThicknessStructuralFoamMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

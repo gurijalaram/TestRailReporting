@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.scenariocomparison;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -21,7 +21,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3305"})
+    @TestRail(id = {3305})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.scenarioComparisonCurrencyTest();

@@ -1,5 +1,7 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.ErrorResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
@@ -7,10 +9,8 @@ import com.apriori.cds.objects.response.UserRole;
 import com.apriori.cds.objects.response.UserRoles;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -62,7 +62,7 @@ public class CdsCustomerUserRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13414"})
+    @TestRail(id = {13414})
     @Description("Returns a list of roles for a user")
     public void getUserRoles() {
         ResponseWrapper<UserRoles> userRoles = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES, UserRoles.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
@@ -72,7 +72,7 @@ public class CdsCustomerUserRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"13415", "13417", "13422","17166"})
+    @TestRail(id = {13415, 13417, 13422, 17166})
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
         ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, role);
@@ -87,7 +87,7 @@ public class CdsCustomerUserRolesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"17165"})
+    @TestRail(id = {17165})
     @Description("Try to create an invalid role (without AP_* prefix) for a user and verify that it fails")
     public void postInvalidUserRoles() {
         String expectedMessage = "Resource 'Role' with identity 'ADMIN' was not found";

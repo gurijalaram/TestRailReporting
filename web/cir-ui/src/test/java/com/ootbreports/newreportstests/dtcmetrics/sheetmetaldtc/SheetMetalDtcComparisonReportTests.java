@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
@@ -35,7 +35,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7419"})
+    @TestRail(id = {7419})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
         jasperApiUtils.genericDtcTest(
@@ -46,7 +46,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7420"})
+    @TestRail(id = {7420})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Comparison Report")
     public void testCostMetricFbc() {
         jasperApiUtils.genericDtcTest(
@@ -57,7 +57,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7399"})
+    @TestRail(id = {7399})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -68,7 +68,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7400"})
+    @TestRail(id = {7400})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(

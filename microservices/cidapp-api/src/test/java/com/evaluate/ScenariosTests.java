@@ -1,5 +1,7 @@
 package com.evaluate;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -7,13 +9,11 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +31,7 @@ public class ScenariosTests {
     private SoftAssertions softAssertions;
 
     @Test
-    @TestRail(testCaseId = "10620")
+    @TestRail(id = 10620)
     @Description("Copy a scenario")
     public void testCopyScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -71,7 +71,7 @@ public class ScenariosTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10731", "10730", "10810", "10823"})
+    @TestRail(id = {10731, 10730, 10810, 10823})
     @Description("Upload, publish subcomponents and assembly then Edit the Assembly, shallow basis")
     public void testUploadPublishingAndEditAssemblyShallow() {
         final String assemblyName = "Hinge assembly";
@@ -118,7 +118,7 @@ public class ScenariosTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10758"})
+    @TestRail(id = {10758})
     @Description("Trigger 409 conflict on trying to publish an assembly that has private sub-components")
     public void testUploadPublishingAssemblyError() {
         final String assemblyName = "Hinge assembly";
@@ -159,7 +159,7 @@ public class ScenariosTests {
 
     @Test
     @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
-    @TestRail(testCaseId = {"10799", "10768"})
+    @TestRail(id = {10799, 10768})
     public void testUploadCostPublishAndEditAssembly() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";

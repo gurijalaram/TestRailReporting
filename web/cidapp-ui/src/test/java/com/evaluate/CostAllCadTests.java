@@ -4,19 +4,19 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -28,7 +28,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class CostAllCadTests extends TestBase {
+public class CostAllCadTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -44,7 +44,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421", "565", "567", "6624", "6626"})
+    @TestRail(id = {5421, 565, 567, 6624, 6626})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -74,7 +74,7 @@ public class CostAllCadTests extends TestBase {
 
     // TODO: 23/10/2020 uncomment when reference panel functionality is implemented in app
     /*@Test
-    @TestRail(testCaseId = {"566"})
+    @TestRail(id = {566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
     public void costIncreaseDecrease() {
 
@@ -101,7 +101,7 @@ public class CostAllCadTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"1605"})
+    @TestRail(id = {1605})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
@@ -118,7 +118,7 @@ public class CostAllCadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5426"})
+    @TestRail(id = {5426})
     @Description("Failure to create a new scenario that has a blank scenario name or is named using unsupported characters")
     public void failedBlankScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

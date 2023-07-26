@@ -5,14 +5,14 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
 import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPermissionsPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.ListUtils;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Ignore("Feature is not fully ready yet.  Can remove this once fully built e2e.")
-public class SystemConfigurationPermissionsTests extends TestBase {
+public class SystemConfigurationPermissionsTests extends TestBaseUI {
     private SystemConfigurationPermissionsPage systemConfigurationPermissionsPage;
 
     @Before
     public void setup() {
-        systemConfigurationPermissionsPage  = new CasLoginPage(driver)
+        systemConfigurationPermissionsPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .openAprioriInternal()
             .goToSystemConfiguration()
@@ -65,8 +65,8 @@ public class SystemConfigurationPermissionsTests extends TestBase {
             .size();
         Integer labelCount = systemConfigurationPermissionsPage.getPermissionLabelCount();
         soft.assertThat(labelCount)
-            .overridingErrorMessage("Expected the displayed number of permissions to be %s.\nActual" +
-                    " value was %s.", numberOfPermissions, labelCount)
+            .overridingErrorMessage("Expected the displayed number of permissions to be %s.Actual" +
+                " value was %s.", numberOfPermissions, labelCount)
             .isEqualTo(numberOfPermissions);
     }
 
@@ -74,7 +74,7 @@ public class SystemConfigurationPermissionsTests extends TestBase {
     @Category(SmokeTest.class)
     @Description("System Configuration Permissions should be displayed and sorted in alphabetical order, the number " +
         "of permissions should be displayed.  The first permission should be selected and details shown correctly.")
-    @TestRail(testCaseId = {"9880", "9883", "9882", "9967", "9965", "9987"})
+    @TestRail(id = {9880, 9883, 9882, 9967, 9965, 9987})
     public void testValidateShouldDisplayPermissions() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -107,7 +107,7 @@ public class SystemConfigurationPermissionsTests extends TestBase {
             systemConfigurationPermissionsPage.getDetailsHeader()).getText();
 
         soft.assertThat(actual.toUpperCase())
-            .overridingErrorMessage("Expected the header for selected permission, %s, to be %s.\nActual value was %s.", permissionName,
+            .overridingErrorMessage("Expected the header for selected permission, %s, to be %s.Actual value was %s.", permissionName,
                 permissionName.toUpperCase(), actual)
             .isEqualTo(permissionName.toUpperCase());
     }
@@ -175,7 +175,7 @@ public class SystemConfigurationPermissionsTests extends TestBase {
     @Test
     @Category(SmokeTest.class)
     @Description("The details page should reflect when a permission is selected.")
-    @TestRail(testCaseId = {"9966"})
+    @TestRail(id = {9966})
     public void testValidatePermissionSelectionUpdatesTheSelectedDetails() {
 
         SoftAssertions soft = new SoftAssertions();

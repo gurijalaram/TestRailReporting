@@ -1,9 +1,13 @@
 package com.integration.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -11,16 +15,9 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -32,7 +29,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class CIDIntegrationTests extends TestBase {
+public class CIDIntegrationTests extends TestBaseUI {
 
     private UserCredentials currentUser = UserUtil.getUser();
     private CidAppLoginPage loginPage;
@@ -58,7 +55,7 @@ public class CIDIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12106"})
+    @TestRail(id = 12106)
     @Description("Upload, Cost and Publish part")
     public void testCreateCostAndPublishPart() {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -87,7 +84,7 @@ public class CIDIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12107"})
+    @TestRail(id = 12107)
     @Description("User can change the default Production Defaults")
     public void changeUserSettings() {
         SoftAssertions softAssertions = new SoftAssertions();

@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 @Schema(location = "workorders/FileOrderSchema.json")
 public class FileCommand {

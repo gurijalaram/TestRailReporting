@@ -1,8 +1,8 @@
 package utils;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.json.JsonManager;
 import com.apriori.utils.EncryptionUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.json.utils.JsonManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

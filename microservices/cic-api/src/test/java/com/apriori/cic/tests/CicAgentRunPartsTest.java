@@ -1,11 +1,11 @@
 package com.apriori.cic.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.CostingInputs;
 import entity.request.WorkflowPart;
@@ -50,7 +50,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15574"})
+    @TestRail(id = {15574})
     @Description("Get CIC Agent Workflow by identity and verify Part selection type REST")
     public void testWorkflowAndVerifyPartSelectionType() {
         this.cicLogin()
@@ -62,7 +62,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16697"})
+    @TestRail(id = {16697})
     @Description("All standard costing inputs set by runPartList request when no costing inputs are set in workflow")
     public void testGetWorkflowRunPartsListWithSinglePart() {
         AgentWorkflowJobRun agentWorkflowJobRunResponse = this.cicLogin()
@@ -75,7 +75,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16698"})
+    @TestRail(id = {16698})
     @Description("RunPartList - all standard costing inputs overridden by runPartList request when all costing inputs are set in workflow with constant value constant")
     public void testGetWorkflowRunPartsOverriddenWithConstant() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -95,7 +95,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15580"})
+    @TestRail(id = {15580})
     @Description("RunPartList - cost parts with list of IDs")
     public void testGetWorkflowRunPartsListWithMultipleParts() {
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(2);
@@ -109,7 +109,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15582"})
+    @TestRail(id = {15582})
     @Description("RunPartList - cost parts with empty parts")
     public void testGetWorkflowRunPartsListWithEmptyParts() {
         this.cicLogin()
@@ -126,7 +126,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15581"})
+    @TestRail(id = {15581})
     @Description("RunPartList - duplicate IDs in list are processed only once")
     public void testRunPartsListWithDuplicateParts() {
         PlmSearchResponse plmParts = CicApiTestUtil.searchPlmWindChillParts(new SearchFilter()
@@ -149,7 +149,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15583"})
+    @TestRail(id = {15583})
     @Description("RunPartList - number of submitted parts exceeds agent max parts to return")
     public void testGetWorkflowRunPartsListWithMaxLimitParts() {
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(6);
@@ -167,7 +167,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15586"})
+    @TestRail(id = {15586})
     @Description("RunPartList - Invalid part")
     public void testRunPartsListWithInvalidPart() {
         this.workflowPartsRequestDataBuilder = WorkflowParts.builder()
@@ -189,7 +189,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15584"})
+    @TestRail(id = {15584})
     @Description("Submit run parts list with workflow with partSelectionType 'Query'")
     public void testGetWorkflowJobResultPartSelectionQuery() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -211,7 +211,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"15579"})
+    @TestRail(id = {15579})
     @Description("Submit run request for workflows with partSelectionType REST and verify error")
     public void testGetWorkflowRunErrorForRest() {
         this.cicLogin()

@@ -1,8 +1,8 @@
 package com.apriori.vds.entity.response.digital.factories;
 
+import com.apriori.annotations.Schema;
 import com.apriori.bcs.entity.response.ProcessGroupAssociations;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

@@ -1,17 +1,17 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditUserTests extends TestBase {
+public class EditUserTests extends TestBaseUI {
 
     private static final String USER_NAME = new GenerateStringUtil().generateUserName();
 
@@ -65,7 +65,7 @@ public class EditUserTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("Test user profile details, edit mode and cancel edit button")
-    @TestRail(testCaseId = {"5576", "11952", "4374", "4382", "11962"})
+    @TestRail(id = {5576", "11952", "4374", "4382", "11962})
     public void testEditAndCancelUserProfile() {
         userIdentity = userProfilePage.getUserIdentity();
         SoftAssertions soft = new SoftAssertions();
@@ -125,7 +125,7 @@ public class EditUserTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("Test that user details can be edited and saved")
-    @TestRail(testCaseId = {"11963"})
+    @TestRail(id = {11963})
     public void testEditUserAndSave() {
         userIdentity = userProfilePage.getUserIdentity();
         SoftAssertions soft = new SoftAssertions();
@@ -152,7 +152,7 @@ public class EditUserTests extends TestBase {
     @Test
     @Ignore("Status field is disabled")
     @Description("Status field is greyed out (non editable) if Customer is set to inactive")
-    @TestRail(testCaseId = {"10644", "10645"})
+    @TestRail(id = {10644", "10645})
     public void testUserStatusFieldNotEditableIfCustomerIsDisabled() {
         SoftAssertions soft = new SoftAssertions();
         UserProfilePage checkUserStatus = userProfilePage.edit();

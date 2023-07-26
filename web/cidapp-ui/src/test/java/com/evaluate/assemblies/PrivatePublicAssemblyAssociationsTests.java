@@ -1,24 +1,24 @@
 package com.evaluate.assemblies;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.PreferencesEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.PreferencesEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PrivatePublicAssemblyAssociationsTests extends TestBase {
+public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
@@ -134,7 +134,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"21707", "21708", "21709", "21710", "11955", "11958", "6600"})
+    @TestRail(id = {21707, 21708, 21709, 21710, 11955, 11958, 6600})
     @Description("Validate assembly association priority for Default strategy")
     public void testDefaultAssemblyAssociationsWorkflow() {
 
@@ -189,7 +189,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"21699", "21701", "21702", "21703"})
+    @TestRail(id = {21699, 21701, 21702, 21703})
     @Description("Validate assembly association priority for Prefer Private strategy")
     public void testPreferPrivateAssemblyAssociationsWorkflow() {
 
@@ -251,7 +251,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"21700", "21704", "21705", "21706"})
+    @TestRail(id = {21700, 21704, 21705, 21706})
     @Description("Validate assembly association priority for Prefer Public strategy")
     public void testPreferPublicAssemblyAssociationsWorkflow() {
 

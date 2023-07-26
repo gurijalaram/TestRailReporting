@@ -1,15 +1,21 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -17,22 +23,16 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ComponentIconEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
+import com.utils.ComponentIconEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UploadAssembliesTests extends TestBase {
+public class UploadAssembliesTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -85,7 +85,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6511", "10510"})
+    @TestRail(id = {6511, 10510})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssemblyTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -100,7 +100,7 @@ public class UploadAssembliesTests extends TestBase {
         subComponentA = FileResourceUtil.getCloudFile(processGroupEnum, subComponentAName + ".SLDPRT");
         subComponentB = FileResourceUtil.getCloudFile(processGroupEnum, subComponentBName + ".SLDPRT");
         subComponentC = FileResourceUtil.getCloudFile(processGroupEnum, subComponentCName + ".SLDPRT");
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+        assembly = FileResourceUtil.getCloudFile(ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -142,7 +142,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11902", "10762", "11861"})
+    @TestRail(id = {11902, 10762, 11861})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -154,7 +154,7 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "flange.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "nut.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "bolt.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "flange c.CATProduct"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "flange c.CATProduct"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -165,7 +165,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11903", "10767", "6562", "11909"})
+    @TestRail(id = {11903, 10767, 6562, 11909})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -176,7 +176,7 @@ public class UploadAssembliesTests extends TestBase {
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -187,20 +187,20 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11904")
+    @TestRail(id = 11904)
     @Description("Upload Assembly with sub-components from Solidworks")
     public void testSolidworksMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String assemblyName = "Hinge assembly";
         List<String> componentNames = Arrays.asList("big ring", "Pin", "small ring");
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+        assembly = FileResourceUtil.getCloudFile(ASSEMBLY, assemblyName + ".SLDASM");
         currentUser = UserUtil.getUser();
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -211,7 +211,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11905", "10764", "11867"})
+    @TestRail(id = {11905, 10764, 11867})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -223,7 +223,7 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "stand.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "drive.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "joint.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "oldham.asm.1"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -244,7 +244,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11906", "10765", "11868"})
+    @TestRail(id = {11906, 10765, 11868})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -257,7 +257,7 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston cover_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston pin_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -279,7 +279,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11907", "10766"})
+    @TestRail(id = {11907, 10766})
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -292,7 +292,7 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "Assembly01.iam"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -303,7 +303,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11908")
+    @TestRail(id = 11908)
     @Description("Upload multiple Assemblies")
     public void testMultipleAssemblyUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -318,14 +318,14 @@ public class UploadAssembliesTests extends TestBase {
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
-        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "Assembly01.iam"), scenarioName));
 
         List<MultiUpload> secondMultiComponentBatch = new ArrayList<>();
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_model1.prt"), scenarioName));
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston cover_model1.prt"), scenarioName));
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston pin_model1.prt"), scenarioName));
-        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
@@ -352,7 +352,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"5620", "6513", "6514"})
+    @TestRail(id = {5620, 6513, 6514})
     @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
     public void uploadAnAssemblyExistingInThePublicWorkspace() {
         currentUser = UserUtil.getUser();
@@ -368,7 +368,7 @@ public class UploadAssembliesTests extends TestBase {
         ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName1,
             assemblyExtension1,
-            ProcessGroupEnum.ASSEMBLY,
+            ASSEMBLY,
             subComponentNames1,
             subComponentExtension1,
             subComponentProcessGroup1,
@@ -411,7 +411,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = "5621")
+    @TestRail(id = 5621)
     @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
     public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
         currentUser = UserUtil.getUser();
@@ -441,7 +441,7 @@ public class UploadAssembliesTests extends TestBase {
         ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName2,
             assemblyExtension2,
-            ProcessGroupEnum.ASSEMBLY,
+            ASSEMBLY,
             subComponentNames2,
             subComponentExtension2,
             subComponentProcessGroup2,
@@ -460,7 +460,7 @@ public class UploadAssembliesTests extends TestBase {
         ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName3,
             assemblyExtension3,
-            ProcessGroupEnum.ASSEMBLY,
+            ASSEMBLY,
             subComponentNames3,
             subComponentExtension3,
             subComponentProcessGroup3,
@@ -483,7 +483,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12156", "6557", "6524"})
+    @TestRail(id = {12156, 6557, 6524})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
         currentUser = UserUtil.getUser();
@@ -498,7 +498,7 @@ public class UploadAssembliesTests extends TestBase {
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
+            ASSEMBLY,
             subComponentNames,
             subComponentExtension,
             subComponentProcessGroup,
@@ -565,7 +565,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"12139", "12101", "12136"})
+    @TestRail(id = {12139, 12101, 12136})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
         currentUser = UserUtil.getUser();
@@ -580,7 +580,7 @@ public class UploadAssembliesTests extends TestBase {
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
+            ASSEMBLY,
             subComponentNames,
             subComponentExtension,
             subComponentProcessGroup,
@@ -636,13 +636,13 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6546"})
+    @TestRail(id = {6546})
     @Description("Changing unit user preferences when viewing assembly")
     public void testUnitPreferenceInAssembly() {
         currentUser = UserUtil.getUser();
 
         final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
         final String big_ring = "big ring";
         final String pin = "Pin";
@@ -685,7 +685,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6564"})
+    @TestRail(id = {6564})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -700,7 +700,7 @@ public class UploadAssembliesTests extends TestBase {
         subComponentA = FileResourceUtil.getCloudFile(processGroupEnum, subComponentAName + ".CATPart");
         subComponentB = FileResourceUtil.getCloudFile(processGroupEnum, subComponentBName + ".CATPart");
         subComponentC = FileResourceUtil.getCloudFile(processGroupEnum, subComponentCName + ".CATPart");
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".CATProduct");
+        assembly = FileResourceUtil.getCloudFile(ASSEMBLY, assemblyName + ".CATProduct");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -726,7 +726,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "5625")
+    @TestRail(id = 5625)
     @Description("Validate missing sub-assembly association when manually uploaded")
     public void verifySubAsmAssociationOnUpload() {
         currentUser = UserUtil.getUser();
@@ -751,13 +751,13 @@ public class UploadAssembliesTests extends TestBase {
         final String autoGuard = "autoguard";
         final String autoBlade = "autoblade";
 
-        final File autoSwordFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoSword + originalAsmExtension);
+        final File autoSwordFile = FileResourceUtil.getCloudFile(ASSEMBLY, autoSword + originalAsmExtension);
 
         List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
         List<String> subAsmComponents = Arrays.asList(autoPommel, autoHandle, autoGuard, autoBlade);
 
-        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ProcessGroupEnum.ASSEMBLY,
-            components, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ASSEMBLY,
+            components, componentExtension, ASSEMBLY, scenarioName, currentUser);
 
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
@@ -771,14 +771,14 @@ public class UploadAssembliesTests extends TestBase {
             .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
 
         explorePage = componentsTreePage.closePanel()
-                .importCadFile()
-                    .inputScenarioName(scenarioName)
-                    .enterFilePath(autoSwordFile)
-                        .submit()
-                            .clickClose();
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .enterFilePath(autoSwordFile)
+            .submit()
+            .clickClose();
 
-        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ProcessGroupEnum.ASSEMBLY,
-            subAsmComponents, componentExtension, ProcessGroupEnum.ASSEMBLY, scenarioName, currentUser);
+        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ASSEMBLY,
+            subAsmComponents, componentExtension, ASSEMBLY, scenarioName, currentUser);
         List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
         subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
         subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
@@ -801,13 +801,13 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10748", "10761"})
+    @TestRail(id = {10748, 10761})
     @Description("Changing unit user preferences when viewing assembly")
     public void testCopyScenarioRetainsAsmAssociation() {
         currentUser = UserUtil.getUser();
 
         final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
         final String big_ring = "big ring";
         final String pin = "Pin";

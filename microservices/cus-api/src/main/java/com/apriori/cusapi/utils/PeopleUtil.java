@@ -2,19 +2,19 @@ package com.apriori.cusapi.utils;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 
+import com.apriori.AuthUserContextUtil;
 import com.apriori.cusapi.entity.enums.CusAppAPIEnum;
 import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
 import com.apriori.cusapi.entity.request.UpdateUserRequest;
 import com.apriori.cusapi.entity.response.ErrorResponse;
 import com.apriori.cusapi.entity.response.PreferenceItemsResponse;
 import com.apriori.cusapi.entity.response.User;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

@@ -4,11 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class PartPrimaryProcessGroupsTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "10881")
+    @TestRail(id = "10881")
     @Description("Validate Get Part Primary Process Groups Endpoint")
     public void testGetPartPrimaryProcessGroupsEndpoint() {
         AcsResources acsResources = new AcsResources();

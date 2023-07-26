@@ -1,13 +1,13 @@
 package com.apriori.cds.tests;
 
+import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customers;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -19,7 +19,7 @@ public class CdsApplicationsTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"3251"})
+    @TestRail(id = {3251})
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
         ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATIONS, Applications.class, HttpStatus.SC_OK);
@@ -30,7 +30,7 @@ public class CdsApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3700"})
+    @TestRail(id = {3700})
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
         ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_BY_ID,
@@ -44,7 +44,7 @@ public class CdsApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5811"})
+    @TestRail(id = {5811})
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
         ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_APPLICATION_BY_ID,

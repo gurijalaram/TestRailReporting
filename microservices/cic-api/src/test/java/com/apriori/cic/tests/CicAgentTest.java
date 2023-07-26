@@ -1,9 +1,9 @@
 package com.apriori.cic.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.JobDefinition;
 import entity.response.AgentConfiguration;
@@ -36,7 +36,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5579"})
+    @TestRail(id = {5579})
     @Description("Get CIC Agent Workflows")
     public void testAgentWorkflows() {
         ResponseWrapper<String> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
@@ -45,7 +45,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5577"})
+    @TestRail(id = {5577})
     @Description("Get CIC Agent Status")
     public void testDCAgentStatus() {
         ResponseWrapper<AgentStatus> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_STATUS, AgentStatus.class);
@@ -53,7 +53,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5578"})
+    @TestRail(id = {5578})
     @Description("Get CIC Agent Configuration")
     public void testECAgentConfiguration() {
         ResponseWrapper<AgentConfiguration> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_CONFIG, AgentConfiguration.class);
@@ -61,7 +61,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5581", "5585", "7618", "5580"})
+    @TestRail(id = {5581, 5585, 7618, 5580})
     @Description("Get CIC Agent Workflow Jobs, " +
         "Initiate the execution of Workflow, Get Workflow using workflow id and job ID" +
         "Cancel workflow using workflowId and jobId" +

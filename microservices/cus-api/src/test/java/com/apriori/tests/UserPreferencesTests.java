@@ -4,10 +4,9 @@ import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
 import com.apriori.cusapi.entity.response.PreferenceItemsResponse;
 import com.apriori.cusapi.entity.response.PreferenceResponse;
 import com.apriori.cusapi.utils.PeopleUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -29,7 +28,7 @@ public class UserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "16826")
+    @TestRail(id = 16826)
     @Description("Verify GET user preferences endpoint test")
     public void verifyUserPrefTest() {
 
@@ -41,7 +40,7 @@ public class UserPreferencesTests {
     }
 
     @Test
-    @TestRail(testCaseId = "16828")
+    @TestRail(id = 16828)
     @Description("Verify PATCH(update) user preferences endpoint test")
     public void verifyUpdateUserPrefTest() {
         PreferenceItemsResponse userPreferencesResponse = peopleUtil

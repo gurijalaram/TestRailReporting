@@ -5,12 +5,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edcapi.entity.response.accounts.AccountsResponse;
 import com.apriori.edcapi.utils.AccountsUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -42,7 +42,7 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1496")
+    @TestRail(id = 1496)
     @Description("GET List the accounts matching a specified query.")
     public void testGetAllAccounts() {
         List<AccountsResponse> allAccounts = getAllAccounts();
@@ -50,14 +50,14 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"1492", "1497"})
+    @TestRail(id = {1492, 1497})
     @Description("GET the current representation of an account.")
     public void testGetAccountByIdentity() {
         getAccountByIdentity(identity);
     }
 
     @Test
-    @TestRail(testCaseId = "1493")
+    @TestRail(id = 1493)
     @Description("DELETE an account.")
     public void testDeleteAccountByIdentity() {
         String identity = postCreateNewAccount().getResponseEntity().getIdentity();
@@ -70,7 +70,7 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1494")
+    @TestRail(id = 1494)
     @Description("PATCH Update an account.")
     public void testPatchUpdateAccountByIdentity() {
         getAccountByIdentity(identity);
@@ -80,7 +80,7 @@ public class AccountsControllerTest extends AccountsUtil {
 
     @Ignore
     @Test
-    @TestRail(testCaseId = "15453")
+    @TestRail(id = 15453)
     @Description("POST Refresh license for specified account")
     public void testPostRefreshLicense() {
         getAccountByIdentity(identity);
@@ -89,7 +89,7 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1495")
+    @TestRail(id = 1495)
     @Description("POST Activate an account.")
     public void testPostActivateAnAccount() {
         ResponseWrapper<AccountsResponse> originalAccount = getActiveAccount();
@@ -112,7 +112,7 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1498")
+    @TestRail(id = 1498)
     @Description("GET the current representation of the active account.")
     public void testGetActiveAccount() {
         ResponseWrapper<AccountsResponse> activeAccount = getActiveAccount();

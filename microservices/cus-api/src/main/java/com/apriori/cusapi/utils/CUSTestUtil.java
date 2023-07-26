@@ -1,12 +1,11 @@
 package com.apriori.cusapi.utils;
 
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.TestUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.junit.BeforeClass;
-
 
 public class CUSTestUtil extends TestUtil {
     protected static UserCredentials testingUser;

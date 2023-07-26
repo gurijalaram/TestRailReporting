@@ -3,9 +3,9 @@ package com.apriori.pageobjects.pages.settings;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.PageUtils;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.enums.UnitsEnum;
 
 import com.utils.CurrencyEnum;
 import com.utils.DecimalPlaceEnum;

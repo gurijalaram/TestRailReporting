@@ -1,25 +1,25 @@
 package com.cic.tests;
 
+import com.apriori.TestBaseUI;
+import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QueryDefinitionTests extends TestBase {
+public class QueryDefinitionTests extends TestBaseUI {
 
-    private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
+    private UserCredentials currentUser = UserUtil.getUser();
     private WorkflowHome workflowHome;
     private QueryDefinitions queryDefinitions;
 
@@ -31,11 +31,11 @@ public class QueryDefinitionTests extends TestBase {
 
     @Before
     public void setup() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
     }
 
     @Test
-    @TestRail(testCaseId = {"4303"})
+    @TestRail(id = {4303})
     @Description("Test input fields functionality")
     public void testInputFields() {
         queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
@@ -58,7 +58,7 @@ public class QueryDefinitionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3957"})
+    @TestRail(id = {3957})
     @Description("Test navigation button states")
     public void testNavigationButtons() {
         queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
@@ -79,7 +79,7 @@ public class QueryDefinitionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4306","3958"})
+    @TestRail(id = {4306, 3958})
     @Description("Verify query widget is correct for each possible PLM System selection")
     public void testRulesListFunctionality() {
         queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)

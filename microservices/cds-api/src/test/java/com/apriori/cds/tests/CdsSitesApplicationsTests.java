@@ -1,16 +1,15 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.LicensedApplication;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.LicensedApplication;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.common.customer.response.LicensedApplications;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -68,7 +67,7 @@ public class CdsSitesApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6058"})
+    @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
         String appIdentity = Constants.getApProApplicationIdentity();
@@ -86,7 +85,7 @@ public class CdsSitesApplicationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"6060"})
+    @TestRail(id = {6060})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
         String appIdentity = Constants.getCiaApplicationIdentity();

@@ -3,7 +3,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':apibase')
+    implementation project('::shared-util')
     implementation project(':shared-util')
     implementation project(':serialization-util')
 

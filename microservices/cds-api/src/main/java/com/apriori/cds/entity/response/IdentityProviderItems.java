@@ -1,7 +1,7 @@
 
 package com.apriori.cds.entity.response;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

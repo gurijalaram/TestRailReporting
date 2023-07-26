@@ -1,0 +1,281 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "active",
+        "siteId",
+        "licensedApplications",
+        "customerIdentity",
+        "deployments"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "siteId": {
+          "type": "string"
+        },
+        "licensedApplications": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "application",
+                  "applicationIdentity"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "application": {
+                    "type": "string"
+                  },
+                  "applicationIdentity": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "optional": [
+              {
+                "type": "object",
+                "required": [
+                  "isDefault",
+                  "identity",
+                  "createdBy",
+                  "createdAt",
+                  "name",
+                  "description",
+                  "apVersion",
+                  "active",
+                  "installations",
+                  "deploymentType"
+                ],
+                "properties": {
+                  "isDefault": {
+                    "type": "boolean"
+                  },
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "apVersion": {
+                    "type": "string"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "installations": {
+                    "type": "array",
+                    "items": {
+                      "optional": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "identity",
+                            "createdBy",
+                            "createdAt",
+                            "name",
+                            "cloudReference",
+                            "description",
+                            "active",
+                            "realm",
+                            "url",
+                            "s3Bucket",
+                            "tenantGroup",
+                            "tenant",
+                            "clientId",
+                            "clientSecret",
+                            "cidGlobalKey",
+                            "deploymentIdentity",
+                            "region",
+                            "applications"
+                          ],
+                          "optional": [
+                            "updatedAt"
+                          ],
+                          "properties": {
+                            "identity": {
+                              "type": "string"
+                            },
+                            "createdBy": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "cloudReference": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "active": {
+                              "type": "boolean"
+                            },
+                            "realm": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "s3Bucket": {
+                              "type": "string"
+                            },
+                            "tenantGroup": {
+                              "type": "string"
+                            },
+                            "tenant": {
+                              "type": "string"
+                            },
+                            "clientId": {
+                              "type": "string"
+                            },
+                            "clientSecret": {
+                              "type": "string"
+                            },
+                            "cidGlobalKey": {
+                              "type": "string"
+                            },
+                            "deploymentIdentity": {
+                              "type": "string"
+                            },
+                            "region": {
+                              "type": "string"
+                            },
+                            "applications": {
+                              "type": "array",
+                              "items": {
+                                "optional": [
+                                  {
+                                    "type": "object",
+                                    "required": [
+                                      "isSingleTenant",
+                                      "isCloudHomeApp",
+                                      "isPublic",
+                                      "identity",
+                                      "createdBy",
+                                      "createdAt",
+                                      "name",
+                                      "cloudReference",
+                                      "serviceName",
+                                      "description",
+                                      "iconUrl"
+                                    ],
+                                    "properties": {
+                                      "isSingleTenant": {
+                                        "type": "boolean"
+                                      },
+                                      "isCloudHomeApp": {
+                                        "type": "boolean"
+                                      },
+                                      "isPublic": {
+                                        "type": "boolean"
+                                      },
+                                      "identity": {
+                                        "type": "string"
+                                      },
+                                      "createdBy": {
+                                        "type": "string"
+                                      },
+                                      "createdAt": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "cloudReference": {
+                                        "type": "string"
+                                      },
+                                      "serviceName": {
+                                        "type": "string"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      },
+                                      "iconUrl": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "deploymentType": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

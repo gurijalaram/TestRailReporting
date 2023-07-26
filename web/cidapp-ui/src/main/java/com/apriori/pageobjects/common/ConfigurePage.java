@@ -134,7 +134,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return list string
      */
     public List<String> getChoicesList() {
-        return Stream.of(columnList.get(0).getAttribute("innerText").split("\n")).filter(x -> !x.contains("Choices".toUpperCase())).collect(Collectors.toList());
+        return Stream.of(columnList.get(0).getAttribute("innerText").split("")).filter(x -> !x.contains("Choices".toUpperCase())).collect(Collectors.toList());
     }
 
     /**
@@ -143,7 +143,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return list string
      */
     public List<String> getChosenList() {
-        return Stream.of(columnList.get(1).getAttribute("innerText").split("\n")).filter(x -> !x.contains("Chosen".toUpperCase())).collect(Collectors.toList());
+        return Stream.of(columnList.get(1).getAttribute("innerText").split("")).filter(x -> !x.contains("Chosen".toUpperCase())).collect(Collectors.toList());
     }
 
     /**

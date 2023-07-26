@@ -1,14 +1,11 @@
 package com.apriori.dms.tests;
 
-
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.response.DmsCommentViewResponse;
 import entity.response.DmsCommentViewsResponse;
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import utils.DmsApiTestDataUtils;
@@ -23,7 +20,7 @@ public class DmsCommentViewTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"15478", "15481"})
+    @TestRail(id = {15478, 15481})
     @Description("Mark and Delete a comment as a viewed")
     public void markAndDeleteCommentView() {
         DmsCommentViewResponse markViewResponse = DmsApiTestUtils.markCommentViewAsRead(
@@ -43,7 +40,7 @@ public class DmsCommentViewTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"15479"})
+    @TestRail(id = {15479})
     @Description("Find comment views")
     public void getCommentViews() {
         DmsCommentViewsResponse responseWrapper = DmsApiTestUtils.getDiscussionCommentViews(
@@ -54,7 +51,7 @@ public class DmsCommentViewTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @TestRail(testCaseId = {"15480"})
+    @TestRail(id = {15480})
     @Description("get a comment view by identity")
     public void getCommentView() {
         DmsCommentViewResponse responseWrapper = DmsApiTestUtils.getDiscussionCommentView(

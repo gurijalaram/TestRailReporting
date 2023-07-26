@@ -28,6 +28,6 @@ public class LetNavigationBarController extends EagerPageComponent<LetNavigation
      * @return list of string
      */
     public List<String> getItemsOfSections(String section) {
-        return Stream.of(getDriver().findElement(By.xpath("//span[text()='" + section + "']//..")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+        return Stream.of(getDriver().findElement(By.xpath("//span[text()='" + section + "']//..")).getAttribute("innerText").split("")).collect(Collectors.toList());
     }
 }

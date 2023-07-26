@@ -4,6 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -11,13 +14,10 @@ import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterati
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.json.JsonManager;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -30,7 +30,7 @@ public class ActiveAxesByScenarioIterationKeyTests extends TestUtil {
 
     @Test
     @Issue("COST-173")
-    @TestRail(testCaseId = "10980")
+    @TestRail(id = 10980)
     @Description("Validate Get Active Axes by Scenario Iteration Key")
     public void testGetActiveAxesByScenarioIterationKey() {
         FileUploadResources fileUploadResources = new FileUploadResources();

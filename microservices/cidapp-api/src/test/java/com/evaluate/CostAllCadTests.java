@@ -1,9 +1,11 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
@@ -12,14 +14,12 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -39,7 +39,7 @@ public class CostAllCadTests {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421", "565", "567"})
+    @TestRail(id = {5421, 565, 567})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void cadFormatSLDPRT() {
 
@@ -88,7 +88,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - par")
     public void cadFormatPar() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -101,7 +101,7 @@ public class CostAllCadTests {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -113,7 +113,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -126,7 +126,7 @@ public class CostAllCadTests {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -139,7 +139,7 @@ public class CostAllCadTests {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -151,7 +151,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -163,7 +163,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -175,7 +175,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -187,7 +187,7 @@ public class CostAllCadTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5421"})
+    @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;

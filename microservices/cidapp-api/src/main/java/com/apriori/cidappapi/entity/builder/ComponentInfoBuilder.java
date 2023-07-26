@@ -3,8 +3,8 @@ package com.apriori.cidappapi.entity.builder;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.Builder;
 import lombok.Data;

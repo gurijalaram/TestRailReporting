@@ -1,8 +1,8 @@
 package com.apriori.vds.entity.response.customizations;
 
+import com.apriori.annotations.Schema;
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;

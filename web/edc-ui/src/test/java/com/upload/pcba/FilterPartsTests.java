@@ -4,14 +4,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CostStatusEnum;
 import com.utils.EdcUiResources;
@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class FilterPartsTests extends TestBase {
+public class FilterPartsTests extends TestBaseUI {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
@@ -38,7 +38,7 @@ public class FilterPartsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1727")
+    @TestRail(id = "1727")
     @Description("BOM - Filter Parts - Cost Status - Available Drop Down options")
     public void testFiltering() {
         currentUser = UserUtil.getUser();

@@ -1,14 +1,14 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.enums.CheckboxState;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.response.AgentWorkflowJobPartsResult;
 import entity.response.AgentWorkflowJobResults;
@@ -26,7 +26,6 @@ import utils.CicApiTestUtil;
 import utils.CicGuiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
 
@@ -40,7 +39,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5972", "5978"})
+    @TestRail(id = {5972, 5978})
     @Description("Test 'Return Latest Revision' functions correctly for NEW workflow when ENABLED," +
         "Test 'Return Latest Revision' for job that contains only parts with multiple revision")
     public void testWorkflowRevisionWhenReturnOnlyEnabled() {
@@ -63,7 +62,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5973"})
+    @TestRail(id = {5973})
     @Description("Test 'Return Latest Revision' functions correctly for NEW workflow when DISABLED")
     public void testWorkflowMapSetRevisionDisabled() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
@@ -86,7 +85,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5976"})
+    @TestRail(id = {5976})
     @Description("Test 'Return Latest Revision' enabled with a query for a particular revision")
     public void testWorkflowMapSetSpecificRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION);
@@ -108,7 +107,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5977"})
+    @TestRail(id = {5977})
     @Description("Test 'Return Latest Revision' for job that contains no parts with multiple revision")
     public void testWorkflowNoPartWithMultiRev() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS);
@@ -129,7 +128,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5979"})
+    @TestRail(id = {5979})
     @Description("Test 'Return Latest Revision' for job that contains a mix of parts with multiple and single revision")
     public void testWorkflowMixedPartsWithMultipleAndSingleRev() {
         PartData plmPartWithParts = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
@@ -161,7 +160,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5981"})
+    @TestRail(id = {5981})
     @Description("Verify no errors are displayed when 'Return Latest Revision' is enabled and job contains no parts")
     public void testWorkflowVerifyRevisionWithInValidPart() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -177,7 +176,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5974"})
+    @TestRail(id = {5974})
     @Description("Test editing workflow to enable 'Return Latest Revision'")
     public void testWorkflowEditDisabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
@@ -221,7 +220,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5975"})
+    @TestRail(id = {5975})
     @Description("Test editing workflow to disable 'Return Latest Revision'")
     public void testWorkflowEditEnabledRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);
@@ -266,7 +265,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5984"})
+    @TestRail(id = {5984})
     @Description("Verify 'Return Latest Revision' setting is preserved when a workflow query is edited")
     public void testWorkflowEditEnabledPreserveRevision() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_PARTS);

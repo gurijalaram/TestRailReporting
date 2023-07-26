@@ -1,14 +1,14 @@
 package com.apriori.sds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -22,7 +22,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
     private static ComponentInfoBuilder componentAssembly;
 
     @Test
-    @TestRail(testCaseId = "12308")
+    @TestRail(id = "12308")
     @Description("Verify Shallow Publish through SDS api")
     public void testShallowPublishAssembly() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -58,7 +58,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "12309")
+    @TestRail(id = "12309")
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

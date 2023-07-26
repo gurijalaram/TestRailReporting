@@ -131,7 +131,7 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
 
         List<WebElement> cards = pageUtils.waitForElementsToAppear(By.cssSelector("div[data-testid='step-cards'] div"));
 
-        return cards.stream().map(card -> card.getText().split("\n")).collect(Collectors.toList());
+        return cards.stream().map(card -> card.getText().split("")).collect(Collectors.toList());
     }
 
     /**

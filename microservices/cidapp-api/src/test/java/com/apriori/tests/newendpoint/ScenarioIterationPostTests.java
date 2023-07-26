@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.enums.Direction;
 import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
 import com.apriori.cidappapi.entity.request.operators.Params;
@@ -11,10 +12,9 @@ import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.entity.response.CostingInput;
 import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12415"})
+    @TestRail(id = {12415})
     @Description("Verify that following query: componentName[EQ]=foo, returns correct results")
     public void getOnePartTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -59,7 +59,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12416"})
+    @TestRail(id = {12416})
     @Description("Verify that POST scenario-iterations returns exactly specified 5 items - paging , sorting Asc")
     public void getFivePartsSortedAscTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -77,7 +77,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12417"})
+    @TestRail(id = {12417})
     @Description("Verify that POST scenario-iterations returns parts with OR operator")
     public void getPartsWithOrOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -94,7 +94,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12418"})
+    @TestRail(id = {12418})
     @Description("Verify that POST scenario-iterations returns parts - NOT operator")
     public void getPartsWithNotOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -118,7 +118,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12419"})
+    @TestRail(id = {12419})
     @Description("Verify that POST scenario-iterations returns parts - isNull operator")
     public void getPartsWithIsNullOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest =
@@ -139,7 +139,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12895"})
+    @TestRail(id = {12895})
     @Description("Verify following query: (componentName[CN]=foo AND createdBy[IN]=currentUser|anotherUser) OR (assignedTo[EQ]=currentUser AND isPublic[EQ]=true)")
     public void getDataWithMoreComplexQueryTest() {
         ScenarioIterationRequest scenarioIterationRequest =

@@ -1,17 +1,17 @@
 package com.partsandassembliesdetails;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.CisColumnsEnum;
 import com.utils.CisCostDetailsEnum;
@@ -20,15 +20,13 @@ import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-
-public class PartsAndAssembliesDetailsTest extends TestBase {
+public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
     public PartsAndAssembliesDetailsTest() {
         super();
@@ -42,7 +40,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private EvaluatePage evaluatePage;
 
     @Test
-    @TestRail(testCaseId = {"12254", "12396", "12459", "12460", "12461"})
+    @TestRail(id = {12254", "12396", "12459", "12460", "12461})
     @Description("Verify 3D viewer and column cards on parts and assemblies details page")
     public void testPartsAndAssembliesDetailPageHeaderTitle() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -79,7 +77,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13067", "13068", "13069", "13070", "13071", "13072"})
+    @TestRail(id = {13067", "13068", "13069", "13070", "13071", "13072})
     @Description("Verify Scenario Results Default Cards on parts and assemblies details page")
     public void testScenarioResultsDefaultCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -142,7 +140,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12910", "12914"})
+    @TestRail(id = {12910", "12914})
     @Description("Verify insights section and details for a costed scenario")
     public void testInsightsSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -175,7 +173,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12912", "12913", "12915", "12916", "13179"})
+    @TestRail(id = {12912", "12913", "12915", "12916", "13179})
     @Description("Verify part nesting section on Insights")
     public void testPartNestingSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -215,7 +213,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13043", "13044", "13045", "13046"})
+    @TestRail(id = {13043", "13044", "13045", "13046})
     @Description("Verify material properties section on Insights")
     public void testMaterialPropertiesSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -255,7 +253,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13047", "13048", "13049", "13050"})
+    @TestRail(id = {13047", "13048", "13049", "13050})
     @Description("Verify material stock section on Insights")
     public void testMaterialStockSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -294,7 +292,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13180", "13182", "13197", "13924"})
+    @TestRail(id = {13180", "13182", "13197", "13924})
     @Description("Verify insights for a non-costed scenario")
     public void testInsightsSectionForUnCostedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -328,7 +326,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12485", "12486", "12487", "12489", "12490", "12491", "12492", "12495"})
+    @TestRail(id = {12485", "12486", "12487", "12489", "12490", "12491", "12492", "12495})
     @Description("Verify the creation of new scenario results cards")
     public void testCreateNewScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -378,7 +376,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12499", "12500", "12502", "12503", "12507", "12509", "12510", "13088", "13089", "13090"})
+    @TestRail(id = {12499", "12500", "12502", "12503", "12507", "12509", "12510", "13088", "13089", "13090})
     @Description("Verify scenario results cards can be edited")
     public void testEditScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -432,7 +430,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12523", "12524", "12525", "12527"})
+    @TestRail(id = {12523", "12524", "12525", "12527})
     @Description("Verify scenario results cards can be removed")
     public void testRemoveScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -477,7 +475,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13283", "13144", "13145", "13146", "13284", "13165", "13151", "13162"})
+    @TestRail(id = {13283", "13144", "13145", "13146", "13284", "13165", "13151", "13162})
     @Description("Verify process routing cycle time details card")
     public void testProcessRoutingCycleTimeDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -527,7 +525,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13215", "13216", "13217", "13299", "14542"})
+    @TestRail(id = {13215", "13216", "13217", "13299", "14542})
     @Description("Verify fully burdened cost details card")
     public void testProcessRoutingFullyBurdenedCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -573,7 +571,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13163", "13164", "13296", "13166", "14541"})
+    @TestRail(id = {13163", "13164", "13296", "13166", "14541})
     @Description("Verify piece part cost details card")
     public void testProcessRoutingPiecePartCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -619,7 +617,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13243", "13244", "13245", "13248", "13485", "13488"})
+    @TestRail(id = {13243", "13244", "13245", "13248", "13485", "13488})
     @Description("Verify assembly tree view")
     public void testAssemblyTreeView() {
         final String assemblyName = "Hinge assembly";
@@ -670,7 +668,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13320", "13321", "13322", "13323", "13324", "13375", "13376", "13377"})
+    @TestRail(id = {13320", "13321", "13322", "13323", "13324", "13375", "13376", "13377})
     @Description("Verify design guidance issue details")
     public void testDesignGuidanceIssueDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -717,7 +715,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13584", "13585", "13586", "13588", "13589", "13590"})
+    @TestRail(id = {13584", "13585", "13586", "13588", "13589", "13590})
     @Description("Verify design guidance investigation section details")
     public void testDesignGuidanceInvestigationDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -760,7 +758,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13799", "13800", "13801", "13992", "13993", "13996", "13997"})
+    @TestRail(id = {13799", "13800", "13801", "13992", "13993", "13996", "13997})
     @Description("Verify cost details for part")
     public void testPartCostCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -800,7 +798,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14033", "14034", "14035", "14036", "14037", "14038", "14039"})
+    @TestRail(id = {14033", "14034", "14035", "14036", "14037", "14038", "14039})
     @Description("Verify design guidance threads section details")
     public void testDesignGuidanceThreadsDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -843,7 +841,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14040", "14041", "14042", "14043", "14044", "14045", "14046", "14047"})
+    @TestRail(id = {14040", "14041", "14042", "14043", "14044", "14045", "14046", "14047})
     @Description("Verify assembly cost details breakdowns")
     public void testAssemblyCostDetails() {
         final String assemblyName = "Hinge assembly";
@@ -898,7 +896,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13270", "13271", "13272", "13273", "13274", "13275", "13276"})
+    @TestRail(id = {13270", "13271", "13272", "13273", "13274", "13275", "13276})
     @Description("Verify share scenario functionalities")
     public void testShareScenarioFunction() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -941,7 +939,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13307", "13308", "13309", "13310", "13314", "13315", "13316", "14180"})
+    @TestRail(id = {13307", "13308", "13309", "13310", "13314", "13315", "13316", "14180})
     @Description("Verify that discussions can be created by scenario results attributes")
     public void testCreateDiscussionByScenarioAttributes() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -996,7 +994,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14466", "14467", "14468", "14469", "14470", "14471", "14543", "14641", "14691"})
+    @TestRail(id = {14466", "14467", "14468", "14469", "14470", "14471", "14543", "14641", "14691})
     @Description("Verify that discussions can be created by comment section")
     public void testCreateDiscussionByCommentSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1057,7 +1055,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14183", "14184", "14185", "14186", "14187", "14691"})
+    @TestRail(id = {14183", "14184", "14185", "14186", "14187", "14691})
     @Description("Verify that replies can be added to a selected comment thread")
     public void testReplyToACommentThread() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1105,7 +1103,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14189", "14190", "14697", "14698", "14699"})
+    @TestRail(id = {14189", "14190", "14697", "14698", "14699})
     @Description("Verify that user can resolve and unresolve a discussion")
     public void testResolveAndUnresolvedComment() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1146,7 +1144,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14195", "14196", "14201", "14202", "14730", "14732"})
+    @TestRail(id = {14195", "14196", "14201", "14202", "14730", "14732})
     @Description("Verify that user can delete and undelete a discussion")
     public void testDeleteAndUndeleteDiscussion() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1192,7 +1190,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14191","14192","14193","14194","14628","14689","14690"})
+    @TestRail(id = {14191, 14192, 14193, 14194, 14628, 14689, 14690})
     @Description("Verify that assign and un-assign a discussion to a project participant ")
     public void testAssignUnAssignACommentThread()  {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1245,7 +1243,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14700", "14701", "14702", "14760", "14761"})
+    @TestRail(id = {14700", "14701", "14702", "14760", "14761})
     @Description("Verify that user can delete and undelete a comment")
     public void testDeleteAndUndeleteAComment() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1292,7 +1290,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14728","14729","14731","14736","14733","14734"})
+    @TestRail(id = {14728, 14729, 14731, 14736, 14733, 14734})
     @Description("Verify that mention users in a comment and assign comment to a mention user ")
     public void testMentionUsersOnACommentThread()  {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1340,7 +1338,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14050", "14051", "14052", "14053"})
+    @TestRail(id = {14050", "14051", "14052", "14053})
     @Description("Verify remove participants functionalities")
     public void testRemoveParticipants() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1394,7 +1392,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16676","16678"})
+    @TestRail(id = {16676, 16678})
     @Description("Verify user can open the same component in CID app from details view")
     public void testOpenComponentInCID() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1427,7 +1425,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"17093","17094","17095","17096","17098","17099"})
+    @TestRail(id = {17093, 17094, 17095, 17096, 17098, 17099})
     @Description("Verify discussions can create from process details card")
     public void testCreateDiscussionsFromProcessDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1483,7 +1481,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16672","16673","16838","16839","16840"})
+    @TestRail(id = {16672, 16673, 16838","16839","16840})
     @Description("Verify user can add/remove process details fields")
     public void testEnableConfigurationsOfProcessDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1551,7 +1549,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"16460","16461","16462","16463"})
+    @TestRail(id = {16460","16461","16462","16463})
     @Description("Verify non-applicable fields are hidden in scenario info cards")
     public void testShowHideNonApplicableFieldsInScenarioInfoCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

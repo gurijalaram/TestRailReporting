@@ -2,7 +2,6 @@ package com.apriori.qds.utils;
 
 import com.apriori.qds.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageRequest;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.util.HashMap;
 import java.util.Map;

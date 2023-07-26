@@ -3,16 +3,16 @@ package com.compare;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -25,7 +25,7 @@ import testsuites.suiteinterface.ExtendedRegression;
 import java.util.Arrays;
 import java.util.List;
 
-public class PublicPrivateComparisonTests extends TestBase {
+public class PublicPrivateComparisonTests extends TestBaseUI {
     private static UserCredentials currentUser;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static String assemblyName1;
@@ -112,7 +112,7 @@ public class PublicPrivateComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6533"})
+    @TestRail(id = 6533)
     @Description("User can add assemblies to a blank new comparison")
     public void addPublicAndPrivateAssemblyToComparison() {
         loginPage = new CidAppLoginPage(driver);

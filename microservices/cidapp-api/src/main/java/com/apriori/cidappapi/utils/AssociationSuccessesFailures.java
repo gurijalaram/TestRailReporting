@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
+import com.apriori.annotations.Schema;
 import com.apriori.cidappapi.entity.response.Failures;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;

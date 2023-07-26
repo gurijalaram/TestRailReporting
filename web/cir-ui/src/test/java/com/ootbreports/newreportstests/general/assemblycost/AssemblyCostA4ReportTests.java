@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.general.assemblycost;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -8,7 +8,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
@@ -22,7 +21,7 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13712"})
+    @TestRail(id = {13712})
     @Description("Input controls - Currency code")
     public void testCurrency() {
         jasperApiUtils.genericAssemblyCostCurrencyTest();

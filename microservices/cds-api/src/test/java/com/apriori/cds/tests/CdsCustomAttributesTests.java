@@ -1,16 +1,16 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.CustomAttribute;
 import com.apriori.cds.objects.response.CustomAttributesResponse;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -68,7 +68,7 @@ public class CdsCustomAttributesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12365", "12366", "12367"})
+    @TestRail(id = {12365, 12366, 12367})
     @Description("Adding a CustomAttribute for a user and getting it")
     public void addCustomAttribute() {
         String updatedDepartment = generateStringUtil.getRandomString();
@@ -92,7 +92,7 @@ public class CdsCustomAttributesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"12369", "12370"})
+    @TestRail(id = {12369, 12370})
     @Description("Get a CustomAttribute by its identity and update")
     public void getCustomAttributeByIdAndUpdate() {
         String updatedDepartment = generateStringUtil.getRandomString();

@@ -4,10 +4,10 @@ import com.apriori.ach.entity.response.CustomerAch;
 import com.apriori.ach.entity.response.Notifications;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.utils.AchTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.authorization.AuthorizationUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,7 +26,7 @@ public class AchNotificationsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"21958"})
+    @TestRail(id = {21958})
     @Description("Returns the list of the notifications")
     public void getNotifications() {
         SoftAssertions soft = new SoftAssertions();

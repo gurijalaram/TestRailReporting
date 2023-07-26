@@ -1,23 +1,23 @@
 package com.evaluate.assemblies;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.PreferencesEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.PreferencesEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MissingAssemblyAssociationsTests extends TestBase {
+public class MissingAssemblyAssociationsTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ComponentsTreePage componentsTreePage;
@@ -58,7 +58,7 @@ public class MissingAssemblyAssociationsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"21669", "21670"})
+    @TestRail(id = {21669, 21670})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with same scenario name are associated to assembly")
     public void testMaturityPresetPrivateWithSameNameAndMissing() {
         final String fuse_block_asm = "Miss_Fuse_Block_Asm";

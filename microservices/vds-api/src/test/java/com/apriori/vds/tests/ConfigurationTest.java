@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.configuration.Configuration;
 import com.apriori.vds.entity.response.configuration.ConfigurationsItems;
@@ -21,14 +21,14 @@ import java.util.HashMap;
 public class ConfigurationTest extends VDSTestUtil {
 
     @Test
-    @TestRail(testCaseId = {"7929"})
+    @TestRail(id = {7929})
     @Description("Returns a list of CustomerConfigurations for a customer.")
     public void getConfigurations() {
         this.getConfigurationsItems();
     }
 
     @Test
-    @TestRail(testCaseId = {"7930"})
+    @TestRail(id = {7930})
     @Description("Get a specific CustomerConfiguration.")
     public void getConfigurationsByIdentity() {
         ConfigurationsItems configurationsItems = this.getConfigurationsItems();
@@ -43,7 +43,7 @@ public class ConfigurationTest extends VDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7931"})
+    @TestRail(id = {7931})
     @Description("Replaces a CustomerConfiguration for a customer. Creates it if it is missing.")
     @Ignore
     public void putConfiguration() {

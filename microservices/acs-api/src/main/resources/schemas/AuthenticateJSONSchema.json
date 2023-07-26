@@ -1,0 +1,22 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#Authorization",
+  "type": "object",
+  "title": "Common token authorization response ",
+  "required": [
+    "access_token",
+    "expires_in"
+  ],
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "title": "The Access_token Schema",
+      "default": "",
+      "pattern": "^(.*)$"
+    },
+    "expires_in": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

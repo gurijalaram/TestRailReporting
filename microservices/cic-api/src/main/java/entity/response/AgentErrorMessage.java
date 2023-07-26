@@ -1,8 +1,8 @@
 package entity.response;
 
+import com.apriori.annotations.Schema;
+import com.apriori.authorization.response.ErrorResponse;
 import com.apriori.deserializers.DateTimeDeserializer_Epoch;
-import com.apriori.utils.ErrorResponse;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

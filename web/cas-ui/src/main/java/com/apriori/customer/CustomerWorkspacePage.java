@@ -9,8 +9,8 @@ import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.security.SecurityPage;
-import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

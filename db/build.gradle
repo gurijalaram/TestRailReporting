@@ -1,5 +1,4 @@
 dependencies {
-    implementation project(':apibase')
     implementation project(':shared-util')
 
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'

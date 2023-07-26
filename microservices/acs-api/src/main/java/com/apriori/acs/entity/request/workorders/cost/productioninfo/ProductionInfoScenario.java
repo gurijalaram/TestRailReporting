@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.request.workorders.cost.productioninfo;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Builder;
 import lombok.Data;

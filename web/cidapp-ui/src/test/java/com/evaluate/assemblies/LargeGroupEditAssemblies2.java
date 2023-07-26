@@ -2,16 +2,16 @@ package com.evaluate.assemblies;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -21,7 +21,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class LargeGroupEditAssemblies2 extends TestBase {
+public class LargeGroupEditAssemblies2 extends TestBaseUI {
 
     private static String scenarioName;
     private static String scenarioName2;
@@ -59,7 +59,7 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10886", "10887", "10888"})
+    @TestRail(id = {10886", "10887", "10888})
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {
         loginPage = new CidAppLoginPage(driver);

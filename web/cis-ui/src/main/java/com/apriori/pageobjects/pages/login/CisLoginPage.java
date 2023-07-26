@@ -6,7 +6,7 @@ import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

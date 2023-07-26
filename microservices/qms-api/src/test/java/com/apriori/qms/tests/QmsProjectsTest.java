@@ -1,7 +1,11 @@
 package com.apriori.qms.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
@@ -13,13 +17,9 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -52,7 +52,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22128"})
+    @TestRail(id = {22128})
     @Description("Verify user can add  project users(default) by project creation API (without mentioning any user in request payload)")
     public void createProjectWithDefaultUser() {
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22127", "22071", "22917"})
+    @TestRail(id = {22127, 22071, 22917})
     @Issue("COL-1704")
     @Description("Verify user can add more than 10 project users (multiple users) by project creation API")
     public void createProjectWithMoreThan10Users() {
@@ -132,7 +132,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22126"})
+    @TestRail(id = {22126})
     @Description("Verify duplicate project users are discarded by project creation API")
     public void createProjectWithDuplicateUsers() {
         List<String> projectUsersList = new ArrayList<>();
@@ -191,7 +191,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22125"})
+    @TestRail(id = {22125})
     @Issue("COL-1837")
     @Description("Verify user can add multiple project users by project creation API(Invalid/null and without User identity)")
     public void createProjectWithInvalidUserIdentity() {
@@ -244,7 +244,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22124"})
+    @TestRail(id = {22124})
     @Description("Verify user can add multiple project users by project creation API(Invalid/null and without Customer identity)")
     public void createProjectWithInvalidCustomerIdentity() {
         List<String> projectUsersList = new ArrayList<>();
@@ -297,7 +297,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22956"})
+    @TestRail(id = {22956})
     @Description("Verify user is able to retrieve avatarColor inside of a specific QMS project's user model")
     public void getProjectByIdentity() {
         BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
@@ -327,7 +327,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"23094"})
+    @TestRail(id = {23094})
     @Description("Verify user is able to retrieve avatarColor inside all QMS project's user model")
     public void getAllProjects() {
         BidPackageProjectsResponse bppResponse = QmsProjectResources.getProjects(
@@ -348,7 +348,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24482"})
+    @TestRail(id = {24482})
     @Description("For /project? endpoint || Verify project can be created with OPEN or IN_PROGRESS status)")
     public void createProjectWithStatusOpenAndInProgress() {
         //OPEN
@@ -399,7 +399,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24483"})
+    @TestRail(id = {24483})
     @Description("Verify the default project created in the background during scenarios discussion creation  will have status as OPEN")
     public void verifyDefaultProjectStatusToBeOpen() {
         //Create default project via scenario discussion
@@ -420,7 +420,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14625"})
+    @TestRail(id = {14625})
     @Description("Verify that the user can find only those projects in which he participates")
     public void getProjectsForParticipant() {
         BidPackageProjectsResponse bidPackageProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
@@ -430,7 +430,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14626", "14669"})
+    @TestRail(id = {14626, 14669})
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getProjectForParticipant() {
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
@@ -457,7 +457,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14627"})
+    @TestRail(id = {14627})
     @Description("Verify that the user can find a project by identity in which he participates")
     public void getEmptyProjectsForParticipant() {
         BidPackageProjectsResponse bidProjectsResponse = QmsProjectResources.getProjects(BidPackageProjectsResponse.class, HttpStatus.SC_OK, currentUser);
@@ -465,7 +465,7 @@ public class QmsProjectsTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"17102", "17103"})
+    @TestRail(id = {17102, 17103})
     @Description("Verifying Project creation with bid package items in request. Verify that User can create project using /project URL")
     public void createProjectWithBidPackageItemsAndValidUserIdentity() {
         ScenarioItem secondScenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);

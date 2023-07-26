@@ -1,5 +1,8 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
 import com.apriori.features.WorkFlowFeatures;
@@ -10,12 +13,9 @@ import com.apriori.pages.workflows.history.HistoryPage;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.JobDefinition;
 import io.qameta.allure.Description;
@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.CicApiTestUtil;
 
-public class WorkflowTests extends TestBase {
+public class WorkflowTests extends TestBaseUI {
     private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
     private static JobDefinition jobDefinitionData;
@@ -44,7 +44,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4109", "3586", "3588", "3587", "3591", "3961"})
+    @TestRail(id = {4109, 3586, 3588, 3587, 3591, 3961})
     @Description("Test creating, editing and deletion of a workflow")
     public void testCreateEditAndDeleteWorkflow() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
@@ -77,7 +77,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4273"})
+    @TestRail(id = {4273})
     @Description("Test the state of the edit, delete and invoke buttons on the WF schedule screen. With a WF selected" +
         "and with no WF selected")
     public void testButtonState() {
@@ -118,7 +118,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3809", "3944"})
+    @TestRail(id = {3809, 3944})
     @Description("Test default sorting, ascending and descending of workflows by name in the schedule table")
     public void testSortedByName() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
@@ -154,7 +154,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4302"})
+    @TestRail(id = {4302})
     public void testValidateInputFields() {
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
@@ -171,7 +171,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3991"})
+    @TestRail(id = {3991})
     public void testValidateNameWithSpecial() {
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
@@ -187,7 +187,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5842", "5956", "6070"})
+    @TestRail(id = {5842, 5956, 6070})
     @Description("Cancel job using the cancel button in CIC App, " +
         "Job status and Status Details are as expected when cancelled from CIC App, " +
         "Cancel button is not enabled for a job in a terminal state")

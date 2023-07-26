@@ -1,8 +1,16 @@
 package com.apriori.sds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.request.PostWatchpointReportRequest;
@@ -12,15 +20,7 @@ import com.apriori.sds.entity.response.ScenarioHoopsImage;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.entity.response.ScenarioManifest;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -36,21 +36,21 @@ public class ScenariosTest extends SDSTestUtil {
     private static ScenarioItem testingScenarioWithWatchpoint;
 
     @Test
-    @TestRail(testCaseId = {"6922"})
+    @TestRail(id = {6922})
     @Description("Find scenarios for a given component matching a specified query.")
     public void testGetScenarios() {
         this.getScenarios();
     }
 
     @Test
-    @TestRail(testCaseId = {"6923"})
+    @TestRail(id = {6923})
     @Description("Get the current representation of a scenario.")
     public void testGetScenarioByIdentity() {
         this.getScenarioByIdentity(getScenarioId());
     }
 
     @Test
-    @TestRail(testCaseId = {"6924"})
+    @TestRail(id = {6924})
     @Description("Get production defaults for a scenario.")
     public void getCostingDefaults() {
         final RequestEntity requestEntity =
@@ -66,7 +66,7 @@ public class ScenariosTest extends SDSTestUtil {
     @Test
     //TODO should be resolved after adding an API to create a custom image for CID.
     @Ignore("API that allow to create a custom image, doesn't exist for CID. Custom image is user guided.")
-    @TestRail(testCaseId = {"6925"})
+    @TestRail(id = {6925})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {
         final RequestEntity requestEntity =
@@ -80,7 +80,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8589"})
+    @TestRail(id = {8589})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getWebImage() {
         final RequestEntity requestEntity =
@@ -94,7 +94,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"6926"})
+    @TestRail(id = {6926})
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
         final ScenarioItem testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
@@ -110,7 +110,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8430")
+    @TestRail(id = "8430")
     @Description("Copy a scenario.")
     public void testCopyScenario() {
         final String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -138,14 +138,14 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8431")
+    @TestRail(id = "8431")
     @Description("Cost a scenario.")
     public void testCostScenario() {
         this.costAndGetReadyScenario();
     }
 
     @Test
-    @TestRail(testCaseId = "8429")
+    @TestRail(id = "8429")
     @Description("Update an existing scenario. ")
     public void testUpdateScenario() {
         final String updatedNotes = "Automation Notes";
@@ -175,14 +175,14 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8433")
+    @TestRail(id = "8433")
     @Description("Publish a scenario.")
     public void testPublishScenario() {
         this.publishAndGetReadyToWorkScenario();
     }
 
     @Test
-    @TestRail(testCaseId = "8432")
+    @TestRail(id = "8432")
     @Description("Fork a scenario.")
     public void testForkScenario() {
         final String forkScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -220,7 +220,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8590"})
+    @TestRail(id = {8590})
     @Description("GET a completed watchpoint report for a scenario.")
     public void testGetWatchPoint() {
         ScenarioItem scenarioWithCreatedWatchpoint = this.createWatchpoint();
@@ -242,14 +242,14 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "8434")
+    @TestRail(id = "8434")
     @Description("Create a watchpoint report.")
     public void testCreateWatchpointReport() {
         this.createWatchpoint();
     }
 
     @Test
-    @TestRail(testCaseId = "7246")
+    @TestRail(id = "7246")
     @Description("Delete an existing scenario.")
     public void deleteScenario() {
         final ScenarioItem componentToDelete = postTestingComponentAndAddToRemoveList();

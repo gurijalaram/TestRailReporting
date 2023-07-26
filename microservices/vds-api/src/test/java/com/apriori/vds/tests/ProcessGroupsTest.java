@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
 import com.apriori.bcs.entity.response.ProcessGroup;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.tests.util.ProcessGroupUtil;
 
@@ -21,7 +21,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
     private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Assembly", "Composites");
 
     @Test
-    @TestRail(testCaseId = {"8271"})
+    @TestRail(id = {8271})
     @Description("Get a list of process groups for a specific customer.")
     public void getProcessGroups() {
         List<ProcessGroup> processGroups = getProcessGroupsResponse();
@@ -49,9 +49,8 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
         return failedPGs.toString();
     }
 
-
     @Test
-    @TestRail(testCaseId = {"8272"})
+    @TestRail(id = {8272})
     @Description("Get a ProcessGroup for a customer identified by its identity.")
     public void getProcessGroupsByIdentity() {
         List<ProcessGroup> processGroups = getProcessGroupsResponse();

@@ -1,5 +1,6 @@
 package com.navigation;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
@@ -7,16 +8,15 @@ import com.apriori.pageobjects.pages.logout.AdminLogoutPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import utils.Constants;
 
-public class AdminNavigationTests extends TestBase {
+public class AdminNavigationTests extends TestBaseUI {
 
     private SoftAssertions softAssertions = new SoftAssertions();
     private SystemDataExport systemDataExport;
@@ -31,7 +31,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2980"})
+    @TestRail(id = {2980})
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
         scenarioExport = new AdminLoginPage(driver)
@@ -44,7 +44,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2981"})
+    @TestRail(id = {2981})
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new AdminLoginPage(driver)
@@ -57,7 +57,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2982"})
+    @TestRail(id = {2982})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new AdminLoginPage(driver)
@@ -72,7 +72,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2983"})
+    @TestRail(id = {2983})
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
@@ -88,7 +88,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2984"})
+    @TestRail(id = {2984})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
@@ -104,7 +104,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2985"})
+    @TestRail(id = {2985})
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new AdminLoginPage(driver)
@@ -118,7 +118,7 @@ public class AdminNavigationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2966"})
+    @TestRail(id = {2966})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         homePage = new AdminLoginPage(driver)

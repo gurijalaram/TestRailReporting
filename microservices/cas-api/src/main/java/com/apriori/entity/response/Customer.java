@@ -1,8 +1,8 @@
 package com.apriori.entity.response;
 
-import com.apriori.apibase.utils.CreatableModel;
+import com.apriori.annotations.CreatableModel;
+import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

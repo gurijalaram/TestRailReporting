@@ -3,10 +3,11 @@ package com.apriori.bcs.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.controller.ReportResources;
@@ -20,13 +21,12 @@ import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.Reports;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -49,7 +49,7 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4180"})
+    @TestRail(id = {4180})
     @Description("API returns a list of all the reports in the CIS DB")
     public void getReports() {
         Reports reports = ReportResources.getReports().getResponseEntity();
@@ -57,14 +57,14 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4182","7958"})
+    @TestRail(id = {4182, 7958})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
         ReportResources.getReportRepresentation(report.getIdentity());
     }
 
     @Test
-    @TestRail(testCaseId = {"4181"})
+    @TestRail(id = {4181})
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
         ReportRequest reportRequestTestData = ReportResources.getReportRequestData();
@@ -79,7 +79,7 @@ public class ReportResourcesTest extends TestUtil {
 
     @Test
     @Issue("AP-69406")
-    @TestRail(testCaseId = "8691")
+    @TestRail(id = 8691)
     @Description("Create a report with unsupported roundToDollar values")
     public void createReportWithRoundToDollarSettings() {
         ReportRequest setReportRequestTestData = ReportResources.getReportRequestData();
@@ -91,14 +91,13 @@ public class ReportResourcesTest extends TestUtil {
         setReportRequestTestData.setReportParameters(reportParameters);
 
         ReportError reportError = ReportResources.createReportWithInvalidData(setReportRequestTestData).getResponseEntity();
-        Assert.assertEquals("Test passed with string roundToDollar value",
+        assertEquals("Test passed with string roundToDollar value",
             "Value 'hello' is not a 'BOOLEAN' parameter 'roundToDollar'",
             reportError.getMessage());
     }
 
-
     @Test
-    @TestRail(testCaseId = {"4183"})
+    @TestRail(id = {4183})
     @Description("Export a report using the CIS API")
     public void exportReport() {
         ResponseWrapper<ReportExport> reportExportResponse = ReportResources.exportReport(report.getIdentity());
@@ -108,7 +107,7 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7957"})
+    @TestRail(id = {7957})
     @Description("Get a list of report templates")
     public void getReportTemplates() {
         ReportTemplates reportTemplates = ReportResources.getReportTemplates().getResponseEntity();

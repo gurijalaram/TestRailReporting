@@ -1,5 +1,7 @@
 package com.apriori.cmp.tests;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
@@ -9,12 +11,10 @@ import com.apriori.cmp.entity.response.ErrorResponse;
 import com.apriori.cmp.entity.response.GetComparisonResponse;
 import com.apriori.cmp.entity.response.PostComparisonResponse;
 import com.apriori.cmp.utils.ComparisonUtils;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -77,7 +77,7 @@ public class CmpSaveComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"25931", "25932"})
+    @TestRail(id = {25931, 25932})
     @Description("Create a Comparison via CMP-API")
     public void testCreateThenUpdateComparison() {
 
@@ -152,7 +152,7 @@ public class CmpSaveComparisonTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"25934", "25935", "25936", "25938", "25940", "25942", "25952", "25953"})
+    @TestRail(id = {25934, 25935, 25936, 25938, 25940, 25942, 25952, 25953})
     @Description("Test Request Validation for Create Comparison Endpoint")
     public void testCreateComparisonValidation() {
 
@@ -253,7 +253,7 @@ public class CmpSaveComparisonTests {
         softAssertions.assertThat(savedComparisonResponse.getStatus()).as("Verify 400 error returned for 0-indexed positions")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(savedComparisonResponse.getMessage()).as("Verify error message for 0-indexed positions")
-            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+            .isEqualTo("2 validation failures were found:* 'First object position' should be equal to 1.* 'Has consecutive, unique object positions' should be true.");
 
         comparison.getObjectsToCompare().get(0).setPosition(2);
         comparison.getObjectsToCompare().get(1).setPosition(3);
@@ -262,13 +262,13 @@ public class CmpSaveComparisonTests {
         softAssertions.assertThat(savedComparisonResponse.getStatus()).as("Verify 400 error returned for 2-indexed positions")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(savedComparisonResponse.getMessage()).as("Verify error message for 2-indexed positions")
-            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+            .isEqualTo("2 validation failures were found:* 'First object position' should be equal to 1.* 'Has consecutive, unique object positions' should be true.");
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"25943", "25945", "25946", "25947", "25948", "25949", "25950"})
+    @TestRail(id = {25943, 25945, 25946, 25947, 25948, 25949, 25950})
     @Description("Test Request Validation for Create Comparison Endpoint")
     public void testUpdateComparisonValidation() {
         comparisonName = new GenerateStringUtil().generateComparisonName();
@@ -363,7 +363,7 @@ public class CmpSaveComparisonTests {
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 0-indexed positions used")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 0-indexed positions used")
-            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+            .isEqualTo("2 validation failures were found:* 'First object position' should be equal to 1.* 'Has consecutive, unique object positions' should be true.");
 
         comparisonUpdates.getObjectsToCompare().get(0).setPosition(2);
         comparisonUpdates.getObjectsToCompare().get(1).setPosition(3);
@@ -372,7 +372,7 @@ public class CmpSaveComparisonTests {
         softAssertions.assertThat(updatedComparison.getStatus()).as("Verify 400 error returned when 2-indexed positions used")
             .isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(updatedComparison.getMessage()).as("Verify error message for 2-indexed positions used")
-            .isEqualTo("2 validation failures were found:\n* 'First object position' should be equal to 1.\n* 'Has consecutive, unique object positions' should be true.");
+            .isEqualTo("2 validation failures were found:* 'First object position' should be equal to 1.* 'Has consecutive, unique object positions' should be true.");
 
         softAssertions.assertAll();
     }

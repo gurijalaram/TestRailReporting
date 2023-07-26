@@ -4,23 +4,23 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Sites;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Sites;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SystemConfigurationTests extends TestBase {
+public class SystemConfigurationTests extends TestBaseUI {
     private SystemConfigurationPage systemConfigurationPage;
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil;
@@ -29,13 +29,13 @@ public class SystemConfigurationTests extends TestBase {
     public void setup() {
 
         systemConfigurationPage = new CasLoginPage(driver)
-                .login(UserUtil.getUser())
-                .openAprioriInternal()
+            .login(UserUtil.getUser())
+            .openAprioriInternal()
                 .goToSystemConfiguration();
     }
 
     @Test
-    @TestRail(testCaseId = {"10977", "10978", "10979"})
+    @TestRail(id = {10977, 10978, 10979})
     @Description("Validate aPriori Internal Site and deployment can be selected in dropdown on System Configuration page")
     public void validateSelectSiteAndDeployment() {
         cdsTestUtil = new CdsTestUtil();

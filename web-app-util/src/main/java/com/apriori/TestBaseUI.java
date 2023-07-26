@@ -1,9 +1,7 @@
 package com.apriori;
 
-/*import static com.apriori.DriverFactory.os;
+import static com.apriori.DriverFactory.os;
 import static com.apriori.DriverFactory.testMode;
-
-import com.apriori.utils.web.driver.DriverFactory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,4 +37,4 @@ public class TestBaseUI {
 
         driver.manage().deleteAllCookies();
     }
-}*/
+}

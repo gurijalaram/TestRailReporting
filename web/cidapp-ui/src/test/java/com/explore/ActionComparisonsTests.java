@@ -1,8 +1,8 @@
 package com.explore;
 
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
 
-public class ActionComparisonsTests extends TestBase {
+public class ActionComparisonsTests extends TestBaseUI {
 
     public ActionComparisonsTests() {
         super();
@@ -10,7 +10,7 @@ public class ActionComparisonsTests extends TestBase {
 
     /*@Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"436"})
+    @TestRail(id = {436"})
     @Description("In comparison view, the user can assign the currently open public comparison")
     public void actionsAssignComparison() {
 
@@ -42,7 +42,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"437"})
+    @TestRail(id = {437"})
     @Description("In explore view, the user can assign the currently selected public comparison")
     public void actionsAssignComparisonExploreView() {
 
@@ -72,7 +72,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"438"})
+    @TestRail(id = {438"})
     @Description("In private comparison view, the user can add Info & notes to the currently open comparison")
     public void addInfoNotesInPrivateComparisonView() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -124,7 +124,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"438"})
+    @TestRail(id = {438"})
     @Description("In public comparison view, the user can add Info & notes to the currently open comparison")
     public void addInfoNotesInPublicComparisonView() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -186,7 +186,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"439"})
+    @TestRail(id = {439"})
     @Description("In explore view, the user can add Info & notes to the currently selected private comparison")
     public void addInfoNotesFofPrivateComparisonExploreView() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -234,7 +234,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"439"})
+    @TestRail(id = {439"})
     @Description("In explore view, the user can add Info & notes to the currently selected public comparison")
     public void addInfoNotesFofComparisonExploreView() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -285,7 +285,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"440"})
+    @TestRail(id = {440"})
     @Description("For private comparisons, all characters should be tested in Info & notes")
     public void testAllCharactersInfoNotesPrivateComparison() {
 
@@ -318,7 +318,7 @@ public class ActionComparisonsTests extends TestBase {
     }*/
 
     /*@Test
-    @TestRail(testCaseId = {"440"})
+    @TestRail(id = {440"})
     @Description("For public comparisons, all characters should be tested in Info & notes")
     public void testAllCharactersInfoNotesPublicComparison() {
 

@@ -1,15 +1,14 @@
 package com.ootbreports.newreportstests.costoutlieridentification;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @TestRail(testCaseId = {"1954"})
+    @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
@@ -34,7 +33,7 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @TestRail(testCaseId = {"1954"})
+    @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(

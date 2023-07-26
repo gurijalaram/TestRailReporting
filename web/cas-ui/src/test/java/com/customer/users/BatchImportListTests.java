@@ -1,6 +1,9 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
@@ -13,14 +16,11 @@ import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.apache.hc.core5.http.HttpStatus;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BatchImportListTests extends TestBase {
+public class BatchImportListTests extends TestBaseUI {
 
     private String cloudRef;
     private String customerName;
@@ -81,7 +81,7 @@ public class BatchImportListTests extends TestBase {
 
     @Test
     @Description("New CSV file with users can be uploaded in CAS")
-    @TestRail(testCaseId = {"4344", "4361", "4354", "4357", "4352", "13234"})
+    @TestRail(id = {4344, 4361, 4354, 4357, 4352, 13234})
     public void testUploadCsvNewUsers() {
         cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
         ImportPage uploadUsers = importPage.refreshBatchFilesList()
@@ -96,7 +96,7 @@ public class BatchImportListTests extends TestBase {
             .validateImportUsersTableHasCorrectColumns("Created At", "createdAt", soft)
             .validateImportUsersTableHasCorrectColumns("Created By", "createdByName", soft);
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         long pageSize = 10;
         long selected = 0;
 
@@ -144,7 +144,7 @@ public class BatchImportListTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("Users can be loaded from CSV by Load button")
-    @TestRail(testCaseId = {"5598", "5599", "4360", "4353", "4358", "4359"})
+    @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {
         cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
 
@@ -152,7 +152,7 @@ public class BatchImportListTests extends TestBase {
 
         soft.assertThat(uploadUsers.getFieldName()).containsExactly("Users in Total:", "Successfully Loaded:", "Failed Loaded:", "Created By:", "Created At:");
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         long pageSize = 10;
 
         SourceListComponent users = uploadUsers.getUsersList();
@@ -198,12 +198,12 @@ public class BatchImportListTests extends TestBase {
 
     @Test
     @Description("Upload user csv with invalid users data")
-    @TestRail(testCaseId = {"4348"})
+    @TestRail(id = {4348})
     public void testCsvInvalidUsersData() {
         cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile);
         importPage.refreshBatchFilesList();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent users = importPage.getUsersList();
         TableComponent usersTable = Obligation.mandatory(users::getTable, "The users table is missing.");

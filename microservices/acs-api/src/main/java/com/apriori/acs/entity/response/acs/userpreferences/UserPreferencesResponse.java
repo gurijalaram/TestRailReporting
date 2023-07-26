@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.acs.userpreferences;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

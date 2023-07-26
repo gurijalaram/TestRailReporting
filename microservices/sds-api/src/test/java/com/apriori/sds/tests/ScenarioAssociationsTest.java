@@ -1,17 +1,17 @@
 package com.apriori.sds.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
 import com.apriori.sds.entity.response.ScenarioAssociation;
 import com.apriori.sds.entity.response.ScenarioAssociationsItems;
 import com.apriori.sds.util.SDSTestUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -34,14 +34,14 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"6928"})
+    @TestRail(id = {6928})
     @Description("Get scenario associations for a given scenario matching a specified query.")
     public void getAssociationsTest() {
         this.getAssociations();
     }
 
     @Test
-    @TestRail(testCaseId = {"6929"})
+    @TestRail(id = {6929})
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         postAssociationForTestingRollup();
@@ -56,14 +56,14 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8422"})
+    @TestRail(id = {8422})
     @Description("Add a scenario association to a scenario.")
     public void postAssociationTest() {
         postAssociationForTestingRollup();
     }
 
     @Test
-    @TestRail(testCaseId = {"8424"})
+    @TestRail(id = {8424})
     @Description("Update an existing scenario association.")
     public void patchScenarioAssociation() {
         final Integer updatedOccurrences = 2;
@@ -85,7 +85,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"8423"})
+    @TestRail(id = {8423})
     @Description("Remove an existing scenario association.")
     public void deleteScenarioAssociation() {
         removeTestingAssociation(postAssociationForTestingRollup().getIdentity());

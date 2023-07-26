@@ -1,9 +1,9 @@
 package com.cic.tests;
 
+import com.apriori.DateUtil;
 import com.apriori.pages.home.CIConnectHome;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.response.AgentWorkflowJobResults;
 import enums.CICPartSelectionType;
@@ -32,7 +32,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24381"})
+    @TestRail(id = {24381})
     @Description("Test each operator for the Int data type in isolation - Date Not Equal")
     public void testWorkflowQueryDefDateNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -55,7 +55,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4149", "4873"})
+    @TestRail(id = {4149, 4873})
     @Description("Test each operator for the Int data type in isolation - Date Equal")
     public void testWorkflowQueryDefDateEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -72,7 +72,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24386"})
+    @TestRail(id = {24386})
     @Description("Test each operator for the Int data type in isolation - Date Greater Than")
     public void testWorkflowQueryDefDateGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -89,7 +89,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24391"})
+    @TestRail(id = {24391})
     @Description("Test each operator for the Int data type in isolation - Date Greater Than or Equal")
     public void testWorkflowQueryDefDateGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -108,7 +108,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24396"})
+    @TestRail(id = {24396})
     @Description("Test each operator for the Int data type in isolation - Date Between")
     public void testWorkflowQueryDefDateBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -127,7 +127,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24401"})
+    @TestRail(id = {24401})
     @Description("Test each operator for the Int data type in isolation - Date Not Between")
     public void testWorkflowQueryDefDateNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -146,7 +146,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24404"})
+    @TestRail(id = {24404})
     @Description("Test each operator for the Int data type in isolation - Date Less Than")
     public void testWorkflowQueryDefDateLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -163,7 +163,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"24407"})
+    @TestRail(id = {24407})
     @Description("Test each operator for the Int data type in isolation - Date Less Than Equal")
     public void testWorkflowQueryDefDateLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)

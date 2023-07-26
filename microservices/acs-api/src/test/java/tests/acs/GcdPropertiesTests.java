@@ -4,8 +4,8 @@ import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +31,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17203")
+    @TestRail(id = 17203)
     @Description("Get save GCD Properties for Sheet Metal")
     public void testSaveGcdPropertiesSheetMetal() {
         AcsResources acsResources = new AcsResources();
@@ -57,7 +57,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17204")
+    @TestRail(id = 17204)
     @Description("Get save GCD Properties for Sheet Metal - Transfer Die")
     public void testSaveGcdPropertiesSheetMetalTransferDie() {
         AcsResources acsResources = new AcsResources();
@@ -84,7 +84,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17207")
+    @TestRail(id = 17207)
     @Description("Get save GCD Properties for Sheet Metal - Stretch Forming")
     public void testSaveGcdPropertiesSheetMetalStretchForming() {
         AcsResources acsResources = new AcsResources();
@@ -111,7 +111,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17206")
+    @TestRail(id = 17206)
     @Description("Get save GCD Properties for Sheet Metal - Roll Forming")
     public void testSaveGcdPropertiesSheetMetalRollForming() {
         AcsResources acsResources = new AcsResources();
@@ -137,7 +137,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17205")
+    @TestRail(id = 17205)
     @Description("Get save GCD Properties for Sheet Metal - Hydroforming")
     public void testSaveGcdPropertiesSheetMetalHydroforming() {
         AcsResources acsResources = new AcsResources();
@@ -163,7 +163,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17193")
+    @TestRail(id = 17193)
     @Description("Get save GCD Properties for Sheet Metal - Additive Manufacturing")
     public void testSaveGcdPropertiesAdditiveManufacturing() {
         AcsResources acsResources = new AcsResources();
@@ -189,7 +189,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17194")
+    @TestRail(id = 17194)
     @Description("Get save GCD Properties for Sheet Metal - Bar & Tube Fab")
     public void testSaveGcdPropertiesBarAndTubeFab() {
         AcsResources acsResources = new AcsResources();
@@ -215,7 +215,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17195")
+    @TestRail(id = 17195)
     @Description("Get save GCD Properties for Casting - Die")
     public void testSaveGcdPropertiesCastingDie() {
         AcsResources acsResources = new AcsResources();
@@ -242,7 +242,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17196")
+    @TestRail(id = 17196)
     @Description("Get save GCD Properties for Casting - Sand")
     public void testSaveGcdPropertiesCastingSand() {
         AcsResources acsResources = new AcsResources();
@@ -269,7 +269,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17197")
+    @TestRail(id = 17197)
     @Description("Get save GCD Properties for Casting - Investment")
     public void testSaveGcdPropertiesCastingInvestment() {
         AcsResources acsResources = new AcsResources();
@@ -296,7 +296,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17198")
+    @TestRail(id = 17198)
     @Description("Get save GCD Properties for Forging")
     public void testSaveGcdPropertiesForging() {
         AcsResources acsResources = new AcsResources();
@@ -323,7 +323,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17199")
+    @TestRail(id = 17199)
     @Description("Get save GCD Properties for Plastic Molding")
     public void testSaveGcdPropertiesPlasticMolding() {
         AcsResources acsResources = new AcsResources();
@@ -350,7 +350,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17200")
+    @TestRail(id = 17200)
     @Description("Get save GCD Properties for Powder Metal")
     public void testSaveGcdPropertiesPowderMetal() {
         AcsResources acsResources = new AcsResources();
@@ -377,7 +377,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17202")
+    @TestRail(id = 17202)
     @Description("Get save GCD Properties for Roto & Blow Molding")
     public void testSaveGcdPropertiesRotoBlowMolding() {
         AcsResources acsResources = new AcsResources();
@@ -404,7 +404,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17208")
+    @TestRail(id = 17208)
     @Description("Get save GCD Properties for Sheet Plastic")
     public void testSaveGcdPropertiesSheetPlastic() {
         AcsResources acsResources = new AcsResources();
@@ -431,7 +431,7 @@ public class GcdPropertiesTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "17209")
+    @TestRail(id = 17209)
     @Description("Get save GCD Properties for Stock Machining")
     public void testSaveGcdPropertiesStockMachining() {
         AcsResources acsResources = new AcsResources();

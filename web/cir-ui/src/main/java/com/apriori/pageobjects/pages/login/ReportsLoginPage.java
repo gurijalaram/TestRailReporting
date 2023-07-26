@@ -5,9 +5,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

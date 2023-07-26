@@ -10,10 +10,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
@@ -23,16 +29,9 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
 import com.utils.ComparisonCardEnum;
@@ -40,6 +39,7 @@ import com.utils.ComparisonDeltaEnum;
 import com.utils.DirectionEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -52,7 +52,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class ComparisonTests extends TestBase {
+public class ComparisonTests extends TestBaseUI {
 
     private final String notFoundMessage = "Oops! Looks like the component or scenario you were looking for could not be found.";
     private UserCredentials currentUser;
@@ -80,8 +80,8 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @Category({SmokeTests.class})
-    @TestRail(testCaseId = {"7019"})
+    @Category( {SmokeTests.class})
+    @TestRail(id = {7019})
     @Description("User can create a comparison by multi selection two or more components on explore page")
     public void createComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -113,7 +113,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7035"})
+    @TestRail(id = {7035})
     @Description("Validate user can select explore tab and then comparison tab again")
     public void goToExploreReturnCompare() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -148,7 +148,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5778"})
+    @TestRail(id = {5778})
     @Description("In comparison view, user can access any scenario included in the comparison (private and public)")
     public void accessAnyScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -204,7 +204,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5782"})
+    @TestRail(id = {5782})
     @Description("While in an open private comparison, user is able to expand and collapse each section of the comparison (Info & Inputs, Process, etc.)")
     public void expandCollapseSectionsInPrivateComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -255,7 +255,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8680"})
+    @TestRail(id = {8680})
     @Description("While in an open public comparison, user is able to expand and collapse each section of the comparison (Info & Inputs, Process, etc.)")
     public void expandCollapseSectionsInPublicComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -320,7 +320,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5783", "6200", "26148"})
+    @TestRail(id = {5783, 6200, 26148})
     @Issue("APD-1663")
     @Description("User can add scenarios to the currently open comparison via UI within current comparison")
     public void addScenarioToComparison() {
@@ -391,7 +391,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"5784"})
+    @TestRail(id = {5784})
     @Description("User can add columns to the part table within the Add Scenarios dialog box")
     public void addColumnsConfigure() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -432,7 +432,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Issue("APD-1663")
-    @TestRail(testCaseId = {"5789"})
+    @TestRail(id = {5789})
     @Description("Be able to filter table contents within Add Scenarios dialog box")
     public void filterScenariosAddDialog() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -467,7 +467,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7032"})
+    @TestRail(id = {7032})
     @Description("Validate user can drag and drop basis of comparison")
     public void dragAndDropToBasis() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -502,7 +502,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"7033"})
+    @TestRail(id = {7033})
     @Description("Validate user can drag and drop rows of comparison")
     public void dragAndDropCard() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -538,7 +538,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5797"})
+    @TestRail(id = {5797})
     @Description("All Design Guidance from scenarios respected in comparison when scenario is added")
     public void designGuidanceInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -574,7 +574,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5799"})
+    @TestRail(id = {5799})
     @Description("Delete private scenarios that are included in the comparison")
     public void deletePrivateScenarioOfComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -616,7 +616,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5798"})
+    @TestRail(id = {5798})
     @Description("Delete public scenarios that are included in the comparison")
     public void deletePublicScenarioOfComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -669,7 +669,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5800", "6458", "6459"})
+    @TestRail(id = {5800, 6458, 6459})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -736,7 +736,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7020"})
+    @TestRail(id = {7020})
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -777,7 +777,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7021", "5906"})
+    @TestRail(id = {7021, 5906})
     @Description("Validate percentages are correct in comparison")
     public void validatePercentageInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -819,7 +819,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6534"})
+    @TestRail(id = {6534})
     @Description("User can add assemblies to existing comparison containing part scenario")
     public void addAssemblyToExistingComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -878,7 +878,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6537", "6535"})
+    @TestRail(id = {6537, 6535})
     @Description("Assemblies in comparison can be interacted with in a similar way as part scenarios - open, basis, delete")
     public void interactWithAssemblyInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -979,7 +979,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6482", "6483"})
+    @TestRail(id = {6482, 6483})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.STOCK_MACHINING;
@@ -1049,7 +1049,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "24358")
+    @TestRail(id = 24358)
     @Description("Verify that Compare button is enabled in Explore view when nothing selected")
     public void testCompareButtonEnabledWithNoSelection() {
         currentUser = UserUtil.getUser();
@@ -1063,7 +1063,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"25983", "25984", "25986"})
+    @TestRail(id = {25983, 25984, 25986})
     @Description("Verify that Save button is present and enabled for initial save and can only be clicked when changes made")
     public void testSaveComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1115,7 +1115,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "25985")
+    @TestRail(id = 25985)
     @Description("Verify that a Comparison cannot be saved using a name that already exists")
     public void testSaveComparisonWithExistingName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1174,7 +1174,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26149", "26176"})
+    @TestRail(id = {26149, 26176})
     @Description("Validate scenarios can be deleted from a new manual comparison via modify comparison")
     public void testDeleteNewManualComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1229,7 +1229,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26173", "26174"})
+    @TestRail(id = {26173, 26174})
     @Description("Verify that deleted Private scenarios are removed from saved comparison")
     public void testDeletePrivateScenarioInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1285,7 +1285,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26171", "26172"})
+    @TestRail(id = {26171, 26172})
     @Description("Verify that deleted Public scenarios are removed from saved comparison")
     public void testDeletePublicScenarioInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1339,7 +1339,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"26175"})
+    @TestRail(id = {26175})
     @Description("Verify that scenario in position 2 will replace basis, if it is deleted")
     public void testDeleteReplacesBasis() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

@@ -1,5 +1,8 @@
 package com.customer.users;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
@@ -8,13 +11,10 @@ import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -26,7 +26,7 @@ import org.junit.experimental.categories.Category;
 import java.util.Arrays;
 import java.util.List;
 
-public class NewUserTests extends TestBase {
+public class NewUserTests extends TestBaseUI {
 
     private Customer targetCustomer;
     private CdsTestUtil cdsTestUtil;
@@ -65,7 +65,7 @@ public class NewUserTests extends TestBase {
     @Test
     @Category({SmokeTest.class})
     @Description("New User profile form has correct fields, user can be added by filling only mandatory fields")
-    @TestRail(testCaseId = {"4063", "4062", "4073"})
+    @TestRail(id = {4063", "4062", "4073})
     public void testUserIsCreatedWithOnlyRequiredFields() {
         SoftAssertions soft = new SoftAssertions();
         String userName = new GenerateStringUtil().generateUserName();
@@ -119,7 +119,7 @@ public class NewUserTests extends TestBase {
 
     @Test
     @Description("Clicking the cancel button returns the user to the user list.")
-    @TestRail(testCaseId = {"4072"})
+    @TestRail(id = {4072})
     public void testCancelReturnsToTheUserListPage() {
         SoftAssertions soft = new SoftAssertions();
         UsersListPage actual = newUserPage

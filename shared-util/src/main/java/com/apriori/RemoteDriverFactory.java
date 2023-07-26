@@ -1,0 +1,43 @@
+package com.apriori;
+
+import com.apriori.exceptions.BrowserNotSupportedException;
+
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.SessionNotCreatedException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+@Slf4j
+public class RemoteDriverFactory {
+    private RemoteWebDriver result;
+    private MutableCapabilities capabilities = new MutableCapabilities();
+
+    public WebDriver createInstance(Browser browser, String server) {
+        try {
+            switch (browser) {
+                case CHROME:
+                    capabilities = new ChromeManager().getOptions();
+                    break;
+                case FIREFOX:
+                    capabilities = new FirefoxManager().getOptions();
+                    break;
+                case EDGE:
+                    capabilities = new EdgeManager().getOptions();
+                    break;
+                default:
+                    throw new BrowserNotSupportedException(browser);
+            }
+            result = new RemoteWebDriver(new URL(server), capabilities);
+
+            log.info("Full list of Capabilities:-{} ", capabilities);
+
+        } catch (SessionNotCreatedException | MalformedURLException e) {
+            e.getCause();
+        }
+        return result;
+    }
+}

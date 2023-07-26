@@ -1,14 +1,14 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.cusapi.entity.request.UpdateUserRequest;
 import com.apriori.cusapi.entity.request.UserProfile;
 import com.apriori.cusapi.entity.response.ErrorResponse;
 import com.apriori.cusapi.entity.response.User;
 import com.apriori.cusapi.utils.PeopleUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -32,7 +32,7 @@ public class UserTests {
     }
 
     @Test
-    @TestRail(testCaseId = "16822")
+    @TestRail(id = 16822)
     @Description("Verify GET current user endpoint test")
     public void verifyCurrentUserTest() {
         User user = peopleUtil.getCurrentUser(currentUser);
@@ -41,7 +41,7 @@ public class UserTests {
     }
 
     @Test
-    @TestRail(testCaseId = "17064")
+    @TestRail(id = 17064)
     @Description("Update valid fields via CUS /users/current endpoint")
     public void updateCurrentUserValidFieldsTest() {
         String newPrefix = generator.getRandomStringSpecLength(8);
@@ -93,7 +93,7 @@ public class UserTests {
     }
 
     @Test
-    @TestRail(testCaseId = "17065")
+    @TestRail(id = 17065)
     @Ignore("It is better to not run this test till issue will be fixed, because it will update Auto user with new name and email")
     @Issue("CFIRST-414")
     @Description("Try to update SAML fields via CUS /users/current endpoint should be not possible")
@@ -124,7 +124,7 @@ public class UserTests {
     }
 
     @Test
-    @TestRail(testCaseId = "17066")
+    @TestRail(id = 17066)
     @Description("Trying to update givenName or FamilyName as empty should give an error")
     public void updateGivenNameOrFamilyNameAsEmptyShouldGiveErrorTest() {
         User user = peopleUtil.getCurrentUser(currentUser);

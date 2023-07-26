@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':shared-util')
-    implementation project(':apibase')
+    implementation project('::shared-util')
     implementation project(':microservices:css-api')
     implementation project(':microservices:cis-api')
     implementation project(':microservices:cidapp-api')

@@ -1,7 +1,7 @@
 package com.apriori.acs.entity.response.acs.scenarioinfobyscenarioiterationkey;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Data;
 

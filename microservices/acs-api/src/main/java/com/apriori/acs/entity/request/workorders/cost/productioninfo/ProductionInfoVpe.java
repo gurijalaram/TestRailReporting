@@ -1,7 +1,7 @@
 package com.apriori.acs.entity.request.workorders.cost.productioninfo;
 
-import com.apriori.apibase.services.response.objects.AutoSelectedSecondaryVpes;
-import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
+import com.apriori.acs.entity.response.workorders.AutoSelectedSecondaryVpes;
+import com.apriori.acs.entity.response.workorders.MaterialCatalogKeyData;
 
 import lombok.Builder;
 import lombok.Data;

@@ -3,23 +3,23 @@ package com.apriori.pageobjects.navtoolbars;
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static com.apriori.utils.enums.ScenarioStateEnum.COST_COMPLETE;
-import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
+import static com.apriori.enums.ScenarioStateEnum.COST_COMPLETE;
+import static com.apriori.enums.ScenarioStateEnum.NOT_COSTED;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.common.LetNavigationBarController;
 import com.apriori.pageobjects.pages.messages.MessagesPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

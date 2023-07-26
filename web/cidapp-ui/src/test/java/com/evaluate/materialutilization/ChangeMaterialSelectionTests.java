@@ -5,25 +5,24 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,7 +30,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class ChangeMaterialSelectionTests extends TestBase {
+public class ChangeMaterialSelectionTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -46,7 +45,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6186", "5898"})
+    @TestRail(id = {6186", "5898})
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -79,7 +78,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6187"})
+    @TestRail(id = {6187})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -112,7 +111,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6188"})
+    @TestRail(id = {6188})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -144,7 +143,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6189"})
+    @TestRail(id = {6189})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -179,7 +178,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6190", "5420"})
+    @TestRail(id = {6190", "5420})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -218,7 +217,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6191"})
+    @TestRail(id = {6191})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -246,7 +245,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6192", "5896"})
+    @TestRail(id = {6192", "5896})
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -277,7 +276,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6193", "5420", "5910", "6303"})
+    @TestRail(id = {6193", "5420", "5910", "6303})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -301,7 +300,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6194", "5911"})
+    @TestRail(id = {6194", "5911})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -324,7 +323,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6195", "5921"})
+    @TestRail(id = {6195", "5921})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -349,7 +348,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6196"})
+    @TestRail(id = {6196})
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

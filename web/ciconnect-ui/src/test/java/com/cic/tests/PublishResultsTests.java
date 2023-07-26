@@ -1,6 +1,12 @@
 package com.cic.tests;
 
 import com.apriori.DateFormattingUtils;
+import com.apriori.DateUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
@@ -10,14 +16,8 @@ import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PRAttachReportTab;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.PlmFieldDefinitions;
 import entity.response.AgentWorkflowJobResults;
@@ -58,7 +58,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4042"})
+    @TestRail(id = {4042})
     @Description("Test Reports Tab on the publish results tab during workflow creation")
     public void testPublishResultsAttachReportTab() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
@@ -103,7 +103,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5077"})
+    @TestRail(id = {5077})
     @Description("Test PLM write of multiselect UDA using mapping rule 'Constant'")
     public void testMultiSelectUdaConstantMappedRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_CONSTANT);
@@ -125,7 +125,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25960"})
+    @TestRail(id = {25960})
     @Description("Test PLM write UDA of each data type (String, Number and Date) using mapping rule 'Constant'")
     public void testEachUdaConstantMappedRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_CONSTANT);
@@ -154,7 +154,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4095", "4867"})
+    @TestRail(id = {4095, 4867})
     @Description("Test each Standard Value can be written back to the PLM system with 'Workflow Generated Value'" +
         "Test PLM write of all standard fields mapped with usage 'Read and Write'")
     public void testEachStandardWFGVWritingRule() {
@@ -214,7 +214,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5078"})
+    @TestRail(id = {5078})
     @Description("Test PLM write of multiselect UDA using mapping rule 'Workdflow Generated Value'")
     public void testMultiUDAWorkflowGeneratedWritingRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_GENERATED);
@@ -242,7 +242,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"25961"})
+    @TestRail(id = {25961})
     @Description("Test PLM write of UDA data type(String, Number and Date) using mapping rule 'Workflow Generated Value'")
     public void testEachUdaWfGVMappedRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_GENERATED);
@@ -273,7 +273,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4865"})
+    @TestRail(id = {4865})
     @Description("Test write back of all CI Connect standard fields using 'Constant' value")
     public void testEachStandardConstantWritingRule() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_PUBLISH_CONSTANT);

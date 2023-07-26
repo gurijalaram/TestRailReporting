@@ -8,8 +8,8 @@ import com.apriori.acs.entity.response.acs.costresults.PropertyValueMap;
 import com.apriori.acs.entity.response.acs.costresults.ResultMapBean;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -45,7 +45,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21569")
+    @TestRail(id = 21569)
     @Description("Get Root Cost Results after Costing Additive Manufacturing")
     public void testGetCostRootResultsAdditiveManufacturing() {
         String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
@@ -58,7 +58,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21570")
+    @TestRail(id = 21570)
     @Description("Get Root Cost Results after Costing Bar & Tube")
     public void testGetCostRootResultsBarAndTubeFab() {
         String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
@@ -71,7 +71,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21574")
+    @TestRail(id = 21574)
     @Description("Get Root Cost Results after Costing Forging")
     public void testGetCostRootResultsForging() {
         String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
@@ -84,7 +84,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21576")
+    @TestRail(id = 21576)
     @Description("Get Root Cost Results after Costing Powder Metal")
     public void testGetCostRootResultsPowderMetal() {
         String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
@@ -97,7 +97,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21577")
+    @TestRail(id = 21577)
     @Description("Get Root Cost Results after Costing Rapid Prototyping")
     public void testGetCostRootResultsRapidPrototyping() {
         String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
@@ -110,7 +110,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21578")
+    @TestRail(id = 21578)
     @Description("Get Root Cost Results after Costing Roto and Blow Molding")
     public void testGetCostRootResultsRotoBlowMolding() {
         String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
@@ -123,7 +123,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21579")
+    @TestRail(id = 21579)
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -136,7 +136,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21581")
+    @TestRail(id = 21581)
     @Description("Get Root Cost Results after Costing Sheet Metal - Hydroforming")
     public void testGetCostRootResultsSheetMetalHydroforming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
@@ -149,7 +149,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21580")
+    @TestRail(id = 21580)
     @Description("Get Root Cost Results after Costing Sheet Metal - Transfer Die")
     public void testGetCostRootResultsSheetMetalTransferDie() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
@@ -162,7 +162,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21583")
+    @TestRail(id = 21583)
     @Description("Get Root Cost Results after Costing Sheet Metal - Stretch Forming")
     public void testGetCostRootResultsSheetMetalStretchForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
@@ -175,7 +175,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21582")
+    @TestRail(id = 21582)
     @Description("Get Root Cost Results after Costing Sheet Metal - Roll Forming")
     public void testGetCostRootResultsSheetMetalRollForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
@@ -188,7 +188,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21584")
+    @TestRail(id = 21584)
     @Description("Get Root Cost Results after Costing Stock Machining")
     public void testGetCostRootResultsStockMachining() {
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
@@ -201,7 +201,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21575")
+    @TestRail(id = 21575)
     @Description("Get Root Cost Results after Costing Plastic Molding")
     public void testGetCostRootResultsPlasticMolding() {
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
@@ -214,7 +214,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21571")
+    @TestRail(id = 21571)
     @Description("Get Root Cost Results after Costing Casting - Die")
     public void testGetCostRootResultsCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
@@ -227,7 +227,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21572")
+    @TestRail(id = 21572)
     @Description("Get Root Cost Results after Costing Casting - Sand")
     public void testGetCostRootResultsCastingSand() {
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
@@ -240,7 +240,7 @@ public class CostResultsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "21573")
+    @TestRail(id = 21573)
     @Description("Get Root Cost Results after Costing Casting - Investment")
     public void testGetCostRootResultsCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();

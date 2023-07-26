@@ -1,9 +1,9 @@
 package utils;
 
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.reader.file.user.UserCredentials;
 
 import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 @Slf4j
-public class WorkflowTestUtil extends TestBase {
+public class WorkflowTestUtil extends TestBaseUI {
     protected AgentWorkflow agentWorkflowResponse;
     protected ResponseWrapper<String> workflowResponse;
     protected AgentWorkflowJobRun agentWorkflowJobRunResponse;

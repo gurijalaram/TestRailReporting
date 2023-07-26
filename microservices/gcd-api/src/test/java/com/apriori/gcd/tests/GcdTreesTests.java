@@ -1,14 +1,14 @@
 package com.apriori.gcd.tests;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.gcd.controller.GcdTreeController;
 import com.apriori.gcd.entity.response.GcdTree;
 import com.apriori.gcd.entity.response.GcdsAdded;
 import com.apriori.gcd.entity.response.GcdsRemoved;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,7 +24,7 @@ public class GcdTreesTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"24114"})
+    @TestRail(id = {24114})
     @Description("Validate difference is returned when different trees are submitted in request")
     public void testDifferentGcdTrees() {
         UserCredentials currentUser = UserUtil.getUser();
@@ -42,28 +42,28 @@ public class GcdTreesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"24115"})
+    @TestRail(id = {24115})
     @Description("Validate that no additions or deletions are returned when same trees are submitted in request")
     public void testSameGcdTrees() {
         validateGCDTrees("SameTrees.json");
     }
 
     @Test
-    @TestRail(testCaseId = {"24116"})
+    @TestRail(id = {24116})
     @Description("Validate that no additions or deletions are returned when same GCDs that have different trees are submitted in request")
     public void testDifferentTreesSameGcds() {
         validateGCDTrees("DifferentTreesSameGcds.json");
     }
 
     @Test
-    @TestRail(testCaseId = {"24117"})
+    @TestRail(id = {24117})
     @Description("Validate input validation with first tree missing in request")
     public void testMissingFirstTree() {
         validateGCDTreeMissing("MissingFirstTree.json");
     }
 
     @Test
-    @TestRail(testCaseId = {"24118"})
+    @TestRail(id = {24118})
     @Description("Validate input validation with second tree missing in request")
     public void testMissingSecondTree() {
         validateGCDTreeMissing("MissingSecondTree.json");

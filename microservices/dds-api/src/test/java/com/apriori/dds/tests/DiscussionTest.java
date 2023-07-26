@@ -1,16 +1,15 @@
 package com.apriori.dds.tests;
 
-
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.TestUtil;
+import com.apriori.authorization.response.ErrorMessage;
+import com.apriori.http.builder.entity.RequestEntity;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.request.DiscussionsRequest;
 import entity.request.DiscussionsRequestParameters;
@@ -48,15 +47,14 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12404"})
+    @TestRail(id = {12404})
     @Description("create a valid discussion")
     public void createDiscussions() {
         softAssertions.assertThat(discussionResponse.getResponseEntity().getDescription()).isEqualTo(discussionDescription);
     }
 
-
     @Test
-    @TestRail(testCaseId = {"12405"})
+    @TestRail(id = {12405})
     @Description("create a discussion with invalid status")
     public void createDiscussionWithInvalidStatus() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
@@ -78,7 +76,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12406"})
+    @TestRail(id = {12406})
     @Description("Get all discussions")
     public void getDiscussions() {
         RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionsResponse.class)
@@ -92,7 +90,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12407"})
+    @TestRail(id = {12407})
     @Description("update a valid discussion")
     public void updateValidDiscussion() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
@@ -113,9 +111,8 @@ public class DiscussionTest extends TestUtil {
         softAssertions.assertThat(discussionResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
     }
 
-
     @Test
-    @TestRail(testCaseId = {"12408"})
+    @TestRail(id = {12408})
     @Description("update a invalid discussion")
     public void updateInValidDiscussion() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
@@ -137,7 +134,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12409", "12412"})
+    @TestRail(id = {12409, 12412})
     @Description("Create, delete and update a deleted discussion")
     public void updateDeletedDiscussion() {
         ResponseWrapper<DiscussionResponse> discussionCreatedResponse = DdsApiTestUtils.createDiscussion(discussionDescription, userContext);
@@ -163,7 +160,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"12413"})
+    @TestRail(id = {12413})
     @Description("delete a invalid discussion")
     public void deleteInvalidDiscussion() {
         ResponseWrapper<ErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil
@@ -178,7 +175,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14327"})
+    @TestRail(id = {14327})
     @Description("Create Discussion with invalid Customer Identity")
     public void createDiscussionWithInvalidCustomer() {
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
@@ -201,7 +198,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"14328"})
+    @TestRail(id = {14328})
     @Description("Get Discussion with invalid Discussion Identity")
     public void getDiscussionWithInvalidIdentity() {
         ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil
@@ -217,7 +214,7 @@ public class DiscussionTest extends TestUtil {
 
     @Test
     @Ignore
-    @TestRail(testCaseId = {"12410"})
+    @TestRail(id = {12410})
     @Description("Search discussions")
     public void searchDiscussions() {
         SearchDiscussionsRequest searchDiscussionsRequest = SearchDiscussionsRequest.builder()

@@ -1,6 +1,6 @@
 package com.apriori.entity.request;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Getter;
 import lombok.Setter;

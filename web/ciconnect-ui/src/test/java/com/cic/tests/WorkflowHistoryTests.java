@@ -1,21 +1,20 @@
 package com.cic.tests;
 
+import com.apriori.TestBaseUI;
+import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WorkflowHistoryTests extends TestBase {
-
+public class WorkflowHistoryTests extends TestBaseUI {
 
     private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
@@ -30,7 +29,7 @@ public class WorkflowHistoryTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3589"})
+    @TestRail(id = {3589})
     @Description("Test creating, editing and deletion of a worflow")
     public void testStartAndTrackJob() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);

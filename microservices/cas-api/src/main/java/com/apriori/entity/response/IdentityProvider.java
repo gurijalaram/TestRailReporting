@@ -1,8 +1,8 @@
 package com.apriori.entity.response;
 
+import com.apriori.annotations.Schema;
+import com.apriori.cds.entity.response.IdentityProviderPlatform;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.utils.common.objects.IdentityProviderPlatform;
-import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

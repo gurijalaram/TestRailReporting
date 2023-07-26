@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "EmailMessageAttachmentSchema.json"
+      }
+    }
+  },
+  "required": [
+    "@odata.context",
+    "value"
+  ]
+}

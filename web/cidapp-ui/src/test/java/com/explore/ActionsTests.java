@@ -7,14 +7,22 @@ import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.PropertyEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -23,23 +31,15 @@ import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
+import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -49,7 +49,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class ActionsTests extends TestBase {
+public class ActionsTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -70,7 +70,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268", "6342"})
+    @TestRail(id = {7185, 7257, 7264, 7263, 7268, 6342})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -102,7 +102,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("Qa Description")
-            .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
+            .inputNotes("QA Notes Test \u2022 MP Testing \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -119,7 +119,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7197", "7198", "7200"})
+    @TestRail(id = {7197, 7198, 7200})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -170,7 +170,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7902", "5436"})
+    @TestRail(id = {7902, 5436})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
@@ -218,7 +218,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7259", "7265", "7269", "7272", "7189"})
+    @TestRail(id = {7259, 7265, 7269, 7272, 7189})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -228,9 +228,9 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String bulletPointNotes = "• Automation notes 1\n" +
-            "• Automation notes 2\n" +
-            "• Automation notes 3\n" +
+        final String bulletPointNotes = "• Automation notes 1" +
+            "• Automation notes 2" +
+            "• Automation notes 3" +
             "• Automation notes 4";
 
         loginPage = new CidAppLoginPage(driver);
@@ -268,7 +268,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7258", "7263", "7267", "7270"})
+    @TestRail(id = {7258, 7263, 7267, 7270})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -304,7 +304,7 @@ public class ActionsTests extends TestBase {
     @Test
     @Issue("CIS-531")
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7172", "7175", "5437"})
+    @TestRail(id = {7172, 7175, 5437})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -344,7 +344,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7174", "7173"})
+    @TestRail(id = {7174, 7173})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -383,7 +383,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7178", "7262", "7910"})
+    @TestRail(id = {7178, 7262, 7910})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -422,7 +422,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187", "7271", "6199", "6339", "5438"})
+    @TestRail(id = {7187, 7271, 6199, 6339, 5438})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -497,7 +497,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7188"})
+    @TestRail(id = 7188)
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -547,7 +547,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7186", "7191"})
+    @TestRail(id = {7186, 7191})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -596,7 +596,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7911"})
+    @TestRail(id = {7911})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -645,7 +645,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7199", "7912"})
+    @TestRail(id = {7199, 7912})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
@@ -695,7 +695,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7266", "7913"})
+    @TestRail(id = {7266, 7913})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -744,7 +744,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7177"})
+    @TestRail(id = {7177})
     @Description("Validate assignee is displayed in the explore view")
     public void actionsAssignValidateAssignee() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -788,7 +788,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7190"})
+    @TestRail(id = {7190})
     @Description("Validate notes can be read by different users")
     public void notesReadOtherUsers() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -833,7 +833,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6207", "6208"})
+    @TestRail(id = {6207, 6208})
     @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
     public void shiftControlHighlightScenarios() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -868,7 +868,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5440"})
+    @TestRail(id = {5440})
     @Description("User can not update the 3D CAD with a differently named 3D CAD file")
     public void updateWithDifferentCADFile() {
 
@@ -894,7 +894,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5443"})
+    @TestRail(id = {5443})
     @Description("Toolbar options are disabled correctly in appropriate contexts")
     public void buttonsDisabledByDefault() {
 

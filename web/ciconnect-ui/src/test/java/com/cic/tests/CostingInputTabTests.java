@@ -1,22 +1,19 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
 import org.junit.Test;
 import utils.WorkflowTestUtil;
 
@@ -28,7 +25,7 @@ public class CostingInputTabTests extends WorkflowTestUtil {
     SoftAssertions softAssertions;
 
     @Test
-    @TestRail(testCaseId = {"4297", "4305"})
+    @TestRail(id = {4297, 4305})
     @Description("Test Cost Inputs Tab Scenario Name field validation,  ability add and delete row")
     public void testValidateScenarioField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputTestData.json", WorkFlowData.class);
@@ -65,7 +62,7 @@ public class CostingInputTabTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4297"})
+    @TestRail(id = {4297})
     @Description("Test Cost Inputs Tab Description validation")
     public void testValidateDescriptionField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputNegativeTestData.json", WorkFlowData.class);
@@ -93,7 +90,7 @@ public class CostingInputTabTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4304"})
+    @TestRail(id = {4304})
     @Description("Verify correct fields are present on Costing Inputs tab")
     public void testVerifyCorrectFields() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputTestData.json",WorkFlowData.class);
@@ -122,7 +119,7 @@ public class CostingInputTabTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4308"})
+    @TestRail(id = {4308})
     @Description("Verify Date picker field is displayed for Costing Inputs Custom Date field value")
     public void testVerifyConnectFieldCustomDateField() {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputCustomDateTestData.json", WorkFlowData.class);

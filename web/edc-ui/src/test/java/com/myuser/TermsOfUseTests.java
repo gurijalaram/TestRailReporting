@@ -3,17 +3,17 @@ package com.myuser;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.navtoolbars.TermsOfUsePage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-public class TermsOfUseTests extends TestBase {
+public class TermsOfUseTests extends TestBaseUI {
 
     private EdcAppLoginPage loginPage;
     private TermsOfUsePage termsOfUsePage;
@@ -24,7 +24,7 @@ public class TermsOfUseTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8923"})
+    @TestRail(id = {8923})
     @Description("Validate Terms of use")
     public void testTermsOfUse() {
         currentUser = UserUtil.getUser();

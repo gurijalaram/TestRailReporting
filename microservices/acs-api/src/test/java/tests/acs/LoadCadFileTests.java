@@ -1,11 +1,11 @@
 package tests.acs;
 
+import com.apriori.GenerateStringUtil;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -17,7 +17,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16515")
+    @TestRail(id = "16515")
     @Description("Test LOADCADFILE API with keepFreeBodies set to False")
     public void testLoadCadFileKeepFreeBodiesFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -47,7 +47,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16516")
+    @TestRail(id = "16516")
     @Description("Test LOADCADFILE API with keepFreeBodies set to True")
     public void testLoadCadFileKeepFreeBodiesTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -77,7 +77,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16517")
+    @TestRail(id = "16517")
     @Description("Test LOADCADFILE API with freeBodiesPreserveCad set to True")
     public void testLoadCadFilefreeBodiesPreserveCadTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -107,7 +107,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16518")
+    @TestRail(id = "16518")
     @Description("Test LOADCADFILE API with freeBodiesPreserveCad set to False")
     public void testLoadCadFilefreeBodiesPreserveCadFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -137,7 +137,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16519")
+    @TestRail(id = "16519")
     @Description("Test LOADCADFILE API with freeBodiesIgnoreMissingComponents set to False")
     public void testLoadCadFilefreeBodiesIgnoreMissingComponentsFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -167,7 +167,7 @@ public class LoadCadFileTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "16520")
+    @TestRail(id = "16520")
     @Description("Test LOADCADFILE API with freeBodiesIgnoreMissingComponents set to True")
     public void testLoadCadFilefreeBodiesIgnoreMissingComponentsTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources();

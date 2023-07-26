@@ -1,9 +1,9 @@
 package com.apriori.cic.tests;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import entity.response.AgentErrorMessage;
 import entity.response.AgentWorkflowJobResults;
@@ -37,7 +37,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16282", "16288", "16289"})
+    @TestRail(id = {16282, 16288, 16289})
     @Description("Get Job results with valid workflow and job identity and validate response body data")
     public void testGetWorkflowJobResult() {
         AgentWorkflowJobResults agentWorkflowJobResult = this.createRestWorkflowAndGetJobResult();
@@ -52,7 +52,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16305"})
+    @TestRail(id = {16305})
     @Description("Get Job results with fields that have no value")
     public void testGetWorkflowJobResultWithNoFields() {
         workflowRequestDataBuilder.setDescription("");
@@ -63,7 +63,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16308"})
+    @TestRail(id = {16308})
     @Description("Get Job results with workflow created using part selection type query")
     public void testGetWorkflowJobResultPartSelectionQuery() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -77,7 +77,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16291", "16309", "16315"})
+    @TestRail(id = {16291, 16309, 16315})
     @Description("get Job Results maximum parts job size for part selection type REST and windchill agent")
     public void testGetWorkflowJobResultWithMaxLimitParts() {
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(5);
@@ -86,7 +86,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16285"})
+    @TestRail(id = {16285})
     @Description("Get Job results with invalid workflow Identity")
     public void testGetJobResultWithInvalidWorkFlow() {
         this.cicLogin()
@@ -104,7 +104,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16286"})
+    @TestRail(id = {16286})
     @Description("Get Job results with valid workflow Identity and invalid job identity")
     public void testGetJobResultWithInvalidJobIdentity() {
         this.cicLogin()
@@ -122,7 +122,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16306"})
+    @TestRail(id = {16306})
     @Description("Get Job results with cancelled job identity")
     public void testGetWorkflowJobResultWithCancelledJob() {
         this.cicLogin()
@@ -149,7 +149,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16310"})
+    @TestRail(id = {16310})
     @Description("Get Job results with errored job identity")
     public void testGetWorkflowJobResultWithErroredJob() {
         workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().setProcessGroupName("Plastic");
@@ -158,7 +158,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16287"})
+    @TestRail(id = {16287})
     @Description("Get Job results during processing with different status")
     public void testGetWorkflowJobInProgress() {
         this.cicLogin()
@@ -189,7 +189,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16284"})
+    @TestRail(id = {16284})
     @Description("get Job Results for part selection type REST and windchill agent")
     public void testGetPartResultInvalidAuthenticationKey() {
         this.cicLogin()
@@ -212,7 +212,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16312"})
+    @TestRail(id = {16312})
     @Description("Get Job Results for parts re-costed with different costing inputs")
     public void testGetJobResultWithReCostedParts() {
         AgentWorkflowJobResults agentWorkflowJobResult = this.createRestWorkflowAndGetJobResult();
@@ -244,7 +244,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16311"})
+    @TestRail(id = {16311})
     @Description("Get Job results with deleted workflow Identity")
     public void testGetJobResultWithDeletedWorkFlow() {
         this.cicLogin()

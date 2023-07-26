@@ -1,6 +1,6 @@
 package utils;
 
-import com.apriori.utils.dataservice.TestDataService;
+import com.apriori.dataservice.TestDataService;
 
 import entity.request.DefaultValues;
 import entity.request.Query;

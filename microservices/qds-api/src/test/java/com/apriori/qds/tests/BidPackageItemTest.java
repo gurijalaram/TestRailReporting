@@ -1,6 +1,8 @@
 package com.apriori.qds.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.AuthUserContextUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageItemParameters;
@@ -8,12 +10,10 @@ import com.apriori.qds.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qds.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -49,7 +49,7 @@ public class BidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13390", "13403"})
+    @TestRail(id = {13390, 13403})
     @Description("Create and delete Bid Package Item")
     public void createAndDeleteBidPackageItem() {
         BidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
@@ -66,7 +66,7 @@ public class BidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13392"})
+    @TestRail(id = {13392})
     @Description("update Bid Package Item")
     public void updateBidPackageItem() {
         BidPackageItemRequest bidPackageItemRequestBuilder = BidPackageItemRequest.builder()
@@ -86,7 +86,7 @@ public class BidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13401"})
+    @TestRail(id = {13401})
     @Description("Get Bid Package Item")
     public void getBidPackageItem() {
         BidPackageItemResponse updateBidPackageItemResponse = BidPackageResources.getBidPackageItem(
@@ -99,7 +99,7 @@ public class BidPackageItemTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13396", "13400"})
+    @TestRail(id = {13396, 13400})
     @Description("Find list of  Bid Package Items and verify pagination")
     public void getBidPackageItems() {
         BidPackageItemsResponse updateBidPackageItemResponse = BidPackageResources.getBidPackageItems(

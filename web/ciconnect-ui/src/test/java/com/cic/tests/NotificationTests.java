@@ -1,19 +1,16 @@
 package com.cic.tests;
 
+import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.notifications.AttachReportTab;
 import com.apriori.pages.workflows.schedule.notifications.FilterTab;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import enums.ReportsEnum;
 import io.qameta.allure.Description;
@@ -37,7 +34,7 @@ public class NotificationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3951", "4875"})
+    @TestRail(id = {3951, 4875})
     @Description("Test email Tab on the Add New Workflow Dialog")
     public void testNotificationsEmailTab() {
         DetailsPart detailsPart = new CicLoginPage(driver)
@@ -66,7 +63,7 @@ public class NotificationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5691"})
+    @TestRail(id = {5691})
     @Description("Test Reports tab in Notification Step during new workflow creation")
     public void testNotificationsReportsTab() {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -100,7 +97,7 @@ public class NotificationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5693", "5694", "5710", "5711"})
+    @TestRail(id = {5693, 5694, 5710, 5711})
     @Description("Verify Filter Application checkboxes are disabled until appropriate template(s) selected")
     public void testNotificationsFilterTab() {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -149,7 +146,7 @@ public class NotificationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5714"})
+    @TestRail(id = {5714})
     @Description("Verify Filter tab rule drop down list")
     public void testFilterTabVerifyRuleDdl() {
         List<String> rulesExpectedList = Arrays.asList(new String[] {"Capital Investment",

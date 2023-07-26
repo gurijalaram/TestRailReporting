@@ -1,6 +1,6 @@
 package com.apriori.entity.response;
 
-import com.apriori.utils.Pagination;
+import com.apriori.authorization.response.Pagination;
 
 import lombok.Data;
 

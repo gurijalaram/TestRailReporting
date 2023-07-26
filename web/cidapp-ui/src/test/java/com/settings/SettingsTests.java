@@ -1,14 +1,22 @@
 package com.settings;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
@@ -22,17 +30,9 @@ import com.apriori.pageobjects.pages.settings.AssemblyDefaultsPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.settings.SelectionPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
@@ -56,7 +56,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 import java.util.List;
 
-public class SettingsTests extends TestBase {
+public class SettingsTests extends TestBaseUI {
     private File resourceFile;
     private File resourceFile2;
     private CidAppLoginPage loginPage;
@@ -85,7 +85,7 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"6283", "6637", "6275", "8883"})
+    @TestRail(id = {6283, 6637, 6275, 8883})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -119,7 +119,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6281", "5442"})
+    @TestRail(id = {6281, 5442})
     @Description("User can change the default Process group")
     public void defaultPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
@@ -144,7 +144,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6282"})
+    @TestRail(id = {6282})
     @Description("User can change the default VPE")
     public void defaultVPE() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -169,7 +169,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6285", "6286", "5429"})
+    @TestRail(id = {6285, 6286, 5429})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -198,7 +198,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6287", "6288"})
+    @TestRail(id = {6287, 6288})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -224,7 +224,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6298"})
+    @TestRail(id = {6298})
     @Description("User should be able to select a material catalogue from a different region than the VPE")
     public void differentMaterialCatalog() {
 
@@ -234,20 +234,20 @@ public class SettingsTests extends TestBase {
         productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .selectDigitalFactory(APRIORI_USA)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY)
             .submit(ExplorePage.class)
             .openSettings()
             .goToProductionTab();
 
-        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"6280"})
+    @TestRail(id = {6280})
     @Description("User can change the default selection colour")
     public void defaultColor() {
         currentUser = UserUtil.getUser();
@@ -265,7 +265,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6284"})
+    @TestRail(id = {6284})
     @Description("User can change the default Material")
     public void defaultMaterial() {
 
@@ -294,7 +294,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6279", "6692", "6696"})
+    @TestRail(id = {6279, 6692, 6696})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
         currentUser = UserUtil.getUser();
@@ -324,7 +324,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6289"})
+    @TestRail(id = {6289})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
 
@@ -341,7 +341,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3605"})
+    @TestRail(id = {3605})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
 
@@ -357,7 +357,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6305", "6306", "6307"})
+    @TestRail(id = {6305, 6306, 6307})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
 
@@ -395,7 +395,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Issue("CID-1182")
-    @TestRail(testCaseId = {"6308"})
+    @TestRail(id = {6308})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
 
@@ -429,7 +429,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6300", "6304"})
+    @TestRail(id = {6300, 6304})
     @Description("Options should filter subsequent drop down options available")
     public void optionsFilter() {
 
@@ -440,14 +440,14 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA)
+            .selectMaterialCatalog(APRIORI_USA)
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 
     @Test
-    @TestRail(testCaseId = {"6277", "6291"})
+    @TestRail(id = {6277, 6291})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
 
@@ -481,7 +481,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6363", "5298"})
+    @TestRail(id = {6363, 5298})
     @Description("Validate User Preferences are for single user only")
     public void settingsDifferentUsers() {
 
@@ -523,7 +523,7 @@ public class SettingsTests extends TestBase {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(testCaseId = {"6368"})
+    @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -565,7 +565,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6360", "6361", "6367"})
+    @TestRail(id = {6360, 6361, 6367})
     @Description("Validate when a user uploads and costs a component their customer choice is shown")
     public void customUnitsAreDisplayedCorrectly() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -614,7 +614,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8762"})
+    @TestRail(id = {8762})
     @Description("Verify default Display Preferences")
     public void defaultDisplayPreferences() {
 
@@ -637,7 +637,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11885"})
+    @TestRail(id = {11885})
     @Description("Validate that default scenario name can be adjusted through user preferences")
     public void changeTheDefaultScenarioName() {
         currentUser = UserUtil.getUser();
@@ -655,7 +655,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21547", "21548"})
+    @TestRail(id = {17154, 17155, 17156, 17157, 21547, 21548})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
@@ -741,7 +741,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"17154", "17155", "17156", "17157", "21653", "21654", "21655", "21656"})
+    @TestRail(id = {17154, 17155, 17156, 17157, 21653, 21654, 21655, 21656})
     @Description("Verify Assembly Strategy Dropdown and Description Cards")
     public void testAssemblyStrategyDropdownCards() {
         currentUser = UserUtil.getUser();

@@ -3,8 +3,8 @@ package com.apriori.cds.tests;
 import com.apriori.cds.entity.response.ConfigurationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -18,7 +18,7 @@ public class CdsConfigurationsTests {
 
     @Test
     @Ignore("Not relevant for now")
-    @TestRail(testCaseId = {"5966"})
+    @TestRail(id = {5966})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getBlacklistedEmailDomains() {
         ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CONFIGURATIONS_EMAIL, ConfigurationResponse.class, HttpStatus.SC_OK);

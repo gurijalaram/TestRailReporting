@@ -6,12 +6,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.utils.Constants;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import java.time.ZoneOffset;
 public class CreateMissingScenarioTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "8767")
+    @TestRail(id = 8767)
     @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {
         AcsResources acsResources = new AcsResources();

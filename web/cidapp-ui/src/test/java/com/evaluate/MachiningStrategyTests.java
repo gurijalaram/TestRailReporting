@@ -1,15 +1,15 @@
 package com.evaluate;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class MachiningStrategyTests extends TestBase {
+public class MachiningStrategyTests extends TestBaseUI {
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
@@ -26,7 +26,7 @@ public class MachiningStrategyTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"14210", "14211", "14212", "14213", "14214", "14937", "14938", "14936"})
+    @TestRail(id = {14210, 14211, 14212, 14213, 14214, 14937, 14938, 14936})
     @Description("Verify Machining Strategy option made available when suitable Process Group selected")
     public void testMachiningStrategyOptionAvailable() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -87,7 +87,7 @@ public class MachiningStrategyTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"14794"})
+    @TestRail(id = {14794})
     @Description("Verify non-machinable PG can be used after costing with machinable PG")
     public void testCostWithNonMachinableAfterMachinablePG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -116,7 +116,7 @@ public class MachiningStrategyTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15421"})
+    @TestRail(id = {15421})
     @Description("Evaluate page - Machinable PG can be selected and part can be costed with Do not machine this part checked")
     public void testCostWithMachiningOptionSelected() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

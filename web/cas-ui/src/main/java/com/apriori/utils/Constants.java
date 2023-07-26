@@ -1,5 +1,7 @@
 package com.apriori.utils;
 
+import com.apriori.FileResourceUtil;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -29,9 +31,9 @@ public class Constants {
         try {
             PROPERTIES.load(new FileInputStream(INPUT_STREAM));
             String properties = PROPERTIES.stringPropertyNames().stream()
-                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "\n")
+                .map(key -> key + "=" + PROPERTIES.getProperty(key) + "")
                 .collect(Collectors.joining());
-            log.info(String.format("Listing properties for '%s' " + "\n" + "%s", environment, properties));
+            log.info(String.format("Listing properties for '%s' " + "" + "%s", environment, properties));
         } catch (IOException e) {
             e.printStackTrace();
         }

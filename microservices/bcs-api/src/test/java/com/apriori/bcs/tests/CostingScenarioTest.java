@@ -4,14 +4,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.junit.Test;
 public class CostingScenarioTest extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = {"4278", "4177"})
+    @TestRail(id = {4278, 4177})
     @Description("Test costing scenario, includes creating a new batch, a new part and waiting for the costing " +
         "process to complete. Then retrieve costing results.")
     public void createBatchPartAndCostPart() {

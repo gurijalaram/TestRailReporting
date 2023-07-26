@@ -3,29 +3,28 @@ package com.settings;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -35,7 +34,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class DecimalPlaceTests extends TestBase {
+public class DecimalPlaceTests extends TestBaseUI {
     File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -60,7 +59,7 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295", "6633"})
+    @TestRail(id = {5287, 5288, 5291, 5297, 5290, 5295, 6633})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -234,7 +233,7 @@ public class DecimalPlaceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5293"})
+    @TestRail(id = {5293})
     @Description("Ensure number of decimal places is respected in Preview Panel")
     public void decimalPlacesInPreviewPanel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -272,7 +271,7 @@ public class DecimalPlaceTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5294"})
+    @TestRail(id = {5294})
     @Description("Ensure number of decimal places is respected in Assemblies")
     public void decimalPlacesForAssembly() {
         final String assemblyName = "flange c";

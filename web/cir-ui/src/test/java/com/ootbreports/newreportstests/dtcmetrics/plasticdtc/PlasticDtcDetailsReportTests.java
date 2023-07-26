@@ -1,19 +1,18 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Collections;
@@ -32,7 +31,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7406"})
+    @TestRail(id = {7406})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -43,7 +42,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7407"})
+    @TestRail(id = {7407})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -54,7 +53,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7381"})
+    @TestRail(id = {7381})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -65,7 +64,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7382"})
+    @TestRail(id = {7382})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(

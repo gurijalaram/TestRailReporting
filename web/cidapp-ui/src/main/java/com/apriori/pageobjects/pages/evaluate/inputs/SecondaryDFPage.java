@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.PageUtils;
+import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.enums.DigitalFactoryEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

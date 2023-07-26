@@ -1,6 +1,6 @@
 package com.apriori.util.test.reader.part;
 
-import com.apriori.utils.reader.file.part.PartData;
+
 import com.apriori.utils.reader.file.part.PartUtil;
 
 import org.junit.Assert;

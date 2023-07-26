@@ -1,6 +1,6 @@
 package com.apriori.nts.utils;
 
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 

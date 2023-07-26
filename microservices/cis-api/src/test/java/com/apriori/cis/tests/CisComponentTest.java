@@ -1,6 +1,7 @@
 package com.apriori.cis.tests;
 
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageItemResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.controller.CisComponentResources;
@@ -8,11 +9,10 @@ import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemResponse;
 import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.cisapi.entity.response.component.AssignComponentsResponse;
 import com.apriori.entity.response.ScenarioItem;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -43,7 +43,7 @@ public class CisComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"22906"})
+    @TestRail(id = {22906})
     @Description("Get Already Assigned Components for specific user")
     public void testGetAlreadyAssignedComponents() {
         AssignComponentsResponse assignedComponentsResponse = CisComponentResources.getAssignedComponents(currentUser, AssignComponentsResponse.class, HttpStatus.SC_OK);

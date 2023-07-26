@@ -1,15 +1,15 @@
 package com.apriori.cds.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.objects.response.Deployments;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Deployment;
-import com.apriori.utils.common.customer.response.Deployments;
-import com.apriori.utils.common.customer.response.Site;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -59,7 +59,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"3301"})
+    @TestRail(id = {3301})
     @Description("Add a deployment to a customer")
     public void addCustomerDeployment() {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
@@ -69,7 +69,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5314"})
+    @TestRail(id = {5314})
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
         cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
@@ -85,7 +85,7 @@ public class CdsDeploymentsTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5315"})
+    @TestRail(id = {5315})
     @Description("Add a deployment to a customer")
     public void getDeploymentByIdentity() {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");

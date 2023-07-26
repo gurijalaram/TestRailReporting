@@ -5,16 +5,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.productioninfo.ProductionInfoResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.junit.Test;
 public class ProductionInfoTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "15430")
+    @TestRail(id = "15430")
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
         FileUploadResources fileUploadResources = new FileUploadResources();

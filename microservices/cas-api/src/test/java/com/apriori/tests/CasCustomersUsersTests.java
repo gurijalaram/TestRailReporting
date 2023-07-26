@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.FileResourceUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -9,12 +11,10 @@ import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UsersData;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.InitFileData;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.InitFileData;
+import com.apriori.testrail.TestRail;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -68,7 +68,7 @@ public class CasCustomersUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5661", "5662", "5663"})
+    @TestRail(id = {5661, 5662, 5663})
     @Description("Add a user to a customer, return a list of users for the customer, get the User identified by its identity.")
     public void addCustomerUsers() {
 
@@ -89,7 +89,7 @@ public class CasCustomersUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5664"})
+    @TestRail(id = {5664})
     @Description("Update the User.")
     public void updateCustomerUsers() {
         String customerName = newCustomer.getName();
@@ -107,7 +107,7 @@ public class CasCustomersUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5667"})
+    @TestRail(id = {5667})
     @Description("Reset the MFA configuration for a user.")
     public void resettingUserMfa() {
         ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
@@ -134,7 +134,7 @@ public class CasCustomersUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"16379"})
+    @TestRail(id = {16379})
     @Description("Export users template")
     public void exportUsersTemplate() {
         List<String> headers = Arrays.asList(
@@ -152,7 +152,7 @@ public class CasCustomersUsersTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"16378"})
+    @TestRail(id = {16378})
     @Description("Export customer users")
     public void exportCustomerUsers() {
         ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);

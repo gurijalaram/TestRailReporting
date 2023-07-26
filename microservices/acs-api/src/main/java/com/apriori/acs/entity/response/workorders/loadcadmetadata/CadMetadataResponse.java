@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.workorders.loadcadmetadata;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Data;
 

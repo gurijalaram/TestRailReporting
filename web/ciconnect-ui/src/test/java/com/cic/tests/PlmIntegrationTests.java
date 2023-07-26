@@ -1,40 +1,29 @@
 package com.cic.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pagedata.CostingServiceSettingsData;
 import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.login.CicLoginPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.request.WorkflowRequest;
-import entity.response.AgentWorkflow;
 import entity.response.AgentWorkflowJobPartsResult;
-import entity.response.AgentWorkflowJobRun;
 import entity.response.PlmSearchPart;
 import enums.CICPartSelectionType;
 import enums.CostingInputFields;
 import enums.MappingRule;
 import enums.PlmPartDataType;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
 import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
 import utils.PlmApiTestUtil;
 import utils.PlmPartsUtil;
-import utils.SearchFilter;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
@@ -52,7 +41,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"21965"})
+    @TestRail(id = {21965})
     @Description("Test 'Mapped from PLM' mapping rule with value set in PLM system")
     public void testWorkflowMapSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
@@ -87,7 +76,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4329"})
+    @TestRail(id = {4329})
     @Description("Test 'Default if no PLM Value' mapping rule with NO value set in PLM system")
     public void testWorkflowMapNoPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
@@ -122,7 +111,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"21966"})
+    @TestRail(id = {21966})
     @Description("Test 'Default if no PLM Value' mapping rule with value set in PLM system")
     public void testWorkflowMapSameAsSetInPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MAPPED);
@@ -158,7 +147,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4330"})
+    @TestRail(id = {4330})
     @Description("Test 'Constant' mapping rule")
     public void testWorkflowMapWithConstantPlm() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_NOT_MAPPED);
@@ -196,7 +185,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4328"})
+    @TestRail(id = {4328})
     @Description("Test 'Mapped from PLM' mapping rule with NO value set in PLM")
     public void testWorkflowMapFromPlmWithNoValueInPlm() {
         costingServiceSettingsData = CostingServiceSettingsData.builder()

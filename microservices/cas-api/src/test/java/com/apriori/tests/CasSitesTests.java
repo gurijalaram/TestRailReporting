@@ -1,5 +1,7 @@
 package com.apriori.tests;
 
+import com.apriori.GenerateStringUtil;
+import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -9,11 +11,9 @@ import com.apriori.entity.response.Customers;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -42,7 +42,7 @@ public class CasSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5649"})
+    @TestRail(id = {5649})
     @Description("Returns a list of sites for the customer")
     public void getCustomerSites() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -57,7 +57,7 @@ public class CasSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5650"})
+    @TestRail(id = {5650})
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -78,7 +78,7 @@ public class CasSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5651"})
+    @TestRail(id = {5651})
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
         ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
@@ -99,7 +99,7 @@ public class CasSitesTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5648"})
+    @TestRail(id = {5648})
     @Description("Create a new Site for the Customer")
     public void createCustomerSite() {
         String customerName = generateStringUtil.generateCustomerName();
