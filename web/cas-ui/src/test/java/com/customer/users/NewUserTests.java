@@ -10,11 +10,11 @@ import com.apriori.components.TableComponent;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -65,7 +65,7 @@ public class NewUserTests extends TestBaseUI {
     @Test
     @Category({SmokeTest.class})
     @Description("New User profile form has correct fields, user can be added by filling only mandatory fields")
-    @TestRail(id = {4063", "4062", "4073})
+    @TestRail(id = {4063, 4062, 4073})
     public void testUserIsCreatedWithOnlyRequiredFields() {
         SoftAssertions soft = new SoftAssertions();
         String userName = new GenerateStringUtil().generateUserName();

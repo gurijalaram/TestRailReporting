@@ -1,7 +1,7 @@
 package com.apriori.components;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.Obligation;
+import com.apriori.http.utils.Obligation;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

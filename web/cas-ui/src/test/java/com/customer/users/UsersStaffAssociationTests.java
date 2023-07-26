@@ -4,6 +4,7 @@ import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Customers;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
@@ -14,12 +15,11 @@ import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
 import com.apriori.customer.users.StaffPage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
-import com.apriori.utils.common.customer.response.Customers;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -115,7 +115,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
             .clickCandidatesCloseButton()
             .clickAddFromList();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         long pageSize = 10;
         long selected = 0;
         SourceListComponent userCandidates = addModal.getCandidates();
@@ -167,7 +167,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
 
         populateStaffTestUsers(2);
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         StaffPage addModal = staffPage.clickAddFromList();
         SourceListComponent candidates = addModal.getCandidates();

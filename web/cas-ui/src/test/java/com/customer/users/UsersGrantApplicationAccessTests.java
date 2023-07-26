@@ -5,7 +5,9 @@ import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.entity.response.Deployment;
 import com.apriori.cds.entity.response.LicensedApplication;
+import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.User;
@@ -15,12 +17,12 @@ import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.Obligation;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -120,7 +122,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     @TestRail(id = {12515})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
 
         SourceListComponent accessControls = userProfilePage.getGrantedAccessControlsContainer();
         userProfilePage.validateContainerIsPageableAndRefreshable(soft, accessControls);
@@ -184,7 +186,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             .clickModalConfirmOkButton()
             .waitForCardIsDisplayed();
 
-        PageUtils utils = new PageUtils(getDriver());
+        PageUtils utils = new PageUtils(driver);
         SourceListComponent accessControls = addModal.getGrantedAccessControlsContainer();
         CardsViewComponent controlsCards = Obligation.mandatory(accessControls::getCardGrid, "The access controls grid is missing");
         controlsCards.getCards("apriori-card").findFirst().ifPresent(card -> Obligation.mandatory(card::getCheck, "The check cell is missing").check(true));

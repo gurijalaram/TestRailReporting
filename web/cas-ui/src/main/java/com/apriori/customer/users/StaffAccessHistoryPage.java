@@ -4,7 +4,7 @@ import com.apriori.common.UsersTableController;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableHeaderComponent;
-import com.apriori.utils.Obligation;
+import com.apriori.http.utils.Obligation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
