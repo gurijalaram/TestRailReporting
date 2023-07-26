@@ -28,7 +28,6 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
         deleteProcessGroupAssociation(backupProcessGroupAssociation.getIdentity());
     }
 
-
     @AfterClass
     public static void clearTestDataAndUploadDefault() {
         if (testingProcessGroupAssociation != null) {
@@ -38,129 +37,6 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
         createProcessGroupAssociation(
             convertAssociationToRequest(backupProcessGroupAssociation)
         );
-    }
-
-    @Test
-    @TestRail(id = {C8411})
-    @Description("Returns a paged set of ProcessGroupAssociation for the current user.")
-    public void testGetProcessGroupAssociations() {
-        getProcessGroupAssociations();
-    }
-
-    @Test
-    @TestRail(id = {C8414})
-    @Description("Get a ProcessGroupAssociation for a customer.")
-    public void testGetMaterialByIdentity() {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
-                .inlineVariables(getFirstGroupAssociation().getIdentity())
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        HTTPRequest.build(requestEntity).get();
-    }
-
-    @Test
-    @TestRail(id = {C8412})
-    @Description("Adds a ProcessGroupAssociation for a customer.")
-    public void testPostProcessGroupAssociation() {
-        getTestingProcessGroupAssociation();
-    }
-
-    @Test
-    @TestRail(id = {C8415})
-    @Description("DELETEs a ProcessGroupAssociation for a customer.")
-    public void testDeleteProcessGroupAssociation() {
-        deleteProcessGroupAssociation(
-            getTestingProcessGroupAssociation().getIdentity()
-        );
-    }
-
-    @Test
-    @TestRail(id = {C8416})
-    @Description("Updates a ProcessGroupAssociation for a customer.")
-    public void testPatchProcessGroupAssociation() {
-        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
-            .builder()
-            .defaultVpeIdentity(backupProcessGroupAssociation.getDefaultVpeIdentity())
-            .defaultVpeName(backupProcessGroupAssociation.getDefaultVpeName())
-            .build();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PATCH_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
-                .inlineVariables(getTestingProcessGroupAssociation().getIdentity())
-                .body("processGroupAssociation", processGroupAssociationRequest)
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).patch();
-
-        ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(updatedProcessGroupAssociation.getDefaultVpeIdentity()).isEqualTo(backupProcessGroupAssociation.getDefaultVpeIdentity());
-        softAssertions.assertThat(updatedProcessGroupAssociation.getDefaultVpeName()).isEqualTo(backupProcessGroupAssociation.getDefaultVpeName());
-        softAssertions.assertThat(updatedProcessGroupAssociation.getUpdatedBy()).isNotNull();
-        softAssertions.assertThat(updatedProcessGroupAssociation.getUpdatedAt()).isNotNull();
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {C8413})
-    @Description("Adds or Replaces a ProcessGroupAssociation for a customer. ")
-    public void testPutCreateProcessGroupAssociation() {
-        ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();
-
-        deleteProcessGroupAssociation(processGroupAssociationToUpdate.getIdentity());
-
-        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
-            .builder()
-            .processGroupIdentity(processGroupAssociationToUpdate.getIdentity())
-            .processGroupName(processGroupAssociationToUpdate.getProcessGroupName())
-            .build();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
-                .body("processGroupAssociation", processGroupAssociationRequest)
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
-
-        ProcessGroupAssociation createdProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
-
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(createdProcessGroupAssociation.getIdentity()).isNotEqualTo(processGroupAssociationToUpdate.getIdentity());
-        softAssertions.assertAll();
-
-        testingProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
-    }
-
-    @Test
-    @TestRail(id = {C9038})
-    @Description("Replaces a ProcessGroupAssociation for a customer. ")
-    public void testPutUpdateProcessGroupAssociation() {
-        ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();
-
-        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
-            .builder()
-            .identity(processGroupAssociationToUpdate.getIdentity())
-            .processGroupIdentity(processGroupAssociationToUpdate.getIdentity())
-            .processGroupName(processGroupAssociationToUpdate.getProcessGroupName())
-            .build();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
-                .body("processGroupAssociation", processGroupAssociationRequest)
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
-
-        ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(updatedProcessGroupAssociation.getIdentity())
-            .isEqualTo(processGroupAssociationToUpdate.getIdentity());
-        softAssertions.assertAll();
     }
 
     private static void deleteProcessGroupAssociation(final String associationId) {
@@ -194,6 +70,127 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             .processGroupIdentity(backupProcessGroupAssociation.getProcessGroupIdentity())
             .processGroupName(backupProcessGroupAssociation.getProcessGroupName())
             .build();
+    }
+
+    @Test
+    @TestRail(id = {8411})
+    @Description("Returns a paged set of ProcessGroupAssociation for the current user.")
+    public void testGetProcessGroupAssociations() {
+        getProcessGroupAssociations();
+    }
+
+    @Test
+    @TestRail(id = {8414})
+    @Description("Get a ProcessGroupAssociation for a customer.")
+    public void testGetMaterialByIdentity() {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+                .inlineVariables(getFirstGroupAssociation().getIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        HTTPRequest.build(requestEntity).get();
+    }
+
+    @Test
+    @TestRail(id = {8412})
+    @Description("Adds a ProcessGroupAssociation for a customer.")
+    public void testPostProcessGroupAssociation() {
+        getTestingProcessGroupAssociation();
+    }
+
+    @Test
+    @TestRail(id = {8415})
+    @Description("DELETEs a ProcessGroupAssociation for a customer.")
+    public void testDeleteProcessGroupAssociation() {
+        deleteProcessGroupAssociation(
+            getTestingProcessGroupAssociation().getIdentity()
+        );
+    }
+
+    @Test
+    @TestRail(id = {8416})
+    @Description("Updates a ProcessGroupAssociation for a customer.")
+    public void testPatchProcessGroupAssociation() {
+        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
+            .builder()
+            .defaultVpeIdentity(backupProcessGroupAssociation.getDefaultVpeIdentity())
+            .defaultVpeName(backupProcessGroupAssociation.getDefaultVpeName())
+            .build();
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.PATCH_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
+                .inlineVariables(getTestingProcessGroupAssociation().getIdentity())
+                .body("processGroupAssociation", processGroupAssociationRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).patch();
+
+        ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(updatedProcessGroupAssociation.getDefaultVpeIdentity()).isEqualTo(backupProcessGroupAssociation.getDefaultVpeIdentity());
+        softAssertions.assertThat(updatedProcessGroupAssociation.getDefaultVpeName()).isEqualTo(backupProcessGroupAssociation.getDefaultVpeName());
+        softAssertions.assertThat(updatedProcessGroupAssociation.getUpdatedBy()).isNotNull();
+        softAssertions.assertThat(updatedProcessGroupAssociation.getUpdatedAt()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {8413})
+    @Description("Adds or Replaces a ProcessGroupAssociation for a customer. ")
+    public void testPutCreateProcessGroupAssociation() {
+        ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();
+
+        deleteProcessGroupAssociation(processGroupAssociationToUpdate.getIdentity());
+
+        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
+            .builder()
+            .processGroupIdentity(processGroupAssociationToUpdate.getIdentity())
+            .processGroupName(processGroupAssociationToUpdate.getProcessGroupName())
+            .build();
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+                .body("processGroupAssociation", processGroupAssociationRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
+
+        ProcessGroupAssociation createdProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(createdProcessGroupAssociation.getIdentity()).isNotEqualTo(processGroupAssociationToUpdate.getIdentity());
+        softAssertions.assertAll();
+
+        testingProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
+    }
+
+    @Test
+    @TestRail(id = {9038})
+    @Description("Replaces a ProcessGroupAssociation for a customer. ")
+    public void testPutUpdateProcessGroupAssociation() {
+        ProcessGroupAssociation processGroupAssociationToUpdate = getTestingProcessGroupAssociation();
+
+        ProcessGroupAssociationRequest processGroupAssociationRequest = ProcessGroupAssociationRequest
+            .builder()
+            .identity(processGroupAssociationToUpdate.getIdentity())
+            .processGroupIdentity(processGroupAssociationToUpdate.getIdentity())
+            .processGroupName(processGroupAssociationToUpdate.getProcessGroupName())
+            .build();
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
+                .body("processGroupAssociation", processGroupAssociationRequest)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
+
+        ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(updatedProcessGroupAssociation.getIdentity())
+            .isEqualTo(processGroupAssociationToUpdate.getIdentity());
+        softAssertions.assertAll();
     }
 
     private ProcessGroupAssociationRequest initCustomProcessGroupAssociationRequest() {

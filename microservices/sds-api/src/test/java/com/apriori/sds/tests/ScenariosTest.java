@@ -204,7 +204,6 @@ public class ScenariosTest extends SDSTestUtil {
 
         final Scenario forkScenario = responseWrapper.getResponseEntity();
 
-
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(this.getReadyToWorkScenario(publishedScenario.getComponentIdentity(), forkScenario.getIdentity())
             .getScenarioName()).isEqualTo(forkScenarioName);
@@ -292,7 +291,6 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId()
                 )
                 .expectedResponseCode(HttpStatus.SC_OK);
-
 
         ResponseWrapper<ScenarioItemsResponse> response = HTTPRequest.build(requestEntity).get();
 
