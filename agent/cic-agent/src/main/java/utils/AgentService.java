@@ -1,12 +1,12 @@
 package utils;
 
+import com.apriori.AwsParameterStoreUtil;
 import com.apriori.FileResourceUtil;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.utils.AwsParameterStoreUtil;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;

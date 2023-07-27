@@ -2,10 +2,8 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     implementation project(':shared-util')
-    implementation project('::shared-util')
     implementation project(':db')
     implementation project(':web-app-util')
     implementation project(':serialization-util')

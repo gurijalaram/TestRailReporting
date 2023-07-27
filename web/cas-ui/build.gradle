@@ -1,5 +1,4 @@
 dependencies {
-    implementation project('::shared-util')
     implementation project(':shared-util')
     implementation project(':microservices:cds-api')
     implementation project(':web-app-util')
