@@ -1,15 +1,11 @@
 package com.apriori.pageobjects.pages.projectsdetails;
 
-import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.common.ProjectsPartsAndAssemblyTableController;
 import com.apriori.pageobjects.pages.projects.ProjectsPage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.components.EagerPageComponent;
 
-import com.utils.CisColumnsEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -142,6 +138,24 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
 
     @FindBy(id = "add-part-and-assembly-add-btn")
     private WebElement btnAddPartsAndAssembliesToProject;
+
+    @FindBy(xpath = "//button[contains(@id,'bulk-action-btn')]")
+    private WebElement removeSelectedPartOption;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-remove-parts-assemblies-confirm-modal']")
+    private WebElement removePartConfirmationModal;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-remove-parts-assemblies-confirm-modal']//p")
+    private WebElement removePartConfirmationMessage;
+
+    @FindBy(id = "remove-btn")
+    private WebElement btnSelectPartRemove;
+
+    @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
+    private WebElement selectAllRowsCheckBox;
+
+    @FindBy(xpath = "//div[contains(@class, 'MuiDataGrid-main')]//span[@role='progressbar']//span")
+    private WebElement progressBar;
 
     private PageUtils pageUtils;
 
@@ -758,5 +772,93 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
     public ProjectsDetailsPage clickAdd() {
         getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
         return this;
+    }
+
+    /**
+     * Checks if remove part option displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemoveSelectedPartOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(removeSelectedPartOption);
+    }
+
+    /**
+     * Click on remove part option
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickRemoveOption() {
+        getPageUtils().waitForElementAndClick(removeSelectedPartOption);
+        return this;
+    }
+
+    /**
+     * Checks if remove part confirmation displayed
+     *
+     * @return true/false
+     */
+    public boolean isRemovePartConfirmationModalDisplayed() {
+        return getPageUtils().isElementDisplayed(removePartConfirmationModal);
+    }
+
+    /**
+     * Get on remove part confirmation message
+     *
+     * @return a sting
+     */
+    public String getRemovePartConfirmationMessage() {
+        return getPageUtils().waitForElementToAppear(removePartConfirmationMessage).getText();
+    }
+
+    /**
+     * Click on remove button
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage clickOnRemove() {
+        getPageUtils().waitForElementsToAppear(tableRow);
+        getPageUtils().waitForElementAndClick(btnSelectPartRemove);
+        return this;
+    }
+
+    /**
+     * Click on select all checkbox
+     *
+     * @return current page object
+     */
+    public ProjectsDetailsPage checkAllComponents() {
+        getPageUtils().waitForElementsToAppear(tableRow);
+        getPageUtils().waitForElementAndClick(selectAllRowsCheckBox);
+        return this;
+    }
+
+    /**
+     * Get the status of select all
+     *
+     * @return a String
+     */
+    public String getCheckAllStatus() {
+        return getPageUtils().waitForElementToAppear(selectAllRowsCheckBox).getAttribute("class");
+    }
+
+    /**
+     * Get status of remove selected parts btn
+     *
+     * @return a sting
+     */
+    public String getStatusOfRemoveOption() {
+        return getPageUtils().waitForElementToAppear(removeSelectedPartOption).getAttribute("class");
+    }
+
+    /**
+     * Checks if show/hide option displayed after part removal
+     *
+     * @return true/false
+     */
+    public boolean isShowHideOptionDisplayedAfterRemoval() {
+        getPageUtils().waitForElementToAppear(progressBar);
+        getPageUtils().waitForElementNotDisplayed(progressBar,2);
+        return getPageUtils().isElementDisplayed(showHideOption);
     }
 }
