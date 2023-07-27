@@ -40,7 +40,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7313})
     @Description("Validate report is available by navigation - Sheet Metal DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
@@ -69,7 +69,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
@@ -117,7 +117,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7370})
     @Description("Verify cancel button functionality - Sheet Metal DTC Comparison Report")
     public void testCancelButton() {
@@ -183,7 +183,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7419})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
@@ -222,7 +222,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7400})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
@@ -249,7 +249,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7673})
     @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Comparison Report")
     public void testSortOrderBends() {
@@ -305,7 +305,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7378})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Comparison Report")
     public void testCurrencyCodeInputControl() {
@@ -367,7 +367,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7533})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -406,7 +406,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7541})
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreAll() {

@@ -113,7 +113,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {

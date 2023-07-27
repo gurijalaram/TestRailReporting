@@ -45,7 +45,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7327})
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -87,7 +87,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7627})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {

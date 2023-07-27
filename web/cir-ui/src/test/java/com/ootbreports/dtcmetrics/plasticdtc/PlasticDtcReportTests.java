@@ -48,7 +48,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7303})
     @Description("Validate report is available by navigation - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {

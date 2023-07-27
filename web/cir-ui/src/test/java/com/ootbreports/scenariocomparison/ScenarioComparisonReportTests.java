@@ -60,7 +60,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3245})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -69,7 +69,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3246})
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -323,7 +323,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3248})
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -374,7 +374,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3306})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {

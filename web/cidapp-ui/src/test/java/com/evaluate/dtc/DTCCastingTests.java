@@ -185,7 +185,7 @@ public class DTCCastingTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(id = {6377})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {

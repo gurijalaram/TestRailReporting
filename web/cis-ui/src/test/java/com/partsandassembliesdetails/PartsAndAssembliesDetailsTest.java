@@ -34,6 +34,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     private File resourceFile;
     private UserCredentials currentUser;
     private EvaluatePage evaluatePage;
+
     public PartsAndAssembliesDetailsTest() {
         super();
     }

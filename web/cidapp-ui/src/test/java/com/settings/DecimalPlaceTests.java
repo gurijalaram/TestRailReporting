@@ -57,7 +57,7 @@ public class DecimalPlaceTests extends TestBaseUI {
         }
     }
 
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(id = {5287, 5288, 5291, 5297, 5290, 5295, 6633})
     @Description("User can change the default Displayed Decimal Places")

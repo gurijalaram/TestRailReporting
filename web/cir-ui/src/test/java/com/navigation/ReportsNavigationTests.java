@@ -55,7 +55,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2987})
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() {
@@ -71,7 +71,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2986})
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
@@ -85,7 +85,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2967})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
@@ -97,7 +97,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2968})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
@@ -109,7 +109,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2969})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
@@ -121,7 +121,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2970})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
@@ -133,7 +133,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2971})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
@@ -145,7 +145,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2972})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
@@ -181,7 +181,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2975})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
@@ -195,7 +195,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2976})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
@@ -208,7 +208,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2977})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {

@@ -41,7 +41,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {1944})
     @Description("Validate report is available by navigation - menu")
     public void testReportAvailableByMenu() {
@@ -70,7 +70,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
@@ -108,7 +108,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {6253})
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
@@ -165,7 +165,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {6986})
     @Description("Percent difference threshold filter - main report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
@@ -201,7 +201,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7023})
     @Description("Annualised potential savings threshold filter - main report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
@@ -273,7 +273,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {1957})
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {

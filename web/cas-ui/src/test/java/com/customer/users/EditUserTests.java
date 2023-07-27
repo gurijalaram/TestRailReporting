@@ -63,7 +63,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTest.class})
+    @Category({SmokeTest.class})
     @Description("Test user profile details, edit mode and cancel edit button")
     @TestRail(id = {5576, 11952, 4374, 4382, 11962})
     public void testEditAndCancelUserProfile() {
@@ -123,7 +123,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTest.class})
+    @Category({SmokeTest.class})
     @Description("Test that user details can be edited and saved")
     @TestRail(id = {11963})
     public void testEditUserAndSave() {

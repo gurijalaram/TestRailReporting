@@ -56,7 +56,7 @@ public class ComponentCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7133})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
@@ -200,7 +200,7 @@ public class ComponentCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3328})
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {

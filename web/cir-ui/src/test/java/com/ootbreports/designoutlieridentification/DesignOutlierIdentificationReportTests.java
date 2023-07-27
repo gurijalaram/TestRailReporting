@@ -186,7 +186,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2006})
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {

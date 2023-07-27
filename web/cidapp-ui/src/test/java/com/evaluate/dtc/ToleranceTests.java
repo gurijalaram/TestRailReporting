@@ -61,7 +61,7 @@ public class ToleranceTests extends TestBaseUI {
 
     @Test
     @Ignore("Cannot edit tolerances this release")
-    @Category( {IgnoreTests.class})
+    @Category({IgnoreTests.class})
     @TestRail(id = {6464, 7811, 6964})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
@@ -254,7 +254,7 @@ public class ToleranceTests extends TestBaseUI {
     }*/
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(id = {6455})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {

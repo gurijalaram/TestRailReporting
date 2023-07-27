@@ -82,7 +82,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2332})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
@@ -103,7 +103,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Issue("AP-66960")
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2335})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {

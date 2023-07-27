@@ -211,7 +211,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3361})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")
     public void testHyperlinksToDetailsReportFinalMilestone() {

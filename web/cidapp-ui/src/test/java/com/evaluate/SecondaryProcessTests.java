@@ -891,7 +891,7 @@ public class SecondaryProcessTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(id = {5122})
     @Description("Selections are cleared when user cancels changes")
     public void selectionsCleared() {

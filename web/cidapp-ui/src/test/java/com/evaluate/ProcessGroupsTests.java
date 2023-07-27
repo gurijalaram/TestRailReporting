@@ -39,7 +39,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(id = {5441, 6631, 6632})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
@@ -66,7 +66,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(id = {6123})
     @Description("Testing process group Stock Machining")
     public void testProcessGroupStockMachining() {

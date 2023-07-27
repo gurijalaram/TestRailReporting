@@ -286,7 +286,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {6985})
     @Description("Percent difference threshold filter works - details report")
     public void testPercentDifferenceThresholdFilter() {

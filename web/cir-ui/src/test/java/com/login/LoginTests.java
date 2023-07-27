@@ -27,7 +27,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2695})
     @Description("Successful login to CI Report")
     public void testLogin() {
@@ -38,7 +38,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2696})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -61,7 +61,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2698})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
@@ -72,7 +72,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {2699})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

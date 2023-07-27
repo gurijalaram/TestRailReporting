@@ -64,7 +64,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
 
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7129})
     @Description("Validate report is available by library (Assembly Cost A4 Report)")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
@@ -73,7 +73,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = 7131)
     @Description("Validate report is available by library (Assembly Cost Letter Report)")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
@@ -82,7 +82,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {3008})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
@@ -106,7 +106,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7622})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (A4) Report")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -142,7 +142,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7625})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
@@ -163,7 +163,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7626})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")
     public void testSubAssemblySelectionAssemblyCostLetter() {

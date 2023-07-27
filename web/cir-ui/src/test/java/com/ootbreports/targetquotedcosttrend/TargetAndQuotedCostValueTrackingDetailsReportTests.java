@@ -56,7 +56,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7425})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlPpc() {
@@ -68,7 +68,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7426})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlFbc() {
