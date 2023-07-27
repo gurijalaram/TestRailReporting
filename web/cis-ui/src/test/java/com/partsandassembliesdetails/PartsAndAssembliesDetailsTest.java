@@ -28,19 +28,18 @@ import java.util.List;
 
 public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
-    public PartsAndAssembliesDetailsTest() {
-        super();
-    }
-
     private CisLoginPage loginPage;
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private File resourceFile;
     private UserCredentials currentUser;
     private EvaluatePage evaluatePage;
+    public PartsAndAssembliesDetailsTest() {
+        super();
+    }
 
     @Test
-    @TestRail(id = {12254", "12396", "12459", "12460", "12461})
+    @TestRail(id = {12254, 12396, 12459, 12460, 12461})
     @Description("Verify 3D viewer and column cards on parts and assemblies details page")
     public void testPartsAndAssembliesDetailPageHeaderTitle() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -77,7 +76,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13067", "13068", "13069", "13070", "13071", "13072})
+    @TestRail(id = {13067, 13068, 13069, 13070, 13071, 13072})
     @Description("Verify Scenario Results Default Cards on parts and assemblies details page")
     public void testScenarioResultsDefaultCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -140,7 +139,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {12910", "12914})
+    @TestRail(id = {12910, 12914})
     @Description("Verify insights section and details for a costed scenario")
     public void testInsightsSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -173,7 +172,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {12912", "12913", "12915", "12916", "13179})
+    @TestRail(id = {12912, 12913, 12915, 12916, 13179})
     @Description("Verify part nesting section on Insights")
     public void testPartNestingSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -213,7 +212,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13043", "13044", "13045", "13046})
+    @TestRail(id = {13043, 13044, 13045, 13046})
     @Description("Verify material properties section on Insights")
     public void testMaterialPropertiesSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -253,7 +252,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13047", "13048", "13049", "13050})
+    @TestRail(id = {13047, 13048, 13049, 13050})
     @Description("Verify material stock section on Insights")
     public void testMaterialStockSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -292,7 +291,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13180", "13182", "13197", "13924})
+    @TestRail(id = {13180, 13182, 13197, 13924})
     @Description("Verify insights for a non-costed scenario")
     public void testInsightsSectionForUnCostedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -326,7 +325,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {12485", "12486", "12487", "12489", "12490", "12491", "12492", "12495})
+    @TestRail(id = {12485, 12486, 12487, 12489, 12490, 12491, 12492, 12495})
     @Description("Verify the creation of new scenario results cards")
     public void testCreateNewScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -376,7 +375,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {12499", "12500", "12502", "12503", "12507", "12509", "12510", "13088", "13089", "13090})
+    @TestRail(id = {12499, 12500, 12502, 12503, 12507, 12509, 12510, 13088, 13089, 13090})
     @Description("Verify scenario results cards can be edited")
     public void testEditScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -421,7 +420,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSaveButtonStatus()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickToOpenDropDown()
-                .clickSaveButton();
+            .clickSaveButton();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(editedCardName)).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.deleteScenarioResultsCard(editedCardName);
@@ -430,7 +429,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {12523", "12524", "12525", "12527})
+    @TestRail(id = {12523, 12524, 12525, 12527})
     @Description("Verify scenario results cards can be removed")
     public void testRemoveScenarioResultsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -475,7 +474,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13283", "13144", "13145", "13146", "13284", "13165", "13151", "13162})
+    @TestRail(id = {13283, 13144, 13145, 13146, 13284, 13165, 13151, 13162})
     @Description("Verify process routing cycle time details card")
     public void testProcessRoutingCycleTimeDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -525,7 +524,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13215", "13216", "13217", "13299", "14542})
+    @TestRail(id = {13215, 13216, 13217, 13299, 14542})
     @Description("Verify fully burdened cost details card")
     public void testProcessRoutingFullyBurdenedCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -571,7 +570,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13163", "13164", "13296", "13166", "14541})
+    @TestRail(id = {13163, 13164, 13296, 13166, 14541})
     @Description("Verify piece part cost details card")
     public void testProcessRoutingPiecePartCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -617,7 +616,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13243", "13244", "13245", "13248", "13485", "13488})
+    @TestRail(id = {13243, 13244, 13245, 13248, 13485, 13488})
     @Description("Verify assembly tree view")
     public void testAssemblyTreeView() {
         final String assemblyName = "Hinge assembly";
@@ -668,7 +667,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13320", "13321", "13322", "13323", "13324", "13375", "13376", "13377})
+    @TestRail(id = {13320, 13321, 13322, 13323, 13324, 13375, 13376, 13377})
     @Description("Verify design guidance issue details")
     public void testDesignGuidanceIssueDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -715,7 +714,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13584", "13585", "13586", "13588", "13589", "13590})
+    @TestRail(id = {13584, 13585, 13586, 13588, 13589, 13590})
     @Description("Verify design guidance investigation section details")
     public void testDesignGuidanceInvestigationDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -758,7 +757,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13799", "13800", "13801", "13992", "13993", "13996", "13997})
+    @TestRail(id = {13799, 13800, 13801, 13992, 13993, 13996, 13997})
     @Description("Verify cost details for part")
     public void testPartCostCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -798,7 +797,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14033", "14034", "14035", "14036", "14037", "14038", "14039})
+    @TestRail(id = {14033, 14034, 14035, 14036, 14037, 14038, 14039})
     @Description("Verify design guidance threads section details")
     public void testDesignGuidanceThreadsDetails() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -841,7 +840,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14040", "14041", "14042", "14043", "14044", "14045", "14046", "14047})
+    @TestRail(id = {14040, 14041, 14042, 14043, 14044, 14045, 14046, 14047})
     @Description("Verify assembly cost details breakdowns")
     public void testAssemblyCostDetails() {
         final String assemblyName = "Hinge assembly";
@@ -896,7 +895,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13270", "13271", "13272", "13273", "13274", "13275", "13276})
+    @TestRail(id = {13270, 13271, 13272, 13273, 13274, 13275, 13276})
     @Description("Verify share scenario functionalities")
     public void testShareScenarioFunction() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -939,7 +938,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {13307", "13308", "13309", "13310", "13314", "13315", "13316", "14180})
+    @TestRail(id = {13307, 13308, 13309, 13310, 13314, 13315, 13316, 14180})
     @Description("Verify that discussions can be created by scenario results attributes")
     public void testCreateDiscussionByScenarioAttributes() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -994,7 +993,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14466", "14467", "14468", "14469", "14470", "14471", "14543", "14641", "14691})
+    @TestRail(id = {14466, 14467, 14468, 14469, 14470, 14471, 14543, 14641, 14691})
     @Description("Verify that discussions can be created by comment section")
     public void testCreateDiscussionByCommentSection() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1055,7 +1054,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14183", "14184", "14185", "14186", "14187", "14691})
+    @TestRail(id = {14183, 14184, 14185, 14186, 14187, 14691})
     @Description("Verify that replies can be added to a selected comment thread")
     public void testReplyToACommentThread() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1103,7 +1102,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14189", "14190", "14697", "14698", "14699})
+    @TestRail(id = {14189, 14190, 14697, 14698, 14699})
     @Description("Verify that user can resolve and unresolve a discussion")
     public void testResolveAndUnresolvedComment() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1144,7 +1143,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14195", "14196", "14201", "14202", "14730", "14732})
+    @TestRail(id = {14195, 14196, 14201, 14202, 14730, 14732})
     @Description("Verify that user can delete and undelete a discussion")
     public void testDeleteAndUndeleteDiscussion() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1192,7 +1191,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     @Test
     @TestRail(id = {14191, 14192, 14193, 14194, 14628, 14689, 14690})
     @Description("Verify that assign and un-assign a discussion to a project participant ")
-    public void testAssignUnAssignACommentThread()  {
+    public void testAssignUnAssignACommentThread() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
 
@@ -1201,19 +1200,19 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .clickMoreOption();
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .clickMoreOption();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1228,14 +1227,14 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("You");
 
         partsAndAssembliesDetailsPage.shareScenario()
-                .selectAUser("qa-automation-22@apriori.com")
-                .clickOnInvite()
-                .clickOnCreatedDiscussion()
-                .clickMoreOption();
+            .selectAUser("qa-automation-22@apriori.com")
+            .clickOnInvite()
+            .clickOnCreatedDiscussion()
+            .clickMoreOption();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isUnAssignOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickUnAssignOption()
-                .reassignDiscussion("QA Automation Account 22");
+            .reassignDiscussion("QA Automation Account 22");
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 22");
 
@@ -1243,7 +1242,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14700", "14701", "14702", "14760", "14761})
+    @TestRail(id = {14700, 14701, 14702, 14760, 14761})
     @Description("Verify that user can delete and undelete a comment")
     public void testDeleteAndUndeleteAComment() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1254,21 +1253,21 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickMessageIconOnCommentSection()
-                .clickOnAttribute()
-                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
-                .addComment("New Comment With Attribute")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .addComment("New Reply")
-                .clickComment();
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickMessageIconOnCommentSection()
+            .clickOnAttribute()
+            .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+            .addComment("New Comment With Attribute")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .addComment("New Reply")
+            .clickComment();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1292,7 +1291,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     @Test
     @TestRail(id = {14728, 14729, 14731, 14736, 14733, 14734})
     @Description("Verify that mention users in a comment and assign comment to a mention user ")
-    public void testMentionUsersOnACommentThread()  {
+    public void testMentionUsersOnACommentThread() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
 
@@ -1301,18 +1300,18 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName)
-                .clickDigitalFactoryMessageIcon()
-                .addComment("New Discussion")
-                .clickComment()
-                .selectCreatedDiscussion()
-                .addCommentWithMention("This is a new reply with a mention user @22");
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName)
+            .clickDigitalFactoryMessageIcon()
+            .addComment("New Discussion")
+            .clickComment()
+            .selectCreatedDiscussion()
+            .addCommentWithMention("This is a new reply with a mention user @22");
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1323,14 +1322,14 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isAMentionUserTagDisplayed("QA Automation Account 22")).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.addCommentWithMention("second mention user @23")
-                .selectMentionUser("qa-automation-23@apriori.com")
-                .clickChangeAssigneeOption();
+            .selectMentionUser("qa-automation-23@apriori.com")
+            .clickChangeAssigneeOption();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssignToAMentionUserListDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.selectMentionUserToAssignDiscussion("qa-automation-23@apriori.com")
-                .clickToAssign()
-                .clickComment();
+            .clickToAssign()
+            .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAssignedState()).contains("QA Automation Account 23");
 
@@ -1338,7 +1337,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14050", "14051", "14052", "14053})
+    @TestRail(id = {14050, 14051, 14052, 14053})
     @Description("Verify remove participants functionalities")
     public void testRemoveParticipants() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1349,17 +1348,17 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
-                .clickOnShare();
+            .clickOnShare();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isUsersDropDownDisplayed()).isEqualTo(true);
@@ -1367,8 +1366,8 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isSharedParticipantsDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.selectAUser("qa-automation-01@apriori.com")
-                .selectAUser("qa-automation-02@apriori.com")
-                .clickOnInvite();
+            .selectAUser("qa-automation-02@apriori.com")
+            .clickOnInvite();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isTrue();
 
@@ -1384,7 +1383,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isShareScenarioModalDisplayed()).isTrue();
 
         partsAndAssembliesDetailsPage.clickOnSharedUserRemoveIcon()
-                .clickOnSharedUserRemoveButton();
+            .clickOnSharedUserRemoveButton();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveIconDisplayed()).isFalse();
 
@@ -1403,21 +1402,21 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isOpenInCIDButtonDisplayed()).isEqualTo(true);
 
         evaluatePage = partsAndAssembliesDetailsPage.clickOnOpenComponent()
-                .clickOnCid()
-                .switchTab();
+            .clickOnCid()
+            .switchTab();
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
 
@@ -1435,16 +1434,16 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName)
-                .clickOnComponent(componentName, scenarioName)
-                .clickProcessRouting()
-                .selectProcess("Cycle Time")
-                .clickCycleTimeChart();
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponent(componentName, scenarioName)
+            .clickProcessRouting()
+            .selectProcess("Cycle Time")
+            .clickCycleTimeChart();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1469,8 +1468,8 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isKeepEditingButtonDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickKeepEditing()
-                .addComment("Process Card Data Field Comment")
-                .clickComment();
+            .addComment("Process Card Data Field Comment")
+            .clickComment();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
@@ -1481,7 +1480,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {16672, 16673, 16838","16839","16840})
+    @TestRail(id = {16672, 16673, 16838, 16839, 16840})
     @Description("Verify user can add/remove process details fields")
     public void testEnableConfigurationsOfProcessDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1491,17 +1490,17 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName, scenarioName)
-                .clickProcessRouting()
-                .selectProcess("Cycle Time")
-                .clickCycleTimeChart();
+            .clickProcessRouting()
+            .selectProcess("Cycle Time")
+            .clickCycleTimeChart();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1509,29 +1508,29 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isNewMessageOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickOnMoreOptionMenu()
-                .clickEditProcessCardOption();
+            .clickEditProcessCardOption();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessCardModalDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getModalTitle()).isEqualTo("Card Settings");
 
         partsAndAssembliesDetailsPage.openAndCloseProcessDropDown()
-                .selectAnOption("Fixture Cost")
-                .selectAnOption("Total Machine Cost")
-                .selectAnOption("Labor Time");
+            .selectAnOption("Fixture Cost")
+            .selectAnOption("Total Machine Cost")
+            .selectAnOption("Labor Time");
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedProcessFieldName()).contains("Fixture Cost");
 
         partsAndAssembliesDetailsPage.clickToRemoveProcessField()
-                .openAndCloseProcessDropDown()
-                .clickProcessModalSaveButton()
-                .clickProcessRouting()
-                .clickCycleTimeChart();
+            .openAndCloseProcessDropDown()
+            .clickProcessModalSaveButton()
+            .clickProcessRouting()
+            .clickCycleTimeChart();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
-                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
-                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
-                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName(),  CisCostDetailsEnum.TOTAL_MACHINE_COST.getProcessRoutingName(),
-                CisCostDetailsEnum.LABOR_TIME.getProcessRoutingName());
+            CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+            CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+            CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName(), CisCostDetailsEnum.TOTAL_MACHINE_COST.getProcessRoutingName(),
+            CisCostDetailsEnum.LABOR_TIME.getProcessRoutingName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
@@ -1549,7 +1548,7 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {16460","16461","16462","16463})
+    @TestRail(id = {16460, 16461, 16462, 16463})
     @Description("Verify non-applicable fields are hidden in scenario info cards")
     public void testShowHideNonApplicableFieldsInScenarioInfoCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -1561,12 +1560,12 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         String cardName = "Liability Inputs";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .clickPartsAndAssemblies()
-                .sortDownCreatedAtField()
-                .clickSearchOption()
-                .clickOnSearchField()
-                .enterAComponentName(componentName);
+            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+            .clickPartsAndAssemblies()
+            .sortDownCreatedAtField()
+            .clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1575,25 +1574,25 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateNewCardOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickToOpenModal()
-                .clickToOpenDropDown()
-                .selectAnOption("Liability Insurance Cost")
-                .selectAnOption("Liability Insurance Factor")
-                .selectAnOption("Logistics")
-                .selectAnOption("Lifetime Cost")
-                .enterCardName(cardName)
-                .clickSaveButton();
+            .clickToOpenDropDown()
+            .selectAnOption("Liability Insurance Cost")
+            .selectAnOption("Liability Insurance Factor")
+            .selectAnOption("Logistics")
+            .selectAnOption("Lifetime Cost")
+            .enterCardName(cardName)
+            .clickSaveButton();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(cardName)).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName,"Show Non-Applicable Fields")).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).doesNotContain("Liability Insurance Cost","Liability Insurance Factor");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName, "Show Non-Applicable Fields")).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).doesNotContain("Liability Insurance Cost", "Liability Insurance Factor");
 
-        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName,"Show Non-Applicable Fields");
+        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName, "Show Non-Applicable Fields");
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).contains("Liability Insurance Cost","Liability Insurance Factor");
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName,"Hide Non-Applicable Fields")).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNonApplicableFields(cardName)).contains("Liability Insurance Cost", "Liability Insurance Factor");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isShowOrHideNonApplicableFieldsDisplayed(cardName, "Hide Non-Applicable Fields")).isEqualTo(true);
 
-        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName,"Hide Non-Applicable Fields")
-                .deleteScenarioResultsCard(cardName);
+        partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName, "Hide Non-Applicable Fields")
+            .deleteScenarioResultsCard(cardName);
 
         softAssertions.assertAll();
     }
