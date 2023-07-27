@@ -1,18 +1,16 @@
 package com.ootbreports.newreportstests.utils;
 
-import static com.apriori.utils.TestHelper.logger;
-
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
 import com.google.common.base.Stopwatch;
+import enums.DtcScoreEnum;
+import enums.JasperCirApiPartsEnum;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import utils.Constants;
@@ -27,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Data
+@Slf4j
 public class JasperApiUtils {
     private static final SoftAssertions softAssertions = new SoftAssertions();
     private ReportRequest reportRequest;
@@ -37,8 +36,8 @@ public class JasperApiUtils {
     /**
      * Default constructor for this class
      *
-     * @param jSessionId - String for authentication/session
-     * @param exportSetName - String of the export set which should be set
+     * @param jSessionId          - String for authentication/session
+     * @param exportSetName       - String of the export set which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
     public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName) {
@@ -51,7 +50,7 @@ public class JasperApiUtils {
     /**
      * Generic method that sets one particular value in the input controls
      *
-     * @param keyToSet String - key of the value to set
+     * @param keyToSet   String - key of the value to set
      * @param valueToSet String - value which to set
      * @return JasperReportSummary instance
      */
@@ -71,7 +70,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -79,7 +78,7 @@ public class JasperApiUtils {
     /**
      * Generic method for testing currency where export set is not relevant
      *
-     * @param currencyKey - currency key to use
+     * @param currencyKey   - currency key to use
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
@@ -136,7 +135,7 @@ public class JasperApiUtils {
     /**
      * Generic test of currency code for use on a dtc report
      *
-     * @param partName - String of partName which is to be used
+     * @param partName          - String of partName which is to be used
      * @param areBubblesPresent - boolean which states if bubbles are present or not
      */
     public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
@@ -308,7 +307,7 @@ public class JasperApiUtils {
      * Generic test to be used on any dtc report
      *
      * @param partNames - List of Strings of part names for use in the test
-     * @param miscData - String array of data to be used in the test
+     * @param miscData  - String array of data to be used in the test
      */
     public void genericDtcTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
@@ -366,7 +365,7 @@ public class JasperApiUtils {
      * Generic test for any dtc details report
      *
      * @param partNames - list of Strings containing the parts to use
-     * @param miscData - String array of data to be used in the test
+     * @param miscData  - String array of data to be used in the test
      */
     public void genericDtcDetailsTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
@@ -393,8 +392,8 @@ public class JasperApiUtils {
      * Generic test for dtc score
      *
      * @param areBubblesPresent - boolean which specifies what report type is being used
-     * @param partNames - List of Strings of part names
-     * @param miscData - String array of data to be used in the test
+     * @param partNames         - List of Strings of part names
+     * @param miscData          - String array of data to be used in the test
      */
     public void genericDtcScoreTest(boolean areBubblesPresent, List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
@@ -424,7 +423,7 @@ public class JasperApiUtils {
      * Generic test of process group input control on any dtc report
      *
      * @param partNames - List of Strings of part names for the test
-     * @param miscData - String array of data to be used in the test
+     * @param miscData  - String array of data to be used in the test
      */
     public void genericProcessGroupDtcTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
@@ -449,7 +448,7 @@ public class JasperApiUtils {
      * Generic test for process group on a dtc details report
      *
      * @param partNames - List of Strings of part names for the test
-     * @param miscData - String array of data to be used in the test
+     * @param miscData  - String array of data to be used in the test
      */
 
     public void genericProcessGroupDtcDetailsTest(List<String> partNames, String... miscData) {
@@ -510,8 +509,8 @@ public class JasperApiUtils {
     /**
      * Generic test for sort order input control on a dtc report
      *
-     * @param miscData - List of Strings of data for the test
-     * @param partNames - List of Strings of part names for the test
+     * @param miscData      - List of Strings of data for the test
+     * @param partNames     - List of Strings of part names for the test
      * @param assertFigures - List of Doubles for the assertion of Annual Spend values
      */
     public void genericSortOrderDtcTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
@@ -534,9 +533,9 @@ public class JasperApiUtils {
     /**
      * Generic test for sort order input control on a dtc report
      *
-     * @param partNames - List of Strings of part names for the test
+     * @param partNames    - List of Strings of part names for the test
      * @param assertValues - List of Strings for the assertion of Annual Spend values
-     * @param miscData - String array of data to be used in the test
+     * @param miscData     - String array of data to be used in the test
      */
     public void genericSortOrderDtcDetailsTest(List<String> partNames, List<String> assertValues, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
@@ -571,8 +570,8 @@ public class JasperApiUtils {
      * Sets a particular report parameter within the ReportRequest instance
      *
      * @param reportRequest ReportRequest instance to use
-     * @param valueToGet String the key of the value to set
-     * @param valueToSet String the value which to set
+     * @param valueToGet    String the key of the value to set
+     * @param valueToSet    String the value which to set
      * @return ReportRequest instance with specified parameter set
      */
     public ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {

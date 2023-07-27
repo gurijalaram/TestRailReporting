@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.enums.reports.ListNameEnum;
+import com.apriori.enums.ListNameEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

@@ -5,11 +5,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;

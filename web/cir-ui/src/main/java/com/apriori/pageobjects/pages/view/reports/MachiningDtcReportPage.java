@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
+import com.apriori.enums.ReportNamesEnum;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

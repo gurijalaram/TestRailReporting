@@ -1,12 +1,12 @@
 package com.ootbreports.targetquotedcosttrend;
 
 import com.apriori.TestBaseUI;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import enums.CostMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

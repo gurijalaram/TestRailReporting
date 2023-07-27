@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 
+import enums.AssemblyTypeEnum;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,16 +1,16 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
+import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.view;
 
 import com.apriori.PageUtils;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -5,21 +5,23 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.SheetMetalDtcReportPage;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.MassMetricEnum;
+import enums.RollupEnum;
+import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -44,8 +46,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName());
     }
 
     @Test
@@ -72,22 +73,22 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
         String rollupName = String.format(
-                "%s (%s)",
-                ReportNamesEnum.SHEET_METAL_DTC.getReportName().toUpperCase(),
-                Constants.DEFAULT_SCENARIO_NAME
+            "%s (%s)",
+            ReportNamesEnum.SHEET_METAL_DTC.getReportName().toUpperCase(),
+            Constants.DEFAULT_SCENARIO_NAME
         );
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), SheetMetalDtcReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
-                .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), SheetMetalDtcReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
+            .waitForCorrectRollupInDropdown(rollupName)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));
         assertThat(sheetMetalDtcReportPage.getDisplayedExportSet(),
-                is(equalTo(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())));
+            is(equalTo(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())));
     }
 
     @Test
@@ -106,10 +107,9 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testApplyButton(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                RollupEnum.SHEET_METAL_DTC.getRollupName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            RollupEnum.SHEET_METAL_DTC.getRollupName());
     }
 
     @Test
@@ -128,9 +128,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testResetButton(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
@@ -140,9 +139,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSaveButton(
-                ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
@@ -161,9 +159,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testExportSetSearch() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetSearch(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
@@ -173,9 +170,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testRollupDropdown(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                RollupEnum.SHEET_METAL_DTC.getRollupName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            RollupEnum.SHEET_METAL_DTC.getRollupName());
     }
 
     @Test
@@ -185,9 +181,9 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlGeneric(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -198,10 +194,9 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlGeneric(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
     }
 
     @Test
@@ -211,10 +206,9 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                MassMetricEnum.FINISH_MASS.getMassMetricName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            MassMetricEnum.FINISH_MASS.getMassMetricName());
     }
 
     @Test
@@ -224,10 +218,9 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                MassMetricEnum.ROUGH_MASS.getMassMetricName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            MassMetricEnum.ROUGH_MASS.getMassMetricName());
     }
 
     @Test
@@ -236,18 +229,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Details Report")
     public void testSortOrderManufacturingIssues() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-                .clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("1271576")));
+            is(equalTo("1271576")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("BRACKET_V1")));
+            is(equalTo("BRACKET_V1")));
     }
 
     @Test
@@ -256,18 +249,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - Bends- Sheet Metal DTC Details Report")
     public void testSortOrderBends() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.BENDS.getSortOrderEnum())
-                .clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.BENDS.getSortOrderEnum())
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("BRACKET_SHORTENED")));
+            is(equalTo("BRACKET_SHORTENED")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("BRACKET_SHORTENED_ISSUES")));
+            is(equalTo("BRACKET_SHORTENED_ISSUES")));
     }
 
     @Test
@@ -276,18 +269,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Details Report")
     public void testSortOrderTolerances() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
-                .clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.TOLERANCES.getSortOrderEnum())
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("BRACKET_V1")));
+            is(equalTo("BRACKET_V1")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("BRACKET_V2")));
+            is(equalTo("BRACKET_V2")));
     }
 
     @Test
@@ -296,18 +289,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Details Report")
     public void testSortOrderMachiningTime() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.MACHINING_TIME.getSortOrderEnum())
-                .clickOk(SheetMetalDtcReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.MACHINING_TIME.getSortOrderEnum())
+            .clickOk(SheetMetalDtcReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("1271576")));
+            is(equalTo("1271576")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("BRACKET_V3")));
+            is(equalTo("BRACKET_V3")));
     }
 
     @Test
@@ -316,18 +309,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Details Report")
     public void testSortOrderAnnualSpend() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-                .clickOk(SheetMetalDtcReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
+            .clickOk(SheetMetalDtcReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("1271576")));
+            is(equalTo("1271576")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("3575137")));
+            is(equalTo("3575137")));
     }
 
     @Test
@@ -336,18 +329,18 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {
         sheetMetalDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
-                .clickOk(SheetMetalDtcReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .selectSortOrder(SortOrderEnum.DTC_RANK.getSortOrderEnum())
+            .clickOk(SheetMetalDtcReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo("BRACKET_SHORTENED")));
+            is(equalTo("BRACKET_SHORTENED")));
         assertThat(sheetMetalDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo("BRACKET_V1")));
+            is(equalTo("BRACKET_V1")));
     }
 
     @Test
@@ -357,9 +350,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testCurrencyCodeInputControl() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCurrencyCodeDtcReports(
-                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
@@ -369,9 +361,8 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testProcessGroupInputControlNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testProcessGroupInputControlNoSelection(
-                ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
@@ -381,73 +372,67 @@ public class SheetMetalDtcDetailsReportTests extends TestBaseUI {
     public void testSingleProcessGroup() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testSingleProcessGroup(
-                ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup());
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(id = {3051"})
-        @Description("Verify Select Parts list controls function correctly - Panel Buttons")
-        public void testPartListInputControlButtons(){
+    @TestRail(id = {3051})
+    @Description("Verify Select Parts list controls function correctly - Panel Buttons")
+    public void testPartListInputControlButtons() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testListFilterButtons(
-        ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-        ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-        ListNameEnum.PARTS_NO_SPACE.getListName()
-    );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            ListNameEnum.PARTS_NO_SPACE.getListName());
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(id = {7531"})
-        @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Details Report")
-        public void testDtcScoreNoSelection(){
+    @TestRail(id = {7531})
+    @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Details Report")
+    public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
-        ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-        ExportSetEnum.SHEET_METAL_DTC.getExportSetName()
-    );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(id = {7534"})
-        @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
-        public void testDtcScoreLow(){
+    @TestRail(id = {7534})
+    @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
+    public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
-        ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-        ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-        DtcScoreEnum.LOW.getDtcScoreName()
-    );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            DtcScoreEnum.LOW.getDtcScoreName());
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(id = {7537"})
-        @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
-        public void testDtcScoreMedium(){
+    @TestRail(id = {7537})
+    @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
+    public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
-        ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-        ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-        DtcScoreEnum.MEDIUM.getDtcScoreName()
-    );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            DtcScoreEnum.MEDIUM.getDtcScoreName());
     }
 
     @Test
     @Category(ReportsTest.class)
-    @TestRail(id = {7540"})
-        @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Details Report")
-        public void testDtcScoreHigh(){
+    @TestRail(id = {7540})
+    @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Details Report")
+    public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreComparisonReports(
-        ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
-        ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-        DtcScoreEnum.HIGH.getDtcScoreName()
-    );
+            ReportNamesEnum.SHEET_METAL_DTC_DETAILS.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            DtcScoreEnum.HIGH.getDtcScoreName());
     }
 }

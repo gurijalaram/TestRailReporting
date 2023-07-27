@@ -1,7 +1,7 @@
 package com.ootbreports.newreportstests.general.assemblydetails;
 
+import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
