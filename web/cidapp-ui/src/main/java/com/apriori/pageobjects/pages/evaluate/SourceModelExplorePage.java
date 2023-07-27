@@ -1,11 +1,11 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;

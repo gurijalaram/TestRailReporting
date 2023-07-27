@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

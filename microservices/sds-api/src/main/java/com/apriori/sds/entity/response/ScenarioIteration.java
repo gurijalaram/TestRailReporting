@@ -4,9 +4,9 @@ import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenar
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioCustomAttribute;
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioMetadata;
 import com.apriori.cidappapi.entity.response.componentiteration.ScenarioRoutings;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.entity.response.CostingInput;
 import com.apriori.entity.response.ScenarioGcd;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.entity.response.Thumbnail;
 import com.apriori.entity.response.componentiteration.PartNestingDiagram;
 import com.apriori.entity.response.componentiteration.ScenarioDesignInvestigations;
@@ -14,7 +14,6 @@ import com.apriori.entity.response.componentiteration.ScenarioDesignIssues;
 import com.apriori.entity.response.componentiteration.ScenarioDesignNotices;
 import com.apriori.entity.response.componentiteration.ScenarioProcess;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

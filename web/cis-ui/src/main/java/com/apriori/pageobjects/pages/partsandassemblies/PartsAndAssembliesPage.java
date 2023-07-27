@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
+import com.apriori.EagerPageComponent;
 import com.apriori.pageobjects.common.PartsAndAssemblyFilterController;
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -183,7 +183,6 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
     private PartsAndAssemblyFilterController partsAndAssemblyFilterController;
-
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
         super(driver, logger);

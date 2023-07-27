@@ -1,6 +1,5 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.entity.IdentityHolder;
@@ -9,6 +8,7 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.entity.response.AccessControls;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.Sites;
 import com.apriori.utils.GenerateStringUtil;
@@ -33,10 +33,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CasBulkGrantDenyAccessTests {
-    private SoftAssertions soft = new SoftAssertions();
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private SoftAssertions soft = new SoftAssertions();
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Customer sourceCustomer;
     private List<CustomerUser> sourceUsers;
     private String customerIdentity;
@@ -82,7 +82,7 @@ public class CasBulkGrantDenyAccessTests {
     }
 
     @Test
-    @Description ("Bulk grants a source customer's users application access to the target customers applications.")
+    @Description("Bulk grants a source customer's users application access to the target customers applications.")
     @TestRail(testCaseId = {"13213"})
     public void bulkGrantAccessOutOfContext() {
         String user1Identity = sourceUsers.get(0).getIdentity();

@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.pages.settings;
 
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.UserPreferenceController;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

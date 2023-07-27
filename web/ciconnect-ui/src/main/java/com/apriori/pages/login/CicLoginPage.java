@@ -2,9 +2,9 @@ package com.apriori.pages.login;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.login.LoginService;
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.home.CIConnectHome;
-import com.apriori.utils.login.LoginService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.By;

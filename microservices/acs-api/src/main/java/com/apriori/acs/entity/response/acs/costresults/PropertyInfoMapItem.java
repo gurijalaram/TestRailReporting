@@ -8,4 +8,5 @@ public class PropertyInfoMapItem {
     private String unitTypeName;
     private String supportedSerializedType;
     private String displayName;
+    private String category;
 }

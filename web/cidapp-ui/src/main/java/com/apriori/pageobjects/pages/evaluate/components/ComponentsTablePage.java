@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.PageUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -17,7 +18,6 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;

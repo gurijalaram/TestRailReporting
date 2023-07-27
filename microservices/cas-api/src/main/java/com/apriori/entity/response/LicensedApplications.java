@@ -1,6 +1,6 @@
 package com.apriori.entity.response;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

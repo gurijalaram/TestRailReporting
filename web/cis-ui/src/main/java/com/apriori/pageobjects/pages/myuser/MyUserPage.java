@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.pages.myuser;
 
+import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.settings.UserPreferencePage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

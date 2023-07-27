@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.partsandassembliesdetails;
 
+import com.apriori.EagerPageComponent;
 import com.apriori.pageobjects.common.PartsAndAssemblyDetailsController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

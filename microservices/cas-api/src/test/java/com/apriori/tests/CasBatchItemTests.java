@@ -1,12 +1,12 @@
 package com.apriori.tests;
 
-import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItems;
+import com.apriori.entity.response.Customer;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -23,11 +23,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class CasBatchItemTests {
+    private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CasTestUtil casTestUtil = new CasTestUtil();
 
     @Before
     public void getToken() {

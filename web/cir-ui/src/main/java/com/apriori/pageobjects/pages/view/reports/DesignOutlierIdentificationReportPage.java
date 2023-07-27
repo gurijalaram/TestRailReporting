@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.view.reports;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

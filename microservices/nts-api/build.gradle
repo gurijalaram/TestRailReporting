@@ -16,6 +16,7 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':serialization-util')
     implementation 'org.apache.pdfbox:pdfbox:2.0.1'
     implementation 'org.apache.poi:poi:5.2.2'
     implementation 'org.apache.poi:poi-ooxml:5.2.2'

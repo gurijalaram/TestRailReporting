@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
@@ -10,12 +11,10 @@ import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

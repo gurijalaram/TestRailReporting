@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.EagerPageComponent;
 
 import com.utils.CisColumnsEnum;
 import com.utils.CisSortOrderEnum;

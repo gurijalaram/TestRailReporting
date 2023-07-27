@@ -1,9 +1,9 @@
 package com.apriori.newcustomer;
 
 import com.apriori.common.ModalUserList;
+import com.apriori.components.SourceListComponent;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -45,6 +45,19 @@ public class InfrastructurePage extends CustomerWorkspacePage {
         modalUserList = new ModalUserList(driver);
     }
 
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver   - WebDriver
+     * @param customer - Customer ID
+     * @return InfrastructurePage
+     */
+    public static InfrastructurePage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/infrastructure";
+        driver.navigate().to(String.format(url, customer));
+        return new InfrastructurePage(driver);
+    }
+
     @Override
     protected void load() {
 
@@ -73,6 +86,7 @@ public class InfrastructurePage extends CustomerWorkspacePage {
 
     /**
      * Select the application
+     *
      * @param application - the name
      * @return current page object
      */
@@ -84,25 +98,13 @@ public class InfrastructurePage extends CustomerWorkspacePage {
 
     /**
      * Get the data for each field
+     *
      * @param field - the field
      * @return string
      */
     public String getApplicationDetails(String field) {
         By fieldName = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::div[@class='py-2 ']", field));
         return getPageUtils().waitForElementToAppear(fieldName).getText();
-    }
-
-    /**
-     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
-     *
-     * @param driver - WebDriver
-     * @param customer - Customer ID
-     * @return InfrastructurePage
-     */
-    public static InfrastructurePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("cas.ui_url") + "customers/%s/infrastructure";
-        driver.navigate().to(String.format(url, customer));
-        return new InfrastructurePage(driver);
     }
 
     /**

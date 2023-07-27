@@ -1,5 +1,6 @@
 package com.apriori.qms.tests;
 
+import com.apriori.DateFormattingUtils;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsProjectResources;
@@ -12,7 +13,6 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectNotificationR
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.utils.DateFormattingUtils;
 import com.apriori.utils.DateUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -49,9 +49,6 @@ public class QmsProjectsFilteredTest extends TestUtil {
     private static ScenarioItem scenarioItemCompleted;
     private static ScenarioItem scenarioItemPurchased;
     private static ScenarioItem scenarioItemSentQuotation;
-    private static String newOwner;
-    private static String newUserIdentityFirst;
-    private static String newUserIdentitySecond;
     private static String newOwnerIdentity;
     private static UserCredentials firstUser;
     private static String firstUserIdentity;
@@ -273,7 +270,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     @TestRail(testCaseId = {"24083"})
     @Description("Search by Name[CN] + Owner[NI]")
     public void getFilteredProjectsByNameCNOwnerNI() {
-        String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[NI]," + newOwner};
+        String[] params = {"pageNumber,1", "name[CN]," + projectName, "owner[NI]," + newOwnerIdentity};
         BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
         softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
@@ -694,7 +691,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
-                .allMatch(i -> i.getName().contains("a"))).isTrue();
+                .allMatch(i -> i.getName().toLowerCase().contains("a"))).isTrue();
         }
 
         params[1] = "name[CN],00";
@@ -703,7 +700,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
-                .allMatch(i -> i.getName().contains("00"))).isTrue();
+                .allMatch(i -> i.getName().toLowerCase().contains("00"))).isTrue();
         }
     }
 }

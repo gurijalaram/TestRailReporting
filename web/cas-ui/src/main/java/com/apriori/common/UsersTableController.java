@@ -1,10 +1,10 @@
 package com.apriori.common;
 
+import com.apriori.PageUtils;
+import com.apriori.components.SourceListComponent;
+import com.apriori.components.TableComponent;
+import com.apriori.components.TableHeaderComponent;
 import com.apriori.utils.Obligation;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
-import com.apriori.utils.web.components.TableHeaderComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;

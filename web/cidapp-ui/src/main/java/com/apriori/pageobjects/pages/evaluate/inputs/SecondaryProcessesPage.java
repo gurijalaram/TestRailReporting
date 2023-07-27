@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

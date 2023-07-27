@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.logout;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminHeader;
-import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
