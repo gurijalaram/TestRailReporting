@@ -1,0 +1,24 @@
+{
+  "type": "array",
+  "items": [
+    {
+      "type": "object",
+      "properties": {
+        "componentIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "iterationIdentity": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "componentIdentity",
+        "scenarioIdentity",
+        "iterationIdentity"
+      ]
+    }
+  ]
+}
