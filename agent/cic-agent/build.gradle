@@ -4,6 +4,7 @@ repositories {
 
 dependencies {
     implementation project(':shared-util')
+    implementation project(':web-app-util')
     implementation project(':db')
     implementation project(':microservices:cic-api')
     implementation project(':web:ciconnect-ui')
