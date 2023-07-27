@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ListNameEnum;
 import com.apriori.enums.OperationEnum;

@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
+import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
@@ -67,7 +68,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7249})
     @Description("Verify report is available by search - Casting DTC Details Report")
     public void testReportAvailabilityBySearch() {
@@ -85,7 +86,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7655})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Details Report")
     public void testRollupDropdown() {
@@ -97,7 +98,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7344})
     @Description("Verify apply button functionality - Casting DTC Details Report")
     public void testApplyButton() {
@@ -110,7 +111,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7349})
     @Description("Verify cancel button functionality - Casting DTC Details Report")
     public void testCancelButton() {
@@ -119,7 +120,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7351})
     @Description("Verify reset button functionality - Casting DTC Details Report")
     public void testResetButton() {
@@ -152,13 +153,13 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7429})
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Details Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName()
+            ReportNamesEnum.CASTING_DTC_DETAILS.getReportName()
         );
     }
 
@@ -182,14 +183,14 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
 
         genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario()
+            .openDesignGuidance();
 
         String holeIssueCidValue = guidanceIssuesPage.getDtcIssueCount("Hole");
 
@@ -210,7 +211,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7412})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
@@ -236,7 +237,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7392})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
@@ -255,8 +256,8 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
-                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.CASTING_DTC.getExportSetName()
+            ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+            ExportSetEnum.CASTING_DTC.getExportSetName()
         );
     }
 
@@ -274,7 +275,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7513})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
@@ -300,7 +301,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7657})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
@@ -321,7 +322,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(SortOrderItemsEnum.JEEP.getSortOrderItemName());
         assertValues.add(SortOrderItemsEnum.GEAR_HOUSING.getSortOrderItemName());
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(), false, assertValues);
     }
 
     @Test
@@ -336,7 +337,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(Constants.OTHER_SCENARIO_NAME);
         assertValues.add(Constants.DEFAULT_SCENARIO_NAME);
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(), false, assertValues);
     }
 
     @Test
@@ -349,11 +350,11 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(SortOrderItemsEnum.OBSTRUCTED.getSortOrderItemName());
         assertValues.add(SortOrderItemsEnum.B2.getSortOrderItemName());
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(), false, assertValues);
     }
 
     @Test
-    @Category( {ReportsTest.class, OnPremTest.class})
+    @Category({ReportsTest.class, OnPremTest.class})
     @TestRail(id = {7632})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
@@ -364,7 +365,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(Constants.DEFAULT_SCENARIO_NAME);
         assertValues.add(Constants.OTHER_SCENARIO_NAME);
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.TOLERANCES.getSortOrderEnum(), true, assertValues);
+            SortOrderEnum.TOLERANCES.getSortOrderEnum(), true, assertValues);
     }
 
     @Test
@@ -379,7 +380,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(Constants.DEFAULT_SCENARIO_NAME);
         assertValues.add(Constants.OTHER_SCENARIO_NAME);
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(), true, assertValues);
+            SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(), true, assertValues);
     }
 
     @Test
@@ -392,7 +393,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(SortOrderItemsEnum.DU_TWO.getSortOrderItemName());
         assertValues.add(SortOrderItemsEnum.DU_THREE.getSortOrderItemName());
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(), false, assertValues);
     }
 
     @Test
@@ -405,7 +406,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(SortOrderItemsEnum.E3.getSortOrderItemName());
         assertValues.add(SortOrderItemsEnum.MLDES.getSortOrderItemName());
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(), false, assertValues);
     }
 
     @Test
@@ -418,7 +419,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
         assertValues.add(SortOrderItemsEnum.BARCO.getSortOrderItemName());
         assertValues.add(SortOrderItemsEnum.BARCO_THREE.getSortOrderItemName());
         commonReportTests.castingDtcDetailsSortOrderTest(
-                SortOrderEnum.DTC_RANK.getSortOrderEnum(), false, assertValues);
+            SortOrderEnum.DTC_RANK.getSortOrderEnum(), false, assertValues);
     }
 
     @Test

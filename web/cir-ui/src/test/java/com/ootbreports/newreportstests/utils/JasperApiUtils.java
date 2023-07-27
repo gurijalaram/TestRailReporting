@@ -4,6 +4,7 @@ import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
+import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
 import com.google.common.base.Stopwatch;
@@ -96,7 +97,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -117,7 +118,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
