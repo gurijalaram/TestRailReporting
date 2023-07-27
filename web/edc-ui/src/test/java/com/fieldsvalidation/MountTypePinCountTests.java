@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 public class MountTypePinCountTests extends TestBaseUI {
 
@@ -35,16 +36,16 @@ public class MountTypePinCountTests extends TestBaseUI {
 
     @After
     public void cleanUp() {
-        BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(getDriver().getCurrentUrl()));
+        BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }
 
     @Test
     @Ignore("this feature is not on qa-test yet")
-    @TestRail(id = 15407")
-        @Description("Verify that three variants radio buttons for Mount Type field exists")
-        public void mountTypeRadioBtnTest(){
+    @TestRail(id = 15407)
+    @Description("Verify that three variants radio buttons for Mount Type field exists")
+    public void mountTypeRadioBtnTest() {
         currentUser = UserUtil.getUser();
-        String fileName="Test BOM 5.csv";
+        String fileName = "Test BOM 5.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
@@ -63,7 +64,7 @@ public class MountTypePinCountTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {3223", "3217})
+    @TestRail(id = {3223, 3217})
     @Description("Verify Mount Type Accepted Values >=5 Characters ,Verify Pin Count and Mount Type are required fields")
     public void mountTypePinCountAreRequiredTest() {
         String testMountTypeData = generateStringUtil.getRandomString();
@@ -86,21 +87,21 @@ public class MountTypePinCountTests extends TestBaseUI {
         softAssertions.assertThat(editBomPage.isSaveButtonDisabledDisplayed()).isTrue();
 
         editBomPage.enterMountTypeOldVer(testMountTypeData)
-        .enterPinCount(testPinCountData);
+            .enterPinCount(testPinCountData);
 
         softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isTrue();
         softAssertions.assertAll();
-        }
+    }
 
-        @Test
-        @TestRail(id = 3222")
-        @Description("Verify Pin Count only accepts integer values")
-        public void pinCountNeedsToBeIntTest(){
-        String testMountTypeData=generateStringUtil.getRandomString();
-        String testPinCountData=generateStringUtil.getRandomNumbers();
+    @Test
+    @TestRail(id = 3222)
+    @Description("Verify Pin Count only accepts integer values")
+    public void pinCountNeedsToBeIntTest() {
+        String testMountTypeData = generateStringUtil.getRandomString();
+        String testPinCountData = generateStringUtil.getRandomNumbers();
 
         currentUser = UserUtil.getUser();
-        String fileName="Test BOM 5.csv";
+        String fileName = "Test BOM 5.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);

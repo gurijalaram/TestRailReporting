@@ -26,7 +26,7 @@ public class HelpTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {2272})
+    @TestRail(id = 2272)
     @Description("Login page Help link takes user to Zendesk login page")
     public void onlineHelpTest() {
         currentUser = UserUtil.getUser();
@@ -39,9 +39,9 @@ public class HelpTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = 8941")
-        @Description("User can navigate to About Us pager")
-        public void testAboutUs(){
+    @TestRail(id = 8941)
+    @Description("User can navigate to About Us pager")
+    public void testAboutUs() {
         currentUser = UserUtil.getUser();
 
         loginPage = new EdcAppLoginPage(driver);
