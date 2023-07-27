@@ -22,7 +22,6 @@ import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -43,12 +42,12 @@ import utils.QmsApiTestUtils;
 import java.util.Collections;
 
 public class QmsScenarioDiscussionTest extends TestUtil {
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions = new SoftAssertions();
     private static BidPackageResponse bidPackageResponse;
     private static ScenarioDiscussionResponse scenarioDiscussionResponse;
     private static DiscussionCommentResponse discussionCommentResponse;
     private static ScenarioItem scenarioItem;
-    private static final UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeClass
     public static void beforeClass() {
@@ -263,18 +262,9 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(testCaseId = {"22257"})
     @Description("Verify that by default, User will GET 300 discussion (PageSize)")
     public void verifyGetDiscussionsPageSizeDefault() {
-        QueryParams queryParams = new QueryParams();
-        queryParams.put("componentIdentity[EQ]", scenarioItem.getComponentIdentity());
-        queryParams.put("scenarioIdentity[EQ]", scenarioItem.getScenarioIdentity());
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
-            .queryParams(queryParams)
-            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ScenarioDiscussionsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
-
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(300);
+        String[] params = {"componentIdentity[EQ]," + scenarioItem.getComponentIdentity(), "scenarioIdentity[EQ]," + scenarioItem.getScenarioIdentity()};
+        ScenarioDiscussionsResponse discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(discussionsResponse.getPageSize()).isEqualTo(300);
     }
 
     @Test

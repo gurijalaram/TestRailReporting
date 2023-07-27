@@ -19,6 +19,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -549,8 +550,85 @@ public class BidPackageProjectUserTest extends TestUtil {
             //Verify Admin User is able to delete PU that are Assigned to discussions
             List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
             userIdentityList.add(BidPackageProjectUserParameters.builder().identity(projectSecondUserIdentity).build());
-            QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, bppResponse.getBidPackageIdentity(), bppResponse.getIdentity(), currentUser);
+            deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, bppResponse.getBidPackageIdentity(), bppResponse.getIdentity(), currentUser);
+            softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+                    .anyMatch(i -> i.getIdentity()
+                        .equals(projectSecondUserIdentity)))
+                .isTrue();
         }
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"24052"})
+    @Description("Deleting Bulk PU - deletes Participants from discussions")
+    public void deleteBulkProjectUsersWithDiscussions() {
+        for (int d = 0; d < 10; d++) {
+            ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+            softAssertions.assertThat(csdResponse.getStatus()).isEqualTo("ACTIVE");
+        }
+
+        String firstUserEmail = UserUtil.getUser().getEmail();
+        String secondUserEmail = UserUtil.getUser().getEmail();
+        String thirdUserEmail = UserUtil.getUser().getEmail();
+        String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);
+        String secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUserEmail);
+        String thirdUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(thirdUserEmail);
+
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        usersList.add(BidPackageProjectUserParameters.builder().userEmail(firstUserEmail).role("DEFAULT")
+            .build());
+        usersList.add(BidPackageProjectUserParameters.builder().userEmail(secondUserEmail).role("DEFAULT")
+            .build());
+        usersList.add(BidPackageProjectUserParameters.builder().userEmail(thirdUserEmail).role("DEFAULT")
+            .build());
+
+        BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
+            .projectUsers(usersList).build();
+        BidPackageProjectUsersPostResponse bulkProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, currentUser);
+        String firstProjectUserIdentity = bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
+            .filter(pu -> pu.getUserIdentity().equals(firstUserIdentity))
+            .findFirst().map(BidPackageProjectUserResponse::getIdentity).orElse(null);
+        String secondProjectUserIdentity = bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
+            .filter(pu -> pu.getUserIdentity().equals(secondUserIdentity))
+            .findFirst().map(BidPackageProjectUserResponse::getIdentity).orElse(null);
+        String thirdProjectUserIdentity = bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
+            .filter(pu -> pu.getUserIdentity().equals(thirdUserIdentity))
+            .findFirst().map(BidPackageProjectUserResponse::getIdentity).orElse(null);
+
+        String[] params = {"componentIdentity[EQ]," + scenarioItem.getComponentIdentity(), "scenarioIdentity[EQ]," + scenarioItem.getScenarioIdentity(), "pageNumber,1"};
+        ScenarioDiscussionsResponse discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(discussionsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(discussionsResponse.getItems().stream()
+                    .allMatch(d -> d.getParticipants().stream()
+                        .anyMatch(p -> p.getUserIdentity().equals(firstUserIdentity) ||
+                            p.getUserIdentity().equals(secondUserIdentity) ||
+                            p.getUserIdentity().equals(thirdUserIdentity))))
+                .isTrue();
+        }
+
+        List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
+        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(firstProjectUserIdentity).build());
+        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(secondProjectUserIdentity).build());
+        userIdentityList.add(BidPackageProjectUserParameters.builder().identity(thirdProjectUserIdentity).build());
+        BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(userIdentityList, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
+        softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
+                .anyMatch(i -> i.getIdentity().equals(firstProjectUserIdentity) ||
+                    i.getIdentity().equals(secondProjectUserIdentity) ||
+                    i.getIdentity().equals(thirdProjectUserIdentity)))
+            .isTrue();
+
+        discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(discussionsResponse.getItems().size()).isGreaterThan(0);
+        if (softAssertions.wasSuccess()) {
+            softAssertions.assertThat(discussionsResponse.getItems().stream()
+                    .allMatch(d -> d.getParticipants().stream()
+                        .noneMatch(p -> p.getUserIdentity().equals(firstUserIdentity) &&
+                            p.getUserIdentity().equals(secondUserIdentity) &&
+                            p.getUserIdentity().equals(thirdUserIdentity))))
+                .isTrue();
+
+        }
     }
 }

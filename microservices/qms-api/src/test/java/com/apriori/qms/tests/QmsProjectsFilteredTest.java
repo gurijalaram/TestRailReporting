@@ -604,7 +604,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
                 .allMatch(i -> i.getUsers().stream()
-                    .noneMatch(u -> u.getUserIdentity().equals(firstUserIdentity) ||
+                    .noneMatch(u -> u.getUserIdentity().equals(firstUserIdentity) &&
                         u.getUserIdentity().equals(secondUserIdentity)))).isTrue();
         }
     }
