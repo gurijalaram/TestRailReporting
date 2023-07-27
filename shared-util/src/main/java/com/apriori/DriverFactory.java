@@ -32,33 +32,6 @@ public class DriverFactory {
         this.driver = createInstance();
     }
 
-    @Getter
-    protected static TestType type = setTestType(System.getProperty("type"));
-
-    private static Browser setBrowser(String browser) {
-        return browser == null || browser.isEmpty() ? Browser.CHROME : Browser.valueOf(browser.toUpperCase());
-    }
-
-    private static TestType setTestType(String testType) {
-        if (testType == null || StringUtils.isEmpty(testType) || testType.equalsIgnoreCase("UI")) {
-            return UI;
-        }
-        switch (testType.toUpperCase()) {
-            case "UI":
-                type = UI;
-                break;
-            case "EXPORT":
-                type = EXPORT;
-                break;
-            case "API":
-                type = API;
-                break;
-            default:
-                throw new ArgumentNotValidException(testType);
-        }
-        return type;
-    }
-
     public WebDriver createInstance() {
 
         if (mode == null || StringUtils.isEmpty(mode) || mode.equalsIgnoreCase("QA_LOCAL")) {
@@ -89,5 +62,30 @@ public class DriverFactory {
         driver = new RemoteDriverFactory().createInstance(this.browser, ("http://").concat(host).concat(":4444"));
     }
 
+    @Getter
+    protected static TestType type = setTestType(System.getProperty("type"));
 
+    private static Browser setBrowser(String browser) {
+        return browser == null || browser.isEmpty() ? Browser.CHROME : Browser.valueOf(browser.toUpperCase());
+    }
+
+    private static TestType setTestType(String testType) {
+        if (testType == null || StringUtils.isEmpty(testType) || testType.equalsIgnoreCase("UI")) {
+            return UI;
+        }
+        switch (testType.toUpperCase()) {
+            case "UI":
+                type = UI;
+                break;
+            case "EXPORT":
+                type = EXPORT;
+                break;
+            case "API":
+                type = API;
+                break;
+            default:
+                throw new ArgumentNotValidException(testType);
+        }
+        return type;
+    }
 }
