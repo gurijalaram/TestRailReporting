@@ -1,12 +1,14 @@
 package com.evaluate.dtc;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
+import static com.apriori.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
@@ -14,8 +16,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
@@ -147,7 +147,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6462", "6415", "6416})
+    @TestRail(id = {6462,6415,6416})
     @Description("Validate DFM Risk - Medium Plastic Moulding")
     public void plasticMouldedMediumDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -180,7 +180,7 @@ public class DFMRiskTests extends TestBaseUI {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(id = {6484", "6485})
+    @TestRail(id = {6484,6485})
     @Description("Validate when switch PG from a group with dfm risk to a group without that the risk is removed")
     public void noRiskTransferDie() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -211,7 +211,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6472", "6824", "6473})
+    @TestRail(id = {6472,6824,6473})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
         final String fileName = "1379344.stp";
@@ -257,7 +257,7 @@ public class DFMRiskTests extends TestBaseUI {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(id = {6480", "6481})
+    @TestRail(id = {6480,6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
         final String file = "DTCPlasticIssues.SLDPRT";
@@ -301,7 +301,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6474", "6475})
+    @TestRail(id = {6474,6475})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
         final String file = "bracketdfm.SLDPRT";
@@ -345,7 +345,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6476", "5439", "6477})
+    @TestRail(id = {6476,5439,6477})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
         final String file = "manifold2.prt.1";
@@ -388,7 +388,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6478", "6479", "6471})
+    @TestRail(id = {6478,6479,6471})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
         final String file = "SandCastBox.SLDPRT";

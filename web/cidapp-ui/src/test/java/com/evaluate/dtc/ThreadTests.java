@@ -71,7 +71,7 @@ public class ThreadTests extends TestBaseUI {
 
     /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(id = {28", "1631"})
+    @TestRail(id = {28,1631"})
     @Description("C28 Test to check thread length persist")
     public void editThread() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;

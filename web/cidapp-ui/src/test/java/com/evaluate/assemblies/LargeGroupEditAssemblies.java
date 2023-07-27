@@ -1,6 +1,6 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.enums.ProcessGroupEnum.ASSEMBLY;
 import static com.utils.PartNamesEnum.CENTRE_BOLT;
 import static com.utils.PartNamesEnum.CENTRE_WASHER;
 import static com.utils.PartNamesEnum.DISPLAY;
@@ -44,11 +44,11 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
 
     private static String scenarioName;
     private static String scenarioName2;
-    private CidAppLoginPage loginPage;
-    private ComponentsTablePage componentsTablePage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private CidAppLoginPage loginPage;
+    private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
@@ -80,7 +80,7 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {10883", "10884", "10885", "10894", "11140})
+    @TestRail(id = {10883, 10884, 10885, 10894, 11140})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
         loginPage = new CidAppLoginPage(driver);

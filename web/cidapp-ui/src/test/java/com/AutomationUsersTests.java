@@ -2,14 +2,14 @@ package com;
 
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.UnitsEnum;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.LengthEnum;
-import com.apriori.utils.enums.MassEnum;
-import com.apriori.utils.enums.TimeEnum;
-import com.apriori.utils.enums.UnitsEnum;
 
+import com.utils.CurrencyEnum;
+import com.utils.DecimalPlaceEnum;
+import com.utils.LengthEnum;
+import com.utils.MassEnum;
+import com.utils.TimeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;

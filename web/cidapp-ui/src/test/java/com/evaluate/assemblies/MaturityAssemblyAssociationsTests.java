@@ -7,6 +7,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.PreferencesEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -16,7 +17,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.PreferencesEnum;
 
 import com.utils.ColumnsEnum;
 import com.utils.StatusIconEnum;
@@ -133,7 +133,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(id = {21671", "21687", "21688})
+    @TestRail(id = {21671, 21687, 21688})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with low and medium maturity")
     public void testMaturityPresetPrivateLowAndMedium() {
 
@@ -216,7 +216,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(id = {21689", "21690", "21691})
+    @TestRail(id = {21689, 21690, 21691})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with high maturity and cost complete status")
     public void testMaturityPresetPrivateHighComplete() {
 
@@ -304,7 +304,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(id = {21692", "21693", "21694", "21695})
+    @TestRail(id = {21692, 21693, 21694, 21695})
     @Description("Validate, with Prefer Maturity strategy, public sub-components with same scenario name and low then medium maturity")
     public void testMaturityPresetPublicWithSameNameLowAndMedium() {
 
@@ -387,7 +387,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
 
     @Test
     @Category(ExtendedRegression.class)
-    @TestRail(id = {21696", "21697", "21698})
+    @TestRail(id = {21696, 21697, 21698})
     @Description("Validate, with Prefer Maturity strategy, public sub-components with high maturity and cost complete status")
     public void testMaturityPresetPublicHighComplete() {
 

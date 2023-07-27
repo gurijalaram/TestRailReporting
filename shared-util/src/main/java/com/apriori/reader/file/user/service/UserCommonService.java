@@ -42,7 +42,7 @@ public class UserCommonService {
         return UserCredentials.init(tokenEmail, System.getProperty("password"));
     }
 
-    static List<UserCredentials> initUsers() {
+    public static List<UserCredentials> initUsers() {
         List<String> users;
         String csvFileName = PropertiesContext.get("${env}.users_csv_file");
         users = InitFileData.initRows(csvFileName);

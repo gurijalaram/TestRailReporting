@@ -1,6 +1,6 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.enums.ProcessGroupEnum.ASSEMBLY;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
@@ -25,11 +25,11 @@ public class LargeGroupEditAssemblies2 extends TestBaseUI {
 
     private static String scenarioName;
     private static String scenarioName2;
-    private CidAppLoginPage loginPage;
-    private ComponentsTablePage componentsTablePage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private CidAppLoginPage loginPage;
+    private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Before
@@ -59,7 +59,7 @@ public class LargeGroupEditAssemblies2 extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {10886", "10887", "10888})
+    @TestRail(id = {10886, 10887, 10888})
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {
         loginPage = new CidAppLoginPage(driver);

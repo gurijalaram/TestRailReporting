@@ -6,6 +6,8 @@ import com.apriori.reader.file.user.service.UserSecurityService;
 import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 /**
  * Get user functionality.
  * Has reference to {@link CommonConstants}.properties file
@@ -61,6 +63,14 @@ public class UserUtil {
             .generateCloudContext();
         logInfo(user);
         return user;
+    }
+
+    /**
+     * Gets all users from current csv
+     * @return List<UserCredentials>
+     */
+    public static List<UserCredentials> getUsers() {
+        return UserCommonService.initUsers();
     }
 
     /**

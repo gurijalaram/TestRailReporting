@@ -1,7 +1,7 @@
 package com.settings;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
+import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -20,7 +21,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.enums.MaterialNameEnum;
 
 import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DecimalPlaceTests extends TestBaseUI {
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
@@ -43,7 +44,6 @@ public class DecimalPlaceTests extends TestBaseUI {
     private CostDetailsPage costDetailsPage;
     private PreviewPage previewPage;
     private ExplorePage explorePage;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public DecimalPlaceTests() {
@@ -57,7 +57,7 @@ public class DecimalPlaceTests extends TestBaseUI {
         }
     }
 
-    @Category({SmokeTests.class})
+    @Category( {SmokeTests.class})
     @Test
     @TestRail(id = {5287, 5288, 5291, 5297, 5290, 5295, 6633})
     @Description("User can change the default Displayed Decimal Places")
@@ -71,17 +71,17 @@ public class DecimalPlaceTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .openSettings()
-                .selectDecimalPlaces(DecimalPlaceEnum.SIX)
-                .submit(ExplorePage.class)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .selectDigitalFactory(APRIORI_USA)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .openSettings()
+            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -100,10 +100,9 @@ public class DecimalPlaceTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 6 decimal places").isEqualTo(6);
 
-
         evaluatePage.openSettings()
-                .selectDecimalPlaces(DecimalPlaceEnum.ONE)
-                .submit(EvaluatePage.class);
+            .selectDecimalPlaces(DecimalPlaceEnum.ONE)
+            .submit(EvaluatePage.class);
 
         softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 1 decimal place").isEqualTo(1);
@@ -131,9 +130,8 @@ public class DecimalPlaceTests extends TestBaseUI {
         softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Total Capital Investment")).split("\\.")[1].length())
             .as("Total Capital Investment shown to 1 decimal place").isEqualTo(1);
 
-
         costDetailsPage = evaluatePage.openCostDetails()
-                .expandDropDown("Piece Part Cost, Fully Burdened Cost");
+            .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
         softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost")).split("\\.")[1].length())
             .as("Total Variable Cost shown to 1 decimal place").isEqualTo(1);
@@ -147,8 +145,8 @@ public class DecimalPlaceTests extends TestBaseUI {
             .as("Piece Part Cost shown to 1 decimal place").isEqualTo(1);
 
         evaluatePage.openSettings()
-                .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
-                .submit(EvaluatePage.class);
+            .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
+            .submit(EvaluatePage.class);
 
         softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 4 decimal places").isEqualTo(4);
@@ -177,7 +175,7 @@ public class DecimalPlaceTests extends TestBaseUI {
             .as("Total Capital Investment shown to 4 decimal places").isEqualTo(4);
 
         costDetailsPage = evaluatePage.openCostDetails()
-                .expandDropDown("Piece Part Cost, Fully Burdened Cost");
+            .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
         softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost")).split("\\.")[1].length())
             .as("Total Variable Cost shown to 4 decimal places").isEqualTo(4);
@@ -193,8 +191,8 @@ public class DecimalPlaceTests extends TestBaseUI {
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-                .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
-                .submit(EvaluatePage.class);
+            .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
+            .submit(EvaluatePage.class);
 
         softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
@@ -212,7 +210,7 @@ public class DecimalPlaceTests extends TestBaseUI {
             .as("Total Capital Investment shown to 5 decimal places").isEqualTo(5);
 
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
-                .costScenario();
+            .costScenario();
 
         softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
             .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
@@ -313,11 +311,14 @@ public class DecimalPlaceTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Cost").split("\\.")[1].length())
             .as("Verify Total Cost displayed to 6 decimal places").isEqualTo(6);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Investments").split("\\.")[1].length())
-            .as("Verify Total Investments displayed to 6 decimal places").isEqualTo(6);;
+            .as("Verify Total Investments displayed to 6 decimal places").isEqualTo(6);
+        ;
         softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
-            .as("Verify Finish Mass displayed to 6 decimal places").isEqualTo(6);;
+            .as("Verify Finish Mass displayed to 6 decimal places").isEqualTo(6);
+        ;
         softAssertions.assertThat(evaluatePage.getMaterialResultText("Assembly Time").split("\\.")[1].length())
-            .as("Verify Assembly Time displayed to 6 decimal places").isEqualTo(6);;
+            .as("Verify Assembly Time displayed to 6 decimal places").isEqualTo(6);
+        ;
 
         softAssertions.assertAll();
     }

@@ -1,5 +1,10 @@
 package com.evaluate;
 
+import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.enums.ProcessGroupEnum.STOCK_MACHINING;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
@@ -138,7 +143,7 @@ public class NewScenarioNameTests extends TestBaseUI {
     public void usingAnExistingScenarioName() {
 
         String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, componentName + ".CATPart");
+        resourceFile = FileResourceUtil.getCloudFile(PLASTIC_MOLDING, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
