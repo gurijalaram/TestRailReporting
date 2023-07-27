@@ -540,13 +540,11 @@ public class BidPackageProjectUserTest extends TestUtil {
     @TestRail(testCaseId = {"24052"})
     @Description("Deleting Bulk PU - deletes Participants from discussions")
     public void deleteBulkProjectUsersWithDiscussions() {
-        //Create 10 discussions to the project
         for (int d = 0; d < 10; d++) {
             ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
             softAssertions.assertThat(csdResponse.getStatus()).isEqualTo("ACTIVE");
         }
 
-        //Add 3 Users to the project
         String firstUserEmail = UserUtil.getUser().getEmail();
         String secondUserEmail = UserUtil.getUser().getEmail();
         String thirdUserEmail = UserUtil.getUser().getEmail();
@@ -575,7 +573,6 @@ public class BidPackageProjectUserTest extends TestUtil {
             .filter(pu -> pu.getUserIdentity().equals(thirdUserIdentity))
             .findFirst().map(BidPackageProjectUserResponse::getIdentity).orElse(null);
 
-        //Validate that added bulk PU - adds Participants to Discussions by getting the list of discussions related to this project item
         String[] params = {"componentIdentity[EQ]," + scenarioItem.getComponentIdentity(), "scenarioIdentity[EQ]," + scenarioItem.getScenarioIdentity(), "pageNumber,1"};
         ScenarioDiscussionsResponse discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(discussionsResponse.getItems().size()).isGreaterThan(0);
@@ -588,7 +585,6 @@ public class BidPackageProjectUserTest extends TestUtil {
                 .isTrue();
         }
 
-        //Remove 3 users by using Project User Identities
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(firstProjectUserIdentity).build());
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(secondProjectUserIdentity).build());
@@ -600,7 +596,6 @@ public class BidPackageProjectUserTest extends TestUtil {
                     i.getIdentity().equals(thirdProjectUserIdentity)))
             .isTrue();
 
-        //Validate that deleted bulk PU - deletes Participants from Discussions by getting the list of discussions related to this project item
         discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(discussionsResponse.getItems().size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
