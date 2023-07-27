@@ -452,4 +452,71 @@ public class ProjectsDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"24448","26135","26136","26137"})
+    @Description("Verify that user can remove parts & assemblies after a project creation")
+    public void testRemovePartsAndAssembliesAfterCreation() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        currentUser = UserUtil.getUser().setEmail("qa-automation-40@apriori.com");
+        projectParticipant = UserUtil.getUser().getEmail();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        loginPage = new CisLoginPage(driver);
+        projectsDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostAssembly(assemblyName,
+                        assemblyExtension,
+                        assemblyProcessGroup,
+                        subComponentNames,
+                        subComponentExtension,
+                        subComponentProcessGroup,
+                        scenarioName,
+                        currentUser)
+                .clickProjects()
+                .clickOnCreateNewProject()
+                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,assemblyName, projectParticipant, "2028","15","Details");
+
+        projectsDetailsPage.clickDetailsPageTab("Parts & Assemblies");
+
+        projectsDetailsPage.checkAllComponents();
+
+        softAssertions.assertThat(projectsDetailsPage.getCheckAllStatus()).contains("Mui-checked");
+        softAssertions.assertThat(projectsDetailsPage.getStatusOfRemoveOption()).contains("Mui-disabled");
+
+        projectsDetailsPage.checkAllComponents();
+
+        softAssertions.assertThat(projectsDetailsPage.isAddPartsOptionDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickOnAddParts()
+                .selectAPart(scenarioName,subComponentNames.get(0))
+                .selectAPart(scenarioName,subComponentNames.get(1))
+                .clickAdd();
+
+        softAssertions.assertThat(projectsDetailsPage.getListOfScenarios(subComponentNames.get(0), scenarioName)).isEqualTo(1);
+
+        projectsDetailsPage.selectAPart(scenarioName,subComponentNames.get(0));
+
+        softAssertions.assertThat(projectsDetailsPage.isRemoveSelectedPartOptionDisplayed()).isEqualTo(true);
+
+        projectsDetailsPage.clickRemoveOption();
+
+        softAssertions.assertThat(projectsDetailsPage.isRemovePartConfirmationModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.getRemovePartConfirmationMessage()).contains("Are you sure you want to remove selected part from the project?");
+
+        projectsDetailsPage.clickOnRemove();
+
+        softAssertions.assertThat(projectsDetailsPage.isShowHideOptionDisplayedAfterRemoval()).isEqualTo(true);
+        softAssertions.assertThat(projectsDetailsPage.getListOfScenarios(subComponentNames.get(0), scenarioName)).isEqualTo(0);
+
+        softAssertions.assertAll();
+    }
 }
