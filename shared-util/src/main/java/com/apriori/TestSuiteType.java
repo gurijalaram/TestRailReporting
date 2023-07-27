@@ -3,7 +3,11 @@ package com.apriori;
 public enum TestSuiteType {
     SMOKE("SMOKE"),
     REGRESSION("REGRESSION"),
-    EXTENDED_REGRESSION("EXTENDED_REGRESSION");
+    EXTENDED_REGRESSION("EXTENDED_REGRESSION"),
+    SANITY("SANITY"),
+    CUSTOMER("CUSTOMER"),
+    SYSTEM_CONFIGURATION("SYSTEM_CONFIGURATION"),
+    USERS("USERS");
 
     private final String value;
 
@@ -19,5 +23,9 @@ public enum TestSuiteType {
         public static final String SMOKE = "SMOKE";
         public static final String REGRESSION = "REGRESSION";
         public static final String EXTENDED_REGRESSION = "EXTENDED_REGRESSION";
+        public static final String SANITY = "SANITY";
+        public static final String CUSTOMER = "CUSTOMER";
+        public static final String SYSTEM_CONFIGURATION = "SYSTEM_CONFIGURATION";
+        public static final String USERS = "USERS";
     }
 }

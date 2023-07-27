@@ -1,4 +1,4 @@
-package com.customer;
+package com.apriori.customer;
 
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;

@@ -1,4 +1,4 @@
-package com.customer;
+package com.apriori.customer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -1,4 +1,4 @@
-package com.customer.systemconfiguration;
+package com.apriori.customer.systemconfiguration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -11,7 +11,6 @@ import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableHeaderComponent;
-import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;

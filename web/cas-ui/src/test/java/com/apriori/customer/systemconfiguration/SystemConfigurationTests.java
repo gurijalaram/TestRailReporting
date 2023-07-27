@@ -1,4 +1,4 @@
-package com.customer.systemconfiguration;
+package com.apriori.customer.systemconfiguration;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,7 +9,6 @@ import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Sites;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;

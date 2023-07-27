@@ -1,4 +1,4 @@
-package com.customer.users;
+package com.apriori.customer.users;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
@@ -7,7 +7,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
-import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;

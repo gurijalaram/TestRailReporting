@@ -1,4 +1,4 @@
-package com.customer;
+package com.apriori.customer;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
@@ -8,7 +8,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
-import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.StaffAccessHistoryPage;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.customer.users.UsersListPage;

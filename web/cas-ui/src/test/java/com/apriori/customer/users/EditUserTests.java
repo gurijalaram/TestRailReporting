@@ -1,4 +1,4 @@
-package com.customer.users;
+package com.apriori.customer.users;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;

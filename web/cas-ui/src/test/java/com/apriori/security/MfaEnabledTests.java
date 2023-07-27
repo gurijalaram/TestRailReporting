@@ -1,4 +1,4 @@
-package com.security;
+package com.apriori.security;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
@@ -7,7 +7,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.security.SecurityPage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

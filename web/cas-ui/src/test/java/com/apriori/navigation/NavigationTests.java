@@ -1,4 +1,4 @@
-package com.navigation;
+package com.apriori.navigation;
 
 import com.apriori.TestBaseUI;
 import com.apriori.customer.CustomerWorkspacePage;

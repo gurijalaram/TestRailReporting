@@ -1,4 +1,4 @@
-package com.customer.users;
+package com.apriori.customer.users;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
@@ -11,7 +11,6 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
-import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;

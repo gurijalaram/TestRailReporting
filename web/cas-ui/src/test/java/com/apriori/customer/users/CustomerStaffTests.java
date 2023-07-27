@@ -1,4 +1,4 @@
-package com.customer.users;
+package com.apriori.customer.users;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
@@ -15,7 +15,6 @@ import com.apriori.components.PaginatorComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
-import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;

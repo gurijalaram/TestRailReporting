@@ -1,11 +1,10 @@
-package com.customer;
+package com.apriori.customer;
 
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
-import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;

@@ -1,4 +1,4 @@
-package com.infrastructure;
+package com.apriori.infrastructure;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
