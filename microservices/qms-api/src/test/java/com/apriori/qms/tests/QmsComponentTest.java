@@ -8,10 +8,10 @@ import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qms.controller.QmsComponentResources;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
-import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.entity.response.component.ComponentResponse;
+import com.apriori.qms.entity.response.component.ComponentsAssignedResponse;
+import com.apriori.qms.entity.response.scenario.ScenariosResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -21,32 +21,37 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import utils.QmsApiTestUtils;
 
 public class QmsComponentTest extends TestUtil {
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private static BidPackageResponse bidPackageResponse;
     private static ScenarioItem scenarioItem;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+
+    @BeforeClass
+    public static void beforeClass() {
+        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
+        scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
+        softAssertions.assertAll();
+    }
 
     @Before
     public void beforeTest() {
         softAssertions = new SoftAssertions();
-        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-        bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
-        QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
-        QmsApiTestUtils.createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);
-        ScenarioDiscussionResponse scenarioDiscussionResponse = QmsApiTestUtils.createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
-        QmsApiTestUtils.createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
     @After
     public void afterTest() {
-        QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
         softAssertions.assertAll();
     }
 
@@ -97,14 +102,36 @@ public class QmsComponentTest extends TestUtil {
     @TestRail(id = {22094, 15475})
     @Description("Get component Scenarios Users and Verify avatarColor field is present in User object in Share")
     public void getComponentScenarioUsers() {
+        UserCredentials user = UserUtil.getUser();
+        ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
+            .email(user.getEmail()).build();
+
         ResponseWrapper<ScenarioProjectUserResponse> componentScenariosResponse =
-            QmsComponentResources.getComponentScenarioUsers(userContext,
-                scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity());
+            QmsComponentResources.addComponentScenarioUser(
+                scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(),
+                projectUserParameters, currentUser);
+        softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
+
+        componentScenariosResponse = QmsComponentResources.getComponentScenarioUsers(userContext,
+            scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity());
         softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(1);
+        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(2);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
                 .allMatch(u -> u.getAvatarColor() != null)).isTrue();
         }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26878"})
+    @Description("Verify that user can find list of components, scenarios, and iterations")
+    public void getComponentsAssigned() {
+        ComponentsAssignedResponse componentsAssignedResponse = QmsComponentResources.getComponentsAssigned(
+            ComponentsAssignedResponse.class,
+            HttpStatus.SC_OK,
+            currentUser);
+        softAssertions.assertThat(componentsAssignedResponse.size()).isGreaterThan(0);
     }
 }

@@ -161,7 +161,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
@@ -213,7 +214,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         //Reuse BidPackage Item
@@ -222,7 +224,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -257,7 +260,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             newBidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -289,7 +293,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -313,7 +318,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -339,7 +345,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -365,7 +372,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -396,7 +404,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -420,7 +429,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -446,7 +456,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -472,7 +483,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getFailedProjectItem().stream()
@@ -524,7 +536,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()
@@ -810,7 +823,8 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectResponse.getIdentity(),
             bidPackageItemList,
             BidPackageProjectItemsBulkResponse.class,
-            currentUser
+            currentUser,
+            HttpStatus.SC_OK
         );
 
         softAssertions.assertThat(bulkBidPackageProjectItemsResponse.getProjectItem().stream()

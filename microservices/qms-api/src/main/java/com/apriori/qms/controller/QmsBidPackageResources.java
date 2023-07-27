@@ -529,6 +529,34 @@ public class QmsBidPackageResources {
     }
 
     /**
+     * Delete bid package project user.
+     *
+     * @param <T>                the type parameter
+     * @param userIdList         the user id list
+     * @param bidPackageIdentity the bid package identity
+     * @param projectIdentity    the project identity
+     * @param responseClass      the response class
+     * @param httpStatus         the http status
+     * @param currentUser        the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        BidPackageProjectUserRequest deleteRequest = BidPackageProjectUserRequest.builder()
+            .projectUsers(userIdList)
+            .build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .inlineVariables(bidPackageIdentity, projectIdentity)
+            .body(deleteRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Gets bid package project user.
      *
      * @param <T>                 the type parameter
@@ -694,13 +722,16 @@ public class QmsBidPackageResources {
     /**
      * Create bid package bulk project items bid package project items bulk response.
      *
+     * @param <T>                the type parameter
      * @param bidPackageIdentity the bid package identity
      * @param projectIdentity    the project identity
      * @param bidPackageItemList the bid package item list
+     * @param klass              the klass
      * @param currentUser        the current user
+     * @param httpStatus         the http status
      * @return the bid package project items bulk response
      */
-    public static <T> T createBidPackageBulkProjectItems(String bidPackageIdentity, String projectIdentity, List<BidPackageProjectItem> bidPackageItemList, Class<T> klass, UserCredentials currentUser) {
+    public static <T> T createBidPackageBulkProjectItems(String bidPackageIdentity, String projectIdentity, List<BidPackageProjectItem> bidPackageItemList, Class<T> klass, UserCredentials currentUser, Integer httpStatus) {
         BidPackageProjectItemsRequest bidPackageProjectItemsRequestBuilder = BidPackageProjectItemsRequest.builder()
             .projectItems(BidPackageProjectItems.builder()
                 .projectItem(bidPackageItemList)
@@ -711,7 +742,7 @@ public class QmsBidPackageResources {
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectItemsRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();

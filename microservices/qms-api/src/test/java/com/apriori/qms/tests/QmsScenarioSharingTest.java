@@ -205,37 +205,4 @@ public class QmsScenarioSharingTest extends TestUtil {
                 .isTrue();
         }
     }
-
-    @Test
-    @TestRail(id = {16353})
-    @Description("Verify that user will not get error messages after deleted himself from User list")
-    public void deleteSelfComponentScenarioUserNoError() {
-        //Add
-        UserCredentials anotherUser = UserUtil.getUser();
-        ProjectUserParameters projectUserParameters = ProjectUserParameters.builder()
-            .email(anotherUser.getEmail()).build();
-
-        ResponseWrapper<ScenarioProjectUserResponse> componentScenariosResponse =
-            QmsComponentResources.addComponentScenarioUser(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(),
-                projectUserParameters, currentUser);
-        softAssertions.assertThat(componentScenariosResponse.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
-        softAssertions.assertThat(componentScenariosResponse.getResponseEntity().size()).isEqualTo(2);
-        if (softAssertions.wasSuccess()) {
-            softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
-                .anyMatch(u -> u.getIdentity()
-                    .equals(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail())))).isTrue();
-            softAssertions.assertThat(componentScenariosResponse.getResponseEntity().stream()
-                .anyMatch(u -> u.getIdentity()
-                    .equals(new AuthUserContextUtil().getAuthUserIdentity(anotherUser.getEmail())))).isTrue();
-        }
-
-        //Delete
-        ProjectUserRequest deleteProjectUserRequest = ProjectUserRequest.builder()
-            .users(Collections.singletonList(ProjectUserParameters.builder()
-                .email(currentUser.getEmail())
-                .build()))
-            .build();
-        QmsComponentResources.deleteComponentScenarioUser(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), deleteProjectUserRequest, currentUser);
-    }
 }

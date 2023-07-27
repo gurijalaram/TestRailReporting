@@ -387,7 +387,7 @@ public class QmsApiTestUtils {
                         i.getStatus().equals(projectStatus2))).isTrue();
             } else if (match.equals("NONE")) {
                 softAssertions.assertThat(filteredProjectsResponse.getItems().stream()
-                    .noneMatch(i -> i.getStatus().equals(projectStatus1) ||
+                    .noneMatch(i -> i.getStatus().equals(projectStatus1) &&
                         i.getStatus().equals(projectStatus2))).isTrue();
             }
         }

@@ -1,4 +1,4 @@
-package com.apriori.qms.entity.response.bidpackage;
+package com.apriori.qms.entity.response.scenario;
 
 import com.apriori.annotations.Schema;
 import com.apriori.authorization.response.Pagination;
