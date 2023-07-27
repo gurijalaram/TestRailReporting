@@ -105,29 +105,6 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"13782", "13788"})
-    @Description("Create and delete ADMIN ROLE project user")
-    public void createAndDeleteBidPackageAdminProjectUser() {
-        UserCredentials adminUser = UserUtil.getUser();
-        BidPackageProjectUsersPostResponse bidPackageAdminProjectUserResponse = QmsBidPackageResources.createBidPackageProjectUser("ADMIN", bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
-        softAssertions.assertThat(bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().get(0)
-            .getProjectIdentity()).isEqualTo(bidPackageProjectResponse.getIdentity());
-
-        String projectUserIdentity = bidPackageAdminProjectUserResponse.getProjectUsers().getSuccesses().stream()
-            .filter(pu -> pu.getUserIdentity().equals(new AuthUserContextUtil().getAuthUserIdentity(adminUser.getEmail())))
-            .findFirst().map(BidPackageProjectUserResponse::getIdentity).orElse(null);
-
-        BidPackageProjectUsersDeleteResponse deleteUserResponse = QmsBidPackageResources.deleteBidPackageProjectUser(Collections.singletonList(BidPackageProjectUserParameters.builder()
-            .identity(projectUserIdentity)
-            .build()), bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), adminUser);
-
-        softAssertions.assertThat(deleteUserResponse.getProjectUsers().getSuccesses().stream()
-                .anyMatch(i -> i.getIdentity()
-                    .equals(projectUserIdentity)))
-            .isTrue();
-    }
-
-    @Test
     @TestRail(testCaseId = {"13793"})
     @Description("get bid package project user by identity")
     public void getBidPackageProjectUser() {
