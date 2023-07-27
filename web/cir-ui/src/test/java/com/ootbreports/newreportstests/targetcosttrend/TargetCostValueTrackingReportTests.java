@@ -24,6 +24,6 @@ public class TargetCostValueTrackingReportTests extends JasperApiAuthenticationU
     @TestRail(testCaseId = {"2246"})
     @Description("Input Controls - Currency Code - Target Quoted Cost Value Tracking Report")
     public void testCurrencyCodeInputControl() {
-        jasperApiUtils.targetCostValueTrackingCurrencyTest();
+        jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(8, 68, 69);
     }
 }

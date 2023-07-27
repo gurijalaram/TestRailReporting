@@ -21,8 +21,8 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @TestRail(testCaseId = {"25987"})
-    @Description("Verify Currency Code input control is working correctly")
+    @TestRail(testCaseId = {"26911"})
+    @Description("Verify Currency Code input control is working correctly - Details Report")
     public void testCurrencyCode() {
         jasperApiUtils.cycleTimeValueTrackingCurrencyTest();
     }
