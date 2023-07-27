@@ -22,6 +22,7 @@ import com.apriori.qms.entity.response.bidpackage.BidPackageProjectUsersResponse
 import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ParticipantsResponse;
 import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

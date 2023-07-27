@@ -1,12 +1,11 @@
 package com.apriori.qms.entity.response.component;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
-
 
 @Data
 @Builder

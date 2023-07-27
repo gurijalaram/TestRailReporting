@@ -140,7 +140,6 @@ public class ProjectsDetailsTest extends TestBaseUI {
         projectParticipant = UserUtil.getUser().getEmail();
         updatedProjectParticipant = UserUtil.getUser().getEmail();
 
-
         SoftAssertions softAssertions = new SoftAssertions();
 
         loginPage = new CisLoginPage(driver);
@@ -454,7 +453,7 @@ public class ProjectsDetailsTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(testCaseId = {"24448","26135","26136","26137"})
+    @TestRail(id = {24448, 26135, 26136, 26137})
     @Description("Verify that user can remove parts & assemblies after a project creation")
     public void testRemovePartsAndAssembliesAfterCreation() {
         final String assemblyName = "Hinge assembly";
@@ -473,17 +472,17 @@ public class ProjectsDetailsTest extends TestBaseUI {
 
         loginPage = new CisLoginPage(driver);
         projectsDetailsPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostAssembly(assemblyName,
-                        assemblyExtension,
-                        assemblyProcessGroup,
-                        subComponentNames,
-                        subComponentExtension,
-                        subComponentProcessGroup,
-                        scenarioName,
-                        currentUser)
-                .clickProjects()
-                .clickOnCreateNewProject()
-                .createANewProjectAndOpen("Automation Project " + dateTime,"This Project is created by Automation User " + currentUser.getEmail(), scenarioName,assemblyName, projectParticipant, "2028","15","Details");
+            .uploadAndCostAssembly(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser)
+            .clickProjects()
+            .clickOnCreateNewProject()
+            .createANewProjectAndOpen("Automation Project " + dateTime, "This Project is created by Automation User " + currentUser.getEmail(), scenarioName, assemblyName, projectParticipant, "2028", "15", "Details");
 
         projectsDetailsPage.clickDetailsPageTab("Parts & Assemblies");
 
@@ -497,13 +496,13 @@ public class ProjectsDetailsTest extends TestBaseUI {
         softAssertions.assertThat(projectsDetailsPage.isAddPartsOptionDisplayed()).isEqualTo(true);
 
         projectsDetailsPage.clickOnAddParts()
-                .selectAPart(scenarioName,subComponentNames.get(0))
-                .selectAPart(scenarioName,subComponentNames.get(1))
-                .clickAdd();
+            .selectAPart(scenarioName, subComponentNames.get(0))
+            .selectAPart(scenarioName, subComponentNames.get(1))
+            .clickAdd();
 
         softAssertions.assertThat(projectsDetailsPage.getListOfScenarios(subComponentNames.get(0), scenarioName)).isEqualTo(1);
 
-        projectsDetailsPage.selectAPart(scenarioName,subComponentNames.get(0));
+        projectsDetailsPage.selectAPart(scenarioName, subComponentNames.get(0));
 
         softAssertions.assertThat(projectsDetailsPage.isRemoveSelectedPartOptionDisplayed()).isEqualTo(true);
 

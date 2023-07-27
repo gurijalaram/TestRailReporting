@@ -125,7 +125,7 @@ public class QmsComponentTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"26878"})
+    @TestRail(id = {26878})
     @Description("Verify that user can find list of components, scenarios, and iterations")
     public void getComponentsAssigned() {
         ComponentsAssignedResponse componentsAssignedResponse = QmsComponentResources.getComponentsAssigned(
