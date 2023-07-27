@@ -1,4 +1,4 @@
-package com.apriori.qms.entity.response.bidpackage;
+package com.apriori.qms.entity.response.scenario;
 
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.Pagination;
