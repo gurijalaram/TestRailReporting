@@ -1,4 +1,4 @@
-package com.upload.pcba;
+package com.apriori.pcba;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

@@ -1,4 +1,4 @@
-package com.myuser;
+package com.apriori.myuser;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;

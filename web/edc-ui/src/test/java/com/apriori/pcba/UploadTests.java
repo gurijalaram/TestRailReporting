@@ -1,4 +1,4 @@
-package com.upload.pcba;
+package com.apriori.pcba;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

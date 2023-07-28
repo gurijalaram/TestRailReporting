@@ -1,4 +1,4 @@
-package com.fieldsvalidation;
+package com.apriori.fieldsvalidation;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
