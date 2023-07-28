@@ -1,6 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.TestBaseUI;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.reader.file.user.UserCredentials;

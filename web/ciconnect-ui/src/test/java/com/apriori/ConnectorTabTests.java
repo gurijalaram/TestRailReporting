@@ -1,4 +1,4 @@
-package com.cic.tests;
+package com.apriori;
 
 import com.apriori.pages.connectors.ConnectorsPage;
 import com.apriori.pages.login.CicLoginPage;

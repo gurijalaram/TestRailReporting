@@ -1,6 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;

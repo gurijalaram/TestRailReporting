@@ -1,7 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestBaseUI;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;

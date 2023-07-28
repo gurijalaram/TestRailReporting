@@ -1,6 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.enums.CheckboxState;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pages.home.CIConnectHome;

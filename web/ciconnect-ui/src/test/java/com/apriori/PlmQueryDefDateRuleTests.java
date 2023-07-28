@@ -1,14 +1,11 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pages.home.CIConnectHome;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import entity.response.AgentWorkflowJobResults;
 import enums.CICPartSelectionType;
-import enums.CostingInputFields;
-import enums.MappingRule;
 import enums.PlmPartDataType;
 import enums.QueryDefinitionFieldType;
 import enums.QueryDefinitionFields;
@@ -21,12 +18,11 @@ import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
 
-public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
+public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
 
     private static final String QUERY_STRING_FIELD_VALUE = "%auto test \\- query%";
     private static SoftAssertions softAssertions;
     private CIConnectHome ciConnectHome;
-
 
     @Before
     public void testSetup() {
@@ -35,31 +31,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {4137, 4150, 4340})
-    @Description("Test each operator for the Int data type in isolation - Integer Equal, verify AND operator and data type")
-    public void testWorkflowQueryDefIntegerEqual() {
+    @TestRail(id = {24381})
+    @Description("Test each operator for the Int data type in isolation - Date Not Equal")
+    public void testWorkflowQueryDefDateNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.EQUAL, 1)
-            .setQueryFilters("AND")
-            .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .build();
-
-        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
-
-        softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
-        softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
-            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_DATE).getPlmPartNumber())))
-            .isTrue();
-    }
-
-    @Test
-    @TestRail(id = {24379})
-    @Description("Test each operator for the Int data type in isolation - Integer NOT Equal")
-    public void testWorkflowQueryDefIntegerNotEqual() {
-        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
-            .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.NOT_EQUAL, 1)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.NOT_EQUAL, DateUtil.getDateInMilliSeconds("04/21/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -67,22 +44,39 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
 
         softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(4);
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
-                .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS).getPlmPartNumber()))).isTrue();
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_MULTI_REVISION_NO_PARTS).getPlmPartNumber()))).isTrue();
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
-                .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_INTEGER).getPlmPartNumber()))).isTrue();
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_INTEGER).getPlmPartNumber()))).isTrue();
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
-                .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_REAL).getPlmPartNumber()))).isTrue();
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_REAL).getPlmPartNumber()))).isTrue();
         softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
-                .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_STRING).getPlmPartNumber()))).isTrue();
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_STRING).getPlmPartNumber()))).isTrue();
     }
 
     @Test
-    @TestRail(id = {24384})
-    @Description("Test each operator for the Int data type in isolation - Integer Greater Than")
-    public void testWorkflowQueryDefIntegerGreaterThan() {
+    @TestRail(id = {4149, 4873})
+    @Description("Test each operator for the Int data type in isolation - Date Equal")
+    public void testWorkflowQueryDefDateEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.GREATER_THAN, 4)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.EQUAL, DateUtil.getDateInMilliSeconds("04/21/2023 08:00:00", "GMT"))
+            .setQueryFilters("AND")
+            .build();
+
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
+
+        softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
+        softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_DATE).getPlmPartNumber()))).isTrue();
+    }
+
+    @Test
+    @TestRail(id = {24386})
+    @Description("Test each operator for the Int data type in isolation - Date Greater Than")
+    public void testWorkflowQueryDefDateGreaterThan() {
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.GREATER_THAN, DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -94,12 +88,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24389})
-    @Description("Test each operator for the Int data type in isolation - Integer Greater Than or Equal")
-    public void testWorkflowQueryDefIntegerGreaterThanEqual() {
+    @TestRail(id = {24391})
+    @Description("Test each operator for the Int data type in isolation - Date Greater Than or Equal")
+    public void testWorkflowQueryDefDateGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.GREATER_THAN_EQUAL, 4)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.GREATER_THAN_EQUAL, DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -113,12 +107,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24394})
-    @Description("Test each operator for the Int data type in isolation - Integer between")
-    public void testWorkflowQueryDefIntegerBetween() {
+    @TestRail(id = {24396})
+    @Description("Test each operator for the Int data type in isolation - Date Between")
+    public void testWorkflowQueryDefDateBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.BETWEEN, 2,3)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.BETWEEN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"), DateUtil.getDateInMilliSeconds("04/23/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -132,12 +126,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24399})
-    @Description("Test each operator for the Int data type in isolation - Integer Not between")
-    public void testWorkflowQueryDefIntegerNotBetween() {
+    @TestRail(id = {24401})
+    @Description("Test each operator for the Int data type in isolation - Date Not Between")
+    public void testWorkflowQueryDefDateNotBetween() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.NOT_BETWEEN, 2,4)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.NOT_BETWEEN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"), DateUtil.getDateInMilliSeconds("04/24/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -151,12 +145,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24402})
-    @Description("Test each operator for the Int data type in isolation - Integer less than")
-    public void testWorkflowQueryDefIntegerLessThan() {
+    @TestRail(id = {24404})
+    @Description("Test each operator for the Int data type in isolation - Date Less Than")
+    public void testWorkflowQueryDefDateLessThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.LESS_THAN, 2)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.LESS_THAN, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 
@@ -168,12 +162,12 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24405})
-    @Description("Test each operator for the Int data type in isolation - Integer less than or equal")
-    public void testWorkflowQueryDefIntegerLessThanEqual() {
+    @TestRail(id = {24407})
+    @Description("Test each operator for the Int data type in isolation - Date Less Than Equal")
+    public void testWorkflowQueryDefDateLessThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.INTEGER1, QueryDefinitionFieldType.LESS_THAN_EQUAL, 2)
+            .setQueryFilter(QueryDefinitionFields.DATE_TIME1, QueryDefinitionFieldType.LESS_THAN_EQUAL, DateUtil.getDateInMilliSeconds("04/22/2023 08:00:00", "GMT"))
             .setQueryFilters("AND")
             .build();
 

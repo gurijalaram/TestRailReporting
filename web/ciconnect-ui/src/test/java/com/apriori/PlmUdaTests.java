@@ -1,7 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.DateFormattingUtils;
-import com.apriori.DateUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;

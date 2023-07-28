@@ -1,8 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.DateFormattingUtils;
-import com.apriori.DateUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;

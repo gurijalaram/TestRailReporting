@@ -1,7 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestBaseUI;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;

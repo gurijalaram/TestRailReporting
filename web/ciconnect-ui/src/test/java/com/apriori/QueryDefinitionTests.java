@@ -1,6 +1,5 @@
-package com.cic.tests;
+package com.apriori;
 
-import com.apriori.TestBaseUI;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.CicLoginPage;

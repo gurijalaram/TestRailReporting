@@ -1,4 +1,4 @@
-package com.cic.tests;
+package com.apriori;
 
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

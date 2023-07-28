@@ -1,4 +1,4 @@
-package com.cic.tests;
+package com.apriori;
 
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
