@@ -1,4 +1,4 @@
-package com.apriori.bcs.tests;
+package com.apriori;
 
 import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.enums.BCSAPIEnum;

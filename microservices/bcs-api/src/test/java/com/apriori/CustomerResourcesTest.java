@@ -1,6 +1,5 @@
-package com.apriori.bcs.tests;
+package com.apriori;
 
-import com.apriori.TestUtil;
 import com.apriori.bcs.controller.CustomerResources;
 import com.apriori.bcs.entity.response.CustomAttributes;
 import com.apriori.bcs.entity.response.CustomerVPE;

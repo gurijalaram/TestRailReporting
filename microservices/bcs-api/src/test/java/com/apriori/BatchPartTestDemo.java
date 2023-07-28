@@ -1,4 +1,4 @@
-package com.apriori.bcs.tests;
+package com.apriori;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;

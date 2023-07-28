@@ -1,4 +1,4 @@
-package com.apriori.bcs.tests;
+package com.apriori;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
