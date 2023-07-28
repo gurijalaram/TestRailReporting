@@ -1,7 +1,5 @@
-package tests.acs;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;

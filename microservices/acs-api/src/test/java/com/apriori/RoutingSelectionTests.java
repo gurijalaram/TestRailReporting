@@ -1,8 +1,12 @@
-package tests.acs;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -10,20 +14,17 @@ import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.testrail.TestRail;
+import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import tests.workorders.WorkorderAPITests;
-import testsuites.categories.AcsTest;
 
-public class AvailableRoutingsTests {
+public class RoutingSelectionTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14814)
-    @Description("Get available routings after Cost")
-    public void testGetAvailableRoutingsCosted() {
+    @TestRail(id = 14843)
+    @Description("Save Routing Selection after Cost")
+    public void testSaveRoutingSelection() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -51,65 +52,21 @@ public class AvailableRoutingsTests {
                 false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
+            "Sheet Metal",
             "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+            "Sheet Metal"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14812)
-    @Description("Get available routings before Cost")
-    public void testGetAvailableRoutingsUncosted() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
-        fileUploadResources.checkValidProcessGroup(processGroup);
-
-        FileResponse fileResponse = fileUploadResources.initializePartUpload(
-                "bracket_basic.prt",
-                processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-                fileResponse,
-                testScenarioName
-        );
-
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
-                fileUploadOutputs.getScenarioIterationKey(),
-                "aPriori USA",
-                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
-
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isEqualTo("UNCOSTED");
-        softAssertions.assertAll();
-
-    }
-
-    @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14823)
-    @Description("Get available routings after Cost for Additive Manufacturing scenario")
-    public void testGetAvailableRoutingsAdditiveManufacturing() {
+    @TestRail(id = 14854)
+    @Description("Save Routing Selection after Cost for Additive Manufacturing")
+    public void testSaveRoutingSelectionAdditiveManufacturing() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -121,42 +78,37 @@ public class AvailableRoutingsTests {
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-                "BasicScenario_Additive.prt.1",
-                processGroup
+            "BasicScenario_Additive.prt.1",
+            processGroup
         );
 
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-                fileResponse,
-                testScenarioName
+            fileResponse,
+            testScenarioName
         );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
-                productionInfoInputs,
-                fileUploadOutputs,
-                processGroup,
-                false
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
-                costOutputs.getScenarioIterationKey(),
-                "aPriori USA",
-                ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
+            costOutputs.getScenarioIterationKey(),
+            "Additive Manufacturing",
+            "aPriori India",
+            "Additive Manufacturing"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14824)
-    @Description("Get available routings after Cost for Bar & Tube Fab scenario")
-    public void testGetAvailableRoutingsBarandTube() {
+    @TestRail(id = 14855)
+    @Description("Save Routing Selection after Cost for Bar & Tube")
+    public void testSaveRoutingSelectionBarandTube() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -184,26 +136,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup()
+            "Bar & Tube Fab",
+            "aPriori India",
+            "Bar & Tube Fab"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14825)
-    @Description("Get available routings after Cost for Casting - Die scenario")
-    public void testGetAvailableRoutingsCastingDie() {
+    @TestRail(id = 14856)
+    @Description("Save Routing Selection after Cost for Casting - Die")
+    public void testSaveRoutingSelectionCastingDie() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -231,26 +178,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+            "Casting - Die",
+            "aPriori India",
+            "Casting - Die"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14826)
-    @Description("Get available routings after Cost for Casting - Investment scenario")
-    public void testGetAvailableRoutingsCastingInvestment() {
+    @TestRail(id = 14857)
+    @Description("Save Routing Selection after Cost for Casting - Investment")
+    public void testSaveRoutingSelectionCastingInvestment() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -278,26 +220,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup()
+            "Casting - Investment",
+            "aPriori India",
+            "Casting - Investment"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14827)
-    @Description("Get available routings after Cost for Casting - Sand scenario")
-    public void testGetAvailableRoutingsCastingSand() {
+    @TestRail(id = 14858)
+    @Description("Save Routing Selection after Cost for Casting - Sand")
+    public void testSaveRoutingSelectionCastingSand() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -325,26 +262,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+            "Casting - Sand",
+            "aPriori India",
+            "Casting - Sand"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14828)
-    @Description("Get available routings after Cost for Forging scenario")
-    public void testGetAvailableRoutingsForging() {
+    @TestRail(id = 14859)
+    @Description("Save Routing Selection after Cost for Forging")
+    public void testSaveRoutingSelectionForging() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -372,26 +304,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.FORGING.getProcessGroup()
+            "Forging",
+            "aPriori India",
+            "Forging"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14829)
-    @Description("Get available routings after Cost for Plastic Molding scenario")
-    public void testGetAvailableRoutingsPlasticMolding() {
+    @TestRail(id = 14860)
+    @Description("Save Routing Selection after Cost for Plastic Molding")
+    public void testSaveRoutingSelectionPlasticMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -419,26 +346,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
+            "Plastic Molding",
+            "aPriori India",
+            "Plastic Molding"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14830)
-    @Description("Get available routings after Cost for Powder Metal scenario")
-    public void testGetAvailableRoutingsPowderMetal() {
+    @TestRail(id = 14861)
+    @Description("Save Routing Selection after Cost for Powder Metal")
+    public void testSaveRoutingSelectionPowderMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -466,25 +388,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.POWDER_METAL.getProcessGroup()
+            "Powder Metal",
+            "aPriori India",
+            "Powder Metal"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14834)
-    @Description("Get available routings after Cost for Rapid Prototyping scenario")
-    public void testGetAvailableRoutingsRapidPrototyping() {
+    @TestRail(id = 14862)
+    @Description("Save Routing Selection after Cost for Rapid Prototyping")
+    public void testSaveRoutingSelectionRapidPrototyping() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -512,26 +430,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup()
+            "Rapid Prototyping",
+            "aPriori India",
+            "Rapid Prototyping"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14835)
-    @Description("Get available routings after Cost for Roto & Blow Molding scenario")
-    public void testGetAvailableRoutingsRotoandBlowMolding() {
+    @TestRail(id = 14863)
+    @Description("Save Routing Selection after Cost for Roto & Blow Molding")
+    public void testSaveRoutingSelectionRotoandBlowMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -559,26 +472,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()
+            "Roto & Blow Molding",
+            "aPriori India",
+            "Roto & Blow Molding"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14836)
-    @Description("Get available routings after Cost for Sheet Metal scenario")
-    public void testGetAvailableRoutingsSheetMetal() {
+    @TestRail(id = 14864)
+    @Description("Save Routing Selection after Cost for Sheet Metal")
+    public void testSaveRoutingSelectionSheetMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -606,26 +514,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+            "Sheet Metal",
+            "aPriori India",
+            "Sheet Metal"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14837)
-    @Description("Get available routings after Cost for Sheet Metal - Hydroforming scenario")
-    public void testGetAvailableRoutingsSheetMetalHydroforming() {
+    @TestRail(id = 14865)
+    @Description("Save Routing Selection after Cost for Sheet Metal - Hydroforming")
+    public void testSaveRoutingSelectionSheetMetalHydroforming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -653,26 +556,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup()
+            "Sheet Metal - Hydroforming",
+            "aPriori India",
+            "Sheet Metal - Hydroforming"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14838)
-    @Description("Get available routings after Cost for Sheet Metal - Roll Forming scenario")
-    public void testGetAvailableRoutingsSheetMetalRollForming() {
+    @TestRail(id = 14866)
+    @Description("Save Routing Selection after Cost for Sheet Metal - Roll Forming")
+    public void testSaveRoutingSelectionSheetMetalRollForming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -700,25 +598,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup()
+            "Sheet Metal - Roll Forming",
+            "aPriori India",
+            "Sheet Metal - Roll Forming"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14839)
-    @Description("Get available routings after Cost for Sheet Metal - Stretch Forming scenario")
-    public void testGetAvailableRoutingsSheetMetalStretchForming() {
+    @TestRail(id = 14867)
+    @Description("Save Routing Selection after Cost for Sheet Metal - Stretch Forming")
+    public void testSaveRoutingSelectionSheetMetalStretchForming() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -746,26 +640,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup()
+            "Sheet Metal - Stretch Forming",
+            "aPriori India",
+            "Sheet Metal - Stretch Forming"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 148340)
-    @Description("Get available routings after Cost for Sheet Metal - Transfer Die scenario")
-    public void testGetAvailableRoutingsSheetMetalTransferDie() {
+    @TestRail(id = 14868)
+    @Description("Save Routing Selection after Cost for Sheet Metal - Transfer Die")
+    public void testSaveRoutingSelectionSheetMetalTransferDie() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -793,25 +682,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup()
+            "Sheet Metal - Transfer Die",
+            "aPriori India",
+            "Sheet Metal - Transfer Die"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14841)
-    @Description("Get available routings after Cost for Sheet Plastic scenario")
-    public void testGetAvailableRoutingsSheetPlastic() {
+    @TestRail(id = 14869)
+    @Description("Save Routing Selection after Cost for Sheet Plastic")
+    public void testSaveRoutingSelectionSheetPlastic() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -839,26 +724,21 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()
+            "Sheet Plastic",
+            "aPriori India",
+            "Sheet Plastic"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 
     @Test
-    @Category(AcsTest.class)
-    @TestRail(id = 14842)
-    @Description("Get available routings after Cost for Stock Machining scenario")
-    public void testGetAvailableRoutingsStockMachining() {
+    @TestRail(id = 14870)
+    @Description("Save Routing Selection after Cost for Stock Machining")
+    public void testSaveRoutingSelectionStockMachining() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -886,18 +766,14 @@ public class AvailableRoutingsTests {
             false
         );
 
-        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "aPriori USA",
-            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
+            "Stock Machining",
+            "aPriori India",
+            "Stock Machining"
         );
 
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getName()).isNotNull();
-        softAssertions.assertThat(response.getDisplayName()).isNotNull();
-        softAssertions.assertThat(response.getPlantName()).isNotNull();
-        softAssertions.assertThat(response.getProcessGroupName()).isEqualTo("Stock Machining");
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
-        softAssertions.assertAll();
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
 }

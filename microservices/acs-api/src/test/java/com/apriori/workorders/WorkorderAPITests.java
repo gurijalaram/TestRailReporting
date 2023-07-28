@@ -1,4 +1,4 @@
-package tests.workorders;
+package com.apriori.workorders;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;

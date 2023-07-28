@@ -1,4 +1,4 @@
-package tests.workorders;
+package com.apriori.workorders;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.TestUtil;

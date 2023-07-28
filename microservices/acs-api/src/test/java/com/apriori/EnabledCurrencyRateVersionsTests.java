@@ -1,6 +1,5 @@
-package tests.acs;
+package com.apriori;
 
-import com.apriori.TestUtil;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.testrail.TestRail;
 

@@ -1,4 +1,4 @@
-package tests.acs;
+package com.apriori;
 
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
@@ -10,12 +10,11 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;
+import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import tests.workorders.WorkorderAPITests;
-import testsuites.categories.AcsTest;
 
 public class CostResultsTests {
     private AcsResources acsResources = new AcsResources();
@@ -43,7 +42,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21569)
     @Description("Get Root Cost Results after Costing Additive Manufacturing")
     public void testGetCostRootResultsAdditiveManufacturing() {
@@ -56,7 +54,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21570)
     @Description("Get Root Cost Results after Costing Bar & Tube")
     public void testGetCostRootResultsBarAndTubeFab() {
@@ -69,7 +66,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21574)
     @Description("Get Root Cost Results after Costing Forging")
     public void testGetCostRootResultsForging() {
@@ -82,7 +78,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21576)
     @Description("Get Root Cost Results after Costing Powder Metal")
     public void testGetCostRootResultsPowderMetal() {
@@ -95,7 +90,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21577)
     @Description("Get Root Cost Results after Costing Rapid Prototyping")
     public void testGetCostRootResultsRapidPrototyping() {
@@ -108,7 +102,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21578)
     @Description("Get Root Cost Results after Costing Roto and Blow Molding")
     public void testGetCostRootResultsRotoBlowMolding() {
@@ -121,7 +114,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21579)
     @Description("Get Root Cost Results after Costing Sheet Metal")
     public void testGetCostRootResultsSheetMetal() {
@@ -134,7 +126,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21581)
     @Description("Get Root Cost Results after Costing Sheet Metal - Hydroforming")
     public void testGetCostRootResultsSheetMetalHydroforming() {
@@ -147,7 +138,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21580)
     @Description("Get Root Cost Results after Costing Sheet Metal - Transfer Die")
     public void testGetCostRootResultsSheetMetalTransferDie() {
@@ -160,7 +150,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21583)
     @Description("Get Root Cost Results after Costing Sheet Metal - Stretch Forming")
     public void testGetCostRootResultsSheetMetalStretchForming() {
@@ -173,7 +162,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21582)
     @Description("Get Root Cost Results after Costing Sheet Metal - Roll Forming")
     public void testGetCostRootResultsSheetMetalRollForming() {
@@ -186,7 +174,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21584)
     @Description("Get Root Cost Results after Costing Stock Machining")
     public void testGetCostRootResultsStockMachining() {
@@ -199,7 +186,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21575)
     @Description("Get Root Cost Results after Costing Plastic Molding")
     public void testGetCostRootResultsPlasticMolding() {
@@ -212,7 +198,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21571)
     @Description("Get Root Cost Results after Costing Casting - Die")
     public void testGetCostRootResultsCastingDie() {
@@ -225,7 +210,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21572)
     @Description("Get Root Cost Results after Costing Casting - Sand")
     public void testGetCostRootResultsCastingSand() {
@@ -238,7 +222,6 @@ public class CostResultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 21573)
     @Description("Get Root Cost Results after Costing Casting - Investment")
     public void testGetCostRootResultsCastingInvestment() {

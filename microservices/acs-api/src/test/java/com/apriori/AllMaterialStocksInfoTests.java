@@ -1,6 +1,5 @@
-package tests.acs;
+package com.apriori;
 
-import com.apriori.TestUtil;
 import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.utils.acs.AcsResources;

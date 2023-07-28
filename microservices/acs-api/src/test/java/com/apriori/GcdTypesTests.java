@@ -1,4 +1,4 @@
-package tests.acs;
+package com.apriori;
 
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesAdditiveManufacturingResponse;
 import com.apriori.acs.entity.response.acs.GcdTypes.GcdTypesAssemblyResponse;
