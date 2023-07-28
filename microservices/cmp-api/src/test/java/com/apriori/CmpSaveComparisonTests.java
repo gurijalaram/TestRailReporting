@@ -1,7 +1,5 @@
-package com.apriori.cmp.tests;
+package com.apriori;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
