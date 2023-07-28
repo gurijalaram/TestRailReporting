@@ -64,7 +64,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-     @Tag(SMOKE)
+    @Tag(SMOKE)
     @Description("Test user profile details, edit mode and cancel edit button")
     @TestRail(id = {5576, 11952, 4374, 4382, 11962})
     public void testEditAndCancelUserProfile() {
@@ -124,7 +124,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-     @Tag(SMOKE)
+    @Tag(SMOKE)
     @Description("Test that user details can be edited and saved")
     @TestRail(id = {11963})
     public void testEditUserAndSave() {

@@ -168,7 +168,7 @@ public class EditCustomerTests extends TestBaseUI {
     }
 
     @Test
-     @Tag(SMOKE)
+    @Tag(SMOKE)
     @Description("Test that customer details can be edited and saved.")
     @TestRail(id = {10060})
     public void testEditAndSave() {

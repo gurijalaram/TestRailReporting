@@ -63,7 +63,7 @@ public class NewUserTests extends TestBaseUI {
     }
 
     @Test
-     @Tag(SMOKE)
+    @Tag(SMOKE)
     @Description("New User profile form has correct fields, user can be added by filling only mandatory fields")
     @TestRail(id = {4063, 4062, 4073})
     public void testUserIsCreatedWithOnlyRequiredFields() {

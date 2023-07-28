@@ -119,7 +119,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @Test
     @Description("Validate granted applications can be added by Add button")
-     @Tag(SMOKE)
+    @Tag(SMOKE)
     @TestRail(id = {12515})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
