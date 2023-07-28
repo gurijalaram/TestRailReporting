@@ -1,7 +1,5 @@
-package com.apriori.qms.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.TestUtil;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.entity.response.ScenarioItem;

@@ -1,6 +1,5 @@
-package com.apriori.qms.tests;
+package com.apriori;
 
-import com.apriori.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.qms.controller.QmsProjectResources;

@@ -1,7 +1,5 @@
-package com.apriori.qms.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.entity.response.layout.LayoutResponse;

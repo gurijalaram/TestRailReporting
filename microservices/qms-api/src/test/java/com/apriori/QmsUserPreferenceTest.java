@@ -1,6 +1,5 @@
-package com.apriori.qms.tests;
+package com.apriori;
 
-import com.apriori.TestUtil;
 import com.apriori.qms.controller.QmsUserPreferenceResources;
 import com.apriori.qms.entity.request.userpreference.UserPreferenceParameters;
 import com.apriori.qms.entity.request.userpreference.UserPreferenceRequest;
