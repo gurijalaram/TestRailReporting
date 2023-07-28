@@ -1,4 +1,4 @@
-package com.apriori.edcapi.tests;
+package com.apriori;
 
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;

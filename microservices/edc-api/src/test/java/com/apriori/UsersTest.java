@@ -1,4 +1,4 @@
-package com.apriori.edcapi.tests;
+package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edcapi.entity.response.users.Users;
