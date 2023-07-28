@@ -1,5 +1,7 @@
 package com.apriori.evaluate;
 
+import static com.apriori.TestSuiteType.TestSuite.IGNORE;
+
 import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.customizations.ProcessGroups;
 import com.apriori.cidappapi.utils.CustomizationUtil;
@@ -14,7 +16,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
-import testsuites.suiteinterfaces.IgnoreTests;
+import org.junit.jupiter.api.Tag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +56,7 @@ public class ListProcessGroupTests {
 
     @Ignore("Assemblies cannot be upload")
     @Test
-    @Category(IgnoreTests.class)
+    @Tag(IGNORE)
     @TestRail(id = 6198)
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {

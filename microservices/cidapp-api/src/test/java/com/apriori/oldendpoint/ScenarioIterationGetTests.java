@@ -1,4 +1,4 @@
-package com.apriori.tests.oldendpoint;
+package com.apriori.oldendpoint;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

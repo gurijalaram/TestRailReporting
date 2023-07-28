@@ -1,9 +1,8 @@
-package com.apriori.tests;
+package com.apriori;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;

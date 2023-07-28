@@ -1,5 +1,6 @@
 package com.apriori.evaluate;
 
+import static com.apriori.TestSuiteType.TestSuite.REGRESSION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
@@ -20,7 +21,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
-import testsuites.RegressionTestSuite;
+import org.junit.jupiter.api.Tag;
 
 import java.io.File;
 
@@ -30,7 +31,7 @@ public class ComponentRedirectTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
-    @Category(RegressionTestSuite.class)
+    @Tag(REGRESSION)
     @TestRail(id = 14197)
     @Description("Verify receipt of 301 response when getting component details of a file which already exists")
     public void receive301AfterUploadOfExistingComponent() {
@@ -57,7 +58,7 @@ public class ComponentRedirectTests {
     }
 
     @Test
-    @Category(RegressionTestSuite.class)
+    @Tag(REGRESSION)
     @TestRail(id = 14440)
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithNewScenario() {
@@ -84,7 +85,7 @@ public class ComponentRedirectTests {
     }
 
     @Test
-    @Category(RegressionTestSuite.class)
+    @Tag(REGRESSION)
     @TestRail(id = 14444)
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithOverriddenScenario() {
@@ -112,7 +113,7 @@ public class ComponentRedirectTests {
     }
 
     @Test
-    @Category(RegressionTestSuite.class)
+    @Tag(REGRESSION)
     @TestRail(id = 14450)
     @Description("Verify receipt of 301 response when getting iteration details of a file which already exists using new scenario")
     public void receive301IterationsEndpoint() {

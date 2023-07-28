@@ -1,4 +1,4 @@
-package com.apriori.tests.newendpoint;
+package com.apriori.newendpoint;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

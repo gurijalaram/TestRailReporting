@@ -1,4 +1,4 @@
-package com.apriori.tests.newendpoint;
+package com.apriori.newendpoint;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;

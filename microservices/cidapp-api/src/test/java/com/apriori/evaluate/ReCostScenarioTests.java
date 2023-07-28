@@ -1,5 +1,7 @@
 package com.apriori.evaluate;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;

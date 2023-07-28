@@ -1,4 +1,4 @@
-package com.apriori.tests;
+package com.apriori;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.ColourEnum;
