@@ -1,4 +1,4 @@
-package com.apriori.sds.tests;
+package com.apriori;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.CostingTemplate;

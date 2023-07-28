@@ -1,4 +1,4 @@
-package com.apriori.sds.tests;
+package com.apriori;
 
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;

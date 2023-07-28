@@ -1,4 +1,4 @@
-package com.apriori.sds.tests;
+package com.apriori;
 
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.FeatureDecisionController;

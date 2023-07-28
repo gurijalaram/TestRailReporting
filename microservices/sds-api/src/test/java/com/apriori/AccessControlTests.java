@@ -1,7 +1,5 @@
-package com.apriori.sds.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
