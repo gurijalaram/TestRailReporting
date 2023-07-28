@@ -1,16 +1,15 @@
-package com.apriori.vds.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
+import com.apriori.util.SiteVariableUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
-import com.apriori.vds.tests.util.SiteVariableUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -80,7 +79,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
 
-        validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     @Test
@@ -96,7 +95,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
 
-        validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
 
     private static void deleteSiteVariableById(final String identity) {

@@ -1,15 +1,16 @@
-package com.apriori.vds.tests;
+package com.apriori;
 
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
+import com.apriori.util.ProcessGroupUtil;
+import com.apriori.util.VDSTestUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.user.group.associations.UserGroupAssociationRequest;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociation;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociationsItems;
-import com.apriori.vds.tests.util.ProcessGroupUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -42,7 +43,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(
-                    getGroupIdentity(),
+                    ProcessGroupUtil.getGroupIdentity(),
                     this.postUserGroupAssociation().getIdentity()
                 )
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -75,11 +76,11 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
-                .inlineVariables(getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
+                .inlineVariables(ProcessGroupUtil.getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
                 .body(UserGroupAssociationRequest.builder()
-                    .customerIdentity(customerId)
-                    .userIdentity(userId)
-                    .updatedBy(userId)
+                    .customerIdentity(VDSTestUtil.customerId)
+                    .userIdentity(VDSTestUtil.userId)
+                    .updatedBy(VDSTestUtil.userId)
                     .build()
                 )
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -89,7 +90,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
 
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
-            .inlineVariables(getGroupIdentity())
+            .inlineVariables(ProcessGroupUtil.getGroupIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTPRequest.build(requestEntity).get();
@@ -117,15 +118,15 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
 
         } else {
             requestBody = UserGroupAssociationRequest.builder()
-                .customerIdentity(customerId)
-                .userIdentity(userId)
-                .createdBy(userId)
+                .customerIdentity(VDSTestUtil.customerId)
+                .userIdentity(VDSTestUtil.userId)
+                .createdBy(VDSTestUtil.userId)
                 .build();
         }
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
-                .inlineVariables(getGroupIdentity())
+                .inlineVariables(ProcessGroupUtil.getGroupIdentity())
                 .body(requestBody)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -142,7 +143,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
-                .inlineVariables(getGroupIdentity(), ugaIdentity)
+                .inlineVariables(ProcessGroupUtil.getGroupIdentity(), ugaIdentity)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();

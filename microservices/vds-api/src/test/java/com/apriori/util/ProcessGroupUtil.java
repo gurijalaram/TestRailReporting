@@ -1,4 +1,4 @@
-package com.apriori.vds.tests.util;
+package com.apriori.util;
 
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.bcs.entity.response.ProcessGroups;

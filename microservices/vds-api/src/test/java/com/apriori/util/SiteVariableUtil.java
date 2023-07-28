@@ -1,4 +1,4 @@
-package com.apriori.vds.tests.util;
+package com.apriori.util;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;

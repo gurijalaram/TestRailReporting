@@ -1,14 +1,14 @@
-package com.apriori.vds.tests;
+package com.apriori;
 
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
+import com.apriori.util.VDSTestUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -28,7 +28,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(id = {8030})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getDigitalFactories() {
-        getDigitalFactoriesResponse();
+        VDSTestUtil.getDigitalFactoriesResponse();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
-            .inlineVariables(getDigitalFactoriesResponse().getIdentity())
+            .inlineVariables(VDSTestUtil.getDigitalFactoriesResponse().getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();

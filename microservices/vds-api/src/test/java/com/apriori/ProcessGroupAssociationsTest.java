@@ -1,14 +1,14 @@
-package com.apriori.vds.tests;
+package com.apriori;
 
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
+import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.associations.ProcessGroupAssociationRequest;
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
-import com.apriori.vds.tests.util.ProcessGroupUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
 
     @BeforeClass
     public static void initTestingData() {
-        backupProcessGroupAssociation = getFirstGroupAssociation();
+        backupProcessGroupAssociation = ProcessGroupUtil.getFirstGroupAssociation();
         deleteProcessGroupAssociation(backupProcessGroupAssociation.getIdentity());
     }
 
@@ -76,7 +76,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     @TestRail(id = {8411})
     @Description("Returns a paged set of ProcessGroupAssociation for the current user.")
     public void testGetProcessGroupAssociations() {
-        getProcessGroupAssociations();
+        ProcessGroupUtil.getProcessGroupAssociations();
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     public void testGetMaterialByIdentity() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
-                .inlineVariables(getFirstGroupAssociation().getIdentity())
+                .inlineVariables(ProcessGroupUtil.getFirstGroupAssociation().getIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();

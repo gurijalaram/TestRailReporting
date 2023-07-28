@@ -1,4 +1,4 @@
-package com.apriori.vds.tests.util;
+package com.apriori.util;
 
 import com.apriori.TestUtil;
 import com.apriori.http.builder.entity.RequestEntity;

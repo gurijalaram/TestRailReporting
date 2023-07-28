@@ -1,12 +1,12 @@
-package com.apriori.vds.tests;
+package com.apriori;
 
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
+import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.tests.util.ProcessGroupUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
     @TestRail(id = {8271})
     @Description("Get a list of process groups for a specific customer.")
     public void getProcessGroups() {
-        List<ProcessGroup> processGroups = getProcessGroupsResponse();
+        List<ProcessGroup> processGroups = ProcessGroupUtil.getProcessGroupsResponse();
 
         final String failedProcessGroups = this.validateProcessGroups(processGroups);
 
@@ -53,7 +53,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
     @TestRail(id = {8272})
     @Description("Get a ProcessGroup for a customer identified by its identity.")
     public void getProcessGroupsByIdentity() {
-        List<ProcessGroup> processGroups = getProcessGroupsResponse();
+        List<ProcessGroup> processGroups = ProcessGroupUtil.getProcessGroupsResponse();
         Assert.assertNotEquals("To get Process Group, response should contain it.", 0, processGroups.size());
 
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
