@@ -1,4 +1,4 @@
-package com;
+package com.apriori;
 
 import static com.apriori.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
