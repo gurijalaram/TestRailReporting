@@ -1,4 +1,4 @@
-package com.apriori.cir.tests;
+package com.apriori;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ParametersRequest;
