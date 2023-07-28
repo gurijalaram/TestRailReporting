@@ -1,6 +1,5 @@
-package com.apriori.gcd.tests;
+package com.apriori;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.gcd.controller.GcdTreeController;
 import com.apriori.gcd.entity.response.GcdTree;
