@@ -1,7 +1,5 @@
 package testsuites;
 
-import com.apriori.dds.tests.suite.DdsApiSuite;
-
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

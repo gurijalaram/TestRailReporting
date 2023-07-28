@@ -1,7 +1,5 @@
-package com.apriori.dds.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.TestUtil;
 import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
