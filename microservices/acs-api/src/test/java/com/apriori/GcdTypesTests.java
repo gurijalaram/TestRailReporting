@@ -25,7 +25,6 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import testsuites.categories.AcsTest;
 
 public class GcdTypesTests {
 
@@ -33,7 +32,6 @@ public class GcdTypesTests {
     private final AcsResources acsResources = new AcsResources();
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(id = 17181)
     @Description("Get available GCDs for Sheet Metal")
     public void testGetGcdTypesSheetMetal() {
