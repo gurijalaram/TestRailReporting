@@ -1,8 +1,5 @@
-package com.apriori.cis.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageProjectResources;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserParameters;

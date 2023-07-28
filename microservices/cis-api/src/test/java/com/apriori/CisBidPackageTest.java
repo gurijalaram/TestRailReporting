@@ -1,11 +1,9 @@
-package com.apriori.cis.tests;
+package com.apriori;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.cisapi.controller.CisBidPackageResources;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
 import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;

@@ -1,4 +1,4 @@
-package com.apriori.cis.tests;
+package com.apriori;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

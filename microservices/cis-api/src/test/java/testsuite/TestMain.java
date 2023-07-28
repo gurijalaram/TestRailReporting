@@ -1,4 +1,4 @@
-package com.apriori.cis.testsuite;
+package testsuite;
 
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
