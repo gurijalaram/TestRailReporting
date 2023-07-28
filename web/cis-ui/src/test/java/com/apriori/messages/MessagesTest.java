@@ -1,4 +1,4 @@
-package com.messages;
+package com.apriori.messages;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

@@ -1,4 +1,4 @@
-package com.projectdetails;
+package com.apriori.projectdetails;
 
 import com.apriori.DateFormattingUtils;
 import com.apriori.DateUtil;

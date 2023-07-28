@@ -1,4 +1,4 @@
-package com.partsandassemblies;
+package com.apriori.partsandassemblies;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

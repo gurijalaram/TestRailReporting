@@ -1,4 +1,4 @@
-package com.partsandassembliesdetails;
+package com.apriori.partsandassembliesdetails;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

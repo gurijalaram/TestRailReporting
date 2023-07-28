@@ -1,4 +1,4 @@
-package com.userpreference;
+package com.apriori.userpreference;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
