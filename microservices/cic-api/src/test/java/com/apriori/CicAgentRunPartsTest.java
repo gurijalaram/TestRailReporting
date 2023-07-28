@@ -1,4 +1,4 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;

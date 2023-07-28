@@ -1,4 +1,4 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;

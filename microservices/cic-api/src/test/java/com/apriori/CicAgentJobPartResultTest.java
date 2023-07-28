@@ -1,4 +1,4 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;

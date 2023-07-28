@@ -1,4 +1,4 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
 import entity.request.PlmFieldDefinitions;
 import entity.response.PlmPartResponse;
