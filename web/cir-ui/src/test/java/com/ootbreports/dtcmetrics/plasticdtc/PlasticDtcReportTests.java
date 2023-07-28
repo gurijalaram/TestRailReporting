@@ -1,5 +1,7 @@
 package com.ootbreports.dtcmetrics.plasticdtc;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -29,8 +31,8 @@ import enums.RollupEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -47,7 +49,8 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7303})
     @Description("Validate report is available by navigation - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -58,7 +61,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7306})
     @Description("Validate report is available by library - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -69,7 +72,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7309})
     @Description("Validate report is available by search - Plastic DTC Report")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -80,7 +83,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1344})
     @Description("Test Plastic DTC Reports Export Set Availability")
     public void testPlasticDtcReportExportSetAvailability() {
@@ -89,7 +92,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1365})
     @Description("Verify rollup dropdown input control functions correctly")
     public void testRollupDropdown() {
@@ -101,7 +104,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1370})
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
@@ -141,7 +144,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1345})
     @Description("Test Plastic DTC Export Set Filter using Input Field")
     public void testPlasticDtcExportSetFilterInputField() {
@@ -152,7 +155,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1345})
     @Description("Test Plastic DTC Export Set Filter using Date Picker")
     public void testPlasticDtcExportSetFilterDatePicker() {
@@ -161,7 +164,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1346})
     @Description("Test Plastic DTC Export Set Selection")
     public void testPlasticDtcExportSetSelection() {
@@ -170,7 +173,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1376})
     @Description("Test Plastic DTC Data Integrity")
     public void testPlasticDtcDataIntegrity() {
@@ -204,7 +207,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7354})
     @Description("Verify apply button functionality - Plastic DTC Report")
     public void testApplyButton() {
@@ -217,7 +220,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7357})
     @Description("Verify cancel button functionality - Plastic DTC Report")
     public void testCancelButton() {
@@ -226,7 +229,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7360})
     @Description("Verify reset button functionality - Plastic DTC Report ")
     public void testResetButton() {
@@ -250,7 +253,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1366})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -263,7 +266,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7403})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Report")
     public void testCostMetricInputControlFbc() {
@@ -276,7 +279,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7380})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -289,7 +292,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1368})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -302,7 +305,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1709})
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -314,7 +317,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7517})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Report")
     public void testDtcScoreNoSelection() {
@@ -326,7 +329,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7520})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Report")
     public void testDtcScoreLow() {
@@ -339,7 +342,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7523})
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Report")
     public void testDtcScoreMedium() {
@@ -352,7 +355,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7526})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Report")
     public void testDtcScoreHigh() {
@@ -365,7 +368,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1380})
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
@@ -377,7 +380,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1374})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -390,7 +393,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1371})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -402,7 +405,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2320})
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {

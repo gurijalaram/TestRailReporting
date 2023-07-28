@@ -1,5 +1,7 @@
 package com.ootbreports.general.assemblydetails;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -31,8 +33,8 @@ import enums.ComponentInfoColumnEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -55,7 +57,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1915})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigationAssemblyDetails() {
@@ -66,7 +69,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3060})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
@@ -75,7 +78,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1916})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
@@ -84,7 +87,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1922})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -117,7 +121,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -165,7 +169,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -208,7 +212,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3068, 1929})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -228,10 +233,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .clickOk(AssemblyDetailsReportPage.class)
-                .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
             assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
@@ -260,7 +265,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -310,7 +315,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -327,11 +332,11 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(AssemblyDetailsReportPage.class)
-                .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
             assemblyType,
@@ -359,7 +364,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -410,7 +415,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -461,7 +467,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1919})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -472,7 +479,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3244})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -481,7 +489,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -568,7 +576,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1918})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -600,7 +609,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1920})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -609,7 +619,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
@@ -623,9 +634,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class);
 
         String partNumberComponent = assemblyDetailsReportPage.getComponentLinkPartNumber();
         assemblyDetailsReportPage.clickComponentLinkAssemblyDetails();
@@ -643,7 +654,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
@@ -661,7 +672,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
     public void testCreatedByFilterSearch() {
@@ -673,7 +684,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
@@ -721,7 +732,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
     public void testCreatedByFilterButtons() {
@@ -734,7 +745,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
     public void testLastModifiedFilterSearch() {
@@ -746,7 +757,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
@@ -782,7 +793,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
     public void testLastModifiedFilterButtons() {
@@ -795,7 +806,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
@@ -807,7 +819,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
@@ -852,23 +864,23 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
         assemblyDetailsReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .clickOk(AssemblyDetailsReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(AssemblyDetailsReportPage.class);
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> levelValues =
             assemblyDetailsReportPage.getLevelValues(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType());
@@ -884,7 +896,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -913,7 +925,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {1927})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {
@@ -931,9 +943,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         );
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
-                .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
-                .clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+            .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<String> reportsVpeValues = assemblyDetailsReportPage.getAllVpeValuesAssemblyDetailsReport();
 

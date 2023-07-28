@@ -1,5 +1,7 @@
 package com.ootbreports.targetquotedcosttrend;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -19,8 +21,8 @@ import enums.CostMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 
 public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
@@ -33,7 +35,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3352})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -44,7 +46,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7323})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -55,7 +57,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3354})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -66,7 +68,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3355})
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
@@ -84,7 +86,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3356})
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
@@ -111,7 +113,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3357})
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
@@ -130,7 +132,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3358})
     @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricFbc() {
@@ -143,7 +145,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7423})
     @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricPpc() {
@@ -156,7 +158,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3359})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
@@ -183,7 +185,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
@@ -192,7 +194,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidFinal() {
@@ -201,7 +203,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7668})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Base Milestone")
     public void testHyperlinksToDetailsReportBaseMilestone() {
@@ -210,7 +212,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3361})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")
     public void testHyperlinksToDetailsReportFinalMilestone() {

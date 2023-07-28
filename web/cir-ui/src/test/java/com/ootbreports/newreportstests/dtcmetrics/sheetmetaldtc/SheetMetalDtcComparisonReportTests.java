@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 
@@ -11,7 +13,7 @@ import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -33,7 +35,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7419})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
     public void testCostMetricPpc() {
@@ -44,7 +46,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7420})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Comparison Report")
     public void testCostMetricFbc() {
@@ -55,7 +57,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7399})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
@@ -66,7 +68,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7400})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {

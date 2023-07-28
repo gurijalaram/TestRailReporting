@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.componentcost;
 
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 
@@ -8,7 +10,7 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
 import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
@@ -22,7 +24,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3329})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {

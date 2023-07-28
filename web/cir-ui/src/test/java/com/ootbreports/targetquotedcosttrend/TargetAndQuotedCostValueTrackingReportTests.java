@@ -1,5 +1,7 @@
 package com.ootbreports.targetquotedcosttrend;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -25,8 +27,8 @@ import enums.CostMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
@@ -40,7 +42,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7325})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByNavigation() {
@@ -51,7 +53,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7327})
     @Description("Validate report available by library - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByLibrary() {
@@ -62,7 +64,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7329})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityBySearch() {
@@ -73,7 +75,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3364})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlPpc() {
@@ -85,7 +87,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7424})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlFbc() {
@@ -97,7 +99,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3365})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
@@ -124,7 +126,8 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3368})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 1")
     public void testLinksToMilestoneProjectOne() {
@@ -132,7 +135,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7669})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 2")
     public void testLinksToMilestoneProjectTwo() {
@@ -140,7 +143,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7670})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 3")
     public void testLinksToMilestoneProjectThree() {
@@ -148,7 +151,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7671})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 4")
     public void testLinksToMilestoneProjectFour() {
@@ -156,7 +159,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3366})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
@@ -179,7 +182,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3367})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {

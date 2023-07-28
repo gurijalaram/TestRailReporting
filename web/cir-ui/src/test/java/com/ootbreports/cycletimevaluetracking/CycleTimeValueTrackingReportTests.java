@@ -1,5 +1,7 @@
 package com.ootbreports.cycletimevaluetracking;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,8 +17,8 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 
 public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
@@ -29,7 +31,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2325})
     @Description("Validate report is available by navigation - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByNavigation() {
@@ -40,7 +42,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7236})
     @Description("Verify report availability by library - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByLibrary() {
@@ -49,7 +51,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7238})
     @Description("Verify report availability by search - Cycle Time Value Tracking Report")
     public void testReportAvailabilityBySearch() {
@@ -58,7 +60,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2331})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
@@ -81,7 +83,8 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2332})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
@@ -102,7 +105,8 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Issue("AP-66960")
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2335})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {

@@ -1,5 +1,7 @@
 package com.login;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,8 +14,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 public class LoginTests extends TestBaseUI {
@@ -26,7 +28,8 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2695})
     @Description("Successful login to CI Report")
     public void testLogin() {
@@ -37,7 +40,8 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2696})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -48,7 +52,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2697})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
@@ -60,7 +64,8 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2698})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
@@ -71,7 +76,8 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2699})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

@@ -1,5 +1,7 @@
 package com.ootbreports.dtcmetrics.machiningdtc;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -26,8 +28,8 @@ import enums.SortOrderItemsEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 
 public class MachiningDtcComparisonReportTests extends TestBaseUI {
 
@@ -41,7 +43,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7251})
     @Description("Validate report is available by navigation - Machining DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
@@ -52,7 +54,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7252})
     @Description("Validate report is available by library - Machining DTC Comparison Report")
     public void testReportAvailabilityByLibrary() {
@@ -61,7 +63,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7253})
     @Description("Validate report is available by search - Machining DTC Comparison Report")
     public void testReportAvailabilityBySearch() {
@@ -70,7 +73,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3020})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -79,7 +82,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7337})
     @Description("Verify reset button functionality - Machining DTC Comparison Report")
     public void testApplyButton() {
@@ -92,7 +96,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7334})
     @Description("Verify cancel button functionality - Machining DTC Comparison Report")
     public void testCancelButton() {
@@ -101,7 +105,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7337})
     @Description("Verify reset button functionality - Machining DTC Comparison Report")
     public void testResetButton() {
@@ -125,7 +129,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3567})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -136,7 +141,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7433})
     @Description("Verify export date filters correctly filters export sets - Picker - Machining DTC Comparison Report")
     public void testBothExportDatesUsingDatePicker() {
@@ -145,7 +151,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7432})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Comparison Report")
     public void testBothExportDatesUsingInputField() {
@@ -156,7 +162,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7414})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
@@ -169,7 +175,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7415})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
@@ -182,7 +189,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7394})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
@@ -195,7 +203,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7395})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Comparison Report ")
     public void testMassMetricInputControlRoughMass() {
@@ -208,7 +216,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7458})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Comparison Report")
     public void testDtcScoreNoSelection() {
@@ -220,7 +228,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7496})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -233,7 +242,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7499})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Comparison Report")
     public void testDtcScoreMedium() {
@@ -246,7 +255,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7502})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Comparison Report")
     public void testDtcScoreHigh() {
@@ -259,7 +268,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7543})
     @Description("Verify DTC Score Input Control - All Selection - Machining DTC Comparison Report")
     public void testDtcScoreAll() {
@@ -272,7 +282,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -297,7 +308,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3031})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -310,7 +321,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3027})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -322,7 +334,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -339,7 +351,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
@@ -356,7 +368,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
@@ -373,7 +385,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
@@ -390,7 +402,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {

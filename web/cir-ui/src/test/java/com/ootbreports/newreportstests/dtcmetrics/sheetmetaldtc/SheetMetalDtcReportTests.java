@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;
@@ -14,7 +16,7 @@ import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -100,7 +102,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7532})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -117,7 +119,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7535})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
@@ -134,7 +136,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7538})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
@@ -151,7 +153,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3045})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {

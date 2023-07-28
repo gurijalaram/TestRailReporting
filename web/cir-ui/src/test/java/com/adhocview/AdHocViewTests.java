@@ -1,5 +1,6 @@
 package com.adhocview;
 
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,12 +12,12 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
 
 public class AdHocViewTests extends TestBaseUI {
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = 12517)
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testAdHocViewCreation() {

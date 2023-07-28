@@ -1,4 +1,4 @@
-package com.explore;
+package com.apriori.explore;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.startsWith;

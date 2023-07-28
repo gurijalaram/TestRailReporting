@@ -1,5 +1,7 @@
 package com.ootbreports.designoutlieridentification;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,8 +19,8 @@ import com.navigation.CommonReportTests;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 
 import java.math.BigDecimal;
 
@@ -34,7 +36,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1985})
     @Description("Validate report is available by navigation - Design Outlier Identification Report")
     public void testReportAvailableByNavigation() {
@@ -45,7 +47,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {6178})
     @Description("Validate report is available by library - Design Outlier Identification Report")
     public void testReportAvailableByLibrary() {
@@ -56,7 +58,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1986})
     @Description("Validate report is available by search - Design Outlier Identification Report")
     public void testReportAvailableBySearch() {
@@ -67,7 +69,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1997})
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
     public void testMassMetricFinishMass() {
@@ -80,7 +82,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7385})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {
@@ -93,7 +95,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1988})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -104,7 +106,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1988})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
@@ -115,7 +117,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
@@ -137,7 +139,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1998})
     @Description("Min and max cost filter works")
     public void testMinAndMaxCostFilter() {
@@ -149,7 +151,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = 6260)
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
@@ -161,7 +163,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = 1998)
     @Description("Min and max mass filter works")
     public void testMinAndMaxMassFilter() {
@@ -173,7 +175,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = 6265)
     @Description("Min and max mass filter - junk value test")
     public void testMinAndMaxMassFilterJunkValue() {
@@ -185,7 +187,8 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {2006})
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {

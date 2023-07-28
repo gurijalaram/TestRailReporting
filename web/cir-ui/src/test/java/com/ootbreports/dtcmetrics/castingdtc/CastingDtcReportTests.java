@@ -1,5 +1,6 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,8 +29,7 @@ import enums.RollupEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -45,7 +45,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7240})
     @Description("Validate report is available by navigation - Casting DTC Report")
     public void testReportAvailabilityByNavigation() {
@@ -56,7 +56,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7243})
     @Description("Verify report is available by library - Casting DTC Report")
     public void testReportAvailabilityByLibrary() {
@@ -65,7 +65,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = 7247)
     @Description("Verify report availability by search - Casting DTC Report")
     public void testReportAvailabilityBySearch() {
@@ -74,7 +74,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1692})
     @Description("Verify Export Set list controls function correctly - Casting DTC Report")
     public void testCastingDtcExportSetInputControls() {
@@ -83,7 +83,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {1694})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Report")
     public void testRollupDropdown() {
@@ -95,7 +95,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = 7342)
     @Description("Verify apply button functionality - Casting DTC Report")
     public void testApplyButton() {
@@ -108,7 +108,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {7345})
     @Description("Verify cancel button functionality - Casting DTC Report")
     public void testCancelButton() {
@@ -117,7 +117,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {7346})
     @Description("Verify reset button functionality - Casting DTC Report")
     public void testResetButton() {
@@ -141,7 +141,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1691})
     @Description("Verify export date filters correctly filters export sets - Picker - Casting DTC Report")
     public void testBothExportDatesUsingDatePicker() {
@@ -150,7 +150,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7427})
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Report")
     public void testBothExportDatesUsingInputField() {
@@ -161,7 +161,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1715})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Report")
     public void testVerifyCastingDtcReportIsAvailableWithRollUp() {
@@ -200,7 +200,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1699})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -212,7 +212,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {1703})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -225,7 +225,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {1695})
     @Description("Verify cost metric input control functions correctly")
     public void testCostMetricInputControlPpc() {
@@ -238,7 +238,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {7408})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
@@ -251,7 +251,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {1696})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -264,7 +264,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7388})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -277,7 +277,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7454})
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupDieCastingOnly() {
@@ -290,7 +290,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7453})
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupSandCastingOnly() {
@@ -303,7 +303,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = 7455)
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupSandAndDieCasting() {
@@ -312,7 +312,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1709})
     @Description("Validate chart tool-tips")
     public void testChartToolTips() {
@@ -324,7 +324,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {7505})
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report")
     public void testDtcScoreNoSelection() {
@@ -336,7 +336,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tag(REPORTS)
     @TestRail(id = {7508})
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
@@ -349,7 +349,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7511})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
@@ -362,7 +362,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7514})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
@@ -375,7 +375,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1710})
     @Description("Verify links to help files function correctly")
     public void testLinkToReportsUserGuide() throws Exception {
@@ -387,7 +387,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {1700})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {

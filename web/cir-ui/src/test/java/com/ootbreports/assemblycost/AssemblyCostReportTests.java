@@ -1,5 +1,8 @@
 package com.ootbreports.assemblycost;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.TestBaseUI;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ReportNamesEnum;
@@ -9,8 +12,8 @@ import com.navigation.CommonReportTests;
 import enums.AssemblySetEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 public class AssemblyCostReportTests extends TestBaseUI {
@@ -22,7 +25,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2995})
     @Description("Validate report is available by navigation - Assembly Cost (A4) Report")
     public void testReportAvailabilityByNavigationAssemblyCostA4() {
@@ -33,7 +36,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7132})
     @Description("Validate report is available by navigation - Assembly Cost (Letter) Report")
     public void testReportAvailabilityByNavigationAssemblyCostLetter() {
@@ -44,7 +47,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {2996})
     @Description("Validate report is available by search - Assembly Cost (A4) Report")
     public void testReportAvailableBySearchAssemblyCostA4() {
@@ -53,7 +56,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7130})
     @Description("Validate report is available by search - Assembly Cost (Letter) Report")
     public void testReportAvailableBySearchAssemblyCostLetter() {
@@ -63,7 +66,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
 
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7129})
     @Description("Validate report is available by library (Assembly Cost A4 Report)")
     public void testReportAvailabilityByLibraryAssemblyCostA4() {
@@ -72,7 +76,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = 7131)
     @Description("Validate report is available by library (Assembly Cost Letter Report)")
     public void testReportAvailabilityByLibraryAssemblyCostLetter() {
@@ -81,7 +86,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3008})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
@@ -93,7 +99,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7621})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (Letter) Report")
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
@@ -105,7 +111,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7622})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (A4) Report")
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
@@ -117,7 +124,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7623})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (Letter) Report")
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
@@ -129,7 +136,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3010})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost A4")
     public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
@@ -141,7 +148,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7625})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
@@ -153,7 +161,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3002})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (A4) Report")
     public void testSubAssemblySelectionAssemblyCostA4() {
@@ -162,7 +170,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7626})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")
     public void testSubAssemblySelectionAssemblyCostLetter() {
@@ -171,7 +180,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {2998})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (A4) Report")
     public void testDataIntegrityAssemblyCostA4() {
@@ -180,7 +189,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Category(ReportsTest.class)
+    //@Tag(REPORTS)
     @TestRail(id = {7624})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (Letter) Report")
     public void testDataIntegrityAssemblyCostLetter() {

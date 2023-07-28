@@ -1,5 +1,7 @@
 package com.ootbreports.dtcmetrics.sheetmetaldtc;
 
+import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,8 +27,8 @@ import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -42,7 +44,8 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {7312})
     @Description("Validate report is available by navigation - Sheet Metal DTC Report")
     public void testReportAvailabilityByNavigation() {
@@ -53,7 +56,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7315})
     @Description("Validate report is available by library - Sheet Metal DTC Report")
     public void testReportAvailabilityByLibrary() {
@@ -62,7 +65,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7318})
     @Description("Validate report is available by search - Sheet Metal DTC Report")
     public void testReportAvailabilityBySearch() {
@@ -71,7 +74,8 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
     @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetAndRollupSelection() {
@@ -95,7 +99,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3039})
     @Description("Verify earliest and latest export date calendar widgets correctly filter the list of export sets")
     public void testExportSetDateFilterDatePicker() {
@@ -104,7 +108,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7366})
     @Description("Verify apply button functionality - Sheet Metal DTC Report")
     public void testApplyButton() {
@@ -117,7 +121,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7369})
     @Description("Verify cancel button functionality - Sheet Metal DTC Report")
     public void testCancelButton() {
@@ -126,7 +130,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7372})
     @Description("Verify reset button functionality - Sheet Metal DTC Report")
     public void testResetButton() {
@@ -150,7 +154,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3040})
     @Description("Verify Export Set list controls function correctly - Panel Buttons - Sheet Metal DTC Reports")
     public void testExportSetListControls() {
@@ -159,7 +163,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7690})
     @Description("Verify Export Set list controls function correctly - Search - Sheet Metal DTC Reports")
     public void testExportSetSearch() {
@@ -171,7 +175,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3042})
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
@@ -183,7 +187,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3043})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -196,7 +200,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7418})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Report ")
     public void testCostMetricInputControlFbc() {
@@ -209,7 +213,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3044})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -222,7 +226,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7398})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -235,7 +239,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3045})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
@@ -262,7 +266,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3046})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCodeInputControl() {
@@ -274,7 +278,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7445})
     @Description("Verify process group input control functionality - No Selection - Sheet Metal DTC Report")
     public void testProcessGroupInputControlNoSelection() {
@@ -286,7 +290,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7448})
     @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Report")
     public void testSingleProcessGroup() {
@@ -299,7 +303,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {3051})
     @Description("Verify Select Parts list controls function correctly - Panel Buttons")
     public void testPartListInputControlButtons() {
@@ -312,7 +316,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7529})
     @Description("Verify DTC Score Input Control - No Selection - Sheet Metal DTC Report")
     public void testDtcScoreNoSelection() {
@@ -324,7 +328,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7532})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -337,7 +341,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7535})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
@@ -350,7 +354,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Tag(REPORTS)
     @TestRail(id = {7538})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {

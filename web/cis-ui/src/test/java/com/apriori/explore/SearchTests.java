@@ -1,4 +1,4 @@
-package com.explore;
+package com.apriori.explore;
 
 import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
