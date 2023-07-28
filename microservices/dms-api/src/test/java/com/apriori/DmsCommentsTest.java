@@ -1,7 +1,5 @@
-package com.apriori.dms.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

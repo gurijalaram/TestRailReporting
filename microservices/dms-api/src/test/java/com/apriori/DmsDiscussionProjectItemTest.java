@@ -1,4 +1,4 @@
-package com.apriori.dms.tests;
+package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;

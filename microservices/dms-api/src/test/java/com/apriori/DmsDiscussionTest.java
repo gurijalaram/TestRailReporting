@@ -1,6 +1,5 @@
-package com.apriori.dms.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.testrail.TestRail;
 

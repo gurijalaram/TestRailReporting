@@ -1,6 +1,5 @@
-package com.apriori.dms.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.testrail.TestRail;
 
 import entity.response.DmsCommentViewResponse;

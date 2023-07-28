@@ -1,4 +1,4 @@
-package com.apriori.dms.tests;
+package com.apriori;
 
 import com.apriori.testrail.TestRail;
 
