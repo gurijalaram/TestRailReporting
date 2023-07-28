@@ -1,6 +1,5 @@
-package com.apriori.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.cusapi.entity.request.UpdateUserRequest;
 import com.apriori.cusapi.entity.request.UserProfile;
 import com.apriori.cusapi.entity.response.ErrorResponse;

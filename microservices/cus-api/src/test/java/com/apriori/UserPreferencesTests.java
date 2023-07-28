@@ -1,4 +1,4 @@
-package com.apriori.tests;
+package com.apriori;
 
 import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
 import com.apriori.cusapi.entity.response.PreferenceItemsResponse;
