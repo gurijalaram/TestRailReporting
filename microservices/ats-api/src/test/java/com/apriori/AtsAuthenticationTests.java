@@ -1,6 +1,5 @@
-package tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.ats.entity.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.cds.entity.response.Customer;

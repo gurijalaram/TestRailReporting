@@ -1,4 +1,4 @@
-package tests;
+package com.apriori;
 
 import com.apriori.ats.entity.request.ResetAutoUsers;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
