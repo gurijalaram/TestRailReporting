@@ -9,7 +9,6 @@ import com.navigation.CommonReportTests;
 import enums.CostMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.OnPremTest;
 import testsuites.suiteinterface.ReportsTest;
 

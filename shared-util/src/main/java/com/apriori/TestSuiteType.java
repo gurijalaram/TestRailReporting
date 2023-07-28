@@ -7,7 +7,8 @@ public enum TestSuiteType {
     SANITY("SANITY"),
     CUSTOMER("CUSTOMER"),
     SYSTEM_CONFIGURATION("SYSTEM_CONFIGURATION"),
-    USERS("USERS");
+    USERS("USERS"),
+    IGNORE("IGNORE");
 
     private final String value;
 
@@ -27,5 +28,6 @@ public enum TestSuiteType {
         public static final String CUSTOMER = "CUSTOMER";
         public static final String SYSTEM_CONFIGURATION = "SYSTEM_CONFIGURATION";
         public static final String USERS = "USERS";
+        public static final String IGNORE = "IGNORE";
     }
 }

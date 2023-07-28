@@ -11,7 +11,6 @@ import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 import utils.JasperApiAuthenticationUtil;
 

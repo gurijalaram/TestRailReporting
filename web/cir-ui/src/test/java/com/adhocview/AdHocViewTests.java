@@ -11,7 +11,6 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 
 public class AdHocViewTests extends TestBaseUI {

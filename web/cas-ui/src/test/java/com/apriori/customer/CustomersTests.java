@@ -19,7 +19,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class CustomersTests extends TestBaseUI {
     private CustomerAdminPage customerAdminPage;

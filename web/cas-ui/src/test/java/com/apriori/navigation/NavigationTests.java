@@ -17,7 +17,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class NavigationTests extends TestBaseUI {
