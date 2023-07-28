@@ -1,4 +1,4 @@
-package com.apriori.tests;
+package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
