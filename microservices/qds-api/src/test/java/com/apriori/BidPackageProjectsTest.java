@@ -1,10 +1,5 @@
-package com.apriori.qds.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.DateFormattingUtils;
-import com.apriori.DateUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.entity.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.qds.entity.request.bidpackage.BidPackageProjectRequest;

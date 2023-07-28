@@ -1,8 +1,5 @@
-package com.apriori.qds.tests;
+package com.apriori;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
