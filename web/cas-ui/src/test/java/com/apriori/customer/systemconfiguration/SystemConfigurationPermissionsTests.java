@@ -1,5 +1,6 @@
 package com.apriori.customer.systemconfiguration;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -10,7 +11,6 @@ import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.ListUtils;
 
 import io.qameta.allure.Description;
@@ -18,6 +18,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.Comparator;
 import java.util.List;
@@ -69,7 +70,7 @@ public class SystemConfigurationPermissionsTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @Description("System Configuration Permissions should be displayed and sorted in alphabetical order, the number " +
         "of permissions should be displayed.  The first permission should be selected and details shown correctly.")
     @TestRail(id = {9880, 9883, 9882, 9967, 9965, 9987})
@@ -171,7 +172,7 @@ public class SystemConfigurationPermissionsTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @Description("The details page should reflect when a permission is selected.")
     @TestRail(id = {9966})
     public void testValidatePermissionSelectionUpdatesTheSelectedDetails() {

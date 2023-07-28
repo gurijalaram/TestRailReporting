@@ -1,5 +1,7 @@
 package com.apriori.customer.users;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
@@ -28,6 +30,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 public class UsersGrantApplicationAccessTests extends TestBaseUI {
 

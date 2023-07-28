@@ -1,5 +1,7 @@
 package com.apriori.customer;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.response.Customer;
@@ -13,12 +15,12 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 public class CustomersTests extends TestBaseUI {
     private CustomerAdminPage customerAdminPage;
@@ -39,7 +41,7 @@ public class CustomersTests extends TestBaseUI {
 
     @Test
     @Description("Validate customers table has correct details")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {5594, 5596, 9943, 5555, 6267, 6268, 6269})
     public void testCustomersTableViewHasCorrectDetails() {
         SoftAssertions soft = new SoftAssertions();
@@ -98,7 +100,7 @@ public class CustomersTests extends TestBaseUI {
 
     @Test
     @Description("Validate Card button switches to card view of customers")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {13249, 13250, 13251})
     public void testCustomerStaffCardView() {
         SoftAssertions soft = new SoftAssertions();

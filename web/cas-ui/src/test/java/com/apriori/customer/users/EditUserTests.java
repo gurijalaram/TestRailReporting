@@ -1,5 +1,7 @@
 package com.apriori.customer.users;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.response.Customer;
@@ -18,6 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.Arrays;
 import java.util.List;

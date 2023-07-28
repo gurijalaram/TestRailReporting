@@ -1,5 +1,7 @@
 package com.apriori.infrastructure;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.entity.IdentityHolder;
@@ -19,7 +21,6 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.UserCreation;
 
 import io.qameta.allure.Description;
@@ -28,6 +29,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -112,7 +114,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
 
     @Test
     @Description("Validate all users can be given access to applications from infrastructure view")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {13224, 13225, 13226, 13227, 13230, 14060})
     public void testUsersCanBeGivenAccessToApplication() {
         SoftAssertions soft = new SoftAssertions();

@@ -1,5 +1,6 @@
 package com.apriori.customer.systemconfiguration;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
@@ -15,13 +16,13 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.TimeoutException;
 
 import java.util.List;
@@ -234,7 +235,7 @@ public class SystemConfigurationGroupsTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {9906, 9942})
     public void testValidateGroupSelectionUpdatesTheSelectedDetails() {
 

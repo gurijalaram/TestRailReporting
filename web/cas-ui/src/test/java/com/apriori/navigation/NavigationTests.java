@@ -1,5 +1,7 @@
 package com.apriori.navigation;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.TestBaseUI;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.ImportPage;
@@ -11,12 +13,12 @@ import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class NavigationTests extends TestBaseUI {
@@ -63,7 +65,7 @@ public class NavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @Description("Test that the URL updates when navigating between pages")
     @TestRail(id = {9908})
     public void testURLUpdatesWithPageChange() {

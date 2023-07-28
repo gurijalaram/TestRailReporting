@@ -1,5 +1,7 @@
 package com.apriori.customer.users;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
@@ -18,13 +20,13 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -100,7 +102,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
 
     @Test
     @Description("Verify staff users can be added to the list.")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {5587, 5588, 5589, 5590, 5591})
     public void testVerifyUsersCanBeAddedToTheList() {
 

@@ -1,5 +1,7 @@
 package com.apriori.customer;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
@@ -18,13 +20,13 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 
 public class CustomerAccessTests extends TestBaseUI {
 
@@ -64,7 +66,7 @@ public class CustomerAccessTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @Description("Validate requesting access for a user that is not in white list of customer")
     @TestRail(id = {12082, 12083, 12085, 12088, 12144, 13172})
     public void requestAccessForNotWhiteListUser() {
@@ -183,7 +185,7 @@ public class CustomerAccessTests extends TestBaseUI {
     }
 
     @Test
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @Description("Validate that aPriori staff user cannot add self to a customer")
     @TestRail(id = {16123})
     public void selfAddingToWhiteList() {

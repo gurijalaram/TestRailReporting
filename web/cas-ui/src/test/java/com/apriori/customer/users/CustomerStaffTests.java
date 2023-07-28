@@ -1,5 +1,7 @@
 package com.apriori.customer.users;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
@@ -21,7 +23,6 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.UserCreation;
 
 import io.qameta.allure.Description;
@@ -29,6 +30,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.NoSuchElementException;
 
 import java.util.List;
@@ -85,7 +87,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     @Test
     @Description("Validate customer staff table has correct details")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {4061, 4380, 10572, 10574, 10580})
     public void testCustomerStaffTableViewHasCorrectDetails() {
         UsersListPage goToTableView = usersListPage
@@ -142,7 +144,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     @Test
     @Description("Validate Card button switches to card view of customer staff")
-    @Category(SmokeTest.class)
+    @Tag(SMOKE)
     @TestRail(id = {10573, 10575, 10576, 10577})
     public void testCustomerStaffCardView() {
         UsersListPage goToCardView = usersListPage
