@@ -11,7 +11,6 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -19,7 +18,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +61,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+     @Tag(SMOKE)
     @Description("Test user profile details, edit mode and cancel edit button")
     @TestRail(id = {5576, 11952, 4374, 4382, 11962})
     public void testEditAndCancelUserProfile() {
@@ -123,7 +121,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+     @Tag(SMOKE)
     @Description("Test that user details can be edited and saved")
     @TestRail(id = {11963})
     public void testEditUserAndSave() {

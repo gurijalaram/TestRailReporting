@@ -13,14 +13,12 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +60,7 @@ public class NewUserTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+     @Tag(SMOKE)
     @Description("New User profile form has correct fields, user can be added by filling only mandatory fields")
     @TestRail(id = {4063, 4062, 4073})
     public void testUserIsCreatedWithOnlyRequiredFields() {

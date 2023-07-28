@@ -1,5 +1,7 @@
 package com.apriori.customer.users;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
@@ -18,7 +20,6 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.apache.hc.core5.http.HttpStatus;
@@ -26,7 +27,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 
 public class BatchImportListTests extends TestBaseUI {
 
+    private final String fileName = "testUsersBatch.csv";
     private String cloudRef;
     private String customerName;
     private ImportPage importPage;
@@ -43,7 +45,6 @@ public class BatchImportListTests extends TestBaseUI {
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private final String fileName = "testUsersBatch.csv";
     private String invalidDataFile = "invalidUsersData.csv";
 
     @Before
@@ -140,7 +141,7 @@ public class BatchImportListTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+    @Tag(SMOKE)
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {

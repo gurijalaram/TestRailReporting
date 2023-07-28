@@ -1,5 +1,7 @@
 package com.apriori.customer;
 
+import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -11,7 +13,6 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -20,7 +21,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -77,19 +78,19 @@ public class NewCustomerTests extends TestBaseUI {
             .isNull();
 
         List<String> labels = Arrays.asList(
-                "Customer Name:",
-                "Description:",
-                "Customer Type:",
-                "Salesforce ID:",
-                "Cloud Reference:",
-                "Email Domains:",
-                "CAD File Retention Policy (days):",
-                "Max CAD File Size:",
-                "Last Updated:",
-                "Updated By:",
-                "Created:",
-                "Created By:",
-                "Authentication:"
+            "Customer Name:",
+            "Description:",
+            "Customer Type:",
+            "Salesforce ID:",
+            "Cloud Reference:",
+            "Email Domains:",
+            "CAD File Retention Policy (days):",
+            "Max CAD File Size:",
+            "Last Updated:",
+            "Updated By:",
+            "Created:",
+            "Created By:",
+            "Authentication:"
         );
 
         testNewCustomerLabelAvailable(labels, soft);
@@ -100,13 +101,13 @@ public class NewCustomerTests extends TestBaseUI {
         labels.forEach(label -> {
             List<WebElement> elements = driver.findElements(By.xpath(String.format("//label[.='%s']", label)));
             soft.assertThat(elements.size())
-                    .overridingErrorMessage(String.format("Could not find the label, %s", label))
-                    .isGreaterThan(0);
+                .overridingErrorMessage(String.format("Could not find the label, %s", label))
+                .isGreaterThan(0);
         });
     }
 
     @Test
-    @Category({SmokeTest.class})
+    @Tag(SMOKE)
     @Description("Clicking the cancel button returns the user to the customer list.")
     @TestRail(id = {9613})
     public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
@@ -117,7 +118,7 @@ public class NewCustomerTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+    @Tag(SMOKE)
     @Description("The save button creates the new customer and reloads the page in edit mode.")
     @TestRail(id = {9616, 10627})
     public void testSaveCreatesTheNewCustomerAndThePageReloadsWithTheNewCustomer() {
@@ -263,19 +264,19 @@ public class NewCustomerTests extends TestBaseUI {
         String salesforceId = format.format(new Date());
         String customerName = String.format("QA Automation %s", salesforceId);
         customerProfilePage
-                .enterDescription("Automation Test Customer")
-                .enterSalesforceId(salesforceId)
-                .enterEmailDomains("apriori.com")
-                .enterCustomerName(customerName)
-                .changeCustomerStatus()
-                .clickSaveButton();
+            .enterDescription("Automation Test Customer")
+            .enterSalesforceId(salesforceId)
+            .enterEmailDomains("apriori.com")
+            .enterCustomerName(customerName)
+            .changeCustomerStatus()
+            .clickSaveButton();
 
         soft.assertThat(customerProfilePage.getStatus()).isEqualTo("Inactive");
 
         String customerIdentity = customerViewPage.findCustomerIdentity();
 
         CustomerAdminPage findCustomer = customerViewPage.goToCustomersList()
-                .clickCardViewButton();
+            .clickCardViewButton();
 
         PageUtils utils = new PageUtils(driver);
 

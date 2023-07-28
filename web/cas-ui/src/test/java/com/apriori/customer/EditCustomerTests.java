@@ -8,14 +8,12 @@ import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -167,7 +165,7 @@ public class EditCustomerTests extends TestBaseUI {
     }
 
     @Test
-    @Category({SmokeTest.class})
+     @Tag(SMOKE)
     @Description("Test that customer details can be edited and saved.")
     @TestRail(id = {10060})
     public void testEditAndSave() {

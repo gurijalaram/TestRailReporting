@@ -22,14 +22,12 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
-import com.apriori.testsuites.categories.SmokeTest;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
@@ -118,7 +116,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @Test
     @Description("Validate granted applications can be added by Add button")
-    @Category({SmokeTest.class})
+     @Tag(SMOKE)
     @TestRail(id = {12515})
     public void testUserGrantedAccessControls() {
         SoftAssertions soft = new SoftAssertions();
