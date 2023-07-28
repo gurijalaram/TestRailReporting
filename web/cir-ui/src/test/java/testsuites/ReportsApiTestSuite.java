@@ -25,6 +25,7 @@ import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcRep
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
 import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.newreportstests.recommendedtestparts.RecommendedTestPartsReportTests;
 import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
 import com.ootbreports.newreportstests.targetcosttrend.TargetCostTrendReportTests;
 import com.ootbreports.newreportstests.targetcosttrend.TargetCostValueTrackingDetailsReportTests;
@@ -57,6 +58,7 @@ import org.junit.runners.Suite;
     PlasticDtcComparisonReportTests.class,
     PlasticDtcDetailsReportTests.class,
     PlasticDtcReportTests.class,
+    RecommendedTestPartsReportTests.class,
     ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,
