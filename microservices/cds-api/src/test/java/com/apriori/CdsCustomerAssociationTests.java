@@ -1,4 +1,4 @@
-package com.apriori.cds.tests;
+package com.apriori;
 
 import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;

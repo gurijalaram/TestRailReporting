@@ -1,6 +1,5 @@
-package com.apriori.cds.tests;
+package com.apriori;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.entity.response.Site;
 import com.apriori.cds.entity.response.Sites;

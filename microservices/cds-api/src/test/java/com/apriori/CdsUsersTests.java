@@ -1,4 +1,4 @@
-package com.apriori.cds.tests;
+package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
