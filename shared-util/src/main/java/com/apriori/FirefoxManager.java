@@ -1,7 +1,5 @@
 package com.apriori;
 
-import static io.github.bonigarcia.wdm.config.DriverManagerType.FIREFOX;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,7 +10,7 @@ public class FirefoxManager implements DriverManager<FirefoxOptions> {
     private FirefoxOptions firefoxOptions = new FirefoxOptions();
 
     public WebDriver createDriver() {
-        WebDriverManager.getInstance(FIREFOX).setup();
+        WebDriverManager.firefoxdriver().browserVersion("78.15.0.esr").setup();
 
         return new FirefoxDriver(getOptions());
     }

@@ -2,26 +2,40 @@ package com.apriori;
 
 import static com.apriori.DriverFactory.mode;
 import static com.apriori.DriverFactory.os;
-import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
 import static io.github.bonigarcia.wdm.config.OperatingSystem.LINUX;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
 
+@Slf4j
 public class ChromeManager implements DriverManager<ChromeOptions> {
 
     private ChromeOptions chromeOptions = new ChromeOptions();
     private HashMap<String, Object> chromePrefs = new HashMap<>();
 
     public WebDriver createDriver() {
-        WebDriverManager.getInstance(CHROME).setup();
+        WebDriverManager.chromedriver().setup();
 
-        return new ChromeDriver(getOptions());
+        int sessionRetries = 0;
+
+        while (true) {
+
+            try {
+                return new ChromeDriver(getOptions());
+            } catch (SessionNotCreatedException se) {
+
+                if (++sessionRetries == 3) {
+                    throw se;
+                }
+            }
+        }
     }
 
     public ChromeOptions getOptions() {

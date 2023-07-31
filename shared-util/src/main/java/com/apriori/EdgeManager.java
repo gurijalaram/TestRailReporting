@@ -1,7 +1,5 @@
 package com.apriori;
 
-import static io.github.bonigarcia.wdm.config.DriverManagerType.EDGE;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,7 +10,7 @@ public class EdgeManager implements DriverManager<EdgeOptions> {
     private EdgeOptions edgeOptions = new EdgeOptions();
 
     public WebDriver createDriver() {
-        WebDriverManager.getInstance(EDGE).setup();
+        WebDriverManager.edgedriver().setup();
 
         return new EdgeDriver(getOptions());
     }
