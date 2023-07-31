@@ -1,10 +1,12 @@
 package com.ootbreports.newreportstests.cycletimevaluetracking;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CurrencyEnum;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import utils.JasperApiAuthenticationUtil;
@@ -21,9 +23,24 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @TestRail(testCaseId = {"25987"})
-    @Description("Verify Currency Code input control is working correctly")
+    @TestRail(testCaseId = {"26911"})
+    @Description("Verify Currency Code input control is working correctly - Details Report")
     public void testCurrencyCode() {
-        jasperApiUtils.cycleTimeValueTrackingCurrencyTest();
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        for (int i = 6; i < 10; i += 3) {
+            String gbpCycleTimeTotalValue = getCycleTimeTotalValue(CurrencyEnum.GBP.getCurrency(), i);
+
+            String usdCycleTimeTotalValue = getCycleTimeTotalValue(CurrencyEnum.USD.getCurrency(), i);
+
+            softAssertions.assertThat(gbpCycleTimeTotalValue).isEqualTo(usdCycleTimeTotalValue);
+        }
+
+        softAssertions.assertAll();
+    }
+
+    private String getCycleTimeTotalValue(String currencyToUse, int indexToUse) {
+        return jasperApiUtils.genericTestCoreCurrencyOnly("Currency", currencyToUse)
+            .getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(indexToUse).child(0).text();
     }
 }

@@ -8,7 +8,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
@@ -23,7 +22,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @TestRail(testCaseId = {"1922"})
-    @Description("Verifies that the currency code works properly")
+    @Description("Currency Code works")
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(
             ExportSetEnum.TOP_LEVEL.getExportSetName(),

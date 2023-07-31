@@ -1,4 +1,4 @@
-package com.ootbreports.newreportstests.targetcosttrend;
+package com.ootbreports.newreportstests.potentialsavingsvaluetracking;
 
 import com.apriori.utils.TestRail;
 
@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import utils.JasperApiAuthenticationUtil;
 
-public class TargetCostTrendReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.TARGET_COST_TREND.getEndpoint();
+public class PotentialSavingsValueTrackingReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING.getEndpoint();
     // Export set is not relevant for this report
     private static final String exportSetName = "";
     private static JasperApiUtils jasperApiUtils;
@@ -21,9 +21,9 @@ public class TargetCostTrendReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"2210"})
-    @Description("Input controls - Currency code")
-    public void testCurrencyCodeInputControl() {
-        jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(8, 17, 22);
+    @TestRail(testCaseId = {"13875"})
+    @Description("Input controls - Currency code - Main Report")
+    public void testCurrencyCode() {
+        jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(8, 68, 78);
     }
 }

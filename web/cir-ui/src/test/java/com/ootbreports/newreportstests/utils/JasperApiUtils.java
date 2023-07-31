@@ -61,11 +61,11 @@ public class JasperApiUtils {
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        reportRequest = !valueToSet.isEmpty()
-            ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet) :
-            reportRequest;
-        reportRequest = setReportParameterByName(reportRequest, "exportSetName", currentExportSet);
-        reportRequest = setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
+        if (!valueToSet.isEmpty()) {
+            setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet);
+        }
+        setReportParameterByName("exportSetName", currentExportSet);
+        setReportParameterByName("latestExportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -86,12 +86,9 @@ public class JasperApiUtils {
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        reportRequest = !currencyToSet.isEmpty()
-            ? setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet) :
-            reportRequest;
-        reportRequest = setReportParameterByName(reportRequest, "projectRollup", "187");
+        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-        reportRequest = setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+        setReportParameterByName("exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -111,8 +108,8 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportSetName", exportSetName);
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "exportDate", currentDateTime);
+        setReportParameterByName("exportSetName", exportSetName);
+        setReportParameterByName("exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -123,7 +120,7 @@ public class JasperApiUtils {
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
 
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
+        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
@@ -172,7 +169,7 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
         List<Element> currencyGBPSettingElementList = jasperReportSummaryGbp.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(6).parent().children();
+            .getElementsContainingText("Currency").get(5).children();
         List<String> currencySettingGBP = Arrays.asList(
             currencyGBPSettingElementList.get(3).text(),
             currencyGBPSettingElementList.get(4).text(),
@@ -190,7 +187,7 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
         List<Element> currencySettingUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(6).parent().children();
+            .getElementsContainingText("Currency").get(5).children();
         List<String> currencySettingUSD = Arrays.asList(
             currencySettingUSDElementList.get(3).text(),
             currencySettingUSDElementList.get(4).text(),
@@ -236,48 +233,6 @@ public class JasperApiUtils {
         }
 
         softAssertions.assertAll();
-    }
-
-    /**
-     * Target Quoted Cost currency test
-     */
-    public void targetQuotedCostCurrencyTest() {
-        targetQuotedCostTrendGenericCurrencyTest(8, 23, 33);
-    }
-
-    /**
-     * Target Quoted Cost Trend Value Tracking currency test
-     */
-    public void targetQuotedCostTrendValueTrackingTest() {
-        targetQuotedCostTrendGenericCurrencyTest(8, 68, 74);
-    }
-
-    /**
-     * Target Quoted Cost Trend Value Tracking Details currency test
-     */
-    public void targetQuotedCostTrendValueTrackingDetailsTest() {
-        targetQuotedCostTrendGenericCurrencyTest(20, 93, 121);
-    }
-
-    /**
-     * Target Cost Trend currency test
-     */
-    public void targetCostTrendCurrencyTest() {
-        targetQuotedCostTrendGenericCurrencyTest(8, 17, 22);
-    }
-
-    /**
-     * Target Cost Value Tracking currency test
-     */
-    public void targetCostValueTrackingCurrencyTest() {
-        targetQuotedCostTrendGenericCurrencyTest(8, 68, 69);
-    }
-
-    /**
-     * Target Cost Value Tracking Details currency test
-     */
-    public void targetCostValueTrackingDetailsCurrencyTest() {
-        targetQuotedCostTrendGenericCurrencyTest(20, 67, 68);
     }
 
     /**
@@ -570,18 +525,23 @@ public class JasperApiUtils {
     /**
      * Sets a particular report parameter within the ReportRequest instance
      *
-     * @param reportRequest ReportRequest instance to use
      * @param valueToGet String the key of the value to set
      * @param valueToSet String the value which to set
      * @return ReportRequest instance with specified parameter set
      */
-    public ReportRequest setReportParameterByName(ReportRequest reportRequest, String valueToGet, String valueToSet) {
-        reportRequest.getParameters().getReportParameterByName(valueToGet)
+    public void setReportParameterByName(String valueToGet, String valueToSet) {
+        this.reportRequest.getParameters().getReportParameterByName(valueToGet)
             .setValue(Collections.singletonList(valueToSet));
-        return reportRequest;
     }
 
-    private void targetQuotedCostTrendGenericCurrencyTest(int keyOne, int keyTwo, int keyThree) {
+    /**
+     * Generic currency test for Target Quoted Cost Trend and Potential Savings Reports
+     *
+     * @param keyOne - currency setting key
+     * @param keyTwo - first monetary value key
+     * @param keyThree - second monetary value key
+     */
+    public void targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(int keyOne, int keyTwo, int keyThree) {
         String tableId = "JR_PAGE_ANCHOR_0_1";
         String attributeNameId = "id";
         String tagName = "span";
@@ -607,9 +567,9 @@ public class JasperApiUtils {
         usdCostValues.add(usdSpanElements.get(keyTwo).text());
         usdCostValues.add(usdSpanElements.get(keyThree).text());
 
+        softAssertions.assertThat(gbpCostValues.get(0)).isNotEqualTo(usdCostValues.get(0));
         softAssertions.assertThat(gbpCostValues.get(0)).isEqualTo("GBP");
         softAssertions.assertThat(usdCostValues.get(0)).isEqualTo("USD");
-        softAssertions.assertThat(gbpCostValues.get(0)).isNotEqualTo(usdCostValues.get(0));
         softAssertions.assertThat(gbpCostValues.get(1)).isNotEqualTo(usdCostValues.get(1));
         softAssertions.assertThat(gbpCostValues.get(2)).isNotEqualTo(usdCostValues.get(2));
 
