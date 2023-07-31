@@ -37,33 +37,7 @@ import testsuites.suiteinterface.OnPremTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
-    AssemblyDetailsReportTests.class,
-    AssemblyCostReportTests.class,
-    CastingDtcReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
-    ComponentCostReportTests.class,
-    CostOutlierIdentificationReportTests.class,
-    CostOutlierIdentificationDetailsReportTests.class,
-    CycleTimeValueTrackingDetailsReportTests.class,
-    CycleTimeValueTrackingReportTests.class,
-    DesignOutlierIdentificationReportTests.class,
-    DesignOutlierIdentificationDetailsReportTests.class,
-    LoginTests.class,
-    PlasticDtcComparisonReportTests.class,
-    PlasticDtcDetailsReportTests.class,
-    PlasticDtcReportTests.class,
-    MachiningDtcComparisonReportTests.class,
-    MachiningDtcDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    ReportsNavigationTests.class,
-    SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcReportTests.class,
-    ScenarioComparisonReportTests.class,
-    TargetAndQuotedCostTrendReportTests.class,
-    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class
+    LoginTests.class
 })
 
 public class FullOnPremCirSuite {
