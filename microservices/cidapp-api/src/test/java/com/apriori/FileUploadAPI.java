@@ -14,25 +14,20 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import junitparams.FileParameters;
-import junitparams.JUnitParamsRunner;
-import junitparams.mappers.IdentityMapper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.io.File;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
-@RunWith(JUnitParamsRunner.class)
 public class FileUploadAPI {
 
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
-    @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/auto_api_upload.csv")
     @Description("Upload, cost and publish a part")
     public void uploadCostPublish(String componentName, String processGroup) {
 
@@ -69,21 +64,5 @@ public class FileUploadAPI {
 
         assertThat(publishResponse.getLastAction(), is("PUBLISH"));
         assertThat(publishResponse.getPublished(), is(true));
-    }
-
-    public static class CustomMapper extends IdentityMapper {
-        @Override
-        public Object[] map(Reader reader) {
-            Object[] map = super.map(reader);
-            List<Object> result = new ArrayList<>();
-            for (Object lineObj : map) {
-                String line = lineObj.toString();
-                String[] index = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
-                String fileName = index[0].replace("\"", "");
-                String processGroup = index[1].replace("\"", "");
-                result.add(new Object[] {fileName, processGroup});
-            }
-            return result.toArray();
-        }
     }
 }
