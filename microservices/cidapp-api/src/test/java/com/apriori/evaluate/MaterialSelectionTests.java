@@ -20,15 +20,14 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import junitparams.naming.TestCaseName;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
+import java.util.stream.Stream;
 
-@RunWith(JUnitParamsRunner.class)
 public class MaterialSelectionTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -38,32 +37,31 @@ public class MaterialSelectionTests {
     UserCredentials currentUser;
     private File resourceFile;
 
-    private Object[] testParameters() {
-        return new Object[] {
-            new Object[] {ProcessGroupEnum.ADDITIVE_MANUFACTURING, MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName(), "ADD-LOW-001", ".SLDPRT"},
-            new Object[] {ProcessGroupEnum.BAR_TUBE_FAB, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "AP-000-006", ".step"},
-            new Object[] {ProcessGroupEnum.CASTING, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CastedPart", ".CATPart"},
-            new Object[] {ProcessGroupEnum.CASTING_DIE, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CurvedWall", ".CATPart"},
-            new Object[] {ProcessGroupEnum.CASTING_INVESTMENT, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "AP-000-506", ".prt.1"},
-            new Object[] {ProcessGroupEnum.CASTING_SAND, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "casting_q5_thinvalve", ".prt"},
-            new Object[] {ProcessGroupEnum.FORGING, MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName(), "big ring", ".SLDPRT"},
-            new Object[] {ProcessGroupEnum.PLASTIC_MOLDING, MaterialNameEnum.ABS.getMaterialName(), "bolt", ".CATPart"},
-            new Object[] {ProcessGroupEnum.POWDER_METAL, MaterialNameEnum.STEEL_F0005.getMaterialName(), "case_31_test_part_6_small", ".prt.2"},
-            new Object[] {ProcessGroupEnum.RAPID_PROTOTYPING, "Default", "Plastic moulded cap DFM", ".CATPart"},
-            new Object[] {ProcessGroupEnum.ROTO_BLOW_MOLDING, MaterialNameEnum.POLYETHYLENE_HDPE.getMaterialName(), "Plastic moulded cap DFM", ".CATPart"},
-            new Object[] {ProcessGroupEnum.SHEET_METAL, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "3571050_cad", ".prt.1"},
-            new Object[] {ProcessGroupEnum.SHEET_METAL_HYDROFORMING, MaterialNameEnum.ALUMINIUM_ANSI_2017.getMaterialName(), "FlangedRound", ".SLDPRT"},
-            //new Object[] {ProcessGroupEnum.SHEET_METAL_ROLLFORMING, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "", ""},
-            new Object[] {ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING, MaterialNameEnum.ALUMINIUM_ANSI_2024.getMaterialName(), "bracket_basic", ".prt"},
-            new Object[] {ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "SheetMetal", ".prt"},
-            new Object[] {ProcessGroupEnum.SHEET_PLASTIC, MaterialNameEnum.POLYETHYLENE_HDPE_EXTRUSION_SHEET.getMaterialName(), "r151294", ".prt.1"},
-            new Object[] {ProcessGroupEnum.STOCK_MACHINING, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "case_005_flat end mill contouring", ".SLDPRT"}
-        };
+    static Stream<Arguments> defaultMaterialTest() {
+        return Stream.of(
+            Arguments.of(ProcessGroupEnum.ADDITIVE_MANUFACTURING, MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName(), "ADD-LOW-001", ".SLDPRT"),
+            Arguments.of(ProcessGroupEnum.BAR_TUBE_FAB, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "AP-000-006", ".step"),
+            Arguments.of(ProcessGroupEnum.CASTING, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CastedPart", ".CATPart"),
+            Arguments.of(ProcessGroupEnum.CASTING_DIE, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CurvedWall", ".CATPart"),
+            Arguments.of(ProcessGroupEnum.CASTING_INVESTMENT, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "AP-000-506", ".prt.1"),
+            Arguments.of(ProcessGroupEnum.CASTING_SAND, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "casting_q5_thinvalve", ".prt"),
+            Arguments.of(ProcessGroupEnum.FORGING, MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName(), "big ring", ".SLDPRT"),
+            Arguments.of(ProcessGroupEnum.PLASTIC_MOLDING, MaterialNameEnum.ABS.getMaterialName(), "bolt", ".CATPart"),
+            Arguments.of(ProcessGroupEnum.POWDER_METAL, MaterialNameEnum.STEEL_F0005.getMaterialName(), "case_31_test_part_6_small", ".prt.2"),
+            Arguments.of(ProcessGroupEnum.RAPID_PROTOTYPING, "Default", "Plastic moulded cap DFM", ".CATPart"),
+            Arguments.of(ProcessGroupEnum.ROTO_BLOW_MOLDING, MaterialNameEnum.POLYETHYLENE_HDPE.getMaterialName(), "Plastic moulded cap DFM", ".CATPart"),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "3571050_cad", ".prt.1"),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL_HYDROFORMING, MaterialNameEnum.ALUMINIUM_ANSI_2017.getMaterialName(), "FlangedRound", ".SLDPRT"),
+            //Arguments.of(ProcessGroupEnum.SHEET_METAL_ROLLFORMING, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "", ""},
+            Arguments.of(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING, MaterialNameEnum.ALUMINIUM_ANSI_2024.getMaterialName(), "bracket_basic", ".prt"),
+            Arguments.of(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName(), "SheetMetal", ".prt"),
+            Arguments.of(ProcessGroupEnum.SHEET_PLASTIC, MaterialNameEnum.POLYETHYLENE_HDPE_EXTRUSION_SHEET.getMaterialName(), "r151294", ".prt.1"),
+            Arguments.of(ProcessGroupEnum.STOCK_MACHINING, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "case_005_flat end mill contouring", ".SLDPRT"));
     }
 
     @Test
-    @Parameters(method = "testParameters")
-    @TestCaseName(value = "{method}-{0}")
+    @ParameterizedTest
+    @MethodSource
     @TestRail(id = 5901)
     @Description("Verify default material for each Process Group")
     public void defaultMaterialTest(ProcessGroupEnum pg, String defaultMaterial, String componentName, String componentExt) {
