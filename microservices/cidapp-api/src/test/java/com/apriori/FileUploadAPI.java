@@ -14,7 +14,6 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -25,7 +24,6 @@ public class FileUploadAPI {
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
-    @Test
     @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/auto_api_upload.csv")
     @Description("Upload, cost and publish a part")

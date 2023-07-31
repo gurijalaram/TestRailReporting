@@ -20,7 +20,6 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,7 +36,7 @@ public class MaterialSelectionTests {
     UserCredentials currentUser;
     private File resourceFile;
 
-    static Stream<Arguments> defaultMaterialTest() {
+    static Stream<Arguments> materialData() {
         return Stream.of(
             Arguments.of(ProcessGroupEnum.ADDITIVE_MANUFACTURING, MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName(), "ADD-LOW-001", ".SLDPRT"),
             Arguments.of(ProcessGroupEnum.BAR_TUBE_FAB, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "AP-000-006", ".step"),
@@ -59,9 +58,8 @@ public class MaterialSelectionTests {
             Arguments.of(ProcessGroupEnum.STOCK_MACHINING, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "case_005_flat end mill contouring", ".SLDPRT"));
     }
 
-    @Test
     @ParameterizedTest
-    @MethodSource
+    @MethodSource("materialData")
     @TestRail(id = 5901)
     @Description("Verify default material for each Process Group")
     public void defaultMaterialTest(ProcessGroupEnum pg, String defaultMaterial, String componentName, String componentExt) {

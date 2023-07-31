@@ -5,7 +5,7 @@ import com.apriori.annotations.Schema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-@Schema(location = "common/OldTokenSchema.json")
+@Schema(location = "OldTokenSchema.json")
 @Data
 public class OldTokenRequest {
     @JsonProperty("access_token")

@@ -10,60 +10,30 @@ import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.json.JsonManager;
 
 import io.qameta.allure.Description;
-import junitparams.FileParameters;
-import junitparams.JUnitParamsRunner;
-import junitparams.mappers.IdentityMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
-@RunWith(JUnitParamsRunner.class)
 public class CidWorkorderAPITests extends TestUtil {
 
-    @Test
-    @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/auto_api_upload.csv")
     @Description("Upload, cost and publish a part using CID API")
     public void createDataUploadApi(String fileName, String scenarioName, String processGroup) {
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-                FileResourceUtil.getResourceAsFile(
-                        "CreatePartData.json"
-                ).getPath(), NewPartRequest.class
-        );
+            FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-                fileName,
-                processGroup
-        );
+            fileName,
+            processGroup);
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, scenarioName);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
             processGroup,
-            false
-        );
+            false);
 
         fileUploadResources.publishPart(costOutputs);
-    }
-
-    public static class CustomMapper extends IdentityMapper {
-        @Override
-        public Object[] map(Reader reader) {
-            Object[] map = super.map(reader);
-            List<Object> result = new ArrayList<>();
-            for (Object lineObj : map) {
-                String line = lineObj.toString();
-                String[] index = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
-                String fileName = index[0].replace("\"", "");
-                String scenarioName = index[1].replace("\"", "");
-                String processGroup = index[2].replace("\"", "");
-                result.add(new Object[] {fileName, scenarioName, processGroup});
-            }
-            return result.toArray();
-        }
     }
 }
