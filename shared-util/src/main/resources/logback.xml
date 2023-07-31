@@ -26,25 +26,19 @@
         </sift>
     </appender>
 
-    <logger name="org.hibernate" level="info">
-        <!--<appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE-THREAD" />
-        -->
-    </logger>
-
+    <logger name="org.hibernate" level="info"/>
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
 
     <!-- Restrict logging for browser-level -->
-    <logger name="io.netty" level="OFF"/>
-    <logger name="org.asynchttpclient.netty" level="OFF"/>
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
     <logger name="org.apache.http" level="Info"/>
-    <logger name="org.apache" level="WARN"/>
-    <logger name="httpclient" level="WARN"/>
+    <logger name="org.apache" level="WARN" />
+    <logger name="httpclient" level="WARN" />
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>
