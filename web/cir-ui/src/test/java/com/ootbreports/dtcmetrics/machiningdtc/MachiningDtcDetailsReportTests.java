@@ -4,8 +4,8 @@ import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
@@ -154,7 +154,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
+            ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
         );
     }
 
@@ -219,8 +219,8 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+            ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
 
@@ -285,8 +285,8 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
             is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
         assertThat(
-                partName,
-                is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
+            partName,
+            is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
         );
     }
 

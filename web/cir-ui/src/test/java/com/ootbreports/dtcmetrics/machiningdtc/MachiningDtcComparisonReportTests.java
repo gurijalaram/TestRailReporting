@@ -4,8 +4,8 @@ import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
@@ -157,7 +157,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName()
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName()
         );
     }
 
@@ -222,8 +222,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
-                ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+            ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
 
@@ -298,12 +298,12 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
         String partName = machiningDtcReportPage.clickMachiningDtcComparisonBar();
 
         assertThat(
-                machiningDtcReportPage.getUpperTitleText(),
+            machiningDtcReportPage.getUpperTitleText(),
             is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
         assertThat(
-                partName,
-                is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
+            partName,
+            is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
         );
     }
 
@@ -340,8 +340,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testSortOrderInputControlManufacturingIssues() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[] {
-                SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName(),
-                SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName(),
+            SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName()
         };
         commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
@@ -357,8 +357,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testSortOrderInputControlDesignStandards() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[] {
-                SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName(),
-                SortOrderItemsEnum.PUNCH_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName(),
+            SortOrderItemsEnum.PUNCH_INITIAL.getSortOrderItemName()
         };
         commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
@@ -374,8 +374,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testSortOrderInputControlTolerances() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[] {
-                SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName(),
-                SortOrderItemsEnum.PARTBODY_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.PARTBODY_INITIAL.getSortOrderItemName()
         };
         commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
@@ -391,8 +391,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testSortOrderInputControlSlowOperations() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[] {
-                SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName(),
-                SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName()
+            SortOrderItemsEnum.MACHINING_DTC_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.DTC_MACHINING_TOLERANCED.getSortOrderItemName()
         };
         commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
@@ -409,8 +409,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     public void testSortOrderInputControlAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
         String[] partNames = new String[] {
-                SortOrderItemsEnum.PMI_ROUGH_INITIAL.getSortOrderItemName(),
-                SortOrderItemsEnum.PMI_PROFILE_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.PMI_ROUGH_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.PMI_PROFILE_INITIAL.getSortOrderItemName()
         };
         commonReportTests.machiningSheetMetalDtcComparisonSortOrderTest(
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),

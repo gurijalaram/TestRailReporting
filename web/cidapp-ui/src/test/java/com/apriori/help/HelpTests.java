@@ -3,10 +3,10 @@ package com.apriori.help;
 import static com.apriori.TestSuiteType.TestSuite.IGNORE;
 import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

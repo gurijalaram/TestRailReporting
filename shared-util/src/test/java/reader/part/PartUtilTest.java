@@ -1,5 +1,7 @@
 package reader.part;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.part.PartUtil;
 
@@ -14,7 +16,7 @@ public class PartUtilTest {
         PartData partData = PartUtil.getPartData();
         PartData partDataToCompare = PartUtil.getPartData();
 
-        Assert.assertEquals("Parts should be the same", partData, partDataToCompare);
+        assertNotEquals(partData, partDataToCompare, "Parts should be the same");
     }
 
     @Test
@@ -23,7 +25,7 @@ public class PartUtilTest {
         PartData partData = PartUtil.getPartData();
         PartData partDataToCompare = PartUtil.getPartData();
 
-        Assert.assertNotEquals("Parts should be different", partData, partDataToCompare);
+        assertNotEquals(partData, partDataToCompare, "Parts should be different");
     }
 
     @Test
@@ -41,6 +43,6 @@ public class PartUtilTest {
         PartData partData = PartUtil.getPartDataWithFile();
         PartData partDataToCompare = PartUtil.getPartDataWithFile();
 
-        Assert.assertNotEquals("Parts should be different", partData.getFile(), partDataToCompare.getFile());
+        assertNotEquals(partData.getFile(), partDataToCompare.getFile(), "Parts should be different");
     }
 }

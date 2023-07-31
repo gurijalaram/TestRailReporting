@@ -2,10 +2,10 @@ package com.navigation;
 
 import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.TestSuiteType.TestSuite.REPORTS;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.header.ReportsPageHeader;

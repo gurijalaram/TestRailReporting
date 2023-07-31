@@ -1,5 +1,7 @@
 package reader.users;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
@@ -14,7 +16,7 @@ public class UserUtilTest {
         UserCredentials userCredentials = UserUtil.getUser();
         UserCredentials userCredentialsToCompare = UserUtil.getUser();
 
-        Assert.assertNotEquals("Users should be different", userCredentials, userCredentialsToCompare);
+        assertNotEquals(userCredentials, userCredentialsToCompare, "Users should be different");
     }
 
     @Test
@@ -41,6 +43,6 @@ public class UserUtilTest {
         UserCredentials userCredentials = UserUtil.getUser("admin");
         UserCredentials userCredentialsToCompare = UserUtil.getUser("admin");
 
-        Assert.assertNotEquals("Users should be different", userCredentials, userCredentialsToCompare);
+        assertNotEquals(userCredentials, userCredentialsToCompare, "Users should be different");
     }
 }

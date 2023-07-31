@@ -2,10 +2,10 @@ package com.apriori.evaluate.assemblies;
 
 import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

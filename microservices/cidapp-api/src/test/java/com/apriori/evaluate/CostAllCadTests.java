@@ -25,8 +25,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 

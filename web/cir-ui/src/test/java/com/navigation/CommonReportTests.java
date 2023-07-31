@@ -1,10 +1,10 @@
 package com.navigation;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 public class CommonReportTests extends TestBaseUI {
 
+    private final WebDriver driver;
     private AssemblyCostReportPage assemblyCostReportPage;
     private ViewSearchResultsPage viewSearchResultsPage;
     private CastingDtcReportPage castingDtcReportPage;
@@ -43,7 +44,6 @@ public class CommonReportTests extends TestBaseUI {
     private ReportsPageHeader reportsPageHeader;
     private CirUserGuidePage cirUserGuide;
     private LibraryPage libraryPage;
-    private final WebDriver driver;
 
     public CommonReportTests(WebDriver driver) {
         super();
@@ -122,13 +122,13 @@ public class CommonReportTests extends TestBaseUI {
      * Machining and Sheet Metal DTC Comparison Sort Order Test
      *
      * @param reportName - String
-     * @param sortOrder - String
-     * @param partNames - String[]
+     * @param sortOrder  - String
+     * @param partNames  - String[]
      */
     public void machiningSheetMetalDtcComparisonSortOrderTest(String reportName, String sortOrder, String[] partNames) {
         String exportSet = reportName.equals(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName())
-                ? ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
-                : ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+            ? ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+            : ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
@@ -146,43 +146,43 @@ public class CommonReportTests extends TestBaseUI {
 
         for (int i = 1; i < 5; i++) {
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(1)),
-                    is(equalTo(partNames[0])));
+                is(equalTo(partNames[0])));
             assertThat(genericReportPage.getTableElementNameDtcComparison(String.valueOf(i), String.valueOf(2)),
-                    is(equalTo(partNames[1])));
+                is(equalTo(partNames[1])));
         }
     }
 
     /**
      * Generic test for Casting DTC Comparison sort order
      *
-     * @param sortOrder - String
-     * @param doFourAsserts - boolean
+     * @param sortOrder      - String
+     * @param doFourAsserts  - boolean
      * @param valuesToAssert - ArrayList of type String
      */
     public void castingDtcDetailsSortOrderTest(String sortOrder, boolean doFourAsserts,
-                                                  ArrayList<String> valuesToAssert) {
+                                               ArrayList<String> valuesToAssert) {
         castingSortOrderTestCore(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), sortOrder);
 
         assertThat(
-                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
-                is(equalTo(valuesToAssert.get(0)))
+            castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(true),
+            is(equalTo(valuesToAssert.get(0)))
         );
 
         assertThat(
-                castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
-                is(equalTo(valuesToAssert.get(1)))
+            castingDtcReportPage.getPartNameCastingSheetMetalDtcDetails(false),
+            is(equalTo(valuesToAssert.get(1)))
         );
 
         if (doFourAsserts) {
             assertThat(true, is(equalTo(true)));
             assertThat(true, is(equalTo(true)));
             assertThat(
-                    castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
-                    is(equalTo(valuesToAssert.get(2)))
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(true),
+                is(equalTo(valuesToAssert.get(2)))
             );
             assertThat(
-                    castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
-                    is(equalTo(valuesToAssert.get(3)))
+                castingDtcReportPage.getScenarioNameCastingDtcDetails(false),
+                is(equalTo(valuesToAssert.get(3)))
             );
         }
     }
@@ -265,14 +265,14 @@ public class CommonReportTests extends TestBaseUI {
 
         genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario()
+            .openDesignGuidance();
 
         String cidDraftValue = guidanceIssuesPage.getDtcIssueCount(draftString);
         String cidRadiusValue = guidanceIssuesPage.getDtcIssueCount(radiusString);
@@ -316,14 +316,14 @@ public class CommonReportTests extends TestBaseUI {
 
         genericReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario()
-                .openDesignGuidance();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario()
+            .openDesignGuidance();
 
         radiusString = "Radii";
         String cidMaterialValue = guidanceIssuesPage.getDtcIssueCount(materialString);
@@ -336,68 +336,68 @@ public class CommonReportTests extends TestBaseUI {
     /**
      * Generic test for Export Set Dropdown in Assembly Cost Reports
      *
-     * @param reportName String
+     * @param reportName    String
      * @param exportSetName String
      */
     public void testExportSetDropdownAssemblyCost(String reportName, String exportSetName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(exportSetName)
-                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, AssemblyCostReportPage.class)
+            .selectExportSetDropdown(exportSetName)
+            .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
         assertThat(assemblyCostReportPage.getAssemblyPartNumberFilterItemCount(), is(equalTo("3")));
 
         assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
-                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()), is(true));
+            AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()), is(true));
 
         assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
-                AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName()), is(true));
+            AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName()), is(true));
 
         assertThat(assemblyCostReportPage.isAssemblyPartNumberItemEnabled(
-                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName()), is(true));
+            AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName()), is(true));
     }
 
     /**
      * Generic test for Export Set Dropdown in Assembly Cost Reports
      *
-     * @param reportName String
+     * @param reportName   String
      * @param assemblyName String
      */
     public void testAssemblySetDropdownAssemblyCost(String reportName, String assemblyName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForAssemblyPartNumberFilter(assemblyName)
-                .selectAssemblySetDropdown(assemblyName);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, AssemblyCostReportPage.class)
+            .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForAssemblyPartNumberFilter(assemblyName)
+            .selectAssemblySetDropdown(assemblyName);
 
         assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
 
         assertThat(assemblyCostReportPage.isScenarioNameEnabled(
-                Constants.DEFAULT_SCENARIO_NAME), is(true));
+            Constants.DEFAULT_SCENARIO_NAME), is(true));
     }
 
     /**
      * Generic test for Scenario Name Dropdown
      *
-     * @param reportName String
+     * @param reportName   String
      * @param scenarioName String
      */
     public void testScenarioNameDropdownAssemblyCost(String reportName, String scenarioName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .selectScenarioNameDropdown(scenarioName);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, AssemblyCostReportPage.class)
+            .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .selectScenarioNameDropdown(scenarioName);
 
         assertThat(assemblyCostReportPage.getScenarioNameCount(), is(equalTo("1")));
 
         assertThat(assemblyCostReportPage.isScenarioNameEnabled(
-                Constants.DEFAULT_SCENARIO_NAME), is(true));
+            Constants.DEFAULT_SCENARIO_NAME), is(true));
     }
 
     /**
@@ -407,18 +407,19 @@ public class CommonReportTests extends TestBaseUI {
      */
     public void testSubAssemblySelectionAssemblyCost(String reportName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, AssemblyCostReportPage.class)
+            .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
         ArrayList<String> assemblyNames = new ArrayList<String>() {
             {
                 add(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
                 add(AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName());
                 add(AssemblySetEnum.SUB_SUB_ASM_SHORT.getAssemblySetName());
-            }};
+            }
+        };
 
         for (String assemblyName : assemblyNames) {
             assemblyCostReportPage.selectAssemblySetDropdown(assemblyName);
@@ -430,37 +431,38 @@ public class CommonReportTests extends TestBaseUI {
 
     /**
      * Generic test for Assembly Cost Data Integrity
+     *
      * @param reportName String
      */
     public void testAssemblyCostDataIntegrity(String reportName) {
         assemblyCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, AssemblyCostReportPage.class)
-                .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, AssemblyCostReportPage.class)
+            .selectExportSetDropdown(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForAssemblyPartNumberFilter(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
 
         assemblyCostReportPage.clickOk(GenericReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyCostReportPage.class);
 
         String reportsPartName =
-                assemblyCostReportPage.getGeneralCostInfoValue("Assembly #", true);
+            assemblyCostReportPage.getGeneralCostInfoValue("Assembly #", true);
         String reportsScenarioName =
-                assemblyCostReportPage.getGeneralCostInfoValue("Scenario Name", true);
+            assemblyCostReportPage.getGeneralCostInfoValue("Scenario Name", true);
         String reportsPiecePartCost =
-                assemblyCostReportPage.getGeneralCostInfoValue("Total", false);
+            assemblyCostReportPage.getGeneralCostInfoValue("Total", false);
         String reportsCiCost = assemblyCostReportPage.getGeneralCostInfoValue("Capital", false);
 
         assemblyCostReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.CONTAINS,
-                        AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openFirstScenario();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS,
+                AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openFirstScenario();
 
         CostDetailsPage costDetailsPage = evaluatePage.openCostDetails();
 
@@ -469,36 +471,36 @@ public class CommonReportTests extends TestBaseUI {
 
         assertThat(reportsPiecePartCost, is(equalTo(costDetailsPage.getCostSumValue("Piece Part Cost"))));
         assertThat(reportsCiCost,
-                is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));
+            is(equalTo(String.valueOf(evaluatePage.getCostResults("Total Capital Investment")))));
     }
 
     /**
      * Core part of Casting DTC Sort Order test
      *
      * @param reportName - String
-     * @param sortOrder - String
+     * @param sortOrder  - String
      */
     private void castingSortOrderTestCore(String reportName, String sortOrder) {
         String exportSet = ExportSetEnum.CASTING_DTC.getExportSetName();
         castingDtcReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, CastingDtcReportPage.class)
-                .selectExportSetDtcTests(exportSet)
-                .selectSortOrder(sortOrder)
-                .clickOk(CastingDtcReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, CastingDtcReportPage.class)
+            .selectExportSetDtcTests(exportSet)
+            .selectSortOrder(sortOrder)
+            .clickOk(CastingDtcReportPage.class);
 
         castingDtcReportPage.waitForReportToLoad();
 
         if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set')]/../following-sibling::td[2]/span"))
-                .getText().equals(exportSet)
-                && reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())
-                && sortOrder.equals(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())) {
+            .getText().equals(exportSet)
+            && reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())
+            && sortOrder.equals(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())) {
             castingDtcReportPage.clickInputControlsButton()
-                    .selectExportSetDtcTests(exportSet)
-                    .selectExportSetDtcTests(exportSet)
-                    .waitForExportSetSelection(exportSet)
-                    .clickOk(GenericReportPage.class);
+                .selectExportSetDtcTests(exportSet)
+                .selectExportSetDtcTests(exportSet)
+                .waitForExportSetSelection(exportSet)
+                .clickOk(GenericReportPage.class);
             castingDtcReportPage.waitForReportToLoad();
             castingDtcReportPage.waitForSvgToRender();
         }

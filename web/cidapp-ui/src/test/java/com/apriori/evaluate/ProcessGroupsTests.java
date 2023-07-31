@@ -3,8 +3,8 @@ package com.apriori.evaluate;
 import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;

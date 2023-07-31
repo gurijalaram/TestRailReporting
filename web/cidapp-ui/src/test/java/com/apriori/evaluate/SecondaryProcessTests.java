@@ -1,8 +1,8 @@
 package com.apriori.evaluate;
 
 import static com.apriori.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
