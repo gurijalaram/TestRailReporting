@@ -16,20 +16,19 @@ public class LocalDriverFactory {
             switch (browser) {
                 case CHROME:
                     webDriver = new ChromeManager().createDriver();
-
                     log.info("WebDriver details:- {} ", webDriver);
                     break;
 
                 case FIREFOX:
                     webDriver = new FirefoxManager().createDriver();
-
                     log.info("WebDriver details:- {} ", webDriver);
                     break;
+
                 case EDGE:
                     webDriver = new EdgeManager().createDriver();
-
                     log.info("WebDriver details:- {} ", webDriver);
                     break;
+
                 default:
                     throw new BrowserNotSupportedException(browser);
             }
