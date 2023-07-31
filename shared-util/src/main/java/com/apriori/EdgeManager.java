@@ -1,6 +1,7 @@
 package com.apriori;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -12,7 +13,19 @@ public class EdgeManager implements DriverManager<EdgeOptions> {
     public WebDriver createDriver() {
         WebDriverManager.edgedriver().setup();
 
-        return new EdgeDriver(getOptions());
+        int sessionRetries = 0;
+
+        while (true) {
+
+            try {
+                return new EdgeDriver(getOptions());
+            } catch (SessionNotCreatedException exception) {
+
+                if (++sessionRetries == 3) {
+                    throw exception;
+                }
+            }
+        }
     }
 
     public EdgeOptions getOptions() {

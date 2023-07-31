@@ -1,6 +1,7 @@
 package com.apriori;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -12,7 +13,19 @@ public class FirefoxManager implements DriverManager<FirefoxOptions> {
     public WebDriver createDriver() {
         WebDriverManager.firefoxdriver().browserVersion("78.15.0.esr").setup();
 
-        return new FirefoxDriver(getOptions());
+        int sessionRetries = 0;
+
+        while (true) {
+
+            try {
+                return new FirefoxDriver(getOptions());
+            } catch (SessionNotCreatedException exception) {
+
+                if (++sessionRetries == 3) {
+                    throw exception;
+                }
+            }
+        }
     }
 
     public FirefoxOptions getOptions() {

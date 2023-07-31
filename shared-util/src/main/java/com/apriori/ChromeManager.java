@@ -29,10 +29,10 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
 
             try {
                 return new ChromeDriver(getOptions());
-            } catch (SessionNotCreatedException se) {
+            } catch (SessionNotCreatedException exception) {
 
                 if (++sessionRetries == 3) {
-                    throw se;
+                    throw exception;
                 }
             }
         }
