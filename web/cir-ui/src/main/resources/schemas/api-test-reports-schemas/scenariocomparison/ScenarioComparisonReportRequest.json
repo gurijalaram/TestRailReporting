@@ -39,7 +39,7 @@
       {
         "name": "allExportIds",
         "value": [
-          "1,12"
+          "3"
         ]
       },
       {
@@ -75,15 +75,15 @@
       {
         "name": "scenarioToCompareIDs",
         "value": [
-          "1",
-          "8",
-          "9"
+          "176",
+          "195",
+          "250"
         ]
       },
       {
         "name": "scenarioIDs",
         "value": [
-          "1,8,9"
+          "176,195,250"
         ]
       },
       {

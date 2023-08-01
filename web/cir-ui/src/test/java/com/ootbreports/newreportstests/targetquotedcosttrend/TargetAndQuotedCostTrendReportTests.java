@@ -21,9 +21,9 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     }
 
     @Test
-    @TestRail(testCaseId = {"3359"})
-    @Description("Validate Currency drop-down Input Control")
+    @TestRail(testCaseId = {"25838"})
+    @Description("Input controls - Currency code")
     public void testCurrencyCodeInputControl() {
-        jasperApiUtils.targetQuotedCostCurrencyTest();
+        jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(8, 23, 33);
     }
 }
