@@ -14,8 +14,8 @@ import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociat
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
 
-    @AfterClass
+    @AfterAll
     public static void deleteTestingData() {
         userGroupAssociationsToDelete.forEach(UserGroupAssociationsTest::deleteUserGroupAssociationById);
     }

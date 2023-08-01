@@ -29,10 +29,10 @@ import enums.RollupEnum;
 import enums.SortOrderEnum;
 import enums.SortOrderItemsEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
+    @Disabled("not applicable due to reports configuration")
     @TestRail(id = {7353})
     @Description("Verify save button functionality - Casting DTC Details Report")
     public void testSaveButton() {

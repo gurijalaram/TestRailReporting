@@ -5,15 +5,15 @@ import com.apriori.testrail.TestRail;
 import entity.response.DmsCommentViewResponse;
 import entity.response.DmsCommentViewsResponse;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
 public class DmsCommentViewTest extends DmsApiTestDataUtils {
     private static String userContext;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }

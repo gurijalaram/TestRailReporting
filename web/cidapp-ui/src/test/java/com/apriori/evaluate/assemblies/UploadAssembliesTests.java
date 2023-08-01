@@ -37,9 +37,9 @@ import com.utils.MultiUpload;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public class UploadAssembliesTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void deleteScenarios() {
         if (currentUser != null && assemblyInfo != null) {
             assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);

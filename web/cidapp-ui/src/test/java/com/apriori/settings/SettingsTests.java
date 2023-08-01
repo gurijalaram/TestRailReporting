@@ -49,7 +49,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -76,7 +76,7 @@ public class SettingsTests extends TestBaseUI {
     private ComparePage comparePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    @After
+    @AfterEach
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);

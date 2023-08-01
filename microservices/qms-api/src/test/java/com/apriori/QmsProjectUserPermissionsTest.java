@@ -31,11 +31,11 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
     private static String thirdUserIdentity;
     private static String firstProjectUserIdentity;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentOwnerUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
@@ -116,18 +116,18 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentOwnerUser);
         softAssertions.assertAll();
     }
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         softAssertions.assertAll();
     }

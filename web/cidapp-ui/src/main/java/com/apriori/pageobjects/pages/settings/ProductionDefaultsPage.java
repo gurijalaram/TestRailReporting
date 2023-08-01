@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -79,8 +79,8 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Production Defaults tab is not active", productionsTab.getAttribute("class").contains("active"));
-        assertTrue("Production Defaults is not displayed", productionDefaults.isDisplayed());
+        assertTrue(productionsTab.getAttribute("class").contains("active"), "Production Defaults tab is not active");
+        assertTrue(productionDefaults.isDisplayed(), "Production Defaults is not displayed");
     }
 
     /**

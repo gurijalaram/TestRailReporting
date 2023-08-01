@@ -11,9 +11,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.WorkflowTestUtil;
 
 public class CostingPreferencesTests extends WorkflowTestUtil {
@@ -28,7 +28,7 @@ public class CostingPreferencesTests extends WorkflowTestUtil {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         currentUser = UserUtil.getUser();
         softAssertions = new SoftAssertions();
@@ -100,7 +100,7 @@ public class CostingPreferencesTests extends WorkflowTestUtil {
         softAssertions.assertThat(Integer.parseInt(costingServiceSettings.getBatchSize())).isEqualTo(costingSettingsExpectedData.getBatchSize());
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         softAssertions.assertAll();
     }

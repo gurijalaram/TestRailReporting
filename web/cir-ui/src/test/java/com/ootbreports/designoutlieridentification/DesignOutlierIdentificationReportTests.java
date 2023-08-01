@@ -18,9 +18,9 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
@@ -42,7 +42,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testReportAvailableByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -53,7 +53,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testReportAvailableByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -64,7 +64,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testReportAvailableBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -75,9 +75,9 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMassMetricFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                ExportSetEnum.ROLL_UP_A.getExportSetName(),
-                MassMetricEnum.FINISH_MASS.getMassMetricName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName(),
+            MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -88,9 +88,9 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMassMetricRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMassMetricReportsWithChart(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                ExportSetEnum.ROLL_UP_A.getExportSetName(),
-                MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            ExportSetEnum.ROLL_UP_A.getExportSetName(),
+            MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -101,7 +101,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testExportSetFilterByDateCalendar() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingDatePicker(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -112,7 +112,7 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testExportSetFilterByDateInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -125,16 +125,16 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                    DesignOutlierIdentificationReportPage.class);
+                DesignOutlierIdentificationReportPage.class);
 
         designOutlierIdentificationReportPage.selectExportSet(
-                ExportSetEnum.ROLL_UP_A.getExportSetName(),
-                GenericReportPage.class
+            ExportSetEnum.ROLL_UP_A.getExportSetName(),
+            GenericReportPage.class
         );
 
         assertThat(
-                designOutlierIdentificationReportPage.getExportDateCount(),
-                is(equalTo("2"))
+            designOutlierIdentificationReportPage.getExportDateCount(),
+            is(equalTo("2"))
         );
     }
 
@@ -145,8 +145,8 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinAndMaxCostFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                "Cost"
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            "Cost"
         );
     }
 
@@ -157,8 +157,8 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinAndMaxCostFilterJunkValues() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                "Cost"
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            "Cost"
         );
     }
 
@@ -169,8 +169,8 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinAndMaxMassFilter() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                "Mass"
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            "Mass"
         );
     }
 
@@ -181,8 +181,8 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinAndMaxMassFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                "Mass"
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+            "Mass"
         );
     }
 
@@ -193,21 +193,21 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
-                        GenericReportPage.class)
-                .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
-                .clickOk(GenericReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName(),
+                GenericReportPage.class)
+            .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(
-                ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3")
+            ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 3")
         );
         for (int i = 0; i < 2; i++) {
             genericReportPage.hoverPartNameBubbleDtcReports();
         }
         BigDecimal fbcValue = genericReportPage.getFBCValueFromBubbleTooltip(
-                "FBC Value"
+            "FBC Value"
         );
 
         assertThat(fbcValue.compareTo(new BigDecimal("10429.19")), is(equalTo(0)));

@@ -20,8 +20,8 @@ import com.utils.ColumnsEnum;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
-    @After
+    @AfterEach
     public void deleteScenarios() {
         if (currentUser != null) {
             userPreferencesUtil.resetSettings(currentUser);

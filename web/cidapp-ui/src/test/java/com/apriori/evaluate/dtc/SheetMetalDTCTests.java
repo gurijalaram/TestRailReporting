@@ -21,11 +21,11 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -45,7 +45,7 @@ public class SheetMetalDTCTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);
@@ -255,7 +255,7 @@ public class SheetMetalDTCTests extends TestBaseUI {
 
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
-    @Ignore("Requires tolerances for additional operation")
+    @Disabled("Requires tolerances for additional operation")
     @Tags({@Tag(SMOKE),
         @Tag(IGNORE)})
     @TestRail(id = {6502, 719})

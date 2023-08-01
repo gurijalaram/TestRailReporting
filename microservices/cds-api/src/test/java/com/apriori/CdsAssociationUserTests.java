@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
 
@@ -38,7 +38,7 @@ public class CdsAssociationUserTests {
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         url = Constants.getServiceUrl();
 
@@ -59,7 +59,7 @@ public class CdsAssociationUserTests {
 
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (customerAssociationUserIdentityEndpoint != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,

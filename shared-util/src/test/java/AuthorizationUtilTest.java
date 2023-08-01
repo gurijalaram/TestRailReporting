@@ -8,7 +8,7 @@ import com.apriori.authorization.response.Token;
 import com.apriori.http.utils.ResponseWrapper;
 
 import lombok.SneakyThrows;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

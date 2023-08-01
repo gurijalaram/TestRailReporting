@@ -20,14 +20,14 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-@Ignore("Feature is not available on qa test now")
+@Disabled("Feature is not available on qa test now")
 public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
@@ -48,7 +48,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private UserProfilePage userProfilePage;
     private UsersListPage usersListPage;
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
@@ -73,7 +73,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
             .goToCustomerStaff();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,

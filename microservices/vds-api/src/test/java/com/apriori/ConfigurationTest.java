@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -12,9 +14,8 @@ import com.apriori.vds.entity.response.configuration.ConfigurationsItems;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
@@ -33,7 +34,7 @@ public class ConfigurationTest extends VDSTestUtil {
     public void getConfigurationsByIdentity() {
         ConfigurationsItems configurationsItems = this.getConfigurationsItems();
 
-        Assert.assertNotEquals("To get Configuration, response should contain it.", 0, configurationsItems.getItems().size());
+        assertNotEquals(0, configurationsItems.getItems().size(), "To get Configuration, response should contain it.");
 
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CONFIGURATIONS_BY_IDENTITY, Configuration.class)
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity())
@@ -45,7 +46,7 @@ public class ConfigurationTest extends VDSTestUtil {
     @Test
     @TestRail(id = {7931})
     @Description("Replaces a CustomerConfiguration for a customer. Creates it if it is missing.")
-    @Ignore
+    @Disabled
     public void putConfiguration() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.PUT_CONFIGURATION, null)
             .headers(new HashMap<String, String>() {

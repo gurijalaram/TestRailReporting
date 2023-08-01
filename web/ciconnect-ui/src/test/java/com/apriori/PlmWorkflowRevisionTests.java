@@ -18,9 +18,9 @@ import enums.PlmPartDataType;
 import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.CicGuiTestUtil;
 import utils.PlmPartsUtil;
@@ -31,7 +31,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
     private static SoftAssertions softAssertions;
     private static PartData plmPartData;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
@@ -307,7 +307,7 @@ public class PlmWorkflowRevisionTests extends CicGuiTestUtil {
         softAssertions.assertThat(jobPartsRevisionResult.getResult()).isNotNull();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         this.deleteWorkflow();
         softAssertions.assertAll();

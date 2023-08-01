@@ -3,6 +3,7 @@ package utils;
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
@@ -32,11 +33,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     /**
      * Create test data.
      */
-    @BeforeClass
+    @BeforeAll
     @Description("Create Test Data")
     public static void createTestData() {
         try {
@@ -121,7 +121,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         }
     }
 
-    @AfterClass
+    @AfterAll
     @Description("Delete Test Data")
     public static void deleteTestData() {
         try {
@@ -179,7 +179,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
 
     private static void checkAllureTestDataError() {
         if (!softAssertionsTestData.wasSuccess()) {
-            Assert.fail(softAssertionsTestData.errorsCollected().toString());
+            fail(softAssertionsTestData.errorsCollected().toString());
         }
     }
 
@@ -190,13 +190,13 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         bidPackageProjectResponse = null;
     }
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         softAssertions = new SoftAssertions();
         checkAllureTestDataError();
     }
 
-    @After
+    @AfterEach
     public void after() {
         softAssertions.assertAll();
     }

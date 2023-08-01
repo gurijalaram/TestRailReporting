@@ -19,7 +19,7 @@ import com.utils.CisDisplayPreferenceEnum;
 import com.utils.CisUserPreferenceItemsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 

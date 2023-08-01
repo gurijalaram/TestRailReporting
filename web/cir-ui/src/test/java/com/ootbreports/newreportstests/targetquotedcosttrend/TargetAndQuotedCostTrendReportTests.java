@@ -5,8 +5,8 @@ import com.apriori.testrail.TestRail;
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthenticationUtil {
@@ -15,7 +15,7 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     private static final String exportSetName = "";
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
     }

@@ -21,11 +21,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 import java.time.LocalDateTime;
@@ -50,7 +50,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
     private static String secondUserIdentity;
     private static SoftAssertions softAssertions = new SoftAssertions();
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         scenarioItemInNegotiation = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
@@ -108,7 +108,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
         scenarioItemSentQuotation = QmsApiTestUtils.createAndVerifyProjectWithStatus(currentUser, softAssertions, projectAttributesMap);
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemInNegotiation, currentUser);
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItemCompleted, currentUser);
@@ -117,12 +117,12 @@ public class QmsProjectsFilteredTest extends TestUtil {
         softAssertions.assertAll();
     }
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         softAssertions = new SoftAssertions();
     }
 
-    @After
+    @AfterEach
     public void afterTest() {
         softAssertions.assertAll();
     }

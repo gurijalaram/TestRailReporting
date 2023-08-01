@@ -20,9 +20,9 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -48,7 +48,7 @@ public class HelpTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Currently no help button for inputs")
+    @Disabled("Currently no help button for inputs")
     @Tag(IGNORE)
     @TestRail(id = {264, 6371})
     @Description("Have links to a detailed help page in relevant areas of the UI")

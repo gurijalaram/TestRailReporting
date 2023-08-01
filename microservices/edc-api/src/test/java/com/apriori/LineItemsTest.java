@@ -11,9 +11,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -27,17 +27,17 @@ public class LineItemsTest extends LineItemsUtil {
     private int quantity = 2;
     private int itemsCount = 9;
 
-    @Before
-    public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
-        billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
-    }
-
-    @AfterClass
+    @AfterAll
     public static void deleteTestingData() {
         if (billOfMaterialsIdentity != null) {
             deleteBillOfMaterialById(billOfMaterialsIdentity);
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 
     @Test

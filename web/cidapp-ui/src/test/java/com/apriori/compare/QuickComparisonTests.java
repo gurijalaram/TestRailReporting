@@ -23,8 +23,8 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -48,7 +48,7 @@ public class QuickComparisonTests extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
-    @After
+    @AfterEach
     public void deleteScenarios() {
 
         if (cidComponentItemA != null) {

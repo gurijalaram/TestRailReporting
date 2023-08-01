@@ -18,24 +18,24 @@ import com.apriori.testrail.TestRail;
 import entity.request.JobDefinition;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 
 public class WorkflowTests extends TestBaseUI {
-    private UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
     private static JobDefinition jobDefinitionData;
     WorkflowHome workflowHome;
     SoftAssertions softAssertions;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     public WorkflowTests() {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
@@ -227,7 +227,7 @@ public class WorkflowTests extends TestBaseUI {
         CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), jobDefinitionData);
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         softAssertions.assertAll();
     }

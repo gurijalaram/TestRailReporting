@@ -22,26 +22,25 @@ import com.apriori.testrail.TestRail;
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
 public class ThreadTests extends TestBaseUI {
 
+    SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private ThreadsPage threadingPage;
     private UserCredentials currentUser;
-    SoftAssertions softAssertions = new SoftAssertions();
-
     private File resourceFile;
 
     public ThreadTests() {
         super();
     }
 
-    @After
+    @AfterEach
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);

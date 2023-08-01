@@ -22,9 +22,9 @@ import com.apriori.testrail.TestRail;
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import utils.Constants;
 

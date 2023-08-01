@@ -13,10 +13,10 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -37,7 +37,7 @@ public class EditCustomerTests extends TestBaseUI {
     private Map<String, String> valueMap;
     private String cloudReference = new GenerateStringUtil().generateCloudReference();
 
-    @Before
+    @BeforeEach
     public void setup() {
         created = new ArrayList<>();
         valueMap = new HashMap<>();
@@ -76,16 +76,11 @@ public class EditCustomerTests extends TestBaseUI {
         created.add(customerViewPage.findCustomerIdentity());
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         if (created != null) {
             created.forEach(identity -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
         }
-    }
-
-    @FunctionalInterface
-    interface AssertionFunction {
-        void apply(SoftAssertions assertion, Runnable setValueFn, String name);
     }
 
     private void assertAllLeftFields(SoftAssertions soft, AssertionFunction func) {
@@ -93,10 +88,10 @@ public class EditCustomerTests extends TestBaseUI {
         func.apply(soft, () -> customerProfilePage.enterDescription(valueMap.get("description")), "description");
         func.apply(soft, () -> customerProfilePage.selectCustomerTypeCloud(), "customerType");
         func.apply(soft, () -> customerProfilePage.enterSalesforceId(valueMap.get("salesforceId")), "salesforceId");
-        func.apply(soft, () -> customerProfilePage.enterCloudRef(valueMap.get("cloudReference")),"cloudReference");
-        func.apply(soft, () -> customerProfilePage.enterEmailDomains(valueMap.get("emailDomains")),"emailDomains");
-        func.apply(soft, () -> customerProfilePage.enterCadFileRetentionPolicy(valueMap.get("maxCadFileRetentionDays")),"maxCadFileRetentionDays");
-        func.apply(soft, () -> customerProfilePage.enterMaxCadFileSize(valueMap.get("maxCadFileSize")),"maxCadFileSize");
+        func.apply(soft, () -> customerProfilePage.enterCloudRef(valueMap.get("cloudReference")), "cloudReference");
+        func.apply(soft, () -> customerProfilePage.enterEmailDomains(valueMap.get("emailDomains")), "emailDomains");
+        func.apply(soft, () -> customerProfilePage.enterCadFileRetentionPolicy(valueMap.get("maxCadFileRetentionDays")), "maxCadFileRetentionDays");
+        func.apply(soft, () -> customerProfilePage.enterMaxCadFileSize(valueMap.get("maxCadFileSize")), "maxCadFileSize");
     }
 
     private void assertNonEditable(SoftAssertions assertion, Runnable action, String name) {
@@ -188,5 +183,10 @@ public class EditCustomerTests extends TestBaseUI {
             .isEqualTo(newDescription);
 
         soft.assertAll();
+    }
+
+    @FunctionalInterface
+    interface AssertionFunction {
+        void apply(SoftAssertions assertion, Runnable setValueFn, String name);
     }
 }

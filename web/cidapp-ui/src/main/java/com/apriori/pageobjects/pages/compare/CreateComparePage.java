@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.compare;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * @author ryabsley
@@ -43,7 +42,6 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
     private StatusIcon statusIcon;
     private ModalDialogController modalDialogController;
 
-
     public CreateComparePage(WebDriver driver) {
         super();
         this.driver = driver;
@@ -60,7 +58,7 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("New Comparison page was not displayed", "New Comparison", pageUtils.waitForElementToAppear(newComparisonLabel).getAttribute("textContent"));
+        assertEquals("New Comparison", pageUtils.waitForElementToAppear(newComparisonLabel).getAttribute("textContent"), "New Comparison page was not displayed");
     }
 
     /**

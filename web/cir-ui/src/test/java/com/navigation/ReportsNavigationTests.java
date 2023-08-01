@@ -27,10 +27,10 @@ import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 public class ReportsNavigationTests extends TestBaseUI {
@@ -166,7 +166,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
+    @Disabled("Not valid in QA env due to permissions")
     @TestRail(id = {2973})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
@@ -178,7 +178,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
+    @Disabled("Not valid in QA env due to permissions")
     @TestRail(id = {2974})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
@@ -232,7 +232,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
+    @Disabled("Not valid in QA env due to permissions")
     @TestRail(id = {2978})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
@@ -257,7 +257,7 @@ public class ReportsNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
+    @Disabled("Not valid in QA env due to permissions")
     @TestRail(id = {2979})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {

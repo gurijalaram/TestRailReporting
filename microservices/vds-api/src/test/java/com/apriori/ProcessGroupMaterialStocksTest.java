@@ -5,7 +5,7 @@ import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -73,7 +73,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Scenario Notes dialog is not displayed", "Scenario Info & Notes", pageUtils.waitForElementToAppear(statusLabel).getAttribute("textContent"));
+        assertEquals("Scenario Info & Notes", pageUtils.waitForElementToAppear(statusLabel).getAttribute("textContent"), "Scenario Notes dialog is not displayed");
     }
 
     /**

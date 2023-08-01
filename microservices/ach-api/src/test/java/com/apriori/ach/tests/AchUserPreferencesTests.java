@@ -17,9 +17,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.Collectors;
 
@@ -30,12 +30,12 @@ public class AchUserPreferencesTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
-    @After
+    @AfterEach
     public void deletePreferences() {
         if (userPreferenceIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID,

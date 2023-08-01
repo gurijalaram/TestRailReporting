@@ -14,15 +14,15 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CustomerResourcesTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
     }
@@ -110,7 +110,7 @@ public class CustomerResourcesTest extends TestUtil {
         softAssertions.assertThat(customAttributesResponse.getResponseEntity().getItems().length).isGreaterThan(0);
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         softAssertions.assertAll();
     }

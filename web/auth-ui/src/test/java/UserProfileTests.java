@@ -10,8 +10,8 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ public class UserProfileTests extends TestBaseUI {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         aprioriLoginService = new LoginService(driver, "auth-ui");
     }

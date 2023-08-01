@@ -17,8 +17,8 @@ import com.utils.MultiUpload;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,11 +26,11 @@ import java.util.List;
 
 public class OpenUnknownComponentsTests extends TestBaseUI {
 
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test

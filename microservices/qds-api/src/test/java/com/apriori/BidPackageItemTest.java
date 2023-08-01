@@ -15,9 +15,9 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BidPackageItemTest extends TestUtil {
 
@@ -29,7 +29,7 @@ public class BidPackageItemTest extends TestUtil {
     private static String userContext;
     private static ScenarioItem scenarioItem;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -108,7 +108,7 @@ public class BidPackageItemTest extends TestUtil {
         softAssertions.assertThat(updateBidPackageItemResponse.getIsFirstPage()).isTrue();
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         BidPackageResources.deleteBidPackageItem(bidPackageResponse.getIdentity(),
             bidPackageItemResponse.getIdentity(), currentUser);

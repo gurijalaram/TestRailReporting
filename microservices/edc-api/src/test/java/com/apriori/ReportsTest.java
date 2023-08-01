@@ -6,11 +6,11 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ReportsTest extends ReportsUtil {
-    @Before
+    @BeforeEach
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }

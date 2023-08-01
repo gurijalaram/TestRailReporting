@@ -23,9 +23,9 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import enums.CostMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -49,7 +49,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testReportAvailableByMenu() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -79,9 +79,9 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testCostMetricFbcFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlGeneric(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -92,9 +92,9 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testCostMetricPpcFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlGeneric(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -105,8 +105,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinMaxAprioriCost() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterDesignCostOutlierMainReports(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Cost"
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            "Cost"
         );
     }
 
@@ -118,8 +118,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testMinAndMaxCostFilterJunkValues() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinAndMaxMassOrCostFilterJunkValues(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                "Cost"
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            "Cost"
         );
     }
 
@@ -130,27 +130,27 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testDataIntegrityAgainstCID() {
         String reportName = ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName();
         genericReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
-                .clickOk(GenericReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(reportName, GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(reportName);
         String[] partScenarioName = genericReportPage.getPartNameDtcReports().split(" ");
         genericReportPage.hoverPartNameBubbleDtcReports();
         genericReportPage.hoverPartNameBubbleDtcReports();
         BigDecimal reportsCostValue = genericReportPage.getFBCValueFromBubbleTooltip(
-                "aPriori Cost Value (Cost Outlier) Bottom");
+            "aPriori Cost Value (Cost Outlier) Bottom");
 
         genericReportPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, partScenarioName[0])
-                .submit(ExplorePage.class)
-                .openFirstScenario();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, partScenarioName[0])
+            .submit(ExplorePage.class)
+            .openFirstScenario();
 
         BigDecimal cidFbc = new BigDecimal(String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost")));
 
@@ -164,7 +164,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testExportSetFilterByDateCalendarWidget() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingDatePicker(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName()
         );
     }
 
@@ -176,8 +176,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testPercentDifferenceFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentError(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                Constants.PERCENT_VALUE
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            Constants.PERCENT_VALUE
         );
     }
 
@@ -188,8 +188,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testAnnualisedFilterJunkValue() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentError(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                Constants.ANNUALISED_VALUE
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            Constants.ANNUALISED_VALUE
         );
     }
 
@@ -200,8 +200,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testPercentDifferenceFilterDecimalPlaces() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testAnnualisedOrPercentDecimalPlaces(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                Constants.PERCENT_VALUE
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            Constants.PERCENT_VALUE
         );
     }
 
@@ -213,8 +213,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                Constants.ANNUALISED_VALUE
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            Constants.ANNUALISED_VALUE
         );
     }
 
@@ -225,8 +225,8 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     public void testPercentDifferenceThresholdNoDataAvailable() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostOutlierReportAnnualisedOrPercentFilterNoDataAvailable(
-                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
-                Constants.PERCENT_VALUE
+            ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+            Constants.PERCENT_VALUE
         );
     }
 
@@ -236,45 +236,45 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
-                .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
-                .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
+            .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
+            .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
+            .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
-                        true,
-                        Constants.ANNUALISED_VALUE
-                ),
-                is(equalTo("n/a"))
+            costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                true,
+                Constants.ANNUALISED_VALUE
+            ),
+            is(equalTo("n/a"))
         );
 
         assertThat(
-                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
-                        true,
-                        Constants.PERCENT_VALUE
-                ),
-                is(equalTo("100.0%"))
+            costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                true,
+                Constants.PERCENT_VALUE
+            ),
+            is(equalTo("100.0%"))
         );
 
         costOutlierIdentificationReportPage.waitForSvgToRender();
 
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
-                is(equalTo(1))
+            is(equalTo(1))
         );
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
-                is(equalTo(1))
+            is(equalTo(1))
         );
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
-                is(equalTo(true))
+            is(equalTo(true))
         );
         assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
-                is(equalTo(true))
+            is(equalTo(true))
         );
     }
 
@@ -285,43 +285,43 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
         costOutlierIdentificationReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
-                .selectExportSetDtcTests(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
-                .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk(CostOutlierIdentificationReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), CostOutlierIdentificationReportPage.class)
+            .selectExportSetDtcTests(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName())
+            .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
+            .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
         assertThat(
-                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
-                        false,
-                        Constants.ANNUALISED_VALUE
-                ),
-                is(equalTo("10,000.00"))
+            costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                false,
+                Constants.ANNUALISED_VALUE
+            ),
+            is(equalTo("10,000.00"))
         );
 
         assertThat(
-                costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
-                        false,
-                        Constants.PERCENT_VALUE
-                ),
-                is(equalTo("n/a"))
+            costOutlierIdentificationReportPage.getCostOutlierAnnualisedOrPercentValueFromAboveChart(
+                false,
+                Constants.PERCENT_VALUE
+            ),
+            is(equalTo("n/a"))
         );
 
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.ANNUALISED_VALUE),
-                is(equalTo(2))
+            is(equalTo(2))
         );
         assertThat(costOutlierIdentificationReportPage.getCostOutlierBarChartBarCount(Constants.PERCENT_VALUE),
-                is(equalTo(2))
+            is(equalTo(2))
         );
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.ANNUALISED_VALUE),
-                is(equalTo(true))
+            is(equalTo(true))
         );
         assertThat(costOutlierIdentificationReportPage.isCostOutlierBarDisplayedAndEnabled(Constants.PERCENT_VALUE),
-                is(equalTo(true))
+            is(equalTo(true))
         );
     }
 }

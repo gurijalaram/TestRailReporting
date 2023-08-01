@@ -16,9 +16,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class NavigationTests extends TestBaseUI {
@@ -26,7 +26,7 @@ public class NavigationTests extends TestBaseUI {
     private CustomerWorkspacePage customerProfilePage;
     private String customerID;
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -72,13 +72,13 @@ public class NavigationTests extends TestBaseUI {
 
         SoftAssertions soft = new SoftAssertions();
 
-        validateOnPageURL(soft,  "/profile");
+        validateOnPageURL(soft, "/profile");
 
         // Click through different menus
         UsersPage usersPage = customerProfilePage.goToUsersPage();
         validateOnPageURL(soft, "/users/customer-staff");
         usersPage.goToImport();
-        validateOnPageURL(soft,  "/users/import");
+        validateOnPageURL(soft, "/users/import");
         customerProfilePage.goToInfrastructure();
         validateOnPageURL(soft, "/infrastructure");
 

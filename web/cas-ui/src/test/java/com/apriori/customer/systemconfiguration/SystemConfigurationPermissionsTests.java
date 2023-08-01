@@ -15,20 +15,20 @@ import com.apriori.utils.ListUtils;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Ignore("Feature is not fully ready yet.  Can remove this once fully built e2e.")
+@Disabled("Feature is not fully ready yet.  Can remove this once fully built e2e.")
 public class SystemConfigurationPermissionsTests extends TestBaseUI {
     private SystemConfigurationPermissionsPage systemConfigurationPermissionsPage;
 
-    @Before
+    @BeforeEach
     public void setup() {
         systemConfigurationPermissionsPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())

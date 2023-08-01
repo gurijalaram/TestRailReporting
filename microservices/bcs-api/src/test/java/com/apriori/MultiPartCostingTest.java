@@ -16,8 +16,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class MultiPartCostingTest {
     private static final Integer NUMBER_OF_PARTS = Integer.parseInt(PropertiesContext.get("number_of_parts"));
     private static List<PartData> partDataList = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         partDataList = new TestDataService().getPartsFromCloud(NUMBER_OF_PARTS);
     }

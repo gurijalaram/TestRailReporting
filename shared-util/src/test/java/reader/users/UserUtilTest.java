@@ -1,12 +1,12 @@
 package reader.users;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UserUtilTest {
 
@@ -25,7 +25,7 @@ public class UserUtilTest {
         UserCredentials userCredentials = UserUtil.getUser();
         UserCredentials userCredentialsToCompare = UserUtil.getUser();
 
-        Assert.assertEquals("Users should be the same", userCredentials, userCredentialsToCompare);
+        assertEquals(userCredentials, userCredentialsToCompare, "Users should be the same");
     }
 
     @Test
@@ -34,7 +34,7 @@ public class UserUtilTest {
         UserCredentials userCredentials = UserUtil.getUser("admin");
         UserCredentials userCredentialsToCompare = UserUtil.getUser("admin");
 
-        Assert.assertEquals("Users should be the same", userCredentials, userCredentialsToCompare);
+        assertEquals(userCredentials, userCredentialsToCompare, "Users should be the same");
     }
 
     @Test

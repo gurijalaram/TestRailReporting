@@ -4,8 +4,8 @@ import com.apriori.database.dao.BCSDao;
 import com.apriori.database.dto.BCSBatchDTO;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class BCSDaoTest {
 
     @Test
-    @Ignore("Use to test costing data")
+    @Disabled("Use to test costing data")
     public void testInsertCostingData() {
         System.setProperty("global_db_connection", "local");
 

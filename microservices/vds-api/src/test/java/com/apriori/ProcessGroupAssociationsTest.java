@@ -13,22 +13,22 @@ import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAs
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
 
     private static ProcessGroupAssociation testingProcessGroupAssociation;
     private static ProcessGroupAssociation backupProcessGroupAssociation;
 
-    @BeforeClass
+    @BeforeAll
     public static void initTestingData() {
         backupProcessGroupAssociation = ProcessGroupUtil.getFirstGroupAssociation();
         deleteProcessGroupAssociation(backupProcessGroupAssociation.getIdentity());
     }
 
-    @AfterClass
+    @AfterAll
     public static void clearTestDataAndUploadDefault() {
         if (testingProcessGroupAssociation != null) {
             deleteProcessGroupAssociation(testingProcessGroupAssociation.getIdentity());

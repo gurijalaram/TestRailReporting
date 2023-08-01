@@ -79,7 +79,7 @@ public class ScenarioIterationService {
     }
 
     /**
-     * runs in @BeforeClass method to ensure that data is loaded before tests startsv
+     * runs in @BeforeAll method to ensure that data is loaded before tests startsv
      * (especially when running on local env)
      */
     public void loadDataIfNotExists() {

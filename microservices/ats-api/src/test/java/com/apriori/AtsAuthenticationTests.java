@@ -15,8 +15,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class AtsAuthenticationTests {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
@@ -30,7 +30,7 @@ public class AtsAuthenticationTests {
     private String userIdentity;
     private String idpIdentity;
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (idpIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, customerIdentity, idpIdentity);

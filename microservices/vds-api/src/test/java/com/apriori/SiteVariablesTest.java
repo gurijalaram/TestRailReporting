@@ -14,8 +14,8 @@ import com.apriori.vds.entity.response.process.group.site.variable.SiteVariables
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class SiteVariablesTest extends SiteVariableUtil {
     protected static final Set<String> siteVariableIdsToDelete = new HashSet<>();
 
-    @AfterClass
+    @AfterAll
     public static void deleteTestingData() {
         siteVariableIdsToDelete.forEach(SiteVariablesTest::deleteSiteVariableById);
     }

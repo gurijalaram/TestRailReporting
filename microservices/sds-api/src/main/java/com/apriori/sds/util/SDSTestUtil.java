@@ -3,7 +3,7 @@ package com.apriori.sds.util;
 import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
@@ -40,8 +40,8 @@ import com.apriori.utils.CssComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.Collections;
@@ -60,14 +60,13 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
-
-    @BeforeClass
+    @BeforeAll
     public static void init() {
         RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
         RequestEntityUtil.useTokenForRequests(testingUser.getToken());
     }
 
-    @AfterClass
+    @AfterAll
     public static void clearTestingData() {
         if (!scenariosToDelete.isEmpty()) {
             scenariosToDelete.forEach(component -> {
@@ -315,31 +314,6 @@ public abstract class SDSTestUtil extends TestUtil {
         return scenarioRepresentation;
     }
 
-    protected CostingTemplate getFirstCostingTemplate() {
-        List<CostingTemplate> costingTemplates = getCostingTemplates();
-        assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
-        return costingTemplates.get(0);
-    }
-
-
-    protected List<CostingTemplate> getCostingTemplates() {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
-
-        return response.getResponseEntity().getItems();
-    }
-
-    protected void addScenarioToDelete(final String identity) {
-        scenariosToDelete.add(ScenarioItem.builder()
-            .componentIdentity(getComponentId())
-            .scenarioIdentity(identity)
-            .build()
-        );
-    }
-
     /**
      * POST to cost a scenario
      *
@@ -401,6 +375,30 @@ public abstract class SDSTestUtil extends TestUtil {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
+    }
+
+    protected CostingTemplate getFirstCostingTemplate() {
+        List<CostingTemplate> costingTemplates = getCostingTemplates();
+        assertFalse(costingTemplates.isEmpty(), "To get CostingTemplate it should present in response");
+        return costingTemplates.get(0);
+    }
+
+    protected List<CostingTemplate> getCostingTemplates() {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity().getItems();
+    }
+
+    protected void addScenarioToDelete(final String identity) {
+        scenariosToDelete.add(ScenarioItem.builder()
+            .componentIdentity(getComponentId())
+            .scenarioIdentity(identity)
+            .build()
+        );
     }
 
     /**

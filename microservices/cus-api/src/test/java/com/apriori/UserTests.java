@@ -12,9 +12,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class UserTests {
     private static UserCredentials currentUser;
@@ -25,7 +25,7 @@ public class UserTests {
     private static final String expectedMessageFamilyName = "'familyName' should not be null.";
     private static final String expectedMessageGivenName = "'givenName' should not be null.";
 
-    @Before
+    @BeforeEach
     public void setupUser() {
         currentUser = UserUtil.getUser();
     }
@@ -93,7 +93,7 @@ public class UserTests {
 
     @Test
     @TestRail(id = 17065)
-    @Ignore("It is better to not run this test till issue will be fixed, because it will update Auto user with new name and email")
+    @Disabled("It is better to not run this test till issue will be fixed, because it will update Auto user with new name and email")
     @Issue("CFIRST-414")
     @Description("Try to update SAML fields via CUS /users/current endpoint should be not possible")
     public void updateSamlFieldsShouldBeNotPossibleTest() {

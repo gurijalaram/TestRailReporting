@@ -6,15 +6,15 @@ import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.utils.JasperReportUtil;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
 public class JasperReportTest {
 
     @Test
-    @Ignore
+    @Disabled
     public void getJasperReportSummaryTest() {
 
         // TODO z: usage example.

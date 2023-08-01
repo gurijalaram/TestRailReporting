@@ -14,8 +14,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Set;
 
 // TODO z: ignored due to https://jira.apriori.com/browse/BA-1943
 //  shouldn't be un-ignored
-@Ignore
+@Disabled
 public class ConnectionsTest extends SDSTestUtil {
 
     private static Set<String> connectionsToDelete = new HashSet<>();
@@ -31,7 +31,7 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(id = {6936})
     @Description("Find connections for a customer matching a specified query.")
-    @Ignore
+    @Disabled
     public void testGetConnections() {
         getConnections();
     }
@@ -49,7 +49,7 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(id = {8625})
     @Description("Add a Connection to the ST Installation")
-    @Ignore
+    @Disabled
     public void testPostConnections() {
         postConnection();
     }
@@ -57,7 +57,7 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(id = {8627})
     @Description("Delete - a Connection to an Installation.")
-    @Ignore
+    @Disabled
     public void testDeleteConnections() {
         deleteConnection(postConnection()
             .getIdentity()
@@ -67,7 +67,7 @@ public class ConnectionsTest extends SDSTestUtil {
     @Test
     @TestRail(id = {8626})
     @Description("Update - a Connection to an Installation.")
-    @Ignore
+    @Disabled
     public void testPatchConnections() {
         ConnectionRequest connectionRequest = ConnectionRequest.builder()
             .deploymentIdentity("H337GKD0LA0N")

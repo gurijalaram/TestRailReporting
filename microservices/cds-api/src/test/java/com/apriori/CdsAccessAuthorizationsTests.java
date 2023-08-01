@@ -17,9 +17,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -43,7 +43,7 @@ public class CdsAccessAuthorizationsTests {
     private ResponseWrapper<AssociationUserItems> associationUser;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         url = Constants.getServiceUrl();
         customerName = generateStringUtil.generateCustomerName();
@@ -61,7 +61,7 @@ public class CdsAccessAuthorizationsTests {
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (accessAuthorizationIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID,

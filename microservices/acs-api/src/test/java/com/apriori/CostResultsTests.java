@@ -14,7 +14,7 @@ import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CostResultsTests {
     private AcsResources acsResources = new AcsResources();

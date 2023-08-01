@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -94,7 +94,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Table View is not active", pageUtils.waitForElementToAppear(tableViewButton).getAttribute("class").contains("active"));
+        assertTrue(pageUtils.waitForElementToAppear(tableViewButton).getAttribute("class").contains("active"), "Table View is not active");
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         pageUtils.waitForElementToAppear(componentTable);
@@ -149,7 +149,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
     }
-
 
     /**
      * Opens tree view
@@ -487,7 +486,6 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
         assembliesComponentsController.updateCadFile(filePath, ComponentsTablePage.class);
         return this;
     }
-
 
     /**
      * Checks if the cad button is enabled

@@ -16,8 +16,8 @@ import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.WorkflowTestUtil;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class NotificationTests extends WorkflowTestUtil {
 
     private static WorkFlowData workFlowData;
 
-    @Before
+    @BeforeEach
     public void setup() {
         currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);

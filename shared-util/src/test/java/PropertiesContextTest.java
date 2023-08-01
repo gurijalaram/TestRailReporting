@@ -1,8 +1,10 @@
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Contain tests for the basic functionality of @{@link PropertiesContext}
@@ -72,9 +74,9 @@ public class PropertiesContextTest {
         softAssertions.assertAll();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test()
     public void testMissedProperty() {
-        PropertiesContext.get("NOT.EXISTING.PROPERTY");
+        assertThrows(IllegalArgumentException.class, () -> PropertiesContext.get("NOT.EXISTING.PROPERTY"));
     }
 
     @Test

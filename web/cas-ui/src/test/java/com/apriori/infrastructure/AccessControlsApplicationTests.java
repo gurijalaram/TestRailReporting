@@ -26,10 +26,10 @@ import com.apriori.utils.UserCreation;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +51,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private String installationIdentity;
     private String appIdentity;
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -97,7 +97,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
                 .selectApplication("aPriori Professional");
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));

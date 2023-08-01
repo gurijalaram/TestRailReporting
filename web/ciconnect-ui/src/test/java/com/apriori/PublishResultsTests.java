@@ -29,9 +29,9 @@ import enums.PublishResultsWriteRule;
 import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.PlmApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
@@ -46,7 +46,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     private static PlmApiTestUtil plmApiTestUtil;
     private static PlmFieldDefinitions plmFieldDefinitions;
 
-    @Before
+    @BeforeEach
     public void setUpAndLogin() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
@@ -323,7 +323,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
         softAssertions.assertThat(plmPartResponse.getApDFMRiskScore().toString()).isEqualTo(String.valueOf(customNumber));
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         softAssertions.assertAll();
         this.deleteWorkflow();

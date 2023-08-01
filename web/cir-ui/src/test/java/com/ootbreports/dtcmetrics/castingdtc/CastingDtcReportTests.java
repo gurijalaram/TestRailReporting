@@ -27,9 +27,9 @@ import enums.DtcScoreEnum;
 import enums.MassMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -129,7 +129,7 @@ public class CastingDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
+    @Disabled("not applicable due to reports configuration")
     @TestRail(id = {7347})
     @Description("Verify save button functionality - Casting DTC Report")
     public void testSaveButton() {

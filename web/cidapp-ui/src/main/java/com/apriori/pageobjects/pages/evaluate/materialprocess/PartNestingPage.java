@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.PanelController;
@@ -49,7 +49,7 @@ public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Part Nesting tab was not selected", partNestingTab.getAttribute("class").contains("active"));
+        assertTrue(partNestingTab.getAttribute("class").contains("active"), "Part Nesting tab was not selected");
     }
 
     /**

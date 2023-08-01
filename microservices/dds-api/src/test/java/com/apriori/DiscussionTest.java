@@ -20,10 +20,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import utils.DdsApiTestUtils;
 
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class DiscussionTest extends TestUtil {
     private static String discussionDescription = StringUtils.EMPTY;
 
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
         softAssertions = new SoftAssertions();
@@ -211,7 +211,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {12410})
     @Description("Search discussions")
     public void searchDiscussions() {
@@ -228,7 +228,7 @@ public class DiscussionTest extends TestUtil {
         softAssertions.assertThat(discussionsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertAll();

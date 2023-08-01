@@ -13,8 +13,8 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Random;
@@ -23,7 +23,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     private static UserCredentials userCredentials;
 
-    @BeforeClass
+    @BeforeAll
     public static void getAuthorizationToken() {
         userCredentials = UserUtil.getUserWithCloudContext();
     }

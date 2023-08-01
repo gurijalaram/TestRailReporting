@@ -9,15 +9,15 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class ScenarioIterationsTest extends SDSTestUtil {
 
     @Test
     @TestRail(id = {8425})
     @Description("Import a scenario iteration resulting in the creation/modification of components, scenarios and/or iterations.")
-    @Ignore
+    @Disabled
     public void testCreateScenarioIterations() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null)

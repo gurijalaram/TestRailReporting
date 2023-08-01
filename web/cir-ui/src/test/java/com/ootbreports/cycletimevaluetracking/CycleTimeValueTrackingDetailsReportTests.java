@@ -21,9 +21,9 @@ import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
 public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
@@ -41,7 +41,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
+            ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
         );
     }
 
@@ -53,7 +53,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
+            ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
         );
     }
 
@@ -64,7 +64,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
+            ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName()
         );
     }
 
@@ -74,16 +74,16 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Details Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(
-                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
-                        CycleTimeValueTrackingPage.class
-                );
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                CycleTimeValueTrackingPage.class
+            );
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
         cycleTimeValueTrackingPage.selectProjectRollup()
-                .clickOk(CycleTimeValueTrackingPage.class);
+            .clickOk(CycleTimeValueTrackingPage.class);
 
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
     }
@@ -95,19 +95,19 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(
-                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
-                        CycleTimeValueTrackingPage.class)
-                .selectProjectRollup();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                CycleTimeValueTrackingPage.class)
+            .selectProjectRollup();
 
         assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("1")),
-                is(greaterThan(1)));
+            is(greaterThan(1)));
         assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("2")),
-                is(greaterThan(3)));
+            is(greaterThan(3)));
         assertThat(Integer.parseInt(cycleTimeValueTrackingPage.getCountOfDropdownItems("3")),
-                is(greaterThan(0)));
+            is(greaterThan(0)));
 
         cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getProjectName(), is(equalTo("PROJECT 1")));
@@ -119,14 +119,14 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
-                        CycleTimeValueTrackingPage.class)
-                .selectProjectRollup();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName(),
+                CycleTimeValueTrackingPage.class)
+            .selectProjectRollup();
 
         cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class)
-                .waitForCorrectPartName("IROBOT_18874");
+            .waitForCorrectPartName("IROBOT_18874");
 
         String reportsPartNumber = cycleTimeValueTrackingPage.getPartNumber();
         String reportsScenarioName = cycleTimeValueTrackingPage.getReportsValue("Scenario Name");
@@ -135,24 +135,24 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
         String reportsMaterialComposition = cycleTimeValueTrackingPage.getReportsValue("Material Composition");
         String reportsAnnualVolume = cycleTimeValueTrackingPage.getReportsValue("Annual Volume");
         String reportsFinalCycleTime = cycleTimeValueTrackingPage.getReportsValue("Final Cycle Time")
-                .replace(",", "");
+            .replace(",", "");
 
         cycleTimeValueTrackingPage.openNewCidTabAndFocus(1);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, reportsPartNumber)
-                .addCriteria(PropertyEnum.DIGITAL_FACTORY,OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
-                .submit(ExplorePage.class)
-                .openFirstScenario();
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, reportsPartNumber)
+            .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+            .submit(ExplorePage.class)
+            .openFirstScenario();
 
         String cidPartNumber = evaluatePage.getPartName();
         String cidScenarioName = evaluatePage.getCurrentScenarioName();
         String cidFinishMass = String.valueOf(evaluatePage.getFinishMass());
         String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
         String cidMaterialComposition = evaluatePage
-                .openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
+            .openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
         String cidFinalCycleTime = String.valueOf(evaluatePage.getProcessesResult("Total Cycle Time"));
 

@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
@@ -15,9 +17,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     private static ScenarioItem testingRollUp;
     private static ScenarioAssociation testingAssociation;
 
-    @AfterClass
+    @AfterAll
     public static void clearTestData() {
         if (testingAssociation != null) {
             removeTestingAssociation(testingAssociation.getIdentity());
@@ -115,7 +116,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     private ScenarioAssociation getFirstAssociation() {
         List<ScenarioAssociation> scenarioAssociations = this.getAssociations();
 
-        Assert.assertNotEquals("To get Scenario Association, response should contain it.", 0, scenarioAssociations.size());
+        assertNotEquals(0, scenarioAssociations.size(), "To get Scenario Association, response should contain it.");
         return scenarioAssociations.get(0);
     }
 

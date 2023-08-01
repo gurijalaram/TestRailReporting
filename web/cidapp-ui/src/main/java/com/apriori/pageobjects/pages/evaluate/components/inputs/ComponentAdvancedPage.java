@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.InputsController;
@@ -73,7 +73,7 @@ public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPa
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Advanced tab was not selected", secondaryTab.getAttribute("class").contains("active"));
+        assertTrue(secondaryTab.getAttribute("class").contains("active"), "Advanced tab was not selected");
         pageUtils.waitForElementToAppear(batchSizeInput);
     }
 

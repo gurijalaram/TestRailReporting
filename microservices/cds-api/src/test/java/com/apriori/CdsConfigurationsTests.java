@@ -9,15 +9,15 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class CdsConfigurationsTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
-    @Ignore("Not relevant for now")
+    @Disabled("Not relevant for now")
     @TestRail(id = {5966})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getBlacklistedEmailDomains() {

@@ -9,7 +9,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ApVersionsTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();

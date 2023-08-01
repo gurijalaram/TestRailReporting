@@ -11,9 +11,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class MfaEnabledTests extends TestBaseUI {
     private SecurityPage securityPage;
@@ -23,7 +23,7 @@ public class MfaEnabledTests extends TestBaseUI {
     private String customerIdentity;
     private String customerName;
 
-    @Before
+    @BeforeEach
     public void setup() {
         String cloudRef = generateStringUtil.generateCloudReference();
         customerName = generateStringUtil.generateCustomerName();
@@ -39,7 +39,7 @@ public class MfaEnabledTests extends TestBaseUI {
             .goToSecurityPage();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }

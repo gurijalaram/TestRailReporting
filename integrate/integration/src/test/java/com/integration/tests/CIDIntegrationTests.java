@@ -23,9 +23,9 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -46,7 +46,7 @@ public class CIDIntegrationTests extends TestBaseUI {
         super();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         testDataService = new TestDataService();
         testDataService.setInputData(testDataService.deserializeDataToMap("CIDIntegrationTestData.json"));
@@ -118,7 +118,7 @@ public class CIDIntegrationTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @AfterClass
+    @AfterAll
     public static void testCleanup() {
     }
 }

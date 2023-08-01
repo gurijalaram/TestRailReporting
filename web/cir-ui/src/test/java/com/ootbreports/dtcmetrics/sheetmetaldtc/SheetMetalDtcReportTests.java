@@ -25,10 +25,10 @@ import enums.MassMetricEnum;
 import enums.RollupEnum;
 import enums.SortOrderEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -142,7 +142,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
+    @Disabled("not applicable due to reports configuration")
     @TestRail(id = {7375})
     @Description("Verify save button functionality - Sheet Metal DTC Report")
     public void testSaveButton() {

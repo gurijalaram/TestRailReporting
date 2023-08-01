@@ -12,9 +12,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     private static BidPackageProjectUserResponse bidPackageProjectUserResponse;
     UserCredentials currentUser = UserUtil.getUser();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -104,7 +104,7 @@ public class BidPackageProjectUserTest extends TestUtil {
         softAssertions.assertThat(updateBidPackageProjectUserResponse.getRole()).isEqualTo("ADMIN");
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         BidPackageResources.deleteBidPackageProjectUser(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),

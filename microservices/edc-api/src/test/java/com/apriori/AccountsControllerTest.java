@@ -15,10 +15,10 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -26,18 +26,18 @@ public class AccountsControllerTest extends AccountsUtil {
 
     private static String identity;
 
-    @Before
+    @AfterAll
+    public static void deleteTestData() {
+        if (identity != null) {
+            deleteAccountByIdentity(identity);
+        }
+    }
+
+    @BeforeEach
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         if (identity == null) {
             identity = postCreateNewAccount().getResponseEntity().getIdentity();
-        }
-    }
-
-    @AfterClass
-    public static void deleteTestData() {
-        if (identity != null) {
-            deleteAccountByIdentity(identity);
         }
     }
 
@@ -78,7 +78,7 @@ public class AccountsControllerTest extends AccountsUtil {
         patchUpdateAccountByIdentity(identity);
     }
 
-    @Ignore
+    @Disabled
     @Test
     @TestRail(id = 15453)
     @Description("POST Refresh license for specified account")

@@ -25,9 +25,9 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -53,7 +53,7 @@ public class IgnoredTests extends TestBaseUI {
 
     @Test
     @Tag(IGNORE)
-    @Ignore("At the moment a new scenario name cannot be created from a public scenario")
+    @Disabled("At the moment a new scenario name cannot be created from a public scenario")
     @TestRail(id = {5950, 5951, 5952})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
@@ -172,7 +172,7 @@ public class IgnoredTests extends TestBaseUI {
     }
 
     /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Ignore("Properties Dialogue not yet available")
+    @Disabled("Properties Dialogue not yet available")
     @Test
     @TestRail(id = {1261})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")

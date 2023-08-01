@@ -12,8 +12,8 @@ package com.apriori.database.test.dao;
 //
 //import org.apache.http.HttpStatus;
 //import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
 
 public class DataBaseActions {//TestUtil {
 
@@ -21,7 +21,7 @@ public class DataBaseActions {//TestUtil {
 
 //    private DbMigration dbMigration;
 //
-//    @Before
+//    @BeforeEach
 //    public void createNewDbMigrationInstance() {
 //        dbMigration = new DbMigration();
 //    }

@@ -21,9 +21,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.DdsApiTestUtils;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class CommentsTest extends TestUtil {
     private static UserCredentials currentUser = UserUtil.getUser();
     private static List<String> users = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         contentDesc = RandomStringUtils.randomAlphabetic(12);
         users.add(currentUser.getEmail());
@@ -251,7 +251,7 @@ public class CommentsTest extends TestUtil {
         softAssertions.assertThat(commentCreateResponse.getResponseEntity().getMentionedUsers().size()).isEqualTo(0);
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         DdsApiTestUtils.deleteComment(discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity(), userContext);
         DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), userContext);

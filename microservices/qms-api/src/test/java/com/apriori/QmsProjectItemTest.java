@@ -16,11 +16,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 public class QmsProjectItemTest extends TestUtil {
@@ -31,7 +31,7 @@ public class QmsProjectItemTest extends TestUtil {
     private static ScenarioItem scenarioItem;
     private static final UserCredentials currentUser = UserUtil.getUser();
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
@@ -41,18 +41,18 @@ public class QmsProjectItemTest extends TestUtil {
         QmsApiTestUtils.createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
         softAssertions.assertAll();
     }
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         softAssertions = new SoftAssertions();
     }
 
-    @After
+    @AfterEach
     public void afterTest() {
         softAssertions.assertAll();
     }

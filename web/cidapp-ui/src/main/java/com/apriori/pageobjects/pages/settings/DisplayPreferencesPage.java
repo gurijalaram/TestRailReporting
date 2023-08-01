@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.UnitsEnum;
@@ -78,7 +78,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Display tab was not selected", displayTab.getAttribute("class").contains("active"));
+        assertTrue(displayTab.getAttribute("class").contains("active"), "Display tab was not selected");
     }
 
     /**

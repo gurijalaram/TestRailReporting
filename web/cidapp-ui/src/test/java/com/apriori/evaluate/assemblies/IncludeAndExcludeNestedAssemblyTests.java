@@ -23,36 +23,35 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
+    private static final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
+    private static final String SUB_ASSEMBLY = "sub-assembly";
+    private static final String TOP_LEVEL = "top-level";
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly1;
     private static ComponentInfoBuilder componentAssembly2;
     private static ComponentInfoBuilder componentAssembly3;
-    private ComponentsTablePage componentsTablePage;
-    private ComponentsTreePage componentsTreePage;
     private static UserCredentials currentUser;
     private static String scenarioName;
     SoftAssertions softAssertions = new SoftAssertions();
+    private CidAppLoginPage loginPage;
+    private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private CssComponent cssComponent = new CssComponent();
 
     public IncludeAndExcludeNestedAssemblyTests() {
         super();
     }
 
-    private static final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
-    private static final String SUB_ASSEMBLY = "sub-assembly";
-    private static final String TOP_LEVEL = "top-level";
-
-    @Before
+    @BeforeEach
     public void assemblySetup() {
         List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
 
@@ -131,7 +130,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getListOfScenarios("3571050", scenarioName)).isEqualTo(1);
 
         componentsTreePage.expandSubAssembly(SUB_ASSEMBLY, scenarioName)
-                .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
+            .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
 

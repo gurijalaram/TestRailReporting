@@ -18,8 +18,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsFeatureTests {
 
@@ -32,7 +32,7 @@ public class CdsFeatureTests {
     private String installationIdentity;
     private String deploymentIdentity;
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (installationIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,

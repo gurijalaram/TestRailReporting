@@ -21,9 +21,9 @@ import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 import java.time.LocalDate;
@@ -38,7 +38,7 @@ public class BidPackageProjectsTest extends TestUtil {
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String bidPackageName;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         bidPackageName = new GenerateStringUtil().getRandomString();
@@ -825,7 +825,7 @@ public class BidPackageProjectsTest extends TestUtil {
         QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         QmsBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();

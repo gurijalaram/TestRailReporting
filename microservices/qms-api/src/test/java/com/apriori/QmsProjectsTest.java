@@ -22,9 +22,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
@@ -36,13 +36,13 @@ public class QmsProjectsTest extends TestUtil {
     private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         softAssertions = new SoftAssertions();
         scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
     }
 
-    @After
+    @AfterEach
     public void afterTest() {
         QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         softAssertions.assertAll();

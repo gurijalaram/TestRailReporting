@@ -1,8 +1,8 @@
 package com.apriori.newendpoint;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.enums.Direction;
@@ -18,9 +18,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class ScenarioIterationPostTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         scenarioIterationService.loadDataIfNotExists();
     }
@@ -135,7 +135,7 @@ public class ScenarioIterationPostTests {
         List<CostingInput> costingInput = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
             .map(ScenarioItem::getCostingInput).collect(Collectors.toList());
 
-        costingInput.forEach(Assert::assertNull);
+        costingInput.forEach(Assertions::assertNull);
     }
 
     @Test

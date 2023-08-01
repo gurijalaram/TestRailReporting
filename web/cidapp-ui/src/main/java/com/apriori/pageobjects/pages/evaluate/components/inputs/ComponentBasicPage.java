@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -91,7 +91,7 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Basic tab was not selected", basicTab.getAttribute("class").contains("active"));
+        assertTrue(basicTab.getAttribute("class").contains("active"), "Basic tab was not selected");
         pageUtils.waitForElementToAppear(processGroupDropdown);
     }
 

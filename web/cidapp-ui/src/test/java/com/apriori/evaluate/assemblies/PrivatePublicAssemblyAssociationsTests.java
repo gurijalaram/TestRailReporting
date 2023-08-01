@@ -23,10 +23,10 @@ import com.utils.ColumnsEnum;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -72,7 +72,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     private File resourceFile;
     private File resourceFile2;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         hingeAssembly = "auto hinge assembly";
         assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -107,7 +107,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
     }
 
-    @After
+    @AfterEach
     public void deleteScenarios() {
         if (currentUser != null) {
             userPreferencesUtil.resetSettings(currentUser);

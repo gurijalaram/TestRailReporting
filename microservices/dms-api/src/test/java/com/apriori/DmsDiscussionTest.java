@@ -11,15 +11,15 @@ import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
 public class DmsDiscussionTest extends DmsApiTestDataUtils {
     private static String discussionDescription = StringUtils.EMPTY;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         discussionDescription = RandomStringUtils.randomAlphabetic(12);
     }

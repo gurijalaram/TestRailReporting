@@ -1,6 +1,6 @@
 package com.apriori;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.annotations.CreatableModel;
 import com.apriori.http.builder.entity.RequestEntity;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class TestUtil {
 
     protected static void validateResponseCodeByExpectingAndRealCode(int expectedStatus, int realStatusCode) {
-        assertEquals("The response code should be as expected ", expectedStatus, realStatusCode);
+        assertEquals(expectedStatus, realStatusCode, "The response code should be as expected ");
     }
 
     /**

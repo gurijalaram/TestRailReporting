@@ -24,10 +24,10 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.hc.core5.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class BatchImportListTests extends TestBaseUI {
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerName = new GenerateStringUtil().generateCustomerName();
         cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -64,7 +64,7 @@ public class BatchImportListTests extends TestBaseUI {
             .goToImport();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }

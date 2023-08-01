@@ -21,8 +21,8 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.apache.commons.lang.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,7 +67,7 @@ public class GroupEditTests {
         softAssertions.assertAll();
     }
 
-    @Before
+    @BeforeEach
     public void setupUser() {
         currentUser = UserUtil.getUser();
     }

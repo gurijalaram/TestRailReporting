@@ -3,9 +3,9 @@ package com.apriori;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
@@ -25,26 +25,28 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
 
     private static Part part;
     private static Batch batch;
     private static Report report;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         batch = BatchResources.createBatch().getResponseEntity();
         part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        assertTrue("Verify Part is in completed state", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity()));
+        assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity()), "Verify Part is in completed state");
         report = ReportResources.createReport().getResponseEntity();
-        assertTrue("Verify Report is in completed state", ReportResources.waitUntilReportStateIsCompleted(report.getIdentity()));
+        assertTrue(ReportResources.waitUntilReportStateIsCompleted(report.getIdentity()), "Verify Report is in completed state");
+    }
+
+    @AfterAll
+    public static void testCleanup() {
+        BatchResources.checkAndCancelBatch(batch);
     }
 
     @Test
@@ -111,10 +113,5 @@ public class ReportResourcesTest extends TestUtil {
     public void getReportTemplates() {
         ReportTemplates reportTemplates = ReportResources.getReportTemplates().getResponseEntity();
         assertNotEquals(reportTemplates.getItems().size(), 0);
-    }
-
-    @AfterClass
-    public static void testCleanup() {
-        BatchResources.checkAndCancelBatch(batch);
     }
 }

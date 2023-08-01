@@ -1,8 +1,8 @@
 package com.apriori.oldendpoint;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.entity.response.CssComponentResponse;
@@ -12,13 +12,13 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class ScenarioIterationGetTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         scenarioIterationService.loadDataIfNotExists();
     }

@@ -29,10 +29,10 @@ import enums.DtcScoreEnum;
 import enums.MassMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -241,7 +241,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
+    @Disabled("not applicable due to reports configuration")
     @TestRail(id = {7363})
     @Description("Verify save button functionality - Plastic DTC Report ")
     public void testSaveAndRemoveButtons() {

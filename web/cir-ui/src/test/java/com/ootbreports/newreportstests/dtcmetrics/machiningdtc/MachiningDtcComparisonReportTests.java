@@ -11,25 +11,25 @@ import enums.CostMetricEnum;
 import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private static JasperApiUtils jasperApiUtils;
     private final List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.DTCMACHINING_001_Toleranced.getPartName(),
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupGenericMethods() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
     }

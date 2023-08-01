@@ -19,20 +19,20 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.TimeoutException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Ignore("Feature is not fully ready yet.  Can remove this once fully built e2e")
+@Disabled("Feature is not fully ready yet.  Can remove this once fully built e2e")
 public class SystemConfigurationGroupsTests extends TestBaseUI {
     private SystemConfigurationGroupsPage systemConfigurationGroupsPage;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         systemConfigurationGroupsPage = new CasLoginPage(driver)

@@ -16,11 +16,11 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +36,7 @@ public class EditUserTests extends TestBaseUI {
     private String userIdentity;
     private UserProfilePage userProfilePage;
 
-    @Before
+    @BeforeEach
     public void setup() {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -57,7 +57,7 @@ public class EditUserTests extends TestBaseUI {
             .save(UserProfilePage.class);
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
@@ -151,7 +151,7 @@ public class EditUserTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Status field is disabled")
+    @Disabled("Status field is disabled")
     @Description("Status field is greyed out (non editable) if Customer is set to inactive")
     @TestRail(id = {10644, 10645})
     public void testUserStatusFieldNotEditableIfCustomerIsDisabled() {

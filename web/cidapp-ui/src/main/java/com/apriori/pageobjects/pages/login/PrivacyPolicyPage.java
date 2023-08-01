@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 
@@ -47,7 +47,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("aPriori logo is not displayed", isPageLogoDisplayed());
+        assertTrue(isPageLogoDisplayed(), "aPriori logo is not displayed");
     }
 
     /**

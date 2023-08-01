@@ -14,9 +14,9 @@ import enums.CICAPIEnum;
 import enums.CICPartSelectionType;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
@@ -27,7 +27,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     private JobDefinition jobDefinitionData;
     private SoftAssertions softAssertions;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         plmPartData = new PlmPartsUtil().getPlmPartData();
@@ -88,7 +88,7 @@ public class CicAgentTest extends WorkflowTestUtil {
         this.deleteWorkflow();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         softAssertions.assertAll();
         this.close();

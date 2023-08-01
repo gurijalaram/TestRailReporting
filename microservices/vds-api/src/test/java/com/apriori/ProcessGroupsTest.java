@@ -11,7 +11,7 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;

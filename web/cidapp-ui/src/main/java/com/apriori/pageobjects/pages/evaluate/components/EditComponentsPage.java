@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -50,7 +50,7 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Edit Scenarios dialog is not displayed", pageUtils.waitForElementToAppear(conflictsForm).isDisplayed());
+        assertTrue(pageUtils.waitForElementToAppear(conflictsForm).isDisplayed(), "Edit Scenarios dialog is not displayed");
     }
 
     /**

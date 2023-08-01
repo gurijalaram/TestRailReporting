@@ -19,9 +19,9 @@ import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;
@@ -43,7 +43,7 @@ public class ComponentCostReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.COMPONENT_COST.getReportName()
+            ReportNamesEnum.COMPONENT_COST.getReportName()
         );
     }
 
@@ -72,17 +72,17 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
@@ -96,26 +96,26 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
         componentCostReportPage.selectComponent("TOP-LEVEL")
-                .clickOk(ComponentCostReportPage.class)
-                .waitForCorrectPartName("TOP-LEVEL");
+            .clickOk(ComponentCostReportPage.class)
+            .waitForCorrectPartName("TOP-LEVEL");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("TOP-LEVEL")));
     }
@@ -126,23 +126,23 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Available: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
         );
         componentSelectAsserts(true);
         componentSelectAsserts(false);
 
         componentCostReportPage.clickOk(ComponentCostReportPage.class)
-                .waitForCorrectPartName("3538968");
+            .waitForCorrectPartName("3538968");
 
         assertThat(componentCostReportPage.getComponentCostPartNumber(), is(equalTo("3538968")));
     }
@@ -153,18 +153,18 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-                .waitForComponentFilter()
-                .selectDefaultScenarioName(ComponentCostReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .waitForComponentFilter()
+            .selectDefaultScenarioName(ComponentCostReportPage.class);
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(),
-                "Selected: ",
-                "1"
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Selected: ",
+            "1"
         );
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
         ArrayList<String> partComponentNames = componentCostReportPage.getComponentSelectNames();
@@ -179,21 +179,21 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
-                .waitForInputControlsLoad()
-                .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(ComponentCostReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(ComponentCostReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
 
         componentCostReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(ComponentCostReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(ComponentCostReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostGBP = componentCostReportPage.getLifetimeCost();
 
@@ -208,26 +208,26 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {
         componentCostReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
-                .setLatestExportDateToTodayMinusTwoYears()
-                .clickComponentTypeDropdownTwice();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .setLatestExportDateToTodayMinusTwoYears()
+            .clickComponentTypeDropdownTwice();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.CREATED_BY.getListName(), "Available: ", "0");
+            ListNameEnum.CREATED_BY.getListName(), "Available: ", "0");
 
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
+            ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("0")));
 
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
+            ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("0")));
 
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("0")));
 
         assertThat(componentCostReportPage.getComponentSelectDropdownText(),
-                is(equalTo("Click to select item...")));
+            is(equalTo("Click to select item...")));
 
         assertThat(componentCostReportPage.getWarningMessageText(), is(equalTo(Constants.WARNING_TEXT)));
 
@@ -240,11 +240,11 @@ public class ComponentCostReportTests extends TestBaseUI {
 
         componentCostReportPage.setComponentType(componentType);
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
         componentCostReportPage.waitForComponentFilter(isAssembly);
 
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
+            ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
         assertThat(componentCostReportPage.getFirstScenarioName(), is(equalTo(Constants.DEFAULT_SCENARIO_NAME)));
 
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo(expectedCount)));

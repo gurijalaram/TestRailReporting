@@ -4,7 +4,7 @@ import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class EnabledCurrencyRateVersionsTests extends TestUtil {
 

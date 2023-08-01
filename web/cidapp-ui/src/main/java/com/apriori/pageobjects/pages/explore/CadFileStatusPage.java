@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -53,8 +53,8 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Successes tab is not displayed", pageUtils.waitForElementToAppear(successesTab).isDisplayed());
-        assertTrue("Failures tab is not displayed", pageUtils.waitForElementToAppear(failuresTab).isDisplayed());
+        assertTrue(pageUtils.waitForElementToAppear(successesTab).isDisplayed(), "Successes tab is not displayed");
+        assertTrue(pageUtils.waitForElementToAppear(failuresTab).isDisplayed(), "Failures tab is not displayed");
     }
 
     /**

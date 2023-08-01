@@ -17,11 +17,11 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -40,7 +40,7 @@ public class NewCustomerTests extends TestBaseUI {
     private List<String> created;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setup() {
         created = new ArrayList<>();
         cdsTestUtil = new CdsTestUtil();
@@ -50,7 +50,7 @@ public class NewCustomerTests extends TestBaseUI {
         customerProfilePage = customerViewPage.goToProfile();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         if (created != null) {
             created.forEach(identity -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
@@ -255,7 +255,7 @@ public class NewCustomerTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Status is currently disabled in customer profile")
+    @Disabled("Status is currently disabled in customer profile")
     @Description("Validate that customer can be set to inactive by unselecting Status checkbox")
     @TestRail(id = {10633})
     public void testNewCustomerCanBeCreatedWithInactiveStatus() {

@@ -13,9 +13,9 @@ import com.apriori.testrail.TestRail;
 import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -34,13 +34,13 @@ public class MountTypePinCountTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }
 
     @Test
-    @Ignore("this feature is not on qa-test yet")
+    @Disabled("this feature is not on qa-test yet")
     @TestRail(id = 15407)
     @Description("Verify that three variants radio buttons for Mount Type field exists")
     public void mountTypeRadioBtnTest() {

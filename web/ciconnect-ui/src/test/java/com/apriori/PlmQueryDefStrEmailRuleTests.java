@@ -10,9 +10,9 @@ import enums.QueryDefinitionFieldType;
 import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
 import utils.WorkflowTestUtil;
@@ -23,7 +23,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     private static SoftAssertions softAssertions;
 
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
@@ -211,7 +211,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
             .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_DATE).getPlmPartNumber()))).isTrue();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         this.deleteWorkflow();
         softAssertions.assertAll();

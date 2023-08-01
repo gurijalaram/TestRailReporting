@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class BatchPartTestDemo {
     private static Part part = null;
     private static List<PartData> partDataList = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         System.out.println("asfadfadsf" + PropertiesContext.get("number_of_parts"));
         partDataList = new TestDataService().getPartsFromCloud(2);
@@ -51,7 +51,7 @@ public class BatchPartTestDemo {
         softAssertions.assertAll();
     }
 
-    @AfterClass
+    @AfterAll
     public static void testCleanup() {
         BatchResources.checkAndCancelBatch(batch);
     }

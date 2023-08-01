@@ -1,5 +1,7 @@
 package com.integration.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
@@ -12,10 +14,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -23,12 +24,12 @@ import java.util.Map;
 public class BcsSdsIntegrationTests {
     private static Batch batch;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         batch = (Batch) BatchResources.createBatch().getResponseEntity();
     }
 
-    @AfterClass
+    @AfterAll
     public static void testCleanup() {
     }
 
@@ -49,7 +50,7 @@ public class BcsSdsIntegrationTests {
         materialMode = IterationController.getMaterialMode(
             identities.get("scenario"),
             identities.get("component"));
-        Assert.assertEquals(materialMode.toLowerCase(), "manual");
+        assertEquals(materialMode.toLowerCase(), "manual");
     }
 
     @Test
@@ -72,6 +73,6 @@ public class BcsSdsIntegrationTests {
         materialMode = IterationController.getMaterialMode(
             identities.get("scenario"),
             identities.get("component"));
-        Assert.assertEquals(materialMode.toLowerCase(), "cad");
+        assertEquals(materialMode.toLowerCase(), "cad");
     }
 }

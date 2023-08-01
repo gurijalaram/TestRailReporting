@@ -12,9 +12,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsSitesTests {
     private SoftAssertions soft = new SoftAssertions();
@@ -27,7 +27,7 @@ public class CdsSitesTests {
     private String emailPattern;
     private String customerIdentity;
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -39,7 +39,7 @@ public class CdsSitesTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);

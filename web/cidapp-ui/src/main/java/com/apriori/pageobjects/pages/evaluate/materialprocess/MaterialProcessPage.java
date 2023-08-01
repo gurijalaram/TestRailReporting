@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.PanelController;
@@ -133,7 +133,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Processes tab was not selected", processesTab.getAttribute("class").contains("active"));
+        assertTrue(processesTab.getAttribute("class").contains("active"), "Processes tab was not selected");
         pageUtils.waitForElementToAppear(chartContainer);
     }
 

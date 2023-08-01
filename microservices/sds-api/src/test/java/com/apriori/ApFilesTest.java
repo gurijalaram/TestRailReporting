@@ -11,8 +11,8 @@ import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class ApFilesTest  extends SDSTestUtil {
     @Test
     @TestRail(id = {8417})
     @Description("Import an existing aP File resulting in the creation/modification of components, scenarios and/or iterations. ")
-    @Ignore
+    @Disabled
     public void testPostApFile() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_AP_FILES, null)

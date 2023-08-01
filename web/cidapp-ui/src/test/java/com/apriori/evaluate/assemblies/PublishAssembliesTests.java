@@ -31,9 +31,9 @@ import com.utils.ButtonTypeEnum;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -41,6 +41,8 @@ import java.util.List;
 
 public class PublishAssembliesTests extends TestBaseUI {
 
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
@@ -50,8 +52,6 @@ public class PublishAssembliesTests extends TestBaseUI {
     private File subComponentA;
     private File subComponentB;
     private File assembly;
-    private static ComponentInfoBuilder componentAssembly;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private PublishPage publishPage;
     private ComponentsTablePage componentsTablePage;
@@ -63,7 +63,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);

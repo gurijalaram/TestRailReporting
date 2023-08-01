@@ -19,9 +19,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
@@ -39,7 +39,7 @@ public class CasSiteLicenseTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         customerName = generateStringUtil.generateCustomerName();
@@ -56,7 +56,7 @@ public class CasSiteLicenseTests {
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity

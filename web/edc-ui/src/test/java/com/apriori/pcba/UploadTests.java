@@ -17,9 +17,9 @@ import com.utils.EdcUiResources;
 import com.utils.RightClickOptionEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -41,7 +41,7 @@ public class UploadTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }
@@ -77,7 +77,7 @@ public class UploadTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("ignoring temporarily as qa-test gets 500 error while uploading wireHarness BOM")
+    @Disabled("ignoring temporarily as qa-test gets 500 error while uploading wireHarness BOM")
     @Test
     @TestRail(id = 13253)
     @Description("User is able to upload a Wire Harness BOM directly to EDC on the cloud")
@@ -120,7 +120,7 @@ public class UploadTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("Ignored due to file location")
+    @Disabled("Ignored due to file location")
     @Test
     @TestRail(id = 1732)
     @Description("BOM can be exported to file from main page")

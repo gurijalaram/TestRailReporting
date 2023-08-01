@@ -6,8 +6,8 @@ import com.apriori.utils.runner.ConcurrentTestRunner;
 import com.apriori.utils.web.rules.TestRule;
 import com.apriori.utils.web.util.ConsoleLogHandler;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.Dimension;
@@ -46,7 +46,7 @@ public class TestBase  {
         logger.debug("Locale from property: " + System.getProperty("locale"));
     }
 
-    @Before
+    @BeforeEach
     public void testBaseBefore() {
 
         DriverFactory df;
@@ -84,7 +84,7 @@ public class TestBase  {
 
     }
 
-    @After
+    @AfterEach
     public void closeBrowser() {
         MDC.remove("methodName");
     }

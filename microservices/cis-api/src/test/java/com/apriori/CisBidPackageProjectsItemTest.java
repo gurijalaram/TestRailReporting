@@ -18,10 +18,10 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class CisBidPackageProjectsItemTest extends TestUtil {
 
@@ -32,7 +32,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     private static BidPackageProjectItemResponse bidPackageProjectItemResponse;
     private final UserCredentials currentUser = UserUtil.getUser();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -56,7 +56,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {14091})
     @Description("Create Project Item with valid inputs")
     public void createValidBidPackageProjectItemValid() {
@@ -68,7 +68,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {14092})
     @Description("Create Project Item with valid inputs")
     public void createInvalidBidPackageProjectItem() {
@@ -80,7 +80,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {13487})
     @Description("Get Project Item")
     public void getBidPackageProjectItem() {
@@ -96,7 +96,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {14098})
     @Description("Delete valid Bid Package Project Item")
     public void deleteValidBidPackageProjectItem() {
@@ -105,7 +105,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {14413})
     @Description("Delete In-valid Bid Package Project Item")
     public void deleteInValidBidPackageProjectItem() {
@@ -143,7 +143,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
     }
 
     @Test
-    @Ignore
+    @Disabled
     @TestRail(id = {13489})
     @Description("Mention a User in a Reply (Retrieve the Project users)")
     public void getBidPackageProjectItemUsers() {
@@ -156,7 +156,7 @@ public class CisBidPackageProjectsItemTest extends TestUtil {
             .contains("2 validation failures were found:* 'projectIdentity' is not a valid identity.* 'bidPackageIdentity' is not a valid identity.");
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();

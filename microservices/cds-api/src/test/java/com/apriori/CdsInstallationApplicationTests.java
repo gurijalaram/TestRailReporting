@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsInstallationApplicationTests {
     private SoftAssertions soft = new SoftAssertions();
@@ -37,7 +37,7 @@ public class CdsInstallationApplicationTests {
     private ResponseWrapper<Deployment> deployment;
     private String deploymentIdentity;
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -58,7 +58,7 @@ public class CdsInstallationApplicationTests {
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (installationIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,

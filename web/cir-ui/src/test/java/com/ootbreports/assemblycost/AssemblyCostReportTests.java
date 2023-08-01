@@ -11,9 +11,9 @@ import com.apriori.testrail.TestRail;
 import com.navigation.CommonReportTests;
 import enums.AssemblySetEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 public class AssemblyCostReportTests extends TestBaseUI {
@@ -31,7 +31,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigationAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
+            ReportNamesEnum.ASSEMBLY_COST_A4.getReportName()
         );
     }
 
@@ -42,7 +42,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigationAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
+            ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName()
         );
     }
 
@@ -63,7 +63,6 @@ public class AssemblyCostReportTests extends TestBaseUI {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName());
     }
-
 
     @Test
     @Tags({@Tag(REPORTS),
@@ -93,8 +92,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testExportSetDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testExportSetDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
-                ExportSetEnum.TOP_LEVEL.getExportSetName()
+            ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+            ExportSetEnum.TOP_LEVEL.getExportSetName()
         );
     }
 
@@ -105,8 +104,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testExportSetDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testExportSetDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
-                ExportSetEnum.TOP_LEVEL.getExportSetName()
+            ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+            ExportSetEnum.TOP_LEVEL.getExportSetName()
         );
     }
 
@@ -118,8 +117,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testAssemblySetDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblySetDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
-                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
+            ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+            AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
     }
 
@@ -130,8 +129,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testAssemblySetDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testAssemblySetDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
-                AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
+            ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+            AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()
         );
     }
 
@@ -142,8 +141,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testScenarioNameDropdownFunctionalityAssemblyCostA4() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testScenarioNameDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
-                Constants.DEFAULT_SCENARIO_NAME
+            ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(),
+            Constants.DEFAULT_SCENARIO_NAME
         );
     }
 
@@ -155,8 +154,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     public void testScenarioNameDropdownFunctionalityAssemblyCostLetter() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testScenarioNameDropdownAssemblyCost(
-                ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
-                Constants.DEFAULT_SCENARIO_NAME
+            ReportNamesEnum.ASSEMBLY_COST_LETTER.getReportName(),
+            Constants.DEFAULT_SCENARIO_NAME
         );
     }
 

@@ -1,6 +1,6 @@
 package com.apriori.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.customeradmin.CustomerAdminPage;
@@ -37,7 +37,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CAS login page was not displayed", aprioriLoginService.getLoginTitle().contains("Customer Admin"));
+        assertTrue(aprioriLoginService.getLoginTitle().contains("Customer Admin"), "CAS login page was not displayed");
     }
 
     /**

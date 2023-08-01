@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
@@ -48,7 +48,7 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("EDC login page was not displayed", aprioriLoginService.getLoginTitle().contains("Electronics Data Collection"));
+        assertTrue(aprioriLoginService.getLoginTitle().contains("Electronics Data Collection"), "EDC login page was not displayed");
     }
 
     /**

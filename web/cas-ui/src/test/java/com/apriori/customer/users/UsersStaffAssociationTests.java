@@ -23,10 +23,10 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
     private StaffPage staffPage;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setup() {
         Map<String, Object> existingUsers = Collections.singletonMap("username[CN]", STAFF_TEST_USER);
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
@@ -75,7 +75,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
             .goToStaffPage();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
@@ -186,13 +186,13 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         soft.assertThat(count).overridingErrorMessage("The candidates were not added.").isGreaterThan(0L);
         checkHeader.check(true);
         updated.clickRemoveButton()
-                .clickConfirmRemoveCancelButton();
+            .clickConfirmRemoveCancelButton();
         utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
         long usersNotDeleted = staffTable.getRows().count();
         soft.assertThat(usersNotDeleted).overridingErrorMessage("The associated users were removed.").isEqualTo(count);
 
         updated.clickRemoveButton()
-                .clickConfirmRemoveOkButton();
+            .clickConfirmRemoveOkButton();
         utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
         long usersAdded = staffTable.getRows().count();
         soft.assertThat(usersAdded).overridingErrorMessage("The associated users were not removed.").isEqualTo(0L);

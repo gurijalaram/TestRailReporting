@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
@@ -92,7 +92,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Tree View is not active", pageUtils.waitForElementToAppear(treeViewButton).getAttribute("class").contains("active"));
+        assertTrue(pageUtils.waitForElementToAppear(treeViewButton).getAttribute("class").contains("active"), "Tree View is not active");
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
     }
 
@@ -246,7 +246,6 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
      * Selects the scenario by checkbox
      *
      * @param componentName - component name
-     *
      * @return current page object
      */
     public ComponentsTreePage clickScenarioCheckbox(String componentName) {

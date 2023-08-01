@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsUserPreferencesTests {
     private SoftAssertions soft = new SoftAssertions();
@@ -33,7 +33,7 @@ public class CdsUserPreferencesTests {
     private String customerIdentity;
     private String userIdentity;
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
@@ -49,7 +49,7 @@ public class CdsUserPreferencesTests {
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void deletePreferences() {
         if (userPreferenceIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID,

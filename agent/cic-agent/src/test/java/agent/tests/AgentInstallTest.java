@@ -5,9 +5,9 @@ import com.apriori.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.AgentService;
 import utils.CicLoginUtil;
 
@@ -17,7 +17,7 @@ public class AgentInstallTest extends TestBaseUI {
     private static SoftAssertions softAssertions;
     private static AgentService agentService;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
@@ -53,7 +53,7 @@ public class AgentInstallTest extends TestBaseUI {
         softAssertions.assertThat(agentService.getConnectorStatusInfo().getConnectionStatus()).isEqualTo("Connected to PLM");
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         softAssertions.assertAll();
     }

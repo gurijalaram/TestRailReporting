@@ -7,9 +7,9 @@ import entity.response.PlmSearchResponse;
 import enums.PlmPartsSearch;
 import enums.PlmWCType;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.PlmApiTestUtil;
 import utils.SearchFilter;
@@ -17,7 +17,7 @@ import utils.SearchFilter;
 public class CicPlmSearchPartTest {
     private static SoftAssertions softAssertions;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
     }
@@ -68,7 +68,7 @@ public class CicPlmSearchPartTest {
         softAssertions.assertThat(plmPartResponse).isNotNull();
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         softAssertions.assertAll();
     }

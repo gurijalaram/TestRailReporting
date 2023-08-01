@@ -15,8 +15,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 public class AtsUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -28,7 +28,7 @@ public class AtsUsersTests {
     private String customerIdentity;
     private String userIdentity;
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,

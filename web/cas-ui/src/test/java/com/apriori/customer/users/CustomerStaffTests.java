@@ -27,10 +27,10 @@ import com.apriori.utils.UserCreation;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.NoSuchElementException;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class CustomerStaffTests extends TestBaseUI {
     private IdentityHolder deleteIdentityHolder;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -63,13 +63,13 @@ public class CustomerStaffTests extends TestBaseUI {
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
 
         usersListPage = new CasLoginPage(driver)
-                .login(UserUtil.getUser())
-                .openCustomer(customerIdentity)
-                .goToUsersPage()
-                .goToCustomerStaff();
+            .login(UserUtil.getUser())
+            .openCustomer(customerIdentity)
+            .goToUsersPage()
+            .goToCustomerStaff();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
@@ -91,17 +91,17 @@ public class CustomerStaffTests extends TestBaseUI {
     @TestRail(id = {4061, 4380, 10572, 10574, 10580})
     public void testCustomerStaffTableViewHasCorrectDetails() {
         UsersListPage goToTableView = usersListPage
-                .clickTableViewButton()
-                .validateCustomerStaffTableArePageableRefreshable(soft)
-                .validateUsersTableHasCorrectColumns("User Name", "username", soft)
-                .validateUsersTableHasCorrectColumns("Identity", "identity", soft)
-                .validateUsersTableHasCorrectColumns("Email", "email", soft)
-                .validateUsersTableHasCorrectColumns("User Type", "userType", soft)
-                .validateUsersTableHasCorrectColumns("Family Name", "userProfile.familyName", soft)
-                .validateUsersTableHasCorrectColumns("Given Name", "userProfile.givenName", soft)
-                .validateUsersTableHasCorrectColumns("Job Title", "userProfile.jobTitle", soft)
-                .validateUsersTableHasCorrectColumns("Department", "userProfile.department", soft)
-                .validateUsersTableHasCorrectColumns("Created", "createdAt", soft);
+            .clickTableViewButton()
+            .validateCustomerStaffTableArePageableRefreshable(soft)
+            .validateUsersTableHasCorrectColumns("User Name", "username", soft)
+            .validateUsersTableHasCorrectColumns("Identity", "identity", soft)
+            .validateUsersTableHasCorrectColumns("Email", "email", soft)
+            .validateUsersTableHasCorrectColumns("User Type", "userType", soft)
+            .validateUsersTableHasCorrectColumns("Family Name", "userProfile.familyName", soft)
+            .validateUsersTableHasCorrectColumns("Given Name", "userProfile.givenName", soft)
+            .validateUsersTableHasCorrectColumns("Job Title", "userProfile.jobTitle", soft)
+            .validateUsersTableHasCorrectColumns("Department", "userProfile.department", soft)
+            .validateUsersTableHasCorrectColumns("Created", "createdAt", soft);
 
         PageUtils utils = new PageUtils(driver);
 
@@ -125,11 +125,11 @@ public class CustomerStaffTests extends TestBaseUI {
         String userIdentity = sourceUsers.get(0).getIdentity();
 
         goToTableView.selectUser(customerIdentity, userIdentity, userName)
-                .edit()
-                .cancel()
-                .backToUsersListPage(UsersListPage.class)
-                .clickNew()
-                .backToUsersListPage();
+            .edit()
+            .cancel()
+            .backToUsersListPage(UsersListPage.class)
+            .clickNew()
+            .backToUsersListPage();
 
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
 
@@ -148,7 +148,7 @@ public class CustomerStaffTests extends TestBaseUI {
     @TestRail(id = {10573, 10575, 10576, 10577})
     public void testCustomerStaffCardView() {
         UsersListPage goToCardView = usersListPage
-                .clickCardViewButton();
+            .clickCardViewButton();
 
         PageUtils utils = new PageUtils(driver);
 

@@ -18,9 +18,9 @@ import com.apriori.testrail.TestRail;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +37,7 @@ public class PublicPrivateComparisonTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private ComparePage comparePage;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         currentUser = UserUtil.getUser();
 

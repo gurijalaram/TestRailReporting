@@ -17,7 +17,7 @@ import com.apriori.testrail.TestRail;
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;

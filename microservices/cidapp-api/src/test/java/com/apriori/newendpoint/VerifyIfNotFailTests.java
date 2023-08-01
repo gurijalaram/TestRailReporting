@@ -1,7 +1,7 @@
 package com.apriori.newendpoint;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
@@ -14,8 +14,8 @@ import com.apriori.json.JsonManager;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 public class VerifyIfNotFailTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         scenarioIterationService.loadDataIfNotExists();
     }

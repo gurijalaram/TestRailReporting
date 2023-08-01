@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ public class ListProcessGroupTests {
         softAssertions.assertAll();
     }
 
-    @Ignore("Assemblies cannot be upload")
+    @Disabled("Assemblies cannot be upload")
     @Test
     @Tag(IGNORE)
     @TestRail(id = 6198)

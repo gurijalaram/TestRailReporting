@@ -11,8 +11,8 @@ import entity.response.DmsCommentsResponse;
 import entity.response.DmsErrorMessageResponse;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.DmsApiTestDataUtils;
 import utils.DmsApiTestUtils;
 
@@ -21,7 +21,7 @@ import java.util.Collections;
 public class DmsCommentsTest extends DmsApiTestDataUtils {
     private static String userContext;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }

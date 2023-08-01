@@ -16,8 +16,8 @@ import com.apriori.testrail.TestRail;
 import com.utils.CostStatusEnum;
 import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -32,7 +32,7 @@ public class FilterPartsTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }

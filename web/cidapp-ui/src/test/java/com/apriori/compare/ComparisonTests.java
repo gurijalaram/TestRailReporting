@@ -45,8 +45,8 @@ import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -1004,7 +1004,6 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String scenarioName4 = new GenerateStringUtil().generateScenarioName();
         String scenarioName5 = new GenerateStringUtil().generateScenarioName();
-
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)

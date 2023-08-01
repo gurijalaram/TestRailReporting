@@ -18,18 +18,18 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 public class CustomersTests extends TestBaseUI {
+    String customerIdentity;
+    String customerSalesforceID;
     private CustomerAdminPage customerAdminPage;
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil;
-    String customerIdentity;
-    String customerSalesforceID;
 
-    @Before
+    @BeforeEach
     public void setup() {
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
@@ -124,7 +124,7 @@ public class CustomersTests extends TestBaseUI {
         utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
 
         soft.assertThat(customerAdminPage.getFieldName())
-                .containsExactly("Salesforce ID:", "Cloud Reference:", "Customer Type:", "Created:");
+            .containsExactly("Salesforce ID:", "Cloud Reference:", "Customer Type:", "Created:");
         soft.assertThat(customerAdminPage.isStatusIconColour("green")).isTrue();
         soft.assertAll();
     }

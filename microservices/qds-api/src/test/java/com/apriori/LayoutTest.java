@@ -16,9 +16,9 @@ import com.apriori.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LayoutTest extends TestUtil {
 
@@ -29,7 +29,7 @@ public class LayoutTest extends TestUtil {
     private static String viewElementName;
     private static String layoutName;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         layoutName = "LY" + new GenerateStringUtil().getRandomNumbers();
@@ -89,7 +89,7 @@ public class LayoutTest extends TestUtil {
     }
 
 
-    @After
+    @AfterEach
     public void testCleanup() {
         LayoutResources.deleteLayout(layoutResponse.getIdentity(), userContext);
         softAssertions.assertAll();

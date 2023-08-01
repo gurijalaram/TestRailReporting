@@ -20,9 +20,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +35,14 @@ public class PartsTest extends PartsUtil {
     private SoftAssertions softAssertions = new SoftAssertions();
     private LineItemsUtil lineItems = new LineItemsUtil();
 
-    @AfterClass
+    @AfterAll
     public static void deleteTestingData() {
         if (billOfMaterialsIdentity != null) {
             deleteBillOfMaterialById(billOfMaterialsIdentity);
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();

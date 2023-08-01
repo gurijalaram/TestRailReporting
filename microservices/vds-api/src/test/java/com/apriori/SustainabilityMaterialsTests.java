@@ -15,7 +15,7 @@ import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGrou
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

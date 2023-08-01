@@ -32,9 +32,9 @@ import enums.AssemblyTypeEnum;
 import enums.ComponentInfoColumnEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 import java.math.BigDecimal;

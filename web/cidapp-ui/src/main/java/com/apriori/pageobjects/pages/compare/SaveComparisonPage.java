@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.compare;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
 
 @Slf4j
 public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
@@ -54,7 +53,7 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Save Comparison page was not displayed", "Save Comparison", pageUtils.waitForElementToAppear(saveComparisonLabel).getAttribute("textContent"));
+        assertEquals("Save Comparison", pageUtils.waitForElementToAppear(saveComparisonLabel).getAttribute("textContent"), "Save Comparison page was not displayed");
     }
 
     /**
@@ -92,7 +91,6 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
 
     /**
      * Waits for the Saving Spinner to complete and disappear
-     *
      */
     public ComparePage waitForSavingSpinner() {
         pageUtils.waitForElementNotVisible(saveSpinner, 1);

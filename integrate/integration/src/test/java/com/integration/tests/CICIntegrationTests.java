@@ -33,9 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 
@@ -58,7 +58,7 @@ public class CICIntegrationTests extends TestBaseUI {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
@@ -136,7 +136,7 @@ public class CICIntegrationTests extends TestBaseUI {
         emailMessage.deleteEmailMessage();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowName));
         softAssertions.assertAll();

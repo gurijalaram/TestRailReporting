@@ -16,10 +16,10 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class CasBatchItemTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
@@ -28,12 +28,12 @@ public class CasBatchItemTests {
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
-    @Before
+    @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
@@ -130,7 +130,7 @@ public class CasBatchItemTests {
     }
 
     // TODO endpoint is not implemented
-    @Ignore("Endpoint is not implemented")
+    @Disabled("Endpoint is not implemented")
     @Test
     @TestRail(id = {5673})
     @Description("Update an existing Batch Item identified by its identity.")

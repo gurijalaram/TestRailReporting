@@ -22,8 +22,8 @@ import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     private ComponentInfoBuilder assemblyInfo;
     private ComponentInfoBuilder subAssemblyInfo;
 
-    @After
+    @AfterEach
     public void deleteScenarios() {
         if (currentUser != null) {
             assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);

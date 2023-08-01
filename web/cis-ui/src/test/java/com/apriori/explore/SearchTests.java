@@ -8,9 +8,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SearchTests extends TestBaseUI {
 
@@ -22,12 +22,12 @@ public class SearchTests extends TestBaseUI {
     private ExplorePage explorePage;
     private SoftAssertions softAssertions;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         softAssertions = new SoftAssertions();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         softAssertions.assertAll();
     }

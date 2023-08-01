@@ -3,8 +3,8 @@ package com.apriori;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
@@ -15,20 +15,25 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class BatchResourcesTest {
 
     private static Batch batch1;
     private static ResponseWrapper<Batch> response;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         response = BatchResources.createBatch();
         batch1 = response.getResponseEntity();
         assertThat(batch1.getState(), is(equalTo(BCSState.CREATED.toString())));
+    }
+
+    @AfterAll
+    public static void testCleanup() {
+        BatchResources.checkAndCancelBatch(batch1);
     }
 
     @Test
@@ -80,11 +85,6 @@ public class BatchResourcesTest {
 
         BatchResources.startBatchCosting(batchResponse.getResponseEntity());
 
-        assertTrue("Verify Batch costing state is completed", BatchResources.waitUntilBatchCostingReachedExpected(batchResponse.getResponseEntity().getIdentity(), BCSState.COMPLETED));
-    }
-
-    @AfterClass
-    public static void testCleanup() {
-        BatchResources.checkAndCancelBatch(batch1);
+        assertTrue(BatchResources.waitUntilBatchCostingReachedExpected(batchResponse.getResponseEntity().getIdentity(), BCSState.COMPLETED), "Verify Batch costing state is completed");
     }
 }

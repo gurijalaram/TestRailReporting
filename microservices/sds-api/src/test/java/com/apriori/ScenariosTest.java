@@ -24,8 +24,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     @Test
     //TODO should be resolved after adding an API to create a custom image for CID.
-    @Ignore("API that allow to create a custom image, doesn't exist for CID. Custom image is user guided.")
+    @Disabled("API that allow to create a custom image, doesn't exist for CID. Custom image is user guided.")
     @TestRail(id = 6925)
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {

@@ -23,9 +23,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -119,7 +119,7 @@ public class PsoEditTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("Ignoring this test only as we need to find a way to count bar horizontally")
+    @Disabled("Ignoring this test only as we need to find a way to count bar horizontally")
     @Test
     @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")

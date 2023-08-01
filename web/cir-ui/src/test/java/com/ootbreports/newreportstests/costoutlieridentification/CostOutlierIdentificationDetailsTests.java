@@ -8,8 +8,8 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import enums.CostMetricEnum;
 import enums.JasperCirApiPartsEnum;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
     }

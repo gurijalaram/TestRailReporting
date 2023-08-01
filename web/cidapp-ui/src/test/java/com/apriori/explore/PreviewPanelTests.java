@@ -27,21 +27,20 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
 public class PreviewPanelTests extends TestBaseUI {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private PreviewPage previewPage;
-
     private File resourceFile;
     private File resourceFile2;
     private File resourceFile3;
     private File resourceFile4;
-    UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public PreviewPanelTests() {

@@ -28,11 +28,11 @@ import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.QmsApiTestUtils;
 
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     private static DiscussionCommentResponse discussionCommentResponse;
     private static ScenarioItem scenarioItem;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         scenarioItem = QmsApiTestUtils
             .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
@@ -58,18 +58,18 @@ public class QmsScenarioDiscussionTest extends TestUtil {
             .createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
         softAssertions.assertAll();
     }
 
-    @Before
+    @BeforeEach
     public void beforeTest() {
         softAssertions = new SoftAssertions();
     }
 
-    @After
+    @AfterEach
     public void afterTest() {
         softAssertions.assertAll();
     }

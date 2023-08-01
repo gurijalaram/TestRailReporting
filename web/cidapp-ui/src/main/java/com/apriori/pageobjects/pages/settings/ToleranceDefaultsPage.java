@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -67,7 +67,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Tolerance tab was not selected", toleranceTab.getAttribute("class").contains("active"));
+        assertTrue(toleranceTab.getAttribute("class").contains("active"), "Tolerance tab was not selected");
     }
 
     /**

@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsAccessControlsTests  {
     private IdentityHolder accessControlIdentityHolder;
@@ -32,7 +32,7 @@ public class CdsAccessControlsTests  {
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         customerType = Constants.CLOUD_CUSTOMER;
@@ -44,7 +44,7 @@ public class CdsAccessControlsTests  {
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (accessControlIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.ACCESS_CONTROL_BY_ID,

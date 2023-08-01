@@ -10,13 +10,13 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AprioriInternalProfileTests extends TestBaseUI {
     private CustomerProfilePage customerProfilePage;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         customerProfilePage = new CasLoginPage(driver)

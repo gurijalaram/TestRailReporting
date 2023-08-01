@@ -43,7 +43,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

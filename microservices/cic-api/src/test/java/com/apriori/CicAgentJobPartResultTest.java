@@ -15,9 +15,9 @@ import enums.PlmPartDataType;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
@@ -29,7 +29,7 @@ public class CicAgentJobPartResultTest extends WorkflowTestUtil {
 
     private SoftAssertions softAssertions;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         plmPartData = new PlmPartsUtil().getPlmPartData();
@@ -254,7 +254,7 @@ public class CicAgentJobPartResultTest extends WorkflowTestUtil {
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isNull();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         this.deleteWorkflow();
         softAssertions.assertAll();

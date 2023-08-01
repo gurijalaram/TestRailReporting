@@ -18,10 +18,10 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +35,7 @@ public class NewUserTests extends TestBaseUI {
     private NewUserPage newUserPage;
     private String email;
 
-    @Before
+    @BeforeEach
     public void setup() {
         String customerName = new GenerateStringUtil().generateCustomerName();
         String cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -54,7 +54,7 @@ public class NewUserTests extends TestBaseUI {
             .clickNew();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);

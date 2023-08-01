@@ -20,9 +20,9 @@ import com.opencsv.CSVReaderBuilder;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,14 +45,14 @@ public class CasCustomersUsersTests {
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
-    @Before
+    @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         newCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = newCustomer.getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,

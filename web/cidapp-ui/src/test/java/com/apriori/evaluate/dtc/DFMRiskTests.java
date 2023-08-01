@@ -23,8 +23,8 @@ import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -78,7 +78,6 @@ public class DFMRiskTests extends TestBaseUI {
         String componentName = "9856874Medium";
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, componentName + ".prt.1");
         currentUser = UserUtil.getUser();
-
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -147,7 +146,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6462,6415,6416})
+    @TestRail(id = {6462, 6415, 6416})
     @Description("Validate DFM Risk - Medium Plastic Moulding")
     public void plasticMouldedMediumDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -180,7 +179,7 @@ public class DFMRiskTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {6484,6485})
+    @TestRail(id = {6484, 6485})
     @Description("Validate when switch PG from a group with dfm risk to a group without that the risk is removed")
     public void noRiskTransferDie() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -211,7 +210,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6472,6824,6473})
+    @TestRail(id = {6472, 6824, 6473})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
         final String fileName = "1379344.stp";
@@ -257,7 +256,7 @@ public class DFMRiskTests extends TestBaseUI {
 
     @Test
     @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {6480,6481})
+    @TestRail(id = {6480, 6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
         final String file = "DTCPlasticIssues.SLDPRT";
@@ -301,7 +300,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6474,6475})
+    @TestRail(id = {6474, 6475})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
         final String file = "bracketdfm.SLDPRT";
@@ -345,7 +344,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6476,5439,6477})
+    @TestRail(id = {6476, 5439, 6477})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
         final String file = "manifold2.prt.1";
@@ -388,7 +387,7 @@ public class DFMRiskTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6478,6479,6471})
+    @TestRail(id = {6478, 6479, 6471})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
         final String file = "SandCastBox.SLDPRT";

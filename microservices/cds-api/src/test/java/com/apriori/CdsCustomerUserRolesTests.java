@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CdsCustomerUserRolesTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -34,7 +34,7 @@ public class CdsCustomerUserRolesTests {
     private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
@@ -50,7 +50,7 @@ public class CdsCustomerUserRolesTests {
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);

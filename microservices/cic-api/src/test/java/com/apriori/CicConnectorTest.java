@@ -18,9 +18,9 @@ import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 
@@ -32,11 +32,8 @@ public class CicConnectorTest extends TestBaseUI {
     private static SoftAssertions softAssertions;
     private static ConnectorRequest connectorRequestDataBuilder;
 
-    @Before
-    public void testSetup() {
-        softAssertions = new SoftAssertions();
-        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
-        connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
+    @AfterAll
+    public static void cleanup() {
     }
 
     @Test
@@ -65,7 +62,10 @@ public class CicConnectorTest extends TestBaseUI {
         softAssertions.assertThat(CicApiTestUtil.getAgentReportTemplate(reportTemplates, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY)).isNotNull();
     }
 
-    @AfterClass
-    public static void cleanup() {
+    @BeforeEach
+    public void testSetup() {
+        softAssertions = new SoftAssertions();
+        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
+        connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
     }
 }

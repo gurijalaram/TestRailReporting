@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.PanelController;
@@ -62,7 +62,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Material Utilization tab was not selected", materialTab.getAttribute("class").contains("active"));
+        assertTrue(materialTab.getAttribute("class").contains("active"), "Material Utilization tab was not selected");
     }
 
     /**

@@ -16,7 +16,7 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.util.List;
 
@@ -25,12 +25,10 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static final String userId = PropertiesContext.get("user_identity");
     protected static UserCredentials testingUser;
 
-
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
-
-    @BeforeClass
+    @BeforeAll
     public static  void init() {
         RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
     }

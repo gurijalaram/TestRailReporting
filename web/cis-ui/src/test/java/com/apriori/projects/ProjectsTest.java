@@ -19,8 +19,8 @@ import com.apriori.testrail.TestRail;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -280,7 +280,7 @@ public class ProjectsTest extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled after COL-1952 released to QA")
+    @Disabled("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(id = {22909, 22910, 22911, 22912, 22913})
     @Description("Verify user can filter a project by name")
@@ -325,7 +325,7 @@ public class ProjectsTest extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled after COL-1952 released to QA")
+    @Disabled("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(id = {22914, 22915})
     @Description("Verify user can filter a project by status")
@@ -360,7 +360,7 @@ public class ProjectsTest extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("Disabled after COL-1952 released to QA")
+    @Disabled("Disabled after COL-1952 released to QA")
     @Test
     @TestRail(id = {23790, 23791})
     @Description("Verify user can filter a project by due date")

@@ -21,9 +21,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CasAccessAuthorizationTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
@@ -42,7 +42,7 @@ public class CasAccessAuthorizationTests {
     private SoftAssertions soft = new SoftAssertions();
 
 
-    @Before
+    @BeforeEach
     public void setup() {
         url = Constants.getServiceUrl();
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
@@ -58,7 +58,7 @@ public class CasAccessAuthorizationTests {
 
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
         if (accessAuthorizationIdentityHolder != null) {
             casTestUtil.delete(CASAPIEnum.ACCESS_AUTHORIZATION_BY_ID,

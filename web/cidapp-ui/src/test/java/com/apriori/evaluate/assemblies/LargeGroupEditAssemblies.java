@@ -34,8 +34,8 @@ import com.apriori.testrail.TestRail;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +51,7 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setupAssembly() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";

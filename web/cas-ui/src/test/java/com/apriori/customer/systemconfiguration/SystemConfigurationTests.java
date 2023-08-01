@@ -16,15 +16,15 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SystemConfigurationTests extends TestBaseUI {
     private SystemConfigurationPage systemConfigurationPage;
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         systemConfigurationPage = new CasLoginPage(driver)

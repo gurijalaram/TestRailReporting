@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
@@ -90,7 +90,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Secondary Processes page was not displayed", "Secondary Processes", title.getAttribute("textContent"));
+        assertEquals("Secondary Processes", title.getAttribute("textContent"), "Secondary Processes page was not displayed");
     }
 
     /**
@@ -151,7 +151,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     private void goToTab(String tabName) {
         By byTabName = By.xpath(String.format("//button[contains(text(),'%s')]", tabName));
         pageUtils.waitForElementAndClick(byTabName);
-        assertTrue("Correct tab was not selected", driver.findElement(byTabName).getAttribute("class").contains("active"));
+        assertTrue(driver.findElement(byTabName).getAttribute("class").contains("active"), "Correct tab was not selected");
     }
 
     /**

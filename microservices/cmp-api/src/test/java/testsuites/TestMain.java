@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 public class TestMain {
-    public static Class defaultTest = DmsApiSuite.class;
+    public static Class defaultTest = CmpRegressionTestSuite.class;
 
     public static void main(String[] args) {
 

@@ -18,9 +18,9 @@ import enums.PlmPartDataType;
 import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.PlmApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.WorkflowDataUtil;
@@ -32,7 +32,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
     private static SoftAssertions softAssertions;
     private CIConnectHome ciConnectHome;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         plmPartData = new PlmPartsUtil().getPlmPartData();
@@ -239,7 +239,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getBatchSize()).isEqualTo(costingServiceSettingsData.getBatchSize());
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         this.deleteWorkflow();
         softAssertions.assertAll();

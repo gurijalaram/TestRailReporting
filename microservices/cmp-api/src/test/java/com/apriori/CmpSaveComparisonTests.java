@@ -17,8 +17,8 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class CmpSaveComparisonTests {
     private String comparisonName;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    @BeforeClass
+    @BeforeAll
     public static void prepScenarios() {
         scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();

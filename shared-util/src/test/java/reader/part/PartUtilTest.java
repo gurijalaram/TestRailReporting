@@ -1,12 +1,12 @@
 package reader.part;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.part.PartUtil;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PartUtilTest {
 
@@ -34,7 +34,7 @@ public class PartUtilTest {
         PartData partData = PartUtil.getPartDataWithFile();
         PartData partDataToCompare = PartUtil.getPartDataWithFile();
 
-        Assert.assertEquals("Files should be the same", partData.getFile(), partDataToCompare.getFile());
+        assertEquals(partData.getFile(), partDataToCompare.getFile(), "Files should be the same");
     }
 
     @Test

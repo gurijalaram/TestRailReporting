@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -62,8 +62,8 @@ public class AssemblyDefaultsPage extends LoadableComponent<AssemblyDefaultsPage
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Assembly Defaults tab is not active", assemblyDefaultsTab.getAttribute("class").contains("active"));
-        assertTrue("Assembly Defaults is not displayed", assemblyDefaultsBody.isDisplayed());
+        assertTrue(assemblyDefaultsTab.getAttribute("class").contains("active"), "Assembly Defaults tab is not active");
+        assertTrue(assemblyDefaultsBody.isDisplayed(), "Assembly Defaults is not displayed");
     }
 
     /**

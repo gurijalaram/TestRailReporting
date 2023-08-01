@@ -16,8 +16,8 @@ import com.apriori.testrail.TestRail;
 import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -27,12 +27,11 @@ public class CostScenarioTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private UserCredentials currentUser;
 
     public CostScenarioTests() {
         super();
     }
-
-    private UserCredentials currentUser;
 
     @Test
     @Tag(SANITY)

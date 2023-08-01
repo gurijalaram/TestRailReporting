@@ -12,8 +12,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class QueryDefinitionTests extends TestBaseUI {
 
@@ -28,7 +28,7 @@ public class QueryDefinitionTests extends TestBaseUI {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
     }

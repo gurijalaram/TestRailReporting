@@ -18,9 +18,9 @@ import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LayoutConfigurationTest extends TestUtil {
     private static SoftAssertions softAssertions;
@@ -30,7 +30,7 @@ public class LayoutConfigurationTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static String layoutConfigName;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbers();
@@ -292,7 +292,7 @@ public class LayoutConfigurationTest extends TestUtil {
     }
 
 
-    @After
+    @AfterEach
     public void testCleanup() {
         QmsLayoutResources.deleteLayoutConfiguration(viewElementsResponse.getIdentity(), layoutConfigurationResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();

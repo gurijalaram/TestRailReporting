@@ -20,9 +20,9 @@ import com.navigation.CommonReportTests;
 import enums.CostMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
 public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
@@ -41,7 +41,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
         );
     }
 
@@ -52,7 +52,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
         );
     }
 
@@ -63,7 +63,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName()
         );
     }
 
@@ -73,13 +73,13 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText(),
-                is(equalTo("AC CYCLE TIME VT 1")));
+            is(equalTo("AC CYCLE TIME VT 1")));
 
         targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
@@ -91,17 +91,17 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                TargetQuotedCostTrendReportPage.class);
 
         int itemCount = Integer.parseInt(targetQuotedCostTrendReportPage.getProjectNameDropdownItemCount());
         assertThat(itemCount, is(equalTo(4)));
 
         for (int i = 0; i == itemCount; i++) {
             assertThat(targetQuotedCostTrendReportPage.getProjectNameDropdownOptionText(String.valueOf(i)),
-                    is(equalTo(String.format("PROJECT %d", i))));
+                is(equalTo(String.format("PROJECT %d", i))));
         }
 
         String projectToSelect = "PROJECT 4";
@@ -118,10 +118,10 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.getCountOfExportDateOptions(), is(equalTo("1")));
         assertThat(targetQuotedCostTrendReportPage.isExportDateRecent(), is(equalTo(true)));
@@ -138,9 +138,9 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -151,9 +151,9 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -163,21 +163,21 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
         targetQuotedCostTrendReportPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
-                        TargetQuotedCostTrendReportPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
+                TargetQuotedCostTrendReportPage.class);
 
         targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetQuotedCostTrendReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+            .clickOk(TargetQuotedCostTrendReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetQuotedCostTrendReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(TargetQuotedCostTrendReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 

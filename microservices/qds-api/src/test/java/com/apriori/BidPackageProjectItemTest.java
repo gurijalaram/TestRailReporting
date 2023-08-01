@@ -22,9 +22,9 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
@@ -39,7 +39,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     private static ScenarioItem scenarioItem;
     UserCredentials currentUser = UserUtil.getUser();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -242,7 +242,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             .contains("'projectIdentity' is not a valid identity");
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         BidPackageResources.deleteBidPackageProjectItem(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(),

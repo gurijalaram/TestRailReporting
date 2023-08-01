@@ -12,15 +12,15 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class DigitalFactoriesTest extends VDSTestUtil {
 
     @Test
     @TestRail(id = {8034})
     @Description("POST create or updates a Digital Factory for a customer.")
-    @Ignore
+    @Disabled
     public void postDigitalFactories() {
     }
 
@@ -45,7 +45,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @Test
     @TestRail(id = {8035})
     @Description("POST create or updates a VPEs for a customer.")
-    @Ignore
+    @Disabled
     public void postVPEs() {
     }
 

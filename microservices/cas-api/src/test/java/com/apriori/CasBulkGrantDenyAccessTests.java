@@ -23,9 +23,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class CasBulkGrantDenyAccessTests {
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
 
-    @Before
+    @BeforeEach
     public void setup() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         aPrioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
@@ -62,7 +62,7 @@ public class CasBulkGrantDenyAccessTests {
         appIdentity = PropertiesContext.get("cds.apriori_cloud_home_identity");
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         if (licensedAppIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,

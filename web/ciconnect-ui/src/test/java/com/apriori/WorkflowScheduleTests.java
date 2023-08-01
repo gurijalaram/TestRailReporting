@@ -14,9 +14,9 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class WorkflowScheduleTests extends TestBaseUI {
     private static final UserCredentials currentUser = UserUtil.getUser();
@@ -30,7 +30,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
@@ -305,7 +305,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
         softAssertions.assertThat(workflowHome.selectScheduleTab().isWorkflowExists(workFlowData.getWorkflowName())).isEqualTo(true);
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
             .clickDeleteButton().clickConfirmAlertBoxDelete();

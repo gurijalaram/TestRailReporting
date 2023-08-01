@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.settings;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -48,7 +48,7 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Selection tab is not active", selectionTab.getAttribute("class").contains("active"));
+        assertTrue(selectionTab.getAttribute("class").contains("active"), "Selection tab is not active");
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.EagerPageComponent;
@@ -42,7 +42,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Select Routing page is not displayed", getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"));
+        assertTrue(getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"), "Select Routing page is not displayed");
     }
 
     /**

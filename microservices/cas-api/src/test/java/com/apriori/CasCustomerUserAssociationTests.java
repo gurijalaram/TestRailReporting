@@ -19,10 +19,10 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +37,12 @@ public class CasCustomerUserAssociationTests {
     private List<CustomerAssociationUser> associatedUsers;
     private List<CustomerUser> usersToAssociate;
 
-    @BeforeClass
+    @BeforeAll
     public static void globalSetup() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         aprioriInternal = casTestUtil.getAprioriInternal();
 
@@ -57,7 +57,7 @@ public class CasCustomerUserAssociationTests {
         customerAssociationToAprioriInternal = casTestUtil.findCustomerAssociation(aprioriInternal, targetCustomer);
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         associatedUsers.forEach((user) -> casTestUtil.delete(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USER,

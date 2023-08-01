@@ -13,9 +13,9 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class BidPackageProjectsTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -148,7 +148,7 @@ public class BidPackageProjectsTest extends TestUtil {
         softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo(statusNew);
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         BidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), currentUser);

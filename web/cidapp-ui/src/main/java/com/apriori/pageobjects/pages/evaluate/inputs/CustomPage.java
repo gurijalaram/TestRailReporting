@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.InputsController;
@@ -47,7 +47,7 @@ public class CustomPage extends LoadableComponent<CustomPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Custom was not selected", customTab.getAttribute("class").contains("active"));
+        assertTrue(customTab.getAttribute("class").contains("active"), "Custom was not selected");
     }
 
     /**

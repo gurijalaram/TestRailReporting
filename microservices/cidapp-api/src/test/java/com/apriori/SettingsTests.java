@@ -9,8 +9,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class SettingsTests {
     private Map<PreferencesEnum, String> preferencesToReset = new HashMap<>();
     private UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
-    @After
+    @AfterEach
     public void resetSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSpecificSettings(currentUser, preferencesToReset);

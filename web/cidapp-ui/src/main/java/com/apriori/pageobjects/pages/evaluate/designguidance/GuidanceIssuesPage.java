@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.DesignGuidanceController;
@@ -69,7 +69,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Issues tab was not selected", issuesTab.getAttribute("class").contains("active"));
+        assertTrue(issuesTab.getAttribute("class").contains("active"), "Issues tab was not selected");
     }
 
     /**

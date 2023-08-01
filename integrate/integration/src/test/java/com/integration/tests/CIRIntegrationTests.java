@@ -29,9 +29,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.CicLoginUtil;
 
@@ -53,7 +53,7 @@ public class CIRIntegrationTests extends TestBaseUI {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
@@ -110,7 +110,7 @@ public class CIRIntegrationTests extends TestBaseUI {
 
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowName));
         softAssertions.assertAll();

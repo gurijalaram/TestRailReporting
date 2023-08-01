@@ -40,9 +40,9 @@ import com.utils.StatusIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -380,7 +380,7 @@ public class EditAssembliesTest extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Ignore("A unique assembly is needed to do this and then some post steps to delete this unique assembly and subcomponents")
+    @Disabled("A unique assembly is needed to do this and then some post steps to delete this unique assembly and subcomponents")
     @Test
     @TestRail(id = {10836, 10811})
     @Description("Shallow Edit an assembly with larger set of sub-components ")

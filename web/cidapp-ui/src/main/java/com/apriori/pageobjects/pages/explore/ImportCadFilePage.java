@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
@@ -83,7 +83,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Import CAD File page was not displayed", "Import CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"));
+        assertEquals("Import CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"), "Import CAD File page was not displayed");
     }
 
     /**

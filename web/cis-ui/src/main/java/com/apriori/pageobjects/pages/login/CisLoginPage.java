@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
@@ -41,7 +41,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIS login page was not displayed", aprioriLoginService.getLoginTitle().contains("aP Workspace"));
+        assertTrue(aprioriLoginService.getLoginTitle().contains("aP Workspace"), "CIS login page was not displayed");
     }
 
     /**

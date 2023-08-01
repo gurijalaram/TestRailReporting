@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
@@ -38,7 +38,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CID login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Design"));
+        assertTrue(aprioriLoginService.getLoginTitle().contains("Cost Insight Design"), "CID login page was not displayed");
     }
 
     /**

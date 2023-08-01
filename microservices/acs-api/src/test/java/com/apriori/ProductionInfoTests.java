@@ -15,7 +15,7 @@ import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ProductionInfoTests extends TestUtil {
 

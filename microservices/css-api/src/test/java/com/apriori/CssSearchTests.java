@@ -13,8 +13,8 @@ import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class CssSearchTests {
     private final String componentType = "PART";
     private ScenarioItem scenarioItem;
 
-    @Before
+    @BeforeEach
     public void setupUser() {
         currentUser = UserUtil.getUser();
     }

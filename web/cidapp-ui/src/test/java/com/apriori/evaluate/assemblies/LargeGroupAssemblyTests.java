@@ -32,9 +32,9 @@ import com.apriori.testrail.TestRail;
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +53,7 @@ public class LargeGroupAssemblyTests extends TestBaseUI {
         super();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void assemblySetup() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";

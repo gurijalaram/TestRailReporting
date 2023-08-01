@@ -12,8 +12,8 @@ import com.apriori.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.WorkflowTestUtil;
 
 public class NavBarTests extends WorkflowTestUtil {
@@ -21,7 +21,7 @@ public class NavBarTests extends WorkflowTestUtil {
     private SoftAssertions softAssertions;
     private CIConnectHome ciConnectHome;
 
-    @Before
+    @BeforeEach
     public void setup() {
         currentUser = UserUtil.getUser();
         softAssertions = new SoftAssertions();

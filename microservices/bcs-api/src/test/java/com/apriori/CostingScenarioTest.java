@@ -13,7 +13,7 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CostingScenarioTest extends TestUtil {
 

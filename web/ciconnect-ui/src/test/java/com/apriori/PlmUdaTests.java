@@ -25,9 +25,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.CicApiTestUtil;
 import utils.PlmPartsUtil;
 import utils.SearchFilter;
@@ -39,7 +39,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
     private static PartData plmPartData;
     private final IterationsUtil iterationsUtil = new IterationsUtil();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
@@ -444,7 +444,7 @@ public class PlmUdaTests extends WorkflowTestUtil {
 
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         this.deleteWorkflow();
         softAssertions.assertAll();

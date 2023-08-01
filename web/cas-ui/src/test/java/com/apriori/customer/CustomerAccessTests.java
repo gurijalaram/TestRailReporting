@@ -23,13 +23,14 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 public class CustomerAccessTests extends TestBaseUI {
 
+    SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private String cloudRef;
     private CdsTestUtil cdsTestUtil;
@@ -38,9 +39,8 @@ public class CustomerAccessTests extends TestBaseUI {
     private String userName;
     private String userEmail;
     private UsersPage usersPage;
-    SoftAssertions soft = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setup() {
         customerName = new GenerateStringUtil().generateCustomerName();
         cloudRef = new GenerateStringUtil().generateCloudReference();
@@ -60,7 +60,7 @@ public class CustomerAccessTests extends TestBaseUI {
             .goToUsersPage();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }

@@ -16,7 +16,7 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.restassured.http.Header;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UserPreferencesTests extends TestUtil {
 

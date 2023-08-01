@@ -27,10 +27,10 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
@@ -52,7 +52,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private String installationIdentity;
     private String appIdentity;
 
-    @Before
+    @BeforeEach
     public void setup() {
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateSalesForceId();
@@ -102,7 +102,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             .selectUser(customerIdentity, userIdentity, userName);
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,

@@ -26,9 +26,9 @@ import com.navigation.CommonReportTests;
 import enums.CostMetricEnum;
 import enums.RollupEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
@@ -48,7 +48,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
 
@@ -59,7 +59,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByLibrary(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
 
@@ -70,7 +70,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityBySearch(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName()
         );
     }
 
@@ -81,8 +81,8 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingReport(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+            CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -93,8 +93,8 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricTargetQuotedCostValueTrackingReport(
-                ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+            CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -104,21 +104,21 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                        TargetAndQuotedCostValueTrackingPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                TargetAndQuotedCostValueTrackingPage.class);
 
         targetAndQuotedCostValueTrackingPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+            .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         targetAndQuotedCostValueTrackingPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
@@ -164,21 +164,21 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                        TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName());
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                TargetAndQuotedCostValueTrackingPage.class)
+            .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName());
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOptionCount(), is(equalTo("1")));
         String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
-                .replace("T", " ");
+            .replace("T", " ");
 
         targetAndQuotedCostValueTrackingPage.clickOk(TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
-                .replace(" UTC", ""), is(equalTo(exportDateSelected)));
+            .replace(" UTC", ""), is(equalTo(exportDateSelected)));
     }
 
     @Test
@@ -187,14 +187,14 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                        TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectProjectNameToAppear("1");
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                TargetAndQuotedCostValueTrackingPage.class)
+            .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+            .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
+            .waitForCorrectProjectNameToAppear("1");
 
         targetAndQuotedCostValueTrackingPage.clickProjectLink("1");
         targetAndQuotedCostValueTrackingPage.switchTab(1);
@@ -211,19 +211,19 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
         targetAndQuotedCostValueTrackingPage.openNewCidTabAndFocus(2);
         EvaluatePage evaluatePage = new ExplorePage(driver)
-                .filter()
-                .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
-                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
-                .submit(ExplorePage.class)
-                .openScenario(partName, Constants.DEFAULT_SCENARIO_NAME);
+            .filter()
+            .saveAs()
+            .inputName(new GenerateStringUtil().generateFilterName())
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
+            .submit(ExplorePage.class)
+            .openScenario(partName, Constants.DEFAULT_SCENARIO_NAME);
 
         String cidScenarioName = evaluatePage.getCurrentScenarioName();
         String cidVPE = evaluatePage.getSelectedVPE();
         String cidProcessGroup = evaluatePage.getSelectedProcessGroup();
         String cidMaterialComposition =
-                evaluatePage.openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
+            evaluatePage.openMaterialProcess().openMaterialUtilizationTab().getMaterialName();
         String cidAnnualVolume = evaluatePage.getAnnualVolume();
         String cidFbc = String.valueOf(evaluatePage.getCostResults("Fully Burdened Cost"));
 
@@ -237,22 +237,23 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     /**
      * Generic test method for milestone project link test
+     *
      * @param index - index of project link to click
      */
     private void testMilestoneProjectLink(String index) {
         targetAndQuotedCostValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
-                        TargetAndQuotedCostValueTrackingPage.class)
-                .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
-                .clickProjectLink(index)
-                .switchTab(1)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
+                TargetAndQuotedCostValueTrackingPage.class)
+            .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
+            .clickOk(TargetAndQuotedCostValueTrackingPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
+            .clickProjectLink(index)
+            .switchTab(1)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getProjectName(),
-                is(equalTo(String.format("PROJECT %s", index))));
+            is(equalTo(String.format("PROJECT %s", index))));
     }
 }

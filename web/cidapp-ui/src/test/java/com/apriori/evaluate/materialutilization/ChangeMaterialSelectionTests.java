@@ -25,8 +25,8 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -45,7 +45,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6186,5898})
+    @TestRail(id = {6186, 5898})
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -175,10 +175,9 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {6190,5420})
+    @TestRail(id = {6190, 5420})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -204,7 +203,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -245,7 +244,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6192,5896})
+    @TestRail(id = {6192, 5896})
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -276,7 +275,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {6193,5420,5910,6303})
+    @TestRail(id = {6193, 5420, 5910, 6303})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -300,7 +299,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6194,5911})
+    @TestRail(id = {6194, 5911})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -323,7 +322,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6195,5921})
+    @TestRail(id = {6195, 5921})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

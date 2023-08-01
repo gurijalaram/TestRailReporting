@@ -15,9 +15,9 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CisComponentTest extends TestUtil {
 
@@ -26,7 +26,7 @@ public class CisComponentTest extends TestUtil {
     private static ScenarioItem scenarioItem;
     private static final UserCredentials currentUser = UserUtil.getUser();
 
-    @Before
+    @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
@@ -55,7 +55,7 @@ public class CisComponentTest extends TestUtil {
         }
     }
 
-    @After
+    @AfterEach
     public void testCleanup() {
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();

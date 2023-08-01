@@ -11,9 +11,9 @@ import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
 import enums.CostMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
 public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBaseUI {
 

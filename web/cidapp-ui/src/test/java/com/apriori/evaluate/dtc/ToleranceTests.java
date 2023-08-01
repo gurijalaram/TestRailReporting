@@ -30,10 +30,10 @@ import com.utils.SortOrderEnum;
 import com.utils.ToleranceEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
@@ -52,7 +52,7 @@ public class ToleranceTests extends TestBaseUI {
         super();
     }
 
-    @After
+    @AfterEach
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);
@@ -60,7 +60,7 @@ public class ToleranceTests extends TestBaseUI {
     }
 
     @Test
-    @Ignore("Cannot edit tolerances this release")
+    @Disabled("Cannot edit tolerances this release")
     @Tag(IGNORE)
     @TestRail(id = {6464, 7811, 6964})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")

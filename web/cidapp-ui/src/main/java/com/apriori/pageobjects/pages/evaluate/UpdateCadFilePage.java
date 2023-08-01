@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -64,7 +64,7 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Update CAD File page was not displayed", "Update CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"));
+        assertEquals("Update CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"), "Update CAD File page was not displayed");
     }
 
 

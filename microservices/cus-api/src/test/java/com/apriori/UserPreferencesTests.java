@@ -10,8 +10,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class UserPreferencesTests {
     SoftAssertions softAssertions = new SoftAssertions();
     private final PeopleUtil peopleUtil = new PeopleUtil();
 
-    @Before
+    @BeforeEach
     public void setupUser() {
         currentUser = UserUtil.getUser();
     }

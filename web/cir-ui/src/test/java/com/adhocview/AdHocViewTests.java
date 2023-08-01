@@ -11,8 +11,8 @@ import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 public class AdHocViewTests extends TestBaseUI {
 
