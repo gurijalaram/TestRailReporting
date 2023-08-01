@@ -45,7 +45,10 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
     private WebElement privacyPolicy;
 
     @FindBy(xpath = "//h2[@class = 'textAccent']")
-    private WebElement onPremLoginTitle;
+    private WebElement onPremReportsLoginTitle;
+
+    @FindBy(xpath = "//p[@class='password-inputs-header']")
+    private WebElement onPremAdminLoginTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -154,9 +157,10 @@ public class OnPremLoginPageImplementation extends LoadableComponent<OnPremLogin
      */
     @Override
     public String getLoginTitle() {
-        pageUtils.waitForElementToAppear(onPremLoginTitle);
-        pageUtils.waitForElementToBeClickable(onPremLoginTitle);
-        return onPremLoginTitle.getText();
+        WebElement elementToUse = this.application.equals("admin") ? onPremAdminLoginTitle : onPremReportsLoginTitle;
+        pageUtils.waitForElementToAppear(elementToUse);
+        pageUtils.waitForElementToBeClickable(elementToUse);
+        return elementToUse.getText();
     }
 
     /**
