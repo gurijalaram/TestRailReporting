@@ -59,7 +59,8 @@ public class Constants {
         }};
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";
-    public static final String FAILED_LOGIN_MESSAGE_ONPREM = "Invalid credentials supplied.Could not login to JasperReports Server.";
+    public static final String FAILED_LOGIN_MESSAGE_ONPREM_PART_ONE = "Invalid credentials supplied.Could not login to JasperReports Server.";
+    public static final String FAILED_LOGIN_MESSAGE_ONPREM_PART_TWO = "Invalid credentials supplied.Could not login to JasperReports Server.";
     public static final String FAILED_LOGIN_MESSAGE_CLOUD = "WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.";
     public static final String FAILED_LOGIN_EMPTY_FIELDS = "Email can't be blank";
     public static final String FORGOT_PWD_MSG = "If the supplied email address is valid, you will receive an email shortly ".concat(

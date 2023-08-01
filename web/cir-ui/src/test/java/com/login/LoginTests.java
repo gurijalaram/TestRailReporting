@@ -1,5 +1,6 @@
 package com.login;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -47,7 +48,8 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        assertThat(loginPage.getInvalidEmailMessage(), is(startsWith(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_ONE)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_TWO)));
     }
 
     @Test
@@ -70,7 +72,8 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLoginEmptyFields();
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        assertThat(loginPage.getLoginMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_ONE)));
+        assertThat(loginPage.getLoginMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_TWO)));
     }
 
     @Test
@@ -81,6 +84,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .invalidEmailFailedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInvalidEmailMessage(), is(startsWith(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_ONE)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(Constants.FAILED_LOGIN_MESSAGE_ONPREM_PART_TWO)));
     }
 }
