@@ -1,5 +1,5 @@
 {
-  "reportUnitUri": "/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTrackingDetails",
+  "reportUnitUri": "/aPriori/reports/solutions/designToCost/potentialSavings/potentialSavingsValueTrackingDetails",
   "async": true,
   "allowInlineScripts": false,
   "markupType": "embeddable",
@@ -27,7 +27,7 @@
       {
         "name": "exportDate",
         "value": [
-          "2023-06-23T07:11:36"
+          "2023-07-25T02:16:05"
         ]
       },
       {
@@ -37,27 +37,9 @@
         ]
       },
       {
-        "name": "sortOrder",
-        "value": [
-          "aPriori Cost"
-        ]
-      },
-      {
         "name": "currencyCode",
         "value": [
           "GBP"
-        ]
-      },
-      {
-        "name": "currentProjectId",
-        "value": [
-          "0"
-        ]
-      },
-      {
-        "name": "currentProjectName",
-        "value": [
-          "Final"
         ]
       }
     ]

@@ -21,9 +21,24 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @TestRail(id = {25987})
+    @TestRail(id = {26911})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
-        jasperApiUtils.cycleTimeValueTrackingCurrencyTest();
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        for (int i = 6; i < 10; i += 3) {
+            String gbpCycleTimeTotalValue = getCycleTimeTotalValue(CurrencyEnum.GBP.getCurrency(), i);
+
+            String usdCycleTimeTotalValue = getCycleTimeTotalValue(CurrencyEnum.USD.getCurrency(), i);
+
+            softAssertions.assertThat(gbpCycleTimeTotalValue).isEqualTo(usdCycleTimeTotalValue);
+        }
+
+        softAssertions.assertAll();
+    }
+
+    private String getCycleTimeTotalValue(String currencyToUse, int indexToUse) {
+        return jasperApiUtils.genericTestCoreCurrencyOnly("Currency", currencyToUse)
+            .getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(indexToUse).child(0).text();
     }
 }

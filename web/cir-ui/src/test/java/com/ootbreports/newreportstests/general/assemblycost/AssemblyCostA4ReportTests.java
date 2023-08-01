@@ -21,7 +21,7 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {13712})
+    @TestRail(id = 26907)
     @Description("Input controls - Currency code")
     public void testCurrency() {
         jasperApiUtils.genericAssemblyCostCurrencyTest();
