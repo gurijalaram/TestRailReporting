@@ -32,7 +32,24 @@ public class JasperApiUtils {
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
+    private String processGroupName;
     private String jSessionId;
+
+    /**
+     * Default constructor for this class
+     *
+     * @param jSessionId - String for authentication/session
+     * @param exportSetName - String of the export set which should be set
+     * @param processGroup - String of process group which should be set
+     * @param reportsJsonFileName - String of the right json file to use to be sent to the api
+     */
+    public JasperApiUtils(String jSessionId, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
+        this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
+        this.jSessionId = jSessionId;
+        this.exportSetName = exportSetName;
+        this.processGroupName = processGroup.getProcessGroup();
+        this.reportsJsonFileName = reportsJsonFileName;
+    }
 
     /**
      * Default constructor for this class
@@ -59,11 +76,18 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls();
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
             setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet);
         }
+
+        if(processGroupName != null) {
+            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+            setReportParameterByName("processGroup", processGroupId);
+        }
+
         setReportParameterByName("exportSetName", currentExportSet);
         setReportParameterByName("latestExportDate", currentDateTime);
 

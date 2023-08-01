@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -83,7 +84,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.P_40089252_MLDES_0004_REDRAW.getPartName(),
             JasperCirApiPartsEnum.DU100024720_G.getPartName()
         );
-        jasperApiUtils.genericDtcDetailsTest(
+        new JasperApiUtils(jSessionId, exportSetName, ProcessGroupEnum.CASTING_DIE, reportsJsonFileName).genericDtcDetailsTest(
             partNames,
             "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
