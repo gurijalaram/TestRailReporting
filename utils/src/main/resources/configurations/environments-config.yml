@@ -111,7 +111,7 @@ onprem:
   users_csv_file: onprem-users.csv
 
   reports:
-    ui_url: ${base_url}jasperserver-pro/
+    ui_url: https://${base_url}jasperserver-pro/
     welcome_page_text: aP Analytics
     failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
 

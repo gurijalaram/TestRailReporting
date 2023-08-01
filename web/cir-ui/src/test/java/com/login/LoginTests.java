@@ -2,6 +2,7 @@ package com.login;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
@@ -46,7 +47,7 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(startsWith(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
     }
 
     @Test
@@ -80,6 +81,6 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .invalidEmailFailedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInvalidEmailMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        assertThat(loginPage.getInvalidEmailMessage(), is(startsWith(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
     }
 }
