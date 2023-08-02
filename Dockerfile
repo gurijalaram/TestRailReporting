@@ -6,7 +6,7 @@ COPY apriori-https-cert.cer .
 RUN keytool -import -trustcacerts -noprompt \
     -alias root \
     -file ./apriori-https-cert.cer \
-    -keystore $JAVA_HOME/jre/lib/security/cacerts \
+    -keystore $JAVA_HOME/lib/security/cacerts \
     -storepass changeit
 
 # Copy source code
