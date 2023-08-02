@@ -23,6 +23,8 @@ public enum JasperApiEnum {
     PLASTIC_DTC_DETAILS("/dtcmetrics/plasticdtc/PlasticDtcDetailsReportRequest"),
     PLASTIC_DTC("/dtcmetrics/plasticdtc/PlasticDtcReportRequest"),
     RECOMMENDED_TEST_PARTS("/recommendedtestparts/RecommendedTestPartsReportRequest"),
+    POTENTIAL_SAVINGS_VALUE_TRACKING("/potentialsavingsvaluetracking/PotentialSavingsValueTrackingReportRequest"),
+    POTENTIAL_SAVINGS_VALUE_TRACKING_DETAILS("/potentialsavingsvaluetracking/PotentialSavingsValueTrackingDetailsReportRequest"),
     SCENARIO_COMPARISON("/scenariocomparison/ScenarioComparisonReportRequest"),
     SHEET_METAL_DTC_COMPARISON("/dtcmetrics/sheetmetaldtc/SheetMetalDtcComparisonReportRequest"),
     SHEET_METAL_DTC_DETAILS("/dtcmetrics/sheetmetaldtc/SheetMetalDtcDetailsReportRequest"),

@@ -10,7 +10,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -32,7 +31,7 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
 
     @Test
     @TestRail(testCaseId = {"1954"})
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
+    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header) - Details Report - Fully Burdened Cost")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierDetailsTest(
             partNames,
@@ -41,8 +40,8 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
     }
 
     @Test
-    @TestRail(testCaseId = {"1954"})
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
+    @TestRail(testCaseId = {"26908"})
+    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header) - Details Report - Piece Part Cost")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierDetailsTest(
             partNames,

@@ -13,7 +13,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -252,10 +251,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7635")
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Details Report")
     public void testSortOrderInputControlAnnualSpend() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
             JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName(),
@@ -276,10 +271,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(testCaseId = "7636")
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
     public void testSortOrderInputControlDtcRank() {
-        List<String> miscData = Arrays.asList(
-            "Sort Order",
-            SortOrderEnum.DTC_RANK.getSortOrderEnum()
-        );
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.BARCO_R8761310.getPartName(),
             JasperCirApiPartsEnum.BARCO_R8552931.getPartName(),
