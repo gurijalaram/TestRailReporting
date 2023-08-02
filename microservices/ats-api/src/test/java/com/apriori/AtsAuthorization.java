@@ -25,9 +25,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class AtsAuthorization extends TestUtil {
-    final UserCredentials userCredentials = UserUtil.getUser();
+    private final UserCredentials userCredentials = UserUtil.getUser();
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
-    SoftAssertions soft = new SoftAssertions();
+    private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Test

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class AtsUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
-    SoftAssertions soft = new SoftAssertions();
+    private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private ResponseWrapper<Customer> customer;
     private ResponseWrapper<User> user;

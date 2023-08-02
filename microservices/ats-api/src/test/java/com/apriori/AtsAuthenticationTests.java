@@ -20,12 +20,12 @@ import org.junit.jupiter.api.Test;
 
 public class AtsAuthenticationTests {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
-    SoftAssertions soft = new SoftAssertions();
+    private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private ResponseWrapper<Customer> customer;
     private ResponseWrapper<User> user;
-    ResponseWrapper<IdentityProviderResponse> identityProvider;
+    private ResponseWrapper<IdentityProviderResponse> identityProvider;
     private String customerIdentity;
     private String userIdentity;
     private String idpIdentity;
