@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.manage;
+package com.apriori.pageobjects.manage;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminHeader;
@@ -10,18 +10,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class ScenarioExport extends AdminHeader {
-
-    @FindBy(css = "h1")
-    private WebElement manageScenarioExportTitle;
-
-    @FindBy(css = "[id='exportscheduleslist']")
-    private WebElement exportTable;
+public class SystemDataExport extends AdminHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public ScenarioExport(WebDriver driver) {
+    @FindBy(css = "h1")
+    private WebElement manageSystemDataExportTitle;
+
+    public SystemDataExport(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -37,26 +34,26 @@ public class ScenarioExport extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(exportTable);
+
     }
 
     /**
-     * Checks if header is displayed
+     * Gets isDisplayed value for header
      *
-     * @return boolean - is element displayed
+     * @return boolean - isDisplayed
      */
     public boolean isHeaderDisplayed() {
-        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
-        return pageUtils.isElementDisplayed(manageScenarioExportTitle);
+        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
+        return pageUtils.isElementDisplayed(manageSystemDataExportTitle);
     }
 
     /**
-     * Checks if header is enabled
+     * Gets isEnabled value for header
      *
-     * @return boolean - is element enabled
+     * @return boolean - isEnabled
      */
     public boolean isHeaderEnabled() {
-        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
-        return pageUtils.isElementEnabled(manageScenarioExportTitle);
+        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
+        return pageUtils.isElementEnabled(manageSystemDataExportTitle);
     }
 }

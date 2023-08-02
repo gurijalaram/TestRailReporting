@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.homepage;
+package com.apriori.pageobjects.homepage;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminPageHeader;

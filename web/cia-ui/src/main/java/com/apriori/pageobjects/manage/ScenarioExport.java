@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.manage;
+package com.apriori.pageobjects.manage;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminHeader;
@@ -10,15 +10,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class SystemDataExport extends AdminHeader {
+public class ScenarioExport extends AdminHeader {
+
+    @FindBy(css = "h1")
+    private WebElement manageScenarioExportTitle;
+
+    @FindBy(css = "[id='exportscheduleslist']")
+    private WebElement exportTable;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    @FindBy(css = "h1")
-    private WebElement manageSystemDataExportTitle;
-
-    public SystemDataExport(WebDriver driver) {
+    public ScenarioExport(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -34,26 +37,26 @@ public class SystemDataExport extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(exportTable);
     }
 
     /**
-     * Gets isDisplayed value for header
+     * Checks if header is displayed
      *
-     * @return boolean - isDisplayed
+     * @return boolean - is element displayed
      */
     public boolean isHeaderDisplayed() {
-        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
-        return pageUtils.isElementDisplayed(manageSystemDataExportTitle);
+        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
+        return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
 
     /**
-     * Gets isEnabled value for header
+     * Checks if header is enabled
      *
-     * @return boolean - isEnabled
+     * @return boolean - is element enabled
      */
     public boolean isHeaderEnabled() {
-        pageUtils.waitForElementToAppear(manageSystemDataExportTitle);
-        return pageUtils.isElementEnabled(manageSystemDataExportTitle);
+        pageUtils.waitForElementToAppear(manageScenarioExportTitle);
+        return pageUtils.isElementEnabled(manageScenarioExportTitle);
     }
 }

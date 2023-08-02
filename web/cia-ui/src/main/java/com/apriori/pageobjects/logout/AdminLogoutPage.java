@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.logout;
+package com.apriori.pageobjects.logout;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.header.AdminHeader;
