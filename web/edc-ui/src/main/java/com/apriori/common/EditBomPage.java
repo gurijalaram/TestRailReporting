@@ -1,8 +1,8 @@
-package com.apriori.pageobjects.common;
+package com.apriori.common;
 
 import com.apriori.EagerPageComponent;
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.login.MatchedPartPage;
+import com.apriori.pageobjects.login.MatchedPartPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

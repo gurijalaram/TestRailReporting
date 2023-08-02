@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.login;
+package com.apriori.pageobjects.login;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

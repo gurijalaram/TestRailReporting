@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.common;
+package com.apriori.common;
 
 import com.apriori.PageUtils;
 

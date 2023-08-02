@@ -1,8 +1,8 @@
-package com.apriori.pageobjects.common;
+package com.apriori.common;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.login.MatchedPartPage;
-import com.apriori.pageobjects.pages.login.UploadedFilePage;
+import com.apriori.pageobjects.login.MatchedPartPage;
+import com.apriori.pageobjects.login.UploadedFilePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

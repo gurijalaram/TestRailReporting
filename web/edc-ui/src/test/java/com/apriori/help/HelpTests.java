@@ -4,9 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.TestBaseUI;
+import com.apriori.pageobjects.login.EdcAppLoginPage;
 import com.apriori.pageobjects.navtoolbars.AboutUsPage;
 import com.apriori.pageobjects.navtoolbars.ZendeskSignInPage;
-import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

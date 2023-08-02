@@ -1,8 +1,8 @@
-package com.apriori.pageobjects.pages.login;
+package com.apriori.pageobjects.login;
 
 import com.apriori.EagerPageComponent;
-import com.apriori.pageobjects.common.EditBomPage;
-import com.apriori.pageobjects.common.UploadedBomTableActions;
+import com.apriori.common.EditBomPage;
+import com.apriori.common.UploadedBomTableActions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
