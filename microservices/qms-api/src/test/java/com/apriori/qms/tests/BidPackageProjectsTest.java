@@ -310,8 +310,8 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(errorProjectResponse.getMessage())
             .contains("2 validation failures were found:\n" +
-                "* 'displayName' should not be empty.\n" +
-                "* 'displayName' should not be blank");
+                "* 'name' should not be empty.\n" +
+                "* 'name' should not be blank");
     }
 
     @Test
@@ -341,7 +341,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("'displayName' should not be more than 64 characters");
+            .contains("'name' should not be more than 64 characters");
     }
 
     @Test
@@ -617,7 +617,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("'displayName' should not be null");
+            .contains("'name' should not be null");
     }
 
     @Test
