@@ -9,8 +9,8 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ReportNamesEnum;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.PlasticDtcReportPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.PlasticDtcReportPage;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;

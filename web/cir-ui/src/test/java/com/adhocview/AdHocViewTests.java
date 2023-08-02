@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

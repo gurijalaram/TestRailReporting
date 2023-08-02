@@ -8,9 +8,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
 import com.apriori.enums.ReportNamesEnum;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
-import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
+import com.apriori.pageobjects.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;

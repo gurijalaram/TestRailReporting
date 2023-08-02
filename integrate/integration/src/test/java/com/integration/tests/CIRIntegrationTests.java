@@ -10,7 +10,7 @@ import com.apriori.dataservice.TestDataService;
 import com.apriori.email.GraphEmailService;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.pageobjects.header.ReportsHeader;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

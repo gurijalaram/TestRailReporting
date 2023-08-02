@@ -13,9 +13,9 @@ import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ListNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ReportNamesEnum;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.GenericReportPage;
+import com.apriori.pageobjects.view.reports.MachiningDtcReportPage;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;

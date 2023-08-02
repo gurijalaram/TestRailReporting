@@ -14,7 +14,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
-import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
+import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

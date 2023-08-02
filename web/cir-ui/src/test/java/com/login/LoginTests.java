@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

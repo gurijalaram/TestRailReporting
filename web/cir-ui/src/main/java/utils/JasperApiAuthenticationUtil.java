@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserUtil;
 

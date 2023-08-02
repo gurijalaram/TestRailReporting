@@ -16,12 +16,12 @@ import com.apriori.enums.ListNameEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
+import com.apriori.pageobjects.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.view.reports.GenericReportPage;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;

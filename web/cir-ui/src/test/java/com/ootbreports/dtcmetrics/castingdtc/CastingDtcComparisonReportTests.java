@@ -13,10 +13,10 @@ import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
+import com.apriori.pageobjects.view.reports.CastingDtcReportPage;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
